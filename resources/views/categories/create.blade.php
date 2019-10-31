@@ -1,0 +1,21 @@
+@extends('layouts.master')
+
+@section('content')
+			
+		
+
+			<form method="POST" action="/categories" class="floating-form">
+	        @csrf
+	        	<input type="text" name="name" placeholder="name">
+	        	<input type="text" name="slug" placeholder="slug">
+	        	<input type="text" name="description" placeholder="description">
+				<input type="text" name="imagePath" placeholder="imagePath">
+	            <button type="submit" class="create">
+	                Create
+	            </button>
+	    	</form>
+
+
+   
+
+@endsection

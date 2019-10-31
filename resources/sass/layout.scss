@@ -1,0 +1,29 @@
+html { font-size: 62.5%; font-family: 'Montserrat', sans-serif; } 
+body { font-size: 14px; font-size: 1.6rem; font-family: 'Montserrat', sans-serif;} /* =14px */
+h1   { font-size: 24px; font-size: 2.4rem; font-family: 'Montserrat', sans-serif; } /* =24px */
+h2   { font-size: 20px; font-size: 2.2rem; font-family: 'Montserrat', sans-serif; } /* =24px */
+h3   { font-size: 16px; font-size: 2.0rem; font-family: 'Montserrat', sans-serif; } /* =24px */
+
+.grid {
+  display: grid;
+  &.nav {
+    grid-template-columns: 8rem .7fr 1fr;
+    align-items: center;
+    border-bottom: .1rem solid rgb(235, 235, 235);
+    height:7rem;
+  }
+  & a {
+  	font-family: "Montserrat", sans-serif;
+    color: #484848;
+    text-decoration: none;
+    font-size: 1.35rem;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+  }
+}
+.navmenu {
+    display: grid;
+    grid-template-columns: repeat( auto-fit, minmax(80px, 1fr) );
+    justify-items: right;
+    align-items: center;
+  }

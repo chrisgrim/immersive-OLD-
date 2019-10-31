@@ -1,0 +1,46 @@
+
+// Body
+$body-bg: #f8fafc;
+
+// Typography
+$font-family-sans-serif: "Nunito", sans-serif;
+$font-size-base: 1.8rem;
+$line-height-base: 1.6;
+$basic-font: 'Open Sans', sans-serif;
+$basic-font-1: 'Montserrat', sans-serif;
+
+// Colors
+$blue: #a3d4ff;
+$indigo: #6574cd;
+$purple: #9561e2;
+$pink: #f66D9b;
+$red: #e3342f;
+$orange: #f6993f;
+$yellow: #ffed4a;
+$green: #38c172;
+$teal: #4dc0b5;
+$cyan: #6cb2eb;
+$bg: #f3f8fa;
+$white: #fff;
+$black: #fc428c;
+$circle-color: green;
+$outside-color: #a3d4ff; 
+$line-color: #dedede;
+$nav-background: #fff;
+$footer-background: #fff;
+$default-font-color: #484848;
+$light-font-color: #b3b5bf;
+$border-color:#e5e5e5;
+
+input, textarea, button:focus {outline:0;}
+input, textarea{box-sizing:border-box} 
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+-webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+}
