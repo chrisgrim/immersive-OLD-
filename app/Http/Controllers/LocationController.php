@@ -64,6 +64,7 @@ class LocationController extends Controller
 
         //add lat and lon to the event model for searching
         $event->update([
+            'location_id' => $event->location->id,
             'location_latlon' => [
                 'lat' => $request->latitude,
                 'lon' => $request->longitude,

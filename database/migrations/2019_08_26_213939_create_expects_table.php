@@ -23,6 +23,7 @@ class CreateExpectsTable extends Migration
             $table->longtext('contactAdvisories')->nullable();
             $table->longtext('mobilityAdvisories')->nullable();
             $table->longtext('contentAdvisories')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

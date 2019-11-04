@@ -86,7 +86,6 @@ Vue.component('create-image', require('./components/create/image.vue').default);
 Vue.component('create-date-picker', require('./components/create/datepicker.vue').default);
 Vue.component('create-shows', require('./components/create/shows.vue').default);
 Vue.component('show-listing', require('./components/create/show-listing.vue').default);
-Vue.component('create-information', require('./components/create/information.vue').default);
 Vue.component('create-description', require('./components/create/description.vue').default);
 Vue.component('create-expect', require('./components/create/expect.vue').default);
 

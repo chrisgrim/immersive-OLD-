@@ -4,19 +4,21 @@ namespace App;
 
 use ScoutElastic\Searchable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Event extends Model
 {
-    use Searchable, Favoritable;
+    use Searchable, Favoritable, SoftDeletes;
 
     protected $indexConfigurator = EventIndexConfigurator::class;
+
 
     protected $casts = [
         'location_latlon' => 'array',
     ];
     
 	protected $fillable = [
-    	'slug', 'user_id', 'category_id','organizer_id','description','name','largeImagePath','thumbImagePath','expectation_id','information_id', 'organizer_id', 'location_latlon', 'closingDate','websiteUrl','ticketUrl',
+    	'slug', 'user_id', 'category_id','organizer_id','description','name','largeImagePath','thumbImagePath','expectation_id', 'organizer_id', 'location_latlon', 'closingDate','websiteUrl','ticketUrl','location_id'
 
     ];
 
@@ -52,10 +54,6 @@ class Event extends Model
     public function expectation() 
     {
         return $this->hasOne(Expect::class);
-    }
-    public function information() 
-    {
-        return $this->hasOne(Information::class);
     }
     public function shows() 
     {

@@ -122,12 +122,12 @@
                 genreName: this.pivots,
                 options: this.genres,
                 eventUrl:_.has(this.event, 'slug') ? `/create-event/${this.event.slug}` : null,
+                websiteUrl: '',
+                ticketUrl: '',
                 genreActive: false,
                 descriptionActive: false,
                 ticketActive: false,
                 websiteActive: false,
-                websiteUrl: '',
-                ticketUrl: '',
 			}
 		},
 

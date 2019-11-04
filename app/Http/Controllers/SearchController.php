@@ -11,7 +11,8 @@ use App\CityListSearchRule;
 use App\EventSearchRule;
 use App\DateSearchRule;
 use Carbon\Carbon;
-use Cookie;
+use Session;
+
 
 use Illuminate\Http\Request;
 
@@ -19,7 +20,8 @@ class SearchController extends Controller
 {
     public function index()
     {
-        $searchedevents = request()->cookie('search');
+        $searchedevents = json_encode(Session::get('searchDataStore'));
+
         return view('searches.search',compact('searchedevents'));
     }
 
@@ -125,11 +127,7 @@ class SearchController extends Controller
     }
     public function searchDatastore(Request $request)
     {
-
-        // Cookie::queue(cookie('search', json_encode($request->all()), $minute = 10));
-        return response()->withCookie('search', json_encode($request->all()), 10);
-
-
+        Session::put('searchDataStore', $request->all());        
     }
 
     

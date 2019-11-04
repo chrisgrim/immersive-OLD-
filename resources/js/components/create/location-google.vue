@@ -42,7 +42,7 @@
 	    	<div class="location-section-2">
 			    <div class="create-field">
 
-					<label v-if="showHiddenLocation"> City  </label>
+					<label v-if="showHiddenLocation"> City </label>
 					<label v-else="specificLocation"> Location </label>
 						<gmap-autocomplete
 						@place_changed="setPlace"
@@ -130,16 +130,11 @@
 
 		computed: {
 			showHiddenLocation: function() {
-				if( this.location.hiddenLocationToggle === 'Yes' ) { 
-					// toggles the address placeholder to only show city
-					this.locationPlaceholder = this.location.city;
-					return '1'; 
-				} else { 
-					//toggles the address placeholder to show the entire address
-					this.locationPlaceholder = this.event.location.hiddenLocationToggle ? this.event.location.home + ' ' + this.event.location.street + ', ' + this.event.location.city : 'Event Address';
-					return ''
-				}
+				return this.location.hiddenLocationToggle === 'Yes' ? '1': '';
 			},
+			locationPlaceholder() {
+				return this.event.location.hiddenLocationToggle ? (this.event.location.home ? this.event.location.home : '') + ' ' + (this.event.location.street ? this.event.location.street + ', ' : '') + '' + this.event.location.city : 'Event Address';
+			}
 		},
 
 		data() {
@@ -158,7 +153,6 @@
 				center: '',
 				url:'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
 				attribution:'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-				locationPlaceholder: '',
 				searchedLocation: {},
 			}
 		},

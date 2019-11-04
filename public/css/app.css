@@ -618,6 +618,32 @@ h3 {
   align-items: center;
 }
 
+.ticket-box {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  box-shadow: -3px 5px 5px 1px #e8e8e899;
+  padding: 2rem;
+  border-radius: 5px 5px 5px 0px;
+  grid-column-gap: 2rem;
+  margin-top: 15px;
+  border: solid 1px #ebebeb;
+}
+
+.show-box {
+  box-shadow: -3px 5px 5px 1px #e8e8e899;
+  padding: 2rem;
+  border-radius: 5px 5px 5px 0px;
+  margin-top: 15px;
+  border: solid 1px #ebebeb;
+}
+
+.show-box-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-column-gap: 2rem;
+  grid-row-gap: 2rem;
+}
+
 div#create {
   margin-top: 5rem;
 }
@@ -825,6 +851,19 @@ button.create[disabled] {
 
 .asd__keyboard-shortcuts-trigger-wrapper {
   display: none;
+}
+
+button.add-button {
+  border: none;
+  box-shadow: -3px 5px 5px 1px #cecece99;
+  padding: 1.3rem 2rem;
+  border-radius: 0px 0px 5px 5px;
+  margin-top: -1px;
+  color: #f2595b;
+  font-size: 1.5rem;
+  font-weight: 600;
+  border: solid 1px #ebebeb;
+  border-top: none;
 }
 
 /* -------------------------Pricing-------------------*/

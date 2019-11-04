@@ -8,21 +8,26 @@
             name="dates">
     	</flat-pickr>
 
-        Add Your Show Times
         
-        <div v-for="time in showTimes">
-            <vue-timepicker
-            format="hh:mm A"
-            close-on-complete
-            :minute-interval="5"
-            v-model="time.showTime">
-            ></vue-timepicker>
+        <div class="show-box">
+            <div class="create-field">
+                <label>Show Times</label>
+            </div>
+            <div class="show-box-grid">
+                <div v-for="time in showTimes" >
+                    <vue-timepicker
+                    format="hh:mm A"
+                    close-on-complete
+                    :minute-interval="5"
+                    v-model="time.showTime">
+                    ></vue-timepicker>
+                </div>
+            </div>
         </div>
         <div>
-            <button class="btn btn-default" @click.prevent="addShowTimes">Add more show times</button>
+            <button class="add-button" @click.prevent="addShowTimes"> &#43; Show Times</button>
         </div>
-        <div v-for="ticket in tickets">
-
+        <div v-for="ticket in tickets" class="ticket-box">
             <div class="create-field">
                 <label>Ticket Type</label>
                 <input 
@@ -32,19 +37,20 @@
                 v-model="ticket.name" 
                 placeholder="ex: General Admission, VIP, Student">
             </div>
-            
             <div class="create-field">
                 <label>Ticket Price</label>
                 <input
                 class="create-input" 
-                v-model="ticket.price"
-                v-money="ticket.price !== null ? money : null" 
+                v-model="ticket.ticket_price"
+                v-money="ticket.ticket_price !== null ? money : null" 
                 v-bind="money"
                 placeholder=" "/>    
             </div>
-
         </div>
-        <button class="btn btn-default" @click.prevent="addTickets">Add another ticket type</button>
+        <div>
+            <button class="add-button" @click.prevent="addTickets">&#43; Ticket Types</button>
+        </div>
+        <button @click.prevent="test()" >Test</button>
         
         <button 
         @click.prevent="submitDates()" 
@@ -83,6 +89,13 @@ export default {
         		return ''
         	}
         },
+        quickSave() {
+            return {
+                'dates': this.dateArray,
+                'tickets': this.tickets,
+                'showTimes': this.showTimes
+            };
+        },
     },
 
     data() {
@@ -102,7 +115,7 @@ export default {
 				dateFormat: 'Y-m-d H:i:s',        
 	        },
             tickets: [
-                { name: '', price: '0' },
+                { name: '', ticket_price: '0' },
             ],
             money: {
                 decimal: '.',
@@ -126,25 +139,49 @@ export default {
                     A: "PM",
                 },
             });
+            axios.post(`${this.eventUrl}/shows/tmp`, this.quickSave);
         },
 
         addTickets() {
             this.tickets.push({});
+            axios.post(`${this.eventUrl}/shows/tmp`, this.quickSave);
         },
 
     	getRedis() {
     		axios.get(`${this.eventUrl}/shows/gettmp`)
     		.then(response => {
                 console.log(response.data);
-    			this.dates = response.data;
-    			this.dates == '' ? this.getDatabase() : console.log('no date');
+                if (response.data.dates) {
+                    this.dates = response.data.dates;
+                    response.data.showTimes ? this.showTimes = response.data.showTimes : '';
+                    response.data.tickets ? this.tickets = response.data.tickets : '';
+                } else {
+                    this.getDatabase();
+                };
+    			// response.data.dates ? this.dates = response.data.dates : this.getDatabase();
+       //          response.data.showTimes ? this.showTimes = response.data.showTimes : '';
+       //          response.data.tickets ? this.tickets = response.data.tickets : '';
             });
     	},
 
+        test() {
+            axios.get(`${this.eventUrl}/shows/loadshows`)
+            .then(response => {
+                console.log(response.data.tickets[0].tickets);
+                this.dates = response.data.dates;
+                this.tickets = response.data.tickets[0].tickets
+
+            });
+        },
+
     	getDatabase() {
+
     		axios.get(`${this.eventUrl}/shows/loadshows`)
     		.then(response => {
-    			this.dates = response.data;
+                console.log(response.data);
+                this.dates = response.data.dates;
+                this.tickets = response.data.tickets[0].tickets
+    			// response.data ? this.dates = response.data : '';
             });
     	},
 
@@ -174,8 +211,8 @@ export default {
 
     watch: {
 		dates: function() {
-		  	axios.post(`${this.eventUrl}/shows/tmp`, this.dateArray);
-		}
+		  	axios.post(`${this.eventUrl}/shows/tmp`, this.quickSave);
+		},
 	},
 
     mounted() {

@@ -26,6 +26,7 @@ class CreateLocationsTable extends Migration
             $table->integer('postal_code')->nullable();
             $table->DECIMAL('longitude', 11, 8)->nullable();
             $table->DECIMAL('latitude', 10 ,8)->nullable();
+            $table->softDeletes();
             // $table->foreign('event_id')
             //       ->references('id')->on('events')
             //       ->onDelete('cascade');

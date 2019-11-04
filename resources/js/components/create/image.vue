@@ -32,10 +32,7 @@
 
     </div>
     <div>
-        <button 
-        :disabled="$v.$invalid" 
-        class="create" 
-        @click.prevent="createImage()"> 
+        <button class="create" @click.prevent="createImage()"> 
             Save and Continue 
         </button>
     </div>
@@ -48,13 +45,13 @@ import _ from 'lodash';
 import ImageUpload from '../layouts/image-upload.vue'
 import { required, minLength, maxLength } from 'vuelidate/lib/validators'
 
-const file_size_validation = (value, vm) =>  {
-  if (!value) {
-    return false;
-  }
-  let file = value;
-  return (file.size < 91456)
-};
+// const file_size_validation = (value, vm) =>  {
+//   if (!value) {
+//     return false;
+//   }
+//   let file = value;
+//   return (file.size < 91456)
+// };
 
 
 export default {
@@ -111,7 +108,7 @@ export default {
     validations: {
         eventImage: {
             required,
-            file_size_validation,
+            
         },
     },
     

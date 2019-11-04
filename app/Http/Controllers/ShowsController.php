@@ -8,6 +8,7 @@ use App\Ticket;
 use App\Show;
 use Carbon\Carbon;
 use Redis;
+use Session;
 use App\Http\Requests\ShowStoreRequest;
 
 class ShowsController extends Controller
@@ -36,20 +37,33 @@ class ShowsController extends Controller
      */
     public function store(ShowStoreRequest $request, Event $event)
     {
-        $event->shows()->delete();
+        
+        $showDelete = $event->shows()->whereNotIn('date', $request->dates)->get();
+
+        foreach($showDelete as $show){
+            $show->tickets()->delete();
+        }
+        $event->shows()->whereNotIn('date', $request->dates)->delete();
+
 
         foreach( $request->dates as $date) {
 
-            $show = Show::create([
+            $show = Show::updateOrCreate([
                 'date' => $date,
                 'event_id' => $event->id
             ]);
 
+
+            $show->tickets()->whereNotIn('name', $request->tickets)->delete();
+
             foreach ($request->tickets as $ticket) {
-                Ticket::create([
+
+                Ticket::updateOrCreate([
                     'show_id' => $show->id,
                     'name' => $ticket['name'],
-                    'ticket_price' => str_replace('$', '', $ticket['price'])
+                ],
+                [
+                    'ticket_price' => str_replace('$', '', $ticket['ticket_price'])
                 ]);
             }
         };
@@ -60,27 +74,27 @@ class ShowsController extends Controller
             'closingDate' => $lastDate->date
         ]);
 
-
-        Redis::del($event->id);
+        Session::forget($event->id .'dates');   
     }
     public function tempStore(Event $event, Request $request)
     {
-
-        // Session::put('test', $request->all());
-        Redis::set($event->id, json_encode($request->all()));
+        Session::put($event->id . 'dates', $request->all());   
     }
     public function getTempStore(Event $event)
     {
-        // return Session::get('test');
-        return Redis::get($event->id);
+        return Session::get($event->id . 'dates');
     }
     public function loadDatabase(Event $event)
     {
         return $event->shows()->all();
-     
     }
     public function loadShows(Event $event)
     {
-        return $event->shows()->pluck('date');
+        $tickets = $event->shows()->with('tickets')->get();
+        $dates =  $event->shows()->pluck('date');
+        return response()->json(array(
+            'dates' => $dates,
+            'tickets' => $tickets
+        ));
     }
 }

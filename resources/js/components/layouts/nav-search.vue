@@ -85,10 +85,10 @@ export default {
         globalSearch() {
             axios.post('/search/storedata', this.searchBoxInput)
             .then(response => {
-                console.log(response.data);
+                window.location.href = '/index/search';
             });
 
-            window.location.href = '/index/search';
+            
 
         },
 

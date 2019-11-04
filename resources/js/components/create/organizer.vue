@@ -59,7 +59,7 @@
             />
             
             <div v-if="$v.organizationImageModel.$error" class="validation-error">
-                <p class="error" v-if="!$v.organizationImageModel.required">The Name is required</p>
+                <p class="error" v-if="!$v.organizationImageModel.required">An image is required</p>
             </div>
 
         </div>
@@ -162,7 +162,6 @@
     </div>
     <div>
         <button 
-        :disabled="$v.$invalid" 
         class="create" 
         @click.prevent="createOrganizer"> Save and Continue </button>
     </div>

@@ -58,9 +58,6 @@ Route::GET('/create-event/{event}/shows/gettmp', 'ShowsController@getTempStore')
 Route::GET('/create-event/{event}/shows/loadshows', 'ShowsController@loadShows');
 Route::POST('/create-event/{event}/shows', 'ShowsController@store');
 
-Route::GET('/create-event/{event}/information', 'InformationController@create');
-Route::PATCH('/create-event/{event}/information', 'InformationController@store');
-
 Route::GET('/create-event/{event}/description', 'DescriptionController@create');
 Route::PATCH('/create-event/{event}/description ', 'DescriptionController@store');
 
