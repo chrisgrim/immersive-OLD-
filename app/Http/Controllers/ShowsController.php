@@ -37,7 +37,6 @@ class ShowsController extends Controller
      */
     public function store(ShowStoreRequest $request, Event $event)
     {
-        
         $showDelete = $event->shows()->whereNotIn('date', $request->dates)->get();
 
         foreach($showDelete as $show){
@@ -53,12 +52,14 @@ class ShowsController extends Controller
                 'event_id' => $event->id
             ]);
 
-            return $request->tickets;
-            $show->tickets()->get();
-            $show->tickets()->whereNotIn('name', $request->tickets)->delete();
 
             foreach ($request->tickets as $ticket) {
+                $ticketname[] = $ticket['name'];
+            };
 
+            $show->tickets()->whereNotIn('name', $ticketname)->delete();
+
+            foreach ($request->tickets as $ticket) {
                 Ticket::updateOrCreate([
                     'show_id' => $show->id,
                     'name' => $ticket['name'],
@@ -72,7 +73,8 @@ class ShowsController extends Controller
         $lastDate = $event->shows()->orderBy('date', 'DESC')->first();
 
         $event->update([
-            'closingDate' => $lastDate->date
+            'closingDate' => $lastDate->date,
+            'show_times' => $request->showtimes,
         ]);
 
         Session::forget($event->id .'dates');   
@@ -93,9 +95,11 @@ class ShowsController extends Controller
     {
         $tickets = $event->shows()->with('tickets')->get();
         $dates =  $event->shows()->pluck('date');
+        $showTimes = $event->show_times;
         return response()->json(array(
             'dates' => $dates,
-            'tickets' => $tickets
+            'tickets' => $tickets,
+            'showTimes' => $showTimes
         ));
     }
 }

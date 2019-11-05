@@ -4406,6 +4406,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4443,7 +4463,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       eventUrl: _.has(this.event, 'slug') ? "/create-event/".concat(this.event.slug) : null,
-      dates: new Date(),
+      dates: '',
       // Get more form https://chmln.github.io/flatpickr/options/
       config: {
         minDate: "today",
@@ -4452,12 +4472,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         showMonths: 2,
         dateFormat: 'Y-m-d H:i:s'
       },
+      ticketActive: '',
+      ticketPriceActive: '',
+      showTimeActive: '',
       tickets: [this.initializeTicketObject()],
-      showTimes: [this.initializeShowtimeObject()],
+      showTimes: '',
       money: {
         decimal: '.',
         thousands: '.',
-        prefix: '$',
+        prefix: '',
         suffix: '',
         precision: 2,
         masked: false
@@ -4474,6 +4497,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }
       });
       axios.post("".concat(this.eventUrl, "/shows/tmp"), this.quickSave);
+    },
+    deleteRow: function deleteRow(index) {
+      index == 0 ? this.clearindex() : this.$delete(this.tickets, index);
+    },
+    clearindex: function clearindex() {
+      this.tickets[0].name = '';
+      this.tickets[0].ticket_price = '';
     },
     initializeShowtimeObject: function initializeShowtimeObject() {
       return {
@@ -4495,7 +4525,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.tickets.push(this.initializeTicketObject());
       axios.post("".concat(this.eventUrl, "/shows/tmp"), this.quickSave);
     },
-    getRedis: function getRedis() {
+    getSession: function getSession() {
       var _this = this;
 
       axios.get("".concat(this.eventUrl, "/shows/gettmp")).then(function (response) {
@@ -4516,9 +4546,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this2 = this;
 
       axios.get("".concat(this.eventUrl, "/shows/loadshows")).then(function (response) {
+        console.log('database');
         response.data.dates.length ? _this2.dates = response.data.dates : '';
-        response.data.tickets.length ? _this2.tickets = response.data.tickets[0].tickets : ''; // response.data.tickets !== '' ? this.tickets = response.data.tickets[0].tickets : '';
-        // response.data ? this.dates = response.data : '';
+        response.data.tickets.length ? _this2.tickets = response.data.tickets[0].tickets : '';
+        response.data.showTimes.length ? _this2.showTimes = response.data.showTimes : '';
       });
     },
     submitDates: function () {
@@ -4530,8 +4561,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                //       	this.$v.$touch();
-                // if (this.$v.$invalid) { return false }
+                this.$v.$touch();
+
+                if (!this.$v.$invalid) {
+                  _context.next = 3;
+                  break;
+                }
+
+                return _context.abrupt("return", false);
+
+              case 3:
                 axios.post("".concat(this.eventUrl, "/shows/tmp"), this.dateArray);
                 data = {
                   'dates': this.dateArray,
@@ -4545,7 +4584,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   console.log('error');
                 });
 
-              case 4:
+              case 7:
               case "end":
                 return _context.stop();
             }
@@ -4566,10 +4605,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   mounted: function mounted() {
-    this.getRedis();
+    this.getSession();
   },
   validations: {
-    selectedValue: {
+    tickets: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["required"],
+      $each: {
+        name: {
+          required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["required"]
+        },
+        ticket_price: {
+          minValue: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["minValue"])(0.01)
+        }
+      }
+    },
+    showTimes: {
       required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["required"]
     }
   }
@@ -63250,7 +63300,7 @@ var render = function() {
       [
         _c("div", { staticClass: "checklist-section" }, [
           _vm._v("\n            Dates and Tickets\n            "),
-          _vm.event.shows_id
+          _vm.event.show_times
             ? _c(
                 "svg",
                 { staticClass: "checkbox", attrs: { viewBox: "0 0 42 42" } },
@@ -65542,232 +65592,317 @@ var render = function() {
         }
       }),
       _vm._v(" "),
-      _c("div", { staticClass: "show-box" }, [
-        _vm._m(0),
+      _c("div", { staticClass: "create-field" }, [
+        _c("label", { staticClass: "area" }, [_vm._v(" Show Times ")]),
         _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "show-box-grid" },
-          _vm._l(_vm.showTimes, function(time) {
-            return _c(
-              "div",
-              [
-                _c(
-                  "vue-timepicker",
-                  {
-                    attrs: {
-                      format: "hh:mm A",
-                      "close-on-complete": "",
-                      "minute-interval": 5
-                    },
-                    model: {
-                      value: time.showTime,
-                      callback: function($$v) {
-                        _vm.$set(time, "showTime", $$v)
-                      },
-                      expression: "time.showTime"
-                    }
-                  },
-                  [_vm._v("\n                    >")]
-                )
-              ],
-              1
-            )
-          }),
-          0
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", [
-        _c(
-          "button",
-          {
-            staticClass: "add-button",
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                return _vm.addShowTimes($event)
-              }
+        _c("p", [_vm._v("Give a brief description of your show times")]),
+        _vm._v(" "),
+        _c("textarea", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.showTimes,
+              expression: "showTimes"
             }
+          ],
+          staticClass: "create-input area",
+          class: { active: _vm.showTimeActive, error: _vm.$v.showTimes.$error },
+          attrs: {
+            rows: "8",
+            placeholder: "First show is at 8:00Pm...",
+            required: "",
+            autofocus: ""
           },
-          [_vm._v(" + Show Times")]
-        )
+          domProps: { value: _vm.showTimes },
+          on: {
+            click: function($event) {
+              _vm.showTimeActive = true
+            },
+            blur: function($event) {
+              _vm.showTimeActive = false
+            },
+            input: [
+              function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.showTimes = $event.target.value
+              },
+              _vm.$v.showTimes.$touch
+            ]
+          }
+        }),
+        _vm._v(" "),
+        _vm.$v.showTimes.$error
+          ? _c("div", { staticClass: "validation-error" }, [
+              !_vm.$v.showTimes.required
+                ? _c("p", { staticClass: "error" }, [
+                    _vm._v("Must enter your show times")
+                  ])
+                : _vm._e()
+            ])
+          : _vm._e()
       ]),
       _vm._v(" "),
-      _vm._l(_vm.tickets, function(ticket) {
-        return _c("div", { staticClass: "ticket-box" }, [
-          _c("div", { staticClass: "create-field" }, [
-            _c("label", [_vm._v("Ticket Type")]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: ticket.name,
-                  expression: "ticket.name"
-                }
-              ],
-              staticClass: "create-input",
-              attrs: {
-                type: "text",
-                name: "name",
-                placeholder: "ex: General Admission, VIP, Student"
-              },
-              domProps: { value: ticket.name },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+      _c(
+        "div",
+        { staticClass: "ticket-box" },
+        _vm._l(_vm.$v.tickets.$each.$iter, function(v, index) {
+          return _c("div", { staticClass: "ticket-box-grid" }, [
+            _c("div", { staticClass: "create-field" }, [
+              _c("label", [_vm._v("Ticket Type")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: v.name.$model,
+                    expression: "v.name.$model"
                   }
-                  _vm.$set(ticket, "name", $event.target.value)
+                ],
+                staticClass: "create-input",
+                class: { active: _vm.ticketActive, error: v.name.$error },
+                attrs: {
+                  name: "name",
+                  placeholder: "ex: General Admission, VIP, Student"
+                },
+                domProps: { value: v.name.$model },
+                on: {
+                  click: function($event) {
+                    _vm.ticketActive = true
+                  },
+                  blur: function($event) {
+                    _vm.ticketActive = false
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(v.name, "$model", $event.target.value)
+                  }
                 }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "create-field" }, [
-            _c("label", [_vm._v("Ticket Price")]),
+              }),
+              _vm._v(" "),
+              v.name.$error
+                ? _c("div", { staticClass: "validation-error" }, [
+                    !v.name.required
+                      ? _c("p", { staticClass: "error" }, [
+                          _vm._v("Must Enter Ticket Name")
+                        ])
+                      : _vm._e()
+                  ])
+                : _vm._e()
+            ]),
             _vm._v(" "),
-            _vm.money.type === "checkbox"
-              ? _c(
-                  "input",
-                  _vm._b(
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: ticket.ticket_price,
-                          expression: "ticket.ticket_price"
+            _c("div", { staticClass: "create-field" }, [
+              _c("label", [_vm._v("Ticket Price")]),
+              _vm._v(" "),
+              _vm.money.type === "checkbox"
+                ? _c(
+                    "input",
+                    _vm._b(
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: v.ticket_price.$model,
+                            expression: "v.ticket_price.$model"
+                          },
+                          {
+                            name: "money",
+                            rawName: "v-money",
+                            value: v.ticket_price.$model,
+                            expression: "v.ticket_price.$model"
+                          }
+                        ],
+                        staticClass: "create-input",
+                        class: {
+                          active: _vm.ticketPriceActive,
+                          error: v.ticket_price.$error
                         },
-                        {
-                          name: "money",
-                          rawName: "v-money",
-                          value:
-                            ticket.ticket_price !== null ? _vm.money : null,
-                          expression:
-                            "ticket.ticket_price !== null ? money : null"
-                        }
-                      ],
-                      staticClass: "create-input",
-                      attrs: { placeholder: " ", type: "checkbox" },
-                      domProps: {
-                        checked: Array.isArray(ticket.ticket_price)
-                          ? _vm._i(ticket.ticket_price, null) > -1
-                          : ticket.ticket_price
-                      },
-                      on: {
-                        change: function($event) {
-                          var $$a = ticket.ticket_price,
-                            $$el = $event.target,
-                            $$c = $$el.checked ? true : false
-                          if (Array.isArray($$a)) {
-                            var $$v = null,
-                              $$i = _vm._i($$a, $$v)
-                            if ($$el.checked) {
-                              $$i < 0 &&
-                                _vm.$set(
-                                  ticket,
-                                  "ticket_price",
-                                  $$a.concat([$$v])
-                                )
+                        attrs: { placeholder: "$0.00", type: "checkbox" },
+                        domProps: {
+                          checked: Array.isArray(v.ticket_price.$model)
+                            ? _vm._i(v.ticket_price.$model, null) > -1
+                            : v.ticket_price.$model
+                        },
+                        on: {
+                          click: function($event) {
+                            _vm.ticketPriceActive = true
+                          },
+                          blur: function($event) {
+                            _vm.ticketPriceActive = false
+                          },
+                          keydown: function($event) {
+                            $event.key === "-" ? $event.preventDefault() : null
+                          },
+                          change: function($event) {
+                            var $$a = v.ticket_price.$model,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = null,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 &&
+                                  _vm.$set(
+                                    v.ticket_price,
+                                    "$model",
+                                    $$a.concat([$$v])
+                                  )
+                              } else {
+                                $$i > -1 &&
+                                  _vm.$set(
+                                    v.ticket_price,
+                                    "$model",
+                                    $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                  )
+                              }
                             } else {
-                              $$i > -1 &&
-                                _vm.$set(
-                                  ticket,
-                                  "ticket_price",
-                                  $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                                )
+                              _vm.$set(v.ticket_price, "$model", $$c)
                             }
-                          } else {
-                            _vm.$set(ticket, "ticket_price", $$c)
                           }
                         }
-                      }
-                    },
-                    "input",
-                    _vm.money,
-                    false
+                      },
+                      "input",
+                      _vm.money,
+                      false
+                    )
                   )
-                )
-              : _vm.money.type === "radio"
-              ? _c(
-                  "input",
-                  _vm._b(
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: ticket.ticket_price,
-                          expression: "ticket.ticket_price"
-                        },
-                        {
-                          name: "money",
-                          rawName: "v-money",
-                          value:
-                            ticket.ticket_price !== null ? _vm.money : null,
-                          expression:
-                            "ticket.ticket_price !== null ? money : null"
-                        }
-                      ],
-                      staticClass: "create-input",
-                      attrs: { placeholder: " ", type: "radio" },
-                      domProps: { checked: _vm._q(ticket.ticket_price, null) },
-                      on: {
-                        change: function($event) {
-                          return _vm.$set(ticket, "ticket_price", null)
-                        }
-                      }
-                    },
+                : _vm.money.type === "radio"
+                ? _c(
                     "input",
-                    _vm.money,
-                    false
-                  )
-                )
-              : _c(
-                  "input",
-                  _vm._b(
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: ticket.ticket_price,
-                          expression: "ticket.ticket_price"
-                        },
-                        {
-                          name: "money",
-                          rawName: "v-money",
-                          value:
-                            ticket.ticket_price !== null ? _vm.money : null,
-                          expression:
-                            "ticket.ticket_price !== null ? money : null"
-                        }
-                      ],
-                      staticClass: "create-input",
-                      attrs: { placeholder: " ", type: _vm.money.type },
-                      domProps: { value: ticket.ticket_price },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
+                    _vm._b(
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: v.ticket_price.$model,
+                            expression: "v.ticket_price.$model"
+                          },
+                          {
+                            name: "money",
+                            rawName: "v-money",
+                            value: v.ticket_price.$model,
+                            expression: "v.ticket_price.$model"
                           }
-                          _vm.$set(ticket, "ticket_price", $event.target.value)
+                        ],
+                        staticClass: "create-input",
+                        class: {
+                          active: _vm.ticketPriceActive,
+                          error: v.ticket_price.$error
+                        },
+                        attrs: { placeholder: "$0.00", type: "radio" },
+                        domProps: {
+                          checked: _vm._q(v.ticket_price.$model, null)
+                        },
+                        on: {
+                          click: function($event) {
+                            _vm.ticketPriceActive = true
+                          },
+                          blur: function($event) {
+                            _vm.ticketPriceActive = false
+                          },
+                          keydown: function($event) {
+                            $event.key === "-" ? $event.preventDefault() : null
+                          },
+                          change: function($event) {
+                            return _vm.$set(v.ticket_price, "$model", null)
+                          }
                         }
-                      }
-                    },
-                    "input",
-                    _vm.money,
-                    false
+                      },
+                      "input",
+                      _vm.money,
+                      false
+                    )
                   )
-                )
+                : _c(
+                    "input",
+                    _vm._b(
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: v.ticket_price.$model,
+                            expression: "v.ticket_price.$model"
+                          },
+                          {
+                            name: "money",
+                            rawName: "v-money",
+                            value: v.ticket_price.$model,
+                            expression: "v.ticket_price.$model"
+                          }
+                        ],
+                        staticClass: "create-input",
+                        class: {
+                          active: _vm.ticketPriceActive,
+                          error: v.ticket_price.$error
+                        },
+                        attrs: { placeholder: "$0.00", type: _vm.money.type },
+                        domProps: { value: v.ticket_price.$model },
+                        on: {
+                          click: function($event) {
+                            _vm.ticketPriceActive = true
+                          },
+                          blur: function($event) {
+                            _vm.ticketPriceActive = false
+                          },
+                          keydown: function($event) {
+                            $event.key === "-" ? $event.preventDefault() : null
+                          },
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              v.ticket_price,
+                              "$model",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      },
+                      "input",
+                      _vm.money,
+                      false
+                    )
+                  ),
+              _vm._v(" "),
+              v.ticket_price.$error
+                ? _c("div", { staticClass: "validation-error" }, [
+                    !v.ticket_price.minValue
+                      ? _c("p", { staticClass: "error" }, [
+                          _vm._v("Must Enter Price")
+                        ])
+                      : _vm._e()
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "delete-circle",
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.deleteRow(index)
+                    }
+                  }
+                },
+                [_vm._v("X")]
+              )
+            ])
           ])
-        ])
-      }),
+        }),
+        0
+      ),
       _vm._v(" "),
-      _c("div", [
+      _c("div", { staticClass: "add-button" }, [
         _c(
           "button",
           {
@@ -65783,46 +65918,28 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c(
-        "button",
-        {
-          on: {
-            click: function($event) {
-              $event.preventDefault()
-              return _vm.test()
+      _c("div", [
+        _c(
+          "button",
+          {
+            staticClass: "create",
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.submitDates()
+              }
             }
-          }
-        },
-        [_vm._v("Test")]
-      ),
+          },
+          [_vm._v(" Next ")]
+        )
+      ]),
       _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "create",
-          on: {
-            click: function($event) {
-              $event.preventDefault()
-              return _vm.submitDates()
-            }
-          }
-        },
-        [_vm._v(" \n            Next \n        ")]
-      )
+      _c("div")
     ],
-    2
+    1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "create-field" }, [
-      _c("label", [_vm._v("Show Times")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

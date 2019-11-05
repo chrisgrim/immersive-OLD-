@@ -29,14 +29,17 @@ h3   { font-size: 16px; font-size: 2.0rem; font-family: 'Montserrat', sans-serif
   }
 
 .ticket-box {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     box-shadow: -3px 5px 5px 1px #e8e8e899;
     padding: 2rem;
     border-radius: 5px 5px 5px 0px;
-    grid-column-gap: 2rem;
     margin-top: 15px;
     border: solid 1px #ebebeb;
+    position: relative;
+    &-grid {
+         display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        grid-column-gap: 2rem;
+    }
 }
 .show-box {
     box-shadow: -3px 5px 5px 1px #e8e8e899;

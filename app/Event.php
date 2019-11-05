@@ -18,7 +18,7 @@ class Event extends Model
     ];
     
 	protected $fillable = [
-    	'slug', 'user_id', 'category_id','organizer_id','description','name','largeImagePath','thumbImagePath','expectation_id', 'organizer_id', 'location_latlon', 'closingDate','websiteUrl','ticketUrl','location_id'
+    	'slug', 'user_id', 'category_id','organizer_id','description','name','largeImagePath','thumbImagePath','expectation_id', 'organizer_id', 'location_latlon', 'closingDate','websiteUrl','ticketUrl','location_id','show_times'
 
     ];
 

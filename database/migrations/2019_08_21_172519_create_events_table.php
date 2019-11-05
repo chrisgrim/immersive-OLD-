@@ -24,6 +24,7 @@ class CreateEventsTable extends Migration
             $table->string('name')->nullable();
             $table->longtext('description')->nullable();
             $table->string('websiteUrl')->nullable();
+            $table->string('show_times')->nullable();
             $table->string('ticketUrl')->nullable();
             $table->string('largeImagePath')->nullable();
             $table->string('thumbImagePath')->nullable();

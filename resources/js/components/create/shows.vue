@@ -7,62 +7,82 @@
             placeholder="Select date"               
             name="dates">
     	</flat-pickr>
-
         
-        <div class="show-box">
-            <div class="create-field">
-                <label>Show Times</label>
+        <div class="create-field">
+
+            <label class="area"> Show Times </label>
+            <p>Give a brief description of your show times</p>
+            <textarea 
+            v-model="showTimes" 
+            class="create-input area"
+            :class="{ active: showTimeActive,'error': $v.showTimes.$error }"
+            rows="8" 
+            placeholder="First show is at 8:00Pm..." 
+            required
+            @click="showTimeActive = true"
+            @blur="showTimeActive = false"
+            @input="$v.showTimes.$touch"
+            autofocus>
+            </textarea>
+
+            <div v-if="$v.showTimes.$error" class="validation-error">
+                <p class="error" v-if="!$v.showTimes.required">Must enter your show times</p>
             </div>
-            <div class="show-box-grid">
-                <div v-for="time in showTimes" >
-                    <vue-timepicker
-                    format="hh:mm A"
-                    close-on-complete
-                    :minute-interval="5"
-                    v-model="time.showTime">
-                    ></vue-timepicker>
+        </div>
+        <div class="ticket-box">
+            <div v-for="(v, index) in $v.tickets.$each.$iter" class="ticket-box-grid">
+                <div class="create-field">
+                    <label>Ticket Type</label>
+                    <input 
+                    class="create-input"  
+                    name="name"
+                    :class="{ active: ticketActive,'error': v.name.$error }"
+                    @click="ticketActive = true"
+                    @blur="ticketActive = false"
+                    v-model="v.name.$model" 
+                    placeholder="ex: General Admission, VIP, Student"
+                    />
+                    <div v-if="v.name.$error" class="validation-error">
+                        <p class="error" v-if="!v.name.required">Must Enter Ticket Name</p>
+                    </div>
+                </div>
+                <div class="create-field">
+                    <label>Ticket Price</label>
+                    <input
+                    class="create-input"
+                    :class="{ active: ticketPriceActive,'error': v.ticket_price.$error }"
+                    @click="ticketPriceActive = true"
+                    @blur="ticketPriceActive = false"
+                    v-model="v.ticket_price.$model"
+                    v-money="v.ticket_price.$model"
+                    @keydown="$event.key === '-' ? $event.preventDefault() : null"
+                    v-bind="money"
+                    placeholder="$0.00"
+                    />
+                    <div v-if="v.ticket_price.$error" class="validation-error">
+                        <p class="error" v-if="!v.ticket_price.minValue">Must Enter Price</p>
+                    </div>
+                    <button @click.prevent="deleteRow(index)" class="delete-circle">X</button>
                 </div>
             </div>
+            
         </div>
-        <div>
-            <button class="add-button" @click.prevent="addShowTimes"> &#43; Show Times</button>
-        </div>
-        <div v-for="ticket in tickets" class="ticket-box">
-            <div class="create-field">
-                <label>Ticket Type</label>
-                <input 
-                type="text" 
-                class="create-input"  
-                name="name" 
-                v-model="ticket.name" 
-                placeholder="ex: General Admission, VIP, Student">
-            </div>
-            <div class="create-field">
-                <label>Ticket Price</label>
-                <input
-                class="create-input" 
-                v-model="ticket.ticket_price"
-                v-money="ticket.ticket_price !== null ? money : null" 
-                v-bind="money"
-                placeholder=" "/>    
-            </div>
-        </div>
-        <div>
+        <div class="add-button">
             <button class="add-button" @click.prevent="addTickets">&#43; Ticket Types</button>
         </div>
-        <button @click.prevent="test()" >Test</button>
-        
-        <button 
-        @click.prevent="submitDates()" 
-        class="create"> 
-            Next 
-        </button> 
+        <div>
+            <button  @click.prevent="submitDates()" class="create"> Next </button> 
+        </div>
+        <div>
+</div>
+
+
     </div>
 </template>
 
 <script>
 import format from 'date-fns/format'
-import { required } from 'vuelidate/lib/validators'
+import { required, minLength, minValue } from 'vuelidate/lib/validators'
 import flatPickr from 'vue-flatpickr-component'
 import 'flatpickr/dist/flatpickr.css'
 import VueTimepicker from 'vue2-timepicker/src/vue-timepicker.vue'
@@ -101,7 +121,7 @@ export default {
     data() {
         return {
             eventUrl:_.has(this.event, 'slug') ? `/create-event/${this.event.slug}` : null,
-            dates: new Date(),
+            dates: '',
         // Get more form https://chmln.github.io/flatpickr/options/
 	        config: {
 				minDate: "today",
@@ -110,17 +130,19 @@ export default {
 				showMonths: 2,
 				dateFormat: 'Y-m-d H:i:s',        
 	        },
+            ticketActive: '',
+            ticketPriceActive: '',
+            showTimeActive: '',
             tickets: [this.initializeTicketObject()],
-            showTimes: [this.initializeShowtimeObject()],
+            showTimes: '',
             money: {
                 decimal: '.',
                 thousands: '.',
-                prefix: '$',
+                prefix: '',
                 suffix: '',
                 precision: 2,
                 masked: false
             },
-
         }
     },
 
@@ -135,6 +157,15 @@ export default {
                 },
             });
             axios.post(`${this.eventUrl}/shows/tmp`, this.quickSave);
+        },
+
+        deleteRow(index) {
+            index == 0 ? this.clearindex() : this.$delete(this.tickets, index) ;
+        },
+
+        clearindex() {
+            this.tickets[0].name = '';
+            this.tickets[0].ticket_price = '';
         },
 
         initializeShowtimeObject() {
@@ -160,7 +191,7 @@ export default {
             axios.post(`${this.eventUrl}/shows/tmp`, this.quickSave);
         },
 
-    	getRedis() {
+    	getSession() {
     		axios.get(`${this.eventUrl}/shows/gettmp`)
     		.then(response => {
                 console.log(response.data);
@@ -178,17 +209,17 @@ export default {
 
     		axios.get(`${this.eventUrl}/shows/loadshows`)
     		.then(response => {
+                console.log('database');
                 response.data.dates.length ? this.dates = response.data.dates : '';
                 response.data.tickets.length ? this.tickets = response.data.tickets[0].tickets : '';
-                // response.data.tickets !== '' ? this.tickets = response.data.tickets[0].tickets : '';
-    			// response.data ? this.dates = response.data : '';
+                response.data.showTimes.length ? this.showTimes = response.data.showTimes : '';
             });
     	},
 
         async submitDates() {
 
-   //       	this.$v.$touch();
-			// if (this.$v.$invalid) { return false }
+         	this.$v.$touch();
+			if (this.$v.$invalid) { return false }
 
 			axios.post(`${this.eventUrl}/shows/tmp`, this.dateArray);
 
@@ -216,13 +247,24 @@ export default {
 	},
 
     mounted() {
-    	this.getRedis();
+    	this.getSession();
     },
 
     validations: {
-		selectedValue: {
-			required,
-		},
+        tickets: {
+            required,
+            $each: {
+                name: {
+                    required,
+                },
+                ticket_price: {
+                    minValue: minValue(0.01),
+                },
+            }
+        },
+        showTimes: {
+            required
+        },
 	},
 }  
 </script>

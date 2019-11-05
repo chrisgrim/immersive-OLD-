@@ -23,7 +23,7 @@
         <a :href="'/create-event/'+ this.event.slug +'/shows'">
         <div class="checklist-section">
             Dates and Tickets
-            <svg class="checkbox" v-if="event.shows_id" viewBox="0 0 42 42"><path d="m19.1 25.2 4.7 6.2 12.1-11.2"></path></svg>
+            <svg class="checkbox" v-if="event.show_times" viewBox="0 0 42 42"><path d="m19.1 25.2 4.7 6.2 12.1-11.2"></path></svg>
         </div>
         </a>
 

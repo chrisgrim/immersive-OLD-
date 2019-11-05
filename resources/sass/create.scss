@@ -181,15 +181,28 @@ button.create[disabled]{
 }
 button.add-button {
     border: none;
-    box-shadow: -3px 5px 5px 1px #cecece99;
-    padding: 1.3rem 2rem;
-    border-radius: 0px 0px 5px 5px;
-    margin-top: -1px;
-    color: #f2595b;
     font-size: 1.5rem;
     font-weight: 600;
+    color: #f2595b;
+}
+div.add-button {
+    box-shadow: -3px 5px 5px 1px #cecece99;
+    padding: 1.3rem 2rem;
+    border-radius: 0px 0px 50px 5px;
+    margin-top: -1px;
+    display: inline-block;
+    z-index: 1;
     border: solid 1px #ebebeb;
     border-top: none;
+}
+button.delete-circle {
+    border-radius: 100px;
+    padding: 0.7rem 1rem;
+    border: solid black 1px;
+    background: white;
+    margin-right: -4rem;
+    margin-top: .6rem;
+    float: right;
 }
 
 
