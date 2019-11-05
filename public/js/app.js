@@ -4443,12 +4443,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       eventUrl: _.has(this.event, 'slug') ? "/create-event/".concat(this.event.slug) : null,
-      dates: '',
-      showTimes: [{
-        hh: "00",
-        mm: "00",
-        A: "PM"
-      }],
+      dates: new Date(),
       // Get more form https://chmln.github.io/flatpickr/options/
       config: {
         minDate: "today",
@@ -4457,10 +4452,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         showMonths: 2,
         dateFormat: 'Y-m-d H:i:s'
       },
-      tickets: [{
-        name: '',
-        ticket_price: '0'
-      }],
+      tickets: [this.initializeTicketObject()],
+      showTimes: [this.initializeShowtimeObject()],
       money: {
         decimal: '.',
         thousands: '.',
@@ -4482,8 +4475,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       });
       axios.post("".concat(this.eventUrl, "/shows/tmp"), this.quickSave);
     },
+    initializeShowtimeObject: function initializeShowtimeObject() {
+      return {
+        hh: "00",
+        mm: "00",
+        A: "PM"
+      };
+    },
+    initializeTicketObject: function initializeTicketObject() {
+      return {
+        id: '',
+        name: '',
+        show_id: '',
+        ticket_amount: '',
+        ticket_price: ''
+      };
+    },
     addTickets: function addTickets() {
-      this.tickets.push({});
+      this.tickets.push(this.initializeTicketObject());
       axios.post("".concat(this.eventUrl, "/shows/tmp"), this.quickSave);
     },
     getRedis: function getRedis() {
@@ -4500,27 +4509,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           _this.getDatabase();
         }
 
-        ; // response.data.dates ? this.dates = response.data.dates : this.getDatabase();
-        //          response.data.showTimes ? this.showTimes = response.data.showTimes : '';
-        //          response.data.tickets ? this.tickets = response.data.tickets : '';
-      });
-    },
-    test: function test() {
-      var _this2 = this;
-
-      axios.get("".concat(this.eventUrl, "/shows/loadshows")).then(function (response) {
-        console.log(response.data.tickets[0].tickets);
-        _this2.dates = response.data.dates;
-        _this2.tickets = response.data.tickets[0].tickets;
+        ;
       });
     },
     getDatabase: function getDatabase() {
-      var _this3 = this;
+      var _this2 = this;
 
       axios.get("".concat(this.eventUrl, "/shows/loadshows")).then(function (response) {
-        console.log(response.data);
-        _this3.dates = response.data.dates;
-        _this3.tickets = response.data.tickets[0].tickets; // response.data ? this.dates = response.data : '';
+        response.data.dates.length ? _this2.dates = response.data.dates : '';
+        response.data.tickets.length ? _this2.tickets = response.data.tickets[0].tickets : ''; // response.data.tickets !== '' ? this.tickets = response.data.tickets[0].tickets : '';
+        // response.data ? this.dates = response.data : '';
       });
     },
     submitDates: function () {

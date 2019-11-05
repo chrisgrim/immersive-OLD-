@@ -53,7 +53,8 @@ class ShowsController extends Controller
                 'event_id' => $event->id
             ]);
 
-
+            return $request->tickets;
+            $show->tickets()->get();
             $show->tickets()->whereNotIn('name', $request->tickets)->delete();
 
             foreach ($request->tickets as $ticket) {

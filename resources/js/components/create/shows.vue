@@ -101,11 +101,7 @@ export default {
     data() {
         return {
             eventUrl:_.has(this.event, 'slug') ? `/create-event/${this.event.slug}` : null,
-            dates: '',
-
-            showTimes: [
-                { hh: "00", mm: "00", A: "PM", },
-            ],
+            dates: new Date(),
         // Get more form https://chmln.github.io/flatpickr/options/
 	        config: {
 				minDate: "today",
@@ -114,9 +110,8 @@ export default {
 				showMonths: 2,
 				dateFormat: 'Y-m-d H:i:s',        
 	        },
-            tickets: [
-                { name: '', ticket_price: '0' },
-            ],
+            tickets: [this.initializeTicketObject()],
+            showTimes: [this.initializeShowtimeObject()],
             money: {
                 decimal: '.',
                 thousands: '.',
@@ -142,8 +137,26 @@ export default {
             axios.post(`${this.eventUrl}/shows/tmp`, this.quickSave);
         },
 
+        initializeShowtimeObject() {
+            return {
+                hh: "00",
+                mm: "00",
+                A: "PM",
+            }
+        },
+
+        initializeTicketObject() {
+            return {
+                id: '',
+                name: '',
+                show_id: '',
+                ticket_amount: '',
+                ticket_price: '',
+            }
+        },
+
         addTickets() {
-            this.tickets.push({});
+            this.tickets.push(this.initializeTicketObject());
             axios.post(`${this.eventUrl}/shows/tmp`, this.quickSave);
         },
 
@@ -158,29 +171,16 @@ export default {
                 } else {
                     this.getDatabase();
                 };
-    			// response.data.dates ? this.dates = response.data.dates : this.getDatabase();
-       //          response.data.showTimes ? this.showTimes = response.data.showTimes : '';
-       //          response.data.tickets ? this.tickets = response.data.tickets : '';
             });
     	},
-
-        test() {
-            axios.get(`${this.eventUrl}/shows/loadshows`)
-            .then(response => {
-                console.log(response.data.tickets[0].tickets);
-                this.dates = response.data.dates;
-                this.tickets = response.data.tickets[0].tickets
-
-            });
-        },
 
     	getDatabase() {
 
     		axios.get(`${this.eventUrl}/shows/loadshows`)
     		.then(response => {
-                console.log(response.data);
-                this.dates = response.data.dates;
-                this.tickets = response.data.tickets[0].tickets
+                response.data.dates.length ? this.dates = response.data.dates : '';
+                response.data.tickets.length ? this.tickets = response.data.tickets[0].tickets : '';
+                // response.data.tickets !== '' ? this.tickets = response.data.tickets[0].tickets : '';
     			// response.data ? this.dates = response.data : '';
             });
     	},
