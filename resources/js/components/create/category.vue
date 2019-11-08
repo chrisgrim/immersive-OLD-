@@ -18,9 +18,9 @@
 	        :options="categoryOptions" 
 	        open-direction="bottom"
 	        @input="$v.selectedCategory.$touch"
-			:class="{ active: catActive,'error': $v.selectedCategory.$error}"
-			@click="catActive = true"
-	        @blur="catActive = false" 
+			:class="{ active: categoryActive,'error': $v.selectedCategory.$error}"
+			@click="categoryActive = true"
+	        @blur="categoryActive = false" 
 	        >
 	            <template slot="option" slot-scope="props">
 	                <img class="option__image" :src="props.option.categoryImagePath ? `/storage/${props.option.categoryImagePath}` : defaultImage"
@@ -34,7 +34,7 @@
 	        <input type="hidden" name="category" v-model="selectedCategory">
 
 	        <div v-if="$v.selectedCategory.$error" class="validation-error">
-				<p class="error" v-if="!$v.selectedCategory.required">Please select at least one Category</p>
+				<p class="error" v-if="!$v.selectedCategory.required">Please select your events category</p>
 			</div>
 	    </div>
 	    <img v-if="this.selectedCategory" class="option__image" :src="'/storage/' + selectedCategory.imagePath " alt="defaultImage">
@@ -43,7 +43,7 @@
 	    </div>
 
 	    <div class="">
-	        <button :disabled="$v.$invalid" @click.prevent="submitCategory()" class="create"> Next </button>
+	        <button @click.prevent="submitCategory()" class="create"> Next </button>
 	    </div>
     </div>
 </template>
@@ -69,24 +69,20 @@
 				selectedCategory: this.event.category,
 				eventUrl:_.has(this.event, 'slug') ? `/create-event/${this.event.slug}` : null,
 				categoryOptions: this.categories,
-				catActive: false,
+				categoryActive: false,
 			}
 		},
 
 		methods: {
 
+			//checks for validation
+			//submit to database
 			async submitCategory() {
-				if (this.$v.$invalid) { return false; }
+				this.$v.$touch(); 
+				if (this.$v.$invalid) { return false };
 				
 				axios.patch(`${this.eventUrl}/category`, this.selectedCategory)
-				.then(response => {
-                    // all is well. move on to the next page
-                    console.log(this.selectedCategory);
-                    // window.location.href = `${this.eventUrl}/organizer`;
-                })
-                .catch(errorResponse => {
-                   
-                });
+				.then(response => { window.location.href = `${this.eventUrl}/organizer` });
 			}
 		},
 

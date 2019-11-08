@@ -2,7 +2,7 @@
 
 @section('created')
 
-<create-organizer :event="{{$event}}" :organizers="{{$organizers}}" :user="{{auth()->user()}}" />
+<create-organizer :event="{{$event}}" :user="{{auth()->user()}}" />
 
    
 @endsection

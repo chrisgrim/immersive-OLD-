@@ -101,14 +101,17 @@ export default {
     },
 
     computed: {
+
+        // return this.dates.length > 10 ? this.dates.split(",") : '';
         dateArray() {
-        	// return this.dates.length > 10 ? this.dates.split(",") : '';
         	if(!Array.isArray(this.dates) && this.dates.includes(",")) {
         		return this.dates.split(",");
         	} else {
         		return ''
         	}
         },
+
+        //creates data file for quick sessions save
         quickSave() {
             return {
                 'dates': this.dateArray,
@@ -122,7 +125,6 @@ export default {
         return {
             eventUrl:_.has(this.event, 'slug') ? `/create-event/${this.event.slug}` : null,
             dates: '',
-        // Get more form https://chmln.github.io/flatpickr/options/
 	        config: {
 				minDate: "today",
 				mode: "multiple",
@@ -148,21 +150,12 @@ export default {
 
     methods: {
 
-        addShowTimes() {
-            this.showTimes.push({
-                showTime: {
-                    hh: "00",
-                    mm: "00",
-                    A: "PM",
-                },
-            });
-            axios.post(`${this.eventUrl}/shows/tmp`, this.quickSave);
-        },
-
+        //deletes a ticket row or clears the first one
         deleteRow(index) {
             index == 0 ? this.clearindex() : this.$delete(this.tickets, index) ;
         },
 
+        //clears the first ticket row if there are no other ones to delete
         clearindex() {
             this.tickets[0].name = '';
             this.tickets[0].ticket_price = '';
@@ -176,6 +169,13 @@ export default {
             }
         },
 
+        // when user clicks new ticket this creates a new ticket object and updates the session
+        addTickets() {
+            this.tickets.push(this.initializeTicketObject());
+            axios.post(`${this.eventUrl}/shows/tmp`, this.quickSave);
+        },
+
+        //creates a ticket Object
         initializeTicketObject() {
             return {
                 id: '',
@@ -186,11 +186,7 @@ export default {
             }
         },
 
-        addTickets() {
-            this.tickets.push(this.initializeTicketObject());
-            axios.post(`${this.eventUrl}/shows/tmp`, this.quickSave);
-        },
-
+        // On page load this checks to see if there is a session to load from
     	getSession() {
     		axios.get(`${this.eventUrl}/shows/gettmp`)
     		.then(response => {
@@ -205,6 +201,7 @@ export default {
             });
     	},
 
+        // If there is no saved session then it tries to load from the database
     	getDatabase() {
 
     		axios.get(`${this.eventUrl}/shows/loadshows`)
@@ -216,31 +213,24 @@ export default {
             });
     	},
 
+        //Submits the users dates and tickets to the database
         async submitDates() {
-
          	this.$v.$touch();
 			if (this.$v.$invalid) { return false }
-
-			axios.post(`${this.eventUrl}/shows/tmp`, this.dateArray);
 
             let data = {
                 'dates': this.dateArray,
                 'showtimes': this.showTimes,
                 'tickets': this.tickets
             };
-            console.log(data);
             axios.post(`${this.eventUrl}/shows`, data)
-            .then(response => {
-                   console.log('submitted');
-            })
-            .catch(errorResponse => { 
-                   console.log('error');
-            });
+            .then(response => { window.location.href = `${this.eventUrl}/description`; });
         },
 
     },
 
     watch: {
+        //fires to session everytime user makes a change
 		dates: function() {
 		  	axios.post(`${this.eventUrl}/shows/tmp`, this.quickSave);
 		},
@@ -265,6 +255,9 @@ export default {
         showTimes: {
             required
         },
+        dates: {
+            
+        }
 	},
 }  
 </script>

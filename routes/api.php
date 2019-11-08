@@ -22,9 +22,11 @@ Route::GET('events', 'EventController@get');
 //Users entered data into the navbar
 Route::GET('search/navbar/content', 'SearchController@searchNav');
 
-//Add Dates to Show Controller
+//On Organizer Create Page this searches all organizers and returns based on users selection
+Route::GET('organizer/search', 'SearchController@searchOrganizer');
 
-Route::POST('location/search', 'SearchController@searchLocation');
+
+
 
 Route::GET('searchedEvents', 'SearchController@get');
 
@@ -34,7 +36,6 @@ Route::POST('index/filter', 'SearchController@filterIndex');
 
 Route::GET('search/navbar/content', 'SearchController@searchNav');
 
-Route::GET('organizer/search', 'SearchController@searchOrganizer');
 
 //browser geocache
 Route::GET('geo/cache', 'ProfilesController@storeUserGeolocation');

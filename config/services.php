@@ -34,8 +34,4 @@ return [
         'secret' => env('SPARKPOST_SECRET'),
     ],
 
-    'googlelocation' => [
-        'key' => env('GOOGLE_LOC_KEY'),
-    ]
-
 ];

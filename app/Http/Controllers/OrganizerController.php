@@ -9,6 +9,7 @@ use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\OrganizerStoreRequest;
 use App\Http\Requests\OrganizerUpdateRequest;
+use Redirect;
 
 class OrganizerController extends Controller
 {
@@ -27,56 +28,35 @@ class OrganizerController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new resource and Eager load organizer with event and get organizers
      *
      * @return \Illuminate\Http\Response
      */
     public function create(Event $event)
     {
-        //eager load organizer with $event variable
         $event->load('organizer');
-        
-        //load all the organizer into the $organizers variable
-        $organizers = Organizer::limit(30)->get();
-        
-        return view('create.organizer',compact('event','organizers'));
+        return view('create.organizer',compact('event'));
     }
 
     /**
      * Store a newly created resource in storage.
+     Create a new organizer model and store details.
+     Create details for image naming then store it
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(OrganizerStoreRequest $request, Event $event)
     {
+        $organizer = Organizer::Create($request->except(['imagePath', 'user_id']) + ['user_id' => auth()->id()]);
 
-        $organizer = Organizer::Create($request->except(['imagePath']) + ['user_id' => auth()->id()]);
-
-        if ($request->hasFile('imagePath')) {
-            
-            //Create File Info
-            $extension = $request->file('imagePath')->getClientOriginalExtension();
-            $filename= $request->slug . '-' . 'organization' . '_' . rand(1,50000) .'.'.$extension;
-            $path = "organizer-images/$filename";
-
-
-            //Store File
-            $request->file('imagePath')->storeAs('/public/organizer-images', $filename);
-
-            //Resize File   
-            Image::make(storage_path()."/app/public/organizer-images/$filename")->fit(1200, 800)->save(storage_path("/app/public/$path"));
-
-            //Update Image Paths
-            $organizer->update([
-                    'imagePath' => $path
-            ]);
- 
-        }
-
-        $event->update([
-            'organizer_id' => $organizer->id
-        ]);
+        $extension = $request->file('imagePath')->getClientOriginalExtension();
+        $filename= $request->slug . '-' . 'organization' . '_' . rand(1,50000) .'.'.$extension;
+        $path = "organizer-images/$filename";
+        $request->file('imagePath')->storeAs('/public/organizer-images', $filename);
+        Image::make(storage_path()."/app/public/organizer-images/$filename")->fit(1200, 800)->save(storage_path("/app/public/$path"));
+        $organizer->update([ 'imagePath' => $path ]);
+        $event->update([ 'organizer_id' => $organizer->id ]);
         
     }
 
@@ -103,7 +83,10 @@ class OrganizerController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified resource in storage. 
+        Update event with the correct organization.
+        First Check to make sure user can edit the organizer. If not, then redirect back with error.
+
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Organizer  $organizer
@@ -111,33 +94,23 @@ class OrganizerController extends Controller
      */
     public function update(OrganizerUpdateRequest $request, Event $event, Organizer $organizer)
     {
+        $event->update(['organizer_id' => $organizer->id]);
 
-
+        if ($organizer->user_id !== auth()->id()) { return response()->json(array(['Not_Owner' => 'Organization was not changed as you were not the owner'])); };
 
         $organizer->update($request->except(['imagePath']));
-
         
         if ($request->hasFile('imagePath')) {
-            
+
             Storage::delete('public/' . $organizer->imagePath);
-            //Create File Info
+
             $extension = $request->file('imagePath')->getClientOriginalExtension();
             $filename= $request->slug . '-' . 'organization' . '_' . rand(1,50000) .'.'.$extension;
             $path = "organizer-images/$filename";
-
-            //Store File
-            $request->file('imagePath')->storeAs('/public/organizer-images', $filename);
-
-            //Resize File   
+            $request->file('imagePath')->storeAs('/public/organizer-images', $filename); 
             Image::make(storage_path()."/app/public/organizer-images/$filename")->fit(1200, 800)->save(storage_path("/app/public/$path"));
-
-            //Update Image Paths
-            $organizer->update([
-                    'imagePath' => $path
-            ]);
+            $organizer->update([ 'imagePath' => $path ]);
         }
-
-        $event->update(['organizer_id' => $organizer->id]);
 
        
     }

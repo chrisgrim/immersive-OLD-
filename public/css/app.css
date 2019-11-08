@@ -814,10 +814,6 @@ button.create[disabled] {
   width: 40%;
 }
 
-.organization-form .multiselect {
-  padding-top: 3rem;
-}
-
 .organization-form .multiselect .option__desc,
 .organization-form .multiselect .option__image {
   display: inline-block;
@@ -898,10 +894,6 @@ button.delete-circle {
 }
 
 /*------------------------------Image --------------*/
-
-.organization-form .multiselect {
-  padding-top: 3rem;
-}
 
 .organization-form .multiselect .option__desc,
 .organization-form .multiselect .option__image {

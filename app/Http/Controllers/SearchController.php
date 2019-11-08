@@ -64,25 +64,13 @@ class SearchController extends Controller
 
 	public function searchOrganizer(Request $request)
     {
-
-        $ajaxOrganizers = Organizer::search($request->keywords)
+        if($request->keywords) {
+            $ajaxOrganizers = Organizer::search($request->keywords)
 		    ->rule(OrganizerSearchRule::class)
 		    ->get();
+        } else { $ajaxOrganizers = null; };
 
-        // return $ajaxOrganizers;
         return response()->json($ajaxOrganizers);
-    }
-
-    public function searchLocation(Request $request)
-    {   
-        // dd([floatval($request->longitude), floatval($request->latitude)]);
-
-
-        $radiusResults = Event::search('*')
-            ->whereGeoDistance('location_latlon', [floatval($request->longitude), floatval($request->latitude)], '100km')
-            ->get();
-
-        return response()->json($radiusResults);
     }
 
     public function searchNav(Request $request)

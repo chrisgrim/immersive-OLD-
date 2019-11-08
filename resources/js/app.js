@@ -14,7 +14,6 @@ import * as VueGoogleMaps from "vue2-google-maps";
 import vuelidateErrorExtractor, { templates } from "vuelidate-error-extractor";
 import { Icon }  from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import VCalendar from 'v-calendar';
 import VueRouter from 'vue-router';
 
 
@@ -29,16 +28,11 @@ const router = new VueRouter({
 
 Vue.use(VueGoogleMaps, {
   load: {
-    key: "AIzaSyDi5THKxUVFMVrEMfl-2D03CCXNTkSavmI",
+    key: process.env.MIX_GOOGLE_LOC_KEY,
     libraries: "places" // necessary for places input
   }
 });
 Vue.use(Vuelidate);
-
-const datepickerOptions = {}
-Vue.use(VCalendar, {
-  firstDayOfWeek: 2,
-});
 
 
 require('./bootstrap');
@@ -77,7 +71,6 @@ Vue.component('favorite', require('./components/layouts/favorite.vue').default);
 
 
 Vue.component('event-create-checklist', require('./components/create/checklist.vue').default);
-Vue.component('create-location', require('./components/create/location.vue').default);
 Vue.component('create-location-google', require('./components/create/location-google.vue').default);
 Vue.component('create-category', require('./components/create/category.vue').default);
 Vue.component('create-organizer', require('./components/create/organizer.vue').default);

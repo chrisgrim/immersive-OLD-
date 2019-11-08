@@ -16,10 +16,13 @@
 					open-direction="bottom"
 					:searchable="false" 
 					:allow-empty="false"
-					:class="{ active: hiddenActive}"
+					:class="{ active: hiddenActive, 'error': $v.location.hiddenLocationToggle.$error}"
 					@click="hiddenActive = true"
 			        @blur="hiddenActive = false"
 					/>
+					<div v-if="$v.location.hiddenLocationToggle.$error" class="validation-error">
+    					<p class="error" v-if="!$v.location.hiddenLocationToggle.required">Is the Location Hidden?</p>
+    				</div>
 
 			    </div>
 		    	<div class="create-field" v-if="showHiddenLocation">
@@ -29,7 +32,7 @@
 		            v-model.trim="location.hiddenLocation" 
 		            class="create-input area" 
 		            rows="8" 
-		            :class="{ active: notifiedActive }"
+		            :class="{ active: notifiedActive}"
 		            required 
 		            autofocus
 		 			placeholder=" "
@@ -48,11 +51,14 @@
 						@place_changed="setPlace"
 						class="create-input"
 						autocomplete="false"
-						:class="{ active: locationActive }"
+						:class="{ active: locationActive, 'error': $v.location.latitude.$error }"
 						:placeholder="locationPlaceholder"
 						@click="locationActive = true"
 			        	@blur="locationActive = false">
 						</gmap-autocomplete>
+						<div v-if="$v.location.latitude.$error" class="validation-error">
+							<p class="error" v-if="!$v.location.latitude.required">Please select from the list of locations</p>
+						</div>
 
 				</div>
 			</div>
@@ -109,7 +115,7 @@
 <script>
 	import Multiselect from 'vue-multiselect'
 	import _ from 'lodash'
-	import { required, minLength } from 'vuelidate/lib/validators'
+	import { required, minLength, requiredIf } from 'vuelidate/lib/validators'
 	import {LMap, LTileLayer, LMarker} from 'vue2-leaflet'
 
 
@@ -144,16 +150,13 @@
 				selectedRegions: this.pivots,
 				locationOptions: [ 'Yes', 'No' ],
 				eventUrl:_.has(this.event, 'slug') ? `/create-event/${this.event.slug}` : null,
-				name: '',
-				locationActive: false,
-				notifiedActive: false,
-				hiddenActive: false,
-				places: [],
 				zoom:14,
 				center: '',
 				url:'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
 				attribution:'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-				searchedLocation: {},
+				locationActive: false,
+				notifiedActive: false,
+				hiddenActive: false,
 			}
 		},
 
@@ -172,15 +175,54 @@
 				}
 			},
 
+			//Checks if database has fields and inputs them into Vue forms and adds lat and long to map
 			updateEventFields(input) {
-				//Checks if database has fields and inputs them into Vue forms
                 if ((input !== null) && (typeof input === "object") && (input.id !== null)) {
                     this.location = _.pick(input, _.intersection( _.keys(this.location), _.keys(input) ));
+                };
+				this.event.location.hiddenLocationToggle ? this.center = L.latLng(this.event.location.latitude, this.event.location.longitude) : '';
+            },
+			
+			//checks for validations
+			//creates data variable called data and adds location info to the variable
+			//adds regions to data variable
+			async submitLocation() {
+
+				this.$v.$touch(); 
+				if (this.$v.$invalid) { return false };
+                let data = this.location;
+           		data.Region = this.selectedRegions.map(a => a.id);
+
+				axios.patch(`${this.eventUrl}/location`, data)
+				.then(response => { window.location.href = `${this.eventUrl}/category`; })
+                .catch(errorResponse => { this.validationErrors = errorResponse.response.data.errors; });
+			},
+
+			// adds lat and lon to leaflet map using this.center
+			// sends google map loc and lat info to updateLats
+			//adds address info to location object
+
+			setPlace(place) {
+				this.center = L.latLng(place.geometry.location.lat(), place.geometry.location.lng());
+				this.updateLats(place);
+				this.getAddressObject(place.address_components);
+			},
+
+			// adds the google 
+			updateLats(e) {
+				this.location.latitude = e.geometry.location.lat();
+                this.location.longitude = e.geometry.location.lng();
+			},
+
+			//after google fields search this inputs data into vue fields
+			updateLocationFields(input) {
+                if ((input !== null) && (typeof input === "object") && (input.id !== null)) {
+                    this.location = _.extend( this.location, input);
                 }
             },
 
+			// Gets data from Google Maps and inputs into Vue forms correctly
 			getAddressObject(address_components) {
-				// Gets data from Google Maps and inputs into Vue forms correctly
 				var ShouldBeComponent = {
 					home: ["street_number"],
 					postal_code: ["postal_code"],
@@ -202,7 +244,6 @@
 					],
 					country: ["country"]
 				};
-
 				var address = {
 					home: "",
 					postal_code: "",
@@ -211,7 +252,6 @@
 					city: "",
 					country: ""
 				};
-
 				address_components.forEach(component => {
 					for (var shouldBe in ShouldBeComponent) {
 						if (ShouldBeComponent[shouldBe].indexOf(component.types[0]) !== -1) {
@@ -223,95 +263,13 @@
 						}
 					}
 				});
-
 				this.updateLocationFields(address);
 			},
-
-			updateLocationFields(input) {
-				//after google fields search this inputs data into vue fields
-                if ((input !== null) && (typeof input === "object") && (input.id !== null)) {
-                    this.location = _.extend( this.location, input);
-                }
-            },
-			
-			async searchLocation() {
-
-				// this.$v.$touch(); 
-				// if (this.$v.$invalid) { return false; }
-
-				axios.post('/api/location/search', this.searchedLocation)
-				.then(response => {
-                    console.log(response)
-                })
-                .catch(errorResponse => {
-                    // show if there are server side validation errors
-                    this.validationErrors = errorResponse.response.data.errors
-                    console.log(errorResponse.response.data.errors)
-
-             	});
-
-
-			},
-
-			async submitLocation() {
-
-				// this.$v.$touch(); 
-				// if (this.$v.$invalid) { return false; }
-
-				//creates data variagle and adds location info to the variable
-                let data = this.location;
-
-				// Gets selected regions and adds them to data variable
-           		data.Region = this.selectedRegions.map(a => a.id);
-
- 				
- 				//Send info to the database
-				axios.patch(`${this.eventUrl}/location`, data)
-				.then(response => {
-                    console.log(response)
-                })
-                .catch(errorResponse => {
-                    // show if there are server side validation errors
-                    this.validationErrors = errorResponse.response.data.errors
-                    console.log(errorResponse.response.data.errors)
-
-             	});
-
-
-			},
-
-			setPlace(place) {
-
-				// adds lat and lon to leaflet map
-				this.center = L.latLng(place.geometry.location.lat(), place.geometry.location.lng());
-
-				// adds lat and lon to location object
-				this.updateLats(place);
-
-				//adds address info to location object
-				this.getAddressObject(place.address_components);
-				
-			},
-			updateLats(e) {
-				this.searchedLocation.latitude = this.location.latitude = e.geometry.location.lat();
-                this.searchedLocation.longitude = this.location.longitude = e.geometry.location.lng();
-			}
-
 		},
 	
-
+		// on pageload this updates the fields with database information (if there is any) and then updates 
 		mounted() {
-
-			//Checks for database information and updates Vue fields
 			this.updateEventFields(this.event.location);
-
-			// Checks if has location, if it does then opens map and centers the map on the location.
-			if (this.event.location.hiddenLocationToggle) {
-				this.center = L.latLng(this.event.location.latitude, this.event.location.longitude);
-			}
-
-
-
 		},
 
 		validations: {
@@ -319,12 +277,12 @@
 				required
 			},
 			location: {
-			   	city: {
-			       required
-			   	},
-			   	state: {
-			   		required,
-			   	}
+				hiddenLocationToggle: {
+					required
+				},
+			 	latitude: {
+			 		required
+			 	},
 			},
 		},
 			

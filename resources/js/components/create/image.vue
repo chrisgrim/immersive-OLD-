@@ -85,7 +85,7 @@ export default {
         async createImage() {
 
             //checks if all the validatoon rules have been followed and returns false if they haven't
-            if (this.$v.$invalid) { return false }
+            if (this.$v.$invalid) { return false };
             //create a new empty Form Data
             let data = new FormData();
 
