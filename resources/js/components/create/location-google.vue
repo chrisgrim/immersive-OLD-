@@ -6,6 +6,11 @@
     	<div class="create-form locations">
 			<div class="location-section-1">
 			    <div class="create-field">
+					<div id="cover">
+						<input v-model="location.hiddenLocationToggle" type="checkbox" id="checkbox">
+						<div id="bar"></div>
+						<div id="knob">Yes</div>
+					</div>
 
 					<label>Is The Location Hidden?</label>
 					<multiselect 
@@ -152,6 +157,7 @@
 				eventUrl:_.has(this.event, 'slug') ? `/create-event/${this.event.slug}` : null,
 				zoom:14,
 				center: '',
+				locToggle: true,
 				url:'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
 				attribution:'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
 				locationActive: false,
@@ -187,14 +193,15 @@
 			//creates data variable called data and adds location info to the variable
 			//adds regions to data variable
 			async submitLocation() {
-
 				this.$v.$touch(); 
 				if (this.$v.$invalid) { return false };
                 let data = this.location;
            		data.Region = this.selectedRegions.map(a => a.id);
 
 				axios.patch(`${this.eventUrl}/location`, data)
-				.then(response => { window.location.href = `${this.eventUrl}/category`; })
+				.then(response => { 					
+					window.location.href = `${this.eventUrl}/category`; 
+				})
                 .catch(errorResponse => { this.validationErrors = errorResponse.response.data.errors; });
 			},
 

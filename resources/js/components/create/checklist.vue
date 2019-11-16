@@ -3,7 +3,7 @@
         <a :href="'/create-event/'+ this.event.slug +'/location'">
         <div class="checklist-section" >
             Location 
-                <svg class="checkbox" v-if="event.location_id" viewBox="0 0 42 42"><path d="m19.1 25.2 4.7 6.2 12.1-11.2"></path></svg>
+                <svg class="checkbox" v-if="event.location_latlon" viewBox="0 0 42 42"><path d="m19.1 25.2 4.7 6.2 12.1-11.2"></path></svg>
         </div>
         </a>
         <a :href="'/create-event/'+ this.event.slug +'/category'">

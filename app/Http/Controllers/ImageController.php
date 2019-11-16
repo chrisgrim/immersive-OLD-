@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Event;
+use App\EventImage;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManagerStatic as Image;
 
@@ -11,6 +12,7 @@ class ImageController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('can:update,event');
     }
     /**
      * Display a listing of the resource.
@@ -39,27 +41,9 @@ class ImageController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, Event $event)
-    {
+    {   
         if ($request->hasFile('image')) {
-            
-            //Create File Info
-            $title = $event->slug;
-            $extension = $request->file('image')->getClientOriginalExtension();
-            $filename= $title.'.'.$extension;
-            $imagePath = "event-large-images/$filename";
-            $thumbnailPath = "event-thumb-images/thumb-$filename";
-
-            //Store File
-            $request->file('image')->storeAs('/public/event-large-images', $filename);
-
-            //Resize File   
-            Image::make(storage_path()."/app/public/event-large-images/$filename")->fit(1200, 800)->save(storage_path("/app/public/$imagePath"))->fit(600, 400)->save(storage_path("/app/public/$thumbnailPath"));
-
-            //Update Image Paths
-            $event->update([
-                    'largeImagePath' => $imagePath,
-                    'thumbImagePath' => $thumbnailPath,
-            ]);
+            EventImage::saveFile($request, $event);
         }
     }
 

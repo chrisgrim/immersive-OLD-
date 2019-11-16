@@ -1,12 +1,17 @@
 <template>
     <div>
-       <flat-pickr
-            v-model="dates"
-            :config="config"                                                  
-            class="form-control" 
-            placeholder="Select date"               
-            name="dates">
-    	</flat-pickr>
+        <div>
+            <flat-pickr
+                v-model="dates"
+                :config="config"                                                  
+                class="form-control"
+                placeholder="Select date"               
+                name="dates">
+            </flat-pickr>
+        </div>
+        <div v-if="$v.dates.$error" class="validation-error">
+            <p class="error" v-if="!$v.dates.required">Must add at least 1 show date</p>
+        </div>
         
         <div class="create-field">
 
@@ -209,7 +214,7 @@ export default {
                 console.log('database');
                 response.data.dates.length ? this.dates = response.data.dates : '';
                 response.data.tickets.length ? this.tickets = response.data.tickets[0].tickets : '';
-                response.data.showTimes.length ? this.showTimes = response.data.showTimes : '';
+                response.data.showTimes ? this.showTimes = response.data.showTimes : '';
             });
     	},
 
@@ -253,11 +258,11 @@ export default {
             }
         },
         showTimes: {
-            required
+            required,
         },
         dates: {
-            
-        }
+            required,
+        },
 	},
 }  
 </script>

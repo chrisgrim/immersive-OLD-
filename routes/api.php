@@ -25,7 +25,8 @@ Route::GET('search/navbar/content', 'SearchController@searchNav');
 //On Organizer Create Page this searches all organizers and returns based on users selection
 Route::GET('organizer/search', 'SearchController@searchOrganizer');
 
-
+//On Description Page this searches all genres and returns based on users selection
+Route::GET('genre/search', 'SearchController@searchGenre');
 
 
 Route::GET('searchedEvents', 'SearchController@get');

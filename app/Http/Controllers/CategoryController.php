@@ -30,7 +30,6 @@ class CategoryController extends Controller
      */
     public function create(Event $event)
     {
-
         return view('categories.create');
     }
 
@@ -42,6 +41,8 @@ class CategoryController extends Controller
      */
     public function store(CategoryStoreRequest $request, Event $event)
     {
+        $this->authorize('update', $event);
+
         $categories = Category::firstOrCreate($request->except(['_token']));
 
         return redirect('/');

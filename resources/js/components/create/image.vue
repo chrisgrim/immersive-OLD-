@@ -27,7 +27,7 @@
 
          <div v-if="$v.eventImage.$error" class="validation-error">
             <p class="error" v-if="!$v.eventImage.required">The Image is required</p>
-             <p class="error" v-if="!$v.eventImage.file_size_validation">Image size is too large</p>
+             <p class="error" v-if="!$v.eventImage.fileSize">Image size is too large</p>
         </div>
 
     </div>
@@ -45,14 +45,6 @@ import _ from 'lodash';
 import ImageUpload from '../layouts/image-upload.vue'
 import { required, minLength, maxLength } from 'vuelidate/lib/validators'
 
-// const file_size_validation = (value, vm) =>  {
-//   if (!value) {
-//     return false;
-//   }
-//   let file = value;
-//   return (file.size < 91456)
-// };
-
 
 export default {
     components: { 
@@ -68,46 +60,40 @@ export default {
             eventImage: this.event.largeImagePath ? `/storage/${this.event.largeImagePath}` : '',
             defaultImage: '/storage/website-files/upload.png',
             eventUrl:_.has(this.event, 'slug') ? `/create-event/${this.event.slug}` : null,
+            finalImage: '',
         };
     },
 
     methods: {
 
+        //This adds the image to the page so the user can see
+        //Then adds the image as a file so it can be uploaded to the database
         async onImageUpload(image) {
-            
-            //This adds the image to the page so the user can see
             this.eventImage = image.src;
-            //This adds the image as a file so it can be uploaded to the database
-            this.event.largeImagePath = image.file;
-
+            this.finalImage = image.file;
+            this.createImage();
         },
 
+        //checks if all the validatoon rules have been followed and returns false if they haven't. Then create form data named data and append the image.
         async createImage() {
-
-            //checks if all the validatoon rules have been followed and returns false if they haven't
+            console.log(this.finalImage.size);
+            this.$v.$touch(); 
             if (this.$v.$invalid) { return false };
-            //create a new empty Form Data
+            
             let data = new FormData();
-
-            // add the image to the form data and name it image
-            data.append('image', this.event.largeImagePath);
-
-            //post the image to laravel with image data attached
+            data.append('image', this.finalImage);
             axios.post(`${this.eventUrl}/images`, data)
             .then(response => {
                 console.log('worked');
             })
-            .catch(errorResponse => {
-                // show if there are server side validation errors
-                this.validationErrors = errorResponse.response.data.errors
-                console.log(errorResponse.response.data.errors)
-            });
+            .catch(errorResponse => { this.validationErrors = errorResponse.response.data.errors });
         },
     },
 
     validations: {
         eventImage: {
             required,
+            fileSize() { return this.finalImage ? this.finalImage.size < 2097152 : true },
             
         },
     },

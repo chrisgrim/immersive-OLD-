@@ -1,1 +1,58 @@
+.profile-body {
+	width:70%;
+	margin:auto;
+}
+.profile-upload-field {
+  position: relative;
+  margin-bottom: 2rem;
+  padding-top: 3rem;
+}
+.profile-upload-label {
+  top: 1rem;
+  font-size: 1.1rem;
+  color: #b3b5bf;
+}
+.profile-upload-wrapper, .profile-upload-wrapper img {
+    width: 100px;
+    height: 100px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 15px;
+    position: relative;
+    display: block;
+    cursor: pointer;
+    background: #f77161;
+    font-size: 110px;
+    transition: width .5s ease-in-out;
+    transition: height .5s ease-in-out;
 
+    &.imageloaded {
+        font-size: 40px;
+        background-size: cover;
+    }
+}
+.profile-upload-wrapper .profile-upload-layover {
+	position: absolute;
+	left: 80%;
+	top: 60%;
+	transition: all .3s ease-in-out;
+}
+.add-profile-image {
+    background: #ff8c3c;
+    border-radius: 50px;
+	padding: 0px 10px 0px 10px;
+	box-shadow: 1px 2px 5px 2px #9898984d;
+	& p {
+		margin: 0px;
+		font-size: 30px;
+	}
+}
+.profile-upload-wrapper .profile-upload-layover:hover {
+	transform: scale(1.2);
+}
+.profile-upload-wrapper .profile-upload-layover .text-center {
+  position: relative;
+  text-align: center;
+  top: 50%;
+  transform: translateY(-50%);
+}

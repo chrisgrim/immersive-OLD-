@@ -14,7 +14,7 @@ let mutations = {
         DELETE_EVENT(state, event) {
             let index = state.events.findIndex(item => item.id === event.id)
             state.events.splice(index, 1)
-        }
+        },
 
     }
     export default mutations

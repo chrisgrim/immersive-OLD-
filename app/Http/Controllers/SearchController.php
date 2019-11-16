@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Event;
+use App\Genre;
 use App\Date;
 use App\Organizer;
 use App\CityList;
 use App\OrganizerSearchRule;
 use App\CityListSearchRule;
 use App\EventSearchRule;
+use App\GenreSearchRule;
 use App\DateSearchRule;
 use Carbon\Carbon;
 use Session;
@@ -71,6 +73,22 @@ class SearchController extends Controller
         } else { $ajaxOrganizers = null; };
 
         return response()->json($ajaxOrganizers);
+    }
+
+    /**
+     * Get List of Genres as user types in name
+     *
+     * @param  \App\Genre  $genre
+     * @return \Illuminate\Http\Response
+     */
+    public function searchGenre(Request $request)
+    {   
+        if($request->keywords) {
+            $ajaxGenre = Genre::search($request->keywords)
+            ->rule(GenreSearchRule::class)
+            ->get();
+        } else { $ajaxOrganizers = null; };
+        return response()->json($ajaxGenre);
     }
 
     public function searchNav(Request $request)

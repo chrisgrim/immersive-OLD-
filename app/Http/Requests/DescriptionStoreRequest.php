@@ -25,6 +25,8 @@ class DescriptionStoreRequest extends FormRequest
     {
         return [
             'description' => 'required',
+            'ticketUrl' => 'required',
+            'websiteUrl' => 'required'
         ];
     }
 }

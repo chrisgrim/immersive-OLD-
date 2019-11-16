@@ -17,7 +17,6 @@ class CreateEventsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('category_id')->nullable();
-            $table->unsignedBigInteger('location_id')->nullable();
             $table->unsignedBigInteger('expectation_id')->nullable();
             $table->unsignedBigInteger('organizer_id')->nullable();
             $table->string('slug')->unique();
@@ -34,9 +33,6 @@ class CreateEventsTable extends Migration
             $table->boolean('approved')->nullable()->default(null);
             $table->softDeletes();
             $table->timestamps();
-            // $table->foreign('user_id')
-            //       ->references('id')->on('users')
-            //       ->onDelete('cascade');
         });
     }
 

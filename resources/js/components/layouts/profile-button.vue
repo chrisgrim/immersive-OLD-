@@ -2,15 +2,21 @@
 	<div class="profile-button">
 		<label @click="toggle = !toggle" class="profile-image" :style="{ backgroundImage: 'url(' + avatar + ')' }">
 		</label>
+
 		<ul v-show='toggle' class="subdropdown">
 			<li>
-				<a :href="'/users/show/'+ url">
+				<a :href="'/users/'+ url">
 					Profile
 				</a>
 			</li>
 			<li>
 				<a :href="'/myFavorites/'+ url">
 					Your Favorites
+				</a>
+			</li>
+			<li v-if="user.userType.name == 'admin'">
+				<a href="/categories/create">
+					Create Categories
 				</a>
 			</li>
 			<li>
@@ -39,7 +45,7 @@
 
 		data() {
 			return {
-				avatar: this.user.avatar_path,
+				avatar: this.user.image_path ? `/storage/${this.user.image_path}` : '/storage/website-files/default-user-icon.jpg',
 				userName: this.user.name,
 				url: this.user.id,
 				toggle:false,
@@ -50,16 +56,7 @@
 
 
 		methods: {
-			onLoad(avatar) {
-				this.avatar = avatar.src;
-				this.persist(avatar.file);
-			},
 
-			// logout() {
-
-			// 	axios.post('/logout');
-			// 	window.location.href = '/logout';
-			// }
 			logout(){
 				axios.post('/logout').
 					then(response => {
@@ -70,9 +67,7 @@
 						}
 					}).catch(error => {
 				});
-
             },
-
 		}
 	}
 </script>

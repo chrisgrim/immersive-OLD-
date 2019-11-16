@@ -1,6 +1,6 @@
     let state = {
         events: [],
-        userSearchRequest: []
+        userSearchRequest: [],
     }
 
     export default state

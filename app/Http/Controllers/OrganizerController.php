@@ -16,6 +16,7 @@ class OrganizerController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('can:update,event');
     }
     /**
      * Display a listing of the resource.
@@ -28,7 +29,7 @@ class OrganizerController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource and Eager load organizer with event and get organizers
+     * Show the form for creating a new resource and Eager load organizer with event and get organizers Check if user has auth
      *
      * @return \Illuminate\Http\Response
      */
@@ -40,6 +41,7 @@ class OrganizerController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     Check if user has auth
      Create a new organizer model and store details.
      Create details for image naming then store it
      *
@@ -49,15 +51,8 @@ class OrganizerController extends Controller
     public function store(OrganizerStoreRequest $request, Event $event)
     {
         $organizer = Organizer::Create($request->except(['imagePath', 'user_id']) + ['user_id' => auth()->id()]);
-
-        $extension = $request->file('imagePath')->getClientOriginalExtension();
-        $filename= $request->slug . '-' . 'organization' . '_' . rand(1,50000) .'.'.$extension;
-        $path = "organizer-images/$filename";
-        $request->file('imagePath')->storeAs('/public/organizer-images', $filename);
-        Image::make(storage_path()."/app/public/organizer-images/$filename")->fit(1200, 800)->save(storage_path("/app/public/$path"));
-        $organizer->update([ 'imagePath' => $path ]);
+        Organizer::saveFile($organizer, $request);
         $event->update([ 'organizer_id' => $organizer->id ]);
-        
     }
 
     /**
@@ -93,26 +88,16 @@ class OrganizerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(OrganizerUpdateRequest $request, Event $event, Organizer $organizer)
-    {
+    {   
         $event->update(['organizer_id' => $organizer->id]);
-
-        if ($organizer->user_id !== auth()->id()) { return response()->json(array(['Not_Owner' => 'Organization was not changed as you were not the owner'])); };
-
-        $organizer->update($request->except(['imagePath']));
         
-        if ($request->hasFile('imagePath')) {
-
-            Storage::delete('public/' . $organizer->imagePath);
-
-            $extension = $request->file('imagePath')->getClientOriginalExtension();
-            $filename= $request->slug . '-' . 'organization' . '_' . rand(1,50000) .'.'.$extension;
-            $path = "organizer-images/$filename";
-            $request->file('imagePath')->storeAs('/public/organizer-images', $filename); 
-            Image::make(storage_path()."/app/public/organizer-images/$filename")->fit(1200, 800)->save(storage_path("/app/public/$path"));
-            $organizer->update([ 'imagePath' => $path ]);
-        }
-
-       
+        if ($organizer->user_id == auth()->id()) {
+            $event->update(['organizer_id' => $organizer->id]);
+            $organizer->update($request->except(['imagePath', 'newImageUpload']));
+            if ($request->hasFile('imagePath') && $request->newImageUpload == true) {
+                Organizer::saveFile($organizer, $request);
+            };
+        } 
     }
 
     /**

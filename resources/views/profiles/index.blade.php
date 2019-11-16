@@ -4,7 +4,7 @@
 
 <div class="inner-container">
 	<div id="bodyArea">
-		<user-profile :user="{{ auth()->user() }}" v-cloak></user-profile>	
+		<user-profile :fav="{{$fav}}" :loaduser="{{ auth()->user() }}" v-cloak></user-profile>	
 	</div>
 </div>
 

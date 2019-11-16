@@ -337,7 +337,7 @@ export default {
         // submits to database. If statement is for new organizer or if updating organizer
         async createOrganizer() {
             this.$v.$touch(); 
-            if (this.$v.$invalid) { return false }
+            if (this.$v.$invalid) { return false };
 
             const params = new FormData();
             const headers = {'Content-Type': 'application/x-www-form-urlencoded'};
@@ -345,6 +345,7 @@ export default {
                 params.append(field, this.organizer[field]);
             }
             params.append('slug', this.slug);
+            this.finalImage ? params.append('newImageUpload', true) : params.append('newImageUpload', false);
 
             this.organizer.id == '' ? this.submitNewOrganizer(params, headers) : this.submitEditOrganizer(params, headers);
         },

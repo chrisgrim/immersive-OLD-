@@ -4,6 +4,8 @@ namespace App;
 
 use ScoutElastic\Searchable;
 use Illuminate\Database\Eloquent\Model;
+use Intervention\Image\ImageManagerStatic as Image;
+use Illuminate\Support\Facades\Storage;
 
 
 class Organizer extends Model
@@ -12,16 +14,50 @@ class Organizer extends Model
 
     protected $indexConfigurator = OrganizerIndexConfigurator::class;
 
+    /**
+    * What protected variables are allowed to be passed to the database
+    *
+    * @var array
+    */
     protected $fillable = [
     	'user_id','name','website','slug','description','rating','imagePath','instagramHandle','twitterHandle','facebookHandle'
     ];
+
+    /**
+    * Each Organizer can have many events
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany
+    */
     public function events() 
     {
         return $this->hasMany(Event::class);
     }
+    
+    /**
+     * The Organizer belongs to one user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+     */
     public function users() 
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+    * Save File and update organizer model with path name
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  $organizer
+    */
+    public static function saveFile($organizer, $request)
+    {
+        Storage::delete('public/' . $organizer->imagePath);
+        $extension = $request->file('imagePath')->getClientOriginalExtension();
+        $filename= $request->slug . '-' . 'organization' . '_' . rand(1,50000) .'.'.$extension;
+        $imagePath = "organizer-images/$filename";
+        $request->file('imagePath')->storeAs('/public/organizer-images', $filename);
+        Image::make(storage_path()."/app/public/organizer-images/$filename")->fit(1200, 800)->save(storage_path("/app/public/$imagePath"));
+        $organizer->update([ 'imagePath' => $imagePath ]);
     }
 
     protected $searchRules = [
@@ -72,7 +108,6 @@ class Organizer extends Model
                 'type' => 'keyword',
                 'index' => false
             ],
-
         ]
     ];
 }

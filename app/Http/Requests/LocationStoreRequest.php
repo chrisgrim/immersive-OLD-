@@ -23,11 +23,13 @@ class LocationStoreRequest extends FormRequest
      */
     public function rules()
     {
+
         return [
             'hiddenLocationToggle' => 'required',
             'city' => 'required',
             'region' => 'required',
             'country' => 'required',
+            'hiddenLocation' => 'max:500'
         ];
     }
 }

@@ -18,6 +18,7 @@ class LocationController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('can:update,event');
     }
     /**
      * Display a listing of the resource.
@@ -30,41 +31,33 @@ class LocationController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new resource. Eager Load location with event. Load all of the regions. Load the pivot table that shows which regions are assigned to this event
      *
      * @return \Illuminate\Http\Response
      */
     public function create(Event $event)
     {
-        //eager load location with $event variable
-        $event->load('location');
-        
-        //load all the regions into the $region variable
-        $regions = Region::all();
 
-        // load the connection between event and region
+        $event->load('location');
+        $regions = Region::all();
         $pivots = $event->regions()->get();
 
         return view('create.location', compact('event','regions','pivots'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created resource in storage. I update the location table with the request except token and region.
+     I then sync the regions of the event to the request. Finally I add the lat and lon to the event model for easy searching
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(LocationStoreRequest $request, Event $event)
     {
-        //update the location table with user information
-        $event->location->update($request->except(['_token','Region']));
-
-        //sync the regions associated with event
+        
+        $event->location->update($request->all());
         $event->regions()->sync(request('Region'));
-
-        //add lat and lon to the event model for searching
         $event->update([
-            'location_id' => $event->location->id,
             'location_latlon' => [
                 'lat' => $request->latitude,
                 'lon' => $request->longitude,

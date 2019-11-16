@@ -11,7 +11,6 @@
 |
 */
 
-
 Route::GET('/', 'EventController@index')->name('home');
 
 Auth::routes();
@@ -29,8 +28,7 @@ Route::POST('/vuex/search', 'SearchController@filterIndex');
 
 
 //User Pages
-Route::GET('/users/show/{user}', 'ProfilesController@index');
-
+Route::RESOURCE('users', 'ProfilesController');
 
 Route::GET('/citylist/generate', 'CityListsController@generate');
 
@@ -40,6 +38,8 @@ Route::POST('favorite/{event}/favorites', 'FavoritesController@store');
 Route::DELETE('favorite/{event}/favorites', 'FavoritesController@destroy');
 Route::GET('favorite/{event}/login', 'FavoritesController@loginToFavorite');
 
+//event list
+Route::GET('/create-event/edit', 'EventController@editEvents');
 
 // Create Paths
 Route::GET('/create-event/{event}/location', 'LocationController@create');
@@ -69,3 +69,9 @@ Route::PATCH('/create-event/{event}/title ', 'EventController@updateTitle');
 
 Route::GET('/create-event/{event}/images', 'ImageController@create');
 Route::POST('/create-event/{event}/images', 'ImageController@store');
+
+
+// Route::fallback(function () {
+//     return 'test';
+// });
+

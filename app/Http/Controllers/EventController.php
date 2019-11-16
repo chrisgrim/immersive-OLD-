@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Event;
+use App\Region;
 use App\CityList;
 use App\Category;
 use Illuminate\Support\Facades\Storage;
@@ -15,7 +16,8 @@ class EventController extends Controller
     public function __construct()
     {
         $this->middleware('auth')->except('index','get');
-        // $this->middleware('admin');
+        $this->middleware('can:update,event')
+        ->except(['index','get','create','show','editEvents','store']);
     }
     /**
      * Display a listing of the resource.
@@ -54,24 +56,16 @@ class EventController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created resource in storage. When I first create event I create a location and expectation at the same time. Depending on if the store came from axios or a form I send the data back as a object or a redirect.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //create a new blank event with a random slug.
-
-        $event = Event::create([
-            'user_id' => auth()->id(),
-            'slug' => rand()
-        ]);
-        $event->location()->Create();
-        $event->expectation()->Create();
-        
+        $event = Event::newEvent();
+        if ($request->type == 'axios') { return $event; };
         return redirect('/create-event/'. $event->slug . '/location');
-
     }
 
     /**
@@ -82,7 +76,7 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        //
+        return view('events.show', compact('event'));
     }
 
     /**
@@ -93,7 +87,10 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        //
+        $event->load('location');
+        $regions = Region::all();
+        $pivots = $event->regions()->get();
+        return view('create.location',compact('event','regions','pivots'));
     }
 
     /**
@@ -106,7 +103,6 @@ class EventController extends Controller
     public function update(Request $request, Event $event)
     {
         $event->update($request->all());
-
     }
 
     /**
@@ -117,13 +113,26 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
-        //
+        $event->delete();
+        $events = auth()->user()->events;
+        return $events;
+    }
+
+    /**
+     * Loads the users created events
+     *
+     * @param  \App\Event  $event
+     * @return \Illuminate\Http\Response
+     */
+    public function editEvents(Event $event)
+    {
+        $events = auth()->user()->events;
+        return view('events.edit', compact('events'));
     }
 
     public function createCategory(Event $event)
     {
         $event->load('category');
-
         $categories = Category::all();
 
         return view('create.category', compact('event','categories'));
@@ -131,20 +140,11 @@ class EventController extends Controller
     
     public function updateCategory(Request $request, Event $event)
     {
-        $event->update([
-            'category_id' => request('id')
-        ]);
-
+        $event->update([ 'category_id' => request('id') ]);
     }
     public function updateTitle(TitleUpdateRequest $request, Event $event)
     {
-        $event->update([
-            'name' => request('name'),
-            'slug' => str_slug(request('name'))
-        ]);
-        
-        return response()->json(compact('event'));
-
+        $event->update([ 'name' => request('name') ]);
     }
     public function title(Event $event)
     {

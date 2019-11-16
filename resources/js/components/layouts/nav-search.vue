@@ -70,6 +70,7 @@ export default {
         asyncGenerateCitiesList (query) {
             axios.get('/api/search/navbar/content', { params: { keywords: query } })
             .then(response => {
+                console.log(response.data);
                 this.searchBoxOptions = response.data;
             });
         },

@@ -25,10 +25,11 @@ class TitleUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required',
-                            Rule::unique('events')
-                                  ->ignore($this->id)
-                        ],
+            'name' => 
+                ['required',
+                    Rule::unique('events')
+                    ->ignore($this->id)
+            ]
         ];
     }
 }

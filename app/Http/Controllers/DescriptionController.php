@@ -12,6 +12,7 @@ class DescriptionController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('can:update,event');
     }
     /**
      * Display a listing of the resource.
@@ -24,22 +25,21 @@ class DescriptionController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new resource. $Pivots gets the genres assigned to the event
+     $genres gets all the genres in the list.
      *
      * @return \Illuminate\Http\Response
      */
     public function create(Event $event)
     {
-        //Selects all the genres assigned to this event and adds then to $pivots variable
         $pivots = $event->genres()->get();
-        //Grabs all the Genres to populate the list
         $genres = Genre::all();
 
         return view('create.description', compact('event', 'pivots', 'genres'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created resource in storage. Update all the standard fields. For each genre field I check if they exist then add any the user created. Finally I sync those submitted with the genres associated with the event.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -49,20 +49,11 @@ class DescriptionController extends Controller
         $event->update($request->except(['genre']));
 
         if ($request->has('genre')) {
-
-            $genres = $request['genre'];
-
-            //go through them and if it exists then it does nothing, otherwise it will create a new genre
-            foreach ($genres as $genre) {
+            foreach ($request['genre'] as $genre) {
                 Genre::firstOrCreate(['genre' => $genre]);
-            }
-
-            //newSync is given all the objects where the name is the same as the submitted names
-            $newSync = Genre::all()->whereIn('genre', $genres);
-            
-            //using laravels sync and belongsTo relationship we can easy add these to the event_genre table
+            };
+            $newSync = Genre::all()->whereIn('genre', $request['genre']);
             $event->genres()->sync($newSync);
-
         };
     }
 

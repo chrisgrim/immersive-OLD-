@@ -25,40 +25,31 @@ class ExpectController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new resource. I Load expectation with event, then I load the contact levels associated with the event alread (if there are any) and name it pivots. Finally I add all the contact level options as the variable contactlevels
      *
      * @return \Illuminate\Http\Response
      */
     public function create(Event $event)
     {
-        //load expectation model with the Event model
+        $this->authorize('update', $event);
         $event->load('expectation');
-
-        //load all contactlevels connected with this event
         $pivots = $event->contactlevels()->get();
-
-        //load all of the contact levels
         $contactLevels = ContactLevel::all();
 
         return view('create.expect', compact('event','contactLevels','pivots'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created resource in storage. First I update the event with the submitted data. Then I sync the contact levels associated with the event. Finally I update the event with the expectation_id of the expection table (only used for the checklist)
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(ExpectationStoreRequest $request, Event $event)
     {
-
-        //update the expect table with information
+        $this->authorize('update', $event);
         $event->expectation->update($request->except(['contactLevel']));
-
-        //update the pivot table with the selected contactLevels for this event
         $event->contactlevels()->sync(request('contactLevel'));
-
-        //update event with the id of the expect table
         $event->update(['expectation_id' => $event->expectation->id]);
 
  

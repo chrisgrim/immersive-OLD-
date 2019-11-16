@@ -15,16 +15,16 @@ import vuelidateErrorExtractor, { templates } from "vuelidate-error-extractor";
 import { Icon }  from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import VueRouter from 'vue-router';
+import {routes} from './routes';
 
 
 Vue.use(VueRouter)
 
+
 const router = new VueRouter({
-  mode: 'history',
-  routes: [
-    { path: '/event/:id'}
-  ]
-})
+  routes,
+  mode: 'history'
+});
 
 Vue.use(VueGoogleMaps, {
   load: {
@@ -33,7 +33,6 @@ Vue.use(VueGoogleMaps, {
   }
 });
 Vue.use(Vuelidate);
-
 
 require('./bootstrap');
 
@@ -49,7 +48,6 @@ Icon.Default.mergeOptions({
 });
 
 
-
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -62,13 +60,18 @@ Icon.Default.mergeOptions({
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 
-
+Vue.component('vue-nav', require('./components/layouts/nav.vue').default);
 
 Vue.component('profile-button', require('./components/layouts/profile-button.vue').default);
 
 Vue.component('nav-search', require('./components/layouts/nav-search.vue').default);
 Vue.component('favorite', require('./components/layouts/favorite.vue').default);
 
+Vue.component('modal', require('./components/layouts/modal.vue').default);
+
+Vue.component('edit-events', require('./components/events/edit.vue').default);
+Vue.component('event-show', require('./components/events/event-show.vue').default);
+Vue.component('edit-listing', require('./components/events/edit-listing.vue').default);
 
 Vue.component('event-create-checklist', require('./components/create/checklist.vue').default);
 Vue.component('create-location-google', require('./components/create/location-google.vue').default);
@@ -108,7 +111,8 @@ if(document.getElementById("header")){
 if(document.getElementById("create")){
 	const create = new Vue({
     	el: '#create',
-      store
+      store,
+      router
 	});
 };
 if(document.getElementById("bodyArea")){
@@ -116,6 +120,5 @@ if(document.getElementById("bodyArea")){
       el: '#bodyArea',
       store,
       router
-     
   });
 };

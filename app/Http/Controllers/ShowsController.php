@@ -19,6 +19,7 @@ class ShowsController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('can:update,event');
     }
     /**
      * Show the form for creating a new resource and passing the event variable

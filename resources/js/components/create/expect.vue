@@ -261,31 +261,22 @@
 				}
 			},
 
+			//updates fields if event is stored in database.
 			updateEventFields(input) {
 	            if ((input !== null) && (typeof input === "object") && (input.id !== null)) {
 	                this.expect = _.pick(input, _.intersection( _.keys(this.expect), _.keys(input) ));
 	            }
 	        },
 
+	        //submit data to the database
 			async submitExpectations() {
-
 				this.$v.$touch(); 
                 if (this.$v.$invalid) { return false; };
-                
-               	let data =this.expect;
-
+               	let data = this.expect;
                	data.contactLevel = this.contactLevel.map(a => a.id);
 
-               	console.log(this.expect);
-
 				axios.patch(`${this.eventUrl}/expect`, data)
-				.then(response => {
-                    // all is well. move on to the next page
-                })
-                .catch(errorResponse => {
-                    // show if there are server side validation errors
-                    
-                });
+				.then(response => { window.location.href = `${this.eventUrl}/title`; });
 			},
 		},
 

@@ -5,6 +5,7 @@ namespace App;
 use ScoutElastic\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class Event extends Model
 {
@@ -17,65 +18,138 @@ class Event extends Model
         'location_latlon' => 'array',
     ];
     
+    /**
+    * What protected variables are allowed to be passed to the database
+    *
+    * @var array
+    */
 	protected $fillable = [
-    	'slug', 'user_id', 'category_id','organizer_id','description','name','largeImagePath','thumbImagePath','expectation_id', 'organizer_id', 'location_latlon', 'closingDate','websiteUrl','ticketUrl','location_id','show_times'
+    	'slug', 'user_id', 'category_id','organizer_id','description','name','largeImagePath','thumbImagePath','expectation_id', 'organizer_id', 'location_latlon', 'closingDate','websiteUrl','ticketUrl','show_times'
 
     ];
 
     /**
-     * The relations to eager load on every query.
-     *
-     * @var array
-     */
+    * The relations to eager load on every query. I am adding shows here because I need to filter by dates for the search
+    *
+    * @var array
+    */
     protected $with = ['shows', 'favorites'];
-     /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
-    protected $appends = ['isFavorited'];
 
+    /**
+    * The accessors to append to the model's array form.
+    *
+    * @var array
+    */
+    protected $appends = ['isFavorited'];
+    
+    /**
+    * Each event belongs to One User
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+    */
     public function user() 
     {
         return $this->belongsTo(User::class);
     }
+    /**
+    * Each event belongs to one Category
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+    */
     public function category() 
     {
         return $this->belongsTo(Category::class);
     }
+    /**
+    * Each event belongs to One Organizer
+    *
+    * @return \Illuminate\Database\Eloquent\Relations/belongsTo
+    */
     public function organizer() 
     {
         return $this->belongsTo(Organizer::class);
     }
+    /**
+     * Each Event has One Location
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function location() 
     {
         return $this->hasOne(Location::class);
     }
+    /**
+     * Each Event has one Expectation Model
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function expectation() 
     {
         return $this->hasOne(Expect::class);
     }
+    /**
+     * Each event has many shows
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function shows() 
     {
         return $this->hasMany(Show::class);
     }
+    /**
+     * Each event can belong to many shows
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+     */
     public function genres() 
     {
         return $this->belongsToMany(Genre::class);
     }
+    /**
+     * Each event can belong to many regions
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+     */
     public function regions() 
     {
         return $this->belongsToMany(Region::class);
     }
+    /**
+     * Each event can belong to many ContactLevels
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+     */
     public function contactlevels() 
     {
         return $this->belongsToMany(ContactLevel::class);
     }
+
+    /**
+    * Sets the Route Key to slug instead of ID
+    *
+    * @return Route Key Name
+    */
     public function getRouteKeyName()
     {
         return 'slug';
     }
 
+    /**
+    * Creates a new event
+    *
+    * @return Nothing
+    */
+    public static function newEvent()
+    {
+        $event = Event::create([
+            'user_id' => auth()->id(),
+            'slug' => rand()
+        ]);
+        $event->location()->Create();
+        $event->expectation()->Create();
+        return $event;
+    }
+    
     protected $searchRules = [
         //
     ];
@@ -130,10 +204,6 @@ class Event extends Model
             ],
             'category_id' => [
                 'type' => 'integer',
-            ],
-            'location_id' => [
-                'type' => 'integer',
-                'index' => false
             ],
             'dates_id' => [
                 'type' => 'integer',

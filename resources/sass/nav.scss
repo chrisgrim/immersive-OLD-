@@ -195,6 +195,7 @@ nav-menu, .nav-menu {
 
 /*style for the second level menu*/
 ul.subdropdown{
+  z-index: 1;
   max-height:0;
   padding:0;
   overflow:hidden;
@@ -204,6 +205,7 @@ ul.subdropdown{
   right:0;
   box-shadow: -1px 1px 5px 0px #cecece;
   margin-right:2rem;
+  background: white;
 }
 ul.subdropdown{
   max-height:35rem;

@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Intervention\Image\ImageManagerStatic as Image;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
@@ -16,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','image_path'
     ];
 
     /**
@@ -37,17 +39,93 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['hasCreatedEvents', 'userType'];
+
+    /**
+     * User can have many events
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
     public function events() 
     {
         return $this->hasMany(Event::class);
     }
+
+    /**
+     * User can have many favorites
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
     public function favorites() 
     {
         return $this->hasMany(Favorite::class);
     }
-    public function getAvatarPathAttribute($avatar)
+
+    /**
+    * User belongs to a role on the site
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+    */
+    public function role() {
+        return $this->hasOne(Role::class);
+    }
+
+    /**
+    * Determine if the current user is Admin
+    *
+    * @return bool
+    */
+    public function isAdmin() {
+        return $this->role()->where('name', 'admin')->exists();
+    }
+
+    /**
+    * Determine if the current user is Moderator
+    *
+    * @return bool
+    */
+    public function isModerator() {
+        return $this->role()->where('name', 'moderator')->exists();
+    }
+
+    /**
+    * Determine if the current user has created events
+    *
+    * @return bool
+    */
+    public function getHasCreatedEventsAttribute()
     {
-        $avatarStore='storage/'.$avatar;
-        return asset($avatar ? $avatarStore : 'storage/default-avatar/default.jpg');
+        return auth()->user()->events()->count() ? true : false;    
+    }
+
+    /**
+    * Determine current User type
+    *
+    * @return sting
+    */
+    public function getUserTypeAttribute()
+    {
+        return $this->role()->first();    
+    }
+
+    /**
+    * Saves the image that is passed from the controller
+    *
+    * @return string
+    */
+    public static function saveFile($request, $user)
+    {
+        Storage::delete('public/' . $user->image_path);
+        $extension = $request->file('image')->getClientOriginalExtension();
+        $filename = $user->name .'-'. rand(5,9999) . '.' .$extension;
+        $imagePath = "avatars/$filename";
+        $request->file('image')->storeAs('/public/avatars', $filename);
+        Image::make(storage_path()."/app/public/avatars/$filename")->fit(800, 800)->save(storage_path("/app/public/$imagePath"));
+        $user->update([ 'image_path' => $imagePath ]);
     }
 }
