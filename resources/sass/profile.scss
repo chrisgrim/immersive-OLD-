@@ -16,7 +16,7 @@
     width: 100px;
     height: 100px;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: cover !important;
     border-radius: 15px;
     position: relative;
     display: block;
@@ -51,8 +51,8 @@
 	transform: scale(1.2);
 }
 .profile-upload-wrapper .profile-upload-layover .text-center {
-  position: relative;
-  text-align: center;
-  top: 50%;
-  transform: translateY(-50%);
+    position: relative;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
 }

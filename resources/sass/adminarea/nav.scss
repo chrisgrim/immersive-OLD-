@@ -1,0 +1,18 @@
+
+.checklist-section {
+
+    & .item {
+        position: relative;
+        display: inline-block;
+    }
+    & .notification {
+        position: absolute;
+        background: red;
+        padding: 0.2rem 0.7rem;
+        border-radius: 5rem;
+        right: -1.3rem;
+        color: white;
+        top: -.7rem;
+        font-size: 1rem;
+    }
+}

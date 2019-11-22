@@ -36,11 +36,11 @@
             placeholder=" "
             />
             <div v-if="$v.user.name.$error" class="validation-error">
-				<p class="error" v-if="!$v.user.name.required">Must enter an Event Website </p>
+				<p class="error" v-if="!$v.user.name.required">Must have a user name </p>
 			</div>
 		</div>
 		<div class="">
-            <button @click.prevent="submitUser()" class="create"> Save and Continue </button>
+            <button @click.prevent="submitUser()" class="create"> Update </button>
         </div>
 		
 

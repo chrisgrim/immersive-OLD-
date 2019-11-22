@@ -2,19 +2,12 @@
 	<div>
 		<h2>Our Latest Events in {{this.location}}</h2>
 		<div>
-			<v-date-picker
-            mode="range"
-            :columns="2"
-            :available-dates='{ start: new Date(), end: null }'
-            :masks="masks"
-            popoverDirection="bottom"
-            :input-props='{
-			    placeholder: "Dates",
-			    readonly: true
-			}'
-            v-model='searchDateRange'>
-            </v-date-picker>
-            <button @click.prevent="openCalendar">Show Hide</button>
+			<flat-pickr
+                v-model="dates"
+                :config="config"                                                  
+                placeholder="Select date"               
+                name="dates">
+            </flat-pickr>
 		</div>
 		<div id="app">
 			<div id="grid-section">
@@ -30,7 +23,8 @@
 <script>
 	import _ from 'lodash';
     import Multiselect from 'vue-multiselect';
-    import format from 'date-fns/format';
+	import flatPickr from 'vue-flatpickr-component'
+	import 'flatpickr/dist/flatpickr.css'
     import { mapGetters } from 'vuex'
 
 
@@ -38,7 +32,7 @@
 
 
 		components: {
-            Multiselect,
+            Multiselect, flatPickr
         },
 
         name: "userSearchRequest",
@@ -70,10 +64,14 @@
       			price: '',
       			eventName: '',
       			searchObject: this.initializeSearchObject(),
-      			searchDateRange: new Date(),
-   				masks: {
-					input: ['MMM DD'],
-				},
+      			dates: '',
+		        config: {
+					minDate: "today",
+					mode: "range",
+					inline: false,
+					showMonths: 2,
+					dateFormat: 'Y-m-d H:i:s',        
+		        },
 				visibility: 'visible',
 
 			}
@@ -92,10 +90,7 @@
 				this.$store.dispatch('searchEvents', this.searchedevents);
 				this.$store.dispatch('userSearchRequest', this.searchedevents);
 			},
-
-			openCalendar() {
-		      this.visibility = this.visibility == 'hidden' ? 'visible' : 'hidden';
-		    },
+			
 
 		},
 

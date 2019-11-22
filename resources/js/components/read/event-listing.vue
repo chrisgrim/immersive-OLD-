@@ -1,7 +1,7 @@
 <template>
-	<div>
+	<div class="event-list-section">
 		<h2>Our Latest Events</h2>
-		<div id="app">
+		<div>
 			<div id="grid-section">
                 <div v-for="event in events">
                     <event-listing-item :event="event"></event-listing-item>

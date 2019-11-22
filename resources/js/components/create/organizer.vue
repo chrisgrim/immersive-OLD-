@@ -1,14 +1,16 @@
 <template>
 <div>
-    
+    <div class="create-title">
+        <h2>Event Organizer</h2>
+        <p>What organizer or production company is putting this immersive show on?</p>
+    </div>
     <div class="organization-form">
-
         <multiselect 
         v-model="searchModel" 
         id="ajax" 
         label="name" 
         track-by="name" 
-        placeholder="Add New Event Organization Here Or Search For Existing One" 
+        placeholder="Add new event organization here or search for existing one" 
         open-direction="bottom"
         :allow-empty="false"
         deselectLabel=''
@@ -35,14 +37,14 @@
     
         
     <div v-show="showFormFields" v-if="this.userOwnsOrganization">
-        <div class="image-upload-field">
-            <label class="image-upload-label">Company logo/image</label>
+        <div class="image-upload-field create-field">
+            <label>Add Organizers Image</label>
             <label
-            class="image-upload-wrapper"
+            class="profile-upload-wrapper"
             :style="{ backgroundImage: `url('${organizationImageModel ? organizationImageModel : defaultImage}')` }" >
-                <span class="image-upload-layover">
-                    <div class="text-center">{{ organizationImageModel ? 'Change' : 'Upload' }}</div>
-                </span>
+                            <span class="profile-upload-layover">
+                <div class="add-profile-image"><p>+</p></div>
+            </span>
                 <image-upload @loaded="onImageUpload"></image-upload>
             </label>
             <input 
@@ -95,7 +97,7 @@
             </div>
             <div class="create-field">
 
-                <label>Enter Production Website</label>
+                <label>Production Website</label>
                 <input 
                 class="create-input" 
                 type="url" 
@@ -114,7 +116,7 @@
                 </div>
             </div>
             <div class="create-field">
-                <label>enter twitter handle</label>
+                <label>Twitter handle (optional)</label>
                 <input 
                 type="text" 
                 class="create-input" 
@@ -124,7 +126,7 @@
                 />
             </div>
             <div class="create-field">
-                <label>enter facebook handle</label>
+                <label>Facebook handle (optional)</label>
                 <input 
                 type="text" 
                 class="create-input" 
@@ -134,7 +136,7 @@
                 />
             </div>
             <div class="create-field">
-                <label>enter instagram handle</label>
+                <label>Instagram handle (optional)</label>
                 <input 
                 type="text" 
                 class="create-input" 
@@ -310,9 +312,9 @@ export default {
         submitNewOrganizer(params, headers) {
             axios.post(`${this.eventUrl}/organizer`, params, headers)
             .then(response => { 
-                window.location.href = `${this.eventUrl}/shows`; 
+                window.location.href = `${this.eventUrl}/title`; 
             })
-            .catch(error => {            
+            .catch(error => {         
                 this.serverErrors = error.response.data.errors;  
             });
         },
@@ -321,7 +323,7 @@ export default {
         submitEditOrganizer(params, headers) {
             axios.post(`${this.eventUrl}/${this.organizer.id}/organizer`, params, headers)
             .then(response => { 
-                window.location.href = `${this.eventUrl}/shows`; 
+                window.location.href = `${this.eventUrl}/title`; 
             })
             .catch(error => {            
                 this.serverErrors = error.response.data.errors;  
@@ -346,7 +348,6 @@ export default {
             }
             params.append('slug', this.slug);
             this.finalImage ? params.append('newImageUpload', true) : params.append('newImageUpload', false);
-
             this.organizer.id == '' ? this.submitNewOrganizer(params, headers) : this.submitEditOrganizer(params, headers);
         },
     },

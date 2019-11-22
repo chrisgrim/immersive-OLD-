@@ -38,6 +38,7 @@ class ShowsController extends Controller
      */
     public function store(ShowStoreRequest $request, Event $event)
     {
+        
         $showDelete = $event->shows()->whereNotIn('date', $request->dates)->get();
 
         foreach($showDelete as $show){
@@ -72,10 +73,20 @@ class ShowsController extends Controller
         };
         
         $lastDate = $event->shows()->orderBy('date', 'DESC')->first();
+        foreach ($request->tickets as $ticket) {
+            $array[] = $ticket['ticket_price'] + 0;
+        }
+        rsort($array);
+        if (sizeof($array) > 1) {
+            $pricerange = '$'. last($array) . ' - ' . '$' . $array[0];
+        } else {
+            $pricerange = '$' . $array[0];
+        }
 
         $event->update([
             'closingDate' => $lastDate->date,
             'show_times' => $request->showtimes,
+            'price_range' => $pricerange,
         ]);
 
         Session::forget($event->id .'dates');   

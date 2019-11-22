@@ -1,45 +1,29 @@
 <template>
 	<div>
-        <div>
-    		<h2> What can your guests expect?</h2>
-	    </div>
-	    <div>
-	    	<p>Let the guests know what they can expect. Will there be scary noises or bright flashes?</p>
-	    	<p>Some common ones include: 
-				* strong language
-				* fog/haze
-				* flashing lights
-				* simulated gun shots/violence
-				* themes around racism, homophobia, mental health, suicide, etc.
-				* discussions of sex and intimacy
-				* moments of darkness
-				* strong smells
-			</p>
+        <div class="create-title">
+    		<h2>Advisories and Restrictions</h2>
+	    	<p>Let the guests know what they can expect. Choose from our list below or enter your own.</p>
 	    </div>
 	    <div class="floating-form">
-		    <div class="create-field">
-
-		    	<label class="area"> Content Advisory </label>
-	            <textarea 
-	            v-model="expect.contentAdvisories" 
-	            class="create-input area"
-	            :class="{ active: contentActive,'error': $v.expect.contentAdvisories.$error }"
-	            rows="8" 
-	            placeholder=" " 
-	            required
-	            @click="contentActive = true"
-		        @blur="contentActive = false"
-		        @input="$v.expect.contentAdvisories.$touch"
-	            autofocus>
-	            </textarea>
-
-	            <div v-if="$v.expect.contentAdvisories.$error" class="validation-error">
-    				<p class="error" v-if="!$v.expect.contentAdvisories.required">Must enter an advisory </p>
-    			</div>
-	            
-	        </div>
 	        <div class="create-field">
-
+				<label class="area">Content Advisories</label>
+				<multiselect 
+				v-model="contentAdvisories" 
+				:options="contentAdvisoryOptions" 
+				:multiple="true" 
+				tag-placeholder="Add this as new tag"
+				:taggable="true" 
+                tag-position="bottom"
+				placeholder="Search or add a tag" 
+				open-direction="bottom"
+				@tag="addTag"
+				@click="contentActive = true"
+		        @blur="contentActive = false"
+				label="advisories"
+				track-by="id">
+				</multiselect>
+			</div>
+	        <div class="create-field">
             	<label>Age Restriction</label>
                 <input 
                 type="text" 
@@ -53,23 +37,18 @@
                 />
 
 				<div v-if="$v.expect.ageRestriction.$error" class="validation-error">
-    				<p class="error" v-if="!$v.expect.ageRestriction.required">Must Provide an age</p>
-					<p class="error" v-if="!$v.expect.ageRestriction.numeric">Can only be a number</p>
+    				<p class="error" v-if="!$v.expect.ageRestriction.required">Required</p>
     			</div>
                
             </div>
 	        <br>
 	        <div>
 				<div class="create-field">
-
 					<label class="area">Level of Contact w/ Audience (Touch Advisory) </label>
 					<multiselect 
 					v-model="contactLevel" 
 					:options="contactLevelOptions" 
 					:multiple="true" 
-					:close-on-select="false" 
-					:clear-on-select="false" 
-					:preserve-search="true" 
 					placeholder="Choose All That Apply"
 					open-direction="bottom"
 					:class="{ active: contactActive,'error': $v.contactLevel.$error }"
@@ -80,11 +59,9 @@
 					track-by="id" 
 					:preselect-first="false">
   					</multiselect>
-
 	  				<div v-if="$v.contactLevel.$error" class="validation-error">
 	    				<p class="error" v-if="!$v.contactLevel.required">Must choose at least one contact level </p>
 	    			</div>
-
 				</div>
 			</div>
 			<div>
@@ -109,33 +86,22 @@
 		            
 	        	</div>
 			</div>
-			<div>
-				<div class="create-field">
-
-					<label>Advisory for Sexual Violence?</label>
-					<multiselect 
-					v-model="expect.sexualViolence" 
-					deselect-label="Can't remove this value" 
-					placeholder="Select one" 
-					:options="sexualViolenceOptions" 
-					open-direction="bottom"
-					:searchable="false"
-					:class="{ active: sexualViolenceActive,'error': $v.expect.sexualViolence.$error }"
-					@click="sexualViolenceActive = true"
-			        @blur="sexualViolenceActive = false"
-			        @input="$v.expect.sexualViolence.$touch"
-					:allow-empty="false">
-	  				</multiselect>
-
-					<div v-if="$v.expect.sexualViolence.$error" class="validation-error">
-	    				<p class="error" v-if="!$v.expect.sexualViolence.required">Must select a sexual violence advisory </p>
-	    			</div>
-
+			<div class="create-field">
+			 	<label> Is there sexual Violence? </label>
+				<div id="cover">
+					<input v-model="expect.sexualViolence" type="checkbox" id="checkbox">
+					<div id="bar"></div>
+					<div id="knob">
+						<p v-if="expect.sexualViolence">Yes</p>
+						<p v-else="expect.sexualViolence">No</p>
+					</div>
 				</div>
-			</div>
-			<div v-if="showSexViolenceReason">
+                <div v-if="$v.expect.sexualViolence.$error" class="validation-error">
+                    <p class="error" v-if="!$v.expect.sexualViolence.required">Must select if there is sexual violence</p>
+                </div>
+            </div>
+			<div v-if="expect.sexualViolence">
 				<div class="create-field">
-
 					<label class="area"> Explain more about the sexual violence </label>
 		            <textarea 
 		            v-model="expect.sexualViolenceDescription" 
@@ -144,33 +110,22 @@
 		            placeholder=" " 
 		            required 
 		            autofocus></textarea>
-		            
 	        	</div>
 			</div>
-	        <div>
-				<div class="create-field">
-
-					<label class="area">Is this experience wheelchair accessible?</label>
-					<multiselect 
-					v-model="expect.wheelchairReady" 
-					deselect-label="Can't remove this value" 
-					placeholder="Select one" 
-					:options="wheelchairOptions" 
-					open-direction="bottom"
-					:searchable="false"
-					:class="{ active: sexualViolenceActive,'error': $v.expect.wheelchairReady.$error }"
-					@click="wheelchairReadyActive = true"
-			        @blur="wheelchairReadyActive = false"
-			        @input="$v.expect.wheelchairReady.$touch"
-					:allow-empty="false">
-	  				</multiselect>
-
-	  				<div v-if="$v.expect.wheelchairReady.$error" class="validation-error">
-	    				<p class="error" v-if="!$v.expect.wheelchairReady.required">Must select if experience is wheelchair ready </p>
-	    			</div>
-
+			<div class="create-field">
+			 	<label> Is the Event Wheel Chair Accessible? </label>
+				<div id="cover">
+					<input v-model="expect.wheelchairReady" type="checkbox" id="checkbox">
+					<div id="bar"></div>
+					<div id="knob">
+						<p v-if="expect.wheelchairReady">Yes</p>
+						<p v-else="expect.wheelchairReady">No</p>
+					</div>
 				</div>
-			</div>
+                <div v-if="$v.expect.wheelchairReady.$error" class="validation-error">
+                    <p class="error" v-if="!$v.expect.wheelchairReady.required">Must select if the event is wheelchair accessible </p>
+                </div>
+		    </div>
 			<div><br>
 					Any Other Mobility Advisories?<br>
 					* Can you accommodate someone who can't stand/walk for long periods of time? <br>
@@ -217,16 +172,18 @@
 		props: {
 			event: { type:Object },
 			contact: { type:Array },
+			content: { type:Array },
 			pivots: { type:Array },
+			contentpivots: { type:Array },
 		},
 
 		data() {
 			return {
 				expect: this.initializeEventObject(),
 				contactLevelOptions: this.contact,
+				contentAdvisoryOptions: this.content,
 				contactLevel: this.pivots,
-				sexualViolenceOptions: [ 'Yes', 'No' ],
-				wheelchairOptions: [ 'Yes', 'No' ],
+				contentAdvisories: this.contentpivots,
 				eventUrl:_.has(this.event, 'slug') ? `/create-event/${this.event.slug}` : null,
 				contentActive: false,
 				contactActive: false,
@@ -235,27 +192,16 @@
 				wheelchairReadyActive: false,
 				mobilityAdvisories: false,
 				ageActive: false,
-
-
 			}
 		},
-
-		computed: {
-			showSexViolenceReason: function() {
-				if ( this.expect.sexualViolence == 'Yes' ) {
-					return 'The show includes' } else { return ''}
-			}
-		},
-
 
 		methods: {
 			initializeEventObject() {
 				return {
-					contentAdvisories: '',
 					contactAdvisories: '',
-					sexualViolence: '',
+					sexualViolence: false,
 					sexualViolenceDescription: '',
-					wheelchairReady: '',
+					wheelchairReady: false,
 					mobilityAdvisories: '',
 					ageRestriction: '',
 				}
@@ -266,7 +212,18 @@
 	            if ((input !== null) && (typeof input === "object") && (input.id !== null)) {
 	                this.expect = _.pick(input, _.intersection( _.keys(this.expect), _.keys(input) ));
 	            }
+                this.expect.wheelchairReady ? '' : this.expect.wheelchairReady = false;
+                this.expect.sexualViolence ? '' : this.expect.sexualViolence = false;
 	        },
+
+	        addTag (newTag) {
+                const tag = {
+                    advisories: newTag,
+                    id: newTag.substring(0, 0) + Math.floor((Math.random() * 10000000))
+                }
+                this.contentAdvisoryOptions.push(tag)
+                this.contentAdvisories.push(tag)
+            },
 
 	        //submit data to the database
 			async submitExpectations() {
@@ -274,9 +231,13 @@
                 if (this.$v.$invalid) { return false; };
                	let data = this.expect;
                	data.contactLevel = this.contactLevel.map(a => a.id);
+               	data.contentAdvisory = this.contentAdvisories.map(a => a.advisories);
 
 				axios.patch(`${this.eventUrl}/expect`, data)
-				.then(response => { window.location.href = `${this.eventUrl}/title`; });
+				.then(response => { 
+                    window.location.href = `${this.eventUrl}/images`; 
+                })
+				.catch(error => { console.log(error.response.data); });
 			},
 		},
 
@@ -289,15 +250,6 @@
         		required
         	},
 			expect: {
-				contentAdvisories: {
-			       required,
-			   	},
-			   	sexualViolence: {
-			       required,
-			   	},
-			   	wheelchairReady: {
-			       required,
-			   	},
 			   	mobilityAdvisories: {
 			       required,
 			   	},
@@ -306,8 +258,13 @@
 			   	},
 			   	ageRestriction: {
 			       required,
-			       numeric
 			   	},
+                wheelchairReady: {
+                    required,
+                },
+                sexualViolence: {
+                    required,
+                },
 			},	
 		},
     };

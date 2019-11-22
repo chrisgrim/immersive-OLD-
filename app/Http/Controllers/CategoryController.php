@@ -9,9 +9,14 @@ use App\Http\Requests\CategoryStoreRequest;
 
 class CategoryController extends Controller
 {
+    /**
+     * Checks for admin before allowing controller access
+     *
+     * @return \Illuminate\Http\__construct
+     */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('admin');
     }
     /**
      * Display a listing of the resource.
@@ -20,7 +25,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -28,9 +33,10 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Event $event)
+    public function create()
     {
-        return view('categories.create');
+        $categories = Category::all();
+        return view('adminArea.categories',compact('categories'));
     }
 
     /**
@@ -39,13 +45,11 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CategoryStoreRequest $request, Event $event)
+    public function store(Request $request)
     {
-        $this->authorize('update', $event);
-
-        $categories = Category::firstOrCreate($request->except(['_token']));
-
-        return redirect('/');
+        $category = Category::create($request->except(['imagePath']));
+        $category->saveFile($request, $category);
+        return back();
     }
 
     /**
@@ -79,7 +83,10 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $category->update($request->all());
+        $category->saveFile($request, $category);
+        return back();
+
     }
 
     /**

@@ -20,8 +20,10 @@ class CreateTicketsTable extends Migration
             $table->decimal('ticket_price', 6, 2)->nullable();
             $table->longtext('description')->nullable();
             $table->integer('ticket_amount')->nullable();
-            $table->softDeletes();
             $table->timestamps();
+            $table->foreign('show_id')
+                    ->references('id')->on('shows')
+                    ->onDelete('cascade');
         });
     }
 

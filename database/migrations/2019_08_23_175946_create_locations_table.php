@@ -16,7 +16,7 @@ class CreateLocationsTable extends Migration
         Schema::create('locations', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('event_id');
-            $table->string('hiddenLocationToggle')->nullable();
+            $table->boolean('hiddenLocationToggle')->default(0);
             $table->string('hiddenLocation')->nullable();
             $table->string('home')->nullable();
             $table->string('street')->nullable();
@@ -26,11 +26,10 @@ class CreateLocationsTable extends Migration
             $table->integer('postal_code')->nullable();
             $table->DECIMAL('longitude', 11, 8)->nullable();
             $table->DECIMAL('latitude', 10 ,8)->nullable();
-            $table->softDeletes();
-            // $table->foreign('event_id')
-            //       ->references('id')->on('events')
-            //       ->onDelete('cascade');
             $table->timestamps();
+            $table->foreign('event_id')
+                    ->references('id')->on('events')
+                    ->onDelete('cascade');
         });
     }
 

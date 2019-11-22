@@ -17,6 +17,10 @@ Auth::routes();
 
 Route::RESOURCE('events', 'EventController');
 Route::RESOURCE('categories', 'CategoryController');
+Route::RESOURCE('regions', 'RegionsController');
+Route::RESOURCE('contactlevels', 'ContactLevelsController');
+Route::RESOURCE('contentadvisories', 'ContentAdvisoriesController');
+Route::RESOURCE('genres', 'GenresController');
 
 // ----------   Search Page -------
 // Adds Top Search to Session
@@ -26,11 +30,16 @@ Route::GET('/index/search', 'SearchController@index');
 // This is the search for vuex
 Route::POST('/vuex/search', 'SearchController@filterIndex');
 
+//Admin Area
+Route::GET('/admin/dashboard', 'AdminAreaController@index');
+Route::GET('/approve/events', 'AdminAreaController@approve');
+Route::GET('/approve/events/{event}', 'AdminAreaController@showApproval');
+Route::POST('/approve/{event}', 'AdminAreaController@success');
+Route::POST('/unapprove/{event}', 'AdminAreaController@fail');
 
-//User Pages
+//User Profile Pages
 Route::RESOURCE('users', 'ProfilesController');
 
-Route::GET('/citylist/generate', 'CityListsController@generate');
 
 // favorites Button
 Route::GET('myFavorites/{user}', 'FavoritesController@index');
@@ -42,15 +51,18 @@ Route::GET('favorite/{event}/login', 'FavoritesController@loginToFavorite');
 Route::GET('/create-event/edit', 'EventController@editEvents');
 
 // Create Paths
+Route::GET('/create-event/{event}/organizer', 'OrganizerController@create');
+Route::POST('/create-event/{event}/organizer', 'OrganizerController@store');
+Route::POST('/create-event/{event}/{organizer}/organizer', 'OrganizerController@update');
+
+Route::GET('/create-event/{event}/title', 'EventController@title');
+Route::PATCH('/create-event/{event}/title ', 'EventController@updateTitle');
+
 Route::GET('/create-event/{event}/location', 'LocationController@create');
 Route::PATCH('/create-event/{event}/location', 'LocationController@store');
 
 Route::GET('/create-event/{event}/category', 'EventController@createCategory');
 Route::PATCH('/create-event/{event}/category', 'EventController@updateCategory');
-
-Route::GET('/create-event/{event}/organizer', 'OrganizerController@create');
-Route::POST('/create-event/{event}/organizer', 'OrganizerController@store');
-Route::POST('/create-event/{event}/{organizer}/organizer', 'OrganizerController@update');
 
 Route::GET('/create-event/{event}/shows', 'ShowsController@create');
 Route::POST('/create-event/{event}/shows/tmp', 'ShowsController@tempStore');
@@ -64,14 +76,12 @@ Route::PATCH('/create-event/{event}/description ', 'DescriptionController@store'
 Route::GET('/create-event/{event}/expect', 'ExpectController@create');
 Route::PATCH('/create-event/{event}/expect ', 'ExpectController@store');
 
-Route::GET('/create-event/{event}/title', 'EventController@title');
-Route::PATCH('/create-event/{event}/title ', 'EventController@updateTitle');
-
 Route::GET('/create-event/{event}/images', 'ImageController@create');
 Route::POST('/create-event/{event}/images', 'ImageController@store');
 
+Route::GET('/create-event/{event}/thankyou', 'EventController@thanks');
 
-// Route::fallback(function () {
-//     return 'test';
-// });
+//Generate City List
+Route::GET('/citylist/generate', 'CityListsController@generate');
+
 

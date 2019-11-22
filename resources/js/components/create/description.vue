@@ -1,10 +1,8 @@
 <template>
 	<div>
-        <div>
-            <h2> Event Description</h2>
-        </div>
-        <div>
-            <p>What can your guests expect with the event?</p>
+        <div class="create-title">
+            <h2>Event Description</h2>
+            <p>This is your main event description.</p>
         </div>
         <div>
             <div class="create-field">
@@ -14,7 +12,7 @@
                 class="create-input area"  
                 name="description" 
                 v-model="description" 
-                placeholder=" "
+                placeholder="eg. Our super scary event will bring your fears to the surface..."
                 :class="{ active: descriptionActive,'error': $v.description.$error }"
                 @input="$v.description.$touch"
                 @click="descriptionActive = true"
@@ -25,7 +23,7 @@
                 </div>
             </div>
             <div class="create-field">
-                <label>Event Website</label>
+                <label>Event Website Url</label>
                 <input 
                 type="text" 
                 class="create-input" 
@@ -34,15 +32,14 @@
                 @click="websiteActive = true"
                 @blur="websiteActive = false"
                 @input="$v.websiteUrl.$touch"
-                placeholder=" "
+                placeholder="Leave blank if using Organizer Website Url"
                 />
                 <div v-if="$v.websiteUrl.$error" class="validation-error">
-                    <p class="error" v-if="!$v.websiteUrl.required">Must enter an Event Website </p>
                     <p class="error" v-if="!$v.websiteUrl.url">Must be a Url (https://...)</p>
                 </div>
             </div>
             <div class="create-field">   
-                <label>Ticket Url</label>
+                <label>Ticket Url (If different from Organizer Website)</label>
                 <input 
                 type="text" 
                 class="create-input"  
@@ -51,15 +48,15 @@
                 @click="ticketActive = true"
                 @blur="ticketActive = false"
                 @input="$v.ticketUrl.$touch"
-                placeholder=" "
+                placeholder="Leave blank if using Organizer Website Url"
                 />
                 <div v-if="$v.ticketUrl.$error" class="validation-error">
-                    <p class="error" v-if="!$v.ticketUrl.required">Enter a ticket Url, Can be the same as website </p>
                     <p class="error" v-if="!$v.ticketUrl.url"> Must be a Url (https://...)</p>
                 </div>
             </div>
-            <div>
-                Event Genre
+            <div class="create-field"> 
+                <label>Event Genre</label>
+                <p>Select from our top genres or add your own.</p>
                 <multiselect 
                 v-model="genreName"
                 class="create-input"
@@ -74,7 +71,6 @@
                 :class="{ active: genreActive,'error': $v.genreName.$error }"
                 @search-change="asyncFind"
                 @tag="addTag"
-                @open="loadGenres"
                 @input="$v.genreName.$touch"
                 @click="genreActive = true"
                 @blur="genreActive = false"
@@ -139,16 +135,13 @@
                 .then(response => { window.location.href = `${this.eventUrl}/expect`; });
 			},
 
-            //on genre search box open assign option list to the original list of genres
-            loadGenres() {
-                this.options = this.genres;
-            },
-
             //Search list of Genres as user Types then add response to the options list
             asyncFind (query) {
                 axios.get('/api/genre/search', { params: { keywords: query } })
                 .then(response => {
-                    this.options = response.data;
+                    console.log(response.data);
+                    response.data.length ? this.options = response.data : '';
+                    // this.options = response.data;
                 });
             },
 
@@ -172,11 +165,9 @@
                 required
             },
             websiteUrl: {
-               required,
                url,
             },
             ticketUrl: {
-               required,
                url
             },
         },

@@ -30,8 +30,9 @@ class CreateEventsTable extends Migration
             $table->string('overallRating')->default(0);
             $table->json('location_latlon')->nullable();
             $table->dateTime('closingDate')->nullable();
-            $table->boolean('approved')->nullable()->default(null);
-            $table->softDeletes();
+            $table->string('price_range')->nullable();
+            $table->string('approval_process')->default('inProgress');
+            $table->boolean('approved')->default(0);
             $table->timestamps();
         });
     }

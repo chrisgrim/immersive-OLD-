@@ -2,6 +2,6 @@
 
 @section('created')
 
-<create-expect :event="{{$event}}" :contact="{{$contactLevels}}" :pivots="{{$pivots}}">	
+<create-expect :event="{{$event}}" :contact="{{$contactLevels}}" :content="{{$contentAdvisories}}" :pivots="{{$pivots}}" :contentpivots="{{$contentpivots}}">	
 
 @endsection

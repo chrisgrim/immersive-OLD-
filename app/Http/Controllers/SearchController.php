@@ -87,7 +87,7 @@ class SearchController extends Controller
             $ajaxGenre = Genre::search($request->keywords)
             ->rule(GenreSearchRule::class)
             ->get();
-        } else { $ajaxOrganizers = null; };
+        } else { $ajaxGenre = null; };
         return response()->json($ajaxGenre);
     }
 

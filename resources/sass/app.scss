@@ -2,8 +2,10 @@
 // Variables
 @import 'variables';
 
-// Event Edit
+// Events
 @import 'events/event-edit';
+@import 'events/event-show';
+@import 'events/event-index';
 
 // Elements
 @import 'elements';
@@ -25,4 +27,8 @@
 
 // Nav
 @import 'nav';
+
+// Admin Category
+@import 'adminarea/category';
+@import 'adminarea/nav';
 

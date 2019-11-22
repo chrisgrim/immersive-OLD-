@@ -25,7 +25,6 @@ class CreateOrganizersTable extends Migration
             $table->string('instagramHandle')->nullable();
             $table->string('twitterHandle')->nullable();
             $table->string('facebookHandle')->nullable();
-            $table->softDeletes();
             $table->timestamps();
         });
     }

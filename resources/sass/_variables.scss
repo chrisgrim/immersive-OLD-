@@ -44,3 +44,34 @@ select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
 -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
 }
+.leaflet-touch .leaflet-control-attribution, .leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar {
+    display: none;
+}
+
+.zoom-in button {
+    background: white;
+    border: none;
+    padding: 1.2rem;
+    border-radius: 1rem 1rem 0rem 0rem;
+    &:hover {
+        background: #e8e8e8;
+    }
+}
+.zoom-out button {
+    background: white;
+    border: none;
+    padding: 1.2rem;
+    border-radius: 0rem 0rem 1rem 1rem;
+    &:hover {
+        background: #e8e8e8;
+    }
+}
+.zoom-button-section {
+    position: absolute;
+    right:0;
+    top:0;
+    margin: 2.4rem;
+    z-index: 900;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 4px 24px, rgba(0, 0, 0, 0.04) 0px 0px 0px 1px !important;
+    border-radius: 1rem;
+}

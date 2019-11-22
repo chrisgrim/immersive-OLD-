@@ -1,6 +1,11 @@
 <template>
     <div>
-        <div>
+        <div class="create-title">
+            <h2>Show Dates and Pricing</h2>
+            <p>Enter the show dates and pricing.</p>
+        </div>
+        <div class="create-field">
+            <label> Select all show dates</label>
             <flat-pickr
                 v-model="dates"
                 :config="config"                                                  
@@ -8,13 +13,11 @@
                 placeholder="Select date"               
                 name="dates">
             </flat-pickr>
+            <div v-if="$v.dates.$error" class="validation-error">
+                <p class="error" v-if="!$v.dates.required">Must add at least 1 show date</p>
+            </div>
         </div>
-        <div v-if="$v.dates.$error" class="validation-error">
-            <p class="error" v-if="!$v.dates.required">Must add at least 1 show date</p>
-        </div>
-        
         <div class="create-field">
-
             <label class="area"> Show Times </label>
             <p>Give a brief description of your show times</p>
             <textarea 
@@ -29,48 +32,50 @@
             @input="$v.showTimes.$touch"
             autofocus>
             </textarea>
-
             <div v-if="$v.showTimes.$error" class="validation-error">
                 <p class="error" v-if="!$v.showTimes.required">Must enter your show times</p>
             </div>
         </div>
-        <div class="ticket-box">
-            <div v-for="(v, index) in $v.tickets.$each.$iter" class="ticket-box-grid">
-                <div class="create-field">
-                    <label>Ticket Type</label>
-                    <input 
-                    class="create-input"  
-                    name="name"
-                    :class="{ active: ticketActive,'error': v.name.$error }"
-                    @click="ticketActive = true"
-                    @blur="ticketActive = false"
-                    v-model="v.name.$model" 
-                    placeholder="ex: General Admission, VIP, Student"
-                    />
-                    <div v-if="v.name.$error" class="validation-error">
-                        <p class="error" v-if="!v.name.required">Must Enter Ticket Name</p>
+        <div class="create-field">
+            <label class="area"> Ticket types and prices </label>
+            <div class="ticket-box">
+                <div v-for="(v, index) in $v.tickets.$each.$iter" class="ticket-box-grid">
+                    <div class="create-field">
+                        <label>Ticket Type</label>
+                        <input 
+                        class="create-input"  
+                        name="name"
+                        :class="{ active: ticketActive,'error': v.name.$error }"
+                        @click="ticketActive = true"
+                        @blur="ticketActive = false"
+                        v-model="v.name.$model" 
+                        placeholder="ex: General Admission, VIP, Student"
+                        />
+                        <div v-if="v.name.$error" class="validation-error">
+                            <p class="error" v-if="!v.name.required">Must Enter Ticket Name</p>
+                        </div>
                     </div>
-                </div>
-                <div class="create-field">
-                    <label>Ticket Price</label>
-                    <input
-                    class="create-input"
-                    :class="{ active: ticketPriceActive,'error': v.ticket_price.$error }"
-                    @click="ticketPriceActive = true"
-                    @blur="ticketPriceActive = false"
-                    v-model="v.ticket_price.$model"
-                    v-money="v.ticket_price.$model"
-                    @keydown="$event.key === '-' ? $event.preventDefault() : null"
-                    v-bind="money"
-                    placeholder="$0.00"
-                    />
-                    <div v-if="v.ticket_price.$error" class="validation-error">
-                        <p class="error" v-if="!v.ticket_price.minValue">Must Enter Price</p>
+                    <div class="create-field">
+                        <label>Ticket Price</label>
+                        <input
+                        class="create-input"
+                        :class="{ active: ticketPriceActive,'error': v.ticket_price.$error }"
+                        @click="ticketPriceActive = true"
+                        @blur="ticketPriceActive = false"
+                        v-model="v.ticket_price.$model"
+                        v-money="v.ticket_price.$model"
+                        @keydown="$event.key === '-' ? $event.preventDefault() : null"
+                        v-bind="money"
+                        placeholder="$0.00"
+                        />
+                        <div v-if="v.ticket_price.$error" class="validation-error">
+                            <p class="error" v-if="!v.ticket_price.minValue">Must Enter Price</p>
+                            <p class="error" v-if="!v.ticket_price.required">Must Enter Price</p>
+                        </div>
+                        <button @click.prevent="deleteRow(index)" class="delete-circle">X</button>
                     </div>
-                    <button @click.prevent="deleteRow(index)" class="delete-circle">X</button>
                 </div>
             </div>
-            
         </div>
         <div class="add-button">
             <button class="add-button" @click.prevent="addTickets">&#43; Ticket Types</button>
@@ -229,7 +234,9 @@ export default {
                 'tickets': this.tickets
             };
             axios.post(`${this.eventUrl}/shows`, data)
-            .then(response => { window.location.href = `${this.eventUrl}/description`; });
+            .then(response => { 
+                window.location.href = `${this.eventUrl}/description`; 
+            });
         },
 
     },
@@ -253,6 +260,7 @@ export default {
                     required,
                 },
                 ticket_price: {
+                    required,
                     minValue: minValue(0.01),
                 },
             }

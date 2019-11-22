@@ -33,7 +33,9 @@ class DescriptionController extends Controller
     public function create(Event $event)
     {
         $pivots = $event->genres()->get();
-        $genres = Genre::all();
+        $genres = Genre::where('admin', true)
+                        ->orWhere('user_id', auth()->user()->id)
+                        ->get();
 
         return view('create.description', compact('event', 'pivots', 'genres'));
     }
@@ -50,7 +52,12 @@ class DescriptionController extends Controller
 
         if ($request->has('genre')) {
             foreach ($request['genre'] as $genre) {
-                Genre::firstOrCreate(['genre' => $genre]);
+                Genre::firstOrCreate([
+                    'genre' => $genre
+                ],
+                [
+                    'user_id' => auth()->user()->id,
+                ]);
             };
             $newSync = Genre::all()->whereIn('genre', $request['genre']);
             $event->genres()->sync($newSync);

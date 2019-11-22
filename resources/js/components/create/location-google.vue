@@ -2,37 +2,23 @@
 	<div class="create-content">
 		<div class="create-title">
     		<h2> Location</h2>
+			<p>We use this data to allow users to search by city to find your event.</p>
     	</div>
     	<div class="create-form locations">
 			<div class="location-section-1">
 			    <div class="create-field">
+				 	<label> Is your location hidden? </label>
 					<div id="cover">
 						<input v-model="location.hiddenLocationToggle" type="checkbox" id="checkbox">
 						<div id="bar"></div>
-						<div id="knob">Yes</div>
+						<div id="knob">
+							<p v-if="location.hiddenLocationToggle">Yes</p>
+							<p v-else="location.hiddenLocationToggle">No</p>
+						</div>
 					</div>
-
-					<label>Is The Location Hidden?</label>
-					<multiselect 
-					v-model.trim="location.hiddenLocationToggle" 
-					deselect-label="Can't remove this value" 
-					placeholder="Is the location is being withheld?" 
-					:options="locationOptions" 
-					open-direction="bottom"
-					:searchable="false" 
-					:allow-empty="false"
-					:class="{ active: hiddenActive, 'error': $v.location.hiddenLocationToggle.$error}"
-					@click="hiddenActive = true"
-			        @blur="hiddenActive = false"
-					/>
-					<div v-if="$v.location.hiddenLocationToggle.$error" class="validation-error">
-    					<p class="error" v-if="!$v.location.hiddenLocationToggle.required">Is the Location Hidden?</p>
-    				</div>
-
 			    </div>
-		    	<div class="create-field" v-if="showHiddenLocation">
-
-					<label> Please enter how participants will be notified </label>
+		    	<div class="create-field" v-if="location.hiddenLocationToggle">
+					<label> Please enter how participants will be notified of the location </label>
 		            <textarea 
 		            v-model.trim="location.hiddenLocation" 
 		            class="create-input area" 
@@ -40,42 +26,36 @@
 		            :class="{ active: notifiedActive}"
 		            required 
 		            autofocus
-		 			placeholder=" "
+		 			placeholder="...the night before you will receieve an email containing the location..."
 		            @click="notifiedActive = true"
 			        @blur="notifiedActive = false"
 		            />
-		            
 		        </div>
 	    	</div>
 	    	<div class="location-section-2">
 			    <div class="create-field">
-
-					<label v-if="showHiddenLocation"> City </label>
-					<label v-else="specificLocation"> Location </label>
-						<gmap-autocomplete
-						@place_changed="setPlace"
-						class="create-input"
-						autocomplete="false"
-						:class="{ active: locationActive, 'error': $v.location.latitude.$error }"
-						:placeholder="locationPlaceholder"
-						@click="locationActive = true"
-			        	@blur="locationActive = false">
-						</gmap-autocomplete>
-						<div v-if="$v.location.latitude.$error" class="validation-error">
-							<p class="error" v-if="!$v.location.latitude.required">Please select from the list of locations</p>
-						</div>
-
+					<label> Location </label>
+					<p>Put address if you have one, otherwise select your city.</p>
+					<gmap-autocomplete
+					@place_changed="setPlace"
+					class="create-input"
+					autocomplete="false"
+					:class="{ active: locationActive, 'error': $v.location.latitude.$error }"
+					:placeholder="locationPlaceholder"
+					@click="locationActive = true"
+		        	@blur="locationActive = false">
+					</gmap-autocomplete>
+					<div v-if="$v.location.latitude.$error" class="validation-error">
+						<p class="error" v-if="!$v.location.latitude.required">Please select from the list of locations</p>
+					</div>
 				</div>
 			</div>
 			<div class="location-section-3">
-
 					<div v-if="center">
 						<div style="width:400px;height:400px">
 							<l-map :zoom="zoom" :center="center">
-							<l-tile-layer 
-							:url="url"></l-tile-layer>
-							<l-marker 
-							:lat-lng="center"></l-marker>
+							<l-tile-layer :url="url"></l-tile-layer>
+							<l-marker :lat-lng="center"></l-marker>
 							</l-map>
 						</div>	
 					</div>
@@ -106,7 +86,6 @@
 				</div>
 			</div>
 			
-				
 		    <div class="create-button">
 		        <button @click.prevent="submitLocation()" class="create"> Next </button>
 		    </div>
@@ -140,11 +119,8 @@
 		},
 
 		computed: {
-			showHiddenLocation: function() {
-				return this.location.hiddenLocationToggle === 'Yes' ? '1': '';
-			},
 			locationPlaceholder() {
-				return this.event.location.hiddenLocationToggle ? (this.event.location.home ? this.event.location.home : '') + ' ' + (this.event.location.street ? this.event.location.street + ', ' : '') + '' + this.event.location.city : 'Event Address';
+				return this.event.location.city ? (this.event.location.home ? this.event.location.home : '') + ' ' + (this.event.location.street ? this.event.location.street + ', ' : '') + '' + this.event.location.city : 'Event Address';
 			}
 		},
 
@@ -153,11 +129,9 @@
 				location:this.initializeEventObject(),
 				regionOptions:this.regions,
 				selectedRegions: this.pivots,
-				locationOptions: [ 'Yes', 'No' ],
 				eventUrl:_.has(this.event, 'slug') ? `/create-event/${this.event.slug}` : null,
 				zoom:14,
 				center: '',
-				locToggle: true,
 				url:'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
 				attribution:'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
 				locationActive: false,
@@ -175,7 +149,7 @@
 	                country: '',
 	               	postal_code: '',
 	                hiddenLocation: '',
-	 				hiddenLocationToggle: '',
+	 				hiddenLocationToggle: 0,
 	                latitude: '',
 	               	longitude: '',
 				}
@@ -186,7 +160,7 @@
                 if ((input !== null) && (typeof input === "object") && (input.id !== null)) {
                     this.location = _.pick(input, _.intersection( _.keys(this.location), _.keys(input) ));
                 };
-				this.event.location.hiddenLocationToggle ? this.center = L.latLng(this.event.location.latitude, this.event.location.longitude) : '';
+				this.event.location.latitude ? this.center = L.latLng(this.event.location.latitude, this.event.location.longitude) : '';
             },
 			
 			//checks for validations
@@ -199,10 +173,13 @@
            		data.Region = this.selectedRegions.map(a => a.id);
 
 				axios.patch(`${this.eventUrl}/location`, data)
-				.then(response => { 					
+				.then(response => { 			
+                    console.log(response.data);		
 					window.location.href = `${this.eventUrl}/category`; 
 				})
-                .catch(errorResponse => { this.validationErrors = errorResponse.response.data.errors; });
+                .catch(errorResponse => { 
+                    this.validationErrors = errorResponse.response.data.errors; 
+                });
 			},
 
 			// adds lat and lon to leaflet map using this.center
@@ -284,9 +261,6 @@
 				required
 			},
 			location: {
-				hiddenLocationToggle: {
-					required
-				},
 			 	latitude: {
 			 		required
 			 	},

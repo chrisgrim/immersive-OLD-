@@ -13,7 +13,16 @@
 				reader.onload = e => {
 					let src = e.target.result;
 
-					this.$emit('loaded', {src, file});
+					const img = new Image();
+
+					img.onload = () => {
+                        this.$emit('loaded', {src, file, width: img.width, height: img.height});
+                    };
+
+                    img.onerror = () => {
+                        this.$emit('error');
+                    };
+                    img.src = src;
 				};
 			}
 		}

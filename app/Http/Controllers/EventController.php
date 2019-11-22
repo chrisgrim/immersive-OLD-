@@ -15,7 +15,7 @@ class EventController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->except('index','get');
+        $this->middleware('auth')->except('index','get','show');
         $this->middleware('can:update,event')
         ->except(['index','get','create','show','editEvents','store']);
     }
@@ -30,6 +30,7 @@ class EventController extends Controller
             // ->where('closingDate', '<=', 'now/d')
             ->take(6)
             ->get();
+        // $events = Event::all();
         return view('events.index',compact('events'));
     }
 
@@ -65,7 +66,7 @@ class EventController extends Controller
     {
         $event = Event::newEvent();
         if ($request->type == 'axios') { return $event; };
-        return redirect('/create-event/'. $event->slug . '/location');
+        return redirect('/create-event/'. $event->slug . '/organizer');
     }
 
     /**
@@ -76,6 +77,7 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
+        $event->load('category', 'organizer', 'location');
         return view('events.show', compact('event'));
     }
 
@@ -87,10 +89,10 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        $event->load('location');
-        $regions = Region::all();
-        $pivots = $event->regions()->get();
-        return view('create.location',compact('event','regions','pivots'));
+        // $event->load('location');
+        // $regions = Region::all();
+        // $pivots = $event->regions()->get();
+        return view('create.organizer',compact('event'));
     }
 
     /**
@@ -149,5 +151,20 @@ class EventController extends Controller
     public function title(Event $event)
     {
         return view('create.title', compact('event'));
+    }
+    public function thanks(Event $event)
+    {
+        $website = $event->organizer->website;
+        
+        if ($event->websiteUrl == null) {
+            $event->update([ 'websiteUrl' => $website ]);
+        }
+        if ($event->ticketUrl == null) {
+            $event->update([ 'ticketUrl' => $website ]);
+        }
+        $event->update([
+            'approval_process' => 'ready',
+        ]);
+        return view('create.thanks');
     }
 }

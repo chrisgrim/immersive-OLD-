@@ -1,0 +1,199 @@
+.show-heart-location {
+    position: absolute;
+    right: 2%;
+    background: white;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    top: 5%;
+    & .unhearted {
+        fill: #ffffff;
+        stroke: #717171;
+    }
+}
+.event-head-section {
+    position: relative;
+    margin-left: 24px;
+    margin-right: 24px;
+    overflow: auto;
+}
+.event-title {
+	width: 33.33333333333333%;
+	float: left;
+	padding-left: 8px;
+	padding-right: 8px;
+	min-height: 1px;
+	position: relative;
+	&_box{
+		height: 536px;
+		background-color: #F2F2F2;
+	}
+	&_content{
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		padding: 40px;
+	}
+	&_text{
+		font-size: 46px;
+		line-height: 52px;
+		max-height: 312px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-line-clamp: 6;
+		-webkit-box-orient: vertical;
+		color: #484848;
+		margin-top: 3rem;
+	}
+}
+.event-image {
+	width: 66.66666666666666%;
+	float: left;
+	height: 536px;
+	background-size: cover;
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	background-color: #F2F2F2;
+}
+.event-body {
+	margin-top: 64px;
+	margin-bottom: 72px;
+	padding: 0rem 8rem;
+    overflow: auto;
+}
+.event-description-section {
+    overflow: auto;
+    width: 100%;
+}
+.event-top-info {
+    margin-bottom: 1.6rem;
+    display: inline-flex;
+    & .text {
+        word-wrap: break-word;
+        font-size: 2rem;
+        font-weight: 800;
+        line-height: 1.2857142857142858em;
+        color: #484848;
+        margin-right:2rem;
+    }
+}
+.event-description {
+    padding:1rem;
+    min-height: 1px;
+    position: relative;
+    width: 58.333333333333336%;
+    float: left;
+    &_text{
+		margin: 0px;
+		word-wrap: break-word;
+		font-size: 16px;
+		font-weight: 400;
+		line-height: 1.75em;
+		color: #484848;
+	}
+}
+.event-organizer {
+	display: grid;
+	grid-template-columns: 10rem 1fr;
+	padding-left: 8px;
+	padding-right: 8px;
+	min-height: 1px;
+	position: relative;
+	width: 33.33333333333333%;
+	float: left;
+	margin-left: 8.333333333333332%;
+}
+.event-organizer_image {
+	& .img {
+		height:10rem;
+		width:10rem;
+		background-size: cover;
+		background-position: 50% 50%;
+		background-repeat: no-repeat;
+		border-radius: 5rem;
+	}
+}
+.event-organizer_description {
+    padding:1rem;
+    & .organizer-name {
+        margin: 0px;
+        word-wrap: break-word;
+        font-size: 2rem;
+        font-weight: 800;
+        line-height: 1.2857142857142858em;
+        color: #484848;
+    }
+    & .organizer-description {
+        margin: 0px;
+        word-wrap: break-word;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 2rem;
+        color: #484848;
+    }
+}
+.location-section{
+    margin-top:7rem;
+    overflow: auto;
+    width: 100%;
+}
+
+.location-place {
+    & .text {
+        margin: 0px;
+        word-wrap: break-word;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 1.75em;
+        color: #484848;
+    }
+}
+.location-map {
+    position: relative;
+}
+.event-bottom-bar {
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    background: white;
+    display: grid;
+    grid-template-columns: 1fr 10rem 12rem;
+    z-index: 900;
+    padding: 1.6rem 8rem;
+    align-items: center;
+    box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.14) !important;
+    & .event-name{
+        margin: 0px;
+        word-wrap: break-word;
+        font-size: 12px;
+        font-weight: 800;
+        line-height: 1.3333333333333333em;
+        letter-spacing: 0.08333333333333333em;
+        color: #767676;
+    }
+    & .event-price {
+        margin: 0px;
+        word-wrap: break-word;
+        font-size: 16px;
+        font-weight: 800;
+        line-height: 1.375em;
+        color: #484848;
+    }
+    & button {
+        margin: 0px;
+        text-decoration: none;
+        border-radius: 4px;
+        border-width: 2px;
+        border-style: solid;
+        background: #914669;
+        border-color: transparent;
+        color: white;
+        padding: 1rem;
+        font-size: 1.6rem;
+        font-weight: 600;
+        line-height: 1.375em;
+        float:right;
+    }
+}
+

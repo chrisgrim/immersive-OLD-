@@ -14,9 +14,9 @@
 					Your Favorites
 				</a>
 			</li>
-			<li v-if="user.userType.name == 'admin'">
-				<a href="/categories/create">
-					Create Categories
+			<li v-if="user.userType ? user.userType.name == 'admin' : ''">
+				<a href="/admin/dashboard">
+					Admin Dashboard
 				</a>
 			</li>
 			<li>

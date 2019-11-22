@@ -25,7 +25,6 @@ class LocationStoreRequest extends FormRequest
     {
 
         return [
-            'hiddenLocationToggle' => 'required',
             'city' => 'required',
             'region' => 'required',
             'country' => 'required',

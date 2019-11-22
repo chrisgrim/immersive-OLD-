@@ -12,7 +12,7 @@ class Expect extends Model
     * @var array
     */
     protected $fillable = [
-    	'wheelchairReady','sexualViolence','sexualViolenceDescription','contactAdvisories','mobilityAdvisories','contentAdvisories','event_id','ageRestriction'
+    	'wheelchairReady','sexualViolence','sexualViolenceDescription','mobilityAdvisories','contactAdvisories','event_id','ageRestriction'
     ];
     
     /**

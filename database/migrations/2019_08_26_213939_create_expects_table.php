@@ -16,15 +16,16 @@ class CreateExpectsTable extends Migration
         Schema::create('expects', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('event_id');
-            $table->string('wheelchairReady')->nullable();
-            $table->string('sexualViolence')->nullable();
+            $table->boolean('wheelchairReady')->nullable();
+            $table->boolean('sexualViolence')->nullable();
             $table->longtext('sexualViolenceDescription')->nullable();
-            $table->unsignedInteger('ageRestriction')->nullable();
-            $table->longtext('contactAdvisories')->nullable();
+            $table->string('ageRestriction')->nullable();
             $table->longtext('mobilityAdvisories')->nullable();
-            $table->longtext('contentAdvisories')->nullable();
-            $table->softDeletes();
+            $table->longtext('contactAdvisories')->nullable();
             $table->timestamps();
+            $table->foreign('event_id')
+                    ->references('id')->on('events')
+                    ->onDelete('cascade');
         });
     }
 

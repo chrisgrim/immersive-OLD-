@@ -64,10 +64,10 @@
 			},
 
 			createEvent() {
-				let datas = { type: 'axios' };
-				axios.post(`/events`, datas)
+				let data = { type: 'axios' };
+				axios.post(`/events`, data)
 				.then(response => { 
-					window.location.href = `/create-event/${response.data.slug}/location`; 
+					window.location.href = `/create-event/${response.data.slug}/organizer`; 
 				})
             	.catch(error => { this.serverErrors = error.response.data.errors; });
 			}

@@ -40,7 +40,7 @@ div.profile-button {
   background-size: cover;
   border-radius: 50px;
   top: -2rem;
-  left: 4rem;
+  right: 4rem;
 }
 
 
@@ -60,16 +60,16 @@ div.profile-button {
 
 
 #nav-bar{
-	position:relative;
-	border-bottom: 1px solid $line-color;
-	display:grid;
-	align-items: center;
-  background-color: $nav-background;
-	grid-template-columns: 10rem auto;
-	grid-template-rows: 8rem;
-	grid-template-areas:
-	"logo"
-	"nav-menu"
+    position:relative;
+    border-bottom: 1px solid $line-color;
+    display:grid;
+    align-items: center;
+    background-color: $nav-background;
+    grid-template-columns: 10rem auto;
+    grid-template-rows: 8rem;
+    grid-template-areas:
+    "logo"
+    "nav-menu"
 }
 
 /*NavMenu Bar Content*/
@@ -79,16 +79,15 @@ div.profile-button {
 }
 
 nav-menu, .nav-menu {
-  display: grid;
-  grid-template-columns: 1fr repeat(4, 140px);
-  text-align: center;
-  align-items: center;
-
+    display: grid;
+    grid-template-columns: 1fr repeat(4, 140px);
+    text-align: center;
+    align-items: center;
 }
 
 .desktop-menu-item {
-  position: relative;
-  margin: auto;
+    position: relative;
+    margin: auto;
 }
 
 
@@ -96,11 +95,11 @@ nav-menu, .nav-menu {
 
 .desktop-logo {
 	padding-left: 2rem;
-  & img {
-    width: 13rem;
-    padding-top: 3.6rem;
-    padding-left: 4rem;
-  }
+    & img {
+        width: 13rem;
+        padding-top: 3.6rem;
+        padding-left: 4rem;
+    }
 }
 
 .header {
@@ -119,29 +118,28 @@ nav-menu, .nav-menu {
 }
 
 .header li a {
-  display: block;
-  padding: 2rem 2rem;
-  color:white;
-
-  &:hover {
-  	background-color: #436e71;
-  }
+    display: block;
+    padding: 2rem 2rem;
+    color:white;
+    &:hover {
+        background-color: #436e71;
+    }
 }
 
 .link {
-  &.remember a{
-    font-size: 1rem;
-  }
-  & a {
+    &.remember a{
+        font-size: 1rem;
+    }
+    & a {
     font-family: $basic-font-1;
     color: $default-font-color;
     text-decoration: none;
     font-size: 1.3rem;
     font-weight: 400;
     transition: all .2s ease-in-out;
-      &:hover {
-      text-decoration:underline;
-      }
+        &:hover {
+            text-decoration:underline;
+        }
     }
 }
 
@@ -156,17 +154,17 @@ nav-menu, .nav-menu {
 /* menu */
 
 .header .menu {
-  clear: both;
-  max-height: 0;
-  transition: max-height .2s ease-out;
+    clear: both;
+    max-height: 0;
+    transition: max-height .2s ease-out;
 }
 
 .header .menu-btn {
-  display: none;
+    display: none;
 }
 
 .header .menu-btn:checked ~ .menu {
-  min-height: 100vh;
+    min-height: 100vh;
 }
 .nav-profile-image {
     width: 34px;
@@ -177,35 +175,35 @@ nav-menu, .nav-menu {
 
 
 .dropdown-label {
-  & label {
-    position:relative;
-    display:block;
-    transition:background 0.3s;
-    cursor:pointer;
-  }
-  & input {
-    display: none;
-  }
-  & input:checked ~ ul.subdropdown{
-  max-height:15rem;
-  transition:max-height 0.2s ease-in;
-  margin-top: 1.5rem;
-  }
+    & label {
+        position:relative;
+        display:block;
+        transition:background 0.3s;
+        cursor:pointer;
+    }
+    & input {
+        display: none;
+    }
+    & input:checked ~ ul.subdropdown{
+        max-height:15rem;
+        transition:max-height 0.2s ease-in;
+        margin-top: 1.5rem;
+    }
 }
 
 /*style for the second level menu*/
 ul.subdropdown{
-  z-index: 1;
-  max-height:0;
-  padding:0;
-  overflow:hidden;
-  list-style-type:none;
-  position:absolute;
-  min-width:100%;
-  right:0;
-  box-shadow: -1px 1px 5px 0px #cecece;
-  margin-right:2rem;
-  background: white;
+    z-index: 1;
+    max-height:0;
+    padding:0;
+    overflow:hidden;
+    list-style-type:none;
+    position:absolute;
+    min-width:100%;
+    right:0;
+    box-shadow: -1px 1px 5px 0px #cecece;
+    margin-right:2rem;
+    background: white;
 }
 ul.subdropdown{
   max-height:35rem;

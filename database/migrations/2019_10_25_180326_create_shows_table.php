@@ -17,8 +17,10 @@ class CreateShowsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('event_id');
             $table->dateTime('date');
-            $table->softDeletes();
             $table->timestamps();
+            $table->foreign('event_id')
+                    ->references('id')->on('events')
+                    ->onDelete('cascade');
         });
     }
 

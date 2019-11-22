@@ -28,7 +28,7 @@ class ExpectationStoreRequest extends FormRequest
             'sexualViolence' => 'required',
             'contactAdvisories' => 'required',
             'mobilityAdvisories' => 'required',
-            'contentAdvisories' => 'required',
+            'contentAdvisory' => 'required',
             'ageRestriction' => 'required'
         ];
     }

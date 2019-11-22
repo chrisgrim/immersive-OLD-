@@ -85,6 +85,8 @@ Vue.component('show-listing', require('./components/create/show-listing.vue').de
 Vue.component('create-description', require('./components/create/description.vue').default);
 Vue.component('create-expect', require('./components/create/expect.vue').default);
 
+Vue.component('admin-area-nav', require('./components/adminArea/nav.vue').default);
+
 Vue.component('event-listing', require('./components/read/event-listing.vue').default);
 Vue.component('event-listing-item', require('./components/read/event-listing-item.vue').default);
 
@@ -114,6 +116,11 @@ if(document.getElementById("create")){
       store,
       router
 	});
+};
+if(document.getElementById("admin")){
+  const create = new Vue({
+      el: '#admin',
+  });
 };
 if(document.getElementById("bodyArea")){
   const bodyArea = new Vue({

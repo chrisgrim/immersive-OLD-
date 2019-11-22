@@ -17,7 +17,7 @@ class Genre extends Model
     * @var array
     */
 	protected $fillable = [
-    	'genre'
+    	'genre','admin', 'user_id'
     ];
     
     /**
@@ -36,6 +36,14 @@ class Genre extends Model
     protected $mapping = [
         'properties' => [
             'id' => [
+                'type' => 'integer',
+                'index' => false
+            ],
+            'admin' => [
+                'type' => 'boolean',
+                'index' => false
+            ],
+            'user_id' => [
                 'type' => 'integer',
                 'index' => false
             ],

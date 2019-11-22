@@ -1,10 +1,8 @@
 <template>
-	<div class="location-section-1">
-		<div class="create-guide-title">
-    	<h2> What type of Event are you hosting?</h2>
-	    </div>
-	    <div>
-	    	<p>Choose the category that best describes your event</p>
+	<div>
+		<div class="create-title">
+	    	<h2> What type of Event are you hosting?</h2>
+		    <p>Choose the category that best describes your event</p>
 	    </div>
 		 <div class="organization-form">
 	        <multiselect 
@@ -23,7 +21,7 @@
 	        @blur="categoryActive = false" 
 	        >
 	            <template slot="option" slot-scope="props">
-	                <img class="option__image" :src="props.option.categoryImagePath ? `/storage/${props.option.categoryImagePath}` : defaultImage"
+	                <img class="option__image" :src="props.option.imagePath ? `/storage/${props.option.imagePath}` : defaultImage"
 	                alt="defaultImage">
 	                <div class="option__desc">
 	                    <span class="option__title">{{ props.option.name }}</span>
@@ -82,7 +80,7 @@
 				if (this.$v.$invalid) { return false };
 				
 				axios.patch(`${this.eventUrl}/category`, this.selectedCategory)
-				.then(response => { window.location.href = `${this.eventUrl}/organizer` });
+				.then(response => { window.location.href = `${this.eventUrl}/shows` });
 			}
 		},
 

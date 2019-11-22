@@ -41,10 +41,8 @@ class ImageController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, Event $event)
-    {   
-        if ($request->hasFile('image')) {
-            EventImage::saveFile($request, $event);
-        }
+    {
+        EventImage::saveFile($request, $event);
     }
 
     /**

@@ -4,12 +4,11 @@ namespace App;
 
 use ScoutElastic\Searchable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Intervention\Image\ImageManagerStatic as Image;
 
 class Event extends Model
 {
-    use Searchable, Favoritable, SoftDeletes;
+    use Searchable, Favoritable;
 
     protected $indexConfigurator = EventIndexConfigurator::class;
 
@@ -24,7 +23,7 @@ class Event extends Model
     * @var array
     */
 	protected $fillable = [
-    	'slug', 'user_id', 'category_id','organizer_id','description','name','largeImagePath','thumbImagePath','expectation_id', 'organizer_id', 'location_latlon', 'closingDate','websiteUrl','ticketUrl','show_times'
+    	'slug', 'user_id', 'category_id','organizer_id','description','name','largeImagePath','thumbImagePath','expectation_id', 'organizer_id', 'location_latlon', 'closingDate','websiteUrl','ticketUrl','show_times','price_range', 'approval_process', 'approved'
 
     ];
 
@@ -51,6 +50,7 @@ class Event extends Model
     {
         return $this->belongsTo(User::class);
     }
+
     /**
     * Each event belongs to one Category
     *
@@ -60,6 +60,7 @@ class Event extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
     /**
     * Each event belongs to One Organizer
     *
@@ -69,6 +70,7 @@ class Event extends Model
     {
         return $this->belongsTo(Organizer::class);
     }
+
     /**
      * Each Event has One Location
      *
@@ -78,6 +80,7 @@ class Event extends Model
     {
         return $this->hasOne(Location::class);
     }
+
     /**
      * Each Event has one Expectation Model
      *
@@ -87,6 +90,7 @@ class Event extends Model
     {
         return $this->hasOne(Expect::class);
     }
+
     /**
      * Each event has many shows
      *
@@ -96,6 +100,7 @@ class Event extends Model
     {
         return $this->hasMany(Show::class);
     }
+
     /**
      * Each event can belong to many shows
      *
@@ -105,6 +110,7 @@ class Event extends Model
     {
         return $this->belongsToMany(Genre::class);
     }
+
     /**
      * Each event can belong to many regions
      *
@@ -114,6 +120,7 @@ class Event extends Model
     {
         return $this->belongsToMany(Region::class);
     }
+
     /**
      * Each event can belong to many ContactLevels
      *
@@ -122,6 +129,16 @@ class Event extends Model
     public function contactlevels() 
     {
         return $this->belongsToMany(ContactLevel::class);
+    }
+
+    /**
+     * Each event can belong to many ContactLevels
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+     */
+    public function contentadvisories() 
+    {
+        return $this->belongsToMany(ContentAdvisory::class);
     }
 
     /**
@@ -182,6 +199,42 @@ class Event extends Model
                     ],
                 ]
             ],
+            'expectation' => [
+                'properties' => [
+                    'sexualViolence' => [
+                        'type' => 'text',
+                        'index' => false
+                    ],
+                    'wheelchairReady' => [
+                        'type' => 'text',
+                        'index' => false
+                    ],
+                    'created_at' => [
+                        'type' => 'text',
+                        'index' => false
+                    ],
+                    'updated_at' => [
+                        'type' => 'text',
+                        'index' => false
+                    ],
+                ]
+            ],
+            'location' => [
+                'properties' => [
+                    'hiddenLocationToggle' => [
+                        'type' => 'text',
+                        'index' => false
+                    ],
+                    'created_at' => [
+                        'type' => 'text',
+                        'index' => false
+                    ],
+                    'updated_at' => [
+                        'type' => 'text',
+                        'index' => false
+                    ],
+                ]
+            ],
             'slug' => [
                 'type' => 'text',
                 'index' => false
@@ -226,10 +279,14 @@ class Event extends Model
                 'index' => false
             ],
             'approved' => [
-                'type' => 'integer',
+                'type' => 'text',
                 'index' => false
             ],
             'created_at' => [
+                'type' => 'text',
+                'index' => false
+            ],
+            'price_range' => [
                 'type' => 'text',
                 'index' => false
             ],

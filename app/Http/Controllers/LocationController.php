@@ -54,7 +54,6 @@ class LocationController extends Controller
      */
     public function store(LocationStoreRequest $request, Event $event)
     {
-        
         $event->location->update($request->all());
         $event->regions()->sync(request('Region'));
         $event->update([

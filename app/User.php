@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 
 class User extends Authenticatable
 {
@@ -44,7 +45,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $appends = ['hasCreatedEvents', 'userType'];
+    protected $appends = ['hasCreatedEvents', 'userType', 'needsApproval'];
 
     /**
      * User can have many events
@@ -101,6 +102,16 @@ class User extends Authenticatable
     public function getHasCreatedEventsAttribute()
     {
         return auth()->user()->events()->count() ? true : false;    
+    }
+
+    /**
+    * Creates a new event
+    *
+    * @return count of events needing approval
+    */
+    public function getNeedsApprovalAttribute()
+    {
+        return auth()->user()->isAdmin() ? Event::where('approval_process', 'ready')->count() : null;
     }
 
     /**

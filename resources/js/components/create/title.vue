@@ -1,10 +1,8 @@
 <template>
 	<div>
-		<div class="create-guide-title">
-    	<h2> What is the Title of your Event?</h2>
-	    </div>
-	    <div>
-	    	<p>Make it a good one!</p>
+		<div class="create-title">
+	    	<h2> What is the Title of your Event?</h2>
+		    <p>Make it a good one!</p>
 	    </div>
 	    <div class="floating-form">
 		    <div class="create-field">
@@ -79,7 +77,7 @@
 				if (this.$v.$invalid) { return false }
 				
 				axios.patch(`${this.eventUrl}/title`, this.submitObject)
-				.then(response => { window.location.href = `${this.eventUrl}/images`; })
+				.then(response => { window.location.href = `${this.eventUrl}/location`; })
             	.catch(error => { this.serverErrors = error.response.data.errors; });
 			}
 		},
