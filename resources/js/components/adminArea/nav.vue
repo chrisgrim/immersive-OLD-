@@ -30,7 +30,7 @@
         </div>
         </a>
 
-         <a href="/approve/events">
+         <a href="/finish/events">
             <div class="checklist-section">
                 <div class="item">
                     <div v-if="user.needsApproval" class="notification">

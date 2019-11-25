@@ -10,7 +10,7 @@
     <div>
         @foreach($events as $event)
             <div>
-                <a href="/approve/events/{{$event->slug}}">
+                <a href="/finish/events/{{$event->slug}}">
                     {{$event->name}}
                 </a>
             </div>

@@ -3,7 +3,9 @@
 		<a :href="'/events/' + event.slug">
 			<div class="event-grid">
 				<div class="event-grid_image">
-					<div class="grid-background-image" :style="divBackground">
+					<div 
+                    class="grid-background-image" 
+                    :style="{ backgroundImage: `url('${this.event ? /storage/ + this.event.thumbImagePath : ''}')` }">
 						<div :class="showEventClass">
 							<svg viewBox="0 0 32 32" class="unhearted">
 								<a :href="'/favorite/' + event.slug + '/login'">

@@ -97,11 +97,13 @@ class SearchController extends Controller
 
             $ajaxCity = CityList::search($request->keywords)
             ->rule(CityListSearchRule::class)
+            ->orderBy('population', 'desc')
             ->get();
 
         } else {
 
             $ajaxCity = CityList::search('*')
+            ->orderBy('population', 'desc')
             ->take(20)
             ->get();
 

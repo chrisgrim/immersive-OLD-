@@ -9,7 +9,7 @@
                 name="dates">
             </flat-pickr>
 		</div>
-		<div id="app">
+		<div class="event-list-section">
 			<div id="grid-section">
                 <div v-for="event in events">
                     <event-listing-item :event="event"></event-listing-item>

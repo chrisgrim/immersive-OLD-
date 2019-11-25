@@ -27,10 +27,9 @@ class EventController extends Controller
     public function index(Event $event)
     {
         $events = Event::search('*')
-            // ->where('closingDate', '<=', 'now/d')
+            ->where('closingDate', '>=', 'now/d')
             ->take(6)
             ->get();
-        // $events = Event::all();
         return view('events.index',compact('events'));
     }
 
@@ -89,9 +88,7 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        // $event->load('location');
-        // $regions = Region::all();
-        // $pivots = $event->regions()->get();
+        $event->load('organizer');
         return view('create.organizer',compact('event'));
     }
 

@@ -17,6 +17,7 @@ class CreateCityListsTable extends Migration
 
             $table->bigIncrements('id');
             $table->string('name');
+            $table->unsignedBigInteger('population');
             $table->DECIMAL('latitude', 10 ,8)->nullable();
             $table->DECIMAL('longitude', 11, 8)->nullable();
             $table->timestamps();            

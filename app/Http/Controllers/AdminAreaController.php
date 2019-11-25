@@ -100,7 +100,7 @@ class AdminAreaController extends Controller
      * @param  \App\AdminArea  $adminArea
      * @return \Illuminate\Http\Response
      */
-    public function approve()
+    public function approval()
     {
         $events = Event::where('approval_process', 'ready')->get();
         return view('adminArea.approval',compact('events'));
@@ -128,9 +128,10 @@ class AdminAreaController extends Controller
     {
         $event->update([
             'approval_process' => 'approved',
-            'approved' => true
+            'approved' => true,
+            'slug' => str_slug($event->name),
         ]);
-        return redirect('/approve/events');
+        return redirect('/finish/events');
     }
 
     /**

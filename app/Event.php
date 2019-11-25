@@ -40,6 +40,25 @@ class Event extends Model
     * @var array
     */
     protected $appends = ['isFavorited'];
+
+    /**
+    * Should be searchable
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+    */
+    public function shouldBeSearchable()
+    {
+        return $this->isPublished();
+    }
+
+    /**
+    * Determines which events are published
+    *
+    * @return bool
+    */
+    public function isPublished() {
+        return $this->approved == true;
+    }
     
     /**
     * Each event belongs to One User

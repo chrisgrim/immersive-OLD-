@@ -32,10 +32,11 @@ Route::POST('/vuex/search', 'SearchController@filterIndex');
 
 //Admin Area
 Route::GET('/admin/dashboard', 'AdminAreaController@index');
-Route::GET('/approve/events', 'AdminAreaController@approve');
-Route::GET('/approve/events/{event}', 'AdminAreaController@showApproval');
+Route::GET('/finish/events', 'AdminAreaController@approval');
+Route::GET('/finish/events/{event}', 'AdminAreaController@showApproval');
 Route::POST('/approve/{event}', 'AdminAreaController@success');
 Route::POST('/unapprove/{event}', 'AdminAreaController@fail');
+
 
 //User Profile Pages
 Route::RESOURCE('users', 'ProfilesController');
@@ -50,7 +51,7 @@ Route::GET('favorite/{event}/login', 'FavoritesController@loginToFavorite');
 //event list
 Route::GET('/create-event/edit', 'EventController@editEvents');
 
-// Create Paths
+// Create Event Paths
 Route::GET('/create-event/{event}/organizer', 'OrganizerController@create');
 Route::POST('/create-event/{event}/organizer', 'OrganizerController@store');
 Route::POST('/create-event/{event}/{organizer}/organizer', 'OrganizerController@update');

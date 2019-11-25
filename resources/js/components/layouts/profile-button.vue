@@ -9,11 +9,6 @@
 					Profile
 				</a>
 			</li>
-			<li>
-				<a :href="'/myFavorites/'+ url">
-					Your Favorites
-				</a>
-			</li>
 			<li v-if="user.userType ? user.userType.name == 'admin' : ''">
 				<a href="/admin/dashboard">
 					Admin Dashboard

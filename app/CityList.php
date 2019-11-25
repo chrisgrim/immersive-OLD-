@@ -30,6 +30,9 @@ class CityList extends Model
             'name' => [
                 'type' => 'search_as_you_type',
             ],
+            'population' => [
+                'type' => 'integer',
+            ],
             'latitude' => [
                 'type' => 'integer',
                 'index' => false

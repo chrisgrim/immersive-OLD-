@@ -3,6 +3,7 @@
     <div class="create-title">
         <h2> Add a cover image</h2>
         <p>Choose an image that best shows off your event</p>
+        <CubeSpinner :loading="isLoading"></CubeSpinner>
     </div>
     <div class="image-upload-field" v-if="!imageSrc">
         <label 
@@ -52,11 +53,12 @@ import ImageUpload from '../layouts/image-upload.vue'
 import VueCropper from 'vue-cropperjs';
 import 'cropperjs/dist/cropper.css';
 import { required, minLength, maxLength } from 'vuelidate/lib/validators'
+import CubeSpinner  from '../layouts/loading.vue'
 
 
 export default {
     components: { 
-        ImageUpload,VueCropper
+        ImageUpload,VueCropper, CubeSpinner
     },
     
     props: {
@@ -71,6 +73,7 @@ export default {
             finalImage: '',
             imageSrc: '',
             tooSmall: '',
+            isLoading: false,
         };
     },
 
