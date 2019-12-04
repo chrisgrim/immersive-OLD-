@@ -1,22 +1,76 @@
 <template>
 	<div>
-		<h2>Our Latest Events in {{this.location}}</h2>
-		<div>
-			<flat-pickr
-                v-model="dates"
-                :config="config"                                                  
-                placeholder="Select date"               
-                name="dates">
-            </flat-pickr>
-		</div>
-		<div class="event-list-section">
-			<div id="grid-section">
-                <div v-for="event in events">
-                    <event-listing-item :event="event"></event-listing-item>
+        <div class="searchFilterBar">
+            <div class="filterItem">
+                 <flat-pickr
+                    v-model="dates"
+                    :config="config"                                                  
+                    placeholder="Select date"               
+                    name="dates">
+                </flat-pickr>
+            </div>            
+        </div>
+        <div class="search-content">
+            <div class="event-show-section">
+                <div>
+                    <h2>{{listedEvents.length}} immersive shows</h2>
+                </div>
+                <div id="event-show-grid">
+                    <div v-for="event in listedEvents">
+                        <event-show-listing :event="event"></event-show-listing>
+                    </div>
                 </div>
             </div>
-            
-		</div>
+        </div>
+		<div class="search-map">
+            <div>
+                <div class="search-map-section">
+                    <label>
+                        <span class=checkbox>
+                            <input @click="mapSearch = !mapSearch" type="checkbox" v-model="mapSearch">
+                            <span class=check></span>
+                        </span> 
+                    </label>
+                    <p>Search as I move the map </p>
+                </div>
+                <div class="zoom-button-section">
+                    <div class="zoom-in">
+                        <button @click.prevent="zoom += 1">
+                            <svg viewBox="0 0 16 16" height="16" width="16" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M7 1a1 1 0 0 1 2 0v14a1 1 0 1 1-2 0V1z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"></path></svg>
+                        </button>
+                    </div>
+                    <div class="zoom-out">
+                        <button @click.prevent="zoom -= 1">
+                            <svg viewBox="0 0 16 16" height="16" width="16" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"></path></svg>
+                        </button>
+                    </div>
+                </div>
+                <div style="width:100%;height:100vh">
+                    <l-map
+                    :zoom="zoom"
+                    :center="mapCenter"
+                    style="height: 80%"
+                    @update:center="centerUpdate"
+                    @update:bounds="boundsUpdate"
+                    :options="{ scrollWheelZoom: allowZoom, zoomControl: allowZoom }"
+                    >
+                    <l-tile-layer :url="url" :attribution="attribution" />
+                    <l-marker-cluster>
+                        <l-marker 
+                        v-for="event in listedEvents" 
+                        :key="event.id" 
+                        :lat-lng="event.location_latlon"
+                        @click="hello(event)">
+                            <l-icon class-name="icons"><p>{{event.price_range.split(' -')[0]}}</p></l-icon>
+                            <l-popup>
+                                <popup-content :data="event" />
+                            </l-popup>
+                        </l-marker>
+                    </l-marker-cluster>
+                    </l-map>
+                </div>  
+            </div>
+        </div>
     </div>
 </template>
 
@@ -26,16 +80,28 @@
 	import flatPickr from 'vue-flatpickr-component'
 	import 'flatpickr/dist/flatpickr.css'
     import { mapGetters } from 'vuex'
+    import {LMap, LTileLayer, LMarker, LPopup, LIcon} from 'vue2-leaflet'
+    import Vue2LeafletMarkerCluster from 'vue2-leaflet-markercluster'
+    import { latLng } from "leaflet"
+    import eventShowListing  from '../events/event-show-listing.vue'
+    import PopupContent from "../read/popup-content"
 
 
 	export default {
 
 
 		components: {
-            Multiselect, flatPickr
+            Multiselect, flatPickr, LPopup, LMap, LTileLayer, LMarker, 'l-marker-cluster': Vue2LeafletMarkerCluster, PopupContent, LIcon, eventShowListing,
         },
 
+        props: {
+            searchedevents: {
+                type:Object,
+            },
+        }, 
+
         name: "userSearchRequest",
+        name: "searchEvents",
 
         computed: {
             ...mapGetters([
@@ -44,18 +110,19 @@
             ...mapGetters([
                 'userSearchRequest'
             ]),
-            location: function() {
+            location() {
             	return this.$store.state.userSearchRequest.name;
+            },
+            mapCenter() {
+                return {
+                    lat: this.$store.state.userSearchRequest.latitude ? this.$store.state.userSearchRequest.latitude : '',
+                    lng: this.$store.state.userSearchRequest.longitude ? this.$store.state.userSearchRequest.longitude : '',
+                }
+            },
+            listedEvents() {
+                return this.eventList ? this.eventList : this.events;
             }
-        },
-
-        props: {
-	        searchedevents: {
-	            type:Object,
-	        },
-	    },  
-
-        name: "searchEvents",
+        }, 
 
 		data() {
 			return {
@@ -70,14 +137,34 @@
 					mode: "range",
 					inline: false,
 					showMonths: 2,
-					dateFormat: 'Y-m-d H:i:s',        
+					dateFormat: 'Y-m-d H:i:s',
+                    onClose: [function(value){
+                        const dateArr = value.map(date => this.formatDate(date, "Y-m-d H:i:s"));
+                        console.log(dateArr);
+                    }.bind(this.test)] 
 		        },
 				visibility: 'visible',
+                zoom: 11,
+                center: latLng(47.41322, -1.219482),
+                url: "https://{s}.tile.osm.org/{z}/{x}/{y}.png",
+                attribution:
+                '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors',
+                currentCenter: latLng(47.41322, -1.219482),
+                currentBounds: '',
+                allowZoom: false,
+                eventList: '',
+                mapSearch: true,
 
 			}
 		},
 
 		methods: {
+
+            testUpdate(value) {
+                console.log(value);
+                this.$set(this.searchedevents, 'start',value[0]);
+                console.log(this.searchedevents);
+            },
 
 			initializeSearchObject() {
 	            return {
@@ -90,15 +177,43 @@
 				this.$store.dispatch('searchEvents', this.searchedevents);
 				this.$store.dispatch('userSearchRequest', this.searchedevents);
 			},
+            centerUpdate(center) {
+                this.currentCenter = center;
+            },
+            boundsUpdate(bounds) {
+                this.currentBounds = bounds;
+                this.mapSearch ? this.updateData() : '';
+            },
+
+            updateData() {
+                let data = {
+                    latitude: this.currentBounds,
+                    time: 'test'
+                };
+                axios.post('/api/mapboundary/search', data)
+                .then(response => {
+                    console.log(response.data)
+                    this.eventList = response.data
+                });
+            },
+
+            hello(event) {
+                //
+            }
 			
 
 		},
 
-		mounted() {
-			//uses the laravel returned session to filter through events.
-			this.updateFilter();
+        watch: {
+            mapCenter() {
+                this.zoom = 11
+            }
+        },
 
-		}
+		mounted() {
+			this.updateFilter();
+		},
+
 
 
     };

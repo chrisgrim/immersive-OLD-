@@ -1,11 +1,11 @@
 <template>
 	<div>
-		<a :href="'/events/' + event.slug">
+		<a :href="url">
 			<div class="event-grid">
 				<div class="event-grid_image">
 					<div 
                     class="grid-background-image" 
-                    :style="{ backgroundImage: `url('${this.event ? /storage/ + this.event.thumbImagePath : ''}')` }">
+                    :style="{ backgroundImage: `url('${this.event.thumbImagePath ? /storage/ + this.event.thumbImagePath : '/storage/default-avatar/default.jpg'}')` }">
 						<div :class="showEventClass">
 							<svg viewBox="0 0 32 32" class="unhearted">
 								<a :href="'/favorite/' + event.slug + '/login'">
@@ -28,12 +28,14 @@
 	export default {
 		props: {
 			event: { type:Object },
+            loadurl: { type:String }
 		},
 
 		data() {
 			return {
 				divBackground: `background-image: url("/storage/${this.event.thumbImagePath}");`,
                 showEventClass: 'index-heart-location',
+                url: this.loadurl ? this.loadurl : '/events/' + this.event.slug,
 			}
 		},
 

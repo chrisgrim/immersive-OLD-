@@ -1,7 +1,8 @@
 <template>
 	<div class="profile-button">
-		<label @click="toggle = !toggle" class="profile-image" :style="{ backgroundImage: 'url(' + avatar + ')' }">
-		</label>
+		<label @click="toggle = !toggle" class="profile-image">
+            <img :src="avatar" height="28" width="28" :alt="user.name + `'s account`">
+        </label>
 
 		<ul v-show='toggle' class="subdropdown">
 			<li>

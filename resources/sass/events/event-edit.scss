@@ -5,3 +5,57 @@
     	width:100%;
     }
 }
+.tab-events {
+    margin-top:5rem;
+    min-height: 320px;
+}
+.organizer-event-edit-section {
+    & .title-block {
+        width: 100%;
+        position: relative;
+        overflow: auto;
+    }
+    & .title {
+        float:left;
+        overflow-wrap: break-word;
+        font-size: 3.2rem;
+        font-weight: 800;
+        line-height: 1.125rem;
+        color: rgb(72, 72, 72);
+        padding-top: .6rem;
+        padding-bottom: .6rem;
+        margin: 0px;
+    }
+    & .buttons {
+        float:right;
+    }
+}
+.edit-events-page {
+    max-width: 100rem;
+    margin: auto;
+    padding-top:4rem;
+}
+.tab-section {
+    border-bottom: solid #b1b1b1 1px;
+    & .tab {
+        display: inline-block;
+        & button {
+            border: none;
+            font-size: 1.6rem;
+            line-height: 2.2rem;
+            color: #484848;
+            background-color: transparent;
+            border-bottom-width: 2px;
+            border-bottom-color: transparent;
+            margin-right: 32px;
+            padding-left:0px;
+            padding-right:0px;
+            padding-top: 24px;
+            padding-bottom: 24px;
+        }
+    }
+    & .tab.tab-active button {
+        color:#008489;
+        border-bottom: 2px solid #008489;
+    }
+}

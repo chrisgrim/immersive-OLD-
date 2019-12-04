@@ -35,11 +35,11 @@
             <p class="error" v-if="this.tooSmall">The image needs to be at least 1200 x 800</p>
         </div>
     <div>
-        <button class="create" @click.prevent="createImage()"> 
-            Save and Continue 
+        <button v-if="readyToSubmit" class="create" @click.prevent="createImage()"> 
+            Update Image
         </button>
     </div>
-        <button v-if="event.largeImagePath" class="create" @click.prevent="submitEvent()"> 
+        <button v-if="!readyToSubmit" class="create" @click.prevent="submitEvent()"> 
             Submit Event
         </button>
     </div>
@@ -74,6 +74,7 @@ export default {
             imageSrc: '',
             tooSmall: '',
             isLoading: false,
+            readyToSubmit: false
         };
     },
 
@@ -88,23 +89,25 @@ export default {
         async assignImage(image) {
             this.imageSrc = image.src;
             this.finalImage = image.file;
-            this.tooSmall = false
+            this.readyToSubmit = true;
+            this.tooSmall = false;
         },
 
 
         //checks if all the validatoon rules have been followed and returns false if they haven't. Then create form data named data and append the image.
         async createImage() {
-            // this.$v.$touch(); 
-            // if (this.$v.$invalid) { return false };
-                let data = {
-                    image: this.$refs.cropper.getCroppedCanvas().toDataURL('image/jpeg', 1.0)
-                };
+            this.$v.$touch(); 
+            if (this.$v.$invalid) { return false };
+            this.isLoading = true;
+            let data = {
+                image: this.$refs.cropper.getCroppedCanvas().toDataURL('image/jpeg', 1.0)
+            };
             
-                axios.post(`${this.eventUrl}/images`, data)
-                .then(response => {
-                    window.location.reload();
-                })
-                .catch(errorResponse => { this.validationErrors = errorResponse.response.data.errors });
+            axios.post(`${this.eventUrl}/images`, data)
+            .then(response => {
+                window.location.reload();
+            })
+            .catch(errorResponse => { this.validationErrors = errorResponse.response.data.errors });
         },
 
         submitEvent() {
@@ -122,7 +125,7 @@ export default {
     },
 
     validations: {
-        eventImage: {
+        imageSrc: {
             required,
             // fileSize() { return this.finalImage ? this.finalImage.size < 2097152 : true },
         },

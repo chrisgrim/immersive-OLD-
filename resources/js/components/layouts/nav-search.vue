@@ -52,8 +52,8 @@ export default {
             'userSearchRequest'
         ]),
         placeholder() {
-            return this.$store.state.userSearchRequest.name;
-        }
+            return this.$store.state.userSearchRequest.name ? this.$store.state.userSearchRequest.name : 'Try "Los Angeles"';
+        },
 
     },
 
@@ -63,6 +63,7 @@ export default {
             searchBoxInput: [],
             searchBoxOptions: [],
             isLoading: false,
+            search: this.initializeSearchObject(),
         }
     },
 
@@ -73,6 +74,14 @@ export default {
                 console.log(response.data);
                 this.searchBoxOptions = response.data;
             });
+        },
+
+        initializeSearchObject() {
+            return {
+                name: '',
+                latitude: '',
+                longitude: '',
+            }
         },
 
         searchEvents() {
@@ -88,9 +97,6 @@ export default {
             .then(response => {
                 window.location.href = '/index/search';
             });
-
-            
-
         },
 
         localSearch() {
@@ -100,7 +106,12 @@ export default {
 
         eventSearch() {
              window.location.href = `/events/${this.searchBoxInput.slug}`;
-        }
+        },
+
     },
+
+    mounted() {
+        
+    }
 };
 </script>

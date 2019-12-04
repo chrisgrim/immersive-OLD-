@@ -1,14 +1,20 @@
 .show-heart-location {
     position: absolute;
-    right: 2%;
+    right: 0;
     background: white;
     padding: 1rem;
     border-radius: 0.5rem;
-    top: 5%;
+    top: 0;
+    margin: 5%;
     & .unhearted {
         fill: #ffffff;
         stroke: #717171;
     }
+}
+.searchFilterBar {
+    width: 100%;
+    height: 5rem;
+    border-bottom: 1px solid rgb(235, 235, 235);
 }
 .event-head-section {
     position: relative;
@@ -54,6 +60,7 @@
 	background-position: 50% 50%;
 	background-repeat: no-repeat;
 	background-color: #F2F2F2;
+    position: relative;
 }
 .event-body {
 	margin-top: 64px;
@@ -162,7 +169,7 @@
     z-index: 900;
     padding: 1.6rem 8rem;
     align-items: center;
-    box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.14) !important;
+    box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.14);
     & .event-name{
         margin: 0px;
         word-wrap: break-word;
@@ -196,4 +203,77 @@
         float:right;
     }
 }
+#event-show-grid {
+    width: 100%;
+}
+.show-marg-top {
+    margin-top: 8px;
+    margin-bottom: 20px;
+    & .line {
+        border:solid .5px #EBEBEB;
+    }
+}
+.event-show-image {
+    width: 30rem;
+    height: 20rem;
+    display: inline-block;
+}
+.event-show-section {
+    padding:0rem 3rem;
+}
+.event-show-info {
+    display: inline-block;
+    padding-left: 1rem;
+    position: absolute;
+    & .name {
+        font-weight: 400;
+        color: #222222;
+        font-size: 18px;
+        line-height: 24px;
+        max-height: 24px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+    }
+    & .price {
+        -webkit-box-align: center;
+        align-items: center;
+        color: #222222;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 24px;
+    }
+}
+.popup-content .info {
+    display: inline-block;
+    padding: 1rem;
+    position: absolute;
+    & .name {
+        font-weight: 400;
+        color: #222222;
+        font-size: 18px;
+        line-height: 24px;
+        max-height: 24px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+    }
+    & .price {
+        -webkit-box-align: center;
+        align-items: center;
+        color: #222222;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 24px;
+    }
+}
+.popup-content {
+    width:100%;
+    height: 25rem;
+}
+
 

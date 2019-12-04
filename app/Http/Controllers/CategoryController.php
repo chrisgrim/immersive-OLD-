@@ -16,7 +16,7 @@ class CategoryController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('admin');
+        $this->middleware('admin')->except('show');
     }
     /**
      * Display a listing of the resource.
@@ -60,7 +60,9 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        $events = $category->events()->get();
+        $categories = Category::all();
+        return view('categories.show',compact('events','categories', 'category'));
     }
 
     /**

@@ -170,3 +170,34 @@ span.flatpickr-day.selected {
   background-color: #6ec7abed;
 }*/
 
+/*------------------------------Leaflet-----------------------------*/
+
+.leaflet-marker-icon.icons {
+    background: white;
+    border-radius: 5rem;
+    border: solid 2px black;
+    width: 5rem !important;
+    margin-left: -2.5rem !important;
+    height: 3rem !important;
+    text-align: center;
+    & p {
+        overflow-wrap: break-word;
+        font-size: 14px;
+        font-weight: 800;
+        line-height: 1.28571em;
+        color: inherit;
+        margin: .4rem 0rem;
+    }
+}
+div.leaflet-popup-content-wrapper {
+    padding: 0px;
+    width: 20rem;
+}
+div.leaflet-popup-content {
+    margin: 10px 0px;
+    line-height: 1.4;
+}
+a.leaflet-popup-close-button {
+    display: none;
+}
+

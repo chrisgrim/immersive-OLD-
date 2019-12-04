@@ -88,16 +88,7 @@ class ShowsController extends Controller
             'show_times' => $request->showtimes,
             'price_range' => $pricerange,
         ]);
-
-        Session::forget($event->id .'dates');   
-    }
-    public function tempStore(Event $event, Request $request)
-    {
-        Session::put($event->id . 'dates', $request->all());   
-    }
-    public function getTempStore(Event $event)
-    {
-        return Session::get($event->id . 'dates');
+ 
     }
     public function loadDatabase(Event $event)
     {

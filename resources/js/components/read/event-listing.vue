@@ -1,13 +1,23 @@
 <template>
-	<div class="event-list-section">
-		<h2>Our Latest Events</h2>
-		<div>
-			<div id="grid-section">
-                <div v-for="event in events">
-                    <event-listing-item :event="event"></event-listing-item>
-                </div>
+	<div>
+        <div class="category-grid">
+            <div v-for="category in categories" class="category-section">
+                <a :href="'/categories/' + category.slug">
+                    <category-listing-item :category="category"></category-listing-item>
+                </a>
             </div>
-		</div>
+        </div>
+
+        <div class="event-list-section">
+    		<h2>Our Latest Events</h2>
+    		<div>
+    			<div id="grid-section">
+                    <div v-for="event in events">
+                        <event-listing-item :event="event"></event-listing-item>
+                    </div>
+                </div>
+    		</div>
+        </div>
     </div>
 </template>
 
@@ -15,26 +25,24 @@
 	import _ from 'lodash';
     import Multiselect from 'vue-multiselect';
     import format from 'date-fns/format';
+    import categoryListingItem  from '../read/category-listing-item.vue';
     // import {mapGetters} from 'vuex'
 
 
 	export default {
 
 		components: {
-            Multiselect,
+            Multiselect, categoryListingItem
         },
 
         props: {
 	        events: {
 	            type:Array,
 	        },
+            categories: {
+                type:Array
+            }
 	    }, 
-
-        // computed: {
-        //     ...mapGetters([
-        //         'events'
-        //     ])
-        // },
 
 		data() {
 			return {

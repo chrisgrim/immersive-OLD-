@@ -1,6 +1,29 @@
+header#header {
+    position: fixed;
+    width: 100%;
+    background: white;
+    z-index: 900;
+}
 .logo img {
     width: 80%;
 }
+.menu {
+    width: 100%;
+    list-style-type:none;
+    padding:0px;
+    height:100%;
+    &-nav {
+        float: right;
+        text-align: center;
+        height:100%;
+        margin: 0rem 2rem;
+        padding-top: 2rem;
+        & a {
+            vertical-align: bottom;
+        }
+    }
+}
+
 
 .nav-search .multiselect {
     width: 74%;
@@ -21,8 +44,9 @@ input.vc-py-2 {
     padding-bottom: 9px;
 }
 div.profile-button {
-  position: relative;
-  width: 100%;
+    position: relative;
+    width: 3.3rem;
+    height: 3.3rem;
 }
 .nav-search {
     position: relative;
@@ -34,28 +58,14 @@ div.profile-button {
     }
 }
 .profile-image{
-  position: absolute;
+/*  position: absolute;
   width: 3.2rem;
   height: 3.2rem;
   background-size: cover;
   border-radius: 50px;
   top: -2rem;
-  right: 4rem;
+  right: 4rem;*/
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -91,8 +101,35 @@ nav-menu, .nav-menu {
 }
 
 
-/* NavLogo Bar Content*/
 
+
+/* NavLogo Bar Content*/
+.nav-search__input .multiselect__select{
+    display: none;
+}
+.nav-search__input .multiselect__input {
+    text-overflow: ellipsis;
+    font-weight: 800;
+    font-size: 17px;
+    color: #484848;
+}
+.nav-search__input .multiselect__single {
+    text-overflow: ellipsis;
+    font-weight: 800;
+    font-size: 17px;
+    color: #484848;
+}
+.nav-search__input .multiselect__placeholder {
+    background-color: transparent;
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    text-overflow: ellipsis;
+    font-weight: 800;
+    font-size: 17px;
+    color: #b9b9b9;
+}
 .desktop-logo {
 	padding-left: 2rem;
     & img {
@@ -145,9 +182,9 @@ nav-menu, .nav-menu {
 
 
 .down-arrow{
-    color: #767676 !important;
-    display: inline-block !important;
-    font-size: 1.1rem !important;
+    color: #767676;
+    display: inline-block;
+    font-size: 1.1rem;
     padding-bottom: 2rem;
 }
 

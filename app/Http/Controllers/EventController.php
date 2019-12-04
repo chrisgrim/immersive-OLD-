@@ -30,7 +30,8 @@ class EventController extends Controller
             ->where('closingDate', '>=', 'now/d')
             ->take(6)
             ->get();
-        return view('events.index',compact('events'));
+        $categories = Category::all();
+        return view('events.index',compact('events', 'categories'));
     }
 
 
@@ -125,8 +126,33 @@ class EventController extends Controller
      */
     public function editEvents(Event $event)
     {
-        $events = auth()->user()->events;
-        return view('events.edit', compact('events'));
+        $organizers = auth()->user()->organizers->load([
+            'liveEvents' => function ($builder) {
+                $builder->where('user_id', auth()->id());
+            },
+            'pastEvents' => function ($builder) {
+                $builder->where('user_id', auth()->id());
+            },
+            'pendingEvents' => function ($builder) {
+                $builder->where('user_id', auth()->id());
+            },
+            'inProgressEvents' => function ($builder) {
+                $builder->where('user_id', auth()->id());
+            }
+        ]);
+        $eventsbyorganizer = $organizers->map(function ($organizer) {
+            return [
+                        'id' => $organizer->id,
+                        'name' => $organizer->name,
+                        'slug' => $organizer->slug,
+                        'imagePath' => $organizer->imagePath,
+                        'live_events' =>  $organizer->liveEvents,
+                        'past_events' => $organizer->pastEvents,
+                        'pending_events' => $organizer->pendingEvents,
+                        'in_progress_events' => $organizer->inProgressEvents,
+            ];
+        });
+        return view('events.edit', compact('eventsbyorganizer'));
     }
 
     public function createCategory(Event $event)

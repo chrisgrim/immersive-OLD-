@@ -120,15 +120,6 @@ export default {
         		return ''
         	}
         },
-
-        //creates data file for quick sessions save
-        quickSave() {
-            return {
-                'dates': this.dateArray,
-                'tickets': this.tickets,
-                'showTimes': this.showTimes
-            };
-        },
     },
 
     data() {
@@ -137,6 +128,7 @@ export default {
             dates: '',
 	        config: {
 				minDate: "today",
+                maxDate: new Date().fp_incr(180),
 				mode: "multiple",
 				inline: true,
 				showMonths: 2,
@@ -179,10 +171,9 @@ export default {
             }
         },
 
-        // when user clicks new ticket this creates a new ticket object and updates the session
+        // when user clicks new ticket this creates a new ticket object
         addTickets() {
             this.tickets.push(this.initializeTicketObject());
-            axios.post(`${this.eventUrl}/shows/tmp`, this.quickSave);
         },
 
         //creates a ticket Object
@@ -196,22 +187,7 @@ export default {
             }
         },
 
-        // On page load this checks to see if there is a session to load from
-    	getSession() {
-    		axios.get(`${this.eventUrl}/shows/gettmp`)
-    		.then(response => {
-                console.log(response.data);
-                if (response.data.dates) {
-                    this.dates = response.data.dates;
-                    response.data.showTimes ? this.showTimes = response.data.showTimes : '';
-                    response.data.tickets ? this.tickets = response.data.tickets : '';
-                } else {
-                    this.getDatabase();
-                };
-            });
-    	},
-
-        // If there is no saved session then it tries to load from the database
+        // If there is data in Database it will load from the database
     	getDatabase() {
 
     		axios.get(`${this.eventUrl}/shows/loadshows`)
@@ -241,15 +217,8 @@ export default {
 
     },
 
-    watch: {
-        //fires to session everytime user makes a change
-		dates: function() {
-		  	axios.post(`${this.eventUrl}/shows/tmp`, this.quickSave);
-		},
-	},
-
     mounted() {
-    	this.getSession();
+    	this.getDatabase();
     },
 
     validations: {

@@ -4,6 +4,7 @@ namespace App;
 
 use ScoutElastic\Searchable;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Storage;
 
@@ -38,9 +39,49 @@ class Organizer extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
-    public function users() 
+    public function user() 
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get Live Events for organizer
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function liveEvents()
+    {
+        return $this->hasMany(Event::class)->whereDate('closingDate', '>=', Carbon::today());
+    }
+
+    /**
+     * Get Past Events for organizer
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function pastEvents()
+    {
+        return $this->hasMany(Event::class)->whereDate('closingDate', '<=', Carbon::today());
+    }
+
+    /**
+     * Get In Progress Events for organizer
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function inProgressEvents()
+    {
+        return $this->hasMany(Event::class)->where('approval_process', 'inProgress');
+    }
+
+    /**
+     * Get Pending Events for organizer
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function pendingEvents()
+    {
+        return $this->hasMany(Event::class)->where('approval_process', 'ready');
     }
 
     /**

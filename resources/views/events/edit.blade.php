@@ -4,7 +4,7 @@
 
 <div class="inner-container">
 	<div id="bodyArea">
-		<edit-events :loadevents="{{$events}}">	
+		<edit-events :eventsbyorganizer="{{json_encode($eventsbyorganizer)}}">	
 	</div>
 </div>
 

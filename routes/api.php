@@ -28,6 +28,9 @@ Route::GET('organizer/search', 'SearchController@searchOrganizer');
 //On Description Page this searches all genres and returns based on users selection
 Route::GET('genre/search', 'SearchController@searchGenre');
 
+//On Map move send new latlng/ if category that is attached and if dates that is attached
+Route::POST('mapboundary/search', 'SearchController@searchMapBoundary');
+
 
 Route::GET('searchedEvents', 'SearchController@get');
 

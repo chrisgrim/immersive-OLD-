@@ -19,7 +19,7 @@ class EventImage extends Model
             Storage::delete('public/' . $event->largeImagePath);
             Storage::delete('public/' . $event->thumbImagePath);
         };
-        $title = $event->name;
+        $title = str_slug($event->name);
         $filename = $title.'-'. rand(5, 9999) . '.jpg';
         $imagePath = "event-large-images/$filename";
         $thumbnailPath = "event-thumb-images/thumb-$filename";

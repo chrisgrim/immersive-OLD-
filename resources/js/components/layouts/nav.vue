@@ -9,23 +9,31 @@
 	
 			<nav-search></nav-search>
 
-			<div class="navmenu">
-				<a href="/events/create" v-if="user && !user.hasCreatedEvents">
-					<div>Create Event</div>
-				</a>
-				<a href="/create-event/edit" v-if="user && user.hasCreatedEvents">
-					<div>Edit Your Events</div>
-				</a>
-
-				<profile-button :user="user" v-if="user"></profile-button>
-
-				<a href="/login" v-if="!user">
-					<div>Login</div>
-				</a>
-
-				<a href="/register" v-if="!user">
-					<div>Register</div>
-				</a>
+			<div class="menu">
+                <div class="menu-nav">
+                    <profile-button :user="user" v-if="user"></profile-button>
+                </div>
+                <div class="menu-nav" v-if="user && !user.hasCreatedEvents">
+                    <a href="/events/create">
+                        <div>Create Event</div>
+                    </a>
+                </div>
+                <div class="menu-nav" v-if="user && user.hasCreatedEvents">
+                    <a href="/create-event/edit">
+                        Edit Your Events
+                    </a>
+                </div>
+                <div class="menu-nav">
+    				<a href="/login" v-if="!user">
+    					<div>Login</div>
+    				</a>
+                </div>
+                
+                <div class="menu-nav">
+    				<a href="/register" v-if="!user">
+    					<div>Register</div>
+    				</a>
+                </div>
 
 			</div>
 		</nav>

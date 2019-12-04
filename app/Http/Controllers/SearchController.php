@@ -22,21 +22,18 @@ class SearchController extends Controller
 {
     public function index()
     {
-        $searchedevents = json_encode(Session::get('searchDataStore'));
-
+        $searchedevents = Session::get('searchDataStore');
+        $name = json_encode($searchedevents['name']);
+        $lat = trim(json_encode($searchedevents['latitude']), '"');
+        $lng = trim(json_encode($searchedevents['longitude']), '"');
+        $searchedevents = array (
+            "latitude" => $lat,
+            "longitude" => $lng,
+            "name" => $name
+        );
         return view('searches.search',compact('searchedevents'));
     }
 
-    public function loadIndex(Request $request)
-    {
-
-        $events = Event::search('*')
-            ->where('closingDate', '<=', 'now/d')
-            ->take(100)
-            ->get();
-
-        return response()->json($events);
-	}
     public function filterIndex(Request $request)
     {
 
@@ -46,7 +43,7 @@ class SearchController extends Controller
 
    
         $events = Event::search('*')
-            // ->where('closingDate', '<=', 'now/d')
+            ->where('closingDate', '>=', 'now/d')
             ->when($request->category_id, function($query) use ($request) {
                 $query->where('category_id', $request->category_id);
             })
@@ -136,6 +133,21 @@ class SearchController extends Controller
     public function searchDatastore(Request $request)
     {
         Session::put('searchDataStore', $request->all());        
+    }
+
+    public function searchMapBoundary(Request $request)
+    {
+
+             $events = Event::search('*')
+            ->where('closingDate', '>=', 'now/d')
+            ->when($request->category_id, function($query) use ($request) {
+                $query->where('category_id', $request->category_id);
+            })
+            ->when($request->latitude, function($query) use ($request) {
+                $query->whereGeoBoundingBox('location_latlon', ['top_right' => [floatval($request->latitude['_northEast']['lng']), floatval($request->latitude['_northEast']['lat'])], 'bottom_left' => [floatval($request->latitude['_southWest']['lng']), floatval($request->latitude['_southWest']['lat'])]]);
+            })
+            ->get(); 
+            return $events;
     }
 
     

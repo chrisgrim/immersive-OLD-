@@ -272,7 +272,6 @@ class Event extends Model
             ],
             'user_id' => [
                 'type' => 'integer',
-                'index' => false
             ],
             'category_id' => [
                 'type' => 'integer',
@@ -291,7 +290,6 @@ class Event extends Model
             ],
             'organizer_id' => [
                 'type' => 'integer',
-                'index' => false
             ],
             'overallRating' => [
                 'type' => 'integer',
@@ -307,7 +305,6 @@ class Event extends Model
             ],
             'price_range' => [
                 'type' => 'text',
-                'index' => false
             ],
             'updated_at' => [
                 'type' => 'text',

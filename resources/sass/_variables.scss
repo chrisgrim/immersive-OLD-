@@ -75,3 +75,51 @@ select:-webkit-autofill:focus {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 4px 24px, rgba(0, 0, 0, 0.04) 0px 0px 0px 1px !important;
     border-radius: 1rem;
 }
+.search-map-section {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    z-index: 900;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 4px 24px, rgba(0, 0, 0, 0.04) 0px 0px 0px 1px !important;
+    border-radius: 1rem;
+    background: white;
+    width: 30rem;
+    margin-left: -15rem;
+    margin-top: 2.4rem;
+    & p {
+        display: inline-block;
+        margin: 0;
+        padding: 1rem;
+    }
+    & input {
+        margin:1rem;
+    }
+}
+.checkbox {
+    width: 3rem;
+    height: 3rem;
+    background: #f64747;
+    position: relative;
+    border-radius: .5rem;
+    display: inline-block;
+    margin: 1rem;
+    
+    input:checked + .check {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 8px;
+        height: 14px;
+        border-width: 0 2px 2px 0;
+        border-style: solid;
+        border-color: #fff;
+        transform: rotate(45deg);
+        margin-left: -4px;
+        margin-top: -7px;
+    }
+    
+    input[type="checkbox"] {
+        -webkit-appearance: none;
+        appearance: none;   
+    }
+}

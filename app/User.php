@@ -58,6 +58,16 @@ class User extends Authenticatable
     }
 
     /**
+     * The User has many organizations
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function organizers() 
+    {
+        return $this->hasMany(Organizer::class);
+    }
+
+    /**
      * User can have many favorites
      *
      * @return \Illuminate\Database\Eloquent\Relations\hasMany

@@ -68,10 +68,14 @@ Vue.component('nav-search', require('./components/layouts/nav-search.vue').defau
 Vue.component('favorite', require('./components/layouts/favorite.vue').default);
 
 Vue.component('modal', require('./components/layouts/modal.vue').default);
+Vue.component('tabs', require('./components/layouts/tabs.vue').default);
+Vue.component('tab', require('./components/layouts/tab.vue').default);
+
 
 Vue.component('edit-events', require('./components/events/edit.vue').default);
 Vue.component('event-show', require('./components/events/event-show.vue').default);
 Vue.component('edit-listing', require('./components/events/edit-listing.vue').default);
+
 
 Vue.component('event-create-checklist', require('./components/create/checklist.vue').default);
 Vue.component('create-location-google', require('./components/create/location-google.vue').default);
@@ -93,6 +97,7 @@ Vue.component('event-listing-item', require('./components/read/event-listing-ite
 Vue.component('search-listing', require('./components/read/search-listing.vue').default);
 
 Vue.component('user-profile', require('./components/read/user-profile.vue').default);
+Vue.component('category-listing', require('./components/read/category-listing.vue').default);
 
 
 
