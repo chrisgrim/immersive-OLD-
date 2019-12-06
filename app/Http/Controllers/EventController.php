@@ -6,6 +6,7 @@ use App\Event;
 use App\Region;
 use App\CityList;
 use App\Category;
+use App\Organizer;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Http\Requests\TitleUpdateRequest;
@@ -34,18 +35,6 @@ class EventController extends Controller
         return view('events.index',compact('events', 'categories'));
     }
 
-
-    public function get(Request $request)
-    {
-        $events = Event::search('*')
-            // ->where('closingDate', '<=', 'now/d')
-            ->take(6)
-            ->get();
-
-        return $events;
-    }
-
-
     /**
      * Show the form for creating a new resource.
      *
@@ -57,6 +46,18 @@ class EventController extends Controller
     }
 
     /**
+     * Loads the users created events
+     *
+     * @param  \App\Event  $event
+     * @return \Illuminate\Http\Response
+     */
+    public function editEvents(Event $event)
+    {
+        $eventsbyorganizer = Organizer::getOrganizerEvents();
+        return view('events.edit', compact('eventsbyorganizer'));
+    }
+
+    /**
      * Store a newly created resource in storage. When I first create event I create a location and expectation at the same time. Depending on if the store came from axios or a form I send the data back as a object or a redirect.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -64,9 +65,8 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        $event = Event::newEvent();
-        if ($request->type == 'axios') { return $event; };
-        return redirect('/create-event/'. $event->slug . '/organizer');
+        $event = Event::newEvent($request);
+        return $event;
     }
 
     /**
@@ -116,43 +116,6 @@ class EventController extends Controller
         $event->delete();
         $events = auth()->user()->events;
         return $events;
-    }
-
-    /**
-     * Loads the users created events
-     *
-     * @param  \App\Event  $event
-     * @return \Illuminate\Http\Response
-     */
-    public function editEvents(Event $event)
-    {
-        $organizers = auth()->user()->organizers->load([
-            'liveEvents' => function ($builder) {
-                $builder->where('user_id', auth()->id());
-            },
-            'pastEvents' => function ($builder) {
-                $builder->where('user_id', auth()->id());
-            },
-            'pendingEvents' => function ($builder) {
-                $builder->where('user_id', auth()->id());
-            },
-            'inProgressEvents' => function ($builder) {
-                $builder->where('user_id', auth()->id());
-            }
-        ]);
-        $eventsbyorganizer = $organizers->map(function ($organizer) {
-            return [
-                        'id' => $organizer->id,
-                        'name' => $organizer->name,
-                        'slug' => $organizer->slug,
-                        'imagePath' => $organizer->imagePath,
-                        'live_events' =>  $organizer->liveEvents,
-                        'past_events' => $organizer->pastEvents,
-                        'pending_events' => $organizer->pendingEvents,
-                        'in_progress_events' => $organizer->inProgressEvents,
-            ];
-        });
-        return view('events.edit', compact('eventsbyorganizer'));
     }
 
     public function createCategory(Event $event)

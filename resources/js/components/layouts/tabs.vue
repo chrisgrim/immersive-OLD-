@@ -1,10 +1,10 @@
 <template>
     <div>
-        <div class="tab-section" role="tablist">
+        <div class="tab" role="tablist">
             <div
                 v-for="(tab, index) in tabs"
-                class="tab"
-                :class="{ 'tab-active': tab.isActive }"
+                class="ln"
+                :class="{ 'act': tab.isActive }"
                 :style="tab.isActive ? 'margin-bottom: -1px' : ''"
             >
                 <button

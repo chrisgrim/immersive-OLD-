@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="inner-container">
+<div>
 	<div id="bodyArea">
 		<edit-events :eventsbyorganizer="{{json_encode($eventsbyorganizer)}}">	
 	</div>

@@ -4,45 +4,14 @@
         <h2>Event Organizer</h2>
         <p>What organizer or production company is putting this immersive show on?</p>
     </div>
-    <div class="organization-form">
-        <multiselect 
-        v-model="searchModel" 
-        id="ajax" 
-        label="name" 
-        track-by="name" 
-        placeholder="Add new event organization here or search for existing one" 
-        open-direction="bottom"
-        :allow-empty="false"
-        deselectLabel=''
-        :options="searchOptions" 
-        :searchable="true" 
-        :loading="isLoading" 
-        :options-limit="30" 
-        :limit="5"  
-        :show-no-results="false" 
-        @search-change="asyncFind"
-        @open="addNewOrganizer"
-        @select="onOrganizerSelect">
-            <template slot="option" slot-scope="props">
-                    <img class="option__image" :src="props.option.imagePath ? `/storage/${props.option.imagePath}` : defaultImage"
-                    alt="defaultImage">
-                    <div class="option__desc">
-                        <span class="option__title">{{ props.option.name }}</span>
-                        <span class="option__small">{{ props.option.description }}</span>
-                    </div>
-                </template>
-        </multiselect>
-    </div>
-   
-    
         
-    <div v-show="showFormFields" v-if="this.userOwnsOrganization">
+    <div>
         <div class="image-upload-field create-field">
             <label>Add Organizers Image</label>
             <label
             class="profile-upload-wrapper"
             :style="{ backgroundImage: `url('${organizationImageModel ? organizationImageModel : defaultImage}')` }" >
-                            <span class="profile-upload-layover">
+                <span class="profile-upload-layover">
                 <div class="add-profile-image"><p>+</p></div>
             </span>
                 <image-upload @loaded="onImageUpload"></image-upload>
@@ -147,16 +116,6 @@
             </div>
         </div>
     </div>
-    <div v-else="this.userOwnsOrganization">
-        <img class="" :src="organizationImageModel" alt="">
-        <h2>{{organizer.name}}</h2>
-        <p>{{organizer.description}}</p>
-        <p>{{organizer.website}}</p>
-        <p>{{organizer.twitterHandle}}</p>
-        <p>{{organizer.facebookHandle}}</p>
-        <p>{{organizer.instagramHandle}}</p>
-
-    </div>
     <div>
         <button class="create" @click.prevent="createOrganizer"> Save and Continue </button>
     </div>
@@ -177,7 +136,6 @@ export default {
     },
     
     props: {
-        event: { type: Object },
         user: { type: Object }
     },
 
@@ -212,14 +170,6 @@ export default {
 
     methods: {
 
-        //shows the option for new organizer when the dropdown is clicked
-        addNewOrganizer() {
-            const newOrganizer = this.initializeOrganizerObject();
-            newOrganizer.name = 'Create New Organizer';
-            newOrganizer.user_id = this.user.id;
-            this.searchOptions = [newOrganizer];
-        },
-
         //on page load creates an empty organizer object
         initializeOrganizerObject() {
             return {
@@ -232,17 +182,6 @@ export default {
                 facebookHandle: '',
                 instagramHandle: '',
                 user_id:''
-            }
-        },
-        //displays the fields for the user to edit
-        //fills the field forms with data from the selected organizer
-         //adds the image
-        onOrganizerSelect(organizer) {
-            if ((organizer !== null) && (typeof organizer === "object") && (organizer.id !== null)) {
-                this.showFormFields = true;
-                this.organizer = _.pick(organizer, _.intersection( _.keys(this.organizer), _.keys(organizer) ));
-                this.organizationImageModel = this.organizer.imagePath ? `/storage/${this.organizer.imagePath}` : '';
-                if(organizer.id === '') { this.organizer.name = '' }
             }
         },
 
@@ -308,29 +247,6 @@ export default {
             this.finalImage = image.file;
         },
 
-        //submits if is new Organizer
-        submitNewOrganizer(params, headers) {
-            axios.post(`${this.eventUrl}/organizer`, params, headers)
-            .then(response => { 
-                window.location.href = `${this.eventUrl}/title`; 
-            })
-            .catch(error => {         
-                this.serverErrors = error.response.data.errors;  
-            });
-        },
-
-        //submits to edit an old organizer
-        submitEditOrganizer(params, headers) {
-            axios.post(`${this.eventUrl}/${this.organizer.id}/organizer`, params, headers)
-            .then(response => { 
-                window.location.href = `${this.eventUrl}/title`; 
-            })
-            .catch(error => {            
-                this.serverErrors = error.response.data.errors;  
-            });
-        },
-
-
         //checks if validation passes
         //creates a new Form data called params
         //creates a headers variable with correct info
@@ -348,15 +264,14 @@ export default {
             }
             params.append('slug', this.slug);
             this.finalImage ? params.append('newImageUpload', true) : params.append('newImageUpload', false);
-            this.organizer.id == '' ? this.submitNewOrganizer(params, headers) : this.submitEditOrganizer(params, headers);
+            axios.post('/organizer', params, headers)
+            .then(response => { 
+                window.location.href = '/create-event/edit'; 
+            })
+            .catch(error => {         
+                this.serverErrors = error.response.data.errors;  
+            });
         },
-    },
-    //if event already has organizer(being updated) this fills in the fields on the page with that organizer
-    mounted() {
-         if (_.has(this.event, 'organizer.id') && this.event.organizer.id !== null) {
-            this.onOrganizerSelect(this.event.organizer);
-            this.searchModel = this.event.organizer;
-        }
     },
 
     validations: {

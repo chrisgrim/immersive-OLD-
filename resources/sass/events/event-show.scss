@@ -203,49 +203,7 @@
         float:right;
     }
 }
-#event-show-grid {
-    width: 100%;
-}
-.show-marg-top {
-    margin-top: 8px;
-    margin-bottom: 20px;
-    & .line {
-        border:solid .5px #EBEBEB;
-    }
-}
-.event-show-image {
-    width: 30rem;
-    height: 20rem;
-    display: inline-block;
-}
-.event-show-section {
-    padding:0rem 3rem;
-}
-.event-show-info {
-    display: inline-block;
-    padding-left: 1rem;
-    position: absolute;
-    & .name {
-        font-weight: 400;
-        color: #222222;
-        font-size: 18px;
-        line-height: 24px;
-        max-height: 24px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-    }
-    & .price {
-        -webkit-box-align: center;
-        align-items: center;
-        color: #222222;
-        font-weight: 400;
-        font-size: 18px;
-        line-height: 24px;
-    }
-}
+
 .popup-content .info {
     display: inline-block;
     padding: 1rem;

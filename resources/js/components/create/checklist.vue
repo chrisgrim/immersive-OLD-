@@ -1,12 +1,5 @@
 <template>
 	<div>
-        <a :href="'/create-event/'+ this.event.slug +'/organizer'">
-        <div class="checklist-section">
-            Event Organizer
-            <svg class="checkbox" v-if="event.organizer_id" viewBox="0 0 52 52"><path d="m19.1 25.2 4.7 6.2 12.1-11.2"></path></svg>
-        </div>
-        </a>
-
         <a :href="'/create-event/'+ this.event.slug +'/title'">
         <div class="checklist-section">
             Title

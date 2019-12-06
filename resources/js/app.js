@@ -60,23 +60,20 @@ Icon.Default.mergeOptions({
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 
+//Nav
 Vue.component('vue-nav', require('./components/layouts/nav.vue').default);
-
+Vue.component('nav-search', require('./components/layouts/nav-search.vue').default);
 Vue.component('profile-button', require('./components/layouts/profile-button.vue').default);
 
-Vue.component('nav-search', require('./components/layouts/nav-search.vue').default);
-Vue.component('favorite', require('./components/layouts/favorite.vue').default);
 
+//Components
+Vue.component('favorite', require('./components/layouts/favorite.vue').default);
 Vue.component('modal', require('./components/layouts/modal.vue').default);
 Vue.component('tabs', require('./components/layouts/tabs.vue').default);
 Vue.component('tab', require('./components/layouts/tab.vue').default);
 
 
-Vue.component('edit-events', require('./components/events/edit.vue').default);
-Vue.component('event-show', require('./components/events/event-show.vue').default);
-Vue.component('edit-listing', require('./components/events/edit-listing.vue').default);
-
-
+//Create Events
 Vue.component('event-create-checklist', require('./components/create/checklist.vue').default);
 Vue.component('create-location-google', require('./components/create/location-google.vue').default);
 Vue.component('create-category', require('./components/create/category.vue').default);
@@ -89,15 +86,24 @@ Vue.component('show-listing', require('./components/create/show-listing.vue').de
 Vue.component('create-description', require('./components/create/description.vue').default);
 Vue.component('create-expect', require('./components/create/expect.vue').default);
 
+//Admin Area
 Vue.component('admin-area-nav', require('./components/adminArea/nav.vue').default);
 
-Vue.component('event-listing', require('./components/read/event-listing.vue').default);
-Vue.component('event-listing-item', require('./components/read/event-listing-item.vue').default);
+//Profile
+Vue.component('user-profile', require('./components/profile/profile-index.vue').default);
 
-Vue.component('search-listing', require('./components/read/search-listing.vue').default);
+//Categories
+Vue.component('category-show', require('./components/categories/category-show.vue').default);
 
-Vue.component('user-profile', require('./components/read/user-profile.vue').default);
-Vue.component('category-listing', require('./components/read/category-listing.vue').default);
+//Organizers
+Vue.component('organizer-show', require('./components/organizers/organizer-show.vue').default);
+
+//Events
+Vue.component('event-index', require('./components/events/event-index.vue').default);
+Vue.component('search-listing', require('./components/events/event-search.vue').default);
+Vue.component('event-show', require('./components/events/event-show.vue').default);
+Vue.component('edit-events', require('./components/events/event-edit.vue').default);
+Vue.component('event-listing-item', require('./components/events/components/index-item.vue').default);
 
 
 

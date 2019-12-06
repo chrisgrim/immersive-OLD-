@@ -1,0 +1,30 @@
+.flatpickr-days {
+    margin: 1rem 4rem 4rem 4rem;
+}
+.flatpickr-weekdays {
+    margin:auto !important;
+    width:90% !important;
+}
+.flatpickr-weekdaycontainer span.flatpickr-weekday {
+    font-weight: 300;
+}
+div.flatpickr-calendar.animate.multiMonth.inline.showTimeInput {
+    width: 700px !important;
+}
+span.flatpickr-day {
+    border: 1px solid rgb(228, 231, 231);
+    border-radius: 0px;
+    height: 100%;
+    max-width: 100%;
+}
+.flatpickr-months {
+    padding-top: 4rem;
+    padding-bottom: 2rem;
+}
+input.form-control.flatpickr-input {
+    display: none;
+}
+span.flatpickr-day.selected {
+    background: rgb(0, 166, 153);
+    border-color: rgb(0, 166, 153) !important;
+}

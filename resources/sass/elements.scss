@@ -1,35 +1,4 @@
-/*------------------------------calendar-------------------------*/
 
-.flatpickr-days {
-    margin: 1rem 4rem 4rem 4rem;
-}
-.flatpickr-weekdays {
-	margin:auto !important;
-	width:90% !important;
-}
-.flatpickr-weekdaycontainer span.flatpickr-weekday {
-    font-weight: 300;
-}
-div.flatpickr-calendar.animate.multiMonth.inline.showTimeInput {
-    width: 700px !important;
-}
-span.flatpickr-day {
-    border: 1px solid rgb(228, 231, 231);
-    border-radius: 0px;
-    height: 100%;
-    max-width: 100%;
-}
-.flatpickr-months {
-    padding-top: 4rem;
-    padding-bottom: 2rem;
-}
-input.form-control.flatpickr-input {
-    display: none;
-}
-span.flatpickr-day.selected {
-    background: rgb(0, 166, 153);
-    border-color: rgb(0, 166, 153) !important;
-}
 /*----------------------- modal ------------------------*/
 
 .modal-backdrop {
@@ -92,7 +61,7 @@ span.flatpickr-day.selected {
   }
 
 
-/*  ----------------------------- Switch ----------------------*/
+
 
 
 
@@ -159,45 +128,7 @@ span.flatpickr-day.selected {
 #checkbox:checked:active ~ #knob {
   margin-left: -32px;
 }
-/*#checkbox:checked ~ #knob {
-    left: 8px;
-    & p {
-        margin: 8px 0px 0px 3px;
-    }
-}
 
-#checkbox:checked ~ #bar {
-  background-color: #6ec7abed;
-}*/
 
-/*------------------------------Leaflet-----------------------------*/
 
-.leaflet-marker-icon.icons {
-    background: white;
-    border-radius: 5rem;
-    border: solid 2px black;
-    width: 5rem !important;
-    margin-left: -2.5rem !important;
-    height: 3rem !important;
-    text-align: center;
-    & p {
-        overflow-wrap: break-word;
-        font-size: 14px;
-        font-weight: 800;
-        line-height: 1.28571em;
-        color: inherit;
-        margin: .4rem 0rem;
-    }
-}
-div.leaflet-popup-content-wrapper {
-    padding: 0px;
-    width: 20rem;
-}
-div.leaflet-popup-content {
-    margin: 10px 0px;
-    line-height: 1.4;
-}
-a.leaflet-popup-close-button {
-    display: none;
-}
 

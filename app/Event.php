@@ -175,11 +175,12 @@ class Event extends Model
     *
     * @return Nothing
     */
-    public static function newEvent()
+    public static function newEvent($request)
     {
         $event = Event::create([
             'user_id' => auth()->id(),
-            'slug' => rand()
+            'slug' => rand(),
+            'organizer_id' => $request->id
         ]);
         $event->location()->Create();
         $event->expectation()->Create();

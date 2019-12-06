@@ -1,6 +1,6 @@
 <template>
-    <div class="nav-search">
-        <div class="nav-search__input">
+    <div class="search">
+        <div class="">
             <multiselect 
             v-model="searchBoxInput" 
             :options="searchBoxOptions" 

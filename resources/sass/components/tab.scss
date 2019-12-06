@@ -1,0 +1,21 @@
+.tab {
+    border-bottom: solid #b1b1b1 1px;
+    & .ln {
+        display: inline-block;
+        & button {
+            border: none;
+            font-size: 1.6rem;
+            line-height: 2.2rem;
+            color: #484848;
+            margin-right: 3.2rem;
+            padding-left:0rem;
+            padding-right:0rem;
+            padding-top: 2.4rem;
+            padding-bottom: 2.4rem;
+        }
+    }
+    & .ln.act button {
+        color:#008489;
+        border-bottom: 2px solid #008489;
+    }
+}

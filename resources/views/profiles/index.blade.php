@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="inner-container">
+<div>
 	<div id="bodyArea">
 		<user-profile :fav="{{$fav}}" :loaduser="{{ auth()->user() }}" v-cloak></user-profile>	
 	</div>

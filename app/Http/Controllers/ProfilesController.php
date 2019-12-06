@@ -9,6 +9,16 @@ use Illuminate\Support\Facades\Auth;
 
 class ProfilesController extends Controller
 {
+    /**
+    * Checks for admin before allowing controller access
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index(User $user)
     {
         return view('profiles.index', compact('user'));

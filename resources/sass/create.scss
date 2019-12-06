@@ -67,19 +67,7 @@ input.create-input {
 		font-size: 1.3rem;
     }
 }
-.multiselect {
-    margin: 0rem 0rem 1rem 0rem;
-}
-.multiselect--active {
-	& .multiselect__tags {
-		border: 1px solid rgb(0, 132, 137) !important;
-	}
-}
-.multiselect.error {
-    & .multiselect__tags {
-        border: 1px solid red !important;
-    }
-}
+
 .create-field {
 	width:100%;
 	& label {

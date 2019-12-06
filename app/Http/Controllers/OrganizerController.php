@@ -15,8 +15,8 @@ class OrganizerController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
-        $this->middleware('can:update,event');
+        $this->middleware('auth')->except(['show']);
+        $this->middleware('can:update,organizer')->except(['store','show']);
     }
     /**
      * Display a listing of the resource.
@@ -52,7 +52,6 @@ class OrganizerController extends Controller
     {
         $organizer = Organizer::Create($request->except(['imagePath', 'user_id']) + ['user_id' => auth()->id()]);
         Organizer::saveFile($organizer, $request);
-        $event->update([ 'organizer_id' => $organizer->id ]);
     }
 
     /**
@@ -63,7 +62,7 @@ class OrganizerController extends Controller
      */
     public function show(Organizer $organizer)
     {
-        //
+        return view('organizers.show', compact('organizer'));
     }
 
     /**

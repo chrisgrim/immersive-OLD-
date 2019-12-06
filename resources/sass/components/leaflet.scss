@@ -1,0 +1,64 @@
+.leaflet-marker-icon.icons {
+    background: white;
+    border-radius: 5rem;
+    border: solid 2px black;
+    width: 5rem !important;
+    margin-left: -2.5rem !important;
+    height: 3rem !important;
+    text-align: center;
+    & p {
+        overflow-wrap: break-word;
+        font-size: 14px;
+        font-weight: 800;
+        line-height: 1.28571em;
+        color: inherit;
+        margin: .4rem 0rem;
+    }
+}
+div.leaflet-popup {
+    &-content {
+        margin: 1rem 0rem;
+        line-height: 1.4;
+        &-wrapper {
+            padding: 0rem;
+            width: 20rem;
+        }
+    }
+}
+a.leaflet-popup-close-button {
+    display: none;
+}
+.leaflet-touch .leaflet-control-attribution, .leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar {
+    display: none;
+}
+div.vue2leaflet-map {
+    height:100% !important;
+}
+
+.zoom {
+    position: absolute;
+    right:0;
+    top:0;
+    margin: 2.4rem;
+    z-index: 900;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 4px 24px, rgba(0, 0, 0, 0.04) 0px 0px 0px 1px !important;
+    border-radius: 1rem;
+    & .in button {
+        background: white;
+        border: none;
+        padding: 1.2rem;
+        border-radius: 1rem 1rem 0rem 0rem;
+        &:hover {
+            background: #e8e8e8;
+        }
+    }
+    .out button {
+        background: white;
+        border: none;
+        padding: 1.2rem;
+        border-radius: 0rem 0rem 1rem 1rem;
+        &:hover {
+            background: #e8e8e8;
+        }
+    }
+}

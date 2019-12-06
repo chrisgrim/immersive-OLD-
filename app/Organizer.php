@@ -71,17 +71,7 @@ class Organizer extends Model
      */
     public function inProgressEvents()
     {
-        return $this->hasMany(Event::class)->where('approval_process', 'inProgress');
-    }
-
-    /**
-     * Get Pending Events for organizer
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\hasMany
-     */
-    public function pendingEvents()
-    {
-        return $this->hasMany(Event::class)->where('approval_process', 'ready');
+        return $this->hasMany(Event::class)->where('approval_process', 'inProgress')->orWhere('approval_process', 'ready');
     }
 
     /**
@@ -99,6 +89,49 @@ class Organizer extends Model
         $request->file('imagePath')->storeAs('/public/organizer-images', $filename);
         Image::make(storage_path()."/app/public/organizer-images/$filename")->fit(1200, 800)->save(storage_path("/app/public/$imagePath"));
         $organizer->update([ 'imagePath' => $imagePath ]);
+    }
+
+    /**
+    * Save File and update organizer model with path name
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  $organizer
+    */
+    public static function getOrganizerEvents()
+    {
+        $organizers = auth()->user()->organizers->load([
+            'liveEvents' => function ($builder) {
+                $builder->where('user_id', auth()->id());
+            },
+            'pastEvents' => function ($builder) {
+                $builder->where('user_id', auth()->id());
+            },
+            'inProgressEvents' => function ($builder) {
+                $builder->where('user_id', auth()->id());
+            }
+        ]);
+        $eventsbyorganizer = $organizers->map(function ($organizer) {
+            return [
+                        'id' => $organizer->id,
+                        'name' => $organizer->name,
+                        'slug' => $organizer->slug,
+                        'imagePath' => $organizer->imagePath,
+                        'live_events' =>  $organizer->liveEvents,
+                        'past_events' => $organizer->pastEvents,
+                        'in_progress_events' => $organizer->inProgressEvents,
+            ];
+        });
+        return $eventsbyorganizer;
+    }
+
+    /**
+    * Sets the Route Key to slug instead of ID
+    *
+    * @return Route Key Name
+    */
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 
     protected $searchRules = [

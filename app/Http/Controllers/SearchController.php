@@ -31,7 +31,7 @@ class SearchController extends Controller
             "longitude" => $lng,
             "name" => $name
         );
-        return view('searches.search',compact('searchedevents'));
+        return view('events.search',compact('searchedevents'));
     }
 
     public function filterIndex(Request $request)

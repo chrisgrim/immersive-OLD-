@@ -45,7 +45,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $appends = ['hasCreatedEvents', 'userType', 'needsApproval'];
+    protected $appends = ['hasCreatedOrganizers', 'userType', 'needsApproval'];
 
     /**
      * User can have many events
@@ -109,9 +109,9 @@ class User extends Authenticatable
     *
     * @return bool
     */
-    public function getHasCreatedEventsAttribute()
+    public function getHasCreatedOrganizersAttribute()
     {
-        return auth()->user()->events()->count() ? true : false;    
+        return auth()->user()->organizers()->count() ? true : false;    
     }
 
     /**

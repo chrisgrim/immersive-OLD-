@@ -1,11 +1,11 @@
 <template>
 	<div>
-		<nav class="grid nav">
-			<a href="/">
-				<div class="logo">
+		<nav class="nav">
+			<div class="logo">
+                <a href="/">
 					<img src="/storage/website-files/ei-logo.png" alt="">
-				</div>
-			</a>
+                </a>
+			</div>
 	
 			<nav-search></nav-search>
 
@@ -13,12 +13,12 @@
                 <div class="menu-nav">
                     <profile-button :user="user" v-if="user"></profile-button>
                 </div>
-                <div class="menu-nav" v-if="user && !user.hasCreatedEvents">
+                <div class="menu-nav" v-if="user && !user.hasCreatedOrganizers">
                     <a href="/events/create">
                         <div>Create Event</div>
                     </a>
                 </div>
-                <div class="menu-nav" v-if="user && user.hasCreatedEvents">
+                <div class="menu-nav" v-if="user && user.hasCreatedOrganizers">
                     <a href="/create-event/edit">
                         Edit Your Events
                     </a>

@@ -1,9 +1,9 @@
 <template>
-    <div class="category-block">
+    <div class="item">
         <div 
-        class="category-background-image" 
+        class="image" 
         :style="{ backgroundImage: `url('${this.category ? /storage/ + this.category.imagePath : ''}')` }" />
-        <div class="category-text">
+        <div class="text">
             <h4>
                 {{ category.name }}
             </h4>

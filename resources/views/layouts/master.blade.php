@@ -4,12 +4,10 @@
 		@include('layouts.meta')
 	</head>
 	<body>
-		<div id="container">
-			@include('layouts.nav')
-			<main>
-				@yield('content')
-			</main>
-			@include('layouts.footer')
-		</div>
+		@include('layouts.nav')
+		<main>
+			@yield('content')
+		</main>
+		@include('layouts.footer')
 	</body>
 </html>

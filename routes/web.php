@@ -21,6 +21,7 @@ Route::RESOURCE('regions', 'RegionsController');
 Route::RESOURCE('contactlevels', 'ContactLevelsController');
 Route::RESOURCE('contentadvisories', 'ContentAdvisoriesController');
 Route::RESOURCE('genres', 'GenresController');
+Route::RESOURCE('organizer', 'OrganizerController');
 
 // ----------   Search Page -------
 // Adds Top Search to Session
@@ -51,11 +52,6 @@ Route::GET('favorite/{event}/login', 'FavoritesController@loginToFavorite');
 //event list
 Route::GET('/create-event/edit', 'EventController@editEvents');
 
-// Create Event Paths
-Route::GET('/create-event/{event}/organizer', 'OrganizerController@create');
-Route::POST('/create-event/{event}/organizer', 'OrganizerController@store');
-Route::POST('/create-event/{event}/{organizer}/organizer', 'OrganizerController@update');
-
 Route::GET('/create-event/{event}/title', 'EventController@title');
 Route::PATCH('/create-event/{event}/title ', 'EventController@updateTitle');
 
@@ -81,6 +77,9 @@ Route::GET('/create-event/{event}/images', 'ImageController@create');
 Route::POST('/create-event/{event}/images', 'ImageController@store');
 
 Route::GET('/create-event/{event}/thankyou', 'EventController@thanks');
+
+Route::GET('/redirect', 'Auth\LoginController@redirectToProvider');
+Route::GET('/callback', 'Auth\LoginController@handleProviderCallback');
 
 //Generate City List
 Route::GET('/citylist/generate', 'CityListsController@generate');

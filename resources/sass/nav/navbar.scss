@@ -1,0 +1,82 @@
+#header {
+    position: fixed;
+    width: 100%;
+    background: white;
+    z-index: 901;
+}
+.nav {
+    align-items: center;
+    border-bottom: 0.1rem solid #ebebeb;
+    height: 7rem;
+    position: relative;
+    & a {
+        font-family: "Montserrat", sans-serif;
+        color: #484848;
+        text-decoration: none;
+        font-size: 1.35rem;
+        font-weight: 500;
+        transition: all 0.2s ease-in-out;
+    }
+    & .logo {
+        height: 6.9rem;
+        width: 6.9rem;
+        display: inline-block;
+        float: left;
+    }
+    & img {
+        height: 100%;
+        width: 100%;
+    }
+    & .search {
+        position: relative;
+        width: 40%;
+        display: inline-block;
+        float:left;
+        margin-top: 1.4rem;
+        & .multiselect {
+            width: 74%;
+            display: inline-block;
+            vertical-align: top;
+            &__tags {
+              border-radius: 5px 0px 0px 5px;
+            }
+        }
+        & .multiselect__input {
+            font-weight: 800;
+            font-size: 17px;
+            color: #484848;
+        }
+        & .multiselect__single {
+            font-weight: 800;
+            font-size: 17px;
+            color: #484848;
+        }
+        & .multiselect__placeholder {
+            padding: 0px;
+            width: 100%;
+            font-weight: 800;
+            font-size: 17px;
+            color: #b9b9b9;
+        }
+        & .multiselect__select{
+            display: none;
+        }
+    }
+}
+.menu {
+    width: 100%;
+    list-style-type:none;
+    padding:0px;
+    height:100%;
+    &-nav {
+        float: right;
+        text-align: center;
+        height:100%;
+        margin: 0rem 2rem;
+        padding-top: 2.3rem;
+        & a {
+            vertical-align: bottom;
+        }
+    }
+}
+

@@ -2,9 +2,9 @@
 
 @section('content')
 
-<div class="inner-container">
+<div>
 	<div id="bodyArea">
-		<event-listing :events="{{$events}}" :categories="{{$categories}}">	
+		<event-index :events="{{$events}}" :categories="{{$categories}}"/>	
 	</div>
 </div>
 
