@@ -47,7 +47,7 @@
                     :center="mapCenter"
                     style="height: 80%"
                     @update:center="centerUpdate"
-                    @update:bounds="boundsUpdate"
+                    @update:bounds="this.boundsUpdate"
                     :options="{ scrollWheelZoom: allowZoom, zoomControl: allowZoom }"
                     >
                     <l-tile-layer :url="url" :attribution="attribution" />
@@ -178,7 +178,7 @@
             },
             boundsUpdate(bounds) {
                 this.currentBounds = bounds;
-                this.mapSearch ? this.updateData() : '';
+                // this.mapSearch ? this.updateData() : '';
             },
 
             updateData() {
@@ -202,6 +202,9 @@
         watch: {
             mapCenter() {
                 this.zoom = 11
+            },
+            currentCenter() {
+                this.currentCenter.lat.toString().length > 10 ? this.mapSearch ? this.updateData() : '' : '' ;
             }
         },
 

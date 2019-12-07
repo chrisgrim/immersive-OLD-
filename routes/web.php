@@ -78,8 +78,8 @@ Route::POST('/create-event/{event}/images', 'ImageController@store');
 
 Route::GET('/create-event/{event}/thankyou', 'EventController@thanks');
 
-Route::GET('/redirect', 'Auth\LoginController@redirectToProvider');
-Route::GET('/callback', 'Auth\LoginController@handleProviderCallback');
+Route::GET('/login/{provider}', 'Auth\LoginController@redirectToProvider');
+Route::GET('/login/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
 
 //Generate City List
 Route::GET('/citylist/generate', 'CityListsController@generate');
