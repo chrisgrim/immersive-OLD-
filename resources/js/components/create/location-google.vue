@@ -1,12 +1,8 @@
 <template>
-	<div class="create-content">
-		<div class="create-title">
-    		<h2> Location</h2>
-			<p>We use this data to allow users to search by city to find your event.</p>
-    	</div>
-    	<div class="create-form locations">
-			<div class="location-section-1">
-			    <div class="create-field">
+	<div class="location">
+    	<div class="section">
+			<div class="text">
+			    <div class="field">
 				 	<label> Is your location hidden? </label>
 					<div id="cover">
 						<input v-model="location.hiddenLocationToggle" type="checkbox" id="checkbox">
@@ -17,11 +13,10 @@
 						</div>
 					</div>
 			    </div>
-		    	<div class="create-field" v-if="location.hiddenLocationToggle">
+		    	<div class="field" v-if="location.hiddenLocationToggle">
 					<label> Please enter how participants will be notified of the location </label>
 		            <textarea 
 		            v-model.trim="location.hiddenLocation" 
-		            class="create-input area" 
 		            rows="8" 
 		            :class="{ active: notifiedActive}"
 		            required 
@@ -31,68 +26,72 @@
 			        @blur="notifiedActive = false"
 		            />
 		        </div>
-	    	</div>
-	    	<div class="location-section-2">
-			    <div class="create-field">
-					<label> Location </label>
-					<p>Put address if you have one, otherwise select your city.</p>
-					<gmap-autocomplete
-					@place_changed="setPlace"
-					class="create-input"
-					autocomplete="false"
-					:class="{ active: locationActive, 'error': $v.location.latitude.$error }"
-					:placeholder="locationPlaceholder"
-					@click="locationActive = true"
-		        	@blur="locationActive = false">
-					</gmap-autocomplete>
-					<div v-if="$v.location.latitude.$error" class="validation-error">
-						<p class="error" v-if="!$v.location.latitude.required">Please select from the list of locations</p>
-					</div>
-				</div>
-			</div>
-			<div class="location-section-3">
-					<div v-if="center">
-						<div style="width:400px;height:400px">
-							<l-map :zoom="zoom" :center="center">
-							<l-tile-layer :url="url"></l-tile-layer>
-							<l-marker :lat-lng="center"></l-marker>
-							</l-map>
-						</div>	
-					</div>
-			    </div>
-			</div>
-			<div class="location-section-4">
-			    <div class="create-field">
-			    	
-					<label>Regions</label>
-					<multiselect 
-					v-model.trim="selectedRegions" 
-					:options="this.regions ? regionOptions : []" 
-					:multiple="true" 
-					placeholder="Select Region. You may select more than one." 
-					track-by="id"
-					open-direction="bottom"
-					required 
-					label="region"
-					@input="$v.selectedRegions.$touch"
-					:class="{ active: hiddenActive,'error': $v.selectedRegions.$error}"
-					@click="hiddenActive = true"
-			        @blur="hiddenActive = false"
-					/>
-
-					<div v-if="$v.selectedRegions.$error" class="validation-error">
-	    				<p class="error" v-if="!$v.selectedRegions.required">Please select at least one Region</p>
-	    			</div>
-				</div>
-			</div>
-			
-		    <div class="create-button">
-		        <button @click.prevent="submitLocation()" class="create"> Next </button>
-		    </div>
-
-
-
-		</div>
+    		    <div class="field">
+    				<label> Location </label>
+    				<p>Put address if you have one, otherwise select your city.</p>
+    				<gmap-autocomplete
+    				@place_changed="setPlace"
+    				autocomplete="false"
+    				:class="{ active: locationActive, 'error': $v.location.latitude.$error }"
+    				:placeholder="locationPlaceholder"
+    				@click="locationActive = true"
+    	        	@blur="locationActive = false">
+    				</gmap-autocomplete>
+    				<div v-if="$v.location.latitude.$error" class="validation-error">
+    					<p class="error" v-if="!$v.location.latitude.required">Please select from the list of locations</p>
+    				</div>
+    			</div>
+    		    <div class="field">
+    				<label>Regions</label>
+    				<multiselect 
+    				v-model.trim="selectedRegions" 
+    				:options="this.regions ? regionOptions : []" 
+    				:multiple="true" 
+    				placeholder="Select Region. You may select more than one." 
+    				track-by="id"
+    				open-direction="bottom"
+    				required 
+    				label="region"
+    				@input="$v.selectedRegions.$touch"
+    				:class="{ active: hiddenActive,'error': $v.selectedRegions.$error}"
+    				@click="hiddenActive = true"
+    		        @blur="hiddenActive = false"
+    				/>
+    				<div v-if="$v.selectedRegions.$error" class="validation-error">
+        				<p class="error" v-if="!$v.selectedRegions.required">Please select at least one Region</p>
+        			</div>
+    			</div>
+                <div class="">
+                <button @click.prevent="submitLocation()" class="create"> Next </button>
+            </div>
+            </div>
+            <div class="image">
+                <div v-if="center" class="map">
+                    <div class="zoom">
+                        <div class="in">
+                            <button @click.prevent="zoom += 1">
+                                <svg viewBox="0 0 16 16" height="16" width="16" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M7 1a1 1 0 0 1 2 0v14a1 1 0 1 1-2 0V1z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"></path></svg>
+                            </button>
+                        </div>
+                        <div class="out">
+                            <button @click.prevent="zoom -= 1">
+                                <svg viewBox="0 0 16 16" height="16" width="16" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div style="width:100%;height:100vh">
+                        <l-map :zoom="zoom" :center="center" :options="{ scrollWheelZoom: allowZoom, zoomControl: allowZoom }">
+                        <l-tile-layer :url="url"></l-tile-layer>
+                        <l-marker :lat-lng="center"></l-marker>
+                        </l-map>
+                    </div>  
+                </div>
+            </div>
+        </div>
+		<div class="inNav">
+            <button class="create" @click.prevent="goBack()"> Back </button>
+            <button class="create" @click.prevent="submitLocation()"> Next </button>
+        </div>
     </div>
 </template>
 
@@ -137,6 +136,7 @@
 				locationActive: false,
 				notifiedActive: false,
 				hiddenActive: false,
+                allowZoom: false,
 			}
 		},
 
@@ -204,6 +204,10 @@
                     this.location = _.extend( this.location, input);
                 }
             },
+            
+            goBack() {
+                window.location.href = `${this.eventUrl}/title`;
+            },
 
 			// Gets data from Google Maps and inputs into Vue forms correctly
 			getAddressObject(address_components) {

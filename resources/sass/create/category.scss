@@ -1,0 +1,22 @@
+#create {
+    position: relative;
+    overflow: auto;
+    & .category {
+        padding-top: 6%;
+        width:90%;
+        margin: auto;
+        & .text {
+            width: 36%;
+            float: left;
+            margin:0;
+            padding: 0% 0% 0% 5%;
+        }
+        & .image {
+            width: 64%;
+            float: right;
+            margin: 0;
+            padding: 0% 0% 0% 5%;
+            min-height: 50vh;
+        }
+    }
+}

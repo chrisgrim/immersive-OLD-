@@ -71,6 +71,16 @@ class Event extends Model
     }
 
     /**
+    * Each event has One Comment
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+    */
+    public function moderatorcomment() 
+    {
+        return $this->hasOne(ModeratorComment::class);
+    }
+
+    /**
     * Each event belongs to one Category
     *
     * @return \Illuminate\Database\Eloquent\Relations\belongsTo

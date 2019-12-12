@@ -130,9 +130,16 @@ class EventController extends Controller
     {
         $event->update([ 'category_id' => request('id') ]);
     }
-    public function updateTitle(TitleUpdateRequest $request, Event $event)
-    {
-        $event->update([ 'name' => request('name') ]);
+    public function updateTitle(Request $request, Event $event)
+    {   if ($event->name == $request->name) {
+            //
+        } else {
+            if (Event::where('name', '=', $request->name)->exists()) {
+                $event->update([ 'name' => request('name') . '-' . rand(5, 9999) ]);
+            } else {
+                $event->update([ 'name' => request('name') ]);
+            }
+        }
     }
     public function title(Event $event)
     {

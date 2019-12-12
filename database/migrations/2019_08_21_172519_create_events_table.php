@@ -22,6 +22,7 @@ class CreateEventsTable extends Migration
             $table->string('slug')->unique();
             $table->string('name')->nullable();
             $table->longtext('description')->nullable();
+            $table->longtext('tag_line')->nullable();
             $table->string('websiteUrl')->nullable();
             $table->string('show_times')->nullable();
             $table->string('ticketUrl')->nullable();

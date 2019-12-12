@@ -1,0 +1,773 @@
+#header.c {
+  z-index: -1;
+}
+
+#header.c .nav {
+  border: none;
+}
+
+#create .section {
+  overflow: visible;
+}
+
+#create .steps {
+  height: 7rem;
+  overflow: visible;
+  width: 100%;
+  margin: auto;
+  position: fixed;
+  z-index: 500;
+  background: white;
+}
+
+#create .steps h2 {
+  display: inline-block;
+  margin: 0;
+}
+
+#create .steps p {
+  display: inline-block;
+}
+
+#create .steps .logo {
+  height: 6.9rem;
+  width: 6.9rem;
+  display: inline-block;
+  float: left;
+}
+
+#create .steps .logo img {
+  height: 100%;
+  width: 100%;
+}
+
+#create .content {
+  width: 100%;
+  margin: auto;
+  padding-top: 7rem;
+}
+
+#create .field {
+  width: 100%;
+}
+
+#create .field label {
+  display: block;
+  margin: 2rem 0rem 1rem 0rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #656565;
+}
+
+#create .field input {
+  position: relative;
+  color: #484848;
+  background-color: white;
+  transition: border-color 0.2s ease 0s;
+  padding: 1.3rem 1rem;
+  border-width: 1px;
+  border-style: solid;
+  -o-border-image: initial;
+  border-image: initial;
+  border-radius: 5px;
+  border-color: #ebebeb;
+  margin: 0rem 0rem 1rem 0rem;
+  font-size: 1.4rem;
+  width: 100%;
+}
+
+#create .field textarea {
+  position: relative;
+  color: #484848;
+  background-color: white;
+  transition: border-color 0.2s ease 0s;
+  padding: 1.3rem 1rem;
+  border-width: 1px;
+  border-style: solid;
+  -o-border-image: initial;
+  border-image: initial;
+  border-radius: 5px;
+  border-color: #ebebeb;
+  margin: 0rem 0rem 1rem 0rem;
+  font-size: 1.4rem;
+  width: 100%;
+}
+
+#create .inNav {
+  position: fixed;
+  top: 0;
+  right: 1%;
+  z-index: 501;
+}
+
+#create .checklist {
+  overflow: hidden;
+}
+
+#create .checklist .item {
+  width: 90%;
+  margin: auto;
+  margin-top: 1.1rem;
+}
+
+#create .checklist .item .text {
+  padding: 0% 0% 0% 5%;
+}
+
+#create .checklist .bar {
+  height: 10px !important;
+  line-height: 0.8px !important;
+  background-color: #edefed !important;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px !important;
+  position: relative;
+  margin-top: 1rem;
+}
+
+#create .checklist .bar a {
+  overflow: visible;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+#create .checklist .bar .grey {
+  display: inline-block;
+  height: 10px;
+  position: absolute;
+}
+
+#create .checklist .bar .fill {
+  display: inline-block !important;
+  height: 10px !important;
+  position: absolute !important;
+  background-color: #008489 !important;
+  border-right: 0.3px solid #008489 !important;
+}
+
+#create .submit {
+  margin: 0;
+  padding: 0% 0% 0% 5%;
+}
+
+#create {
+  margin-top: -7rem;
+}
+
+#create.start {
+  background-image: url("/storage/website-files/create-background.jpg");
+  background-size: cover;
+  height: 100vh;
+}
+
+#create.start .content {
+  padding: 7% 2% 2rem 7%;
+  width: 40%;
+  float: left;
+}
+
+#create.start .content h2 {
+  font-size: 3.2rem;
+  font-weight: 400;
+}
+
+#create {
+  position: relative;
+  overflow: auto;
+}
+
+#create .organizer {
+  padding-top: 4%;
+  width: 90%;
+  margin: auto;
+}
+
+#create .organizer .text {
+  width: 36%;
+  float: left;
+  margin: 0;
+  padding: 0% 0% 0% 5%;
+}
+
+#create .organizer .image {
+  width: 64%;
+  float: right;
+  margin: 0;
+  padding: 0% 0% 0% 5%;
+}
+
+#create {
+  position: relative;
+  overflow: auto;
+}
+
+#create .image {
+  padding-top: 4%;
+  width: 90%;
+  margin: auto;
+}
+
+#create .image .section {
+  overflow: visible;
+}
+
+#create .image .img {
+  width: 50%;
+  float: left;
+  margin: 0;
+  padding: 0% 5% 0% 5%;
+}
+
+#create .image .pre {
+  width: 50%;
+  float: right;
+  margin: 0;
+  padding: 0% 5% 0% 5%;
+}
+
+.prev-box {
+  position: relative;
+  height: calc(672px * (9 / 16));
+}
+
+.preview {
+  width: 100%;
+  height: calc(672px * (9 / 16));
+  overflow: hidden;
+  display: inline-block;
+  position: absolute;
+  background: red;
+}
+
+.organization-form .multiselect .option__desc,
+.organization-form .multiselect .option__image {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.organization-form .multiselect .option__image {
+  max-height: 80px;
+  margin-right: 10px;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  border: 1px solid #ddd;
+}
+
+.organization-form .multiselect .option__title {
+  font-size: 14px;
+}
+
+.organization-form .multiselect .option__small {
+  font-size: 12px;
+  display: block;
+}
+
+.image-upload-field {
+  position: relative;
+  margin-bottom: 2rem;
+  padding-top: 3rem;
+}
+
+.image-upload-wrapper {
+  border: 1px solid #ddd;
+}
+
+.image-upload-label {
+  top: 1rem;
+  font-size: 1.1rem;
+  color: #b3b5bf;
+}
+
+.image-upload-wrapper,
+.image-upload-wrapper img {
+  width: 450px;
+  height: 270px;
+  border-radius: 5px;
+  position: relative;
+  display: block;
+  cursor: pointer;
+  font-size: 110px;
+  transition: width 0.5s ease-in-out;
+  transition: height 0.5s ease-in-out;
+  border: 1px solid black;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center center;
+}
+
+.image-upload-wrapper.imageloaded,
+.image-upload-wrapper img.imageloaded {
+  width: 100%;
+  font-size: 40px;
+  height: 500px;
+  background-size: cover;
+}
+
+.image-upload-wrapper .image-upload-layover {
+  opacity: 1;
+  top: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0);
+  font-size: 100px;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease-in-out;
+  transition: font-size 0.3s ease-in-out;
+}
+
+.image-upload-wrapper .image-upload-layover:hover {
+  opacity: 0.8;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.image-upload-wrapper .image-upload-layover .text-center {
+  position: relative;
+  opacity: 0;
+  text-align: center;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.image-upload-wrapper .image-upload-layover .text-center:hover {
+  opacity: 1;
+}
+
+.imgclick {
+  width: 100px;
+  height: 100px;
+  background-size: contain;
+  border-radius: 50px;
+}
+
+label.imgclick {
+  position: relative;
+  display: block;
+  cursor: pointer;
+}
+
+.fileinput {
+  display: none !important;
+}
+
+#create {
+  position: relative;
+  overflow: auto;
+}
+
+#create .title {
+  padding-top: 4%;
+  width: 90%;
+  margin: auto;
+}
+
+#create .title .text {
+  width: 36%;
+  float: left;
+  margin: 0;
+  padding: 0% 0% 0% 5%;
+}
+
+#create .title .image {
+  width: 64%;
+  float: right;
+  margin: 0;
+  padding: 0% 0% 0% 5%;
+}
+
+#create {
+  position: relative;
+  overflow: auto;
+}
+
+#create .location {
+  padding-top: 1.2rem;
+  width: 100%;
+}
+
+#create .location .text {
+  width: 40%;
+  float: left;
+  margin: 0;
+  padding: 3.1% 0% 0% 9.5%;
+}
+
+#create .location .image {
+  width: 60%;
+  float: right;
+  margin: 0;
+  padding: 0% 0% 0% 5%;
+}
+
+#create {
+  position: relative;
+  overflow: auto;
+}
+
+#create .category {
+  padding-top: 6%;
+  width: 90%;
+  margin: auto;
+}
+
+#create .category .text {
+  width: 36%;
+  float: left;
+  margin: 0;
+  padding: 0% 0% 0% 5%;
+}
+
+#create .category .image {
+  width: 64%;
+  float: right;
+  margin: 0;
+  padding: 0% 0% 0% 5%;
+  min-height: 50vh;
+}
+
+#create {
+  position: relative;
+  overflow: auto;
+}
+
+#create .shows {
+  padding-top: 4%;
+  width: 100%;
+}
+
+#create .shows .section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+}
+
+#create .shows .section .calendar {
+  margin: 0;
+  padding: 0% 0% 0% 5%;
+}
+
+#create .shows .section .pricing {
+  margin: 0;
+  padding: 0% 4% 0% 4%;
+}
+
+#create {
+  position: relative;
+  overflow: auto;
+}
+
+#create .description {
+  padding-top: 4%;
+  width: 90%;
+  margin: auto;
+}
+
+#create .description .text {
+  width: 50%;
+  float: left;
+  margin: 0;
+  padding: 0% 0% 0% 5%;
+}
+
+#create .description .genre {
+  width: 50%;
+  float: right;
+  margin: 0;
+  padding: 0% 0% 0% 5%;
+}
+
+#create {
+  position: relative;
+  overflow: visible;
+}
+
+#create .advisories {
+  padding-top: 4%;
+  width: 90%;
+  margin: auto;
+}
+
+#create .advisories .text {
+  width: 36%;
+  float: left;
+  margin: 0;
+  padding: 0% 0% 0% 5%;
+}
+
+#create .advisories .mobile {
+  width: 64%;
+  float: right;
+  margin: 0;
+  padding: 0% 0% 0% 5%;
+}
+
+/*--------------------------- default-----------------*/
+
+.create-title {
+  background: #efefef;
+  padding: 0.5rem 2rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.container-create {
+  width: 60%;
+  display: inline-block;
+  padding: 1rem 5%;
+}
+
+textarea.create-input.area {
+  position: relative;
+  color: #484848;
+  background-color: white;
+  transition: border-color 0.2s ease 0s;
+  padding: 1.3rem 1rem;
+  border-width: 1px;
+  border-style: solid;
+  -o-border-image: initial;
+     border-image: initial;
+  border-radius: 5px;
+  border-color: #ebebeb;
+  margin: 0rem 0rem 1rem 0rem;
+  font-size: 1.4rem;
+  width: 100%;
+}
+
+textarea.create-input.area.active {
+  border-color: #008489;
+}
+
+textarea.create-input.area.error {
+  border-color: red;
+}
+
+input.create-input {
+  position: relative;
+  color: #484848;
+  background-color: white;
+  transition: border-color 0.2s ease 0s;
+  padding: 1.3rem 1rem;
+  border-width: 1px;
+  border-style: solid;
+  -o-border-image: initial;
+     border-image: initial;
+  border-radius: 5px;
+  border-color: #ebebeb;
+  margin: 0rem 0rem 1rem 0rem;
+  font-size: 1.4rem;
+  width: 100%;
+}
+
+input.create-input.active {
+  border-color: #008489;
+}
+
+input.create-input.error {
+  border-color: red;
+}
+
+.validation-error {
+  margin-top: -20px;
+  position: absolute;
+  background: white;
+  margin-left: 10px;
+}
+
+.validation-error p {
+  margin: 0px;
+  padding: 0px 5px;
+  color: red;
+  font-size: 1.3rem;
+}
+
+.create-field {
+  width: 100%;
+}
+
+.create-field label {
+  display: block;
+  margin: 2rem 0rem 1rem 0rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #484848;
+}
+
+button.create {
+  color: #008489;
+  border: 1px solid #008489;
+  padding: 0.9rem 2rem;
+  font-size: 1.6rem;
+  border-radius: 5px;
+  margin: 2rem 0rem;
+}
+
+button.create:disabled,
+button.create[disabled] {
+  border: 1px solid #cacaca;
+  background-color: #f9f9f9;
+  color: #c7c7c7;
+}
+
+#checklist a {
+  text-decoration: none;
+  color: #484848;
+}
+
+.create-form.locations {
+  position: relative;
+}
+
+.location-section-1 {
+  width: 40%;
+}
+
+.location-section-2 {
+  width: 40%;
+  display: inline-block;
+}
+
+.location-section-3 {
+  width: 35%;
+  right: 15rem;
+  position: absolute;
+  top: 0;
+}
+
+.location-section-4 {
+  width: 40%;
+}
+
+.organization-form .multiselect .option__desc,
+.organization-form .multiselect .option__image {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.organization-form .multiselect .option__image {
+  max-height: 80px;
+  margin-right: 10px;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  border: 1px solid #ddd;
+}
+
+.organization-form .multiselect .option__title {
+  font-size: 14px;
+}
+
+.organization-form .multiselect .option__small {
+  font-size: 12px;
+  display: block;
+}
+
+/*-----------------------initial create page---------------------*/
+
+.initial_create {
+  background-image: url("/storage/website-files/create-background.jpg");
+  background-size: cover;
+  height: 94vh;
+}
+
+.initial_create-text {
+  width: 45%;
+  float: right;
+  margin-top: 10%;
+}
+
+/*--------------------------dates section-------------*/
+
+.dates-grid {
+  display: grid;
+  grid-template-columns: 310px 1fr;
+}
+
+.asd__month {
+  min-height: 330px;
+}
+
+.asd__keyboard-shortcuts-trigger-wrapper {
+  display: none;
+}
+
+button.add-button {
+  border: none;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #f2595b;
+}
+
+div.add-button {
+  box-shadow: -3px 5px 5px 1px #cecece99;
+  padding: 1.3rem 2rem;
+  border-radius: 0px 0px 50px 5px;
+  margin-top: -1px;
+  display: inline-block;
+  z-index: 1;
+  border: solid 1px #ebebeb;
+  border-top: none;
+}
+
+button.delete-circle {
+  border-radius: 100px;
+  padding: 0.7rem 1rem;
+  border: solid black 1px;
+  background: white;
+  margin-right: -4rem;
+  margin-top: 0.6rem;
+  float: right;
+}
+
+/* -------------------------Pricing-------------------*/
+
+.alt-pricing {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 250px));
+  align-items: end;
+}
+
+.alt-pricing .create-field {
+  width: 100px;
+}
+
+/*------------------------------Image --------------*/
+
+/*--------------------------------Checklist --------------------------------*/
+
+.container-checklist {
+  padding: 0rem 1rem 1rem 2rem;
+}
+
+.checklist-section {
+  margin: 1rem 0rem;
+  position: relative;
+}
+
+svg.checkbox {
+  stroke: #008489;
+  viewBox: 0 0 42 42;
+  fill: currentColor;
+  fill-opacity: 0;
+  stroke-width: 3;
+  focusable: false;
+  role: presentation;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  height: 2.5em;
+  width: 2.5em;
+  display: block;
+  overflow: visible;
+  margin-top: -1rem;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.container-checklist {
+  width: 20%;
+  display: inline-block;
+  vertical-align: top;
+}
+

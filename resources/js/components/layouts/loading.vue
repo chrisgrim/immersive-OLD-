@@ -1,10 +1,19 @@
 <template>
-  <div v-if="isLoading">
-    <div class="spinner">
-      <div class="cube1"></div>
-      <div class="cube2"></div>
+    <div v-if="loading" class="spinner">
+        <div class="area">
+            <div class="dot dot-1"></div>
+            <div class="dot dot-2"></div>
+            <div class="dot dot-3"></div>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+            <defs>
+                <filter id="goo">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+                <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 21 -7"/>
+                </filter>
+            </defs>
+        </svg>
     </div>
-  </div>
 </template>
 
 <script>
@@ -15,9 +24,9 @@
         default: true
       },
     },
+
     data() {
       return {
-        isLoading: this.loading,
         styles: {
           width: this.width + 'px',
           height: this.height + 'px'
@@ -29,61 +38,86 @@
 </script>
 
 <style scoped>
-  .spinner {
-    margin: 100px auto;
-    width: 40px;
-    height: 40px;
+    .spinner {
+        position: absolute;
+        z-index: 10;
+        height: calc(672px * (9 / 16));
+        width: 93%;
+        background: rgba(0,0,0,.5);
+    }
+   .spinner .area {
+    width: 200px;
+    height: 200px;
     position: absolute;
-  }
-  .cube1,
-  .cube2 {
-    background-color: #333;
-    width: 15px;
-    height: 15px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: auto;
+    filter: url('#goo');
+    animation: rotate-move 2s ease-in-out infinite;
+    }
+
+    .dot { 
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #000;
     position: absolute;
     top: 0;
+    bottom: 0;
     left: 0;
-    -webkit-animation: sk-cubemove 1.8s infinite ease-in-out;
-    animation: sk-cubemove 1.8s infinite ease-in-out;
-  }
-  .cube2 {
-    -webkit-animation-delay: -0.9s;
-    animation-delay: -0.9s;
-  }
-  @-webkit-keyframes sk-cubemove {
-    25% {
-      -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5)
+    right: 0;
+    margin: auto;
     }
-    50% {
-      -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg)
+
+    .dot-3 {
+    background-color: #f74d75;
+    animation: dot-3-move 2s ease infinite, index 6s ease infinite;
     }
-    75% {
-      -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5)
+
+    .dot-2 {
+    background-color: #10beae;
+    animation: dot-2-move 2s ease infinite, index 6s -4s ease infinite;
     }
-    100% {
-      -webkit-transform: rotate(-360deg)
+
+    .dot-1 {
+    background-color: #ffe386;
+    animation: dot-1-move 2s ease infinite, index 6s -2s ease infinite;
     }
-  }
-  @keyframes sk-cubemove {
-    25% {
-      transform: translateX(42px) rotate(-90deg) scale(0.5);
-      -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5);
+
+    @keyframes dot-3-move {
+    20% {transform: scale(1)}
+    45% {transform: translateY(-18px) scale(.50)}
+    60% {transform: translateY(-45px) scale(.50)}
+    80% {transform: translateY(-45px) scale(.50)}
+    100% {transform: translateY(0px) scale(1)}
     }
-    50% {
-      transform: translateX(42px) translateY(42px) rotate(-179deg);
-      -webkit-transform: translateX(42px) translateY(42px) rotate(-179deg);
+
+    @keyframes dot-2-move {
+    20% {transform: scale(1)}
+    45% {transform: translate(-16px, 12px) scale(.50)}
+    60% {transform: translate(-40px, 30px) scale(.50)}
+    80% {transform: translate(-40px, 30px) scale(.50)}
+    100% {transform: translateY(0px) scale(1)}
     }
-    50.1% {
-      transform: translateX(42px) translateY(42px) rotate(-180deg);
-      -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg);
+
+    @keyframes dot-1-move {
+    20% {transform: scale(1)}
+    45% {transform: translate(16px, 12px) scale(.50)}
+    60% {transform: translate(40px, 30px) scale(.50)}
+    80% {transform: translate(40px, 30px) scale(.50)}
+    100% {transform: translateY(0px) scale(1)}
     }
-    75% {
-      transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
-      -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
+
+    @keyframes rotate-move {
+    55% {transform: translate(-50%, -50%) rotate(0deg)}
+    80% {transform: translate(-50%, -50%) rotate(360deg)}
+    100% {transform: translate(-50%, -50%) rotate(360deg)}
     }
-    100% {
-      transform: rotate(-360deg);
-      -webkit-transform: rotate(-360deg);
+
+    @keyframes index {
+    0%, 100% {z-index: 3}
+    33.3% {z-index: 2}
+    66.6% {z-index: 1}
     }
-  }
 </style>

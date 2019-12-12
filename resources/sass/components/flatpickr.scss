@@ -1,3 +1,9 @@
+.flatpickr-calendar.inline {
+    margin: auto;
+}
+.flatpickr-calendar .multiMonth .inline {
+    width:100% !important;
+}
 .flatpickr-days {
     margin: 1rem 4rem 4rem 4rem;
 }
@@ -8,9 +14,10 @@
 .flatpickr-weekdaycontainer span.flatpickr-weekday {
     font-weight: 300;
 }
-div.flatpickr-calendar.animate.multiMonth.inline.showTimeInput {
-    width: 700px !important;
+div.flatpickr-calendar.animate.multiMonth.inline {
+    width: 100% !important;
 }
+
 span.flatpickr-day {
     border: 1px solid rgb(228, 231, 231);
     border-radius: 0px;

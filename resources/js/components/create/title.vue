@@ -1,29 +1,32 @@
 <template>
-	<div>
-		<div class="create-title">
-	    	<h2> What is the Title of your Event?</h2>
-		    <p>Make it a good one!</p>
+	<div class="title">
+	    <div class="section">
+            <div class="text">
+    		    <div class="field">
+    				<label>Title</label>
+    	            <input 
+    	            type="text" 
+    	            v-model="name" 
+    	            placeholder=" "
+    	            :class="{ active: nameActive,'error': $v.name.$error }"
+    	            @input="$v.name.$touch()"
+    	            @click="nameActive = true"
+                    @blur="nameActive = false"
+    	             />
+    	             <div v-if="$v.name.$error" class="validation-error">
+    	    				<p class="error" v-if="!$v.name.required">The Title is required</p>
+    	    		</div>
+    	        </div>
+            </div>
+            <div class="image">
+                
+            </div>
 	    </div>
-	    <div class="floating-form">
-		    <div class="create-field">
-				<label>Title</label>
-	            <input 
-	            type="text" 
-	            class="create-input"
-	            v-model="name" 
-	            placeholder=" "
-	            :class="{ active: nameActive,'error': $v.name.$error }"
-	            @input="$v.name.$touch()"
-	            @click="clearinput()"
-                @blur="titleActive = false"
-	             />
-	             <div v-if="$v.name.$error" class="validation-error">
-	    				<p class="error" v-if="!$v.name.required">The Title is required</p>
-	 					<p class="error" v-if="!$v.name.serverFailedTitle">This Event name has already been taken</p>
-	    		</div>
-	        </div>
-	    </div>
-	    <div class="">
+        <div class="inNav">
+            <button class="create" @click.prevent="goBack()"> Back </button>
+            <button class="create" @click.prevent="submitName()"> Next </button>
+        </div>
+	    <div class="submit">
 	        <button @click.prevent="submitName()" class="create"> Next </button>
 	    </div>
     </div>
@@ -44,7 +47,6 @@
 			return {
 				name: this.event.name,
 				eventUrl:_.has(this.event, 'slug') ? `/create-event/${this.event.slug}` : null,
-				serverErrors: [],
 				nameActive: false,
 			}
 		},
@@ -59,11 +61,6 @@
 
 		methods: {
 
-			//this checks the list of server errors to see if any of them have the title error
-			hasServerError(field) {
-	            return (field && _.has(this, 'serverErrors.' + field) && !_.isEmpty(this.serverErrors[field]));
-	        },
-
 	        //On click Sets class to green to remove error
 	        //clears out all server errors
 	        clearinput() {
@@ -77,15 +74,20 @@
 				if (this.$v.$invalid) { return false }
 				
 				axios.patch(`${this.eventUrl}/title`, this.submitObject)
-				.then(response => { window.location.href = `${this.eventUrl}/location`; })
+				.then(response => { 
+                    window.location.href = `${this.eventUrl}/location`; 
+                })
             	.catch(error => { this.serverErrors = error.response.data.errors; });
-			}
+			},
+
+            goBack() {
+                window.location.href = '/create-event/edit';
+            }
 		},
 
 		validations: {
 			name: {
 				required,
-				serverFailedTitle : function(){ return !this.hasServerError('name'); },
 			},
 		},
     };

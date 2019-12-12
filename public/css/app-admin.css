@@ -1,0 +1,91 @@
+#bodyArea .approve {
+  margin-top: -7rem;
+  background: white;
+}
+
+.approvebar {
+  width: 100%;
+  background: #a2a4ec;
+  position: fixed;
+  bottom: 0;
+  height: 10rem;
+  z-index: 900;
+}
+
+.approvebar .comments {
+  position: absolute;
+  left: 4%;
+  top: 0;
+  margin-top: -8%;
+  background: white;
+  border-radius: 1rem;
+  border: 1px solid black;
+  padding: 1rem;
+  width: 35rem;
+}
+
+.approvebar .comments label {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.approvebar .comments textarea {
+  width: 100%;
+  border: 1px solid #f1f1f1;
+  font-size: 1.5rem;
+}
+
+.approvebar .buttons {
+  margin: 0;
+  position: absolute;
+  right: 4%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.container-admin {
+  width: 70%;
+  display: inline-block;
+  padding: 1rem 2rem;
+}
+
+input.create-input.category {
+  width: 33%;
+}
+
+.category-edit {
+  width: 40%;
+  display: inline-block;
+}
+
+.cat-image-upload-wrapper {
+  width: 300px;
+  height: 150px;
+  background-color: blue;
+  display: inline-block;
+}
+
+.cat-image-upload-wrapper input {
+  display: block !important;
+  width: 157px !important;
+  height: 57px !important;
+  opacity: 0 !important;
+  overflow: hidden !important;
+}
+
+.checklist-section .item {
+  position: relative;
+  display: inline-block;
+}
+
+.checklist-section .notification {
+  position: absolute;
+  background: red;
+  padding: 0.2rem 0.7rem;
+  border-radius: 5rem;
+  right: -1.3rem;
+  color: white;
+  top: -0.7rem;
+  font-size: 1rem;
+}
+

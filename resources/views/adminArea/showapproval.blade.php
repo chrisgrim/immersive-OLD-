@@ -1,21 +1,20 @@
-@extends('adminArea.index')
+@extends('layouts.create.master')
 
-@section('adminarea')
+@section('content')
 
-<div class="container">
+<div id="bodyArea" class="approve">
+    <div class="approve">
+        <event-show :loadevent="{{$event}}">
+    </div>
     <div>
-        <div>
-            {{$event->name}}
-        </div>
-        <div>
-            {{$event->description}} 
-        </div>
-        <form method="POST" action="/approve/{{$event->slug}}" class="floating-form">
-            @csrf
-            <button type="submit" class="create">
-                Approve
-            </button>
-        </form>
+        <approval-bar :loadevent="{{$event}}">
+    </div>
+</div>
+
+
+{{-- <div class="container">
+    <div>
+        
         <form method="POST" action="/unapprove/{{$event->slug}}" class="floating-form">
             @csrf
             <button type="submit" class="create">
@@ -23,6 +22,6 @@
             </button>
         </form>
     </div>
-</div>
+</div> --}}
 
 @endsection

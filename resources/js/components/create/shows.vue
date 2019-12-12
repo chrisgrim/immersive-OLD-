@@ -1,91 +1,91 @@
 <template>
-    <div>
-        <div class="create-title">
-            <h2>Show Dates and Pricing</h2>
-            <p>Enter the show dates and pricing.</p>
-        </div>
-        <div class="create-field">
-            <label> Select all show dates</label>
-            <flat-pickr
-                v-model="dates"
-                :config="config"                                                  
-                class="form-control"
-                placeholder="Select date"               
-                name="dates">
-            </flat-pickr>
-            <div v-if="$v.dates.$error" class="validation-error">
-                <p class="error" v-if="!$v.dates.required">Must add at least 1 show date</p>
+    <div class="shows">
+        <div class="section">
+            <div class="calendar">
+                <div class="field">
+                    <label> Select all show dates</label>
+                    <flat-pickr
+                        v-model="dates"
+                        :config="config"                                                  
+                        class="form-control"
+                        placeholder="Select date"               
+                        name="dates">
+                    </flat-pickr>
+                    <div v-if="$v.dates.$error" class="validation-error">
+                        <p class="error" v-if="!$v.dates.required">Must add at least 1 show date</p>
+                    </div>
+                </div>
+                <button  @click.prevent="submitDates()" class="create"> Next </button> 
             </div>
-        </div>
-        <div class="create-field">
-            <label class="area"> Show Times </label>
-            <p>Give a brief description of your show times</p>
-            <textarea 
-            v-model="showTimes" 
-            class="create-input area"
-            :class="{ active: showTimeActive,'error': $v.showTimes.$error }"
-            rows="8" 
-            placeholder="First show is at 8:00Pm..." 
-            required
-            @click="showTimeActive = true"
-            @blur="showTimeActive = false"
-            @input="$v.showTimes.$touch"
-            autofocus>
-            </textarea>
-            <div v-if="$v.showTimes.$error" class="validation-error">
-                <p class="error" v-if="!$v.showTimes.required">Must enter your show times</p>
-            </div>
-        </div>
-        <div class="create-field">
-            <label class="area"> Ticket types and prices </label>
-            <div class="ticket-box">
-                <div v-for="(v, index) in $v.tickets.$each.$iter" class="ticket-box-grid">
-                    <div class="create-field">
-                        <label>Ticket Type</label>
-                        <input 
-                        class="create-input"  
-                        name="name"
-                        :class="{ active: ticketActive,'error': v.name.$error }"
-                        @click="ticketActive = true"
-                        @blur="ticketActive = false"
-                        v-model="v.name.$model" 
-                        placeholder="ex: General Admission, VIP, Student"
-                        />
-                        <div v-if="v.name.$error" class="validation-error">
-                            <p class="error" v-if="!v.name.required">Must Enter Ticket Name</p>
+            <div class="pricing">
+                <div class="field">
+                    <label class="area"> Show times</label>
+                    <textarea 
+                    v-model="showTimes" 
+                    class="create-input area"
+                    :class="{ active: showTimeActive,'error': $v.showTimes.$error }"
+                    rows="8" 
+                    placeholder="First show is at 8:00Pm..." 
+                    required
+                    @click="showTimeActive = true"
+                    @blur="showTimeActive = false"
+                    @input="$v.showTimes.$touch"
+                    autofocus>
+                    </textarea>
+                    <div v-if="$v.showTimes.$error" class="validation-error">
+                        <p class="error" v-if="!$v.showTimes.required">Must enter your show times</p>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="area"> Ticket types and prices </label>
+                    <div class="ticket-box">
+                        <div v-for="(v, index) in $v.tickets.$each.$iter" class="ticket-box-grid">
+                            <div class="field">
+                                <label>Ticket Type</label>
+                                <input 
+                                class="create-input"  
+                                name="name"
+                                :class="{ active: ticketActive,'error': v.name.$error }"
+                                @click="ticketActive = true"
+                                @blur="ticketActive = false"
+                                v-model="v.name.$model" 
+                                placeholder="ex: General Admission, VIP, Student"
+                                />
+                                <div v-if="v.name.$error" class="validation-error">
+                                    <p class="error" v-if="!v.name.required">Must Enter Ticket Name</p>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>Ticket Price</label>
+                                <input
+                                class="create-input"
+                                :class="{ active: ticketPriceActive,'error': v.ticket_price.$error }"
+                                @click="ticketPriceActive = true"
+                                @blur="ticketPriceActive = false"
+                                v-model="v.ticket_price.$model"
+                                v-money="v.ticket_price.$model"
+                                @keydown="$event.key === '-' ? $event.preventDefault() : null"
+                                v-bind="money"
+                                placeholder="$0.00"
+                                />
+                                <div v-if="v.ticket_price.$error" class="validation-error">
+                                    <p class="error" v-if="!v.ticket_price.minValue">Must Enter Price</p>
+                                    <p class="error" v-if="!v.ticket_price.required">Must Enter Price</p>
+                                </div>
+                                <button @click.prevent="deleteRow(index)" class="delete-circle">X</button>
+                            </div>
                         </div>
                     </div>
-                    <div class="create-field">
-                        <label>Ticket Price</label>
-                        <input
-                        class="create-input"
-                        :class="{ active: ticketPriceActive,'error': v.ticket_price.$error }"
-                        @click="ticketPriceActive = true"
-                        @blur="ticketPriceActive = false"
-                        v-model="v.ticket_price.$model"
-                        v-money="v.ticket_price.$model"
-                        @keydown="$event.key === '-' ? $event.preventDefault() : null"
-                        v-bind="money"
-                        placeholder="$0.00"
-                        />
-                        <div v-if="v.ticket_price.$error" class="validation-error">
-                            <p class="error" v-if="!v.ticket_price.minValue">Must Enter Price</p>
-                            <p class="error" v-if="!v.ticket_price.required">Must Enter Price</p>
-                        </div>
-                        <button @click.prevent="deleteRow(index)" class="delete-circle">X</button>
-                    </div>
+                </div>
+                <div class="add-button">
+                    <button class="add-button" @click.prevent="addTickets">&#43; Ticket Types</button>
                 </div>
             </div>
         </div>
-        <div class="add-button">
-            <button class="add-button" @click.prevent="addTickets">&#43; Ticket Types</button>
+        <div class="inNav">
+            <button class="create" @click.prevent="goBack()"> Back </button>
+            <button class="create" @click.prevent="submitDates()"> Next </button>
         </div>
-        <div>
-            <button  @click.prevent="submitDates()" class="create"> Next </button> 
-        </div>
-        <div>
-</div>
-
 
     </div>
 </template>
@@ -117,7 +117,11 @@ export default {
         	if(!Array.isArray(this.dates) && this.dates.includes(",")) {
         		return this.dates.split(",");
         	} else {
-        		return ''
+        		if(!Array.isArray(this.dates)) {
+                    return [this.dates];
+                } else {
+                    ''
+                }
         	}
         },
     },
@@ -189,15 +193,17 @@ export default {
 
         // If there is data in Database it will load from the database
     	getDatabase() {
-
     		axios.get(`${this.eventUrl}/shows/loadshows`)
     		.then(response => {
-                console.log('database');
                 response.data.dates.length ? this.dates = response.data.dates : '';
                 response.data.tickets.length ? this.tickets = response.data.tickets[0].tickets : '';
                 response.data.showTimes ? this.showTimes = response.data.showTimes : '';
             });
     	},
+
+        goBack() {
+            window.location.href = `${this.eventUrl}/category`;
+        },
 
         //Submits the users dates and tickets to the database
         async submitDates() {
@@ -210,7 +216,8 @@ export default {
                 'tickets': this.tickets
             };
             axios.post(`${this.eventUrl}/shows`, data)
-            .then(response => { 
+            .then(response => {
+                // console.log(response.data)
                 window.location.href = `${this.eventUrl}/description`; 
             });
         },

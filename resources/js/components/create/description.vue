@@ -1,86 +1,97 @@
 <template>
-	<div>
-        <div class="create-title">
-            <h2>Event Description</h2>
-            <p>This is your main event description.</p>
-        </div>
-        <div>
-            <div class="create-field">
-            	<label class="area"> Let your guests know what to expect with the event/performance </label>
-                <textarea 
-                type="text" 
-                class="create-input area"  
-                name="description" 
-                v-model="description" 
-                placeholder="eg. Our super scary event will bring your fears to the surface..."
-                :class="{ active: descriptionActive,'error': $v.description.$error }"
-                @input="$v.description.$touch"
-                @click="descriptionActive = true"
-                @blur="descriptionActive = false" 
-                rows="8"></textarea>
-                <div v-if="$v.description.$error" class="validation-error">
-                    <p class="error" v-if="!$v.description.required">Must provide a description</p>
-                </div>
+	<div class="description">
+        <div class="section">
+            <div class="field">
+                <div class="text">
+                    <label class="area"> Let your guests know what to expect with the event/performance </label>
+                    <textarea 
+                    type="text" 
+                    name="description" 
+                    v-model="description" 
+                    placeholder="eg. Our super scary event will bring your fears to the surface..."
+                    :class="{ active: descriptionActive,'error': $v.description.$error }"
+                    @input="$v.description.$touch"
+                    @click="descriptionActive = true"
+                    @blur="descriptionActive = false" 
+                    rows="8"></textarea>
+                    <div v-if="$v.description.$error" class="validation-error">
+                        <p class="error" v-if="!$v.description.required">Must provide a description</p>
+                    </div>
+                    <div class="field">
+                        <label>Event Tag Line</label>
+                        <input 
+                        type="text" 
+                        v-model="tagLine"
+                        :class="{ active: websiteActive }"
+                        @click="tagLineActive = true"
+                        @blur="tagLineActive = false"
+                        placeholder="Quick, one sentence line to get the audience hooked!"
+                        />
+                    </div>
+                    <div class="field">
+                        <label>Event Website Url</label>
+                        <input 
+                        type="text" 
+                        v-model="websiteUrl"
+                        :class="{ active: websiteActive,'error': $v.websiteUrl.$error }"
+                        @click="websiteActive = true"
+                        @blur="websiteActive = false"
+                        @input="$v.websiteUrl.$touch"
+                        placeholder="Leave blank if using Organizer Website Url"
+                        />
+                        <div v-if="$v.websiteUrl.$error" class="validation-error">
+                            <p class="error" v-if="!$v.websiteUrl.url">Must be a Url (https://...)</p>
+                        </div>
+                    </div>
+                    <div class="field">   
+                        <label>Ticket Url (If different from Organizer Website)</label>
+                        <input 
+                        type="text" 
+                        v-model="ticketUrl"
+                        :class="{ active: ticketActive,'error': $v.ticketUrl.$error }"
+                        @click="ticketActive = true"
+                        @blur="ticketActive = false"
+                        @input="$v.ticketUrl.$touch"
+                        placeholder="Leave blank if using Organizer Website Url"
+                        />
+                        <div v-if="$v.ticketUrl.$error" class="validation-error">
+                            <p class="error" v-if="!$v.ticketUrl.url"> Must be a Url (https://...)</p>
+                        </div>
+                    </div>
+                    <div class="">
+                        <button @click.prevent="submitDescription()" class="create"> Save and Continue </button>
+                    </div>
+                </div>
             </div>
-            <div class="create-field">
-                <label>Event Website Url</label>
-                <input 
-                type="text" 
-                class="create-input" 
-                v-model="websiteUrl"
-                :class="{ active: websiteActive,'error': $v.websiteUrl.$error }"
-                @click="websiteActive = true"
-                @blur="websiteActive = false"
-                @input="$v.websiteUrl.$touch"
-                placeholder="Leave blank if using Organizer Website Url"
-                />
-                <div v-if="$v.websiteUrl.$error" class="validation-error">
-                    <p class="error" v-if="!$v.websiteUrl.url">Must be a Url (https://...)</p>
-                </div>
-            </div>
-            <div class="create-field">   
-                <label>Ticket Url (If different from Organizer Website)</label>
-                <input 
-                type="text" 
-                class="create-input"  
-                v-model="ticketUrl"
-                :class="{ active: ticketActive,'error': $v.ticketUrl.$error }"
-                @click="ticketActive = true"
-                @blur="ticketActive = false"
-                @input="$v.ticketUrl.$touch"
-                placeholder="Leave blank if using Organizer Website Url"
-                />
-                <div v-if="$v.ticketUrl.$error" class="validation-error">
-                    <p class="error" v-if="!$v.ticketUrl.url"> Must be a Url (https://...)</p>
-                </div>
-            </div>
-            <div class="create-field"> 
-                <label>Event Genre</label>
-                <p>Select from our top genres or add your own.</p>
-                <multiselect 
-                v-model="genreName"
-                class="create-input"
-                tag-placeholder="Add this as new tag" 
-                placeholder="Search or add a tag" 
-                label="genre" 
-                track-by="id" 
-                :options="options" 
-                :multiple="true" 
-                :taggable="true" 
-                tag-position="bottom"
-                :class="{ active: genreActive,'error': $v.genreName.$error }"
-                @search-change="asyncFind"
-                @tag="addTag"
-                @input="$v.genreName.$touch"
-                @click="genreActive = true"
-                @blur="genreActive = false"
-                ></multiselect>
-                <div v-if="$v.genreName.$error" class="validation-error">
-                    <p class="error" v-if="!$v.genreName.required">Must select at least one Genre</p>
-                </div>
+            <div class="genre">
+                <div class="field"> 
+                    <label>Event Genre</label>
+                    <p>Select from our top genres or add your own.</p>
+                    <multiselect 
+                    v-model="genreName"
+                    tag-placeholder="Add this as new tag" 
+                    placeholder="Search or add a tag" 
+                    label="genre" 
+                    track-by="id" 
+                    :options="options" 
+                    :multiple="true" 
+                    :taggable="true" 
+                    tag-position="bottom"
+                    :class="{ active: genreActive,'error': $v.genreName.$error }"
+                    @search-change="asyncFind"
+                    @tag="addTag"
+                    @input="$v.genreName.$touch"
+                    @click="genreActive = true"
+                    @blur="genreActive = false"
+                    ></multiselect>
+                    <div v-if="$v.genreName.$error" class="validation-error">
+                        <p class="error" v-if="!$v.genreName.required">Must select at least one Genre</p>
+                    </div>
+                </div>
             </div>
-            <div class="">
-                <button @click.prevent="submitDescription()" class="create"> Save and Continue </button>
+            <div class="inNav">
+                <button class="create" @click.prevent="goBack()"> Back </button>
+                <button class="create" @click.prevent="submitDescription()"> Next </button>
             </div>
         </div>
     </div>
@@ -109,7 +120,8 @@
                 options: this.genres,
                 eventUrl:_.has(this.event, 'slug') ? `/create-event/${this.event.slug}` : null,
                 websiteUrl: _.has(this.event, 'websiteUrl') ? this.event.websiteUrl : '',
-                ticketUrl: _.has(this.event, 'ticketUrl') ? this.event.ticketUrl : '',
+                ticketUrl: _.has(this.event, 'ticketUrl') ? this.event.ticketUrl : '',
+                tagLine: _.has(this.event, 'tag_line') ? this.event.tag_line : '',
                 genreActive: false,
                 descriptionActive: false,
                 ticketActive: false,
@@ -127,7 +139,8 @@
 				let data = {
                     'description': this.description,
                     'websiteUrl': this.websiteUrl,
-                    'ticketUrl': this.ticketUrl
+                    'ticketUrl': this.ticketUrl,
+                    'tag_line': this.tagLine
            		};
                 data.genre = this.genreName.map(a => a.genre);
 
@@ -153,6 +166,10 @@
                 }
                 this.options.push(tag)
                 this.genreName.push(tag)
+            },
+
+            goBack() {
+                window.location.href = `${this.eventUrl}/shows`;
             },
 
 		},

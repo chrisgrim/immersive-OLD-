@@ -1,123 +1,140 @@
 <template>
-<div>
-    <div class="create-title">
-        <h2>Event Organizer</h2>
-        <p>What organizer or production company is putting this immersive show on?</p>
-    </div>
-        
-    <div>
-        <div class="image-upload-field create-field">
-            <label>Add Organizers Image</label>
-            <label
-            class="profile-upload-wrapper"
-            :style="{ backgroundImage: `url('${organizationImageModel ? organizationImageModel : defaultImage}')` }" >
-                <span class="profile-upload-layover">
-                <div class="add-profile-image"><p>+</p></div>
-            </span>
-                <image-upload @loaded="onImageUpload"></image-upload>
-            </label>
-            <input 
-            type="hidden" 
-            name="organizationImagePath"
-            v-model="organizationImageModel"
-            @input="$v.organizationImageModel.$touch()"
-            />
-            <div v-if="$v.organizationImageModel.$error" class="validation-error">
-                <p class="error" v-if="!$v.organizationImageModel.required">An image is required</p>
-                <p class="error" v-if="!$v.organizationImageModel.fileSize">Your image should be under 2MB</p>
+<div class="organizer">
+    <div class="section">
+        <div class="text">
+            <div class="floating-form">
+                <div class="field">
+                    <label>Organization name</label>
+                    <input 
+                    type="text" 
+                    placeholder=" " 
+                    name="name"
+                    :class="{ active: nameActive,'error': $v.organizer.name.$error }"
+                    @input="$v.organizer.name.$touch"
+                    @click="toggleName()"
+                    @blur="nameActive = false"
+                    v-model="organizer.name"
+                    />
+                    <div v-if="$v.organizer.name.$error" class="validation-error">
+                        <p class="error" v-if="!$v.organizer.name.required">The Name is required</p>
+                        <p class="error" v-if="!$v.organizer.name.serverFailed">The Name needs to be unique</p>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Organization Description</label>
+                    <textarea 
+                    type="text"
+                    name="description" 
+                    v-model="organizer.description" 
+                    placeholder=" "
+                    :class="{ active: descriptionActive,'error': $v.organizer.description.$error }"
+                    @input="$v.organizer.description.$touch"
+                    @click="descriptionActive = true"
+                    @blur="descriptionActive = false" 
+                    rows="8">
+                    </textarea>
+                    <div v-if="$v.organizer.description.$error" class="validation-error">
+                        <p class="error" v-if="!$v.organizer.description.required">The Description is required</p>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Your Organization Website</label>
+                    <input 
+                    type="url" 
+                    v-model="organizer.website" 
+                    name="website"
+                    :class="{ active: websiteActive,'error': $v.organizer.website.$error }"
+                    @input="$v.organizer.website.$touch"
+                    @click="toggleWebsite()"
+                    @blur="websiteActive = false" 
+                    placeholder=" "
+                    />
+                    <div v-if="$v.organizer.website.$error" class="validation-error">
+                        <p class="error" v-if="!$v.organizer.website.url">Must be a Url (Needs http://)</p>
+                        <p class="error" v-if="!$v.organizer.website.required">The Website is required</p>
+                        <p class="error" v-if="!$v.organizer.website.serverFailed">The Website needs to be unique</p>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Your Organization Email (optional)</label>
+                    <input 
+                    type="text" 
+                    v-model="organizer.email" 
+                    name="email"
+                    :class="{ active: websiteActive }"
+                    @blur="websiteActive = false" 
+                    placeholder=" "
+                    />
+                </div>
+                <div class="field">
+                    <label>Twitter handle (optional)</label>
+                    <input 
+                    type="text" 
+                    v-model="organizer.twitterHandle" 
+                    name="twitterHandle" 
+                    placeholder=" "
+                    />
+                </div>
+                <div class="field">
+                    <label>Facebook handle (optional)</label>
+                    <input 
+                    type="text" 
+                    v-model="organizer.facebookHandle" 
+                    name="facebookHandle" 
+                    placeholder=" "
+                    />
+                </div>
+                <div class="field">
+                    <label>Instagram handle (optional)</label>
+                    <input 
+                    type="text" 
+                    v-model="organizer.instagramHandle" 
+                    name="instagramHandle" 
+                    placeholder=" "
+                    />
+                </div>
             </div>
         </div>
-        <div class="floating-form">
-            <div class="create-field">
-                <label>Enter Production Company name</label>
-                <input 
-                type="text" 
-                class="create-input" 
-                placeholder=" " 
-                name="name"
-                :class="{ active: nameActive,'error': $v.organizer.name.$error }"
-                @input="$v.organizer.name.$touch"
-                @click="toggleName()"
-                @blur="nameActive = false"
-                v-model="organizer.name"
-                />
-                <div v-if="$v.organizer.name.$error" class="validation-error">
-                    <p class="error" v-if="!$v.organizer.name.required">The Name is required</p>
-                    <p class="error" v-if="!$v.organizer.name.serverFailed">The Name needs to be unique</p>
+        <div class="image">
+            <div class="image-upload-field" v-if="!imageSrc">
+                <label 
+                class="image-upload-wrapper"
+                :style="{ backgroundImage: `url('${organizationImageModel ? organizationImageModel : defaultImage}')` }">
+                    <span class="image-upload-layover">
+                        <div class="text-center"> + </div>
+                    </span>
+                    <image-upload @loaded="onImageUpload"></image-upload>
+                </label>
+            </div>
+            <div class="">
+                <!-- Cropper container -->
+                <div v-if="this.imageSrc" style="width: 32%; display: inline-block;" class="">
+                    <vue-cropper 
+                    class="mr-2 w-50" 
+                    ref='cropper' 
+                    :guides="true"
+                    :aspectRatio="16 / 9"
+                    :initialAspectRatio="16 / 9"
+                    :zoomable="false"
+                    preview=".preview"
+                    :src="imageSrc">
+                    </vue-cropper>
                 </div>
-            </div>
-            <div class="create-field">
-                <label>Description of Production Company</label>
-                <textarea 
-                type="text" 
-                class="create-input area"  
-                name="description" 
-                v-model="organizer.description" 
-                placeholder=" "
-                :class="{ active: descriptionActive,'error': $v.organizer.description.$error }"
-                @input="$v.organizer.description.$touch"
-                @click="descriptionActive = true"
-                @blur="descriptionActive = false" 
-                rows="8">
-                </textarea>
-                <div v-if="$v.organizer.description.$error" class="validation-error">
-                    <p class="error" v-if="!$v.organizer.description.required">The Description is required</p>
+                <div v-if="this.imageSrc" class="prev-box">
+                    <div class="preview" />
+                    <CubeSpinner :loading="isLoading"></CubeSpinner>
                 </div>
-            </div>
-            <div class="create-field">
-
-                <label>Production Website</label>
-                <input 
-                class="create-input" 
-                type="url" 
-                v-model="organizer.website" 
-                name="website"
-                :class="{ active: websiteActive,'error': $v.organizer.website.$error }"
-                @input="$v.organizer.website.$touch"
-                @click="toggleWebsite()"
-                @blur="websiteActive = false" 
-                placeholder=" "
-                />
-                <div v-if="$v.organizer.website.$error" class="validation-error">
-                    <p class="error" v-if="!$v.organizer.website.url">Must be a Url (Needs http://)</p>
-                    <p class="error" v-if="!$v.organizer.website.required">The Website is required</p>
-                    <p class="error" v-if="!$v.organizer.website.serverFailed">The Website needs to be unique</p>
+                <div v-if="$v.imageSrc.$error" class="validation-error">
+                    <p class="error" v-if="!$v.imageSrc.required">The Image is required</p>
                 </div>
-            </div>
-            <div class="create-field">
-                <label>Twitter handle (optional)</label>
-                <input 
-                type="text" 
-                class="create-input" 
-                v-model="organizer.twitterHandle" 
-                name="twitterHandle" 
-                placeholder=" "
-                />
-            </div>
-            <div class="create-field">
-                <label>Facebook handle (optional)</label>
-                <input 
-                type="text" 
-                class="create-input" 
-                v-model="organizer.facebookHandle" 
-                name="facebookHandle" 
-                placeholder=" "
-                />
-            </div>
-            <div class="create-field">
-                <label>Instagram handle (optional)</label>
-                <input 
-                type="text" 
-                class="create-input" 
-                v-model="organizer.instagramHandle" 
-                name="instagramHandle" 
-                placeholder=" "
-                />
             </div>
         </div>
     </div>
+    <div class="inNav">
+        <button class="create" @click.prevent="createOrganizer"> Save and Create Event </button>
+    </div>
     <div>
-        <button class="create" @click.prevent="createOrganizer"> Save and Continue </button>
+        <button class="create" @click.prevent="createOrganizer"> Save and Create Event </button>
     </div>
 </div>
 
@@ -127,13 +144,13 @@
 import _ from 'lodash'
 import ImageUpload from '../layouts/image-upload.vue'
 import Multiselect from 'vue-multiselect'
+import VueCropper from 'vue-cropperjs'
+import 'cropperjs/dist/cropper.css'
+import CubeSpinner  from '../layouts/loading.vue'
 import { required, minLength, maxLength, url } from 'vuelidate/lib/validators'
 
 export default {
-    components: { 
-        ImageUpload,
-        Multiselect,
-    },
+    components: { ImageUpload, Multiselect, VueCropper, CubeSpinner },
     
     props: {
         user: { type: Object }
@@ -152,8 +169,7 @@ export default {
         return {
             searchModel: '',
             organizationImageModel: '',
-            finalImage: '',
-            defaultImage: '/storage/website-files/upload.png',
+            defaultImage: '/storage/website-files/upload-icon.png',
             showSearchField: _.isEmpty(this.searchOptions) ? false : true,
             showFormFields: false,
             organizer: this.initializeOrganizerObject(),
@@ -162,8 +178,14 @@ export default {
             nameActive: false,
             descriptionActive: false,
             websiteActive: false,
+            emailActive: false,
             serverErrors: [],
             isLoading: false,
+            finalImage: '',
+            imageSrc: '',
+            tooSmall: '',
+            isLoading: false,
+            readyToSubmit: false
 
         };
     },
@@ -177,6 +199,7 @@ export default {
                 name: '',
                 description: '',
                 website: '',
+                email: '',
                 imagePath: '',
                 twitterHandle: '',
                 facebookHandle: '',
@@ -218,33 +241,12 @@ export default {
             return (field && _.has(this, 'serverErrors.' + field) && !_.isEmpty(this.serverErrors[field]));
         },
 
-        //this is the ajax search for the organizers name when the user starts entering letters
-        //sets the isloading spinning dial to true
-        //axios post the users search to find similar organization in database
-        //I create a new organizer named Create New organizer and add it to the returned list in case the user wants to make a new organizer
-        //turn off spinning wheel
-        asyncFind (query) {
-            this.isLoading = true
-            axios.get('/api/organizer/search', { params: { keywords: query } })
-            .then(response => {
-                if (query.length) {
-                    this.searchOptions = response.data;
-                } else {
-                    const newOrganizer = this.initializeOrganizerObject();
-                    newOrganizer.name = 'Create New Organizer';
-                    newOrganizer.user_id = this.user.id;
-                    this.searchOptions = _.concat(newOrganizer, response.data);
-                };
-                this.isLoading = false;
-            });
-        },
-
         // adds image to the page so user can see it
         //adds file to organizer object for upl
         async onImageUpload(image) {
-            this.organizationImageModel = image.src;
-            this.organizer.imagePath = image.file;
+            this.imageSrc = image.src;
             this.finalImage = image.file;
+            this.readyToSubmit = true;
         },
 
         //checks if validation passes
@@ -258,15 +260,14 @@ export default {
             if (this.$v.$invalid) { return false };
 
             const params = new FormData();
-            const headers = {'Content-Type': 'application/x-www-form-urlencoded'};
             for (var field in this.organizer) {
                 params.append(field, this.organizer[field]);
             }
+            params.append('imagePath', this.$refs.cropper.getCroppedCanvas().toDataURL('image/jpeg', 1.0));
             params.append('slug', this.slug);
-            this.finalImage ? params.append('newImageUpload', true) : params.append('newImageUpload', false);
-            axios.post('/organizer', params, headers)
+            axios.post('/organizer', params)
             .then(response => { 
-                window.location.href = '/create-event/edit'; 
+                window.location.href = '/create-event/edit';
             })
             .catch(error => {         
                 this.serverErrors = error.response.data.errors;  
@@ -275,9 +276,8 @@ export default {
     },
 
     validations: {
-        organizationImageModel: {
+        imageSrc: {
             required,
-            fileSize() { return this.finalImage ? this.finalImage.size < 2097152 : true },
         },
 
         organizer: {

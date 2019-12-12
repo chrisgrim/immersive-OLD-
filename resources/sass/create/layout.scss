@@ -1,0 +1,131 @@
+#header.c {
+    z-index: -1;
+    & .nav {
+        border:none;
+    }
+}
+#create {
+    & .section {
+        overflow: visible;
+    }
+    & .steps {
+        height: 7rem;
+        overflow: visible;
+        width: 100%;
+        margin: auto;
+        position: fixed;
+        z-index: 500;
+        background: white;
+        & h2 {
+            display: inline-block;
+            margin:0;
+        }
+        & p {
+            display: inline-block;
+        }
+        & .logo {
+            height: 6.9rem;
+            width: 6.9rem;
+            display: inline-block;
+            float: left;
+            & img {
+                height: 100%;
+                width: 100%;
+            }
+        }
+    }
+    & .content {
+        width:100%;
+        margin:auto;
+        padding-top: 7rem;
+    }
+    & .field {
+        width: 100%;
+        & label {
+            display: block;
+            margin: 2rem 0rem 1rem 0rem;
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: #656565;
+        }
+        & input {
+            position: relative;
+            color: #484848;
+            background-color: white;
+            transition: border-color 0.2s ease 0s;
+            padding: 1.3rem 1rem;
+            border-width: 1px;
+            border-style: solid;
+            -o-border-image: initial;
+            border-image: initial;
+            border-radius: 5px;
+            border-color: #ebebeb;
+            margin: 0rem 0rem 1rem 0rem;
+            font-size: 1.4rem;
+            width: 100%;
+        }
+        & textarea {
+            position: relative;
+            color: #484848;
+            background-color: white;
+            transition: border-color 0.2s ease 0s;
+            padding: 1.3rem 1rem;
+            border-width: 1px;
+            border-style: solid;
+            -o-border-image: initial;
+            border-image: initial;
+            border-radius: 5px;
+            border-color: #ebebeb;
+            margin: 0rem 0rem 1rem 0rem;
+            font-size: 1.4rem;
+            width: 100%;
+        }
+    }
+    & .inNav {
+        position: fixed;
+        top: 0;
+        right: 1%;
+        z-index: 501;
+    }
+    & .checklist {
+        overflow: hidden;
+        & .item {
+            width: 90%;
+            margin: auto;
+            margin-top: 1.1rem;
+            & .text {
+                padding: 0% 0% 0% 5%;
+            }
+        }
+        & .bar {
+            height: 10px !important;
+            line-height: 0.8px !important;
+            background-color: rgb(237, 239, 237) !important;
+            box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px !important;
+            position: relative;
+            margin-top: 1rem;
+            & a {
+                overflow: visible;
+                display: block;
+                width:100%;
+                height:100%;
+            }
+            & .grey {
+                display: inline-block;
+                height: 10px;
+                position: absolute;
+            }
+            & .fill {
+                display: inline-block !important;
+                height: 10px !important;
+                position: absolute !important;
+                background-color: rgb(0, 132, 137) !important;
+                border-right: 0.3px solid rgb(0, 132, 137) !important;
+            }
+        }
+    }
+    & .submit {
+        margin:0;
+        padding: 0% 0% 0% 5%;
+    }
+}

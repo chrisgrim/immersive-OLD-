@@ -29,6 +29,8 @@
     import MediumEditor from 'vue2-content-editor'
 
 
+
+
     export default {
 
         props: ['loadorganizer'],
@@ -77,7 +79,6 @@
 
 
         mounted() {
-            
 
         },
 

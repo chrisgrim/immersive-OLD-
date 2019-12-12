@@ -142,9 +142,9 @@
                 visibility: 'visible',
                 zoom: 11,
                 center: latLng(47.41322, -1.219482),
-                url: "https://{s}.tile.osm.org/{z}/{x}/{y}.png",
+                url: "https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png",
                 attribution:
-                '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors',
+                '<a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia</a>',
                 currentCenter: latLng(47.41322, -1.219482),
                 currentBounds: '',
                 allowZoom: false,

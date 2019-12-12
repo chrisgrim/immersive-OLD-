@@ -1,13 +1,13 @@
-@extends('layouts.master')
+@extends('layouts.create.master')
 
 @section('content')
 
 <div id="create">
-	<div class="container-checklist">	
-		@include('create.checklist')
+	<div class="steps">	
+		<event-create-checklist :event="{{$event}}">
 	</div>		
 
-	<div class="container-create">
+	<div class="content">
 		@yield('created')
 	</div>
 </div>	

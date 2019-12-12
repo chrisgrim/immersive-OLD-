@@ -18,6 +18,7 @@ class CreateOrganizersTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('name');
             $table->string('website')->nullable();
+            $table->string('email')->nullable();
             $table->string('slug')->unique();
             $table->longtext('description');
             $table->string('rating')->default(0);

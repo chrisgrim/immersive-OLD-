@@ -25,7 +25,7 @@
                         </div>
                         <div v-for="(event, index) in organizer.in_progress_events" v-if="index < 4">
                             <button @click.prevent="showModal(event)" class="delete-circle">X</button>
-                            <event-listing-item :loadurl="'/create-event/' + event.slug + '/title'" :event="event"></event-listing-item>
+                            <event-listing-item :event="event"></event-listing-item>
                         </div> 
                         <modal v-show="isModalVisible" @close="closeModal">
                                 <div slot="header">Ready to Delete?</div>
@@ -90,6 +90,12 @@
 			}
 		},
 
+        computed: {
+            getUrl(event) {
+                return this.events.in_progress_events;
+            }
+        },
+
 		methods: {
 			//deletes a ticket row or clears the first one
 			deleteRow(index) {
@@ -122,7 +128,7 @@
 
             showOrganizer(organizer) {
                 window.location.href = `/organizer/${organizer.slug}`;
-            }
+            },
 
 		},
 

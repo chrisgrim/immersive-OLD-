@@ -1,0 +1,21 @@
+#create {
+    position: relative;
+    overflow: auto;
+    & .shows {
+        padding-top: 4%;
+        width:100%;
+        & .section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            overflow: hidden;
+            & .calendar {
+                margin:0;
+                padding: 0% 0% 0% 5%;
+            }
+            & .pricing {
+                margin: 0;
+                padding: 0% 4% 0% 4%;
+            }
+        }
+    }
+}

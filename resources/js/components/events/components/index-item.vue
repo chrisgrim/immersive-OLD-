@@ -37,7 +37,7 @@
             },
             disabledBackground() {
                 return `background-image: url('/storage/default-avatar/default-disabled.png'),url('${this.shortBack}')`;
-            }
+            },
         },
 
         data() {
@@ -49,7 +49,31 @@
         },
 
         methods: {
+            getUrl() {
+                if (this.event.expectation_id) {
+                    return this.url = `/create-event/${this.event.slug}/title`;
+                }
+                if (this.event.description) {
+                    return this.url = `/create-event/${this.event.slug}/expect`;
+                }
+                if (this.event.show_times) {
+                    return this.url = `/create-event/${this.event.slug}/description`;
+                }
+                if (this.event.category_id) {
+                    return this.url = `/create-event/${this.event.slug}/shows`;
+                }
+                if (this.event.location_latlon) {
+                    return this.url = `/create-event/${this.event.slug}/category`;
+                }
+                if (this.event.name) {
+                    return this.url = `/create-event/${this.event.slug}/location`;
+                }
+            }
+        },
 
+        mounted() {
+            this.event.approved ? '' : this.getUrl();
         }
+
     };
 </script>

@@ -1,47 +1,57 @@
 <template>
-<div>
-    <div class="create-title">
-        <h2> Add a cover image</h2>
-        <p>Choose an image that best shows off your event</p>
-        <CubeSpinner :loading="isLoading"></CubeSpinner>
-    </div>
-    <div class="image-upload-field" v-if="!imageSrc">
-        <label 
-        class="image-upload-wrapper"
-        :class="{ imageloaded: eventImage }"
-        :style="{ backgroundImage: `url('${eventImage ? eventImage : ''}')` }">
-            <span class="image-upload-layover">
-                <div class="text-center"> + </div>
-            </span>
-            <image-upload @loaded="onImageUpload"></image-upload>
-        </label>
-    </div>
-    <div class="p-3 bg-white shadow rounded-lg creat-field">
-        <!-- Cropper container -->
-        <div v-if="this.imageSrc" style="width: 32%; display: inline-block;" class="my-3 d-flex align-items-center justify-content-center mx-auto">
-            <vue-cropper 
-            class="mr-2 w-50" 
-            ref='cropper' 
-            :guides="true"
-            :aspectRatio="16 / 9"
-            :initialAspectRatio="16 / 9"
-            :zoomable="false"
-            preview=".preview"
-            :src="imageSrc">
-            </vue-cropper>
+<div class="image">
+    <div class="section">
+        <div class="img">
+            <div class="image-upload-field" v-if="!imageSrc">
+                <label 
+                class="image-upload-wrapper"
+                :class="{ imageloaded: eventImage }"
+                :style="{ backgroundImage: `url('${eventImage ? eventImage : defaultImage}')` }">
+                    <span class="image-upload-layover">
+                        <div class="text-center"> + </div>
+                    </span>
+                    <image-upload @loaded="onImageUpload"></image-upload>
+                </label>
+            </div>
+            <div>
+                <!-- Cropper container -->
+                <div v-if="this.imageSrc">
+                    <vue-cropper 
+                    class="mr-2 w-50" 
+                    ref='cropper' 
+                    :guides="true"
+                    :aspectRatio="16 / 9"
+                    :initialAspectRatio="16 / 9"
+                    :zoomable="false"
+                    preview=".preview"
+                    :src="imageSrc">
+                    </vue-cropper>
+                </div>
+                <div v-if="this.tooSmall" class="validation-error">
+                    <p class="error" v-if="this.tooSmall">The image needs to be at least 1200 x 800</p>
+                    <p class="error" v-if="this.tooSmall">The image needs to be at least 1200 x 800</p>
+                </div>
+                <div v-if="$v.imageSrc.$error" class="validation-error">
+                    <p class="error" v-if="!$v.imageSrc.required">The Image is required</p>
+                </div>
+            </div>
+            <div>
+                <button v-if="readyToSubmit" class="create" @click.prevent="submitEvent()"> Submit Event </button>
+                <button v-if="!readyToSubmit" class="create" @click.prevent="createImage()"> Add Image </button>
+            </div>
         </div>
-        <div v-if="this.imageSrc" class="preview" />
-        <div v-if="this.tooSmall" class="validation-error">
-            <p class="error" v-if="this.tooSmall">The image needs to be at least 1200 x 800</p>
+        <div class="pre">
+            <div v-if="this.imageSrc" class="prev-box">
+                <div class="preview" />
+                <CubeSpinner :loading="isLoading"></CubeSpinner>
+            </div>
         </div>
-    <div>
-        <button v-if="readyToSubmit" class="create" @click.prevent="createImage()"> 
-            Update Image
-        </button>
+        
     </div>
-        <button v-if="!readyToSubmit" class="create" @click.prevent="submitEvent()"> 
-            Submit Event
-        </button>
+    <div class="inNav">
+        <button class="create" @click.prevent="goBack()"> Back </button>
+        <button v-if="!readyToSubmit" class="create" @click.prevent="createImage()"> Add Image </button>
+        <button v-if="readyToSubmit" class="create" @click.prevent="submitEvent()"> Submit Event </button>
     </div>
 </div>
 
@@ -58,17 +68,18 @@ import CubeSpinner  from '../layouts/loading.vue'
 
 export default {
     components: { 
-        ImageUpload,VueCropper, CubeSpinner
+        ImageUpload, VueCropper, CubeSpinner
     },
     
     props: {
         event: { type: Object }
     },
+
     
     data() {
         return {
             eventImage: this.event.largeImagePath ? `/storage/${this.event.largeImagePath}` : '',
-            defaultImage: '/storage/website-files/upload.png',
+            defaultImage: '/storage/website-files/upload-icon.png',
             eventUrl:_.has(this.event, 'slug') ? `/create-event/${this.event.slug}` : null,
             finalImage: '',
             imageSrc: '',
@@ -89,7 +100,6 @@ export default {
         async assignImage(image) {
             this.imageSrc = image.src;
             this.finalImage = image.file;
-            this.readyToSubmit = true;
             this.tooSmall = false;
         },
 
@@ -111,17 +121,38 @@ export default {
         },
 
         submitEvent() {
+            this.$v.$touch(); 
+            if (this.$v.$invalid) { return false };
+            this.isLoading = true;
+            let data = {
+                image: this.$refs.cropper.getCroppedCanvas().toDataURL('image/jpeg', 1.0)
+            };
+
+            axios.post(`${this.eventUrl}/images`, data)
+            .then(response => {
+                window.location.href = `${this.eventUrl}/thankyou`;
+            })
+            .catch(errorResponse => { this.validationErrors = errorResponse.response.data.errors });
+        },
+
+        readySubmit() {
             this.event.organizer_id && 
             this.event.name && 
             this.event.location_latlon && 
             this.event.category_id &&
             this.event.show_times &&
             this.event.description &&
-            this.event.expectation_id &&
-            this.event.largeImagePath
-            ? window.location.href = `${this.eventUrl}/thankyou` : console.log('not done');
-        }
+            this.event.expectation_id
+            ? this.readyToSubmit = true : false;
+        },
 
+        goBack() {
+            window.location.href = `${this.eventUrl}/expect`;
+        },
+    },
+
+    mounted() {
+        this.readySubmit();
     },
 
     validations: {

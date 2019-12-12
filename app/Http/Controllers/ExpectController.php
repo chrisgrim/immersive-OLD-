@@ -41,7 +41,7 @@ class ExpectController extends Controller
                             ->orWhere('user_id', auth()->user()->id)
                             ->get();
 
-        return view('create.expect', compact('event','contactLevels','pivots', 'contentpivots', 'contentAdvisories'));
+        return view('create.advisories', compact('event','contactLevels','pivots', 'contentpivots', 'contentAdvisories'));
     }
 
     /**

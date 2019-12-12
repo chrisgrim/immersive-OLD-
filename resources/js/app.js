@@ -64,6 +64,7 @@ Icon.Default.mergeOptions({
 Vue.component('vue-nav', require('./components/layouts/nav.vue').default);
 Vue.component('nav-search', require('./components/layouts/nav-search.vue').default);
 Vue.component('profile-button', require('./components/layouts/profile-button.vue').default);
+Vue.component('vue-create-nav', require('./components/layouts/create/nav.vue').default);
 
 
 //Components
@@ -84,10 +85,11 @@ Vue.component('create-date-picker', require('./components/create/datepicker.vue'
 Vue.component('create-shows', require('./components/create/shows.vue').default);
 Vue.component('show-listing', require('./components/create/show-listing.vue').default);
 Vue.component('create-description', require('./components/create/description.vue').default);
-Vue.component('create-expect', require('./components/create/expect.vue').default);
+Vue.component('create-advisories', require('./components/create/advisories.vue').default);
 
 //Admin Area
 Vue.component('admin-area-nav', require('./components/adminArea/nav.vue').default);
+Vue.component('approval-bar', require('./components/adminArea/approve/approval-bar.vue').default);
 
 //Profile
 Vue.component('user-profile', require('./components/profile/profile-index.vue').default);

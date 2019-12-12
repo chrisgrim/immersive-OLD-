@@ -21,7 +21,7 @@ class Organizer extends Model
     * @var array
     */
     protected $fillable = [
-    	'user_id','name','website','slug','description','rating','imagePath','instagramHandle','twitterHandle','facebookHandle'
+    	'user_id','name','website','slug','description','rating','imagePath','instagramHandle','twitterHandle','facebookHandle', 'email'
     ];
 
     /**
@@ -51,7 +51,7 @@ class Organizer extends Model
      */
     public function liveEvents()
     {
-        return $this->hasMany(Event::class)->whereDate('closingDate', '>=', Carbon::today());
+        return $this->hasMany(Event::class)->whereDate('closingDate', '>=', Carbon::today())->where('approved', 1);
     }
 
     /**
@@ -61,7 +61,7 @@ class Organizer extends Model
      */
     public function pastEvents()
     {
-        return $this->hasMany(Event::class)->whereDate('closingDate', '<=', Carbon::today());
+        return $this->hasMany(Event::class)->whereDate('closingDate', '<=', Carbon::today())->where('approved', 1);
     }
 
     /**
@@ -71,7 +71,7 @@ class Organizer extends Model
      */
     public function inProgressEvents()
     {
-        return $this->hasMany(Event::class)->where('approval_process', 'inProgress')->orWhere('approval_process', 'ready');
+        return $this->hasMany(Event::class)->where('approved', 0);
     }
 
     /**
@@ -82,11 +82,12 @@ class Organizer extends Model
     */
     public static function saveFile($organizer, $request)
     {
-        Storage::delete('public/' . $organizer->imagePath);
-        $extension = $request->file('imagePath')->getClientOriginalExtension();
-        $filename= $request->slug . '-' . 'organization' . '_' . rand(1,50000) .'.'.$extension;
+        if ($organizer->imagePath) {
+            Storage::delete('public/' . $organizer->imagePath);
+        };
+        $filename= $request->slug . '-' . 'organization' . '_' . rand(1,50000) . '.jpg';
         $imagePath = "organizer-images/$filename";
-        $request->file('imagePath')->storeAs('/public/organizer-images', $filename);
+        Image::make(file_get_contents($request->imagePath))->save(storage_path("/app/public/$imagePath"));
         Image::make(storage_path()."/app/public/organizer-images/$filename")->fit(1200, 800)->save(storage_path("/app/public/$imagePath"));
         $organizer->update([ 'imagePath' => $imagePath ]);
     }

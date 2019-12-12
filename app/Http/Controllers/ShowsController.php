@@ -38,7 +38,6 @@ class ShowsController extends Controller
      */
     public function store(ShowStoreRequest $request, Event $event)
     {
-        
         $showDelete = $event->shows()->whereNotIn('date', $request->dates)->get();
 
         foreach($showDelete as $show){
