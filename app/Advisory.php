@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Expect extends Model
+class Advisory extends Model
 {
     /**
     * What protected variables are allowed to be passed to the database

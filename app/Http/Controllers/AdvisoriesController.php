@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Expect;
+use App\Advisory;
 use App\Event;
 use App\ContactLevel;
 use App\ContentAdvisory;
+use App\MobilityAdvisory;
 use Illuminate\Http\Request;
-use App\Http\Requests\ExpectationStoreRequest;
+use App\Http\Requests\AdvisoryStoreRequest;
 
-class ExpectController extends Controller
+class AdvisoriesController extends Controller
 {
     public function __construct()
     {
@@ -27,21 +28,43 @@ class ExpectController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource. I Load expectation with event, then I load the contact levels associated with the event alread (if there are any) and name it pivots. Finally I add all the contact level options as the variable contactlevels
+     * Show the form for creating a new resource. I just am loading event
      *
      * @return \Illuminate\Http\Response
      */
     public function create(Event $event)
     {
-        $event->load('expectation');
-        $pivots = $event->contactlevels()->get();
-        $contentpivots = $event->contentadvisories()->get();
+        return view('create.advisories', compact('event'));
+    }
+
+    /**
+     * Show the form for creating a new resource. Here I load all of the details of the advisories
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function fetch(Event $event)
+    {
+        $advisories = $event->advisories()->first();
+        $contactPivots = $event->contactlevels()->get();
         $contactLevels = ContactLevel::all();
+        $contentPivots = $event->contentadvisories()->get();
         $contentAdvisories = ContentAdvisory::where('admin', true)
                             ->orWhere('user_id', auth()->user()->id)
                             ->get();
+        $mobilityPivots = $event->mobilityadvisories()->get();
+        $mobilityAdvisories = MobilityAdvisory::where('admin', true)
+                            ->orWhere('user_id', auth()->user()->id)
+                            ->get();
+        return response()->json(array(
+            'advisories' => $advisories,
+            'contactPivots' => $contactPivots,
+            'contactLevels' => $contactLevels,
+            'contentPivots' => $contentPivots,
+            'contentAdvisories' => $contentAdvisories,
+            'mobilityPivots' => $mobilityPivots,
+            'mobilityAdvisories' => $mobilityAdvisories,
+        ));
 
-        return view('create.advisories', compact('event','contactLevels','pivots', 'contentpivots', 'contentAdvisories'));
     }
 
     /**
@@ -50,23 +73,13 @@ class ExpectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ExpectationStoreRequest $request, Event $event)
+    public function store(AdvisoryStoreRequest $request, Event $event)
     {
-        $event->expectation->update($request->except(['contactLevel', 'contentAdvisory']));
+        $event->advisories->update($request->except(['contactLevel', 'contentAdvisory', 'mobilityAdvisory']));
         $event->contactlevels()->sync(request('contactLevel'));
-        if ($request->has('contentAdvisory')) {
-            foreach ($request['contentAdvisory'] as $content) {
-                ContentAdvisory::firstOrCreate([
-                    'advisories' => $content
-                ],
-                [
-                    'user_id' => auth()->user()->id,
-                ]);
-            };
-            $newSync = ContentAdvisory::all()->whereIn('advisories', $request['contentAdvisory']);
-            $event->contentadvisories()->sync($newSync);
-        };
-        $event->update(['expectation_id' => $event->expectation->id]);
+        MobilityAdvisory::saveAdvisories($event, $request);
+        ContentAdvisory::saveAdvisories($event, $request);
+        $event->update(['advisories_id' => $event->advisories->id]);
 
     }
 

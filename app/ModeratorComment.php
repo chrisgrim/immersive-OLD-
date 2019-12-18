@@ -12,7 +12,7 @@ class ModeratorComment extends Model
     * @var array
     */
     protected $fillable = [
-        'comments'
+        'comments', 'event_id'
     ];
     /**
     * Each comment belongs to one Event

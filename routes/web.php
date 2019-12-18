@@ -51,14 +51,18 @@ Route::GET('favorite/{event}/login', 'FavoritesController@loginToFavorite');
 
 //event list
 Route::GET('/create-event/edit', 'EventController@editEvents');
+Route::GET('/create-event/edit/fetch', 'EventController@fetchEditEvents');
 
 Route::GET('/create-event/{event}/title', 'EventController@title');
+Route::GET('/create-event/{event}/title/fetch', 'EventController@fetchTitle');
 Route::PATCH('/create-event/{event}/title ', 'EventController@updateTitle');
 
 Route::GET('/create-event/{event}/location', 'LocationController@create');
+Route::GET('/create-event/{event}/location/fetch', 'LocationController@fetch');
 Route::PATCH('/create-event/{event}/location', 'LocationController@store');
 
 Route::GET('/create-event/{event}/category', 'EventController@createCategory');
+Route::GET('/create-event/{event}/category/fetch', 'EventController@fetchCategory');
 Route::PATCH('/create-event/{event}/category', 'EventController@updateCategory');
 
 Route::GET('/create-event/{event}/shows', 'ShowsController@create');
@@ -68,10 +72,12 @@ Route::GET('/create-event/{event}/shows/loadshows', 'ShowsController@loadShows')
 Route::POST('/create-event/{event}/shows', 'ShowsController@store');
 
 Route::GET('/create-event/{event}/description', 'DescriptionController@create');
+Route::GET('/create-event/{event}/description/fetch', 'DescriptionController@fetch');
 Route::PATCH('/create-event/{event}/description ', 'DescriptionController@store');
 
-Route::GET('/create-event/{event}/expect', 'ExpectController@create');
-Route::PATCH('/create-event/{event}/expect ', 'ExpectController@store');
+Route::GET('/create-event/{event}/advisories', 'AdvisoriesController@create');
+Route::GET('/create-event/{event}/advisories/fetch', 'AdvisoriesController@fetch');
+Route::PATCH('/create-event/{event}/advisories ', 'AdvisoriesController@store');
 
 Route::GET('/create-event/{event}/images', 'ImageController@create');
 Route::POST('/create-event/{event}/images', 'ImageController@store');

@@ -14,7 +14,7 @@ class Category extends Model
     * @var array
     */
     protected $fillable = [
-    	'name', 'slug','description','imagePath'
+    	'name', 'slug','description','largeImagePath', 'thumbImagePath'
     ];
     
     /**
@@ -45,23 +45,49 @@ class Category extends Model
     public function saveFile($request, $category)
     {
         if ($request->imagePath) {
-            if ($category->imagePath) {
-                Storage::delete('public/' . $category->imagePath);
+            if ($category->largeImagePath) {
+                Storage::delete('public/' . $category->largeImagePath);
+                Storage::delete('public/' . $category->thumbImagePath);
             };
-            $title = $category->name;
+            $title = str_slug($category->name);
             $extension = $request->file('imagePath')->getClientOriginalExtension();
             $filename = $title . '.' . $extension;
-            $imagePath = "category-images/$filename";
-            $request->file('imagePath')->storeAs('/public/category-images', $filename);
-            Image::make(storage_path() . "/app/public/category-images/$filename")->fit(600, 400)->save(storage_path("/app/public/$imagePath"));
+            $largeImagePath = "category-large-images/$filename";
+            $thumbImagePath = "category-thumb-images/thumb-$filename";
+            $request->file('imagePath')->storeAs('/public/category-large-images', $filename);
+            Image::make(storage_path() . "/app/public/category-large-images/$filename")->fit(1280, 720)->save(storage_path("/app/public/$largeImagePath"))->fit(640, 360)->save(storage_path("/app/public/$thumbImagePath"));
+
             $category->update([
-                'imagePath' => $imagePath,
+                'largeImagePath' => $largeImagePath,
+                'thumbImagePath' => $thumbImagePath,
                 'slug' => str_slug($request->name),
-        ]);
+            ]);
         } else {
             $category->update([ 'slug' => str_slug($request->name) ]);
         };
+    }
 
+    /**
+    * Saves the image that is passed from the controller
+    *
+    * @return string
+    */
+    public function updateName($category, $request)
+    {
+        $category->update([
+            'name' => $request->name, 
+            'slug' => str_slug($request->name)
+        ]);
+        $ext = pathinfo('public/' . $category->largeImagePath, PATHINFO_EXTENSION);
+        $filename = $category->slug . '.' . $ext;
+        $largeImagePath = "category-large-images/$filename";
+        $thumbImagePath = "category-thumb-images/thumb-$filename";
+        Storage::move('public/' . $category->largeImagePath, 'public/' . $largeImagePath );
+        Storage::move('public/' . $category->thumbImagePath, 'public/' . $thumbImagePath );
+        $category->update([
+            'largeImagePath' => $largeImagePath,
+            'thumbImagePath' => $thumbImagePath,
+        ]);
     }
 
 }

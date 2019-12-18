@@ -11,3 +11,8 @@
         border: 1px solid red !important;
     }
 }
+#create {
+    & .multiselect__tag {
+        background: #008489;
+    }
+}

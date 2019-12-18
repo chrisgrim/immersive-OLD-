@@ -54,7 +54,7 @@
                     return this.url = `/create-event/${this.event.slug}/title`;
                 }
                 if (this.event.description) {
-                    return this.url = `/create-event/${this.event.slug}/expect`;
+                    return this.url = `/create-event/${this.event.slug}/advisories`;
                 }
                 if (this.event.show_times) {
                     return this.url = `/create-event/${this.event.slug}/description`;
@@ -68,6 +68,15 @@
                 if (this.event.name) {
                     return this.url = `/create-event/${this.event.slug}/location`;
                 }
+                if (this.event.approved == 0) {
+                    return this.url = `/create-event/${this.event.slug}/title`;
+                }
+            }
+        },
+
+        watch: {
+            event: function(newVal, oldVal) { // watch it
+                this.getUrl();
             }
         },
 

@@ -1,33 +1,51 @@
 <template>
 	<div class="description">
+        <div class="ctitle">
+            <h2>Description</h2>
+        </div>
         <div class="section">
             <div class="field">
                 <div class="text">
-                    <label class="area"> Let your guests know what to expect with the event/performance </label>
-                    <textarea 
-                    type="text" 
-                    name="description" 
-                    v-model="description" 
-                    placeholder="eg. Our super scary event will bring your fears to the surface..."
-                    :class="{ active: descriptionActive,'error': $v.description.$error }"
-                    @input="$v.description.$touch"
-                    @click="descriptionActive = true"
-                    @blur="descriptionActive = false" 
-                    rows="8"></textarea>
-                    <div v-if="$v.description.$error" class="validation-error">
-                        <p class="error" v-if="!$v.description.required">Must provide a description</p>
-                    </div>
                     <div class="field">
-                        <label>Event Tag Line</label>
-                        <input 
+                        <label class="area"> Describe your event to our readers </label>
+                        <textarea 
                         type="text" 
-                        v-model="tagLine"
-                        :class="{ active: websiteActive }"
-                        @click="tagLineActive = true"
-                        @blur="tagLineActive = false"
-                        placeholder="Quick, one sentence line to get the audience hooked!"
-                        />
-                    </div>
+                        name="description" 
+                        v-model="description" 
+                        placeholder="eg. Our super scary event will bring your fears to the surface..."
+                        :class="{ active: descriptionActive,'error': $v.description.$error }"
+                        @input="$v.description.$touch"
+                        @click="descriptionActive = true"
+                        @blur="descriptionActive = false" 
+                        rows="8"></textarea>
+                        <div v-if="$v.description.$error" class="validation-error">
+                            <p class="error" v-if="!$v.description.required">Must provide a description</p>
+                        </div>
+                    </div>
+                    <div class="field"> 
+                        <label>Event Genres</label>
+                        <multiselect 
+                        v-model="genreName"
+                        tag-placeholder="Add this as new tag" 
+                        placeholder="Add your own here" 
+                        label="genre"
+                        closeOnSelect="false"
+                        track-by="id" 
+                        :options="options" 
+                        :multiple="true" 
+                        :taggable="true" 
+                        tag-position="bottom"
+                        :class="{ active: genreActive,'error': $v.genreName.$error }"
+                        @search-change="asyncFind"
+                        @tag="addTag"
+                        @input="$v.genreName.$touch"
+                        @click="genreActive = true"
+                        @blur="genreActive = false"
+                        ></multiselect>
+                        <div v-if="$v.genreName.$error" class="validation-error">
+                            <p class="error" v-if="!$v.genreName.required">Must select at least one Genre</p>
+                        </div>
+                    </div>
                     <div class="field">
                         <label>Event Website Url</label>
                         <input 
@@ -44,7 +62,7 @@
                         </div>
                     </div>
                     <div class="field">   
-                        <label>Ticket Url (If different from Organizer Website)</label>
+                        <label>Ticket Url</label>
                         <input 
                         type="text" 
                         v-model="ticketUrl"
@@ -59,39 +77,16 @@
                         </div>
                     </div>
                     <div class="">
-                        <button @click.prevent="submitDescription()" class="create"> Save and Continue </button>
+                        <button :disabled="dis" @click.prevent="submitDescription()" class="create"> Next </button>
                     </div>
                 </div>
             </div>
             <div class="genre">
-                <div class="field"> 
-                    <label>Event Genre</label>
-                    <p>Select from our top genres or add your own.</p>
-                    <multiselect 
-                    v-model="genreName"
-                    tag-placeholder="Add this as new tag" 
-                    placeholder="Search or add a tag" 
-                    label="genre" 
-                    track-by="id" 
-                    :options="options" 
-                    :multiple="true" 
-                    :taggable="true" 
-                    tag-position="bottom"
-                    :class="{ active: genreActive,'error': $v.genreName.$error }"
-                    @search-change="asyncFind"
-                    @tag="addTag"
-                    @input="$v.genreName.$touch"
-                    @click="genreActive = true"
-                    @blur="genreActive = false"
-                    ></multiselect>
-                    <div v-if="$v.genreName.$error" class="validation-error">
-                        <p class="error" v-if="!$v.genreName.required">Must select at least one Genre</p>
-                    </div>
-                </div>
+               
             </div>
             <div class="inNav">
-                <button class="create" @click.prevent="goBack()"> Back </button>
-                <button class="create" @click.prevent="submitDescription()"> Next </button>
+                <button :disabled="dis" class="create" @click.prevent="goBack()"> Back </button>
+                <button :disabled="dis" class="create" @click.prevent="submitDescription()"> Next </button>
             </div>
         </div>
     </div>
@@ -99,7 +94,6 @@
 
 <script>
     import Multiselect from 'vue-multiselect'
-    import _ from 'lodash'
     import { required, url } from 'vuelidate/lib/validators'
 
 	export default {
@@ -109,23 +103,21 @@
 
 		props: {
 			event: {type:Object},
-            genres: {type:Array},
-            pivots: {type:Array}
 		},
 
 		data() {
 			return {
-                description: _.has(this.event, 'description') ? this.event.description : '',
-                genreName: this.pivots,
-                options: this.genres,
-                eventUrl:_.has(this.event, 'slug') ? `/create-event/${this.event.slug}` : null,
-                websiteUrl: _.has(this.event, 'websiteUrl') ? this.event.websiteUrl : '',
-                ticketUrl: _.has(this.event, 'ticketUrl') ? this.event.ticketUrl : '',
-                tagLine: _.has(this.event, 'tag_line') ? this.event.tag_line : '',
+                description: '',
+                genreName: '',
+                options: [],
+                websiteUrl: '',
+                ticketUrl: '',
+                eventUrl:`/create-event/${this.event.slug}`,
                 genreActive: false,
                 descriptionActive: false,
                 ticketActive: false,
                 websiteActive: false,
+                dis: false,
 			}
 		},
 
@@ -133,19 +125,18 @@
 
             //submit the data to the database adding the genres then load the new page
 			async submitDescription() {
-
                 this.$v.$touch(); 
                 if (this.$v.$invalid) { return false; };
+                this.dis = true;
 				let data = {
                     'description': this.description,
                     'websiteUrl': this.websiteUrl,
                     'ticketUrl': this.ticketUrl,
-                    'tag_line': this.tagLine
            		};
                 data.genre = this.genreName.map(a => a.genre);
 
 				axios.patch(`${this.eventUrl}/description`, data)
-                .then(response => { window.location.href = `${this.eventUrl}/expect`; });
+                .then(response => { window.location.href = `${this.eventUrl}/advisories`; });
 			},
 
             //Search list of Genres as user Types then add response to the options list
@@ -154,7 +145,6 @@
                 .then(response => {
                     console.log(response.data);
                     response.data.length ? this.options = response.data : '';
-                    // this.options = response.data;
                 });
             },
 
@@ -172,7 +162,25 @@
                 window.location.href = `${this.eventUrl}/shows`;
             },
 
+            // If there is data in Database it will load from the database
+            getDatabase() {
+                axios.get(`${this.eventUrl}/description/fetch?timestamp=${new Date().getTime()}`)
+                .then(response => {
+                    console.log(response.data);
+                    this.description = response.data.event.description;
+                    this.websiteUrl = response.data.event.websiteUrl;
+                    this.ticketUrl = response.data.event.ticketUrl;
+                    this.genreName = response.data.pivots;
+                    this.options = response.data.genres;
+                });
+            },
+
 		},
+
+        created() {
+            this.getDatabase();
+        },
+
 
         validations: {
             genreName: {

@@ -2,6 +2,6 @@
 
 @section('created')			
 
-<create-location-google :regions="{{$regions}}" :event="{{$event}}" :pivots="{{$pivots}}" />
+<create-location-google :event="{{$event}}"/>
 
 @endsection

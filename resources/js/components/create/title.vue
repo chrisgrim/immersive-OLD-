@@ -1,9 +1,12 @@
 <template>
 	<div class="title">
+        <div class="ctitle">
+            <h2>Title</h2>
+        </div>
 	    <div class="section">
             <div class="text">
     		    <div class="field">
-    				<label>Title</label>
+    				<label>Stand out from the other events with a great title</label>
     	            <input 
     	            type="text" 
     	            v-model="name" 
@@ -14,28 +17,43 @@
                     @blur="nameActive = false"
     	             />
     	             <div v-if="$v.name.$error" class="validation-error">
-    	    				<p class="error" v-if="!$v.name.required">The Title is required</p>
+    	    			<p class="error" v-if="!$v.name.required">Please add a Title</p>
+                        <p class="error" v-if="!$v.name.maxLength">The Title is too long.</p>
     	    		</div>
     	        </div>
+                <div class="field">
+                    <label>Event Tag Line</label>
+                    <input 
+                    type="text" 
+                    v-model="tagLine"
+                    :class="{ active: tagLineActive,'error': $v.tagLine.$error }"
+                    @input="$v.tagLine.$touch()"
+                    @click="tagLineActive = true"
+                    @blur="tagLineActive = false"
+                    placeholder="Quick, one sentence line to get the audience hooked!"
+                    />
+                    <div v-if="$v.tagLine.$error" class="validation-error">
+                        <p class="error" v-if="!$v.tagLine.maxLength">The tag line is too long.</p>
+                    </div>
+                </div>
             </div>
             <div class="image">
                 
             </div>
 	    </div>
         <div class="inNav">
-            <button class="create" @click.prevent="goBack()"> Back </button>
-            <button class="create" @click.prevent="submitName()"> Next </button>
+            <button :disabled="dis" class="create" @click.prevent="goBack()"> Back </button>
+            <button :disabled="dis" class="create" @click.prevent="submitName()"> Next </button>
         </div>
 	    <div class="submit">
-	        <button @click.prevent="submitName()" class="create"> Next </button>
+	        <button :disabled="dis" @click.prevent="submitName()" class="create"> Next </button>
 	    </div>
     </div>
 </template>
 
 <script>
 	
-	import { required, minLength } from 'vuelidate/lib/validators';
-	import _ from 'lodash';
+	import { required, maxLength } from 'vuelidate/lib/validators';
 
 
 	export default {
@@ -45,9 +63,12 @@
 
 		data() {
 			return {
-				name: this.event.name,
-				eventUrl:_.has(this.event, 'slug') ? `/create-event/${this.event.slug}` : null,
+				name: '',
+				eventUrl: `/create-event/${this.event.slug}`,
+                tagLine: '',
 				nameActive: false,
+                tagLineActive: false,
+                dis:false,
 			}
 		},
 
@@ -55,6 +76,7 @@
 			submitObject() {
             	return {
                 	name: this.name,
+                    tagline: this.tagLine
             	}
 			}
 		},
@@ -72,23 +94,41 @@
 			async submitName() {
 				this.$v.$touch(); 
 				if (this.$v.$invalid) { return false }
-				
+				this.dis = true;
 				axios.patch(`${this.eventUrl}/title`, this.submitObject)
 				.then(response => { 
                     window.location.href = `${this.eventUrl}/location`; 
                 })
-            	.catch(error => { this.serverErrors = error.response.data.errors; });
+            	.catch(error => { this.serverErrors = error.response.data.errors; this.dis = false; });
+
 			},
+
+            // If there is data in Database it will load from the database
+            getDatabase() {
+                axios.get(`${this.eventUrl}/title/fetch?timestamp=${new Date().getTime()}`)
+                .then(response => {
+                    response.data.name ? this.name = response.data.name : '';
+                    response.data.tag_line ? this.tagLine = response.data.tag_line : '';
+                });
+            },
 
             goBack() {
                 window.location.href = '/create-event/edit';
             }
 		},
 
+        created() {
+            this.getDatabase();
+        },
+
 		validations: {
 			name: {
 				required,
+                maxLength: maxLength(140)
 			},
+            tagLine: {
+                maxLength: maxLength(140)
+            }
 		},
     };
 

@@ -4,7 +4,7 @@
 
 <div>
 	<div id="bodyArea">
-		<edit-events :eventsbyorganizer="{{json_encode($eventsbyorganizer)}}">	
+		<edit-events/>	
 	</div>
 </div>
 

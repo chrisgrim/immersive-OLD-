@@ -5,7 +5,7 @@
                 <h2>Explore {{category.name}}</h2>
                 <div>
                     <div id="grid">
-                        <div v-for="event in events">
+                        <div v-for="event in category.events">
                             <event-listing-item :event="event"></event-listing-item>
                         </div>
                     </div>
@@ -29,12 +29,6 @@
         },
 
         props: {
-            events: {
-                type:Array,
-            },
-            categories: {
-                type:Array
-            },
             category: {
                 type:Object
             }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Event;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Http\Requests\CategoryStoreRequest;
 
@@ -25,7 +26,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-
+        return Category::all();
     }
 
     /**
@@ -35,8 +36,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
-        return view('adminArea.categories',compact('categories'));
+        return view('adminArea.categories');
     }
 
     /**
@@ -47,9 +47,11 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        if(Category::where('name', '=', $request->name)->exists()) {
+            return '';
+        }
         $category = Category::create($request->except(['imagePath']));
         $category->saveFile($request, $category);
-        return back();
     }
 
     /**
@@ -60,9 +62,8 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        $events = $category->events()->get();
-        $categories = Category::all();
-        return view('categories.show',compact('events','categories', 'category'));
+        $category->load('events');
+        return view('categories.show',compact('category'));
     }
 
     /**
@@ -85,6 +86,14 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
+        if($request->name) {
+            $category->updateName($category, $request);
+            return '';
+        }
+        if($request->description) {
+            $category->update(['description' => $request->description]);
+            return '';
+        }
         $category->update($request->all());
         $category->saveFile($request, $category);
         return back();
@@ -99,6 +108,10 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        if ($category->largeImagePath) {
+            Storage::delete('public/' . $category->largeImagePath);
+            Storage::delete('public/' . $category->thumbImagePath);
+        };
+        $category->delete();
     }
 }

@@ -51,10 +51,20 @@ class EventController extends Controller
      * @param  \App\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function editEvents(Event $event)
+    public function editEvents()
     {
-        $eventsbyorganizer = Organizer::getOrganizerEvents();
-        return view('events.edit', compact('eventsbyorganizer'));
+        return view('events.edit');
+    }
+
+    /**
+     * Loads the users created events
+     *
+     * @param  \App\Event  $event
+     * @return \Illuminate\Http\Response
+     */
+    public function fetchEditEvents()
+    {
+        return Organizer::getOrganizerEvents();
     }
 
     /**
@@ -120,10 +130,14 @@ class EventController extends Controller
 
     public function createCategory(Event $event)
     {
-        $event->load('category');
         $categories = Category::all();
-
         return view('create.category', compact('event','categories'));
+    }
+
+    public function fetchCategory(Event $event)
+    {
+        $selectedCat = $event->category()->first();
+        return $selectedCat;
     }
     
     public function updateCategory(Request $request, Event $event)
@@ -131,20 +145,35 @@ class EventController extends Controller
         $event->update([ 'category_id' => request('id') ]);
     }
     public function updateTitle(Request $request, Event $event)
-    {   if ($event->name == $request->name) {
-            //
+    {
+
+        if ($event->name == request('name')) {
+            $event->update(['tag_line' => request('tagline')]);
         } else {
-            if (Event::where('name', '=', $request->name)->exists()) {
-                $event->update([ 'name' => request('name') . '-' . rand(5, 9999) ]);
+            if (Event::where('name', '=', request('name'))->exists()) {
+                $event->update([ 
+                    'name' => request('name') . '-' . rand(5, 9999),
+                    'tag_line' => request('tagline')
+                ]);
             } else {
-                $event->update([ 'name' => request('name') ]);
+                $event->update([ 
+                    'name' => request('name'),
+                    'tag_line' => request('tagline')
+                ]);
             }
         }
     }
+
     public function title(Event $event)
     {
         return view('create.title', compact('event'));
     }
+
+    public function fetchTitle(Event $event)
+    {
+        return $event;
+    }
+
     public function thanks(Event $event)
     {
         $website = $event->organizer->website;
@@ -158,6 +187,7 @@ class EventController extends Controller
         $event->update([
             'approval_process' => 'ready',
         ]);
+
         return view('create.thanks');
     }
 }

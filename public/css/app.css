@@ -632,13 +632,51 @@ select:-webkit-autofill:focus {
   min-height: 320px;
 }
 
-.organizer-event-edit-section .title-block {
-  width: 100%;
-  position: relative;
-  overflow: auto;
+.editevents {
+  max-width: 72%;
+  margin: auto;
+  padding-top: 5rem;
 }
 
-.organizer-event-edit-section .title {
+.editevents .section .title-block {
+  width: 100%;
+  height: 8rem;
+  position: relative;
+}
+
+.editevents .section .title-block .edit {
+  font-size: 1.4rem;
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+  font-weight: 600;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  line-height: 2.2rem;
+  min-width: 4.8rem;
+  color: #008489;
+  border-radius: 0.4rem;
+  border-width: 0.1rem;
+  background: white;
+  border-color: #008489;
+}
+
+.editevents .section .title-block .prev {
+  font-size: 1.4rem;
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+  font-weight: 600;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  line-height: 2.2rem;
+  min-width: 4.8rem;
+  color: white;
+  border-radius: 0.4rem;
+  border-width: 0.1rem;
+  background: #008489;
+  border-color: transparent;
+}
+
+.editevents .section .title {
   float: left;
   overflow-wrap: break-word;
   font-size: 3.2rem;
@@ -650,7 +688,7 @@ select:-webkit-autofill:focus {
   margin: 0px;
 }
 
-.organizer-event-edit-section .buttons {
+.editevents .section .buttons {
   float: right;
 }
 
@@ -1191,48 +1229,6 @@ select:-webkit-autofill:focus {
 
 /*----------------------- modal ------------------------*/
 
-.modal-backdrop {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.3);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal {
-  background: #FFFFFF;
-  box-shadow: 2px 2px 20px 1px;
-  overflow-x: auto;
-  display: flex;
-  flex-direction: column;
-}
-
-.modal-header,
-.modal-footer {
-  padding: 15px;
-  display: flex;
-}
-
-.modal-header {
-  border-bottom: 1px solid #eeeeee;
-  color: #4AAE9B;
-  justify-content: space-between;
-}
-
-.modal-footer {
-  border-top: 1px solid #eeeeee;
-  justify-content: flex-end;
-}
-
-.modal-body {
-  position: relative;
-  padding: 20px 10px;
-}
-
 .btn-close {
   border: none;
   font-size: 20px;
@@ -1255,10 +1251,10 @@ select:-webkit-autofill:focus {
   position: relative;
 }
 
-#checkbox {
-  margin: 0px;
+input#checkbox {
+  margin: 0 !important;
   width: 100%;
-  height: 50px;
+  height: 4.2rem;
   cursor: pointer;
   opacity: 0;
   position: relative;
@@ -1267,10 +1263,10 @@ select:-webkit-autofill:focus {
 
 #bar {
   position: absolute;
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background-color: #ffffff;
   z-index: 1;
   border-radius: 5px;
@@ -1279,10 +1275,10 @@ select:-webkit-autofill:focus {
 
 #knob {
   position: absolute;
-  top: 8px;
-  left: 8px;
-  width: 34px;
-  height: 34px;
+  top: 0.5rem;
+  left: 0.5rem;
+  width: 3.6rem;
+  height: 3.4rem;
   background-color: #fff;
   border-radius: 5px;
   transition: left 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28), margin-left 0.3s ease, width 0.3s ease, border-radius 0.3s ease;
@@ -1292,7 +1288,8 @@ select:-webkit-autofill:focus {
 }
 
 #knob p {
-  margin: 8px 0px 0px 6px;
+  font-size: 1.3rem;
+  margin: 0.8rem 0rem 0rem 0.7rem;
   color: #7b7b7b;
 }
 
@@ -1306,11 +1303,12 @@ select:-webkit-autofill:focus {
 }
 
 #checkbox:checked ~ #knob p {
-  margin: 8px 0px 0px 3px;
+  font-size: 1.3rem;
+  margin: 0.8rem 0rem 0rem 0.5rem;
 }
 
 #checkbox:checked ~ #bar {
-  background-color: #00bcd4;
+  background-color: #008489;
 }
 
 #checkbox:checked:active ~ #knob {
@@ -1815,6 +1813,7 @@ fieldset[disabled] .multiselect {
 html {
   font-size: 62.5%;
   font-family: "Montserrat", sans-serif;
+  height: 100%;
 }
 
 body {
@@ -1822,6 +1821,7 @@ body {
   font-size: 1.6rem;
   font-family: "Montserrat", sans-serif;
   margin: 0px;
+  height: 100%;
 }
 
 /* =14px */
@@ -1830,6 +1830,8 @@ h1 {
   font-size: 24px;
   font-size: 2.4rem;
   font-family: "Montserrat", sans-serif;
+  color: #484848;
+  transform: scale(1, 1.11);
 }
 
 /* =24px */
@@ -1838,6 +1840,8 @@ h2 {
   font-size: 20px;
   font-size: 2.2rem;
   font-family: "Montserrat", sans-serif;
+  color: #484848;
+  transform: scale(1, 1.11);
 }
 
 /* =24px */
@@ -1846,6 +1850,8 @@ h3 {
   font-size: 16px;
   font-size: 2rem;
   font-family: "Montserrat", sans-serif;
+  color: #484848;
+  transform: scale(1, 1.11);
 }
 
 /* =24px */
@@ -1868,21 +1874,6 @@ main {
 .container {
   width: 89%;
   margin: auto;
-}
-
-.ticket-box {
-  box-shadow: -3px 5px 5px 1px #e8e8e899;
-  padding: 2rem;
-  border-radius: 5px 5px 5px 0px;
-  margin-top: 15px;
-  border: solid 1px #ebebeb;
-  position: relative;
-}
-
-.ticket-box-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  grid-column-gap: 2rem;
 }
 
 .show-box {
@@ -2182,9 +2173,9 @@ a.leaflet-popup-close-button {
   display: none;
 }
 
-div.vue2leaflet-map {
-  height: 84% !important;
-}
+/*div.vue2leaflet-map {
+    height:84% !important;
+}*/
 
 .zoom {
   position: absolute;
@@ -2287,12 +2278,14 @@ div.vue2leaflet-map {
   border: none;
   font-size: 1.6rem;
   line-height: 2.2rem;
-  color: #484848;
+  color: #5f5f5f;
   margin-right: 3.2rem;
   padding-left: 0rem;
   padding-right: 0rem;
   padding-top: 2.4rem;
   padding-bottom: 2.4rem;
+  font-weight: 500;
+  letter-spacing: 0.06rem;
 }
 
 .tab .ln.act button {
@@ -2333,8 +2326,23 @@ span.flatpickr-day {
 }
 
 .flatpickr-months {
-  padding-top: 4rem;
-  padding-bottom: 2rem;
+  padding-top: 4%;
+  padding-bottom: 2%;
+}
+
+div.flatpickr-current-month {
+  padding: 0;
+}
+
+div.flatpickr-current-month input {
+  padding: 0.5rem 0.5rem !important;
+  margin-left: 1rem !important;
+  text-align: center;
+  width: 80% !important;
+}
+
+div.numInputWrapper:hover {
+  background: none;
 }
 
 input.form-control.flatpickr-input {
@@ -2356,5 +2364,112 @@ span.flatpickr-day.selected {
 
 .multiselect.error .multiselect__tags {
   border: 1px solid red !important;
+}
+
+#create .multiselect__tag {
+  background: #008489;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.44);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background: #FFFFFF;
+  box-shadow: 2px 2px 20px 1px;
+  overflow-x: auto;
+  border-radius: 0.5rem;
+  min-width: 34rem;
+}
+
+.modal .btn {
+  color: #fff;
+  border-radius: 4px;
+  background: #adadad;
+  text-decoration: none;
+  transition: all 0.4s;
+  line-height: normal;
+  min-width: 120px;
+  border: none;
+  min-height: 40px;
+  border-radius: 3px;
+  margin: 0 5px;
+  outline: none !important;
+  float: left;
+  margin-left: 4rem;
+  font-size: 1.4rem;
+}
+
+.modal .btn.del {
+  background: #f15e5e;
+  float: right;
+  margin-right: 4rem;
+  margin-left: 0rem;
+}
+
+.modal .btn.sub {
+  background: #52ab9e;
+  float: right;
+  margin-right: 4rem;
+  margin-left: 0rem;
+}
+
+.modal-header {
+  padding: 4rem 4rem 1rem 4rem;
+}
+
+.modal-header .circle {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+  border-radius: 50%;
+  z-index: 9;
+  text-align: center;
+}
+
+.modal-header .circle.del {
+  border: 3px solid #f15e5e;
+}
+
+.modal-header .circle.del p {
+  color: #f15e5e;
+  font-size: 46px;
+  display: inline-block;
+  margin-top: 1rem;
+  font-weight: 500;
+}
+
+.modal-header .circle.sub {
+  border: 3px solid #52ab9e;
+}
+
+.modal-header .circle.sub p {
+  color: #52ab9e;
+  font-size: 46px;
+  display: inline-block;
+  margin-top: 1rem;
+  font-weight: 500;
+}
+
+.modal-footer {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding-bottom: 10%;
+  padding-top: 4%;
+}
+
+.modal-body {
+  position: relative;
+  margin: 1rem 5rem;
+  text-align: center;
 }
 

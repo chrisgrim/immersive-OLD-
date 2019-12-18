@@ -5,7 +5,7 @@
         <link href="/css/app-admin.css" rel="stylesheet">
     </head>
     <body>
-        @include('layouts.create.nav')
+        @include('layouts.admin.nav')
         <main>
             @yield('content')
         </main>

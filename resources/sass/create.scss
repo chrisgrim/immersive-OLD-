@@ -1,117 +1,9 @@
-/*--------------------------- default-----------------*/
-.create-title {
-    background: #efefef;
-    padding: .5rem 2rem;
-    border-radius: .5rem;
-    margin-bottom: 1rem;
-}
-.container-create {
-    width: 60%;
-    display: inline-block;
-    padding: 1rem 5%;
-}
-textarea.create-input.area {
-    position: relative;
-    color: rgb(72, 72, 72);
-    background-color: rgb(255, 255, 255);
-    transition: border-color 0.2s ease 0s;
-    padding: 1.3rem 1rem;
-    border-width: 1px;
-    border-style: solid;
-    border-image: initial;
-    border-radius: 5px;
-    border-color: rgb(235, 235, 235);
-    margin: 0rem 0rem 1rem 0rem;
-    font-size: 1.4rem;
-    width: 100%;
-    &.active {
-        border-color: rgb(0, 132, 137);
-    }
-    &.error {
-        border-color: red;
-    }
-}
-input.create-input {
-	position: relative;
-    color: rgb(72, 72, 72);
-    background-color: rgb(255, 255, 255);
-    transition: border-color 0.2s ease 0s;
-    padding: 1.3rem 1rem;
-    border-width: 1px;
-    border-style: solid;
-    border-image: initial;
-    border-radius: 5px;
-    border-color: rgb(235, 235, 235);
-    margin: 0rem 0rem 1rem 0rem;
-    font-size: 1.4rem;
-    width: 100%;
-    &.active {
-    	border-color: rgb(0, 132, 137);
-    }
-    &.error {
-    	border-color: red;
-    }
-}
-.validation-error {
-    margin-top: -20px;
-    position: absolute;
-    background: white;
-    margin-left: 10px;
-    & p {
-		margin: 0px;
-		padding: 0px 5px;
-		color: red;
-		font-size: 1.3rem;
-    }
-}
 
-.create-field {
-	width:100%;
-	& label {
-		display: block;
-		margin: 2rem 0rem 1rem 0rem;
-		font-size: 1.5rem;
-		font-weight: 600;
-		color: rgb(72, 72, 72);
-	}
-}
-button.create {
-    color: #008489;
-    border: 1px solid #008489;
-    padding: .9rem 2rem;
-    font-size: 1.6rem;
-    border-radius: 5px;
-    margin: 2rem 0rem;
-}
-button.create:disabled,
-button.create[disabled]{
-    border: 1px solid #cacaca;
-    background-color: #f9f9f9;
-    color: #c7c7c7;
-}
-#checklist a {
-    text-decoration: none;
-    color: #484848;
-}
-.create-form.locations {
-    position: relative;
-}
-.location-section-1 {
-    width: 40%;
-}
-.location-section-2 {
-    width: 40%;
-    display: inline-block;
-}
-.location-section-3 {
-    width: 35%;
-    right: 15rem;
-    position: absolute;
-    top: 0;
-}
-.location-section-4 {
-    width: 40%;
-}
+
+
+
+
+
 
 .organization-form .multiselect {
   .option__desc, .option__image {
@@ -159,31 +51,7 @@ button.create[disabled]{
 .asd__keyboard-shortcuts-trigger-wrapper {
     display: none;
 }
-button.add-button {
-    border: none;
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #f2595b;
-}
-div.add-button {
-    box-shadow: -3px 5px 5px 1px #cecece99;
-    padding: 1.3rem 2rem;
-    border-radius: 0px 0px 50px 5px;
-    margin-top: -1px;
-    display: inline-block;
-    z-index: 1;
-    border: solid 1px #ebebeb;
-    border-top: none;
-}
-button.delete-circle {
-    border-radius: 100px;
-    padding: 0.7rem 1rem;
-    border: solid black 1px;
-    background: white;
-    margin-right: -4rem;
-    margin-top: .6rem;
-    float: right;
-}
+
 
 
 /* -------------------------Pricing-------------------*/

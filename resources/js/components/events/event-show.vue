@@ -4,7 +4,7 @@
 			<div class="event-title">
 				<div  class="event-title_box">
 					<div class="event-title_content">
-						<span class="event-category_text">{{event.category.name}}</span>
+						<span class="event-category_text">{{event.category ? event.category.name : ''}}</span>
 						<span class="event-title_text">{{event.name}}</span>
 					</div>
 				</div>

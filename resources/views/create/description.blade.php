@@ -2,6 +2,6 @@
 
 @section('created')			
 
-<create-description :event="{{$event}}" :genres="{{$genres}}" :pivots="{{$pivots}}">	
+<create-description :event="{{$event}}">	
  
 @endsection

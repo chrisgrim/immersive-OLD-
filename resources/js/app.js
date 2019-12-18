@@ -72,7 +72,7 @@ Vue.component('favorite', require('./components/layouts/favorite.vue').default);
 Vue.component('modal', require('./components/layouts/modal.vue').default);
 Vue.component('tabs', require('./components/layouts/tabs.vue').default);
 Vue.component('tab', require('./components/layouts/tab.vue').default);
-
+Vue.component('image-upload', require('./components/layouts/image-upload.vue').default);
 
 //Create Events
 Vue.component('event-create-checklist', require('./components/create/checklist.vue').default);
@@ -88,8 +88,14 @@ Vue.component('create-description', require('./components/create/description.vue
 Vue.component('create-advisories', require('./components/create/advisories.vue').default);
 
 //Admin Area
-Vue.component('admin-area-nav', require('./components/adminArea/nav.vue').default);
+Vue.component('admin-nav', require('./components/adminArea/nav.vue').default);
+Vue.component('admin-area-nav', require('./components/adminArea/checklist.vue').default);
 Vue.component('approval-bar', require('./components/adminArea/approve/approval-bar.vue').default);
+Vue.component('admin-categories', require('./components/adminArea/admin-categories.vue').default);
+Vue.component('admin-contact-level', require('./components/adminArea/admin-contact-level.vue').default);
+Vue.component('admin-genres', require('./components/adminArea/admin-genres.vue').default);
+Vue.component('admin-regions', require('./components/adminArea/admin-regions.vue').default);
+Vue.component('admin-content-advisories', require('./components/adminArea/admin-content-advisories.vue').default);
 
 //Profile
 Vue.component('user-profile', require('./components/profile/profile-index.vue').default);

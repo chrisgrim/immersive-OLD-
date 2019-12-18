@@ -1,12 +1,16 @@
 <template>
 	<div class="advisories">
 	    <div class="section">
-            <div class="text">
+            <div class="texta">
+                <div class="ctitle">
+                    <h2>Content Advisories</h2>
+                </div>
                 <div class="field">
-                    <label class="area">Content Advisories</label>
+                    <label class="area">Search or add your own content advisory</label>
                     <multiselect 
                     v-model="contentAdvisories" 
-                    :options="contentAdvisoryOptions" 
+                    :options="contentAdvisoryOptions"
+                    :class="{ active: contentActive,'error': $v.contentAdvisories.$error }"
                     :multiple="true" 
                     tag-placeholder="Add this as new tag"
                     :taggable="true" 
@@ -19,84 +23,88 @@
                     label="advisories"
                     track-by="id">
                     </multiselect>
+                    <div v-if="$v.contentAdvisories.$error" class="validation-error">
+                        <p class="error" v-if="!$v.contentAdvisories.required">Must enter a mobility advisory </p>
+                    </div>
                 </div>
                 <div class="field">
-                    <label>Age Restriction</label>
-                    <input 
-                    type="text" 
-                    class="create-input" 
-                    v-model="expect.ageRestriction" 
-                    :class="{ active: ageActive,'error': $v.expect.ageRestriction.$error }"
-                    placeholder=" "
-                    @click="ageActive = true"
+                    <label>Age Restriction</label>
+                    <multiselect 
+                    v-model="advisories.ageRestriction" 
+                    :options="ageOptions" 
+                    placeholder="Select the appropriate age group"
+                    open-direction="bottom"
+                    :class="{ active: ageActive,'error': $v.advisories.ageRestriction.$error }"
+                    @click="ageActive = true"
                     @blur="ageActive = false"
-                    @input="$v.expect.ageRestriction.$touch"
-                    />
-                    <div v-if="$v.expect.ageRestriction.$error" class="validation-error">
-                        <p class="error" v-if="!$v.expect.ageRestriction.required">Required</p>
+                    @input="$v.advisories.ageRestriction.$touch"
+                    :preselect-first="false">
+                    </multiselect>
+                    <div v-if="$v.advisories.ageRestriction.$error" class="validation-error">
+                        <p class="error" v-if="!$v.advisories.ageRestriction.required">Required</p>
                     </div>
-                </div>
-                <br>
-                <div>
-                    <div class="field">
-                        <label class="area">Level of Contact w/ Audience (Touch Advisory) </label>
-                        <multiselect 
-                        v-model="contactLevel" 
-                        :options="contactLevelOptions" 
-                        :multiple="true" 
-                        placeholder="Choose All That Apply"
-                        open-direction="bottom"
-                        :class="{ active: contactActive,'error': $v.contactLevel.$error }"
-                        @click="contactActive = true"
-                        @blur="contactActive = false"
-                        @input="$v.contactLevel.$touch"
-                        label="level" 
-                        track-by="id" 
-                        :preselect-first="false">
-                        </multiselect>
-                        <div v-if="$v.contactLevel.$error" class="validation-error">
-                            <p class="error" v-if="!$v.contactLevel.required">Must choose at least one contact level </p>
-                        </div>
-                    </div>
                 </div>
-                <div>
-                    <div class="field">
-                        <label class="area"> Explain a bit about your contact with the audience </label>
-                        <textarea 
-                        v-model="expect.contactAdvisories" 
-                        class="create-input area" 
-                        rows="8" 
-                        placeholder=" "
-                        :class="{ active: contactAdvisoryActive,'error': $v.expect.contactAdvisories.$error }"
-                        @click="contactAdvisoryActive = true"
-                        @blur="contactAdvisoryActive = false"
-                        @input="$v.expect.contactAdvisories.$touch"
-                        required 
-                        autofocus></textarea>
-                        <div v-if="$v.expect.contactAdvisories.$error" class="validation-error">
-                            <p class="error" v-if="!$v.expect.contactAdvisories.required">Must enter a contact advisory </p>
-                        </div>
-                    </div>
+            </div>
+            <div class="textb">
+                <div class="ctitle">
+                    <h2>Contact Advisories</h2>
                 </div>
                 <div class="field">
+                    <label class="area">Level of Contact w/ Audience (Touch Advisory) </label>
+                    <multiselect 
+                    v-model="contactLevel" 
+                    :options="contactLevelOptions" 
+                    :multiple="true" 
+                    placeholder="Choose All That Apply"
+                    open-direction="bottom"
+                    :class="{ active: contactActive,'error': $v.contactLevel.$error }"
+                    @click="contactActive = true"
+                    @blur="contactActive = false"
+                    @input="$v.contactLevel.$touch"
+                    label="level" 
+                    track-by="id" 
+                    :preselect-first="false">
+                    </multiselect>
+                    <div v-if="$v.contactLevel.$error" class="validation-error">
+                        <p class="error" v-if="!$v.contactLevel.required">Must choose at least one contact level </p>
+                    </div>
+                </div>
+                <div class="field" v-if="contactLevel.length">
+                    <label class="area"> Explain a bit about your contact with the audience </label>
+                    <textarea 
+                    v-model="advisories.contactAdvisories" 
+                    class="create-input area" 
+                    rows="8" 
+                    placeholder=" "
+                    :class="{ active: contactAdvisoryActive,'error': $v.advisories.contactAdvisories.$error }"
+                    @click="contactAdvisoryActive = true"
+                    @blur="contactAdvisoryActive = false"
+                    @input="$v.advisories.contactAdvisories.$touch"
+                    required 
+                    autofocus></textarea>
+                    <div v-if="$v.advisories.contactAdvisories.$error" class="validation-error">
+                        <p class="error" v-if="!$v.advisories.contactAdvisories.required">Must enter a contact advisory </p>
+                    </div>
+                </div>
+                <div class="field" v-if="contactLevel.length">
                     <label> Is there sexual Violence? </label>
                     <div id="cover">
-                        <input v-model="expect.sexualViolence" type="checkbox" id="checkbox">
+                        <input v-model="advisories.sexualViolence" type="checkbox" id="checkbox">
                         <div id="bar"></div>
                         <div id="knob">
-                            <p v-if="expect.sexualViolence">Yes</p>
-                            <p v-else="expect.sexualViolence">No</p>
+                            <p v-if="advisories.sexualViolence">Yes</p>
+                            <p v-else="advisories.sexualViolence">No</p>
                         </div>
                     </div>
-                    <div v-if="$v.expect.sexualViolence.$error" class="validation-error">
-                        <p class="error" v-if="!$v.expect.sexualViolence.required">Must select if there is sexual violence</p>
+                    <div v-if="$v.advisories.sexualViolence.$error" class="validation-error">
+                        <p class="error" v-if="!$v.advisories.sexualViolence.required">Must select if there is sexual violence</p>
                     </div>
                 </div>
-                <div v-if="expect.sexualViolence">
+                <div v-if="advisories.sexualViolence">
                     <div class="field">
                         <label class="area"> Explain more about the sexual violence </label>
                         <textarea 
-                        v-model="expect.sexualViolenceDescription" 
+                        v-model="advisories.sexualViolenceDescription" 
                         class="create-input area" 
                         rows="8" 
                         placeholder=" " 
@@ -104,48 +112,56 @@
                         autofocus></textarea>
                     </div>
                 </div>
-                <button @click.prevent="submitAdvisories()" class="create"> Save and Continue </button>
             </div>
-            <div class="mobile">
+            <div class="textc">
+                <div class="ctitle">
+                    <h2>Mobility Advisories</h2>
+                </div>
                 <div class="field">
-                     <label class="area"> Mobility Advisories </label>
-                     <p>Any Other Mobility Advisories?<br>
-                        * Can you accommodate someone who can't stand/walk for long periods of time? <br>
-                        * Can the show accommodate someone who uses a walker? <br>
-                        * Does the show take place on uneven ground or in a venue with staircases?</p>
-                    <textarea 
-                    v-model="expect.mobilityAdvisories" 
-                    class="create-input area" 
-                    rows="8" 
-                    placeholder=" "
-                    :class="{ active: sexualViolenceActive,'error': $v.expect.mobilityAdvisories.$error }"
-                    @click="mobilityAdvisoriesActive = true"
-                    @blur="mobilityAdvisoriesActive = false"
-                    @input="$v.expect.mobilityAdvisories.$touch"
-                    required 
-                    autofocus></textarea>
-                    <div v-if="$v.expect.mobilityAdvisories.$error" class="validation-error">
-                        <p class="error" v-if="!$v.expect.mobilityAdvisories.required">Must enter a mobility advisory </p>
+                    <label class="area">Search or add your own Mobility advisory</label>
+                    <multiselect 
+                    v-model="mobilityAdvisories" 
+                    :options="mobilityAdvisoryOptions" 
+                    :multiple="true" 
+                    tag-placeholder="Add this as new tag"
+                    :taggable="true" 
+                    tag-position="bottom"
+                    placeholder="Search or add a tag" 
+                    open-direction="bottom"
+                    :class="{ active: mobilityAdvisoryActive,'error': $v.mobilityAdvisories.$error }"
+                    @tag="addTagMobility"
+                    @click="mobilityAdvisoryActive = true"
+                    @blur="mobilityAdvisoryActive = false"
+                    @input="$v.mobilityAdvisories.$touch"
+                    label="mobilities"
+                    track-by="id">
+                    </multiselect>
+                    <div v-if="$v.mobilityAdvisories.$error" class="validation-error">
+                        <p class="error" v-if="!$v.mobilityAdvisories.required">Must enter a mobility advisory </p>
                     </div>
                 </div>
                 <div class="field">
                     <label> Is the Event Wheel Chair Accessible? </label>
                     <div id="cover">
-                        <input v-model="expect.wheelchairReady" type="checkbox" id="checkbox">
+                        <input v-model="advisories.wheelchairReady" type="checkbox" id="checkbox">
                         <div id="bar"></div>
                         <div id="knob">
-                            <p v-if="expect.wheelchairReady">Yes</p>
-                            <p v-else="expect.wheelchairReady">No</p>
+                            <p v-if="advisories.wheelchairReady">Yes</p>
+                            <p v-else="advisories.wheelchairReady">No</p>
                         </div>
                     </div>
-                    <div v-if="$v.expect.wheelchairReady.$error" class="validation-error">
-                        <p class="error" v-if="!$v.expect.wheelchairReady.required">Must select if the event is wheelchair accessible </p>
+                    <div v-if="$v.advisories.wheelchairReady.$error" class="validation-error">
+                        <p class="error" v-if="!$v.advisories.wheelchairReady.required">Must select if the event is wheelchair accessible </p>
                     </div>
                 </div>
+                <button :disabled="dis" @click.prevent="submitAdvisories()" class="create"> Next </button>
+            </div>
+            <div class="mobile">
+                
             </div>
             <div class="inNav">
-                <button class="create" @click.prevent="goBack()"> Back </button>
-                <button class="create" @click.prevent="submitAdvisories()"> Next </button>
+                <button :disabled="dis" class="create" @click.prevent="goBack()"> Back </button>
+                <button :disabled="dis" class="create" @click.prevent="submitAdvisories()"> Next </button>
             </div>
 	    </div>
     </div>
@@ -153,7 +169,6 @@
 
 <script>
     import Multiselect from 'vue-multiselect'
-    import _ from 'lodash'
     import { required, numeric } from 'vuelidate/lib/validators'
 
 	export default {
@@ -163,27 +178,27 @@
 
 		props: {
 			event: { type:Object },
-			contact: { type:Array },
-			content: { type:Array },
-			pivots: { type:Array },
-			contentpivots: { type:Array },
 		},
 
 		data() {
 			return {
-				expect: this.initializeEventObject(),
-				contactLevelOptions: this.contact,
-				contentAdvisoryOptions: this.content,
-				contactLevel: this.pivots,
-				contentAdvisories: this.contentpivots,
-				eventUrl:_.has(this.event, 'slug') ? `/create-event/${this.event.slug}` : null,
+				advisories: this.initializeEventObject(),
+				contactLevelOptions: [],
+				contentAdvisoryOptions: [],
+                mobilityAdvisoryOptions: [],
+				contactLevel: '',
+				contentAdvisories: '',
+                mobilityAdvisories: '',
+				eventUrl:`/create-event/${this.event.slug}`,
 				contentActive: false,
 				contactActive: false,
 				contactAdvisoryActive: false,
 				sexualViolenceActive: false,
 				wheelchairReadyActive: false,
-				mobilityAdvisories: false,
+				mobilityAdvisoryActive: false,
 				ageActive: false,
+                ageOptions: ['All Ages', '12+', '16+', '18+', '21+'],
+                dis: false,
 			}
 		},
 
@@ -194,7 +209,6 @@
 					sexualViolence: false,
 					sexualViolenceDescription: '',
 					wheelchairReady: false,
-					mobilityAdvisories: '',
 					ageRestriction: '',
 				}
 			},
@@ -202,10 +216,10 @@
 			//updates fields if event is stored in database.
 			updateEventFields(input) {
 	            if ((input !== null) && (typeof input === "object") && (input.id !== null)) {
-	                this.expect = _.pick(input, _.intersection( _.keys(this.expect), _.keys(input) ));
+	                this.advisories = _.pick(input, _.intersection( _.keys(this.advisories), _.keys(input) ));
 	            }
-                this.expect.wheelchairReady ? '' : this.expect.wheelchairReady = false;
-                this.expect.sexualViolence ? '' : this.expect.sexualViolence = false;
+                this.advisories.wheelchairReady ? '' : this.advisories.wheelchairReady = false;
+                this.advisories.sexualViolence ? '' : this.advisories.sexualViolence = false;
 	        },
 
 	        addTag (newTag) {
@@ -217,38 +231,71 @@
                 this.contentAdvisories.push(tag)
             },
 
+                addTagMobility (newTag) {
+                const tag = {
+                    mobilities: newTag,
+                    id: newTag.substring(0, 0) + Math.floor((Math.random() * 10000000))
+                }
+                this.mobilityAdvisoryOptions.push(tag)
+                this.mobilityAdvisories.push(tag)
+            },
+
 	        //submit data to the database
 			async submitAdvisories() {
 				this.$v.$touch(); 
                 if (this.$v.$invalid) { return false; };
-               	let data = this.expect;
+                this.dis = true;
+               	let data = this.advisories;
                	data.contactLevel = this.contactLevel.map(a => a.id);
                	data.contentAdvisory = this.contentAdvisories.map(a => a.advisories);
+                data.mobilityAdvisory = this.mobilityAdvisories.map(a => a.mobilities);
 
-				axios.patch(`${this.eventUrl}/expect`, data)
+				axios.patch(`${this.eventUrl}/advisories`, data)
 				.then(response => { 
                     window.location.href = `${this.eventUrl}/images`; 
                 })
-				.catch(error => { console.log(error.response.data); });
+				.catch(error => { console.log(error.response.data); this.dis = false;});
 			},
 
             goBack() {
                 window.location.href = `${this.eventUrl}/description`;
             },
+
+            // If there is data in Database it will load from the database
+            getDatabase() {
+                axios.get(`${this.eventUrl}/advisories/fetch?timestamp=${new Date().getTime()}`)
+                .then(response => {
+                    console.log(response.data);
+                    this.updateEventFields(response.data.advisories);
+                    this.contactLevel = response.data.contactPivots;
+                    this.contactLevelOptions = response.data.contactLevels;
+                    this.contentAdvisories = response.data.contentPivots;
+                    this.contentAdvisoryOptions = response.data.contentAdvisories;
+                    this.mobilityAdvisories = response.data.mobilityPivots;
+                    this.mobilityAdvisoryOptions = response.data.mobilityAdvisories;
+                });
+            },
 		},
 
-        mounted() {
-        	this.updateEventFields(this.event.expectation);
+        created() {
+            this.getDatabase();
         },
+
+        // mounted() {
+        // 	this.updateEventFields(this.event.advisories);
+        // },
 
         validations: {
         	contactLevel: {
         		required
         	},
-			expect: {
-			   	mobilityAdvisories: {
-			       required,
-			   	},
+            mobilityAdvisories: {
+                required
+            },
+            contentAdvisories: {
+                required
+            },
+			advisories: {
 			   	contactAdvisories: {
 			       required,
 			   	},

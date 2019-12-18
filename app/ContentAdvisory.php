@@ -22,4 +22,26 @@ class ContentAdvisory extends Model
     {
     	return $this->belongsToMany(Event::class);
     }
+
+    /**
+    *Save advisories and update pivot
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  $event
+    */
+    public static function saveAdvisories($event, $request)
+    {
+        if ($request->has('contentAdvisory')) {
+            foreach ($request['contentAdvisory'] as $content) {
+                ContentAdvisory::firstOrCreate([
+                    'advisories' => $content
+                ],
+                [
+                    'user_id' => auth()->user()->id,
+                ]);
+            };
+            $newSync = ContentAdvisory::all()->whereIn('advisories', $request['contentAdvisory']);
+            $event->contentadvisories()->sync($newSync);
+        };
+    }
 }

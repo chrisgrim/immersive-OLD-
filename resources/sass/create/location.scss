@@ -2,19 +2,23 @@
     position: relative;
     overflow: auto;
     & .location {
-        padding-top: 1.2rem;
         width:100%;
+        & .ctitle {
+            padding: 0;
+        }
         & .text {
-            width: 40%;
+            width: 50%;
             float: left;
             margin:0;
-            padding: 3.1% 0% 0% 9.5%;
+            padding: 3.1% 8.7% 0% 9.5%;
         }
         & .image {
-            width: 60%;
+            width: 50%;
             float: right;
             margin: 0;
-            padding: 0% 0% 0% 5%;
+            padding: 0;
+            height: 100%;
+            background: #f9f9f9;
         }
     }
 }

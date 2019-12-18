@@ -156,7 +156,7 @@ class AdminAreaController extends Controller
                 'comments' => $request->comments,
             ]
         );
-
+        
         Mail::to($event->user)->send(new ModeratorComments($ModeratorComment));
 
         $event->update([

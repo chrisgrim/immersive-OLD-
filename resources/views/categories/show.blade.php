@@ -4,7 +4,7 @@
 
 <div class="inner-container">
     <div id="bodyArea">
-        <category-show :events="{{$events}}" :category="{{$category}}" :categories="{{$categories}}"> 
+        <category-show :category="{{$category}}"> 
     </div>
 </div>
 

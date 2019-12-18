@@ -24,7 +24,7 @@ class GenresController extends Controller
      */
     public function index()
     {
-        //
+        return Genre::where('admin', true)->get();
     }
 
     /**
@@ -34,8 +34,7 @@ class GenresController extends Controller
      */
     public function create()
     {
-        $genres = Genre::where('admin', true)->get();
-        return view('adminArea.genres', compact('genres'));
+        return view('adminArea.genres');
     }
 
     /**
@@ -51,7 +50,6 @@ class GenresController extends Controller
             'admin' => true,
             'user_id' => auth()->user()->id
         ]);
-        return back();
     }
 
     /**
@@ -90,7 +88,6 @@ class GenresController extends Controller
             'admin' => true,
             'user_id' => auth()->user()->id
         ]);
-        return back();
     }
 
     /**
@@ -102,6 +99,5 @@ class GenresController extends Controller
     public function destroy(Genre $genre)
     {
         $genre->delete();
-        return back();
     }
 }

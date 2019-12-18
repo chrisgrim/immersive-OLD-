@@ -12,8 +12,12 @@
                     :class="{ active: commentsActive }"
                     @click="commentsActive = true"
                     @blur="commentsActive = false" 
+                    @input="$v.comments.$touch"
                     rows="8">
                     </textarea>
+                    <div v-if="$v.comments.$error" class="validation-error">
+                        <p class="error" v-if="!$v.comments.required">Be sure to include notes</p>
+                    </div>
                 </div>
             </div>
             <div class="buttons">
@@ -26,6 +30,7 @@
 </template>
 
 <script>
+    import { required } from 'vuelidate/lib/validators';
 
     export default {
         props: {
@@ -54,6 +59,8 @@
             },
 
             denied() {
+                this.$v.$touch(); 
+                if (this.$v.$invalid) { return false };
                 let data = {
                     comments: this.comments
                 };
@@ -69,8 +76,13 @@
             goBack() {
                 window.location.href = '/finish/events';
             },
-        }
+        },
 
+        validations: {
+            comments: {
+                required,
+            },
+        },
 
     }
 

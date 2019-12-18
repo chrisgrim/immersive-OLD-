@@ -1,0 +1,97 @@
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.44);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+.modal {
+    background: #FFFFFF;
+    box-shadow: 2px 2px 20px 1px;
+    overflow-x: auto;
+    border-radius: .5rem;
+    min-width: 34rem;
+    & .btn {
+        color: #fff;
+        border-radius: 4px;
+        background: #adadad;
+        text-decoration: none;
+        transition: all 0.4s;
+        line-height: normal;
+        min-width: 120px;
+        border: none;
+        min-height: 40px;
+        border-radius: 3px;
+        margin: 0 5px;
+        outline: none !important;
+        float:left;
+        margin-left: 4rem;
+        font-size: 1.4rem;
+        &.del {
+            background: #f15e5e;
+            float:right;
+            margin-right: 4rem;
+            margin-left: 0rem;
+        }
+        &.sub {
+            background: #52ab9e;
+            float:right;
+            margin-right: 4rem;
+            margin-left: 0rem;
+        }
+    }
+}
+
+.modal-header {
+    padding: 4rem 4rem 1rem 4rem;
+    & .circle {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto;
+        border-radius: 50%;
+        z-index: 9;
+        text-align: center;
+        &.del {
+            border: 3px solid #f15e5e;
+            & p {
+                color: #f15e5e;
+                font-size: 46px;
+                display: inline-block;
+                margin-top: 1rem;
+                font-weight: 500;
+            }
+        } 
+        &.sub {
+            border: 3px solid #52ab9e;
+            & p {
+                color: #52ab9e;
+                font-size: 46px;
+                display: inline-block;
+                margin-top: 1rem;
+                font-weight: 500;
+            }
+        }
+        
+    }
+}
+
+
+.modal-footer {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding-bottom: 10%;
+    padding-top: 4%;
+
+}
+
+.modal-body {
+    position: relative;
+    margin: 1rem 5rem;
+    text-align: center;
+}

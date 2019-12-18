@@ -24,7 +24,7 @@ class ContactLevelsController extends Controller
      */
     public function index()
     {
-        //
+        return ContactLevel::all();
     }
 
     /**
@@ -34,8 +34,7 @@ class ContactLevelsController extends Controller
      */
     public function create()
     {
-        $contactlevels = ContactLevel::all();
-        return view('adminArea.contactlevels', compact('contactlevels'));
+        return view('adminArea.contactlevels');
     }
 
     /**
@@ -47,7 +46,6 @@ class ContactLevelsController extends Controller
     public function store(Request $request)
     {
         ContactLevel::create($request->all());
-        return back();
     }
 
     /**
@@ -56,7 +54,7 @@ class ContactLevelsController extends Controller
      * @param  \App\ContactLevel  $contactLevel
      * @return \Illuminate\Http\Response
      */
-    public function show(ContactLevel $contactLevel)
+    public function show(ContactLevel $contactlevel)
     {
         //
     }
@@ -67,7 +65,7 @@ class ContactLevelsController extends Controller
      * @param  \App\ContactLevel  $contactLevel
      * @return \Illuminate\Http\Response
      */
-    public function edit(ContactLevel $contactLevel)
+    public function edit(ContactLevel $contactlevel)
     {
         //
     }
@@ -79,10 +77,9 @@ class ContactLevelsController extends Controller
      * @param  \App\ContactLevel  $contactLevel
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ContactLevel $contactLevel)
+    public function update(Request $request, ContactLevel $contactlevel)
     {
-        $contactLevel->update($request->all());
-        return back();
+        $contactlevel->update($request->all());
     }
 
     /**
@@ -91,8 +88,8 @@ class ContactLevelsController extends Controller
      * @param  \App\ContactLevel  $contactLevel
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ContactLevel $contactLevel)
+    public function destroy(ContactLevel $contactlevel)
     {
-        //
+        $contactlevel->delete();
     }
 }

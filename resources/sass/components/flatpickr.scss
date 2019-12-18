@@ -25,8 +25,20 @@ span.flatpickr-day {
     max-width: 100%;
 }
 .flatpickr-months {
-    padding-top: 4rem;
-    padding-bottom: 2rem;
+    padding-top: 4%;
+    padding-bottom: 2%;
+}
+div.flatpickr-current-month {
+    padding: 0;
+    & input {
+        padding: 0.5rem 0.5rem !important;
+        margin-left: 1rem !important;
+        text-align: center;
+        width: 80% !important;
+    }
+}
+div.numInputWrapper:hover {
+    background: none; 
 }
 input.form-control.flatpickr-input {
     display: none;

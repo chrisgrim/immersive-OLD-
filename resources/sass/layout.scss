@@ -1,8 +1,8 @@
-html { font-size: 62.5%; font-family: 'Montserrat', sans-serif; } 
-body { font-size: 14px; font-size: 1.6rem; font-family: 'Montserrat', sans-serif; margin:0px;} /* =14px */
-h1   { font-size: 24px; font-size: 2.4rem; font-family: 'Montserrat', sans-serif; } /* =24px */
-h2   { font-size: 20px; font-size: 2.2rem; font-family: 'Montserrat', sans-serif; } /* =24px */
-h3   { font-size: 16px; font-size: 2.0rem; font-family: 'Montserrat', sans-serif; } /* =24px */
+html { font-size: 62.5%; font-family: 'Montserrat', sans-serif; height:100%;} 
+body { font-size: 14px; font-size: 1.6rem; font-family: 'Montserrat', sans-serif; margin:0px; height:100%;} /* =14px */
+h1   { font-size: 24px; font-size: 2.4rem; font-family: 'Montserrat', sans-serif; color:#484848; transform: scale(1, 1.11);} /* =24px */
+h2   { font-size: 20px; font-size: 2.2rem; font-family: 'Montserrat', sans-serif; color:#484848; transform: scale(1, 1.11);} /* =24px */
+h3   { font-size: 16px; font-size: 2.0rem; font-family: 'Montserrat', sans-serif; color:#484848; transform: scale(1, 1.11);} /* =24px */
 
 *, *:before, *:after {
     -webkit-box-sizing: border-box;
@@ -23,19 +23,6 @@ main {
 }
 
 
-.ticket-box {
-    box-shadow: -3px 5px 5px 1px #e8e8e899;
-    padding: 2rem;
-    border-radius: 5px 5px 5px 0px;
-    margin-top: 15px;
-    border: solid 1px #ebebeb;
-    position: relative;
-    &-grid {
-         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        grid-column-gap: 2rem;
-    }
-}
 .show-box {
     box-shadow: -3px 5px 5px 1px #e8e8e899;
     padding: 2rem;

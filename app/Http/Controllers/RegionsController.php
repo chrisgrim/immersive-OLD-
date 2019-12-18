@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Region;
+use App\Http\Requests\RegionStoreRequest;
 use Illuminate\Http\Request;
 
 class RegionsController extends Controller
@@ -24,7 +25,7 @@ class RegionsController extends Controller
      */
     public function index()
     {
-        //
+        return Region::all();
     }
 
     /**
@@ -34,8 +35,7 @@ class RegionsController extends Controller
      */
     public function create()
     {
-        $regions = Region::all();
-        return view('adminArea.regions',compact('regions'));
+        return view('adminArea.regions');
     }
 
     /**
@@ -44,10 +44,9 @@ class RegionsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RegionStoreRequest $request)
     {
         Region::create($request->all());
-        return back();
     }
 
     /**
@@ -82,7 +81,6 @@ class RegionsController extends Controller
     public function update(Request $request, Region $region)
     {
         $region->update($request->all());
-        return back();
     }
 
     /**
@@ -93,6 +91,6 @@ class RegionsController extends Controller
      */
     public function destroy(Region $region)
     {
-        //
+        $region->delete();
     }
 }

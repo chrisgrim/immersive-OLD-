@@ -23,7 +23,7 @@ class Event extends Model
     * @var array
     */
 	protected $fillable = [
-    	'slug', 'user_id', 'category_id','organizer_id','description','name','largeImagePath','thumbImagePath','expectation_id', 'organizer_id', 'location_latlon', 'closingDate','websiteUrl','ticketUrl','show_times','price_range', 'approval_process', 'approved'
+    	'slug', 'user_id', 'category_id','organizer_id','description','name','largeImagePath','thumbImagePath','advisories_id', 'organizer_id', 'location_latlon', 'closingDate','websiteUrl','ticketUrl','show_times','price_range', 'approval_process', 'approved','tag_line'
 
     ];
 
@@ -115,9 +115,9 @@ class Event extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function expectation() 
+    public function advisories() 
     {
-        return $this->hasOne(Expect::class);
+        return $this->hasOne(Advisory::class);
     }
 
     /**
@@ -171,6 +171,16 @@ class Event extends Model
     }
 
     /**
+     * Each event can belong to many ContactLevels
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+     */
+    public function mobilityadvisories() 
+    {
+        return $this->belongsToMany(MobilityAdvisory::class);
+    }
+
+    /**
     * Sets the Route Key to slug instead of ID
     *
     * @return Route Key Name
@@ -193,7 +203,7 @@ class Event extends Model
             'organizer_id' => $request->id
         ]);
         $event->location()->Create();
-        $event->expectation()->Create();
+        $event->advisories()->Create();
         return $event;
     }
     
@@ -229,7 +239,7 @@ class Event extends Model
                     ],
                 ]
             ],
-            'expectation' => [
+            'advisories' => [
                 'properties' => [
                     'sexualViolence' => [
                         'type' => 'text',
@@ -295,7 +305,7 @@ class Event extends Model
                 'type' => 'integer',
                 'index' => false
             ],
-            'expectation_id' => [
+            'advisories_id' => [
                 'type' => 'integer',
                 'index' => false
             ],

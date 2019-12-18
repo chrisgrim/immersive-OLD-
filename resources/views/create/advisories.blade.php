@@ -2,6 +2,6 @@
 
 @section('created')
 
-<create-advisories :event="{{$event}}" :contact="{{$contactLevels}}" :content="{{$contentAdvisories}}" :pivots="{{$pivots}}" :contentpivots="{{$contentpivots}}">	
+<create-advisories :event="{{$event}}">	
 
 @endsection

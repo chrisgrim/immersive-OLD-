@@ -2,7 +2,7 @@
     <div class="item">
         <div 
         class="image" 
-        :style="{ backgroundImage: `url('${this.category ? /storage/ + this.category.imagePath : ''}')` }" />
+        :style="{ backgroundImage: `url('${this.category ? /storage/ + this.category.thumbImagePath : ''}')` }" />
         <div class="text">
             <h4>
                 {{ category.name }}

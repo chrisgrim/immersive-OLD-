@@ -1,22 +1,9 @@
 <template>
     <div class="shows">
+        <div class="ctitle">
+            <h2>Shows</h2>
+        </div>
         <div class="section">
-            <div class="calendar">
-                <div class="field">
-                    <label> Select all show dates</label>
-                    <flat-pickr
-                        v-model="dates"
-                        :config="config"                                                  
-                        class="form-control"
-                        placeholder="Select date"               
-                        name="dates">
-                    </flat-pickr>
-                    <div v-if="$v.dates.$error" class="validation-error">
-                        <p class="error" v-if="!$v.dates.required">Must add at least 1 show date</p>
-                    </div>
-                </div>
-                <button  @click.prevent="submitDates()" class="create"> Next </button> 
-            </div>
             <div class="pricing">
                 <div class="field">
                     <label class="area"> Show times</label>
@@ -25,7 +12,7 @@
                     class="create-input area"
                     :class="{ active: showTimeActive,'error': $v.showTimes.$error }"
                     rows="8" 
-                    placeholder="First show is at 8:00Pm..." 
+                    placeholder="Please provide a brief description of daily show times...8:00PM and 10:00PM shows or 10:00PM shows during the week and 12:00PM during the weekend." 
                     required
                     @click="showTimeActive = true"
                     @blur="showTimeActive = false"
@@ -33,10 +20,10 @@
                     autofocus>
                     </textarea>
                     <div v-if="$v.showTimes.$error" class="validation-error">
-                        <p class="error" v-if="!$v.showTimes.required">Must enter your show times</p>
+                        <p class="error" v-if="!$v.showTimes.required">Please give a brief description of show times</p>
                     </div>
                 </div>
-                <div class="field">
+                <div class="field cost">
                     <label class="area"> Ticket types and prices </label>
                     <div class="ticket-box">
                         <div v-for="(v, index) in $v.tickets.$each.$iter" class="ticket-box-grid">
@@ -49,10 +36,11 @@
                                 @click="ticketActive = true"
                                 @blur="ticketActive = false"
                                 v-model="v.name.$model" 
-                                placeholder="ex: General Admission, VIP, Student"
+                                placeholder="ex: General, VIP, Student"
                                 />
                                 <div v-if="v.name.$error" class="validation-error">
-                                    <p class="error" v-if="!v.name.required">Must Enter Ticket Name</p>
+                                    <p class="error" v-if="!v.name.required">Must enter a ticket name</p>
+                                    <p class="error" v-if="!v.name.maxLength">Name is too Long</p>
                                 </div>
                             </div>
                             <div class="field">
@@ -69,22 +57,38 @@
                                 placeholder="$0.00"
                                 />
                                 <div v-if="v.ticket_price.$error" class="validation-error">
-                                    <p class="error" v-if="!v.ticket_price.minValue">Must Enter Price</p>
-                                    <p class="error" v-if="!v.ticket_price.required">Must Enter Price</p>
+                                    <p class="error" v-if="!v.ticket_price.minValue">Please enter an amount</p>
+                                    <p class="error" v-if="!v.ticket_price.required">Please enter a price</p>
                                 </div>
-                                <button @click.prevent="deleteRow(index)" class="delete-circle">X</button>
+                                <button v-if="index != 0" @click.prevent="deleteRow(index)" class="delete-circle">X</button>
                             </div>
                         </div>
                     </div>
+                     <div class="add-button" @click.prevent="addTickets">
+                        <button class="add-button">&#43; Ticket Types</button>
+                    </div>
                 </div>
-                <div class="add-button">
-                    <button class="add-button" @click.prevent="addTickets">&#43; Ticket Types</button>
+            </div>
+            <div class="calendar">
+                <div class="field">
+                    <label> Select all show dates</label>
+                    <flat-pickr
+                        v-model="dates"
+                        :config="config"                                                  
+                        class="form-control"
+                        placeholder="Select date"               
+                        name="dates">
+                    </flat-pickr>
+                    <div v-if="$v.dates.$error" class="validation-error">
+                        <p class="error" v-if="!$v.dates.required">Please add at least 1 show date</p>
+                    </div>
                 </div>
+                <button :disabled="dis" @click.prevent="submitDates()" class="create"> Next </button> 
             </div>
         </div>
         <div class="inNav">
-            <button class="create" @click.prevent="goBack()"> Back </button>
-            <button class="create" @click.prevent="submitDates()"> Next </button>
+            <button :disabled="dis" class="create" @click.prevent="goBack()"> Back </button>
+            <button :disabled="dis" class="create" @click.prevent="submitDates()"> Next </button>
         </div>
 
     </div>
@@ -92,7 +96,7 @@
 
 <script>
 import format from 'date-fns/format'
-import { required, minLength, minValue } from 'vuelidate/lib/validators'
+import { required, minLength, minValue, maxLength } from 'vuelidate/lib/validators'
 import flatPickr from 'vue-flatpickr-component'
 import 'flatpickr/dist/flatpickr.css'
 import VueTimepicker from 'vue2-timepicker/src/vue-timepicker.vue'
@@ -151,6 +155,7 @@ export default {
                 precision: 2,
                 masked: false
             },
+            dis: false,
         }
     },
 
@@ -193,8 +198,9 @@ export default {
 
         // If there is data in Database it will load from the database
     	getDatabase() {
-    		axios.get(`${this.eventUrl}/shows/loadshows`)
+    		axios.get(`${this.eventUrl}/shows/loadshows?timestamp=${new Date().getTime()}`)
     		.then(response => {
+                console.log(response.data);
                 response.data.dates.length ? this.dates = response.data.dates : '';
                 response.data.tickets.length ? this.tickets = response.data.tickets[0].tickets : '';
                 response.data.showTimes ? this.showTimes = response.data.showTimes : '';
@@ -209,7 +215,7 @@ export default {
         async submitDates() {
          	this.$v.$touch();
 			if (this.$v.$invalid) { return false }
-
+            this.dis = true;
             let data = {
                 'dates': this.dateArray,
                 'showtimes': this.showTimes,
@@ -234,6 +240,7 @@ export default {
             $each: {
                 name: {
                     required,
+                    maxLength: maxLength(80),
                 },
                 ticket_price: {
                     required,
@@ -243,6 +250,7 @@ export default {
         },
         showTimes: {
             required,
+            maxLength: maxLength(400)
         },
         dates: {
             required,

@@ -24,7 +24,7 @@ class ContentAdvisoriesController extends Controller
      */
     public function index()
     {
-        //
+        return ContentAdvisory::where('admin', true)->get();
     }
 
     /**
@@ -34,8 +34,7 @@ class ContentAdvisoriesController extends Controller
      */
     public function create()
     {
-        $contentadvisories = ContentAdvisory::where('admin', true)->get();
-        return view('adminArea.contentadvisories', compact('contentadvisories'));
+        return view('adminArea.contentadvisories');
     }
 
     /**
@@ -51,7 +50,6 @@ class ContentAdvisoriesController extends Controller
             'admin' => true,
             'user_id' => auth()->user()->id
         ]);
-        return back();
     }
 
     /**
@@ -90,7 +88,6 @@ class ContentAdvisoriesController extends Controller
             'admin' => true,
             'user_id' => auth()->user()->id
         ]);
-        return back();
     }
 
     /**
@@ -102,6 +99,5 @@ class ContentAdvisoriesController extends Controller
     public function destroy(ContentAdvisory $contentadvisory)
     {
         $contentadvisory->delete();
-        return back();
     }
 }

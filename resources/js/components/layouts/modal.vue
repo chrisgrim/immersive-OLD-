@@ -1,60 +1,35 @@
 <template>
   <transition name="modal-fade">
     <div class="modal-backdrop">
-      <div class="modal"
-        role="dialog"
-        aria-labelledby="modalTitle"
-        aria-describedby="modalDescription"
-      >
-        <header
-          class="modal-header"
-          id="modalTitle"
-        >
-          <slot name="header">
-            This is the default tile!
-          </slot>
-            <button
-              type="button"
-              class="btn-close"
-              @click="close"
-              aria-label="Close modal"
-            >
-              x
-            </button>
+      <div class="modal" role="dialog" aria-labelledby="modalTitle" aria-describedby="modalDescription">
+        <header class="modal-header" id="modalTitle">
+            <slot name="header"> This is the default tile!</slot>
         </header>
-        <section
-          class="modal-body"
-          id="modalDescription"
-        >
-          <slot name="body">
-            I'm the default body!
-          </slot>
+        <section class="modal-body" id="modalDescription">
+            <slot name="body">
+                I'm the default body!
+            </slot>
         </section>
         <footer class="modal-footer">
-          <slot name="footer">
-            I'm the default footer!
-
-            <button
-              type="button"
-              class="btn-green"
-              @click="close"
-              aria-label="Close modal"
-            >
-              Close me!
-            </button>
-          </slot>
+            <button class="btn" @click="close" aria-label="Close modal">Cancel</button>
+            <slot name="footer">
+                I'm the default footer!
+                <button type="button" class="btn" @click="close" aria-label="Close modal">
+                    Close me!
+                </button>
+            </slot>
         </footer>
       </div>
     </div>
   </transition>
 </template>
 <script>
-  export default {
+export default {
     name: 'modal',
     methods: {
-      close() {
+        close() {
         this.$emit('close');
-      },
+        },
     },
-  };
+};
 </script>

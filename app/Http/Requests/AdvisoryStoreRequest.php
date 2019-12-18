@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ExpectationStoreRequest extends FormRequest
+class AdvisoryStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,7 +27,7 @@ class ExpectationStoreRequest extends FormRequest
             'wheelchairReady' => 'required',
             'sexualViolence' => 'required',
             'contactAdvisories' => 'required',
-            'mobilityAdvisories' => 'required',
+            'mobilityAdvisory' => 'required',
             'contentAdvisory' => 'required',
             'ageRestriction' => 'required'
         ];

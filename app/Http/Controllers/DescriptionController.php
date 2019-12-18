@@ -32,12 +32,27 @@ class DescriptionController extends Controller
      */
     public function create(Event $event)
     {
+        return view('create.description', compact('event'));
+    }
+
+     /**
+     * Show the form for creating a new resource. $Pivots gets the genres assigned to the event
+     $genres gets all the genres in the list.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function fetch(Event $event)
+    {
         $pivots = $event->genres()->get();
         $genres = Genre::where('admin', true)
                         ->orWhere('user_id', auth()->user()->id)
                         ->get();
 
-        return view('create.description', compact('event', 'pivots', 'genres'));
+        return response()->json(array(
+            'event' => $event,
+            'pivots' => $pivots,
+            'genres' => $genres
+        ));
     }
 
     /**

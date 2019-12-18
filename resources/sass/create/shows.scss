@@ -2,6 +2,9 @@
     position: relative;
     overflow: auto;
     & .shows {
+        & .ctitle {
+            padding: 0% 9.5% 0% 9.5%;
+        }
         padding-top: 4%;
         width:100%;
         & .section {
@@ -10,12 +13,61 @@
             overflow: hidden;
             & .calendar {
                 margin:0;
-                padding: 0% 0% 0% 5%;
+                padding: 0% 5% 0% 0%;
             }
             & .pricing {
                 margin: 0;
-                padding: 0% 4% 0% 4%;
+                padding: 0% 9% 0% 19.5%;
+                margin-bottom: 20%;
             }
+        }
+        & .ticket-box {
+            box-shadow: -3px 5px 5px 1px #e8e8e899;
+            padding: 2rem;
+            border-radius: 5px 5px 5px 0px;
+            margin-top: 15px;
+            border: solid 1px #ebebeb;
+            position: relative;
+            &-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                grid-column-gap: 1rem;
+            }
+        }
+        & button.delete-circle {
+            border-radius: 100px;
+            padding: 0.7rem 1rem;
+            border: solid #ebebeb 1px;
+            background: white;
+            margin-right: -3.5rem;
+            margin-top: 0.8rem;
+            float: right;
+            font-weight: 800;
+            color: red;
+        }
+        & button.add-button {
+            border: none;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #008489;
+            width: 100%;
+            padding: 1rem;
+            border: solid 1px #ebebeb;
+            border-top: none;
+            border-radius: 0px 0px 50px 5px;
+            box-shadow: -3px 5px 5px 1px #cecece40;
+            text-align: left;
+            margin-right: 4rem;
+        }
+        & div.add-button {
+            position: absolute;
+            margin-top: -1px;
+            display: inline-block;
+            z-index: 1;
+            border-top: none;
+        }
+        & .cost {
+            position: relative;
         }
     }
 }

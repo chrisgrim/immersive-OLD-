@@ -2,6 +2,9 @@
 	<div class="location">
     	<div class="section">
 			<div class="text">
+                <div class="ctitle">
+                    <h2>Location</h2>
+                </div>
 			    <div class="field">
 				 	<label> Is your location hidden? </label>
 					<div id="cover">
@@ -28,7 +31,6 @@
 		        </div>
     		    <div class="field">
     				<label> Location </label>
-    				<p>Put address if you have one, otherwise select your city.</p>
     				<gmap-autocomplete
     				@place_changed="setPlace"
     				autocomplete="false"
@@ -45,7 +47,7 @@
     				<label>Regions</label>
     				<multiselect 
     				v-model.trim="selectedRegions" 
-    				:options="this.regions ? regionOptions : []" 
+    				:options="regionOptions" 
     				:multiple="true" 
     				placeholder="Select Region. You may select more than one." 
     				track-by="id"
@@ -62,10 +64,10 @@
         			</div>
     			</div>
                 <div class="">
-                <button @click.prevent="submitLocation()" class="create"> Next </button>
+                <button :disabled="dis" @click.prevent="submitLocation()" class="create"> Next </button>
             </div>
             </div>
-            <div class="image">
+            <div class="image" :style="this.map">
                 <div v-if="center" class="map">
                     <div class="zoom">
                         <div class="in">
@@ -79,7 +81,7 @@
                             </button>
                         </div>
                     </div>
-                    <div style="width:100%;height:100vh">
+                    <div :style="this.map" style="width:100%;">
                         <l-map :zoom="zoom" :center="center" :options="{ scrollWheelZoom: allowZoom, zoomControl: allowZoom }">
                         <l-tile-layer :url="url"></l-tile-layer>
                         <l-marker :lat-lng="center"></l-marker>
@@ -89,15 +91,14 @@
             </div>
         </div>
 		<div class="inNav">
-            <button class="create" @click.prevent="goBack()"> Back </button>
-            <button class="create" @click.prevent="submitLocation()"> Next </button>
+            <button :disabled="dis" class="create" @click.prevent="goBack()"> Back </button>
+            <button :disabled="dis" class="create" @click.prevent="submitLocation()"> Next </button>
         </div>
     </div>
 </template>
 
 <script>
 	import Multiselect from 'vue-multiselect'
-	import _ from 'lodash'
 	import { required, minLength, requiredIf } from 'vuelidate/lib/validators'
 	import {LMap, LTileLayer, LMarker} from 'vue2-leaflet'
 
@@ -106,8 +107,6 @@
 	export default {
 		props: {
 			event: { type:Object },
-			regions: { type:Array },
-			pivots: { type:Array },
 		},
 
 		components: { 
@@ -119,16 +118,19 @@
 
 		computed: {
 			locationPlaceholder() {
-				return this.event.location.city ? (this.event.location.home ? this.event.location.home : '') + ' ' + (this.event.location.street ? this.event.location.street + ', ' : '') + '' + this.event.location.city : 'Event Address';
-			}
+				return this.location.city ? (this.location.home ? this.location.home : '') + ' ' + (this.location.street ? this.location.street + ', ' : '') + '' + this.location.city : 'Put full address if you have one, otherwise select the city.';
+			},
+            map() {
+                return `height:calc(${this.height}px - 7rem);`
+            }
 		},
 
 		data() {
 			return {
 				location:this.initializeEventObject(),
-				regionOptions:this.regions,
-				selectedRegions: this.pivots,
-				eventUrl:_.has(this.event, 'slug') ? `/create-event/${this.event.slug}` : null,
+				regionOptions:[],
+				selectedRegions: '',
+				eventUrl:`/create-event/${this.event.slug}`,
 				zoom:14,
 				center: '',
 				url:'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
@@ -137,6 +139,8 @@
 				notifiedActive: false,
 				hiddenActive: false,
                 allowZoom: false,
+                dis: false,
+                height:0,
 			}
 		},
 
@@ -152,6 +156,7 @@
 	 				hiddenLocationToggle: 0,
 	                latitude: '',
 	               	longitude: '',
+                    home: ''
 				}
 			},
 
@@ -160,7 +165,7 @@
                 if ((input !== null) && (typeof input === "object") && (input.id !== null)) {
                     this.location = _.pick(input, _.intersection( _.keys(this.location), _.keys(input) ));
                 };
-				this.event.location.latitude ? this.center = L.latLng(this.event.location.latitude, this.event.location.longitude) : '';
+				this.location.latitude ? this.center = L.latLng(this.location.latitude, this.location.longitude) : '';
             },
 			
 			//checks for validations
@@ -169,6 +174,7 @@
 			async submitLocation() {
 				this.$v.$touch(); 
 				if (this.$v.$invalid) { return false };
+                this.dis = true;
                 let data = this.location;
            		data.Region = this.selectedRegions.map(a => a.id);
 
@@ -177,7 +183,8 @@
                     console.log(response.data);		
 					window.location.href = `${this.eventUrl}/category`; 
 				})
-                .catch(errorResponse => { 
+                .catch(errorResponse => {
+                    this.dis = false;
                     this.validationErrors = errorResponse.response.data.errors; 
                 });
 			},
@@ -198,6 +205,16 @@
                 this.location.longitude = e.geometry.location.lng();
 			},
 
+            // If there is data in Database it will load from the database
+            getDatabase() {
+                axios.get(`${this.eventUrl}/location/fetch?timestamp=${new Date().getTime()}`)
+                .then(response => {
+                    this.updateEventFields(response.data.location);
+                    this.selectedRegions = response.data.pivots;
+                    this.regionOptions = response.data.regions;
+                });
+            },
+
 			//after google fields search this inputs data into vue fields
 			updateLocationFields(input) {
                 if ((input !== null) && (typeof input === "object") && (input.id !== null)) {
@@ -207,6 +224,10 @@
             
             goBack() {
                 window.location.href = `${this.eventUrl}/title`;
+            },
+
+            handleResize() {
+                this.height = window.innerHeight;
             },
 
 			// Gets data from Google Maps and inputs into Vue forms correctly
@@ -255,10 +276,16 @@
 			},
 		},
 	
-		// on pageload this updates the fields with database information (if there is any) and then updates 
-		mounted() {
-			this.updateEventFields(this.event.location);
-		},
+
+        created() {
+            this.getDatabase();
+            window.addEventListener('resize', this.handleResize)
+            this.handleResize();
+        },
+
+        destroyed() {
+            window.removeEventListener('resize', this.handleResize)
+        },
 
 		validations: {
 			selectedRegions: {

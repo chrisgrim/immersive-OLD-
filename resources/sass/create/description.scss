@@ -5,17 +5,27 @@
         padding-top: 4%;
         width:90%;
         margin: auto;
+        position: relative;
         & .text {
             width: 50%;
             float: left;
             margin:0;
-            padding: 0% 0% 0% 5%;
+            padding: 0% 10% 0% 5%;
         }
         & .genre {
             width: 50%;
             float: right;
             margin: 0;
             padding: 0% 0% 0% 5%;
+            background: red;
+        }
+        & .multiselect {
+             position: inherit; 
+        }
+        & .multiselect__content-wrapper {
+            width: 50%;
+            top: 10rem;
+            margin-left: 35%;
         }
     }
 }

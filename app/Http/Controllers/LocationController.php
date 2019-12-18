@@ -37,12 +37,21 @@ class LocationController extends Controller
      */
     public function create(Event $event)
     {
+        return view('create.location', compact('event'));
+    }
 
-        $event->load('location');
-        $regions = Region::all();
-        $pivots = $event->regions()->get();
-
-        return view('create.location', compact('event','regions','pivots'));
+    /**
+     * Show the form for creating a new resource. Eager Load location with event. Load all of the regions. Load the pivot table that shows which regions are assigned to this event
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function fetch(Event $event)
+    {
+        return response()->json(array(
+            'location' => $event->location()->first(),
+            'pivots' => $event->regions()->get(),
+            'regions' => Region::all(),
+        ));
     }
 
     /**
