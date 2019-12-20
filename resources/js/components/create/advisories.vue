@@ -6,7 +6,7 @@
                     <h2>Content Advisories</h2>
                 </div>
                 <div class="field">
-                    <label class="area">Search or add your own content advisory</label>
+                    <label class="area">Explain the shows content</label>
                     <multiselect 
                     v-model="contentAdvisories" 
                     :options="contentAdvisoryOptions"
@@ -50,7 +50,7 @@
                     <h2>Contact Advisories</h2>
                 </div>
                 <div class="field">
-                    <label class="area">Level of Contact w/ Audience (Touch Advisory) </label>
+                    <label class="area">Explain the shows contact</label>
                     <multiselect 
                     v-model="contactLevel" 
                     :options="contactLevelOptions" 
@@ -118,7 +118,7 @@
                     <h2>Mobility Advisories</h2>
                 </div>
                 <div class="field">
-                    <label class="area">Search or add your own Mobility advisory</label>
+                    <label class="area">Explain the shows mobility restrictions</label>
                     <multiselect 
                     v-model="mobilityAdvisories" 
                     :options="mobilityAdvisoryOptions" 

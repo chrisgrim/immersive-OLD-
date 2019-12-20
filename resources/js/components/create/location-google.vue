@@ -20,7 +20,7 @@
 					<label> Please enter how participants will be notified of the location </label>
 		            <textarea 
 		            v-model.trim="location.hiddenLocation" 
-		            rows="8" 
+		            rows="4" 
 		            :class="{ active: notifiedActive}"
 		            required 
 		            autofocus

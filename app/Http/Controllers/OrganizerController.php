@@ -48,7 +48,7 @@ class OrganizerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(OrganizerStoreRequest $request, Event $event)
+    public function store(Request $request)
     {
         $organizer = Organizer::Create($request->except(['imagePath', 'user_id']) + ['user_id' => auth()->id()]);
         Organizer::saveFile($organizer, $request);

@@ -1,66 +1,48 @@
 <template>
 <div class="image">
     <div class="section">
-        <div class="img">
-            <div v-if="imageSrc">
-                <label>
-                    <div>
-                        Change Image
-                    </div>
-                    <image-upload @loaded="changeImage"></image-upload>
-                </label>
-                
-            </div>
-            
-            <div class="image-upload-field" v-if="!imageSrc">
+        <div class="img">          
+            <div class="loader">
                 <label 
-                class="image-upload-wrapper"
-                :class="{ imageloaded: eventImage }"
-                :style="{ backgroundImage: `url('${eventImage ? eventImage : defaultImage}')` }">
-                    <span class="image-upload-layover">
-                        <div class="text-center"> + </div>
-                    </span>
-                    <image-upload @loaded="onImageUpload"></image-upload>
+                class=""
+                :style="{ backgroundImage: `url('${imageSrc ? imageSrc : eventImage}')` }">
+                    <div 
+                    class="dash"
+                    :class="{ over: hasImage, load: isLoading }"
+                    >
+                        <div 
+                        class="box"
+                        >
+                            <div class="in">
+                                <div v-if="!isLoading">
+                                    <svg class="b" height="32" width="32" viewBox="0 0 24 24" aria-label="Add an image or video" role="img"><path d="M24 12c0-6.627-5.372-12-12-12C5.373 0 0 5.373 0 12s5.373 12 12 12c6.628 0 12-5.373 12-12zm-10.767 3.75a1.25 1.25 0 0 1-2.5 0v-3.948l-1.031 1.031a1.25 1.25 0 0 1-1.768-1.768L12 7l4.066 4.065a1.25 1.25 0 0 1-1.768 1.768l-1.065-1.065v3.982z"></path></svg>
+                                </div>
+                                 <div>
+                                    <p v-if="!hasImage">Click here to upload image</p>
+                                    <p v-if="hasImage">Change Image</p>
+                                </div>
+                            </div>
+                        </div>
+                        <image-upload @loaded="onImageUpload"></image-upload>
+                        <CubeSpinner :loading="isLoading"></CubeSpinner>
+                    </div>
                 </label>
-            </div>
-            <div>
-                <!-- Cropper container -->
-                <div v-if="this.image">
-                    <vue-cropper 
-                    class="mr-2 w-50" 
-                    ref='cropper' 
-                    :guides="true"
-                    :aspectRatio="16 / 9"
-                    :initialAspectRatio="16 / 9"
-                    :zoomable="false"
-                    preview=".preview"
-                    :src="image">
-                    </vue-cropper>
+                <div>
+                    <div v-if="this.tooSmall" class="validation-error">
+                        <p class="error" v-if="this.tooSmall">The image needs to be at least 1200 x 800</p>
+                    </div>
+                    <div v-if="$v.finalImage.$error" class="validation-error">
+                        <p class="error" v-if="!$v.finalImage.required">The Image is required</p>
+                        <p class="error" v-if="!$v.finalImage.fileSize">The Image is too large</p>
+                        <p class="error" v-if="!$v.finalImage.fileType">Needs to be a Jpg, Png or Gif</p>
+                    </div>
                 </div>
-                <div v-if="this.tooSmall" class="validation-error">
-                    <p class="error" v-if="this.tooSmall">The image needs to be at least 1200 x 800</p>
-                    <p class="error" v-if="this.tooSmall">The image needs to be at least 1200 x 800</p>
-                </div>
-                <div v-if="$v.imageSrc.$error" class="validation-error">
-                    <p class="error" v-if="!$v.imageSrc.required">The Image is required</p>
-                </div>
-            </div>
-            <div>
-                <button v-if="readyToSubmit" class="create" @click.prevent="submitEvent()"> Submit Event </button>
-                <button v-if="!readyToSubmit" class="create" @click.prevent="createImage()"> Add Image </button>
-            </div>
-        </div>
-        <div class="pre">
-            <div v-if="this.imageSrc" class="prev-box" :class="this.onsub" :style="'height:'+ heightcalc + 'px;'">
-                <div class="preview" :style="'height:'+ heightcalc + 'px;'"/>
-                <CubeSpinner :loading="isLoading"></CubeSpinner>
             </div>
         </div>
         
     </div>
     <div class="inNav">
         <button :disabled="dis" class="create" @click.prevent="goBack()"> Back </button>
-        <button :disabled="dis" v-if="!readyToSubmit" class="create" @click.prevent="createImage()"> Add Image </button>
         <button :disabled="dis" v-if="readyToSubmit" class="create" @click.prevent="showModal(event)"> Submit Event </button>
     </div>
     <modal v-show="isModalVisible" @close="closeModal">
@@ -82,17 +64,14 @@
 </template>
 
 <script>
-import _ from 'lodash';
 import ImageUpload from '../layouts/image-upload.vue'
-import VueCropper from 'vue-cropperjs';
-import 'cropperjs/dist/cropper.css';
-import { required, minLength, maxLength } from 'vuelidate/lib/validators'
+import { required } from 'vuelidate/lib/validators'
 import CubeSpinner  from '../layouts/loading.vue'
 
 
 export default {
     components: { 
-        ImageUpload, VueCropper, CubeSpinner
+        ImageUpload, CubeSpinner
     },
     
     props: {
@@ -100,11 +79,8 @@ export default {
     },
 
     computed: {
-        image() {
-            return this.imageSrc
-        },
-        heightcalc() {
-            return this.width / 2 * (9 / 16);
+        hasImage() {
+            return this.eventImage || this.imageSrc ? true : false;
         }
     },
 
@@ -113,16 +89,14 @@ export default {
         return {
             eventImage: this.event.largeImagePath ? `/storage/${this.event.largeImagePath}` : '',
             defaultImage: '/storage/website-files/upload-icon.png',
-            eventUrl:_.has(this.event, 'slug') ? `/create-event/${this.event.slug}` : null,
+            eventUrl:`/create-event/${this.event.slug}`,
             finalImage: '',
             imageSrc: '',
             tooSmall: '',
             isLoading: false,
             readyToSubmit: false,
-            dis: false,
-            onsub: '',
-            width: '',
             isModalVisible: false,
+            dis: false,
         };
     },
 
@@ -131,23 +105,27 @@ export default {
         //This adds the image to the page so the user can see
         //Then adds the image as a file so it can be uploaded to the database
         onImageUpload(image) {
-            image.width < 1280 || image.height < 720 ? this.tooSmall = true : this.assignImage(image);
-        },
-
-        assignImage(image) {
-            console.log(image);
-            this.imageSrc = image.src;
             this.finalImage = image.file;
-            this.tooSmall = false;
+            console.log(this.finalImage.type);
+            this.$v.$touch(); 
+            if (this.$v.$invalid) { return false };
+            image.width < 1280 || image.height < 720 ? this.tooSmall = true : this.addImage(image);
         },
 
-        changeImage(image) {
-            this.imageSrc = '';
-            image.width < 1280 || image.height < 720 ? this.tooSmall = true : this.updateImage(image);
-        },
 
-        updateImage(image) {
-            this.assignImage(image);
+        addImage(image) {
+            this.isLoading = true;
+            this.imageSrc = image.src;
+            this.dis = true;
+            let data = new FormData();
+            data.append('image', image.file);
+            axios.post(`${this.eventUrl}/images`, data)
+            .then(response => {
+                this.isLoading = false;
+                this.dis = false;
+                this.readyToSubmit = true;
+            })
+            .catch(errorResponse => { this.validationErrors = errorResponse.response.data.errors; this.dis = false; });
         },
 
         showModal(event) {
@@ -158,38 +136,9 @@ export default {
             this.isModalVisible = false;
         },
 
-        //checks if all the validatoon rules have been followed and returns false if they haven't. Then create form data named data and append the image.
-        async createImage() {
-            this.$v.$touch(); 
-            if (this.$v.$invalid) { return false };
-            this.dis = true;
-            this.isLoading = true;
-            let data = {
-                image: this.$refs.cropper.getCroppedCanvas().toDataURL('image/jpeg', 1.0)
-            };
-            
-            axios.post(`${this.eventUrl}/images`, data)
-            .then(response => {
-                window.location.reload();
-            })
-            .catch(errorResponse => { this.validationErrors = errorResponse.response.data.errors; this.dis = false; });
-        },
-
         submitEvent() {
-            this.$v.$touch(); 
-            if (this.$v.$invalid) { return false };
-            this.onsub = 'sub';
             this.dis = true;
-            this.isLoading = true;
-            let data = {
-                image: this.$refs.cropper.getCroppedCanvas().toDataURL('image/jpeg', 1.0)
-            };
-
-            axios.post(`${this.eventUrl}/images`, data)
-            .then(response => {
-                window.location.href = `${this.eventUrl}/thankyou`;
-            })
-            .catch(errorResponse => { this.validationErrors = errorResponse.response.data.errors });
+            window.location.href = `${this.eventUrl}/thankyou`;
         },
 
         readySubmit() {
@@ -207,28 +156,21 @@ export default {
             window.location.href = `${this.eventUrl}/advisories`;
         },
 
-        handleResize() {
-            this.width = window.innerWidth;
-        },
     },
 
-    mounted() {
+    created() {
         this.readySubmit();
     },
 
-     created() {
-        window.addEventListener('resize', this.handleResize)
-        this.handleResize();
-    },
-
-    destroyed() {
-        window.removeEventListener('resize', this.handleResize)
-    },
-
     validations: {
-        imageSrc: {
+        finalImage: {
             required,
-            // fileSize() { return this.finalImage ? this.finalImage.size < 2097152 : true },
+            fileSize() { 
+                return this.finalImage ? this.finalImage.size < 2097152 : true 
+            },
+            fileType() {
+                return this.finalImage ? this.finalImage.type ==='image/jpeg' || (this.finalImage.type ==='image/png') || (this.finalImage.type ==='image/gif') : true
+            }
         },
     },
     

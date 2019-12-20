@@ -1,34 +1,7 @@
-
-/*----------------------- modal ------------------------*/
-
-
-  .btn-close {
-    border: none;
-    font-size: 20px;
-    padding: 20px;
-    cursor: pointer;
-    font-weight: bold;
-    color: #4AAE9B;
-    background: transparent;
-  }
-
-  .btn-green {
-    color: white;
-    background: #4AAE9B;
-    border: 1px solid #4AAE9B;
-    border-radius: 2px;
-  }
-
-
-
-
-
-
 #cover {
   width: 100px;
   position: relative;
 }
-
 input#checkbox {
   margin: 0 !important;
   width: 100%;
@@ -89,7 +62,3 @@ input#checkbox {
 #checkbox:checked:active ~ #knob {
   margin-left: -32px;
 }
-
-
-
-

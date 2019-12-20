@@ -96,45 +96,49 @@
             </div>
         </div>
         <div class="image">
-            <div class="image-upload-field" v-if="!imageSrc">
-                <label 
-                class="image-upload-wrapper"
-                :style="{ backgroundImage: `url('${organizationImageModel ? organizationImageModel : defaultImage}')` }">
-                    <span class="image-upload-layover">
-                        <div class="text-center"> + </div>
-                    </span>
-                    <image-upload @loaded="onImageUpload"></image-upload>
-                </label>
-            </div>
-            <div class="">
-                <!-- Cropper container -->
-                <div v-if="this.imageSrc" style="width: 32%; display: inline-block;" class="">
-                    <vue-cropper 
-                    class="mr-2 w-50" 
-                    ref='cropper' 
-                    :guides="true"
-                    :aspectRatio="16 / 9"
-                    :initialAspectRatio="16 / 9"
-                    :zoomable="false"
-                    preview=".preview"
-                    :src="imageSrc">
-                    </vue-cropper>
-                </div>
-                <div v-if="this.imageSrc" class="prev-box">
-                    <div class="preview" />
-                    <CubeSpinner :loading="isLoading"></CubeSpinner>
-                </div>
-                <div v-if="$v.imageSrc.$error" class="validation-error">
-                    <p class="error" v-if="!$v.imageSrc.required">The Image is required</p>
+            <div class="img">          
+                <div class="loader">
+                    <label 
+                    class=""
+                    :style="{ backgroundImage: `url('${imageSrc ? imageSrc : organizerImage}')` }">
+                        <div 
+                        class="dash"
+                        :class="{ over: hasImage, load: isLoading }"
+                        >
+                            <div 
+                            class="box"
+                            >
+                                <div class="in">
+                                    <div v-if="!isLoading">
+                                        <svg class="b" height="32" width="32" viewBox="0 0 24 24" aria-label="Add an image or video" role="img"><path d="M24 12c0-6.627-5.372-12-12-12C5.373 0 0 5.373 0 12s5.373 12 12 12c6.628 0 12-5.373 12-12zm-10.767 3.75a1.25 1.25 0 0 1-2.5 0v-3.948l-1.031 1.031a1.25 1.25 0 0 1-1.768-1.768L12 7l4.066 4.065a1.25 1.25 0 0 1-1.768 1.768l-1.065-1.065v3.982z"></path></svg>
+                                    </div>
+                                     <div>
+                                        <p v-if="!hasImage">Click here to upload image</p>
+                                        <p v-if="hasImage">Change Image</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <image-upload @loaded="onImageUpload"></image-upload>
+                            <CubeSpinner :loading="isLoading"></CubeSpinner>
+                        </div>
+                    </label>
+                    <div>
+                        <div v-if="this.tooSmall" class="validation-error">
+                            <p class="error" v-if="this.tooSmall">The image needs to be at least 1200 x 800</p>
+                        </div>
+                        <div v-if="$v.finalImage.$error" class="validation-error">
+                            <p class="error" v-if="!$v.finalImage.required">The Image is required</p>
+                            <p class="error" v-if="!$v.finalImage.fileSize">The Image is too large</p>
+                            <p class="error" v-if="!$v.finalImage.fileType">Needs to be a Jpg, Png or Gif</p>
+                            <p class="error" v-if="!$v.finalImage.imageSize">The image needs to be at least 1280 x 720</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="inNav">
-        <button class="create" @click.prevent="createOrganizer"> Save and Create Event </button>
-    </div>
-    <div>
-        <button class="create" @click.prevent="createOrganizer"> Save and Create Event </button>
+        <button class="create" @click.prevent="createOrganizer"> Save and Create First Event </button>
     </div>
 </div>
 
@@ -163,12 +167,17 @@ export default {
         userOwnsOrganization() {
             return this.organizer && (this.searchModel.user_id == this.user.id) ? true : false;
         },
+        hasImage() {
+            return this.organizerImage || this.imageSrc ? true : false;
+        }
     },
     
     data() {
         return {
             searchModel: '',
+            tempOrganizer: '',
             organizationImageModel: '',
+            organizerImage: '',
             defaultImage: '/storage/website-files/upload-icon.png',
             showSearchField: _.isEmpty(this.searchOptions) ? false : true,
             showFormFields: false,
@@ -184,6 +193,8 @@ export default {
             finalImage: '',
             imageSrc: '',
             tooSmall: '',
+            imageWidth: '',
+            imageHeight: '',
             isLoading: false,
             readyToSubmit: false
 
@@ -243,10 +254,29 @@ export default {
 
         // adds image to the page so user can see it
         //adds file to organizer object for upl
-        async onImageUpload(image) {
+        onImageUpload(image) {
             this.imageSrc = image.src;
             this.finalImage = image.file;
-            this.readyToSubmit = true;
+            this.imageWidth = image.width;
+            this.imageHeight = image.height;
+            console.log(this.imageWidth);
+        },
+
+        addImage(image) {
+            this.isLoading = true;
+            this.imageSrc = image.src;
+            this.dis = true;
+            let data = new FormData();
+            data.append('imagePath', image.file);
+            axios.post('/organizer', data)
+            .then(response => {
+                console.log(response.data);
+                this.tempOrganizer = response.data;
+                this.isLoading = false;
+                this.dis = false;
+                this.readyToSubmit = true;
+            })
+            .catch(errorResponse => { this.validationErrors = errorResponse.response.data.errors; this.dis = false; });
         },
 
         //checks if validation passes
@@ -258,14 +288,17 @@ export default {
         async createOrganizer() {
             this.$v.$touch(); 
             if (this.$v.$invalid) { return false };
+            this.isLoading = true;
+            this.dis = true;
 
             const params = new FormData();
             for (var field in this.organizer) {
                 params.append(field, this.organizer[field]);
             }
-            params.append('imagePath', this.$refs.cropper.getCroppedCanvas().toDataURL('image/jpeg', 1.0));
+            params.append('imagePath', this.finalImage);
             params.append('slug', this.slug);
-            axios.post('/organizer', params)
+
+             axios.post('/organizer', params)
             .then(response => { 
                 window.location.href = '/create-event/edit';
             })
@@ -276,8 +309,17 @@ export default {
     },
 
     validations: {
-        imageSrc: {
+        finalImage: {
             required,
+            fileSize() { 
+                return this.finalImage ? this.finalImage.size < 2097152 : true 
+            },
+            fileType() {
+                return this.finalImage ? this.finalImage.type ==='image/jpeg' || (this.finalImage.type ==='image/png') || (this.finalImage.type ==='image/gif') : true
+            },
+            imageSize() {
+                return this.finalImage ? this.imageWidth > 1280 || (this.imageHeight > 720) :  true
+            }
         },
 
         organizer: {

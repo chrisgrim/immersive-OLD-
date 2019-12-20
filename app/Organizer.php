@@ -85,10 +85,11 @@ class Organizer extends Model
         if ($organizer->imagePath) {
             Storage::delete('public/' . $organizer->imagePath);
         };
-        $filename= $request->slug . '-' . 'organization' . '_' . rand(1,50000) . '.jpg';
+        $extension = $request->file('imagePath')->getClientOriginalExtension();
+        $filename= $request->slug . '_' . 'organization' . '_' . rand(1,50000) . '.' . $extension;
         $imagePath = "organizer-images/$filename";
-        Image::make(file_get_contents($request->imagePath))->save(storage_path("/app/public/$imagePath"));
-        Image::make(storage_path()."/app/public/organizer-images/$filename")->fit(1200, 800)->save(storage_path("/app/public/$imagePath"));
+        $request->file('imagePath')->storeAs('/public/organizer-images', $filename);
+        Image::make(storage_path()."/app/public/organizer-images/$filename")->fit(1280, 720)->save(storage_path("/app/public/$imagePath"));
         $organizer->update([ 'imagePath' => $imagePath ]);
     }
 

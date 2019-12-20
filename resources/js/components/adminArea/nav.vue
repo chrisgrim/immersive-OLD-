@@ -1,11 +1,9 @@
 <template>
     <div>
         <nav class="nav">
-            <div class="logo">
-                <a href="/">
-                    <img src="/storage/website-files/ei-logo.png" alt="">
-                </a>
-            </div>
+            <a href="/">
+                <button class="home">Home</button>
+            </a>
             <div class="title">
                 <h3>Admin Area</h3>
             </div>
@@ -44,7 +42,7 @@
                     <div class="checklist-section">
                         <div class="item">
                             <div v-if="user.needsApproval" class="notification">
-                                {{user.needsApproval}}
+                                <p>{{user.needsApproval}}</p>
                             </div>
                             Approve Events
                         </div>

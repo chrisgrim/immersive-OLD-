@@ -7,13 +7,22 @@
     border-right: solid #c1c1c1 1px;
     & .nav {
         border:none;
+        padding: 2.5rem;
+        & button.home {
+            border: solid #008489 1px;
+            border-radius: 0.3rem;
+            padding: .9rem 2rem;
+            margin-bottom: 3rem;
+            font-size: 1.5rem;
+            background: #008489;
+            color: white;
+        }
         & .logo {
             float:none;
             display: block;
         }
         & .title {
             display: block;
-            padding-left: 2.5rem;
             & h3 {
                 font-size: 1.7rem;
                 margin:0;
@@ -21,7 +30,6 @@
         }
     }
     & .menu {
-        padding: 2.5rem;
         height: 100vh;
         & a {
             margin: 1rem 1rem;
@@ -34,19 +42,23 @@
 
 
 .checklist-section {
-
+    position: relative;
     & .item {
-        position: relative;
         display: inline-block;
     }
     & .notification {
         position: absolute;
         background: red;
-        padding: 0.2rem 0.7rem;
-        border-radius: 5rem;
-        right: -1.3rem;
+        padding: .5rem;
+        border-radius: 100%;
+        right: 0;
         color: white;
-        top: -.7rem;
         font-size: 1rem;
+        min-width: 2.5rem;
+        & p {
+            margin: 0;
+            text-align: center;
+            font-size: 1.2rem;
+        }
     }
 }

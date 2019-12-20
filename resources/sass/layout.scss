@@ -3,16 +3,12 @@ body { font-size: 14px; font-size: 1.6rem; font-family: 'Montserrat', sans-serif
 h1   { font-size: 24px; font-size: 2.4rem; font-family: 'Montserrat', sans-serif; color:#484848; transform: scale(1, 1.11);} /* =24px */
 h2   { font-size: 20px; font-size: 2.2rem; font-family: 'Montserrat', sans-serif; color:#484848; transform: scale(1, 1.11);} /* =24px */
 h3   { font-size: 16px; font-size: 2.0rem; font-family: 'Montserrat', sans-serif; color:#484848; transform: scale(1, 1.11);} /* =24px */
-
+a { text-decoration: none; color: inherit; }
 *, *:before, *:after {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     -ms-flex: 0 1 auto;
-}
-
-#container {
-    position: relative;
 }
 main {
     padding-top: 7rem;
@@ -23,17 +19,3 @@ main {
 }
 
 
-.show-box {
-    box-shadow: -3px 5px 5px 1px #e8e8e899;
-    padding: 2rem;
-    border-radius: 5px 5px 5px 0px;
-    margin-top: 15px;
-    border: solid 1px #ebebeb;
-    &-grid{
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        grid-column-gap: 2rem;
-        grid-row-gap: 2rem;
-    }
-    
-}

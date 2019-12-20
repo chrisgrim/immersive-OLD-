@@ -1,13 +1,11 @@
 <template>
 	<div class="checklist">
-        <div class="logo">
-            <a href="/create-event/edit">
-                <img src="/storage/website-files/ei-logo.png" alt="">
-            </a>
-        </div>
-        <div v-if="onOrganizer" class="item">
+        <a href="/create-event/edit">
+            <button class="home">Home</button>
+        </a>
+        <div v-if="this.$router.currentRoute.path === `/organizer/create`" class="item">
             <div class="text">
-                <h2>Organizer - </h2>
+                <p>Organizer: </p>
                 <p>Let users know about your team!</p>
             </div>
         </div>

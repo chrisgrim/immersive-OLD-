@@ -1,3 +1,6 @@
+.leaflet-control-attribution.leaflet-control {
+    opacity: 0;
+}
 .leaflet-marker-icon.icons {
     background: white;
     border-radius: 5rem;
@@ -22,6 +25,14 @@ div.leaflet-popup {
         &-wrapper {
             padding: 0rem;
             width: 20rem;
+            & .pop {
+                width: 100%;
+                height: 25rem;
+                & .back {
+                    height:50%;
+                    border-radius: .5rem .5rem 0rem 0rem;
+                }
+            }
         }
     }
 }

@@ -89,7 +89,6 @@ Vue.component('create-advisories', require('./components/create/advisories.vue')
 
 //Admin Area
 Vue.component('admin-nav', require('./components/adminArea/nav.vue').default);
-Vue.component('admin-area-nav', require('./components/adminArea/checklist.vue').default);
 Vue.component('approval-bar', require('./components/adminArea/approve/approval-bar.vue').default);
 Vue.component('admin-categories', require('./components/adminArea/admin-categories.vue').default);
 Vue.component('admin-contact-level', require('./components/adminArea/admin-contact-level.vue').default);

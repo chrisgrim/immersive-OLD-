@@ -45,19 +45,20 @@
                             </div>
                             <div class="field">
                                 <label>Ticket Price</label>
-                                <input
-                                class="create-input"
-                                :class="{ active: ticketPriceActive,'error': v.ticket_price.$error }"
+                                <input 
+                                v-model="v.ticket_price.$model"
+                                v-money="money"
                                 @click="ticketPriceActive = true"
                                 @blur="ticketPriceActive = false"
-                                v-model="v.ticket_price.$model"
-                                v-money="v.ticket_price.$model"
-                                @keydown="$event.key === '-' ? $event.preventDefault() : null"
-                                v-bind="money"
                                 placeholder="$0.00"
+                                v-bind="money"
+                                :class="{ active: ticketPriceActive,'error': v.ticket_price.$error }"
+                                @keydown="$event.key === '-' ? $event.preventDefault() : null"
+                                style="text-align: right" 
                                 />
                                 <div v-if="v.ticket_price.$error" class="validation-error">
                                     <p class="error" v-if="!v.ticket_price.minValue">Please enter an amount</p>
+                                    <p class="error" v-if="!v.ticket_price.maxLength">Please enter an amount under $10,000</p>
                                     <p class="error" v-if="!v.ticket_price.required">Please enter a price</p>
                                 </div>
                                 <button v-if="index != 0" @click.prevent="deleteRow(index)" class="delete-circle">X</button>
@@ -132,7 +133,7 @@ export default {
 
     data() {
         return {
-            eventUrl:_.has(this.event, 'slug') ? `/create-event/${this.event.slug}` : null,
+            eventUrl:`/create-event/${this.event.slug}`,
             dates: '',
 	        config: {
 				minDate: "today",
@@ -149,7 +150,7 @@ export default {
             showTimes: '',
             money: {
                 decimal: '.',
-                thousands: '.',
+                thousands: '',
                 prefix: '',
                 suffix: '',
                 precision: 2,
@@ -245,6 +246,7 @@ export default {
                 ticket_price: {
                     required,
                     minValue: minValue(0.01),
+                    maxLength: maxLength(7),
                 },
             }
         },

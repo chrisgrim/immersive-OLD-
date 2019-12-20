@@ -1,7 +1,6 @@
 #grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: 320px;
     grid-gap: 15px 15px;
     & .image {
         padding: 33%;
@@ -9,11 +8,71 @@
         background-size: cover; 
         background-repeat: no-repeat;
         position: relative;
+        &:hover div.heart{
+            visibility: visible;
+            opacity: 1;
+        }
         & .heart {
             position: absolute;
+            right: 5%;
+            top: 5%;
+            border-radius: 50%;
+            width: 4rem;
+            height: 4rem;
+            background-color:white;
+            border: 1px solid white;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 0px 0px, rgba(0, 0, 0, 0.04) 0px 0px 0px 0.5px;
+            -webkit-transition-duration: 0.3s;
+            -webkit-transition-property: -webkit-transform;
+            transition-property: transform, visibility;
+            -webkit-transform: translateZ(0);
+            -ms-transform: translateZ(0);
+            transform: translateZ(0);
+            visibility: hidden;
+            opacity: 0;
+            &:hover {
+                -webkit-transform: scale(1.07);
+                -ms-transform: scale(1.07);
+                transform: scale(1.07);
+            }
+        }
+    }
+    & .etitle {
+        & h3 {
+            margin: 1rem 0rem .5rem 0rem;
+            font-size: 1.6rem;
+            font-weight: 400;
+        }
+    }
+    & .eprice {
+        & h4 {
+            margin: 0;
+            display: inline-block;
+            margin-right: .5rem;
+        }
+        & p {
+            margin:0;
+            display: inline-block;
+        }
+    }
+    & .item {
+        position: relative;
+        &:hover .del {
+            visibility: visible;
+            opacity: 1;
+        }
+        & .del {
+            position: absolute;
+            bottom: 0;
             right: 0;
-            top: 0;
-            padding: 5%;
+            border: 1px solid #f4645f;
+            padding: 1rem;
+            background: #f4645f;
+            color: white;
+            border-radius: 0.5rem;
+            margin: .3rem;
+            visibility: hidden;
+            opacity: 0;
         }
     }
 }
@@ -23,14 +82,17 @@
     stroke:#FF5A5F; 
     height: 24px; 
     width: 24px; 
-    display: block; 
     overflow: visible;
     stroke-width:2;
+    margin-left: .9rem;
+    margin-top: 1rem;
 }
 .unhearted {
-    fill: #484848;
-    fill-opacity: 0.5;
-    stroke: #FFF;
+    fill: none;
+    fill-opacity: 0;
+    stroke: #000;
     width: 24px;
     stroke-width: 2;
+    margin-left: .9rem;
+    margin-top: 1rem;
 }

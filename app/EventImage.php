@@ -20,15 +20,16 @@ class EventImage extends Model
             Storage::delete('public/' . $event->thumbImagePath);
         };
         $title = str_slug($event->name);
-        $filename = $title.'-'. rand(5, 9999) . '.jpg';
-        $imagePath = "event-large-images/$filename";
-        $thumbnailPath = "event-thumb-images/thumb-$filename";
-        Image::make(file_get_contents($request->image))->save(storage_path("/app/public/$imagePath"));
-        Image::make(storage_path()."/app/public/event-large-images/$filename")->fit(1280, 720)->save(storage_path("/app/public/$imagePath"))->fit(640, 360)->save(storage_path("/app/public/$thumbnailPath"));
+        $extension = $request->file('image')->getClientOriginalExtension();
+        $filename = $title.'-'. rand(5, 9999) . '.' . $extension;
+        $largeImagePath = "event-large-images/$filename";
+        $thumbImagePath = "event-thumb-images/thumb-$filename";
+        $request->file('image')->storeAs('/public/event-large-images', $filename);
+        Image::make(storage_path() . "/app/public/event-large-images/$filename")->fit(1280, 720)->save(storage_path("/app/public/$largeImagePath"))->fit(640, 360)->save(storage_path("/app/public/$thumbImagePath"));
 
         $event->update([
-            'largeImagePath' => $imagePath,
-            'thumbImagePath' => $thumbnailPath,
+            'largeImagePath' => $largeImagePath,
+            'thumbImagePath' => $thumbImagePath,
         ]);
     }
 }

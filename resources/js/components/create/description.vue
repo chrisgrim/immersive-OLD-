@@ -27,9 +27,9 @@
                         <multiselect 
                         v-model="genreName"
                         tag-placeholder="Add this as new tag" 
-                        placeholder="Add your own here" 
+                        placeholder="Search or add your own here" 
                         label="genre"
-                        closeOnSelect="false"
+                        :close-on-select="false"
                         track-by="id" 
                         :options="options" 
                         :multiple="true" 
@@ -82,7 +82,9 @@
                 </div>
             </div>
             <div class="genre">
-               
+               <div>
+                   <h3 v-if="genreActive">Genre List</h3>
+               </div>
             </div>
             <div class="inNav">
                 <button :disabled="dis" class="create" @click.prevent="goBack()"> Back </button>
@@ -118,6 +120,7 @@
                 ticketActive: false,
                 websiteActive: false,
                 dis: false,
+                genres: [],
 			}
 		},
 
@@ -143,8 +146,7 @@
             asyncFind (query) {
                 axios.get('/api/genre/search', { params: { keywords: query } })
                 .then(response => {
-                    console.log(response.data);
-                    response.data.length ? this.options = response.data : '';
+                    response.data.length ? this.options = response.data : this.options = this.genres;
                 });
             },
 
@@ -156,6 +158,7 @@
                 }
                 this.options.push(tag)
                 this.genreName.push(tag)
+                this.genre.push(tag)
             },
 
             goBack() {
@@ -172,6 +175,7 @@
                     this.ticketUrl = response.data.event.ticketUrl;
                     this.genreName = response.data.pivots;
                     this.options = response.data.genres;
+                    this.genres = response.data.genres;
                 });
             },
 

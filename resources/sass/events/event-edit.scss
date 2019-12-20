@@ -63,6 +63,26 @@
         & .buttons {
             float:right;
         }
+        & .enew {
+            background-color: #efefef;
+            border-radius: .5rem;
+            & .body {
+                border: dashed 2px #dadada;
+                border-radius: .5rem;
+                position: relative;
+                padding: 33%;
+                & .event {
+                        position: absolute;
+                        top: 50%;
+                        height: 7rem;
+                        margin-top: -3.5rem;
+                        width: 15rem;
+                        left: 50%;
+                        margin-left: -7.5rem;
+                        text-align: center;
+                }
+            }
+        }
     }
 }
 .edit-events-page {

@@ -18,7 +18,7 @@ class EventController extends Controller
     {
         $this->middleware('auth')->except('index','get','show');
         $this->middleware('can:update,event')
-        ->except(['index','get','create','show','editEvents','store']);
+        ->except(['index','get','create','show','editEvents','store','fetchEditEvents']);
     }
     /**
      * Display a listing of the resource.
@@ -123,9 +123,12 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
+        if ($event->largeImagePath) {
+            Storage::delete('public/' . $event->largeImagePath);
+            Storage::delete('public/' . $event->thumbImagePath);
+        };
         $event->delete();
-        $events = auth()->user()->events;
-        return $events;
+        return auth()->user()->events;
     }
 
     public function createCategory(Event $event)

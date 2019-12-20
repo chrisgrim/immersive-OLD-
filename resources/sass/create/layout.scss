@@ -117,6 +117,20 @@
     & .checklist {
         overflow: hidden;
         background: white;
+        position: relative;
+        & button.home {
+            border: solid #008489 1px;
+            border-radius: 0.3rem;
+            padding: 0.9rem 2rem;
+            font-size: 1.5rem;
+            background: #008489;
+            color: white;
+            position: absolute;
+            height: 4rem;
+            top: 50%;
+            margin-top: -2.5rem;
+            margin-left: 1.5rem;
+        }
         & .item {
             width: 90%;
             margin: auto;

@@ -83,6 +83,7 @@ class SearchController extends Controller
         if($request->keywords) {
             $ajaxGenre = Genre::search($request->keywords)
             ->rule(GenreSearchRule::class)
+            ->where('admin', true)
             ->get();
         } else { $ajaxGenre = null; };
         return response()->json($ajaxGenre);
@@ -137,8 +138,7 @@ class SearchController extends Controller
 
     public function searchMapBoundary(Request $request)
     {
-
-             $events = Event::search('*')
+        $events = Event::search('*')
             ->where('closingDate', '>=', 'now/d')
             ->when($request->category_id, function($query) use ($request) {
                 $query->where('category_id', $request->category_id);

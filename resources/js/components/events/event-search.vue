@@ -18,7 +18,7 @@
                 <search-item :event="event"></search-item>
             </div>
         </div>
-        <div class="map">
+        <div class="map" :style="this.map">
             <div>
                 <div class="search">
                     <label>
@@ -41,11 +41,11 @@
                         </button>
                     </div>
                 </div>
-                <div style="width:100%;height:100vh">
+                <div style="width:100%;">
                     <l-map
                     :zoom="zoom"
                     :center="mapCenter"
-                    style="height: 80%"
+                    :style="this.map"
                     @update:center="centerUpdate"
                     @update:bounds="this.boundsUpdate"
                     :options="{ scrollWheelZoom: allowZoom, zoomControl: allowZoom }"
@@ -117,6 +117,9 @@
             },
             listedEvents() {
                 return this.eventList ? this.eventList : this.events;
+            },
+            map() {
+                return `height:calc(${this.height}px - 12rem);`
             }
         }, 
 
@@ -150,6 +153,7 @@
                 allowZoom: false,
                 eventList: '',
                 mapSearch: true,
+                height:0,
 
             }
         },
@@ -195,7 +199,11 @@
 
             hello(event) {
                 //
-            }
+            },
+
+            handleResize() {
+                this.height = window.innerHeight;
+            },
             
         },
 
@@ -208,8 +216,14 @@
             }
         },
 
-        mounted() {
+        created() {
             this.updateFilter();
+            window.addEventListener('resize', this.handleResize)
+            this.handleResize();
+        },
+
+        destroyed() {
+            window.removeEventListener('resize', this.handleResize)
         },
 
     };

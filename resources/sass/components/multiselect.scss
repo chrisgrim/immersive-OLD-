@@ -4,6 +4,8 @@
 .multiselect--active {
     & .multiselect__tags {
         border: 1px solid rgb(0, 132, 137) !important;
+        border-top-left-radius: 5px !important;
+        border-top-right-radius: 5px !important;
     }
 }
 .multiselect.error {

@@ -1,8 +1,8 @@
 <template>
-  <div class="popup-content">
+  <div class="pop">
     <a :href="'/events/' + data.slug">
         <div 
-        class="grid-background-image" 
+        class="back" 
         :style="{ backgroundImage: `url('${data ? /storage/ + data.thumbImagePath : ''}')` }">
         </div>
         <div class="info">
