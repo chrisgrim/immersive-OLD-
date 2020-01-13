@@ -52,12 +52,12 @@
                                 @blur="ticketPriceActive = false"
                                 placeholder="$0.00"
                                 v-bind="money"
-                                :class="{ active: ticketPriceActive,'error': v.ticket_price.$error }"
+                                :class="{ active: ticketPriceActive,'error': v.ticket_price.$error && num }"
                                 @keydown="$event.key === '-' ? $event.preventDefault() : null"
                                 style="text-align: right" 
                                 />
                                 <div v-if="v.ticket_price.$error" class="validation-error">
-                                    <p class="error" v-if="!v.ticket_price.minValue">Please enter an amount</p>
+                                    <p class="error" v-show="num" v-if="!v.ticket_price.minValue">Please enter an amount</p>
                                     <p class="error" v-if="!v.ticket_price.maxLength">Please enter an amount under $10,000</p>
                                     <p class="error" v-if="!v.ticket_price.required">Please enter a price</p>
                                 </div>
@@ -100,7 +100,6 @@ import format from 'date-fns/format'
 import { required, minLength, minValue, maxLength } from 'vuelidate/lib/validators'
 import flatPickr from 'vue-flatpickr-component'
 import 'flatpickr/dist/flatpickr.css'
-import VueTimepicker from 'vue2-timepicker/src/vue-timepicker.vue'
 import {Money} from 'v-money'
 
 
@@ -112,7 +111,7 @@ export default {
     },  
 
     components: {
-      flatPickr, VueTimepicker, Money
+      flatPickr, Money
     },
 
     computed: {
@@ -157,6 +156,7 @@ export default {
                 masked: false
             },
             dis: false,
+            num: false,
         }
     },
 
@@ -214,6 +214,7 @@ export default {
 
         //Submits the users dates and tickets to the database
         async submitDates() {
+            this.num = true;
          	this.$v.$touch();
 			if (this.$v.$invalid) { return false }
             this.dis = true;

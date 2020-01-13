@@ -26,6 +26,7 @@
         & button.delete-circle {
             position: absolute;
             right: 0;
+            padding:0rem;
             border-radius: 50%;
             border: solid 1px red;
             color: red;
@@ -158,6 +159,18 @@
             }
         }
     }
+    & .pin.noimg .modal-backdrop {
+        & .body {
+            grid-template-columns: 1fr;
+        }
+        & .modal-footer {
+            position: relative;
+            width: 92%;
+            overflow: hidden;
+            padding-bottom: 4%;
+            margin: auto;
+        }
+    }
     & .title{
         position: relative;
         display: inline-block;
@@ -171,6 +184,7 @@
                 border-radius: 50%;
                 width: 4rem;
                 height: 4rem;
+                padding:0rem;
                 border: solid #008489 1px;
                 box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 0px 0px, rgba(0, 0, 0, 0.04) 0px 0px 0px 0.5px;
                 & p {

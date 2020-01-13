@@ -36,7 +36,6 @@
                         :taggable="true" 
                         tag-position="bottom"
                         :class="{ active: genreActive,'error': $v.genreName.$error }"
-                        @search-change="asyncFind"
                         @tag="addTag"
                         @input="$v.genreName.$touch"
                         @click="genreActive = true"
@@ -142,14 +141,6 @@
                 .then(response => { window.location.href = `${this.eventUrl}/advisories`; });
 			},
 
-            //Search list of Genres as user Types then add response to the options list
-            asyncFind (query) {
-                axios.get('/api/genre/search', { params: { keywords: query } })
-                .then(response => {
-                    response.data.length ? this.options = response.data : this.options = this.genres;
-                });
-            },
-
             // adds new tags in the multi select
             addTag (newTag) {
                 const tag = {
@@ -158,7 +149,6 @@
                 }
                 this.options.push(tag)
                 this.genreName.push(tag)
-                this.genre.push(tag)
             },
 
             goBack() {

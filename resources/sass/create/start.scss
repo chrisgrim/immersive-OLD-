@@ -15,10 +15,9 @@
                     font-weight: 400;
                 }
             }
-
         }
         & a.cbut {
-            background: green;
+            background: $default-color;
             padding: 1rem;
             border-radius: .5rem;
             color: white;

@@ -62,9 +62,8 @@
             opacity: 1;
         }
         & .del {
-            position: absolute;
-            bottom: 0;
-            right: 0;
+            position: relative;
+            float: right;
             border: 1px solid #f4645f;
             padding: 1rem;
             background: #f4645f;

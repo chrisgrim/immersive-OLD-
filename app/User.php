@@ -2,17 +2,20 @@
 
 namespace App;
 
+use ScoutElastic\Searchable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\View\View;
 use Laravel\Cashier\Billable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, Billable;
+    use Notifiable, Billable, Searchable;
+
+    protected $indexConfigurator = UserIndexConfigurator::class;
 
     /**
      * The attributes that are mass assignable.
@@ -112,7 +115,7 @@ class User extends Authenticatable
     */
     public function getHasCreatedOrganizersAttribute()
     {
-        return auth()->user()->organizers()->count() ? true : false;    
+        return $this->organizers()->count() ? true : false;    
     }
 
     /**
@@ -122,7 +125,7 @@ class User extends Authenticatable
     */
     public function getNeedsApprovalAttribute()
     {
-        return auth()->user()->isAdmin() ? Event::where('approval_process', 'ready')->count() : null;
+        return $this->isAdmin() ? Event::where('approval_process', 'ready')->count() : null;
     }
 
     /**
@@ -150,4 +153,75 @@ class User extends Authenticatable
         Image::make(storage_path()."/app/public/avatars/$filename")->fit(800, 800)->save(storage_path("/app/public/$imagePath"));
         $user->update([ 'image_path' => $imagePath ]);
     }
+
+    protected $searchRules = [
+        //
+    ];
+
+    protected $mapping = [
+        'properties' => [
+            'id' => [
+                'type' => 'integer',
+                'index' => false
+            ],
+            'name' => [
+                'type' => 'search_as_you_type',
+            ],
+            'email' => [
+                'type' => 'search_as_you_type',
+            ],
+            'email_verified_at' => [
+                'type' => 'text',
+                'index' => false
+            ],
+            'password' => [
+                'type' => 'text',
+                'index' => false
+            ],
+            'avatar_path' => [
+                'type' => 'text',
+                'index' => false
+            ],
+            'image_path' => [
+                'type' => 'text',
+                'index' => false
+            ],
+            'provider' => [
+                'type' => 'text',
+                'index' => false
+            ],
+            'type' => [
+                'type' => 'text',
+                'index' => false
+            ],
+            'remember_token' => [
+                'type' => 'text',
+                'index' => false
+            ],
+            'created_at' => [
+                'type' => 'text',
+                'index' => false
+            ],
+            'updated_at' => [
+                'type' => 'text',
+                'index' => false
+            ],
+            'stripe_id' => [
+                'type' => 'text',
+                'index' => false
+            ],
+            'card_brand' => [
+                'type' => 'text',
+                'index' => false
+            ],
+            'card_last_four' => [
+                'type' => 'text',
+                'index' => false
+            ],
+            'trail_ends_at' => [
+                'type' => 'text',
+                'index' => false
+            ],
+        ]
+    ];
 }

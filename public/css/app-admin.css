@@ -1,3 +1,28 @@
+input,
+textarea,
+button:focus {
+  outline: 0;
+}
+
+input,
+textarea {
+  box-sizing: border-box;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+}
+
+.dis {
+  pointer-events: none;
+}
+
 #bodyArea .approve {
   margin-top: -7rem;
   background: white;
@@ -172,6 +197,7 @@
 #admin .list button.delete-circle {
   position: absolute;
   right: 0;
+  padding: 0rem;
   border-radius: 50%;
   border: solid 1px red;
   color: red;
@@ -363,6 +389,18 @@
   right: 0;
 }
 
+#admin .pin.noimg .modal-backdrop .body {
+  grid-template-columns: 1fr;
+}
+
+#admin .pin.noimg .modal-backdrop .modal-footer {
+  position: relative;
+  width: 92%;
+  overflow: hidden;
+  padding-bottom: 4%;
+  margin: auto;
+}
+
 #admin .title {
   position: relative;
   display: inline-block;
@@ -380,6 +418,7 @@
   border-radius: 50%;
   width: 4rem;
   height: 4rem;
+  padding: 0rem;
   border: solid #008489 1px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 0px 0px, rgba(0, 0, 0, 0.04) 0px 0px 0px 0.5px;
 }

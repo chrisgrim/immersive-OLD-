@@ -3,9 +3,7 @@
 @section('content')
 
 <div id="create">
-	<div class="steps">	
-		<event-create-checklist :event="{{$event}}">
-	</div>		
+	<event-create-checklist :event="{{$event}}"></event-create-checklist>	
 
 	<div class="content">
 		@yield('created')

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Event;
 use App\Genre;
+use App\Category;
 use App\Date;
+use App\User;
 use App\Organizer;
 use App\CityList;
 use App\OrganizerSearchRule;
@@ -12,6 +14,8 @@ use App\CityListSearchRule;
 use App\EventSearchRule;
 use App\GenreSearchRule;
 use App\DateSearchRule;
+use App\UserSearchRule;
+use DB;
 use Carbon\Carbon;
 use Session;
 
@@ -23,15 +27,17 @@ class SearchController extends Controller
     public function index()
     {
         $searchedevents = Session::get('searchDataStore');
-        $name = json_encode($searchedevents['name']);
-        $lat = trim(json_encode($searchedevents['latitude']), '"');
-        $lng = trim(json_encode($searchedevents['longitude']), '"');
+        // $name = json_encode($searchedevents['name']);
+        // $lat = trim(json_encode($searchedevents['latitude']), '"');
+        // $lng = trim(json_encode($searchedevents['longitude']), '"');
         $searchedevents = array (
-            "latitude" => $lat,
-            "longitude" => $lng,
-            "name" => $name
+            "latitude" => trim(json_encode($searchedevents['latitude']), '"'),
+            "longitude" => trim(json_encode($searchedevents['longitude']), '"'),
+            "name" => json_encode($searchedevents['name'])
         );
-        return view('events.search',compact('searchedevents'));
+        $categories = Category::all();
+
+        return view('events.search',compact('searchedevents', 'categories'));
     }
 
     public function filterIndex(Request $request)
@@ -64,30 +70,13 @@ class SearchController extends Controller
 	public function searchOrganizer(Request $request)
     {
         if($request->keywords) {
-            $ajaxOrganizers = Organizer::search($request->keywords)
+            $organizers = Organizer::search($request->keywords)
 		    ->rule(OrganizerSearchRule::class)
 		    ->get();
-        } else { $ajaxOrganizers = null; };
-
-        return response()->json($ajaxOrganizers);
+            return $organizers;
+        };
     }
 
-    /**
-     * Get List of Genres as user types in name
-     *
-     * @param  \App\Genre  $genre
-     * @return \Illuminate\Http\Response
-     */
-    public function searchGenre(Request $request)
-    {   
-        if($request->keywords) {
-            $ajaxGenre = Genre::search($request->keywords)
-            ->rule(GenreSearchRule::class)
-            ->where('admin', true)
-            ->get();
-        } else { $ajaxGenre = null; };
-        return response()->json($ajaxGenre);
-    }
 
     public function searchNav(Request $request)
     {
@@ -136,15 +125,33 @@ class SearchController extends Controller
         Session::put('searchDataStore', $request->all());        
     }
 
+    public function searchUsers(Request $request)
+    {
+        $user = User::search($request->keywords)
+                ->rule(UserSearchRule::class)
+                ->take(10)
+                ->get();
+        return $user;  
+    }
+
     public function searchMapBoundary(Request $request)
     {
         $events = Event::search('*')
             ->where('closingDate', '>=', 'now/d')
-            ->when($request->category_id, function($query) use ($request) {
-                $query->where('category_id', $request->category_id);
+            ->when($request->category, function($query) use ($request) {
+                $query->where('category_id', $request->category);
             })
-            ->when($request->latitude, function($query) use ($request) {
-                $query->whereGeoBoundingBox('location_latlon', ['top_right' => [floatval($request->latitude['_northEast']['lng']), floatval($request->latitude['_northEast']['lat'])], 'bottom_left' => [floatval($request->latitude['_southWest']['lng']), floatval($request->latitude['_southWest']['lat'])]]);
+            ->when(!$request->mapboundary, function($query) use ($request) {
+                $query->whereGeoDistance('location_latlon', [floatval($request->loc['lng']), floatval($request->loc['lat'])], '100km');
+            })
+            ->when($request->mapboundary, function($query) use ($request) {
+                $query->whereGeoBoundingBox('location_latlon', ['top_right' => [floatval($request->mapboundary['_northEast']['lng']), floatval($request->mapboundary['_northEast']['lat'])], 'bottom_left' => [floatval($request->mapboundary['_southWest']['lng']), floatval($request->mapboundary['_southWest']['lat'])]]);
+            })
+            ->when($request->dates, function($query) use ($request) {
+                $query->whereBetween('shows.date', [$request->dates[0],$request->dates[1]]);
+            })
+            ->when($request->price, function($query) use ($request) {
+                $query->whereBetween('priceranges.price', [$request->price[0],$request->price[1]]);
             })
             ->get(); 
             return $events;

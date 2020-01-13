@@ -10,7 +10,5 @@
 	        </div>
             <a href="/organizer/create" class="cbut">Create Organizer</a>
 		</div>
-		
 	</div>
-
 @endsection

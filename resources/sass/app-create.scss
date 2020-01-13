@@ -1,3 +1,6 @@
+// Variables
+@import 'variables';
+
 // Create
 @import 'create/layout';
 @import 'create/start';
@@ -10,6 +13,7 @@
 @import 'create/description';
 @import 'create/advisories';
 @import 'create/spinner';
+@import 'create/thankyou';
 @import 'create';
 
 @import 'components/sliderbutton';

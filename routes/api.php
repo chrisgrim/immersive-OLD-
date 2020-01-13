@@ -31,14 +31,17 @@ Route::GET('genre/search', 'SearchController@searchGenre');
 //On Map move send new latlng/ if category that is attached and if dates that is attached
 Route::POST('mapboundary/search', 'SearchController@searchMapBoundary');
 
+//On admin page returns user list for editing users
+Route::GET('search/user/list', 'SearchController@searchUsers');
+
+
+
 
 Route::GET('searchedEvents', 'SearchController@get');
 
 Route::GET('index/load', 'SearchController@loadIndex');
 
 Route::POST('index/filter', 'SearchController@filterIndex');
-
-Route::GET('search/navbar/content', 'SearchController@searchNav');
 
 
 //browser geocache

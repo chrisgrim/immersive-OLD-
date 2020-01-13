@@ -156,6 +156,10 @@ class Organizer extends Model
             'website' => [
                 'type' => 'keyword'
             ],
+            'emai' => [
+                'type' => 'text',
+                'index' => false
+            ],
             'description' => [
                 'type' => 'text',
                 'analyzer' => 'english'

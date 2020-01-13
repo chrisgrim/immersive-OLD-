@@ -656,6 +656,17 @@ select:-webkit-autofill:focus {
   position: relative;
 }
 
+.editevents .section .title-block .image {
+  width: 6rem;
+  height: 6rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  display: inline-block;
+  float: left;
+  border-radius: 1rem;
+}
+
 .editevents .section .title-block .edit {
   font-size: 1.4rem;
   padding-top: 0.6rem;
@@ -691,13 +702,12 @@ select:-webkit-autofill:focus {
 .editevents .section .title {
   float: left;
   overflow-wrap: break-word;
-  font-size: 3.2rem;
+  font-size: 4rem;
   font-weight: 800;
-  line-height: 1.125rem;
+  line-height: 8rem;
   color: #484848;
-  padding-top: 0.6rem;
-  padding-bottom: 0.6rem;
   margin: 0px;
+  padding: 0;
 }
 
 .editevents .section .buttons {
@@ -948,18 +958,7 @@ select:-webkit-autofill:focus {
 }
 
 .event-bottom-bar button {
-  margin: 0px;
-  text-decoration: none;
-  border-radius: 4px;
-  border-width: 2px;
-  border-style: solid;
   background: #914669;
-  border-color: transparent;
-  color: white;
-  padding: 1rem;
-  font-size: 1.6rem;
-  font-weight: 600;
-  line-height: 1.375em;
   float: right;
 }
 
@@ -1045,6 +1044,101 @@ select:-webkit-autofill:focus {
   width: 100%;
   height: 5rem;
   border-bottom: 1px solid #ebebeb;
+  padding: 0.55rem 2.5rem;
+  display: inline-grid;
+  grid-template-columns: repeat(5, auto);
+  -webkit-box-pack: left;
+          justify-content: left;
+  -webkit-box-align: center;
+          align-items: center;
+  z-index: 900;
+  position: relative;
+}
+
+.search .filter .flatpickr-input,
+.search .filter .form-control.input {
+  display: none;
+}
+
+.search .filter .item {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  width: 100%;
+  margin-right: 1.5rem;
+}
+
+.search .filter .item .el .button .click {
+  padding: 0.8rem;
+  background: white;
+  display: inline-block;
+  border-radius: 2rem;
+  border: 1px solid black;
+  font-weight: 300;
+}
+
+.search .filter .item .el .button .click:hover {
+  background: black;
+  color: white;
+}
+
+.search .filter .item .el .button p {
+  font-size: 1.4rem;
+}
+
+.search .filter .item .el .b_over {
+  position: absolute;
+  background: white;
+  border-radius: 1rem;
+  border: 1px solid black;
+  margin-top: 2.5rem;
+  margin-left: -0.6rem;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 10px 37px;
+}
+
+.search .filter .item .el .b_over .box {
+  padding: 5rem 3rem;
+}
+
+.search .filter .item .el .b_over .save {
+  padding: 1rem;
+  border-top: 1px solid #929292;
+  margin-top: 0.3rem;
+}
+
+.search .filter .item .el .b_over .save button.cancel {
+  background: white;
+  border: 1px solid darkgrey;
+  color: #989898;
+  padding: 0.3rem 1rem;
+}
+
+.search .filter .item .el .b_over .save button.submit {
+  float: right;
+  padding: 0.3rem 1rem;
+}
+
+.search .filter .item .el .b_over .flatpickr-calendar {
+  box-shadow: none;
+}
+
+.search .filter .item .el .b_over.cat {
+  width: 35rem;
+}
+
+.search .filter .item .el .b_over.cat .box {
+  padding: 0rem;
+}
+
+.search .filter .item .el .b_over.cat .box .multiselect__tags {
+  border: none;
+  padding: 18px 40px 0 8px;
+  background: none;
+}
+
+.search .filter .item .el .b_over.price {
+  width: 35rem;
 }
 
 .search .list {
@@ -1151,6 +1245,84 @@ select:-webkit-autofill:focus {
   line-height: 24px;
 }
 
+.showmap {
+  position: absolute;
+  right: 0;
+}
+
+.showmap p {
+  display: inline-block;
+  line-height: 4rem;
+  position: absolute;
+  margin-left: -9.3rem;
+}
+
+.showmap #cover {
+  width: 5rem;
+  position: relative;
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.showmap input#checkbox {
+  margin: 0 !important;
+  width: 100%;
+  height: 3.2rem;
+  cursor: pointer;
+  opacity: 0;
+  position: relative;
+  z-index: 3;
+}
+
+.showmap #bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ffffff;
+  z-index: 1;
+  border-radius: 2rem;
+  border: 1px solid #e8e8e8;
+}
+
+.showmap #knob {
+  position: absolute;
+  top: 0.3rem;
+  left: 0.5rem;
+  width: 2.8rem;
+  height: 2.8rem;
+  background-color: #fff;
+  border-radius: 2rem;
+  -webkit-transition: left 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28), margin-left 0.3s ease, width 0.3s ease, border-radius 0.3s ease;
+  transition: left 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28), margin-left 0.3s ease, width 0.3s ease, border-radius 0.3s ease;
+  box-shadow: 0px 1px 1px #7d7d7d;
+  z-index: 2;
+  border: 1px solid #b5b5b5;
+}
+
+.showmap #checkbox:active ~ #knob {
+  width: 36px;
+  border-radius: 2rem;
+}
+
+.showmap #checkbox:checked ~ #knob {
+  left: 1.9rem;
+}
+
+.showmap #checkbox:checked ~ #knob p {
+  font-size: 1.3rem;
+  margin: 0;
+}
+
+.showmap #checkbox:checked ~ #bar {
+  background-color: #808080;
+}
+
+.showmap #checkbox:checked:active ~ #knob {
+  margin-left: -12px;
+}
+
 #grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -1224,9 +1396,8 @@ select:-webkit-autofill:focus {
 }
 
 #grid .item .del {
-  position: absolute;
-  bottom: 0;
-  right: 0;
+  position: relative;
+  float: right;
   border: 1px solid #f4645f;
   padding: 1rem;
   background: #f4645f;
@@ -1306,16 +1477,16 @@ select:-webkit-autofill:focus {
 }
 
 .login-container {
-  background: #fff4f6;
+  background: white;
   overflow: auto;
   position: relative;
 }
 
 .white-cover-top {
   background: white;
-  -webkit-clip-path: polygon(0% 0%, 0% 100%, 44% 100%, 79% 0%);
-          clip-path: polygon(0% 0%, 0% 100%, 44% 100%, 79% 0%);
-  height: 100vh;
+  -webkit-clip-path: polygon(0% 0%, 0% 100%, 34% 100%, 55% 0%);
+          clip-path: polygon(0% 0%, 0% 100%, 34% 100%, 55% 0%);
+  height: 80vh;
   position: absolute;
   width: 100%;
 }
@@ -1324,15 +1495,13 @@ select:-webkit-autofill:focus {
   background: white;
   -webkit-transform: skew(-40deg);
           transform: skew(-40deg);
-  height: 100vh;
-  right: -40%;
+  height: 80vh;
   position: absolute;
-  width: 50rem;
 }
 
 .login {
   width: 100%;
-  height: 100vh;
+  height: 80vh;
   padding-top: 15rem;
 }
 
@@ -1343,7 +1512,43 @@ select:-webkit-autofill:focus {
 
 .login-block {
   position: absolute;
-  right: 12%;
+  width: 40rem;
+  left: 50%;
+  margin-left: -20rem;
+}
+
+.login .field {
+  width: 84%;
+  height: 4rem;
+  margin-bottom: 1rem;
+}
+
+.login .remem {
+  margin-bottom: 1rem;
+  display: -webkit-inline-box;
+  display: inline-flex;
+  position: relative;
+  width: 84%;
+}
+
+.login .remem .form-check-label {
+  font-size: 1.2rem;
+  position: absolute;
+  left: 2rem;
+  bottom: 0;
+}
+
+.login .remem .forget {
+  font-size: 1.2rem;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.login .submit {
+  background: #008489;
+  width: 84%;
+  color: white;
 }
 
 .login-header h1 {
@@ -1354,6 +1559,64 @@ select:-webkit-autofill:focus {
 
 .create-input.loginfield {
   width: 50%;
+}
+
+.register {
+  width: 100%;
+  height: 80vh;
+  position: relative;
+}
+
+.register .form {
+  position: absolute;
+  width: 40rem;
+  left: 50%;
+  margin-left: -20rem;
+  top: 15rem;
+}
+
+.register .form .field {
+  width: 84%;
+  height: 4rem;
+  margin-bottom: 1rem;
+}
+
+.register h1 {
+  font-size: 6rem;
+  line-height: 1rem;
+  font-weight: 700;
+}
+
+.register .submit {
+  background: #008489;
+  width: 84%;
+  color: white;
+}
+
+.verify {
+  width: 100%;
+  height: 80vh;
+  position: relative;
+}
+
+.verify .form {
+  position: absolute;
+  width: 40rem;
+  left: 50%;
+  margin-left: -20rem;
+  top: 15rem;
+}
+
+.verify .form .another {
+  color: #008489;
+  border: none;
+  padding: 0;
+}
+
+.verify h1 {
+  font-size: 4.4rem;
+  line-height: 1rem;
+  font-weight: 700;
 }
 
 fieldset[disabled] .multiselect {
@@ -1869,7 +2132,8 @@ html {
   height: 100%;
 }
 
-body {
+body,
+p {
   font-size: 14px;
   font-size: 1.6rem;
   font-family: "Montserrat", sans-serif;
@@ -1931,6 +2195,21 @@ main {
 .container {
   width: 89%;
   margin: auto;
+}
+
+button {
+  margin: 0px;
+  text-decoration: none;
+  border-radius: 4px;
+  padding: 1rem;
+  font-size: 1.6rem;
+}
+
+input.general {
+  padding: 0.8rem;
+  border-radius: 0.5rem;
+  border: 1px solid #969696;
+  font-size: 1.4rem;
 }
 
 .profile-body {
@@ -2174,7 +2453,7 @@ ul.subdropdown li a:hover {
   text-align: center;
   height: 100%;
   margin: 0rem 2rem;
-  padding-top: 2.3rem;
+  padding-top: 2.7rem;
 }
 
 .menu-nav a {
@@ -2185,7 +2464,7 @@ ul.subdropdown li a:hover {
   position: relative;
   width: 3.3rem;
   height: 3.3rem;
-  margin-top: -2px;
+  margin-top: -8px;
 }
 
 .leaflet-control-attribution.leaflet-control {
@@ -2219,6 +2498,7 @@ div.leaflet-popup-content {
 div.leaflet-popup-content-wrapper {
   padding: 0rem;
   width: 20rem;
+  margin-top: 50%;
 }
 
 div.leaflet-popup-content-wrapper .pop {
@@ -2360,6 +2640,7 @@ a.leaflet-popup-close-button {
 .tab .ln.act button {
   color: #008489;
   border-bottom: 2px solid #008489;
+  border-radius: 0;
 }
 
 .flatpickr-calendar.inline {
@@ -2379,6 +2660,14 @@ a.leaflet-popup-close-button {
   width: 90% !important;
 }
 
+/*.dayContainer {
+    margin: 2rem !important;
+}
+
+.dayContainer + .dayContainer {
+    box-shadow: none !important;
+}*/
+
 .flatpickr-weekdaycontainer span.flatpickr-weekday {
   font-weight: 300;
 }
@@ -2387,11 +2676,16 @@ div.flatpickr-calendar.animate.multiMonth.inline {
   width: 100% !important;
 }
 
+.rangeMode span.flatpickr-day {
+  margin-top: -1px;
+}
+
 span.flatpickr-day {
   border: 1px solid #e4e7e7;
   border-radius: 0px;
   height: 100%;
   max-width: 100%;
+  border-width: 2px 0.7px 1px 0.7px;
 }
 
 .flatpickr-months {

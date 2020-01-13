@@ -18,6 +18,9 @@ class CreateModeratorCommentsTable extends Migration
             $table->unsignedBigInteger('event_id')->unique();
             $table->string('comments');
             $table->timestamps();
+            $table->foreign('event_id')
+                    ->references('id')->on('events')
+                    ->onDelete('cascade');
         });
     }
 

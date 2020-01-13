@@ -3,6 +3,7 @@
     <head>
         @include('layouts.meta')
         <link href="/css/app-admin.css" rel="stylesheet">
+        <script src="/js/app.js" defer=""></script>
     </head>
     <body>
         @include('layouts.admin.nav')

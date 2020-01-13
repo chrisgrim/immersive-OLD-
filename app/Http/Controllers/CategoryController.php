@@ -94,9 +94,13 @@ class CategoryController extends Controller
             $category->update(['description' => $request->description]);
             return '';
         }
-        $category->update($request->all());
-        $category->saveFile($request, $category);
-        return back();
+        if($request->imagePath) {
+            $category->updateFile($request, $category);
+            return '';
+        }
+        // $category->update($request->all());
+        // $category->saveFile($request, $category);
+        // return back();
 
     }
 

@@ -3,6 +3,9 @@
 		<div v-for="(organizer,index) in organizerEvents">
 			<div class="section">
                 <div class="title-block">
+                    <div class="image" :style="{ backgroundImage: `url('/storage/${organizer.imagePath}')` }">
+                        
+                    </div>
                     <div class="title">
                         {{organizer.name}}
                     </div>
@@ -79,9 +82,8 @@
 </template>
 
 <script>
-
+    
 	export default {
-
 
 		data() {
 			return {

@@ -38,6 +38,24 @@
                 </div>
                 </a>
 
+                <a href="/mobilities/create">
+                <div class="checklist-section" >
+                    Mobility Advisories
+                </div>
+                </a>
+
+                <a href="/master/userlist">
+                <div class="checklist-section" >
+                    Edit Users
+                </div>
+                </a>
+
+                <a href="/admin/organizer">
+                <div class="checklist-section" >
+                    Edit Organizers
+                </div>
+                </a>
+
                  <a href="/finish/events">
                     <div class="checklist-section">
                         <div class="item">

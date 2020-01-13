@@ -4,13 +4,8 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-
-
-window.Vue = require('vue');
-
 import Vuelidate from "vuelidate";
 import store from './store/index'
-import * as VueGoogleMaps from "vue2-google-maps";
 import vuelidateErrorExtractor, { templates } from "vuelidate-error-extractor";
 import { Icon }  from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -18,23 +13,18 @@ import VueRouter from 'vue-router';
 import {routes} from './routes';
 
 
+window.axios = require('axios');
+window.Vue = require('vue');
+
+Vue.use(Vuelidate);
 Vue.use(VueRouter)
+// require('./bootstrap');
 
 
 const router = new VueRouter({
   routes,
   mode: 'history'
 });
-
-Vue.use(VueGoogleMaps, {
-  load: {
-    key: process.env.MIX_GOOGLE_LOC_KEY,
-    libraries: "places" // necessary for places input
-  }
-});
-Vue.use(Vuelidate);
-
-require('./bootstrap');
 
 
 
@@ -93,7 +83,10 @@ Vue.component('approval-bar', require('./components/adminArea/approve/approval-b
 Vue.component('admin-categories', require('./components/adminArea/admin-categories.vue').default);
 Vue.component('admin-contact-level', require('./components/adminArea/admin-contact-level.vue').default);
 Vue.component('admin-genres', require('./components/adminArea/admin-genres.vue').default);
+Vue.component('admin-mobility', require('./components/adminArea/admin-mobility.vue').default);
 Vue.component('admin-regions', require('./components/adminArea/admin-regions.vue').default);
+Vue.component('admin-user', require('./components/adminArea/admin-user.vue').default);
+Vue.component('admin-organizer', require('./components/adminArea/admin-organizer.vue').default);
 Vue.component('admin-content-advisories', require('./components/adminArea/admin-content-advisories.vue').default);
 
 //Profile
@@ -108,6 +101,8 @@ Vue.component('organizer-show', require('./components/organizers/organizer-show.
 //Events
 Vue.component('event-index', require('./components/events/event-index.vue').default);
 Vue.component('search-listing', require('./components/events/event-search.vue').default);
+Vue.component('event-map-search', require('./components/events/event-map-search.vue').default);
+Vue.component('event-list-search', require('./components/events/event-list-search.vue').default);
 Vue.component('event-show', require('./components/events/event-show.vue').default);
 Vue.component('edit-events', require('./components/events/event-edit.vue').default);
 Vue.component('event-listing-item', require('./components/events/components/index-item.vue').default);
@@ -124,15 +119,14 @@ Vue.component('event-listing-item', require('./components/events/components/inde
 if(document.getElementById("header")){
 	const header = new Vue({
     	el: '#header',
-      store,
-      router
+        store,
+        router
 	});
 };
 if(document.getElementById("create")){
 	const create = new Vue({
     	el: '#create',
-      store,
-      router
+        router
 	});
 };
 if(document.getElementById("admin")){

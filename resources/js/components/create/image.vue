@@ -18,7 +18,7 @@
                                     <svg class="b" height="32" width="32" viewBox="0 0 24 24" aria-label="Add an image or video" role="img"><path d="M24 12c0-6.627-5.372-12-12-12C5.373 0 0 5.373 0 12s5.373 12 12 12c6.628 0 12-5.373 12-12zm-10.767 3.75a1.25 1.25 0 0 1-2.5 0v-3.948l-1.031 1.031a1.25 1.25 0 0 1-1.768-1.768L12 7l4.066 4.065a1.25 1.25 0 0 1-1.768 1.768l-1.065-1.065v3.982z"></path></svg>
                                 </div>
                                  <div>
-                                    <p v-if="!hasImage">Click here to upload image</p>
+                                    <p v-if="!hasImage">Click here to upload image<br>Must be at least 1280 x 800 and under 2mb</p>
                                     <p v-if="hasImage">Change Image</p>
                                 </div>
                             </div>
@@ -35,6 +35,7 @@
                         <p class="error" v-if="!$v.finalImage.required">The Image is required</p>
                         <p class="error" v-if="!$v.finalImage.fileSize">The Image is too large</p>
                         <p class="error" v-if="!$v.finalImage.fileType">Needs to be a Jpg, Png or Gif</p>
+                        <p class="error" v-if="!$v.finalImage.imageRatio">Needs to be at least 1200 x 800</p>
                     </div>
                 </div>
             </div>
@@ -64,14 +65,13 @@
 </template>
 
 <script>
-import ImageUpload from '../layouts/image-upload.vue'
 import { required } from 'vuelidate/lib/validators'
 import CubeSpinner  from '../layouts/loading.vue'
 
 
 export default {
     components: { 
-        ImageUpload, CubeSpinner
+        CubeSpinner
     },
     
     props: {
@@ -106,19 +106,20 @@ export default {
         //Then adds the image as a file so it can be uploaded to the database
         onImageUpload(image) {
             this.finalImage = image.file;
-            console.log(this.finalImage.type);
+            this.finalImage.width = image.width;
+            this.finalImage.height = image.height;
             this.$v.$touch(); 
             if (this.$v.$invalid) { return false };
-            image.width < 1280 || image.height < 720 ? this.tooSmall = true : this.addImage(image);
+            this.imageSrc = image.src;
+            this.addImage(image);
         },
 
 
         addImage(image) {
             this.isLoading = true;
-            this.imageSrc = image.src;
             this.dis = true;
             let data = new FormData();
-            data.append('image', image.file);
+            data.append('image', this.finalImage);
             axios.post(`${this.eventUrl}/images`, data)
             .then(response => {
                 this.isLoading = false;
@@ -169,7 +170,10 @@ export default {
                 return this.finalImage ? this.finalImage.size < 2097152 : true 
             },
             fileType() {
-                return this.finalImage ? this.finalImage.type ==='image/jpeg' || (this.finalImage.type ==='image/png') || (this.finalImage.type ==='image/gif') : true
+                return this.finalImage ? ['image/jpeg','image/png','image/gif'].includes(this.finalImage.type) : true
+            },
+            imageRatio() {
+                return this.finalImage ? this.finalImage.width > 1280 && this.finalImage.height > 800 : true 
             }
         },
     },

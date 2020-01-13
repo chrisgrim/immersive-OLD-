@@ -113,7 +113,11 @@
                                         <svg class="b" height="32" width="32" viewBox="0 0 24 24" aria-label="Add an image or video" role="img"><path d="M24 12c0-6.627-5.372-12-12-12C5.373 0 0 5.373 0 12s5.373 12 12 12c6.628 0 12-5.373 12-12zm-10.767 3.75a1.25 1.25 0 0 1-2.5 0v-3.948l-1.031 1.031a1.25 1.25 0 0 1-1.768-1.768L12 7l4.066 4.065a1.25 1.25 0 0 1-1.768 1.768l-1.065-1.065v3.982z"></path></svg>
                                     </div>
                                      <div>
-                                        <p v-if="!hasImage">Click here to upload image</p>
+                                        <div v-if="!hasImage">
+                                            <p>Click here to upload image</p>
+                                            <p>Please make image at least 1280 x 720</p>
+                                            <p>Image needs to be under 2 mb</p>
+                                        </div>
                                         <p v-if="hasImage">Change Image</p>
                                     </div>
                                 </div>
@@ -123,9 +127,6 @@
                         </div>
                     </label>
                     <div>
-                        <div v-if="this.tooSmall" class="validation-error">
-                            <p class="error" v-if="this.tooSmall">The image needs to be at least 1200 x 800</p>
-                        </div>
                         <div v-if="$v.finalImage.$error" class="validation-error">
                             <p class="error" v-if="!$v.finalImage.required">The Image is required</p>
                             <p class="error" v-if="!$v.finalImage.fileSize">The Image is too large</p>
@@ -148,13 +149,11 @@
 import _ from 'lodash'
 import ImageUpload from '../layouts/image-upload.vue'
 import Multiselect from 'vue-multiselect'
-import VueCropper from 'vue-cropperjs'
-import 'cropperjs/dist/cropper.css'
 import CubeSpinner  from '../layouts/loading.vue'
 import { required, minLength, maxLength, url } from 'vuelidate/lib/validators'
 
 export default {
-    components: { ImageUpload, Multiselect, VueCropper, CubeSpinner },
+    components: { ImageUpload, Multiselect, CubeSpinner },
     
     props: {
         user: { type: Object }
@@ -192,9 +191,6 @@ export default {
             isLoading: false,
             finalImage: '',
             imageSrc: '',
-            tooSmall: '',
-            imageWidth: '',
-            imageHeight: '',
             isLoading: false,
             readyToSubmit: false
 
@@ -255,28 +251,13 @@ export default {
         // adds image to the page so user can see it
         //adds file to organizer object for upl
         onImageUpload(image) {
-            this.imageSrc = image.src;
             this.finalImage = image.file;
-            this.imageWidth = image.width;
-            this.imageHeight = image.height;
-            console.log(this.imageWidth);
-        },
-
-        addImage(image) {
-            this.isLoading = true;
+            this.finalImage.width = image.width;
+            this.finalImage.height = image.height;
+            this.$v.finalImage.$touch();
+            console.log(this.finalImage);
+            if (this.$v.finalImage.$invalid) { return false };
             this.imageSrc = image.src;
-            this.dis = true;
-            let data = new FormData();
-            data.append('imagePath', image.file);
-            axios.post('/organizer', data)
-            .then(response => {
-                console.log(response.data);
-                this.tempOrganizer = response.data;
-                this.isLoading = false;
-                this.dis = false;
-                this.readyToSubmit = true;
-            })
-            .catch(errorResponse => { this.validationErrors = errorResponse.response.data.errors; this.dis = false; });
         },
 
         //checks if validation passes
@@ -315,13 +296,12 @@ export default {
                 return this.finalImage ? this.finalImage.size < 2097152 : true 
             },
             fileType() {
-                return this.finalImage ? this.finalImage.type ==='image/jpeg' || (this.finalImage.type ==='image/png') || (this.finalImage.type ==='image/gif') : true
+                return this.finalImage ? ['image/jpeg','image/png','image/gif'].includes(this.finalImage.type) : true
             },
             imageSize() {
-                return this.finalImage ? this.imageWidth > 1280 || (this.imageHeight > 720) :  true
+                return this.finalImage ? this.finalImage.width > 1280 && this.finalImage.height > 720 :  true
             }
         },
-
         organizer: {
             description: {
                required,

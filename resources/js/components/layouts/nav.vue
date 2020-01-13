@@ -35,6 +35,12 @@
     				</a>
                 </div>
 
+                <div class="menu-nav">
+                    <a href="/register" v-if="!user">
+                        <div>Host an Experience</div>
+                    </a>
+                </div>
+
 			</div>
 		</nav>
 	</div>
@@ -44,11 +50,37 @@
 
 	export default {
 
-		props: ['loaduser'],
+        props: {
+            loaduser: {
+                type:Object
+            },
+            username: {
+                type:String, 
+            },
+            userid: {
+                type:String,
+            },
+            avatar: {
+                type:String,
+            },
+            usertype: {
+                type:Object,
+            },
+            createdevents: {
+                type:String
+            }
+        }, 
 
 		data() {
 			return {
-				user: this.loaduser ? this.loaduser : '',
+				// user: {
+    //                 avatar_path: this.avatar,
+    //                 name: this.username,
+    //                 userType: this.usertype,
+    //                 hasCreatedOrganizers: this.createdevents,
+    //                 id: this.userid
+    //             },
+                user:this.loaduser ? this.loaduser : ''
 			};
 		},
 

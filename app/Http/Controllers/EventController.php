@@ -16,7 +16,7 @@ class EventController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->except('index','get','show');
+        $this->middleware(['auth', 'verified'])->except('index','get','show');
         $this->middleware('can:update,event')
         ->except(['index','get','create','show','editEvents','store','fetchEditEvents']);
     }

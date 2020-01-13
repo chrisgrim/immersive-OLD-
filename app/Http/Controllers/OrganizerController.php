@@ -15,7 +15,7 @@ class OrganizerController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->except(['show']);
+        $this->middleware(['auth', 'verified'])->except(['show']);
         $this->middleware('can:update,organizer')->except(['store','show','create']);
     }
     /**

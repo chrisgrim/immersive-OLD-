@@ -11,6 +11,14 @@
     margin:auto !important;
     width:90% !important;
 }
+/*.dayContainer {
+    margin: 2rem !important;
+}
+
+.dayContainer + .dayContainer {
+    box-shadow: none !important;
+}*/
+
 .flatpickr-weekdaycontainer span.flatpickr-weekday {
     font-weight: 300;
 }
@@ -18,11 +26,16 @@ div.flatpickr-calendar.animate.multiMonth.inline {
     width: 100% !important;
 }
 
+.rangeMode span.flatpickr-day {
+    margin-top: -1px;
+}
+
 span.flatpickr-day {
     border: 1px solid rgb(228, 231, 231);
     border-radius: 0px;
     height: 100%;
     max-width: 100%;
+    border-width: 2px .7px 1px .7px;
 }
 .flatpickr-months {
     padding-top: 4%;

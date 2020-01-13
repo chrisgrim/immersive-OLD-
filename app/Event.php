@@ -32,7 +32,7 @@ class Event extends Model
     *
     * @var array
     */
-    protected $with = ['shows', 'favorites'];
+    protected $with = ['shows', 'favorites', 'priceranges'];
 
     /**
     * The accessors to append to the model's array form.
@@ -128,6 +128,16 @@ class Event extends Model
     public function shows() 
     {
         return $this->hasMany(Show::class);
+    }
+
+    /**
+     * Each event has many price ranges
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function priceranges() 
+    {
+        return $this->hasMany(PriceRange::class);
     }
 
     /**
@@ -239,6 +249,24 @@ class Event extends Model
                     ],
                 ]
             ],
+            'priceranges' => [
+                'properties' => [
+                    'price' => [
+                        'type' => 'integer',
+                    ],
+                    'event_id' => [
+                        'type' => 'integer',
+                    ],
+                    'created_at' => [
+                        'type' => 'text',
+                        'index' => false
+                    ],
+                    'updated_at' => [
+                        'type' => 'text',
+                        'index' => false
+                    ],
+                ]
+            ],
             'advisories' => [
                 'properties' => [
                     'sexualViolence' => [
@@ -324,8 +352,13 @@ class Event extends Model
                 'type' => 'text',
                 'index' => false
             ],
+            'show_price' => [
+                'type' => 'text',
+                'index' => false
+            ],
             'price_range' => [
                 'type' => 'text',
+                'index' => false,
             ],
             'updated_at' => [
                 'type' => 'text',

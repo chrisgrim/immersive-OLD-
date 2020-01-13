@@ -23,9 +23,10 @@
             placeholder="Category Name"
             @blur="saveDescription(category)"
             /></textarea> 
-            <div class="box" :style="{ backgroundImage: `url('/${category.thumbImagePath}')` }">
-                <label>
-                     <image-upload @loaded="onImageUpload"></image-upload>
+            <div class="box" :style="{ backgroundImage: `url('/storage/${category.thumbImagePath}')` }">
+                <label @click="tempCat = category">
+                     <image-upload @loaded="onImageEdit"></image-upload>
+                     <CubeSpinner :loading="isLoading"></CubeSpinner>
                 </label> 
             </div>
             <button @click.prevent="showModal(category)" class="delete-circle"><p>X</p></button>
@@ -59,12 +60,17 @@
                                 </div>
                                  <div>
                                     <p>Click here to upload image</p>
+                                    <p>Must be at least 720x960 and under 2mb</p>
                                 </div>
                             </div>
                         </div>
                          <image-upload @loaded="onImageUpload"></image-upload>
-                        <div v-if="$v.imageSrc.$error" class="validation-error">
-                            <p class="error" v-if="!$v.imageSrc.required">Please Add Image </p>
+                         <CubeSpinner :loading="isLoading"></CubeSpinner>
+                        <div v-if="$v.finalImage.$error" class="validation-error">
+                            <p class="error" v-if="!$v.finalImage.required">Please Add Image </p>
+                            <p class="error" v-if="!$v.finalImage.fileSize">Image needs to be less than 2mb </p>
+                            <p class="error" v-if="!$v.finalImage.fileType">Image should be jpg, gif, or png</p>
+                            <p class="error" v-if="!$v.finalImage.imageRatio">Needs to be at least 720 x 960</p>
                         </div>
                     </label> 
                     <div class="text">
@@ -110,9 +116,13 @@
 <script>
     
     import { required, minLength } from 'vuelidate/lib/validators';
+    import CubeSpinner  from '../layouts/loading.vue'
 
 
     export default {
+        components: { 
+            CubeSpinner
+        },
 
         data() {
             return {
@@ -125,7 +135,8 @@
                 isModalVisible: false,
                 isEditModalVisible: false,
                 modalDelete: '',
-
+                tempCat: '',
+                isLoading: false,
             }
         },
 
@@ -139,6 +150,7 @@
             async submitNewCategory() {
                 this.$v.$touch(); 
                 if (this.$v.$invalid) { return false };
+                this.isLoading = true;
                 let data = new FormData();
                 data.append('imagePath', this.finalImage);
                 data.append('name', this.name);
@@ -150,18 +162,14 @@
                     this.isModalVisible = false;
                     this.name = '';
                     this.description = '';
-                    this.imageSrc = '',
-                    this.finalImage = '',
+                    this.imageSrc = '';
+                    this.finalImage = '';
+                    this.isLoading = false;
                     this.loadCategories();
                 })
                 .catch(error => { 
                     this.isModalVisible = false;
                 });
-            },
-
-            showModal(category) {
-                this.modalDelete = category;
-                this.isEditModalVisible = true;
             },
 
             deleteCategory(category) {
@@ -173,22 +181,46 @@
                 .catch(error => { this.serverErrors = error.response.data.errors; });
             },
 
-            onImageUpload(image) {
-                image.width < 1280 || image.height < 720 ? this.tooSmall = true : this.assignImage(image);
-            },
-
-            assignImage(image) {
-                console.log(image);
-                this.imageSrc = image.src;
-                this.finalImage = image.file;
-            },
-
             loadCategories() {
                 axios.get('/categories')
                 .then(response => { 
                    this.categories = response.data;
                 })
                 .catch(error => { this.serverErrors = error.response.data.errors; });
+            },
+
+            onImageUpload(image) {
+                this.finalImage = image.file;
+                this.finalImage.width = image.width;
+                this.finalImage.height = image.height;
+                this.$v.finalImage.$touch();
+                if (this.$v.finalImage.$invalid) { return false };
+                this.imageSrc = image.src;
+            },
+
+            onImageEdit(image) {
+                console.log(image.file);
+                if (image.file.size > 2097152) { return alert('Image Filesize Too Big') };
+                if (!["image/jpeg","image/png",'image/gif'].includes(image.file.type)) { return alert('Image needs to be jpeg, pgn or gif') };
+                if (image.width < 1280 || image.height < 720) { return alert('Image Proportions Too Small') };
+
+                this.isLoading = true;
+                let data = new FormData();
+                data.append('imagePath', image.file);
+                data.append('_method', 'PATCH');
+                axios.post(`/categories/${this.tempCat.slug}`, data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
+                )
+                .then(response => { 
+                   location.reload();
+                })
+                .catch(error => { 
+                    this.serverErrors = error.response.data.errors; 
+                });
+            },
+
+            showModal(category) {
+                this.modalDelete = category;
+                this.isEditModalVisible = true;
             },
 
             saveName(category) {
@@ -230,8 +262,17 @@
             description: {
                 required,
             },
-            imageSrc: {
+            finalImage: {
                 required,
+                fileSize() { 
+                    return this.finalImage ? this.finalImage.size < 2097152 : true 
+                },
+                fileType() {
+                    return this.finalImage ? ['image/jpeg','image/png','image/gif'].includes(this.finalImage.type) : true
+                },
+                imageRatio() {
+                    return this.finalImage ? this.finalImage.width > 1280 && this.finalImage.height > 720 : true 
+                }
             }
         },
     }

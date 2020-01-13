@@ -29,20 +29,21 @@
 			        @blur="notifiedActive = false"
 		            />
 		        </div>
-    		    <div class="field">
-    				<label> Location </label>
-    				<gmap-autocomplete
-    				@place_changed="setPlace"
-    				autocomplete="false"
-    				:class="{ active: locationActive, 'error': $v.location.latitude.$error }"
-    				:placeholder="locationPlaceholder"
-    				@click="locationActive = true"
-    	        	@blur="locationActive = false">
-    				</gmap-autocomplete>
-    				<div v-if="$v.location.latitude.$error" class="validation-error">
-    					<p class="error" v-if="!$v.location.latitude.required">Please select from the list of locations</p>
-    				</div>
-    			</div>
+                <div class="field">
+                    <label> Event Address </label>
+                    <input 
+                    ref="autocomplete" 
+                    :placeholder="locationPlaceholder"
+                    :class="{ active: locationActive, 'error': $v.location.latitude.$error }"
+                    autocomplete="false"
+                    onfocus="value = ''" 
+                    @blur="locationActive = false"
+                    @click="locationActive = true"
+                    type="text" />
+                    <div v-if="$v.location.latitude.$error" class="validation-error">
+                        <p class="error" v-if="!$v.location.latitude.required">Please select from the list of locations</p>
+                    </div>
+                </div>
     		    <div class="field">
     				<label>Regions</label>
     				<multiselect 
@@ -141,6 +142,7 @@
                 allowZoom: false,
                 dis: false,
                 height:0,
+                google: '',
 			}
 		},
 
@@ -193,7 +195,9 @@
 			// sends google map loc and lat info to updateLats
 			//adds address info to location object
 
-			setPlace(place) {
+			setPlace() {
+                let place = this.autocomplete.getPlace();
+                console.log(place);
 				this.center = L.latLng(place.geometry.location.lat(), place.geometry.location.lng());
 				this.updateLats(place);
 				this.getAddressObject(place.address_components);
@@ -283,8 +287,16 @@
             this.handleResize();
         },
 
+        mounted() {
+            this.autocomplete = new google.maps.places.Autocomplete(
+                (this.$refs.autocomplete),
+                {types: ['geocode']}
+            );
+            this.autocomplete.addListener('place_changed', this.setPlace);
+        },
+
         destroyed() {
-            window.removeEventListener('resize', this.handleResize)
+            window.removeEventListener('resize', this.handleResize);
         },
 
 		validations: {

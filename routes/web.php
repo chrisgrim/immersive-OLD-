@@ -13,7 +13,8 @@
 
 Route::GET('/', 'EventController@index')->name('home');
 
-Auth::routes();
+Auth::routes(['verify' => true]);
+
 
 Route::RESOURCE('events', 'EventController');
 Route::RESOURCE('categories', 'CategoryController');
@@ -22,6 +23,7 @@ Route::RESOURCE('contactlevels', 'ContactLevelsController');
 Route::RESOURCE('contentadvisories', 'ContentAdvisoriesController');
 Route::RESOURCE('genres', 'GenresController');
 Route::RESOURCE('organizer', 'OrganizerController');
+Route::RESOURCE('mobilities', 'MobilityController');
 
 // ----------   Search Page -------
 // Adds Top Search to Session
@@ -37,6 +39,13 @@ Route::GET('/finish/events', 'AdminAreaController@approval');
 Route::GET('/finish/events/{event}', 'AdminAreaController@showApproval');
 Route::POST('/approve/{event}', 'AdminAreaController@success');
 Route::POST('/unapprove/{event}', 'AdminAreaController@fail');
+Route::GET('/master/userlist', 'UserMasterController@index');
+Route::PATCH('/master/userlist/{user}', 'UserMasterController@update');
+Route::GET('/userlist/fetch', 'UserMasterController@fetch');
+Route::GET('/admin/organizer', 'AdminOrganizerController@index');
+Route::PATCH('/admin/organizer/{organizer}', 'AdminOrganizerController@update');
+Route::GET('/admin/organizer/fetch', 'AdminOrganizerController@fetch');
+
 
 
 //User Profile Pages

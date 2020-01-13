@@ -18,7 +18,7 @@ class ShowsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth', 'verified']);
         $this->middleware('can:update,event');
     }
     /**
@@ -73,6 +73,9 @@ class ShowsController extends Controller
         
         $lastDate = $event->shows()->orderBy('date', 'DESC')->first();
         foreach ($request->tickets as $ticket) {
+            $event->priceranges()->updateOrCreate([
+                'price' => $ticket['ticket_price']
+            ]);
             $array[] = $ticket['ticket_price'] + 0;
         }
         rsort($array);

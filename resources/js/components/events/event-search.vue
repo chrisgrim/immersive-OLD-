@@ -2,99 +2,134 @@
     <div class="search">
         <div class="filter">
             <div class="item">
-                 <flat-pickr
-                    v-model="dates"
-                    :config="config"                                                  
-                    placeholder="Select date"               
-                    name="dates">
-                </flat-pickr>
-            </div>            
-        </div>
-        <div class="list">
-            <div class="title">
-                <h2>{{listedEvents.length}} immersive shows</h2>
-            </div>
-            <div v-for="event in listedEvents">
-                <search-item :event="event"></search-item>
-            </div>
-        </div>
-        <div class="map" :style="this.map">
-            <div>
-                <div class="search">
-                    <label>
-                        <span class="checkbox">
-                            <input @click="mapSearch = !mapSearch" type="checkbox" v-model="mapSearch">
-                            <span class=check></span>
-                        </span> 
-                    </label>
-                    <p>Search as I move the map </p>
-                </div>
-                <div class="zoom">
-                    <div class="in">
-                        <button @click.prevent="zoom += 1">
-                            <svg viewBox="0 0 16 16" height="16" width="16" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M7 1a1 1 0 0 1 2 0v14a1 1 0 1 1-2 0V1z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"></path></svg>
-                        </button>
-                    </div>
-                    <div class="out">
-                        <button @click.prevent="zoom -= 1">
-                            <svg viewBox="0 0 16 16" height="16" width="16" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"></path></svg>
-                        </button>
+                <div class="el">
+                    <div class="button">
+                        <div @click="show('dates')" class="click">
+                            <p v-if="!datesFormatted.length">Dates</p>
+                            <p v-if="datesFormatted.length">{{datesFormatted[0]}}{{ datesFormatted[1] ? ' to ' + datesFormatted[1] : ''}} </p>
+                        </div>
+                        <div class="b_over dates" v-if="activeItem === 'dates'">
+                            <div>
+                                <flat-pickr
+                                    v-model="dates"
+                                    :config="config"                                         
+                                    placeholder="Select date"               
+                                    name="dates">
+                                </flat-pickr>
+                            </div>
+                            <div class="save">
+                                <button v-if="datesFormatted.length" @click="datesFormatted = []; datesSubmit = [];" class="cancel">clear</button>
+                                <button v-if="!datesFormatted.length" @click="activeItem = null" class="cancel">Cancel</button>
+                                <button @click="filterData" class="submit">Save</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div style="width:100%;">
-                    <l-map
-                    :zoom="zoom"
-                    :center="mapCenter"
-                    :style="this.map"
-                    @update:center="centerUpdate"
-                    @update:bounds="this.boundsUpdate"
-                    :options="{ scrollWheelZoom: allowZoom, zoomControl: allowZoom }"
-                    >
-                    <l-tile-layer :url="url" :attribution="attribution" />
-                    <l-marker-cluster>
-                        <l-marker 
-                        v-for="event in listedEvents" 
-                        :key="event.id" 
-                        :lat-lng="event.location_latlon"
-                        @click="hello(event)">
-                            <l-icon class-name="icons"><p>{{event.price_range.split(' -')[0]}}</p></l-icon>
-                            <l-popup>
-                                <popup-content :data="event" />
-                            </l-popup>
-                        </l-marker>
-                    </l-marker-cluster>
-                    </l-map>
-                </div>  
             </div>
+            <div class="item">
+                <div class="el">
+                    <div class="button">
+                        <div @click="show('category')" class="click">
+                            <p v-if="!category">Categories</p>
+                            <p v-if="category">{{category.name}}</p>
+                        </div>
+                        <div v-if="activeItem === 'category'" class="b_over cat">
+                            <div class="box">
+                                <multiselect 
+                                v-model="category"
+                                label="name"
+                                :options="categories" 
+                                placeholder="Categories"
+                                open-direction="bottom"
+                                :preselect-first="false">
+                                </multiselect>
+                            </div>
+                            <div class="save">
+                                <button v-if="category" @click="category = null" class="cancel">clear</button>
+                                <button v-if="!category" @click="activeItem = null" class="cancel">Cancel</button>
+                                <button @click="filterData" class="submit">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="el">
+                    <div class="button">
+                        <div @click="show('price')" class="click">
+                            <p v-if="showPrice">Price</p>
+                            <p v-else="showPrice">{{'$' + price[0]}}{{' to ' + '$' + price[1]}}</p>
+                        </div>
+                        <div v-if="activeItem === 'price'" class="b_over price" v-clickoutside="show('test')">
+                            <div class="box price">
+                                <vue-slider
+                                v-model="price" 
+                                :enable-cross="false" />
+                                <label> Min </label>
+                                <input 
+                                type="text"
+                                v-model="price[0]"
+                                >
+                                <label> Max </label>
+                                <input 
+                                type="text"
+                                v-model="price[1]"
+                                >
+                            </div>
+                            <div class="save">
+                                <button v-if="showPrice" @click="activeItem = null" class="cancel">Cancel</button>
+                                <button v-else="showPrice" @click="price = [0,100]" class="cancel">clear</button>
+                                <button @click="filterData" class="submit">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="showmap">
+                <p>Show Map</p>
+                <div id="cover">
+                    <input v-model="showMap" type="checkbox" id="checkbox">
+                    <div id="bar"></div>
+                    <div id="knob">
+                        <p v-if="showMap"><svg viewBox="0 0 52 52" fill="black" fill-opacity="0" stroke="currentColor" stroke-width="3" focusable="false" aria-hidden="true" role="presentation" stroke-linecap="round" stroke-linejoin="round" style="height: 28px; width: 28px; display: block; overflow: visible;"><path d="m19.1 25.2 4.7 6.2 12.1-11.2"></path></svg></p>
+                    </div>
+                </div>
+            </div>      
         </div>
+        <event-map-search
+        v-if="showMap"
+        @mapCenterUpdated="updateSearch"
+        :events="eventList"></event-map-search>
+        <event-list-search
+        v-else="showMap"
+        :events="eventList"></event-list-search>
     </div>
 </template>
 
 <script>
-    import _ from 'lodash';
-    import Multiselect from 'vue-multiselect';
     import flatPickr from 'vue-flatpickr-component'
     import 'flatpickr/dist/flatpickr.css'
     import { mapGetters } from 'vuex'
-    import {LMap, LTileLayer, LMarker, LPopup, LIcon} from 'vue2-leaflet'
-    import Vue2LeafletMarkerCluster from 'vue2-leaflet-markercluster'
-    import { latLng } from "leaflet"
-    import searchItem  from '../events/components/search-item.vue'
-    import PopupContent from "../read/popup-content"
+    import Multiselect from 'vue-multiselect'
+    import '../events/components/clickOutside.js';
+    import VueSlider from 'vue-slider-component'
+    import 'vue-slider-component/theme/antd.css'
 
 
     export default {
 
-
         components: {
-            Multiselect, flatPickr, LPopup, LMap, LTileLayer, LMarker, 'l-marker-cluster': Vue2LeafletMarkerCluster, PopupContent, LIcon, searchItem,
+            flatPickr, Multiselect, VueSlider
         },
 
         props: {
             searchedevents: {
                 type:Object,
             },
-        }, 
+            categories: {
+                type:Array
+            }
+        },
 
         name: "userSearchRequest",
         name: "searchEvents",
@@ -109,62 +144,47 @@
             location() {
                 return this.$store.state.userSearchRequest.name;
             },
-            mapCenter() {
+             mapCenter() {
                 return {
                     lat: this.$store.state.userSearchRequest.latitude ? this.$store.state.userSearchRequest.latitude : '',
                     lng: this.$store.state.userSearchRequest.longitude ? this.$store.state.userSearchRequest.longitude : '',
                 }
             },
-            listedEvents() {
-                return this.eventList ? this.eventList : this.events;
-            },
-            map() {
-                return `height:calc(${this.height}px - 12rem);`
+            showPrice() {
+                return this.price[0] == 0 && this.price[1] == 100 ? true : false;
             }
+
         }, 
 
         data() {
             return {
-                value: '',
-                list: [],
-                price: '',
-                eventName: '',
+                eventList: [],
+                showPopup: false,
                 searchObject: this.initializeSearchObject(),
-                dates: '',
+                activeItem: null,
+                category: '',
+                showMap: true,
+                price: [0,100],
+                boundaries: '',
+                datesSubmit: [],
+                datesFormatted: [],
+                dates: [],
+                showInside:false,
+                pickerInstance: '',
                 config: {
                     minDate: "today",
+                    altFormat:'M d',
+                    altInput: true,
                     mode: "range",
-                    inline: false,
+                    inline: true,
                     showMonths: 2,
                     dateFormat: 'Y-m-d H:i:s',
-                    onClose: [function(value){
-                        const dateArr = value.map(date => this.formatDate(date, "Y-m-d H:i:s"));
-                        console.log(dateArr);
-                    }.bind(this.test)] 
+                    onClose: [this.dateFunc()], 
                 },
-                visibility: 'visible',
-                zoom: 11,
-                center: latLng(47.41322, -1.219482),
-                url: "https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png",
-                attribution:
-                '<a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia</a>',
-                currentCenter: latLng(47.41322, -1.219482),
-                currentBounds: '',
-                allowZoom: false,
-                eventList: '',
-                mapSearch: true,
-                height:0,
-
             }
         },
 
         methods: {
-
-            testUpdate(value) {
-                console.log(value);
-                this.$set(this.searchedevents, 'start',value[0]);
-                console.log(this.searchedevents);
-            },
 
             initializeSearchObject() {
                 return {
@@ -172,59 +192,103 @@
                     longitude: '',
                 }
             },
-        
-            updateFilter() {
+
+            show(type) {
+                console.log(type);
+                this.activeItem === type ? this.activeItem = null : this.activeItem = type;
+            },
+            showa(type) {
+                console.log('seconshow');
+                this.activeItem === type ? this.activeItem = null : this.activeItem = type;
+            },
+
+            updateSearchedLocation() {
                 this.$store.dispatch('searchEvents', this.searchedevents);
                 this.$store.dispatch('userSearchRequest', this.searchedevents);
             },
-            centerUpdate(center) {
-                this.currentCenter = center;
-            },
-            boundsUpdate(bounds) {
-                this.currentBounds = bounds;
-                // this.mapSearch ? this.updateData() : '';
-            },
 
-            updateData() {
+            updateSearch(value) {
+                this.boundaries = value;
                 let data = {
-                    latitude: this.currentBounds,
-                    time: 'test'
+                    mapboundary: value,
+                    category: this.category ? this.category.id : '',
+                    dates: this.datesSubmit ? this.datesSubmit : '',
+                    price: this.price ? this.price : '',
                 };
                 axios.post('/api/mapboundary/search', data)
                 .then(response => {
-                    console.log(response.data)
-                    this.eventList = response.data
+                    this.eventList = response.data;
+                    console.log(response.data);
                 });
             },
 
-            hello(event) {
-                //
+            getPriceRange() {
+                let prices = [] 
+                this.eventList.forEach(event=>{ 
+                  event.priceranges.forEach(pricerange=>{ 
+                    prices.push(pricerange.price) 
+                  }) 
+                })
             },
 
-            handleResize() {
-                this.height = window.innerHeight;
+            dateFunc() {
+            // Save component this in that
+            const that = this;
+            // return function needed
+            return function(value) {
+                that.datesSubmit = value.map(date => 
+                    this.formatDate(date, "Y-m-d H:i:S"));
+                that.datesFormatted = value.map(date => 
+                    this.formatDate(date, "M d"));
+                }
             },
-            
+
+            filterData() {
+                this.activeItem = null;
+                let data = {
+                    loc: this.mapCenter,
+                    mapboundary: this.boundaries,
+                    category: this.category ? this.category.id : '',
+                    dates: this.datesSubmit ? this.datesSubmit : '',
+                    price: this.price ? this.price : '',
+                };
+                axios.post('/api/mapboundary/search', data)
+                .then(response => {
+                    this.eventList = response.data;
+                    console.log(response.data)
+                });
+            },
         },
 
         watch: {
-            mapCenter() {
-                this.zoom = 11
+            events() {
+                this.eventList = this.events;
+                this.getPriceRange()
             },
-            currentCenter() {
-                this.currentCenter.lat.toString().length > 10 ? this.mapSearch ? this.updateData() : '' : '' ;
-            }
         },
 
         created() {
-            this.updateFilter();
-            window.addEventListener('resize', this.handleResize)
-            this.handleResize();
+            this.updateSearchedLocation();
         },
 
-        destroyed() {
-            window.removeEventListener('resize', this.handleResize)
-        },
+        directives: {
+            clickoutside: {
+                bind: function (el, binding, vnode) {
+                    el.clickOutsideEvent = function (event) {
+                    // here I check that click was outside the el and his childrens
+                    if (!(el == event.target || el.contains(event.target))) {
+                    // and if it did, call method provided in attribute value
+                    vnode.context[binding.expression](event);
+                    }
+                };
+                document.body.addEventListener('click', el.clickOutsideEvent)
+            },
+            unbind: function (el) {
+            document.body.removeEventListener('click', el.clickOutsideEvent)
+            },
+            stopProp(event) { event.stopPropagation() }
+            }
+        }
 
     };
 </script>
