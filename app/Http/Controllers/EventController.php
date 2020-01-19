@@ -123,74 +123,41 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
-        if ($event->largeImagePath) {
-            Storage::delete('public/' . $event->largeImagePath);
-            Storage::delete('public/' . $event->thumbImagePath);
-        };
-        $event->delete();
+        $event->deleteEvent($event);
         return auth()->user()->events;
     }
 
-    public function createCategory(Event $event)
-    {
-        $categories = Category::all();
-        return view('create.category', compact('event','categories'));
-    }
-
-    public function fetchCategory(Event $event)
-    {
-        $selectedCat = $event->category()->first();
-        return $selectedCat;
-    }
-    
-    public function updateCategory(Request $request, Event $event)
-    {
-        $event->update([ 'category_id' => request('id') ]);
-    }
-    public function updateTitle(Request $request, Event $event)
-    {
-
-        if ($event->name == request('name')) {
-            $event->update(['tag_line' => request('tagline')]);
-        } else {
-            if (Event::where('name', '=', request('name'))->exists()) {
-                $event->update([ 
-                    'name' => request('name') . '-' . rand(5, 9999),
-                    'tag_line' => request('tagline')
-                ]);
-            } else {
-                $event->update([ 
-                    'name' => request('name'),
-                    'tag_line' => request('tagline')
-                ]);
-            }
-        }
-    }
-
+    /**
+     * Returns Title Page in Creation Process
+     *
+     * @param  \App\Event  $event
+     * @return \Illuminate\Http\Response
+     */
     public function title(Event $event)
     {
         return view('create.title', compact('event'));
     }
 
+    /**
+     * Fetches the current Event Title for the creation process. This involves the timestamp process
+     *
+     * @param  \App\Event  $event
+     * @return \Illuminate\Http\Response
+     */
     public function fetchTitle(Event $event)
     {
         return $event;
     }
 
+    public function updateTitle(Request $request, Event $event)
+    {
+
+        $event->updateEventTitle($request, $event);
+    }
+
     public function thanks(Event $event)
     {
-        $website = $event->organizer->website;
-        
-        if ($event->websiteUrl == null) {
-            $event->update([ 'websiteUrl' => $website ]);
-        }
-        if ($event->ticketUrl == null) {
-            $event->update([ 'ticketUrl' => $website ]);
-        }
-        $event->update([
-            'approval_process' => 'ready',
-        ]);
-
+        $event->finalizeEvent($event);
         return view('create.thanks');
     }
 }

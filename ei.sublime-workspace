@@ -4,20 +4,196 @@
 		"selected_items":
 		[
 			[
+				"bac",
+				"background\tproperty"
+			],
+			[
+				"add",
+				"addImage"
+			],
+			[
+				"back",
+				"background-position\tproperty"
+			],
+			[
+				"categ",
+				"category"
+			],
+			[
+				"show",
+				"showInside"
+			],
+			[
+				"in",
+				"initOrganizers"
+			],
+			[
+				"organiz",
+				"organizerList"
+			],
+			[
+				"organ",
+				"organizers"
+			],
+			[
+				"orga",
+				"organizerList"
+			],
+			[
+				"or",
+				"organizerList"
+			],
+			[
+				"date",
+				"datesSubmit"
+			],
+			[
+				"sh",
+				"showPrice"
+			],
+			[
+				"get",
+				"getPriceRange"
+			],
+			[
+				"priceran",
+				"priceranges"
+			],
+			[
+				"lat",
+				"latitude"
+			],
+			[
+				"search",
+				"searchedevents"
+			],
+			[
+				"sho",
+				"showDates"
+			],
+			[
+				"filt",
+				"filterData"
+			],
+			[
+				"con",
+				"console"
+			],
+			[
+				"dates",
+				"datesSubmit"
+			],
+			[
+				"to",
+				"toggleCat"
+			],
+			[
+				"Cate",
+				"category"
+			],
+			[
+				"cate",
+				"category"
+			],
+			[
+				"event",
+				"eventList"
+			],
+			[
+				"even",
+				"eventList"
+			],
+			[
+				"upda",
+				"updateSearchedLocation"
+			],
+			[
+				"set",
+				"setPlace"
+			],
+			[
+				"place",
+				"place_changed"
+			],
+			[
+				"key",
+				"keywords"
+			],
+			[
+				"user",
+				"userlist"
+			],
+			[
+				"create",
+				"createList"
+			],
+			[
+				"load",
+				"loadUsers"
+			],
+			[
+				"mobil",
+				"mobility"
+			],
+			[
+				"mo",
+				"mobility"
+			],
+			[
+				"mob",
+				"mobilities"
+			],
+			[
+				"loa",
+				"loadMobilities"
+			],
+			[
+				"Mobo",
+				"MobilityAdvisory"
+			],
+			[
+				"clea",
+				"clearError"
+			],
+			[
+				"first",
+				"firstTicket"
+			],
+			[
+				"us",
+				"usertype"
+			],
+			[
+				"tem",
+				"tempImg"
+			],
+			[
+				"image",
+				"imagePath"
+			],
+			[
+				"ima",
+				"imageRatio"
+			],
+			[
+				"img",
+				"imgRatio"
+			],
+			[
+				"f",
+				"fileType"
+			],
+			[
+				"t",
+				"type"
+			],
+			[
 				"im",
 				"imageHeight"
 			],
 			[
-				"image",
-				"imageWidth"
-			],
-			[
 				"fin",
 				"finalImage"
-			],
-			[
-				"tem",
-				"tempOrganizer"
 			],
 			[
 				"ty",
@@ -28,20 +204,8 @@
 				"sizeWrong"
 			],
 			[
-				"add",
-				"addImage"
-			],
-			[
 				"check",
 				"checkType"
-			],
-			[
-				"or",
-				"organizerImage"
-			],
-			[
-				"in",
-				"inline\tdisplay"
 			],
 			[
 				"file",
@@ -62,14 +226,6 @@
 			[
 				"gen",
 				"genreActive"
-			],
-			[
-				"sho",
-				"showList"
-			],
-			[
-				"con",
-				"contentAdvisory"
 			],
 			[
 				"adv",
@@ -128,14 +284,6 @@
 				"categories"
 			],
 			[
-				"cate",
-				"category"
-			],
-			[
-				"load",
-				"loadCategories"
-			],
-			[
 				"grid-tem",
 				"grid-template-columns\tproperty"
 			],
@@ -160,20 +308,12 @@
 				"eventsbyorganizer"
 			],
 			[
-				"mob",
-				"mobilityAdvisories"
-			],
-			[
 				"sub",
 				"submitName"
 			],
 			[
 				"mobi",
 				"MobilityAdvisory"
-			],
-			[
-				"mobil",
-				"mobilityAdvisories"
 			],
 			[
 				"ma",
@@ -208,24 +348,12 @@
 				"inline-block\tdisplay"
 			],
 			[
-				"ima",
-				"imageSrc"
-			],
-			[
-				"event",
-				"eventImage"
-			],
-			[
 				"bound",
 				"boundsUpdate"
 			],
 			[
 				"com",
 				"components"
-			],
-			[
-				"show",
-				"showOrganizer"
 			],
 			[
 				"organi",
@@ -246,10 +374,6 @@
 			[
 				"eve",
 				"eventsbyorganizer"
-			],
-			[
-				"orga",
-				"organizers"
 			],
 			[
 				"inline",
@@ -276,16 +400,8 @@
 				"location_latlon"
 			],
 			[
-				"categ",
-				"categories"
-			],
-			[
 				"ca",
 				"category"
-			],
-			[
-				"back",
-				"background\tproperty"
 			],
 			[
 				"gre",
@@ -348,10 +464,6 @@
 				"request"
 			],
 			[
-				"key",
-				"keywords"
-			],
-			[
 				"tick",
 				"ticketUrl"
 			],
@@ -402,118 +514,6 @@
 			[
 				"tic",
 				"ticketsDelete"
-			],
-			[
-				"delete",
-				"deleteRow"
-			],
-			[
-				"ac",
-				"ticketPriceActive"
-			],
-			[
-				"ticket",
-				"ticket_price"
-			],
-			[
-				"getss",
-				"getSessionTickets"
-			],
-			[
-				"getSe",
-				"getSessionDates"
-			],
-			[
-				"fun",
-				"function"
-			],
-			[
-				"dates",
-				"datesToDelete"
-			],
-			[
-				"search",
-				"searchedevents"
-			],
-			[
-				"sear",
-				"searchDatastore"
-			],
-			[
-				"sea",
-				"searchDatastore"
-			],
-			[
-				"date",
-				"dateArray"
-			],
-			[
-				"da",
-				"dateArray"
-			],
-			[
-				"get",
-				"getSession"
-			],
-			[
-				"day",
-				"dayClicked"
-			],
-			[
-				"vuex",
-				"vuexSearch"
-			],
-			[
-				"jso",
-				"json_encode"
-			],
-			[
-				"coll",
-				"collection"
-			],
-			[
-				"url",
-				"urlDate"
-			],
-			[
-				"selec",
-				"selectedValue"
-			],
-			[
-				"lat",
-				"latitude"
-			],
-			[
-				"long",
-				"longitude"
-			],
-			[
-				"organ",
-				"organizer_id"
-			],
-			[
-				"bo",
-				"bodyArea"
-			],
-			[
-				"sele",
-				"selectedValue"
-			],
-			[
-				"selecterd",
-				"selectedRequired"
-			],
-			[
-				"fil",
-				"file_size_validation"
-			],
-			[
-				"placeh",
-				"placeholder"
-			],
-			[
-				"loc",
-				"Location"
 			]
 		]
 	},
@@ -523,16 +523,8 @@
 			"file": "routes/web.php",
 			"settings":
 			{
-				"buffer_size": 4093,
+				"buffer_size": 4762,
 				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "resources/js/components/adminArea/admin-categories.vue",
-			"settings":
-			{
-				"buffer_size": 8891,
 				"line_ending": "Unix"
 			}
 		}
@@ -592,160 +584,146 @@
 		"/Users/chrisgrim/code/ei/app/Http/Controllers",
 		"/Users/chrisgrim/code/ei/app/Mail",
 		"/Users/chrisgrim/code/ei/database",
-		"/Users/chrisgrim/code/ei/database/migrations",
 		"/Users/chrisgrim/code/ei/resources",
 		"/Users/chrisgrim/code/ei/resources/js",
 		"/Users/chrisgrim/code/ei/resources/js/components",
 		"/Users/chrisgrim/code/ei/resources/js/components/adminArea",
-		"/Users/chrisgrim/code/ei/resources/js/components/create",
-		"/Users/chrisgrim/code/ei/resources/js/components/events",
-		"/Users/chrisgrim/code/ei/resources/js/components/events/components",
-		"/Users/chrisgrim/code/ei/resources/js/components/profile",
-		"/Users/chrisgrim/code/ei/resources/js/components/read",
-		"/Users/chrisgrim/code/ei/resources/sass",
-		"/Users/chrisgrim/code/ei/resources/sass/adminarea",
-		"/Users/chrisgrim/code/ei/resources/sass/adminarea/approval",
-		"/Users/chrisgrim/code/ei/resources/sass/create",
-		"/Users/chrisgrim/code/ei/resources/sass/events",
-		"/Users/chrisgrim/code/ei/resources/sass/events/components",
 		"/Users/chrisgrim/code/ei/resources/views",
 		"/Users/chrisgrim/code/ei/resources/views/adminArea",
-		"/Users/chrisgrim/code/ei/resources/views/create",
+		"/Users/chrisgrim/code/ei/resources/views/auth",
 		"/Users/chrisgrim/code/ei/resources/views/events",
-		"/Users/chrisgrim/code/ei/resources/views/layouts",
-		"/Users/chrisgrim/code/ei/resources/views/layouts/admin",
 		"/Users/chrisgrim/code/ei/routes"
 	],
 	"file_history":
 	[
-		"/Users/chrisgrim/code/ei/app/Organizer.php",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/OrganizerController.php",
-		"/Users/chrisgrim/code/ei/resources/js/components/create/checklist.vue",
-		"/Users/chrisgrim/code/ei/resources/js/components/create/organizer.vue",
-		"/Users/chrisgrim/code/ei/resources/js/components/create/image.vue",
-		"/Users/chrisgrim/code/ei/database/migrations/2019_08_26_174655_create_organizers_table.php",
-		"/Users/chrisgrim/code/ei/resources/sass/create/organizer.scss",
-		"/Users/chrisgrim/code/ei/resources/sass/create/image.scss",
-		"/Users/chrisgrim/code/ei/resources/sass/layout.scss",
-		"/Users/chrisgrim/code/ei/resources/sass/create/start.scss",
-		"/Users/chrisgrim/code/ei/resources/views/create/initial.blade.php",
-		"/Users/chrisgrim/code/ei/resources/sass/events/components/event-grid-component.scss",
-		"/Users/chrisgrim/code/ei/sftp-config.json",
-		"/Users/chrisgrim/code/ei/resources/js/components/events/event-search.vue",
-		"/Users/chrisgrim/code/ei/resources/js/components/read/popup-content.vue",
-		"/Users/chrisgrim/code/ei/resources/sass/events/event-show.scss",
-		"/Users/chrisgrim/code/ei/resources/sass/events/components/search-grid-component.scss",
-		"/Users/chrisgrim/code/ei/resources/sass/components/leaflet.scss",
-		"/Users/chrisgrim/code/ei/resources/sass/events/event-search.scss",
-		"/Users/chrisgrim/code/ei/resources/sass/create/layout.scss",
-		"/Users/chrisgrim/code/ei/resources/js/components/events/event-edit.vue",
-		"/Users/chrisgrim/code/ei/resources/js/components/events/components/index-item.vue",
-		"/Users/chrisgrim/code/ei/resources/sass/events/event-edit.scss",
-		"/Users/chrisgrim/code/ei/resources/js/components/layouts/favorite.vue",
-		"/Users/chrisgrim/code/ei/resources/js/components/create/shows.vue",
-		"/Users/chrisgrim/code/ei/resources/sass/app-create.scss",
-		"/Users/chrisgrim/code/ei/resources/sass/create.scss",
-		"/Users/chrisgrim/code/ei/resources/sass/app.scss",
-		"/Users/chrisgrim/code/ei/resources/sass/elements.scss",
-		"/Users/chrisgrim/code/ei/resources/sass/components/sliderbutton.scss",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/EventController.php",
-		"/Users/chrisgrim/code/ei/resources/js/components/adminArea/nav.vue",
-		"/Users/chrisgrim/code/ei/resources/sass/adminarea/nav.scss",
-		"/Users/chrisgrim/code/ei/resources/js/app.js",
-		"/Users/chrisgrim/code/ei/resources/js/components/adminArea/checklist.vue",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/ImageController.php",
-		"/Users/chrisgrim/code/ei/resources/sass/create/spinner.scss",
 		"/Users/chrisgrim/code/ei/app/EventImage.php",
-		"/Users/chrisgrim/code/ei/app/Category.php",
-		"/Users/chrisgrim/code/ei/resources/js/components/create/advisories.vue",
-		"/Users/chrisgrim/code/ei/resources/sass/create/description.scss",
-		"/Users/chrisgrim/code/ei/resources/js/components/create/location-google.vue",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/StaffPicksController.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/SearchController.php",
-		"/Users/chrisgrim/code/ei/resources/sass/create/shows.scss",
-		"/Users/chrisgrim/code/ei/resources/sass/create/advisories.scss",
-		"/Users/chrisgrim/code/ei/resources/sass/create/category.scss",
-		"/Users/chrisgrim/code/ei/resources/sass/create/title.scss",
-		"/Users/chrisgrim/code/ei/resources/sass/create/location.scss",
-		"/Users/chrisgrim/code/ei/resources/js/components/create/description.vue",
-		"/Users/chrisgrim/code/ei/resources/sass/components/multiselect.scss",
+		"/Users/chrisgrim/code/ei/resources/js/components/adminArea/admin-staff-picks.vue",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/UserMasterController.php",
+		"/Users/chrisgrim/code/ei/routes/api.php",
+		"/Users/chrisgrim/code/ei/resources/js/components/create/organizer-admin.vue",
+		"/Users/chrisgrim/code/ei/resources/js/components/events/event-search.vue",
+		"/Users/chrisgrim/code/ei/resources/js/components/adminArea/nav.vue",
+		"/Users/chrisgrim/code/ei/resources/js/app.js",
+		"/Users/chrisgrim/code/ei/app/StaffPick.php",
+		"/Users/chrisgrim/code/ei/resources/views/adminArea/staffpicks.blade.php",
+		"/Users/chrisgrim/code/ei/app/Event.php",
+		"/Users/chrisgrim/code/ei/app/User.php",
+		"/Users/chrisgrim/code/ei/database/migrations/2020_01_13_175323_create_staff_picks_table.php",
+		"/Users/chrisgrim/code/ei/resources/js/components/layouts/nav.vue",
+		"/Users/chrisgrim/code/ei/resources/js/components/adminArea/admin-create-review.vue",
+		"/Users/chrisgrim/code/ei/resources/sass/adminarea/reviewpage.scss",
+		"/Users/chrisgrim/code/ei/resources/js/components/adminArea/imagemodal.vue",
+		"/Users/chrisgrim/code/ei/resources/sass/app-admin.scss",
+		"/Users/chrisgrim/code/ei/resources/views/adminArea/imagemodal.vue",
+		"/Users/chrisgrim/code/ei/resources/views/adminArea/createreview.blade.php",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/EventReviewController.php",
+		"/Users/chrisgrim/code/ei/resources/js/components/layouts/profile-button.vue",
+		"/Users/chrisgrim/code/ei/resources/sass/components/leaflet.scss",
+		"/Users/chrisgrim/code/ei/resources/views/events/index.blade.php",
+		"/Users/chrisgrim/code/ei/resources/sass/auth/verify.scss",
+		"/Users/chrisgrim/code/ei/resources/views/auth/verify.blade.php",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/Auth/RegisterController.php",
+		"/Users/chrisgrim/code/ei/vendor/laravel/framework/src/Illuminate/Auth/Notifications/VerifyEmail.php",
+		"/Users/chrisgrim/code/ei/resources/views/events/show.blade.php",
+		"/Users/chrisgrim/code/ei/resources/views/layouts/meta.blade.php",
+		"/Users/chrisgrim/code/ei/resources/views/events/edit.blade.php",
+		"/Users/chrisgrim/code/ei/resources/views/events/search.blade.php",
+		"/Users/chrisgrim/code/ei/resources/views/layouts/master.blade.php",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/PickOfWeekController.php",
+		"/Users/chrisgrim/code/ei/database/migrations/2020_01_13_174508_create_pick_of_weeks_table.php",
+		"/Users/chrisgrim/code/ei/.env",
+		"/Users/chrisgrim/code/ei/resources/js/components/events/event-edit.vue",
+		"/Users/chrisgrim/code/ei/resources/sass/create/start.scss",
+		"/Users/chrisgrim/code/ei/resources/views/create/thanks.blade.php",
+		"/Users/chrisgrim/code/ei/resources/sass/create/thankyou.scss",
+		"/Users/chrisgrim/code/ei/resources/sass/events/event-edit.scss",
+		"/Users/chrisgrim/code/ei/resources/views/create/initial.blade.php",
+		"/Users/chrisgrim/code/ei/resources/sass/app-create.scss",
+		"/Users/chrisgrim/code/ei/resources/js/components/create/location-google.vue",
+		"/Users/chrisgrim/code/ei/resources/sass/events/components/event-grid-component.scss",
+		"/Users/chrisgrim/code/ei/resources/js/components/create/organizer.vue",
+		"/Users/chrisgrim/code/ei/resources/sass/create/organizer.scss",
+		"/Users/chrisgrim/code/ei/resources/sass/nav/profilebutton.scss",
+		"/Users/chrisgrim/code/ei/resources/sass/nav/navbar.scss",
+		"/Users/chrisgrim/code/ei/resources/sass/app.scss",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/ProfilesController.php",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/OrganizerController.php",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/AdvisoriesController.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/DescriptionController.php",
-		"/Users/chrisgrim/code/ei/resources/js/components/adminArea/admin-contact-level.vue",
-		"/Users/chrisgrim/code/ei/resources/js/components/adminArea/admin-genres.vue",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/GenresController.php",
-		"/Users/chrisgrim/code/ei/resources/views/adminArea/genres.blade.php",
-		"/Users/chrisgrim/code/ei/resources/js/components/adminArea/admin-content-advisories.vue",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/ContentAdvisoriesController.php",
-		"/Users/chrisgrim/code/ei/resources/views/adminArea/contentadvisories.blade.php",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/ContactLevelsController.php",
-		"/Users/chrisgrim/code/ei/resources/views/adminArea/contactlevels.blade.php",
-		"/Users/chrisgrim/code/ei/resources/js/components/adminArea/admin-regions.vue",
-		"/Users/chrisgrim/code/ei/resources/sass/adminarea/approval/show.scss",
-		"/Users/chrisgrim/code/ei/resources/views/create/location.blade.php",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/EventController.php",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/FavoritesController.php",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/HomeController.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/LocationController.php",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/RegionsController.php",
-		"/Users/chrisgrim/code/ei/app/Http/Requests/RegionStoreRequest.php",
-		"/Users/chrisgrim/code/ei/app/Http/Requests/RegionRequest.php",
-		"/Users/chrisgrim/code/ei/resources/views/adminArea/regions.blade.php",
-		"/Users/chrisgrim/code/ei/resources/js/components/adminArea/approve/approval-bar.vue",
-		"/Users/chrisgrim/code/ei/app/ModeratorComment.php",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/AdminAreaController.php",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/ShowsController.php",
+		"/Users/chrisgrim/code/ei/vendor/laravel/framework/src/Illuminate/Auth/Middleware/EnsureEmailIsVerified.php",
+		"/Users/chrisgrim/code/ei/resources/views/auth/login.blade.php",
+		"/Users/chrisgrim/code/ei/resources/views/auth/register.blade.php",
+		"/Users/chrisgrim/code/ei/resources/views/auth/passwords/reset.blade.php",
+		"/Users/chrisgrim/code/ei/resources/sass/auth/login.scss",
+		"/Users/chrisgrim/code/ei/resources/sass/auth/register.scss",
+		"/Users/chrisgrim/code/ei/resources/sass/layout.scss",
+		"/Users/chrisgrim/code/ei/resources/sass/_variables.scss",
+		"/Users/chrisgrim/code/ei/resources/js/components/layouts/nav-search.vue",
+		"/Users/chrisgrim/code/ei/resources/sass/events/event-search.scss",
 		"/Users/chrisgrim/code/ei/resources/js/components/adminArea/admin-categories.vue",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/CategoryController.php",
+		"/Users/chrisgrim/code/ei/vendor/laravel/framework/src/Illuminate/Foundation/Auth/RegistersUsers.php",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/Auth/LoginController.php",
+		"/Users/chrisgrim/code/ei/resources/lang/en/auth.php",
+		"/Users/chrisgrim/code/ei/app/Http/Middleware/Authenticate.php",
+		"/Users/chrisgrim/code/ei/resources/js/components/adminArea/admin-organizer.vue",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/AdminOrganizerController.php",
+		"/Users/chrisgrim/code/ei/app/Organizer.php",
+		"/Users/chrisgrim/code/ei/app/OrganizerSearchRule.php",
+		"/Users/chrisgrim/code/ei/resources/js/components/adminArea/admin-user.vue",
+		"/Users/chrisgrim/code/ei/resources/views/adminArea/organizers.blade.php",
+		"/Users/chrisgrim/code/ei/resources/js/components/events/event-list-search.vue",
+		"/Users/chrisgrim/code/ei/app/Genre.php",
+		"/Users/chrisgrim/code/ei/resources/js/components/events/event-map-search.vue",
+		"/Users/chrisgrim/code/ei/resources/js/components/create/description.vue",
+		"/Users/chrisgrim/code/ei/resources/views/create/index.blade.php",
+		"/Users/chrisgrim/code/ei/resources/js/components/create/checklist.vue",
+		"/Users/chrisgrim/code/ei/resources/sass/create/layout.scss",
+		"/Users/chrisgrim/code/ei/resources/sass/adminarea/layout.scss",
+		"/Users/chrisgrim/code/ei/resources/sass/components/tab.scss",
+		"/Users/chrisgrim/code/ei/app/PriceRange.php",
+		"/Users/chrisgrim/code/ei/database/migrations/2020_01_06_194623_create_price_ranges_table.php",
+		"/Users/chrisgrim/code/ei/database/migrations/2019_12_11_063149_create_moderator_comments_table.php",
+		"/Users/chrisgrim/code/ei/app/Show.php",
+		"/Users/chrisgrim/code/ei/database/migrations/2019_08_21_172519_create_events_table.php",
+		"/Users/chrisgrim/code/ei/resources/sass/components/flatpickr.scss",
+		"/Users/chrisgrim/code/ei/resources/sass/events/event-show.scss",
+		"/Users/chrisgrim/code/ei/resources/js/components/events/components/clickOutside.js",
+		"/Users/chrisgrim/code/ei/resources/js/applite.js",
+		"/Users/chrisgrim/code/ei/resources/js/components/adminArea/approve/approval-bar.vue",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/AdminAreaController.php",
 		"/Users/chrisgrim/code/ei/resources/views/adminArea/showapproval.blade.php",
 		"/Users/chrisgrim/code/ei/resources/views/layouts/admin/secondary.blade.php",
-		"/Users/chrisgrim/code/ei/resources/js/components/events/event-show.vue",
-		"/Users/chrisgrim/code/ei/resources/sass/adminarea/layout.scss",
-		"/Users/chrisgrim/code/ei/resources/sass/adminarea/category.scss",
-		"/Users/chrisgrim/code/ei/resources/views/adminArea/categories.blade.php",
-		"/Users/chrisgrim/code/ei/resources/views/adminArea/index.blade.php",
-		"/Users/chrisgrim/code/ei/resources/js/components/layouts/modal.vue",
-		"/Users/chrisgrim/code/ei/resources/views/layouts/admin/nav.blade.php",
-		"/Users/chrisgrim/code/ei/resources/sass/app-admin.scss",
-		"/Users/chrisgrim/code/ei/resources/views/layouts/admin/master.blade.php",
-		"/Users/chrisgrim/code/ei/resources/sass/components/modal.scss",
-		"/Users/chrisgrim/code/ei/resources/js/components/categories/category-show.vue",
-		"/Users/chrisgrim/code/ei/resources/views/categories/show.blade.php",
-		"/Users/chrisgrim/code/ei/resources/js/components/events/components/cat-item.vue",
-		"/Users/chrisgrim/code/ei/resources/sass/components/tab.scss",
-		"/Users/chrisgrim/code/ei/resources/views/events/edit.blade.php",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/AdvisoriesController.php",
-		"/Users/chrisgrim/code/ei/resources/views/create/advisories.blade.php",
-		"/Users/chrisgrim/code/ei/resources/js/components/create/title.vue",
-		"/Users/chrisgrim/code/ei/resources/views/create/description.blade.php",
-		"/Users/chrisgrim/code/ei/resources/views/create/title.blade.php",
-		"/Users/chrisgrim/code/ei/resources/js/components/create/category.vue",
-		"/Users/chrisgrim/code/ei/resources/views/layouts/create/master.blade.php",
-		"/Users/chrisgrim/code/ei/resources/js/components/layouts/loading.vue",
-		"/Users/chrisgrim/code/ei/app/ContentAdvisory.php",
-		"/Users/chrisgrim/code/ei/app/MobilityAdvisory.php",
-		"/Users/chrisgrim/code/ei/app/Http/Requests/AdvisoryStoreRequest.php",
-		"/Users/chrisgrim/code/ei/database/migrations/2019_08_26_213939_create_advisories_table.php",
-		"/Users/chrisgrim/code/ei/database/migrations/2019_12_14_051507_create_mobility_advisories_table.php",
-		"/Users/chrisgrim/code/ei/database/migrations/2019_11_18_180214_create_content_advisories_table.php",
-		"/Users/chrisgrim/code/ei/app/Event.php",
-		"/Users/chrisgrim/code/ei/resources/sass/components/flatpickr.scss",
-		"/Users/chrisgrim/code/ei/resources/views/create/show.blade.php",
-		"/Users/chrisgrim/code/ei/database/migrations/2019_08_26_170401_create_categories_table.php",
-		"/Users/chrisgrim/code/ei/database/migrations/2019_08_21_172519_create_events_table.php",
-		"/Users/chrisgrim/code/ei/app/Advisory.php",
-		"/Users/chrisgrim/code/ei/database/migrations/2019_08_26_213939_create_expects_table.php",
 		"/Users/chrisgrim/code/ei/webpack.mix.js",
-		"/Users/chrisgrim/code/ei/resources/views/emails/moderator-comments.blade.php",
-		"/Users/chrisgrim/code/ei/app/Mail/ModeratorComments.php",
-		"/Users/chrisgrim/code/ei/.env",
-		"/Users/chrisgrim/code/ei/database/migrations/2019_12_11_063149_create_moderator_comments_table.php",
-		"/Users/chrisgrim/code/ei/resources/js/app-create.js",
-		"/Users/chrisgrim/code/ei/resources/views/create/index.blade.php",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/ExpectController.php",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/ShowsController.php",
-		"/Users/chrisgrim/code/ei/resources/views/create/checklist.blade.php",
-		"/Users/chrisgrim/code/ei/resources/js/components/create/checklist_old.vue",
-		"/Users/chrisgrim/code/ei/resources/js/components/layouts/create/nav.vue",
-		"/Users/chrisgrim/code/ei/resources/views/layouts/create/nav.blade.php",
-		"/Users/chrisgrim/code/ei/resources/sass/create/initial.scss",
-		"/Users/chrisgrim/code/ei/resources/views/create/organizer.blade.php",
-		"/Users/chrisgrim/code/ei/resources/js/components/create/nav.vue",
-		"/Users/chrisgrim/code/ei/resources/views/layouts/create/footer.blade.php"
+		"/Users/chrisgrim/code/ei/app/UserSearchRule.php",
+		"/Users/chrisgrim/code/ei/resources/views/create/location.blade.php",
+		"/Users/chrisgrim/code/ei/resources/views/layouts/create/master.blade.php",
+		"/Users/chrisgrim/code/ei/node_modules/vue2-google-maps/dist/vue-google-maps.js",
+		"/Users/chrisgrim/code/ei/resources/views/layouts/nav.blade.php",
+		"/Users/chrisgrim/code/ei/app/UserIndexConfigurator.php",
+		"/Users/chrisgrim/code/ei/database/migrations/2019_11_13_181756_create_roles_table.php",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/RegionsController.php",
+		"/Users/chrisgrim/code/ei/resources/views/adminArea/mobilities.blade.php",
+		"/Users/chrisgrim/code/ei/resources/views/adminArea/users.blade.php",
+		"/Users/chrisgrim/code/ei/resources/js/components/adminArea/admin-mobility.vue",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/MobilityController.php",
+		"/Users/chrisgrim/code/ei/resources/js/components/adminArea/admin-genres.vue",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/GenresController.php",
+		"/Users/chrisgrim/code/ei/resources/js/components/adminArea/admin-content-advisories.vue",
+		"/Users/chrisgrim/code/ei/resources/js/components/adminArea/admin-regions.vue",
+		"/Users/chrisgrim/code/ei/resources/js/components/adminArea/admin-contact-level.vue",
+		"/Users/chrisgrim/code/ei/resources/sass/components/modal.scss",
+		"/Users/chrisgrim/code/ei/resources/js/components/create/shows.vue",
+		"/Users/chrisgrim/code/ei/resources/js/components/create/image.vue",
+		"/Users/chrisgrim/code/ei/app/Role.php",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/CategoryController.php"
 	],
 	"find":
 	{
@@ -756,6 +734,14 @@
 		"height": 164.0,
 		"where_history":
 		[
+			"/Users/chrisgrim/code/ei",
+			"/Users/chrisgrim/code/ei/resources/sass/events",
+			"/Users/chrisgrim/code/ei/resources/sass",
+			"/Users/chrisgrim/code/ei/resources/sass/adminarea",
+			"/Users/chrisgrim/code/ei/resources",
+			"/Users/chrisgrim/code/ei/resources/js",
+			"/Users/chrisgrim/code/ei/resources",
+			"/Users/chrisgrim/code/ei/resources/js",
 			"/Users/chrisgrim/code/ei/resources/sass",
 			"/Users/chrisgrim/code/ei/resources/js",
 			"/Users/chrisgrim/code/ei/resources/sass",
@@ -782,6 +768,55 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"mapboundary",
+			".",
+			"    .",
+			"menububble",
+			"menu",
+			"icon",
+			"menubar__button",
+			"menububble__button",
+			"isActive",
+			"menububble",
+			"icon",
+			"admin-genres",
+			"form-group row",
+			"register(",
+			"showmap",
+			"user",
+			"class=\"click\"",
+			".checklist",
+			"create",
+			"hide",
+			"toggleCat",
+			"showPopup",
+			"showCat",
+			"value",
+			"advisories.sexualViolence",
+			"length",
+			"listedevents",
+			"searchedevents",
+			"eventlist",
+			"latitude",
+			"updatedata",
+			"udpatedata",
+			"udpate",
+			"vue2-google-maps",
+			"name",
+			"regions",
+			"mobilities",
+			"genres",
+			"mobilities",
+			"genres",
+			"Genre",
+			"genre",
+			"finalImage",
+			"imageSrc",
+			"vuecropper",
+			"vueTimepicker",
+			"date-fns",
+			"moment.js",
+			"moment",
 			"Event",
 			"popup-content",
 			"1.1",
@@ -860,56 +895,7 @@
 			"tab",
 			" !important",
 			"loadorganizers",
-			"liveevents",
-			" !important",
-			"zoom-button-section",
-			" !important",
-			"event-list-section",
-			"event-list-sectiomn",
-			"event-list",
-			"event-l",
-			"loadIndex",
-			"show-heart",
-			"grid-background",
-			"float",
-			" !important",
-			"event",
-			"login",
-			"boolean",
-			".navmenu",
-			"justify-items",
-			"justify",
-			"concat",
-			"options.concat",
-			"ajax",
-			"ajaxz",
-			"ajaz",
-			"wheelchairReady",
-			" !important",
-			"important",
-			"name",
-			"heart",
-			".profile-image",
-			"border-radius",
-			"profile-image",
-			"label.profile",
-			" !important",
-			"description_text",
-			"!important",
-			"category",
-			"input",
-			"AdminAreaController",
-			"soft",
-			"hidden",
-			"42 42",
-			"checkbox",
-			"eventImage",
-			"expect.sexualViolence",
-			"contactLevel",
-			"contactActive",
-			"left",
-			"loaduser",
-			"websiteActive"
+			"liveevents"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -927,7 +913,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -936,15 +922,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4093,
+						"buffer_size": 4762,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3833,
-								3833
+								932,
+								942
 							]
 						],
 						"settings":
@@ -955,38 +941,7 @@
 							"syntax": "Packages/PHP/PHP.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 186.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "resources/js/components/adminArea/admin-categories.vue",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 8891,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/Vuejs Complete Package/vue.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 4533.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -1032,7 +987,7 @@
 	},
 	"output.sftp":
 	{
-		"height": 54.0
+		"height": 122.0
 	},
 	"pinned_build_system": "",
 	"project": "ei.sublime-project",
@@ -1047,6 +1002,46 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"imagemoda",
+				"resources/views/adminArea/imagemodal.vue"
+			],
+			[
+				"verify",
+				"vendor/laravel/framework/src/Illuminate/Auth/Notifications/VerifyEmail.php"
+			],
+			[
+				"verifyem",
+				"vendor/laravel/framework/src/Illuminate/Auth/Notifications/VerifyEmail.php"
+			],
+			[
+				"ensureemai",
+				"vendor/laravel/framework/src/Illuminate/Auth/Middleware/EnsureEmailIsVerified.php"
+			],
+			[
+				"authcontroller",
+				"app/Http/Controllers/Auth/LoginController.php"
+			],
+			[
+				"auth",
+				"resources/lang/en/auth.php"
+			],
+			[
+				"regis",
+				"vendor/laravel/framework/src/Illuminate/Foundation/Auth/RegistersUsers.php"
+			],
+			[
+				"registerus",
+				"vendor/laravel/framework/src/Illuminate/Foundation/Auth/RegistersUsers.php"
+			],
+			[
+				"vue2-google",
+				"node_modules/vue2-google-maps/dist/vue-google-maps.js"
+			],
+			[
+				"registeru",
+				"vendor/laravel/framework/src/Illuminate/Foundation/Auth/RegistersUsers.php"
+			],
 			[
 				"session",
 				"config/session.php"

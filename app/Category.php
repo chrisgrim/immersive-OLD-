@@ -38,6 +38,40 @@ class Category extends Model
     }
 
     /**
+    * Updates the different elements of the model depending on the request
+    *
+    * @return nothing
+    */
+    public function updateElements($request, $category) 
+    {
+        if($request->name) {
+            $category->updateName($category, $request);
+            return '';
+        }
+        if($request->description) {
+            $category->update(['description' => $request->description]);
+            return '';
+        }
+        if($request->imagePath) {
+            $category->updateFile($request, $category);
+            return '';
+        }
+    }
+
+    /**
+    * Deletes the category images and then deletes the catgory
+    *
+    * @return Nothing
+    */
+    public function deleteCategory($category) {
+        if ($category->largeImagePath) {
+            Storage::delete('public/' . $category->largeImagePath);
+            Storage::delete('public/' . $category->thumbImagePath);
+        };
+        $category->delete();
+    }
+
+    /**
     * Saves the image that is passed from the controller
     *
     * @return string

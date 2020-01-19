@@ -21,25 +21,26 @@
 		            <textarea 
 		            v-model.trim="location.hiddenLocation" 
 		            rows="4" 
-		            :class="{ active: notifiedActive}"
+		            :class="{ active: activeItem == 'hidden'}"
 		            required 
 		            autofocus
 		 			placeholder="...the night before you will receieve an email containing the location..."
-		            @click="notifiedActive = true"
-			        @blur="notifiedActive = false"
-		            />
+                    @click="activeItem = 'hidden'"
+                    @blur="activeItem = null"
+                    />
 		        </div>
                 <div class="field">
-                    <label> Event Address </label>
+                    <label> Event Location </label>
                     <input 
                     ref="autocomplete" 
                     :placeholder="locationPlaceholder"
-                    :class="{ active: locationActive, 'error': $v.location.latitude.$error }"
+                    :class="{ active: activeItem == 'location', 'error': $v.location.latitude.$error }"
                     autocomplete="false"
                     onfocus="value = ''" 
-                    @blur="locationActive = false"
-                    @click="locationActive = true"
-                    type="text" />
+                    @click="activeItem = 'location'"
+                    @blur="activeItem = null"
+                    type="text"
+                    />
                     <div v-if="$v.location.latitude.$error" class="validation-error">
                         <p class="error" v-if="!$v.location.latitude.required">Please select from the list of locations</p>
                     </div>
@@ -56,9 +57,9 @@
     				required 
     				label="region"
     				@input="$v.selectedRegions.$touch"
-    				:class="{ active: hiddenActive,'error': $v.selectedRegions.$error}"
-    				@click="hiddenActive = true"
-    		        @blur="hiddenActive = false"
+    				:class="{ active: activeItem == 'region','error': $v.selectedRegions.$error}"
+    				@click="activeItem = 'region'"
+    		        @blur="activeItem = null"
     				/>
     				<div v-if="$v.selectedRegions.$error" class="validation-error">
         				<p class="error" v-if="!$v.selectedRegions.required">Please select at least one Region</p>
@@ -136,13 +137,10 @@
 				center: '',
 				url:'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
 				attribution:'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-				locationActive: false,
-				notifiedActive: false,
-				hiddenActive: false,
+                activeItem: null,
                 allowZoom: false,
                 dis: false,
                 height:0,
-                google: '',
 			}
 		},
 
@@ -182,7 +180,6 @@
 
 				axios.patch(`${this.eventUrl}/location`, data)
 				.then(response => { 			
-                    console.log(response.data);		
 					window.location.href = `${this.eventUrl}/category`; 
 				})
                 .catch(errorResponse => {
@@ -197,7 +194,6 @@
 
 			setPlace() {
                 let place = this.autocomplete.getPlace();
-                console.log(place);
 				this.center = L.latLng(place.geometry.location.lat(), place.geometry.location.lng());
 				this.updateLats(place);
 				this.getAddressObject(place.address_components);
@@ -210,7 +206,7 @@
 			},
 
             // If there is data in Database it will load from the database
-            getDatabase() {
+            load() {
                 axios.get(`${this.eventUrl}/location/fetch?timestamp=${new Date().getTime()}`)
                 .then(response => {
                     this.updateEventFields(response.data.location);
@@ -280,9 +276,8 @@
 			},
 		},
 	
-
         created() {
-            this.getDatabase();
+            this.load();
             window.addEventListener('resize', this.handleResize)
             this.handleResize();
         },

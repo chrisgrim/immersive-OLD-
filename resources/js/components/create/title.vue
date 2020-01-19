@@ -11,10 +11,10 @@
     	            type="text" 
     	            v-model="name" 
     	            placeholder=" "
-    	            :class="{ active: nameActive,'error': $v.name.$error }"
+    	            :class="{ active: activeItem == 'name','error': $v.name.$error }"
     	            @input="$v.name.$touch()"
-    	            @click="nameActive = true"
-                    @blur="nameActive = false"
+    	            @click="activeItem = 'name'"
+                    @blur="activeItem = 'name'"
     	             />
     	             <div v-if="$v.name.$error" class="validation-error">
     	    			<p class="error" v-if="!$v.name.required">Please add a Title</p>
@@ -26,10 +26,10 @@
                     <input 
                     type="text" 
                     v-model="tagLine"
-                    :class="{ active: tagLineActive,'error': $v.tagLine.$error }"
+                    :class="{ active: activeItem == 'tag','error': $v.tagLine.$error }"
                     @input="$v.tagLine.$touch()"
-                    @click="tagLineActive = true"
-                    @blur="tagLineActive = false"
+                    @click="activeItem = 'tag'"
+                    @blur="activeItem = 'tag'"
                     placeholder="Quick, one sentence line to get the audience hooked!"
                     />
                     <div v-if="$v.tagLine.$error" class="validation-error">
@@ -55,7 +55,6 @@
 	
 	import { required, maxLength } from 'vuelidate/lib/validators';
 
-
 	export default {
 		props: {
 			event: { type:Object },
@@ -66,18 +65,8 @@
 				name: '',
 				eventUrl: `/create-event/${this.event.slug}`,
                 tagLine: '',
-				nameActive: false,
-                tagLineActive: false,
+                activeItem: null,
                 dis:false,
-			}
-		},
-
-		computed: {
-			submitObject() {
-            	return {
-                	name: this.name,
-                    tagline: this.tagLine
-            	}
 			}
 		},
 
@@ -95,12 +84,15 @@
 				this.$v.$touch(); 
 				if (this.$v.$invalid) { return false }
 				this.dis = true;
-				axios.patch(`${this.eventUrl}/title`, this.submitObject)
+                let submitObject = {
+                    name: this.name,
+                    tagline: this.tagLine
+                };
+				axios.patch(`${this.eventUrl}/title`, submitObject)
 				.then(response => { 
                     window.location.href = `${this.eventUrl}/location`; 
                 })
             	.catch(error => { this.serverErrors = error.response.data.errors; this.dis = false; });
-
 			},
 
             // If there is data in Database it will load from the database
@@ -114,7 +106,8 @@
 
             goBack() {
                 window.location.href = '/create-event/edit';
-            }
+            },
+
 		},
 
         created() {

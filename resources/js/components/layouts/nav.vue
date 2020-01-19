@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="head" :class="page">
 		<nav class="nav">
 			<div class="logo">
                 <a href="/">
@@ -16,6 +16,11 @@
                 <div class="menu-nav" v-if="user && !user.hasCreatedOrganizers">
                     <a href="/events/create">
                         <div>Create Event</div>
+                    </a>
+                </div>
+                <div class="menu-nav" v-if="user.userType ? user.userType.name == 'admin' : ''">
+                    <a href="/eventreviews/create">
+                        Create Review
                     </a>
                 </div>
                 <div class="menu-nav" v-if="user && user.hasCreatedOrganizers">
@@ -80,13 +85,21 @@
     //                 hasCreatedOrganizers: this.createdevents,
     //                 id: this.userid
     //             },
-                user:this.loaduser ? this.loaduser : ''
+                user:this.loaduser ? this.loaduser : '',
+                page: '',
 			};
 		},
 
 		methods: {
-			
+			navType() {
+                console.log();
+                this.$router.currentRoute.path == `/events/test1` ? this.page = "show" : console.log('false');
+            },
 		},
+
+        mounted() {
+            this.navType();
+        }
 
 	}
 </script>

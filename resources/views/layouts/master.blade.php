@@ -3,7 +3,6 @@
 	<head>
 		@include('layouts.meta')
         @yield('meta')
-        <script src="/js/app.js" defer=""></script>
 	</head>
 	<body>
 		@include('layouts.nav')

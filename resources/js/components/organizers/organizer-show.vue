@@ -26,7 +26,6 @@
     import ImageUpload from '../layouts/image-upload.vue'
     import Multiselect from 'vue-multiselect';
     import { required } from 'vuelidate/lib/validators'
-    import MediumEditor from 'vue2-content-editor'
 
 
 
@@ -36,7 +35,7 @@
         props: ['loadorganizer'],
 
         components: {
-            Multiselect, ImageUpload, MediumEditor
+            Multiselect, ImageUpload
         },
 
         computed: {

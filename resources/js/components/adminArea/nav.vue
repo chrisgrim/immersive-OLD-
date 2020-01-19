@@ -56,6 +56,18 @@
                 </div>
                 </a>
 
+                <a href="/eventreviews/create">
+                <div class="checklist-section" >
+                    Create Review
+                </div>
+                </a>
+
+                <a href="/staffpicks/create">
+                <div class="checklist-section" >
+                    Picks Of The Week
+                </div>
+                </a>
+
                  <a href="/finish/events">
                     <div class="checklist-section">
                         <div class="item">

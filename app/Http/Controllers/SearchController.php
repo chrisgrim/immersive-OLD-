@@ -134,6 +134,14 @@ class SearchController extends Controller
         return $user;  
     }
 
+    public function searchEvents(Request $request)
+    {
+        $events = Event::search($request->keywords)
+                ->rule(EventSearchRule::class)
+                ->get();
+        return $users;  
+    }
+
     public function searchMapBoundary(Request $request)
     {
         $events = Event::search('*')

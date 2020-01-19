@@ -26,14 +26,15 @@
     <meta name="twitter:site" content="@everythingimmersive" />
     <meta name="twitter:image" content="{{ url('/') }}/storage/{{$event->largeImagePath}}" />
     <meta name="twitter:creator" content="@everythingimmersive" />
+    <link href="/css/app-lite.css" rel="stylesheet">
+    <script src="/js/applite.js" defer=""></script>
+{{--     <script src="/js/app.js" defer=""></script> --}}
 @endsection
 
 @section('content')
 
-<div>
-	<div id="bodyArea">
-		<event-show :loadevent="{{$event}}">	
-	</div>
+<div id="bodyArea">
+	<event-show :loadevent="{{$event}}" user="{{auth()->id()}}">	
 </div>
 
 @endsection

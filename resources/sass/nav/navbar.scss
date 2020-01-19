@@ -1,8 +1,14 @@
-#header {
+.head {
     position: fixed;
     width: 100%;
     background: white;
     z-index: 901;
+    &.show {
+        position: relative;
+        & .nav {
+            border:none;
+        }
+    }
 }
 .nav {
     align-items: center;

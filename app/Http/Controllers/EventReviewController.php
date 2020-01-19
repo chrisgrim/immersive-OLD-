@@ -2,22 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\StaffPick;
-use App\Event;
+use App\EventReview;
 use Illuminate\Http\Request;
 
-class StaffPicksController extends Controller
+class EventReviewController extends Controller
 {
     /**
-    * Checks for admin before allowing controller access
-    *
-    * @return \Illuminate\Http\Response
-    */
+     * Checks for admin before allowing controller access
+     *
+     * @return \Illuminate\Http\__construct
+     */
     public function __construct()
     {
-        $this->middleware('admin');
+        $this->middleware('admin')->except('show');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -35,20 +34,7 @@ class StaffPicksController extends Controller
      */
     public function create()
     {
-        return view('adminArea.staffpicks');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function fetch()
-    {
-        $events = Event::search('*')
-            ->where('closingDate', '>=', 'now/d')
-            ->get(); 
-        return $events;
+        return view('adminArea.createreview');
     }
 
     /**
@@ -65,10 +51,10 @@ class StaffPicksController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\StaffPick  $staffPick
+     * @param  \App\EventReview  $eventReview
      * @return \Illuminate\Http\Response
      */
-    public function show(StaffPick $staffPick)
+    public function show(EventReview $eventReview)
     {
         //
     }
@@ -76,10 +62,10 @@ class StaffPicksController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\StaffPick  $staffPick
+     * @param  \App\EventReview  $eventReview
      * @return \Illuminate\Http\Response
      */
-    public function edit(StaffPick $staffPick)
+    public function edit(EventReview $eventReview)
     {
         //
     }
@@ -88,21 +74,21 @@ class StaffPicksController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\StaffPick  $staffPick
+     * @param  \App\EventReview  $eventReview
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $staffPick)
+    public function update(Request $request, EventReview $eventReview)
     {
-        return $staffPick;
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\StaffPick  $staffPick
+     * @param  \App\EventReview  $eventReview
      * @return \Illuminate\Http\Response
      */
-    public function destroy(StaffPick $staffPick)
+    public function destroy(EventReview $eventReview)
     {
         //
     }

@@ -286,7 +286,7 @@ export default {
         //turn off spinning wheel
         asyncFind (query) {
             this.isLoading = true
-            axios.get('/api/organizer/search', { params: { keywords: query } })
+            axios.get('/api/search/organizer', { params: { keywords: query } })
             .then(response => {
                 if (query.length) {
                     this.searchOptions = response.data;

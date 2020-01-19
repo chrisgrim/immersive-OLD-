@@ -16,4 +16,5 @@ mix.js('resources/js/app.js', 'public/js')
     .extract(['vue','vuelidate','leaflet','vue-router','vuelidate-error-extractor'])
     .sass('resources/sass/app-create.scss', 'public/css')
     .sass('resources/sass/app-admin.scss', 'public/css')
+    .sass('resources/sass/app-lite.scss', 'public/css')
     .sass('resources/sass/app.scss', 'public/css');

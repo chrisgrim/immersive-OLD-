@@ -13,10 +13,10 @@
                         name="description" 
                         v-model="description" 
                         placeholder="eg. Our super scary event will bring your fears to the surface..."
-                        :class="{ active: descriptionActive,'error': $v.description.$error }"
+                        :class="{ active: activeItem == 'description','error': $v.description.$error }"
                         @input="$v.description.$touch"
-                        @click="descriptionActive = true"
-                        @blur="descriptionActive = false" 
+                        @click="activeItem = 'description'"
+                        @blur="activeItem = null" 
                         rows="8"></textarea>
                         <div v-if="$v.description.$error" class="validation-error">
                             <p class="error" v-if="!$v.description.required">Must provide a description</p>
@@ -35,11 +35,11 @@
                         :multiple="true" 
                         :taggable="true" 
                         tag-position="bottom"
-                        :class="{ active: genreActive,'error': $v.genreName.$error }"
+                        :class="{ active: activeItem == 'genre','error': $v.genreName.$error }"
                         @tag="addTag"
                         @input="$v.genreName.$touch"
-                        @click="genreActive = true"
-                        @blur="genreActive = false"
+                        @click="activeItem = 'genre'"
+                        @blur="activeItem = null"
                         ></multiselect>
                         <div v-if="$v.genreName.$error" class="validation-error">
                             <p class="error" v-if="!$v.genreName.required">Must select at least one Genre</p>
@@ -50,9 +50,9 @@
                         <input 
                         type="text" 
                         v-model="websiteUrl"
-                        :class="{ active: websiteActive,'error': $v.websiteUrl.$error }"
-                        @click="websiteActive = true"
-                        @blur="websiteActive = false"
+                        :class="{ active: activeItem == 'website','error': $v.websiteUrl.$error }"
+                        @click="activeItem = 'website'"
+                        @blur="activeItem = null"
                         @input="$v.websiteUrl.$touch"
                         placeholder="Leave blank if using Organizer Website Url"
                         />
@@ -65,9 +65,9 @@
                         <input 
                         type="text" 
                         v-model="ticketUrl"
-                        :class="{ active: ticketActive,'error': $v.ticketUrl.$error }"
-                        @click="ticketActive = true"
-                        @blur="ticketActive = false"
+                        :class="{ active: activeItem == 'ticket','error': $v.ticketUrl.$error }"
+                        @click="activeItem = 'ticket'"
+                        @blur="activeItem = null"
                         @input="$v.ticketUrl.$touch"
                         placeholder="Leave blank if using Organizer Website Url"
                         />
@@ -114,12 +114,9 @@
                 websiteUrl: '',
                 ticketUrl: '',
                 eventUrl:`/create-event/${this.event.slug}`,
-                genreActive: false,
-                descriptionActive: false,
-                ticketActive: false,
-                websiteActive: false,
                 dis: false,
                 genres: [],
+                activeItem: null,
 			}
 		},
 
@@ -156,7 +153,7 @@
             },
 
             // If there is data in Database it will load from the database
-            getDatabase() {
+            load() {
                 axios.get(`${this.eventUrl}/description/fetch?timestamp=${new Date().getTime()}`)
                 .then(response => {
                     console.log(response.data);
@@ -172,7 +169,7 @@
 		},
 
         created() {
-            this.getDatabase();
+            this.load();
         },
 
 

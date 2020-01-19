@@ -13,7 +13,7 @@ class EventImage extends Model
     *
     * @return string
     */
-    public static function saveFile($request, $event)
+    public static function saveFile($request, $event, $width, $height)
     {
         if ($event->largeImagePath) {
             Storage::delete('public/' . $event->largeImagePath);
@@ -25,7 +25,7 @@ class EventImage extends Model
         $largeImagePath = "event-large-images/$filename";
         $thumbImagePath = "event-thumb-images/thumb-$filename";
         $request->file('image')->storeAs('/public/event-large-images', $filename);
-        Image::make(storage_path() . "/app/public/event-large-images/$filename")->fit(1280, 720)->save(storage_path("/app/public/$largeImagePath"))->fit(640, 360)->save(storage_path("/app/public/$thumbImagePath"));
+        Image::make(storage_path() . "/app/public/event-large-images/$filename")->fit($width, $height)->save(storage_path("/app/public/$largeImagePath"))->fit( $width / 2, $height / 2)->save(storage_path("/app/public/$thumbImagePath"));
 
         $event->update([
             'largeImagePath' => $largeImagePath,

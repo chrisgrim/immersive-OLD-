@@ -3,6 +3,7 @@
 namespace App;
 
 use ScoutElastic\Searchable;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Model;
 use Intervention\Image\ImageManagerStatic as Image;
 
@@ -88,6 +89,16 @@ class Event extends Model
     public function category() 
     {
         return $this->belongsTo(Category::class);
+    }
+
+    /**
+    * Each event hasOne StaffPick
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+    */
+    public function staffpick() 
+    {
+        return $this->hasOne(StaffPick::class);
     }
 
     /**
@@ -215,6 +226,86 @@ class Event extends Model
         $event->location()->Create();
         $event->advisories()->Create();
         return $event;
+    }
+
+    /**
+    * Deletes the event images and then deletes event
+    *
+    * @return Nothing
+    */
+    public function deleteEvent($event) 
+    {
+        if ($event->largeImagePath) {
+            Storage::delete('public/' . $event->largeImagePath);
+            Storage::delete('public/' . $event->thumbImagePath);
+        };
+        $event->delete();
+    }
+
+    /**
+    * Updates event title
+    *
+    * @return Nothing
+    */
+    public function updateEventTitle($request, $event) 
+    {
+
+        if ($event->name == request('name')) {
+            $event->update(['tag_line' => request('tagline')]);
+        } else {
+            if (Event::where('name', '=', request('name'))->exists()) {
+                $event->update([ 
+                    'name' => request('name') . '-' . rand(5, 9999),
+                    'tag_line' => request('tagline')
+                ]);
+            } else {
+                $event->update([ 
+                    'name' => request('name'),
+                    'tag_line' => request('tagline')
+                ]);
+            }
+        }
+    }
+
+    /**
+    * Deletes the event images and then deletes event
+    *
+    * @return Nothing
+    */
+    public function finalizeEvent($event) 
+    {
+        $website = $event->organizer->website;
+        if ($event->websiteUrl == null) {
+            $event->update([ 'websiteUrl' => $website ]);
+        }
+        if ($event->ticketUrl == null) {
+            $event->update([ 'ticketUrl' => $website ]);
+        }
+        $event->update([
+            'approval_process' => 'ready',
+        ]);
+    }
+
+    /**
+    * Store a newly created resource in storage. Update all the standard fields. For each genre field I check if they exist then add any the user created. Finally I sync those submitted with the genres associated with the event.
+    *
+    * @return Nothing
+    */
+    public function storeDescription($request, $event) 
+    {
+        $event->update($request->except(['genre']));
+        if ($request->has('genre')) {
+            foreach ($request['genre'] as $genre) {
+                Genre::firstOrCreate([
+                    'genre' => $genre
+                ],
+                [
+                    'user_id' => auth()->user()->id,
+                ]);
+            };
+            $newSync = Genre::all()->whereIn('genre', $request['genre']);
+            $event->genres()->sync($newSync);
+        };
     }
     
     protected $searchRules = [

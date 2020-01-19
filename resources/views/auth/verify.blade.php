@@ -6,12 +6,11 @@
         <div class="form">
             <div class="">
                 <div class="welcome">
-                    Please take a minute to 
+                    We would love if you would 
                 </div>
                 <div class="login-header">
                     <h1> Verify Your Email</h1>
                 </div>
-
                 <div class="">
                     @if (session('resent'))
                         <div class="alert alert-success" role="alert">

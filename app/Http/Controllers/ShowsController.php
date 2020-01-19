@@ -4,11 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Event;
-use App\Ticket;
 use App\Show;
-use Carbon\Carbon;
-use Redis;
-use Session;
 use App\Http\Requests\ShowStoreRequest;
 
 class ShowsController extends Controller
@@ -30,6 +26,7 @@ class ShowsController extends Controller
     {
         return view('create.show', compact('event'));
     }
+
     /**
      * Store a newly created resource in storage.
      * 
@@ -38,73 +35,23 @@ class ShowsController extends Controller
      */
     public function store(ShowStoreRequest $request, Event $event)
     {
-        $showDelete = $event->shows()->whereNotIn('date', $request->dates)->get();
-
-        foreach($showDelete as $show){
-            $show->tickets()->delete();
-        }
-        $event->shows()->whereNotIn('date', $request->dates)->delete();
-
-
-        foreach( $request->dates as $date) {
-
-            $show = Show::updateOrCreate([
-                'date' => $date,
-                'event_id' => $event->id
-            ]);
-
-
-            foreach ($request->tickets as $ticket) {
-                $ticketname[] = $ticket['name'];
-            };
-
-            $show->tickets()->whereNotIn('name', $ticketname)->delete();
-
-            foreach ($request->tickets as $ticket) {
-                Ticket::updateOrCreate([
-                    'show_id' => $show->id,
-                    'name' => $ticket['name'],
-                ],
-                [
-                    'ticket_price' => str_replace('$', '', $ticket['ticket_price'])
-                ]);
-            }
-        };
-        
-        $lastDate = $event->shows()->orderBy('date', 'DESC')->first();
-        foreach ($request->tickets as $ticket) {
-            $event->priceranges()->updateOrCreate([
-                'price' => $ticket['ticket_price']
-            ]);
-            $array[] = $ticket['ticket_price'] + 0;
-        }
-        rsort($array);
-        if (sizeof($array) > 1) {
-            $pricerange = '$'. last($array) . ' - ' . '$' . $array[0];
-        } else {
-            $pricerange = '$' . $array[0];
-        }
-
-        $event->update([
-            'closingDate' => $lastDate->date,
-            'show_times' => $request->showtimes,
-            'price_range' => $pricerange,
-        ]);
- 
+        Show::deleteOld($request, $event);
+        Show::saveNewShows($request, $event);
+        Show::updateEvent($request, $event);
     }
-    public function loadDatabase(Event $event)
+
+    /**
+     * Fetch the stored shows and tickets
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function fetch(Event $event)
     {
-        return $event->shows()->all();
-    }
-    public function loadShows(Event $event)
-    {
-        $tickets = $event->shows()->with('tickets')->get();
-        $dates =  $event->shows()->pluck('date');
-        $showTimes = $event->show_times;
         return response()->json(array(
-            'dates' => $dates,
-            'tickets' => $tickets,
-            'showTimes' => $showTimes
+            'dates' => $event->shows()->pluck('date'),
+            'tickets' => $event->shows()->with('tickets')->get(),
+            'showTimes' => $showTimes = $event->show_times
         ));
     }
 }

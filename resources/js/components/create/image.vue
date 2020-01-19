@@ -8,11 +8,9 @@
                 :style="{ backgroundImage: `url('${imageSrc ? imageSrc : eventImage}')` }">
                     <div 
                     class="dash"
-                    :class="{ over: hasImage, load: isLoading }"
-                    >
+                    :class="{ over: hasImage, load: isLoading }">
                         <div 
-                        class="box"
-                        >
+                        class="box">
                             <div class="in">
                                 <div v-if="!isLoading">
                                     <svg class="b" height="32" width="32" viewBox="0 0 24 24" aria-label="Add an image or video" role="img"><path d="M24 12c0-6.627-5.372-12-12-12C5.373 0 0 5.373 0 12s5.373 12 12 12c6.628 0 12-5.373 12-12zm-10.767 3.75a1.25 1.25 0 0 1-2.5 0v-3.948l-1.031 1.031a1.25 1.25 0 0 1-1.768-1.768L12 7l4.066 4.065a1.25 1.25 0 0 1-1.768 1.768l-1.065-1.065v3.982z"></path></svg>
@@ -28,9 +26,6 @@
                     </div>
                 </label>
                 <div>
-                    <div v-if="this.tooSmall" class="validation-error">
-                        <p class="error" v-if="this.tooSmall">The image needs to be at least 1200 x 800</p>
-                    </div>
                     <div v-if="$v.finalImage.$error" class="validation-error">
                         <p class="error" v-if="!$v.finalImage.required">The Image is required</p>
                         <p class="error" v-if="!$v.finalImage.fileSize">The Image is too large</p>
@@ -92,7 +87,6 @@ export default {
             eventUrl:`/create-event/${this.event.slug}`,
             finalImage: '',
             imageSrc: '',
-            tooSmall: '',
             isLoading: false,
             readyToSubmit: false,
             isModalVisible: false,
@@ -126,7 +120,8 @@ export default {
                 this.dis = false;
                 this.readyToSubmit = true;
             })
-            .catch(errorResponse => { this.validationErrors = errorResponse.response.data.errors; this.dis = false; });
+            .catch(errorResponse => { 
+                this.validationErrors = errorResponse.response.data.errors; this.dis = false; });
         },
 
         showModal(event) {

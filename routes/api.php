@@ -23,16 +23,16 @@ Route::GET('events', 'EventController@get');
 Route::GET('search/navbar/content', 'SearchController@searchNav');
 
 //On Organizer Create Page this searches all organizers and returns based on users selection
-Route::GET('organizer/search', 'SearchController@searchOrganizer');
-
-//On Description Page this searches all genres and returns based on users selection
-Route::GET('genre/search', 'SearchController@searchGenre');
+Route::GET('search/organizer', 'SearchController@searchOrganizer');
 
 //On Map move send new latlng/ if category that is attached and if dates that is attached
-Route::POST('mapboundary/search', 'SearchController@searchMapBoundary');
+Route::POST('search/mapboundary', 'SearchController@searchMapBoundary');
 
 //On admin page returns user list for editing users
 Route::GET('search/user/list', 'SearchController@searchUsers');
+
+//On admin page returns user list for editing users
+Route::GET('search/event/list', 'SearchController@searchEvents');
 
 
 

@@ -21,55 +21,5 @@
 
 
 
-.dropdown-label {
-    & label {
-        position:relative;
-        display:block;
-        transition:background 0.3s;
-        cursor:pointer;
-    }
-    & input {
-        display: none;
-    }
-    & input:checked ~ ul.subdropdown{
-        max-height:15rem;
-        transition:max-height 0.2s ease-in;
-        margin-top: 1.5rem;
-    }
-}
 
-/*style for the second level menu*/
-ul.subdropdown{
-    z-index: 1;
-    max-height:0;
-    padding:0;
-    overflow:hidden;
-    list-style-type:none;
-    position:absolute;
-    min-width:100%;
-    right:0;
-    box-shadow: -1px 1px 5px 0px #cecece;
-    margin-right:2rem;
-    background: white;
-}
-ul.subdropdown{
-  max-height:35rem;
-  transition:max-height 0.2s ease-in;
-  margin-top: 1.5rem;
-  }
-
-ul.subdropdown li a{
-  display:block;
-  padding:1rem;
-  padding-right:14rem;
-  text-decoration:none;
-  transition:background .1s;
-  white-space:nowrap;
-  background-color: white;
-  float: left;
-}
-
-ul.subdropdown li a:hover{
-  background: $border-color;
-}
 

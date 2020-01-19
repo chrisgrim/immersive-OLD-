@@ -14,15 +14,6 @@ class DescriptionController extends Controller
         $this->middleware(['auth', 'verified']);
         $this->middleware('can:update,event');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
     /**
      * Show the form for creating a new resource. $Pivots gets the genres assigned to the event
@@ -43,84 +34,21 @@ class DescriptionController extends Controller
      */
     public function fetch(Event $event)
     {
-        $pivots = $event->genres()->get();
-        $genres = Genre::where('admin', true)
-                        ->orWhere('user_id', auth()->user()->id)
-                        ->get();
-
         return response()->json(array(
             'event' => $event,
-            'pivots' => $pivots,
-            'genres' => $genres
+            'pivots' => $event->genres()->get(),
+            'genres' => Genre::where('admin', true)->orWhere('user_id', auth()->user()->id)->get()
         ));
     }
 
     /**
-     * Store a newly created resource in storage. Update all the standard fields. For each genre field I check if they exist then add any the user created. Finally I sync those submitted with the genres associated with the event.
+     * Store Description
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(DescriptionStoreRequest $request, Event $event)
     {
-        $event->update($request->except(['genre']));
-
-        if ($request->has('genre')) {
-            foreach ($request['genre'] as $genre) {
-                Genre::firstOrCreate([
-                    'genre' => $genre
-                ],
-                [
-                    'user_id' => auth()->user()->id,
-                ]);
-            };
-            $newSync = Genre::all()->whereIn('genre', $request['genre']);
-            $event->genres()->sync($newSync);
-        };
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Genre  $genre
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Genre $genre)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Genre  $genre
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Genre $genre)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Genre  $genre
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Genre $genre)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Genre  $genre
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Genre $genre)
-    {
-        //
+        $event->storeDescription($request, $event);
     }
 }

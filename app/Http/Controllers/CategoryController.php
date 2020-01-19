@@ -17,7 +17,8 @@ class CategoryController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('admin')->except('show');
+        $this->middleware(['auth', 'verified']);
+        $this->middleware('admin')->except('show', 'select', 'fetch', 'add');
     }
     /**
      * Display a listing of the resource.
@@ -47,9 +48,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        if(Category::where('name', '=', $request->name)->exists()) {
-            return '';
-        }
+        if(Category::where('name', '=', $request->name)->exists()) { return '';}
         $category = Category::create($request->except(['imagePath']));
         $category->saveFile($request, $category);
     }
@@ -86,22 +85,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        if($request->name) {
-            $category->updateName($category, $request);
-            return '';
-        }
-        if($request->description) {
-            $category->update(['description' => $request->description]);
-            return '';
-        }
-        if($request->imagePath) {
-            $category->updateFile($request, $category);
-            return '';
-        }
-        // $category->update($request->all());
-        // $category->saveFile($request, $category);
-        // return back();
-
+        $category->updateElements($request, $category);
     }
 
     /**
@@ -112,10 +96,38 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        if ($category->largeImagePath) {
-            Storage::delete('public/' . $category->largeImagePath);
-            Storage::delete('public/' . $category->thumbImagePath);
-        };
-        $category->delete();
+        $category->deleteCategory($category);
+    }
+
+    /**
+     * Select the category page.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function select(Event $event)
+    {
+        $categories = Category::all();
+        return view('create.category', compact('event','categories'));
+    }
+
+    /**
+    * Fetches the categories list
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function fetch(Event $event)
+    {
+        $selectedCat = $event->category()->first();
+        return $selectedCat;
+    }
+
+    /**
+    * Fetches the categories list
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function add(Request $request, Event $event)
+    {
+        $event->update([ 'category_id' => request('id') ]);
     }
 }

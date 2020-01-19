@@ -1,15 +1,9 @@
-@import '~vue2-content-editor/src/themes/default.css';
-@import '~medium-editor/dist/css/medium-editor.css';
-
 // Variables
 @import 'variables';
 
 // Events
 @import 'events/event-edit';
-@import 'events/event-show';
-@import 'events/event-index';
 @import 'events/event-search';
-@import 'events/components/event-grid-component';
 @import 'events/components/search-grid-component';
 
 // categories
@@ -20,25 +14,11 @@
 @import 'auth/register';
 @import 'auth/verify';
 
-// Multiselect
-@import 'multiselect';
-
-// Layout
-@import 'layout';
-
 // Profile
 @import 'profile';
 
-// Nav
-@import 'nav';
-@import 'nav/navbar';
-@import 'nav/profilebutton';
-
 //Components 
-@import 'components/leaflet';
 @import 'components/tab';
-@import 'components/flatpickr';
-@import 'components/multiselect';
 @import 'components/modal';
 
 

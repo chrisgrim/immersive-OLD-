@@ -24,4 +24,23 @@ class Location extends Model
     {
         return $this->belongsTo(Event::class);
     }
+
+    /**
+     * Store a newly created resource in storage. I update the location table with the request except token and region.
+     I then sync the regions of the event to the request. Finally I add the lat and lon to the event model for easy searching
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public static function storeEventLocation($request, $event)
+    {
+        $event->location->update($request->all());
+        $event->regions()->sync(request('Region'));
+        $event->update([
+            'location_latlon' => [
+                'lat' => $request->latitude,
+                'lon' => $request->longitude,
+            ],
+        ]);
+    }
 }

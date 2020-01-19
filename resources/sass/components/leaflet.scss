@@ -31,6 +31,8 @@ div.leaflet-popup {
                 height: 25rem;
                 & .back {
                     height:50%;
+                    background-size: cover;
+                    background-repeat: no-repeat;
                     border-radius: .5rem .5rem 0rem 0rem;
                 }
             }

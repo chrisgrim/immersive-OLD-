@@ -83,6 +83,8 @@ Vue.component('approval-bar', require('./components/adminArea/approve/approval-b
 Vue.component('admin-categories', require('./components/adminArea/admin-categories.vue').default);
 Vue.component('admin-contact-level', require('./components/adminArea/admin-contact-level.vue').default);
 Vue.component('admin-genres', require('./components/adminArea/admin-genres.vue').default);
+Vue.component('admin-create-review', require('./components/adminArea/admin-create-review.vue').default);
+Vue.component('admin-staff-picks', require('./components/adminArea/admin-staff-picks.vue').default);
 Vue.component('admin-mobility', require('./components/adminArea/admin-mobility.vue').default);
 Vue.component('admin-regions', require('./components/adminArea/admin-regions.vue').default);
 Vue.component('admin-user', require('./components/adminArea/admin-user.vue').default);

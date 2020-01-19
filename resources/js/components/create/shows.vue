@@ -10,12 +10,12 @@
                     <textarea 
                     v-model="showTimes" 
                     class="create-input area"
-                    :class="{ active: showTimeActive,'error': $v.showTimes.$error }"
+                    :class="{ active: activeItem == 'times','error': $v.showTimes.$error }"
                     rows="8" 
                     placeholder="Please provide a brief description of daily show times...8:00PM and 10:00PM shows or 10:00PM shows during the week and 12:00PM during the weekend." 
                     required
-                    @click="showTimeActive = true"
-                    @blur="showTimeActive = false"
+                    @click="activeItem = 'times'"
+                    @blur="activeItem = null"
                     @input="$v.showTimes.$touch"
                     autofocus>
                     </textarea>
@@ -32,9 +32,9 @@
                                 <input 
                                 class="create-input"  
                                 name="name"
-                                :class="{ active: ticketActive,'error': v.name.$error }"
-                                @click="ticketActive = true"
-                                @blur="ticketActive = false"
+                                :class="{ active: activeItem == 'ticket','error': v.name.$error }"
+                                @click="activeItem = 'ticket'"
+                                @blur="activeItem = null"
                                 v-model="v.name.$model" 
                                 placeholder="ex: General, VIP, Student"
                                 />
@@ -48,11 +48,11 @@
                                 <input 
                                 v-model="v.ticket_price.$model"
                                 v-money="money"
-                                @click="ticketPriceActive = true"
-                                @blur="ticketPriceActive = false"
+                                @click="activeItem = 'price'"
+                                @blur="activeItem = null"
                                 placeholder="$0.00"
                                 v-bind="money"
-                                :class="{ active: ticketPriceActive,'error': v.ticket_price.$error && num }"
+                                :class="{ active: activeItem == 'price','error': v.ticket_price.$error && num }"
                                 @keydown="$event.key === '-' ? $event.preventDefault() : null"
                                 style="text-align: right" 
                                 />
@@ -142,9 +142,6 @@ export default {
 				showMonths: 2,
 				dateFormat: 'Y-m-d H:i:s',        
 	        },
-            ticketActive: '',
-            ticketPriceActive: '',
-            showTimeActive: '',
             tickets: [this.initializeTicketObject()],
             showTimes: '',
             money: {
@@ -157,6 +154,7 @@ export default {
             },
             dis: false,
             num: false,
+            activeItem: null,
         }
     },
 
@@ -165,12 +163,6 @@ export default {
         //deletes a ticket row or clears the first one
         deleteRow(index) {
             index == 0 ? this.clearindex() : this.$delete(this.tickets, index) ;
-        },
-
-        //clears the first ticket row if there are no other ones to delete
-        clearindex() {
-            this.tickets[0].name = '';
-            this.tickets[0].ticket_price = '';
         },
 
         initializeShowtimeObject() {
@@ -198,8 +190,8 @@ export default {
         },
 
         // If there is data in Database it will load from the database
-    	getDatabase() {
-    		axios.get(`${this.eventUrl}/shows/loadshows?timestamp=${new Date().getTime()}`)
+    	load() {
+    		axios.get(`${this.eventUrl}/shows/fetch?timestamp=${new Date().getTime()}`)
     		.then(response => {
                 console.log(response.data);
                 response.data.dates.length ? this.dates = response.data.dates : '';
@@ -233,7 +225,7 @@ export default {
     },
 
     mounted() {
-    	this.getDatabase();
+    	this.load();
     },
 
     validations: {

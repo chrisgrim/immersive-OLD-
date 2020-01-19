@@ -10,7 +10,7 @@
                     <multiselect 
                     v-model="contentAdvisories" 
                     :options="contentAdvisoryOptions"
-                    :class="{ active: contentActive,'error': $v.contentAdvisories.$error }"
+                    :class="{ active: activeItem == 'content','error': $v.contentAdvisories.$error }"
                     :multiple="true" 
                     tag-placeholder="Add this as new tag"
                     :taggable="true" 
@@ -18,8 +18,8 @@
                     placeholder="Search or add a tag" 
                     open-direction="bottom"
                     @tag="addTag"
-                    @click="contentActive = true"
-                    @blur="contentActive = false"
+                    @click="activeItem = 'content'"
+                    @blur="activeItem = null"
                     label="advisories"
                     track-by="id">
                     </multiselect>
@@ -34,9 +34,9 @@
                     :options="ageOptions" 
                     placeholder="Select the appropriate age group"
                     open-direction="bottom"
-                    :class="{ active: ageActive,'error': $v.advisories.ageRestriction.$error }"
-                    @click="ageActive = true"
-                    @blur="ageActive = false"
+                    :class="{ active: activeItem == 'age','error': $v.advisories.ageRestriction.$error }"
+                    @click="activeItem = 'age'"
+                    @blur="activeItem = null"
                     @input="$v.advisories.ageRestriction.$touch"
                     :preselect-first="false">
                     </multiselect>
@@ -57,9 +57,9 @@
                     :multiple="true" 
                     placeholder="Choose All That Apply"
                     open-direction="bottom"
-                    :class="{ active: contactActive,'error': $v.contactLevel.$error }"
-                    @click="contactActive = true"
-                    @blur="contactActive = false"
+                    :class="{ active: activeItem == 'contact','error': $v.contactLevel.$error }"
+                    @click="activeItem = 'contact'"
+                    @blur="activeItem = null"
                     @input="$v.contactLevel.$touch"
                     label="level" 
                     track-by="id" 
@@ -76,9 +76,9 @@
                     class="create-input area" 
                     rows="8" 
                     placeholder=" "
-                    :class="{ active: contactAdvisoryActive,'error': $v.advisories.contactAdvisories.$error }"
-                    @click="contactAdvisoryActive = true"
-                    @blur="contactAdvisoryActive = false"
+                    :class="{ active: activeItem == 'conAdv','error': $v.advisories.contactAdvisories.$error }"
+                    @click="activeItem = 'conAdv'"
+                    @blur="activeItem = null"
                     @input="$v.advisories.contactAdvisories.$touch"
                     required 
                     autofocus></textarea>
@@ -106,8 +106,11 @@
                         <textarea 
                         v-model="advisories.sexualViolenceDescription" 
                         class="create-input area" 
-                        rows="8" 
-                        placeholder=" " 
+                        rows="8"
+                        :class="{ active: activeItem == 'sexual'}"
+                        placeholder=" "
+                        @click="activeItem = 'sexual'"
+                        @blur="activeItem = null"
                         required 
                         autofocus></textarea>
                     </div>
@@ -128,10 +131,10 @@
                     tag-position="bottom"
                     placeholder="Search or add a tag" 
                     open-direction="bottom"
-                    :class="{ active: mobilityAdvisoryActive,'error': $v.mobilityAdvisories.$error }"
+                    :class="{ active: activeItem == 'mobility','error': $v.mobilityAdvisories.$error }"
                     @tag="addTagMobility"
-                    @click="mobilityAdvisoryActive = true"
-                    @blur="mobilityAdvisoryActive = false"
+                    @click="activeItem = 'mobility'"
+                    @blur="activeItem = null"
                     @input="$v.mobilityAdvisories.$touch"
                     label="mobilities"
                     track-by="id">
@@ -190,12 +193,7 @@
 				contentAdvisories: '',
                 mobilityAdvisories: '',
 				eventUrl:`/create-event/${this.event.slug}`,
-				contentActive: false,
-				contactActive: false,
-				contactAdvisoryActive: false,
-				sexualViolenceActive: false,
-				wheelchairReadyActive: false,
-				mobilityAdvisoryActive: false,
+                activeItem: null,
 				ageActive: false,
                 ageOptions: ['All Ages', '12+', '16+', '18+', '21+'],
                 dis: false,
@@ -231,7 +229,7 @@
                 this.contentAdvisories.push(tag)
             },
 
-                addTagMobility (newTag) {
+            addTagMobility (newTag) {
                 const tag = {
                     mobilities: newTag,
                     id: newTag.substring(0, 0) + Math.floor((Math.random() * 10000000))
@@ -262,7 +260,7 @@
             },
 
             // If there is data in Database it will load from the database
-            getDatabase() {
+            load() {
                 axios.get(`${this.eventUrl}/advisories/fetch?timestamp=${new Date().getTime()}`)
                 .then(response => {
                     console.log(response.data);
@@ -278,12 +276,8 @@
 		},
 
         created() {
-            this.getDatabase();
+            this.load();
         },
-
-        // mounted() {
-        // 	this.updateEventFields(this.event.advisories);
-        // },
 
         validations: {
         	contactLevel: {

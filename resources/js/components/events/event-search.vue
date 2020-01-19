@@ -215,7 +215,7 @@
                     dates: this.datesSubmit ? this.datesSubmit : '',
                     price: this.price ? this.price : '',
                 };
-                axios.post('/api/mapboundary/search', data)
+                axios.post('/api/search/mapboundary', data)
                 .then(response => {
                     this.eventList = response.data;
                     console.log(response.data);
@@ -252,7 +252,7 @@
                     dates: this.datesSubmit ? this.datesSubmit : '',
                     price: this.price ? this.price : '',
                 };
-                axios.post('/api/mapboundary/search', data)
+                axios.post('/api/search/mapboundary', data)
                 .then(response => {
                     this.eventList = response.data;
                     console.log(response.data)

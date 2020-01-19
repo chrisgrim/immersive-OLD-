@@ -16,9 +16,9 @@
                 :options="categoryOptions" 
                 open-direction="bottom"
                 @input="$v.selectedCategory.$touch"
-                :class="{ active: categoryActive,'error': $v.selectedCategory.$error}"
-                @click="categoryActive = true"
-                @blur="categoryActive = false" 
+                :class="{ active: activeItem == 'category','error': $v.selectedCategory.$error}"
+                @click="activeItem = 'category'"
+                @blur="activeItem = null" 
                 >
                     <template slot="option" slot-scope="props">
                         <div class="option__desc">
@@ -70,7 +70,7 @@
 				selectedCategory: '',
 				eventUrl:_.has(this.event, 'slug') ? `/create-event/${this.event.slug}` : null,
 				categoryOptions: this.categories,
-				categoryActive: false,
+				activeItem: null,
                 dis: false,
 			}
 		},
@@ -87,7 +87,7 @@
 				.then(response => { window.location.href = `${this.eventUrl}/shows` });
 			},
 
-            getDatabase() {
+            load() {
             axios.get(`${this.eventUrl}/category/fetch?timestamp=${new Date().getTime()}`)
                 .then(response => {
                     this.selectedCategory = response.data;
@@ -101,7 +101,7 @@
 		},
 
         created() {
-            this.getDatabase();
+            this.load();
         },
 
 		validations: {

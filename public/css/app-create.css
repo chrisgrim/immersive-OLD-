@@ -308,6 +308,10 @@ button.create[disabled] {
   font-size: 1.3rem;
 }
 
+.dis {
+  pointer-events: none;
+}
+
 #create {
   margin-top: -7rem;
 }

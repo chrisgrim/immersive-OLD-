@@ -72,6 +72,16 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * The User has many Staff Picks
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function staffpicks() 
+    {
+        return $this->hasMany(StaffPick::class);
+    }
+
+    /**
      * User can have many favorites
      *
      * @return \Illuminate\Database\Eloquent\Relations\hasMany

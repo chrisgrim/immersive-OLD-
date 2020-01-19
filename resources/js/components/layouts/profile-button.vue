@@ -15,11 +15,6 @@
 					Admin Dashboard
 				</a>
 			</li>
-			<li>
-				<a :href="'/website-stats/'">
-					Website Stats
-				</a>
-			</li>
 			 <li>
 			 	<a href="#" @click.prevent="logout()">
 			 		Logout
