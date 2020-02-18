@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Show extends Model
 {
-
     /**
     * What protected variables are allowed to be passed to the database
     *

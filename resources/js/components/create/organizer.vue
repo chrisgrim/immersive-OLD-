@@ -115,7 +115,7 @@
                                      <div>
                                         <div v-if="!hasImage">
                                             <p>Click here to upload image</p>
-                                            <p>Please make image at least 1280 x 720</p>
+                                            <p>Please make image at least 800 x 800</p>
                                             <p>Image needs to be under 2 mb</p>
                                         </div>
                                         <p v-if="hasImage">Change Image</p>
@@ -299,7 +299,7 @@ export default {
                 return this.finalImage ? ['image/jpeg','image/png','image/gif'].includes(this.finalImage.type) : true
             },
             imageSize() {
-                return this.finalImage ? this.finalImage.width > 1280 && this.finalImage.height > 720 :  true
+                return this.finalImage ? this.finalImage.width > 800 && this.finalImage.height > 800 :  true
             }
         },
         organizer: {

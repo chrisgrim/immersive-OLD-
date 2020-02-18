@@ -23,7 +23,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','image_path'
+        'name', 'email', 'password','image_path', 'has_unread'
     ];
 
     /**
@@ -49,7 +49,7 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array
      */
-    protected $appends = ['hasCreatedOrganizers', 'userType', 'needsApproval'];
+    protected $appends = ['hasCreatedOrganizers', 'userType', 'needsApproval','hasMessages'];
 
     /**
      * User can have many events
@@ -72,6 +72,26 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * The User can send many messages
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
+
+    /**
+     * The User can recieve many messages
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function conversations()
+    {
+        return $this->belongsToMany(Conversation::class);
+    }
+
+    /**
      * The User has many Staff Picks
      *
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
@@ -89,6 +109,21 @@ class User extends Authenticatable implements MustVerifyEmail
     public function favorites() 
     {
         return $this->hasMany(Favorite::class);
+    }
+
+    public function favouritedEvents()
+    {
+        return $this->morphedByMany(Event::class, 'favorited', 'favorites');
+    }
+
+    /**
+     * Each User has One Location
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function location() 
+    {
+        return $this->hasOne(UserLocation::class);
     }
 
     /**
@@ -129,6 +164,16 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+    * Determine if the current user has messages 
+    *
+    * @return bool
+    */
+    public function getHasMessagesAttribute()
+    {
+        return $this->conversations()->count() ? true : false;    
+    }
+
+    /**
     * Creates a new event
     *
     * @return count of events needing approval
@@ -155,12 +200,16 @@ class User extends Authenticatable implements MustVerifyEmail
     */
     public static function saveFile($request, $user)
     {
-        Storage::delete('public/' . $user->image_path);
+        $old = $user->image_path;
+        
         $extension = $request->file('image')->getClientOriginalExtension();
         $filename = $user->name .'-'. rand(5,9999) . '.' .$extension;
         $imagePath = "avatars/$filename";
         $request->file('image')->storeAs('/public/avatars', $filename);
-        Image::make(storage_path()."/app/public/avatars/$filename")->fit(800, 800)->save(storage_path("/app/public/$imagePath"));
+        Image::make(storage_path()."/app/public/avatars/$filename")->fit(640, 640)->save(storage_path("/app/public/$imagePath"));
+        
+        $old ? Storage::delete('public/' . $old) : '';
+
         $user->update([ 'image_path' => $imagePath ]);
     }
 
@@ -189,6 +238,10 @@ class User extends Authenticatable implements MustVerifyEmail
                 'index' => false
             ],
             'avatar_path' => [
+                'type' => 'text',
+                'index' => false
+            ],
+            'has_unread' => [
                 'type' => 'text',
                 'index' => false
             ],

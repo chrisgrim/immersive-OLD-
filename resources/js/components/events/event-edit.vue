@@ -32,7 +32,7 @@
                             </div>
                         </div>
                         <div v-for="(event, index) in organizer.in_progress_events" v-if="index < 10" class="item">
-                            <event-listing-item :event="event"></event-listing-item>
+                            <event-listing-item :user="user" :event="event"></event-listing-item>
                             <button @click.prevent="showModal(event)" class="del">Delete</button>
                         </div> 
                         <modal v-show="isModalVisible" @close="closeModal">
@@ -53,7 +53,7 @@
                     <tab title="Live Events" id="grid" class="tab-events">
                         <div v-for="(event, index) in organizer.live_events" v-if="index < 4">
                             <button @click.prevent="showModal(event)" class="delete-circle">X</button>
-                            <event-listing-item :loadurl="'/events/' + event.slug" :event="event"></event-listing-item>
+                            <event-listing-item :user="user" :loadurl="'/events/' + event.slug" :event="event"></event-listing-item>
                         </div> 
                         <modal v-show="isModalVisible" @close="closeModal">
                                 <div slot="header">Ready to Delete?</div>
@@ -65,7 +65,7 @@
                     <tab title="Past Events" id="grid" class="tab-events">
                         <div v-for="(event, index) in organizer.past_events" v-if="index < 4">
                             <button @click.prevent="showModal(event)" class="delete-circle">X</button>
-                            <event-listing-item :loadurl="'/events/' + event.slug" :event="event"></event-listing-item>
+                            <event-listing-item :user="user" :loadurl="'/events/' + event.slug" :event="event"></event-listing-item>
                         </div> 
                         <modal v-show="isModalVisible" @close="closeModal">
                                 <div slot="header">Ready to Delete?</div>
@@ -84,6 +84,12 @@
 <script>
     
 	export default {
+
+        props: {
+            user: {
+                type:String
+            }
+        }, 
 
 		data() {
 			return {

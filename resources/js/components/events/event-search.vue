@@ -1,108 +1,113 @@
 <template>
     <div class="search">
-        <div class="filter">
-            <div class="item">
-                <div class="el">
-                    <div class="button">
-                        <div @click="show('dates')" class="click">
-                            <p v-if="!datesFormatted.length">Dates</p>
-                            <p v-if="datesFormatted.length">{{datesFormatted[0]}}{{ datesFormatted[1] ? ' to ' + datesFormatted[1] : ''}} </p>
-                        </div>
-                        <div class="b_over dates" v-if="activeItem === 'dates'">
-                            <div>
-                                <flat-pickr
-                                    v-model="dates"
-                                    :config="config"                                         
-                                    placeholder="Select date"               
-                                    name="dates">
-                                </flat-pickr>
+        <div class="body">
+            <div class="filter">
+                <div class="item">
+                    <div class="el">
+                        <div class="button">
+                            <div @click="show('dates')" class="click">
+                                <p v-if="!datesFormatted.length">Dates</p>
+                                <p v-if="datesFormatted.length">{{datesFormatted[0]}}{{ datesFormatted[1] ? ' to ' + datesFormatted[1] : ''}} </p>
                             </div>
-                            <div class="save">
-                                <button v-if="datesFormatted.length" @click="datesFormatted = []; datesSubmit = [];" class="cancel">clear</button>
-                                <button v-if="!datesFormatted.length" @click="activeItem = null" class="cancel">Cancel</button>
-                                <button @click="filterData" class="submit">Save</button>
+                            <div class="b_over dates" v-if="activeItem === 'dates'">
+                                <div>
+                                    <flat-pickr
+                                        v-model="dates"
+                                        :config="config"                                         
+                                        placeholder="Select date"               
+                                        name="dates">
+                                    </flat-pickr>
+                                </div>
+                                <div class="save">
+                                    <button v-if="datesFormatted.length" @click="datesFormatted = []; datesSubmit = [];" class="cancel">clear</button>
+                                    <button v-if="!datesFormatted.length" @click="activeItem = null" class="cancel">Cancel</button>
+                                    <button @click="submit" class="submit">Save</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="item">
+                    <div class="el">
+                        <div class="button">
+                            <div @click="show('category')" class="click">
+                                <p v-if="!category">Categories</p>
+                                <p v-if="category">{{category.name}}</p>
+                            </div>
+                            <div v-if="activeItem === 'category'" class="b_over cat">
+                                <div class="box">
+                                    <multiselect 
+                                    v-model="category"
+                                    label="name"
+                                    :options="categories" 
+                                    placeholder="Categories"
+                                    open-direction="bottom"
+                                    :preselect-first="false">
+                                    </multiselect>
+                                </div>
+                                <div class="save">
+                                    <button v-if="category" @click="category = null" class="cancel">clear</button>
+                                    <button v-if="!category" @click="activeItem = null" class="cancel">Cancel</button>
+                                    <button @click="submit" class="submit">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="el">
+                        <div class="button">
+                            <div @click="show('price')" class="click">
+                                <p v-if="showPrice">Price</p>
+                                <p v-else="showPrice">{{'$' + price[0]}}{{' to ' + '$' + price[1]}}</p>
+                            </div>
+                            <div v-if="activeItem === 'price'" class="b_over price" v-clickoutside="show('test')">
+                                <div class="box price">
+                                    <vue-slider
+                                    v-model="price" 
+                                    :enable-cross="false" />
+                                    <label> Min </label>
+                                    <input 
+                                    type="text"
+                                    v-model="price[0]"
+                                    >
+                                    <label> Max </label>
+                                    <input 
+                                    type="text"
+                                    v-model="price[1]"
+                                    >
+                                </div>
+                                <div class="save">
+                                    <button v-if="showPrice" @click="activeItem = null" class="cancel">Cancel</button>
+                                    <button v-else="showPrice" @click="price = [0,100]" class="cancel">clear</button>
+                                    <button @click="submit" class="submit">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="showmap">
+                    <p>Show Map</p>
+                    <div id="cover">
+                        <input v-model="showMap" type="checkbox" id="checkbox">
+                        <div id="bar"></div>
+                        <div id="knob">
+                            <p v-if="showMap"><svg viewBox="0 0 52 52" fill="black" fill-opacity="0" stroke="currentColor" stroke-width="3" focusable="false" aria-hidden="true" role="presentation" stroke-linecap="round" stroke-linejoin="round" style="height: 28px; width: 28px; display: block; overflow: visible;"><path d="m19.1 25.2 4.7 6.2 12.1-11.2"></path></svg></p>
+                        </div>
+                    </div>
+                </div>      
             </div>
-            <div class="item">
-                <div class="el">
-                    <div class="button">
-                        <div @click="show('category')" class="click">
-                            <p v-if="!category">Categories</p>
-                            <p v-if="category">{{category.name}}</p>
-                        </div>
-                        <div v-if="activeItem === 'category'" class="b_over cat">
-                            <div class="box">
-                                <multiselect 
-                                v-model="category"
-                                label="name"
-                                :options="categories" 
-                                placeholder="Categories"
-                                open-direction="bottom"
-                                :preselect-first="false">
-                                </multiselect>
-                            </div>
-                            <div class="save">
-                                <button v-if="category" @click="category = null" class="cancel">clear</button>
-                                <button v-if="!category" @click="activeItem = null" class="cancel">Cancel</button>
-                                <button @click="filterData" class="submit">Save</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="el">
-                    <div class="button">
-                        <div @click="show('price')" class="click">
-                            <p v-if="showPrice">Price</p>
-                            <p v-else="showPrice">{{'$' + price[0]}}{{' to ' + '$' + price[1]}}</p>
-                        </div>
-                        <div v-if="activeItem === 'price'" class="b_over price" v-clickoutside="show('test')">
-                            <div class="box price">
-                                <vue-slider
-                                v-model="price" 
-                                :enable-cross="false" />
-                                <label> Min </label>
-                                <input 
-                                type="text"
-                                v-model="price[0]"
-                                >
-                                <label> Max </label>
-                                <input 
-                                type="text"
-                                v-model="price[1]"
-                                >
-                            </div>
-                            <div class="save">
-                                <button v-if="showPrice" @click="activeItem = null" class="cancel">Cancel</button>
-                                <button v-else="showPrice" @click="price = [0,100]" class="cancel">clear</button>
-                                <button @click="filterData" class="submit">Save</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="showmap">
-                <p>Show Map</p>
-                <div id="cover">
-                    <input v-model="showMap" type="checkbox" id="checkbox">
-                    <div id="bar"></div>
-                    <div id="knob">
-                        <p v-if="showMap"><svg viewBox="0 0 52 52" fill="black" fill-opacity="0" stroke="currentColor" stroke-width="3" focusable="false" aria-hidden="true" role="presentation" stroke-linecap="round" stroke-linejoin="round" style="height: 28px; width: 28px; display: block; overflow: visible;"><path d="m19.1 25.2 4.7 6.2 12.1-11.2"></path></svg></p>
-                    </div>
-                </div>
-            </div>      
+            <event-map-search
+            v-if="showMap"
+            @mapCenterUpdated="mapSearch"
+            :user="user"
+            @loadMore="loadMoreEvents"
+            :events="eventList"></event-map-search>
+            <event-list-search
+            v-else="showMap"
+            :user="user"
+            :events="eventList"></event-list-search>
         </div>
-        <event-map-search
-        v-if="showMap"
-        @mapCenterUpdated="updateSearch"
-        :events="eventList"></event-map-search>
-        <event-list-search
-        v-else="showMap"
-        :events="eventList"></event-list-search>
     </div>
 </template>
 
@@ -128,6 +133,9 @@
             },
             categories: {
                 type:Array
+            },
+            user: {
+                type:String
             }
         },
 
@@ -152,6 +160,17 @@
             },
             showPrice() {
                 return this.price[0] == 0 && this.price[1] == 100 ? true : false;
+            },
+
+            data() {
+                return {
+                    results: this.results,
+                    mapboundary: this.boundaries,
+                    category: this.category,
+                    dates: this.datesSubmit,
+                    price: this.price,
+                    loc: this.mapCenter,
+                }
             }
 
         }, 
@@ -171,6 +190,7 @@
                 dates: [],
                 showInside:false,
                 pickerInstance: '',
+                results: '',
                 config: {
                     minDate: "today",
                     altFormat:'M d',
@@ -207,15 +227,23 @@
                 this.$store.dispatch('userSearchRequest', this.searchedevents);
             },
 
-            updateSearch(value) {
+            filterData() {
+                this.submit();
+            },
+
+            mapSearch(value) {
                 this.boundaries = value;
-                let data = {
-                    mapboundary: value,
-                    category: this.category ? this.category.id : '',
-                    dates: this.datesSubmit ? this.datesSubmit : '',
-                    price: this.price ? this.price : '',
-                };
-                axios.post('/api/search/mapboundary', data)
+                this.submit();
+            },
+
+            loadMoreEvents(value) {
+                this.results = value;
+                this.submit();
+            },
+
+            submit() {
+                this.activeItem = null;
+                 axios.post('/api/search/mapboundary', this.data)
                 .then(response => {
                     this.eventList = response.data;
                     console.log(response.data);
@@ -243,21 +271,6 @@
                 }
             },
 
-            filterData() {
-                this.activeItem = null;
-                let data = {
-                    loc: this.mapCenter,
-                    mapboundary: this.boundaries,
-                    category: this.category ? this.category.id : '',
-                    dates: this.datesSubmit ? this.datesSubmit : '',
-                    price: this.price ? this.price : '',
-                };
-                axios.post('/api/search/mapboundary', data)
-                .then(response => {
-                    this.eventList = response.data;
-                    console.log(response.data)
-                });
-            },
         },
 
         watch: {

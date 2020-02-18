@@ -1,0 +1,82 @@
+.show{
+    max-width: 100%;
+    margin: auto;
+    & .organizer {
+        display: grid;
+        grid-template-columns: .23fr .76fr;
+        & .left {
+            width:100%;
+            background: black;
+            position: relative;
+            & .image {
+                position: absolute;
+                height: 30rem;
+                width: 30rem;
+                right:0;
+                margin: 15rem -15rem 0rem 0rem;
+                & img {
+                    width:100%;
+                    border-radius: 50%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            }
+        }
+        & .right {
+            width:100%;
+            position: relative;
+            padding: 15rem 10rem 0rem 25rem;
+            & .name {
+                & h2 {
+                    font-size: 9rem;
+                    margin-bottom: 1rem;
+                }
+            }
+            & .info {
+                display: grid;
+                grid-template-columns: auto auto auto auto;
+                width: 61%;
+                border-bottom: 1px solid #c3c3c3;
+                & img {
+                    width: 1.4rem;
+                    margin-bottom: 0.7rem;
+                }
+                & .des {
+                    margin: 0px;
+                    word-wrap: break-word;
+                    font-size: 1.4rem;
+                    font-weight: 300;
+                    line-height: 1.2857142857rem;
+                    color: #484848;
+                    display: block;
+                    margin-bottom: 0.5rem;
+                }
+            }
+            & .descrip {
+                color: #676767;
+                margin: 2rem 0rem;
+            }
+            & .modal {
+                width: 34rem;
+                & .modal-body {
+                    text-align: left;
+                    & textarea {
+                        width: 100%;
+                        margin-top: 1.5rem;
+                        border-radius: .4rem;
+                    }
+                }
+                & .modal-footer {
+                    padding: 1rem 5rem 5rem 5rem;
+                }
+                & .btn {
+                    margin: 0rem;
+                    min-width: 100px;
+                    &.sub {
+                        margin:0rem;
+                    }
+                }
+            }
+        }
+    }
+}

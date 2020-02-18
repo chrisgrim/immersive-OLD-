@@ -7,7 +7,7 @@
         width:40rem;
         left:50%;
         margin-left:-20rem;
-        top:15rem;
+        top:20rem;
         & .another {
             color:$default-color;
             border: none;
@@ -22,8 +22,11 @@
 }
 .verify_bar {
     width: 100%;
-    background: #3faba1;
+    background: $default-color;
     color: white;
+    margin-top: 7rem;
+    position: absolute;
+    z-index: 1000;
     & .text {
         display: inline-block;
         padding: 2rem;
@@ -43,6 +46,7 @@
             color: black;
             border: none;
             padding: 0;
+            cursor: pointer;
         }
     }
 }

@@ -87,7 +87,7 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        $event->load('category', 'organizer', 'location');
+        $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories');
         return view('events.show', compact('event'));
     }
 

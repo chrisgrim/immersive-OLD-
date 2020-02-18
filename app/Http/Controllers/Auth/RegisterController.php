@@ -44,6 +44,11 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+    // protected function redirectTo()
+    // {
+    //     return url()->previous();
+    // }
+
     /**
      * Handle a registration request for the application.
      *

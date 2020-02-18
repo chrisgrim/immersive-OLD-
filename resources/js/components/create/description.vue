@@ -23,7 +23,7 @@
                         </div>
                     </div>
                     <div class="field"> 
-                        <label>Event Genres</label>
+                        <label>Event genres</label>
                         <multiselect 
                         v-model="genreName"
                         tag-placeholder="Add this as new tag" 
@@ -46,7 +46,7 @@
                         </div>
                     </div>
                     <div class="field">
-                        <label>Event Website Url</label>
+                        <label>Event website</label>
                         <input 
                         type="text" 
                         v-model="websiteUrl"
@@ -57,11 +57,11 @@
                         placeholder="Leave blank if using Organizer Website Url"
                         />
                         <div v-if="$v.websiteUrl.$error" class="validation-error">
-                            <p class="error" v-if="!$v.websiteUrl.url">Must be a Url (https://...)</p>
+                            <p class="error" v-if="!$v.websiteUrl.url">Must be a url (https://...)</p>
                         </div>
                     </div>
                     <div class="field">   
-                        <label>Ticket Url</label>
+                        <label>Ticket website</label>
                         <input 
                         type="text" 
                         v-model="ticketUrl"
@@ -72,7 +72,7 @@
                         placeholder="Leave blank if using Organizer Website Url"
                         />
                         <div v-if="$v.ticketUrl.$error" class="validation-error">
-                            <p class="error" v-if="!$v.ticketUrl.url"> Must be a Url (https://...)</p>
+                            <p class="error" v-if="!$v.ticketUrl.url"> Must be a url (https://...)</p>
                         </div>
                     </div>
                     <div class="">

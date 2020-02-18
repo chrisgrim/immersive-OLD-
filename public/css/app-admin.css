@@ -167,7 +167,6 @@ select:-webkit-autofill:focus {
   width: 80%;
   margin-left: 20%;
   padding: 3rem 5rem;
-  margin-top: -9rem;
 }
 
 #admin .validation-error {

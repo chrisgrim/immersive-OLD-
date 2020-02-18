@@ -3,20 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Organizer;
+use App\Conversation;
 use App\Event;
+use App\Message;
+use App\User;
+use DB;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\OrganizerStoreRequest;
 use App\Http\Requests\OrganizerUpdateRequest;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ContactUser;
 use Redirect;
 
 class OrganizerController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'verified'])->except(['show']);
-        $this->middleware('can:update,organizer')->except(['store','show','create']);
+        $this->middleware(['auth', 'verified'])->except(['show', 'message']);
+        $this->middleware('can:update,organizer')->except(['store','show','create', 'message']);
     }
     /**
      * Display a listing of the resource.
@@ -108,5 +114,48 @@ class OrganizerController extends Controller
     public function destroy(Organizer $organizer)
     {
         //
+    }
+
+    public function message(Request $request, Organizer $organizer, User $user)
+    {
+        
+        $conversation = DB::table('conversation_user as a')
+                ->join('conversation_user as b', 'a.id', '<','b.id')
+                ->where(function($q) use ($user, $organizer){
+                $q->where([['a.user_id','=',$user->id],['b.user_id','=',$organizer->user->id]])
+                ->orWhere([['a.user_id','=',$organizer->user->id],['b.user_id','=',$user->id]]);
+            })
+            ->whereColumn('a.conversation_id','b.conversation_id')
+            ->first();
+            
+        if($conversation) {
+            Message::create([
+                'conversation_id' => $conversation->conversation_id,
+                'user_id' => $user->id,
+                'message' => $request->message
+            ]);
+        } else {
+            $ids = [$user->id, $organizer->user->id];
+            $conversation = Conversation::create();
+            $conversation->users()->sync($ids);
+            Message::create([
+                'conversation_id' => $conversation->id,
+                'user_id' => $user->id,
+                'message' => $request->message
+            ]);
+        }
+
+        $organizer->user->update([
+            'has_unread' => true
+        ]);
+
+        $attributes = [
+            'email' => $user->email,
+            'body' => $request->message,
+            'username' => $user->name,
+        ];
+
+        $organizer->email ? $dest = $organizer->email : $dest = $organizer->user->email;
+        Mail::to($dest)->send(new ContactUser($attributes));
     }
 }

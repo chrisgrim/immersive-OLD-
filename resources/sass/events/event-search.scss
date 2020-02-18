@@ -1,4 +1,9 @@
 .search {
+    max-width: 100%;
+    padding-top: .01rem;
+    & .body {
+        margin-top:12rem;
+    }
     & .filter {
         width: 100%;
         height: 5rem;
@@ -9,7 +14,9 @@
         justify-content: left;
         align-items: center;
         z-index: 900;
-        position: relative;
+        position: fixed;
+        background: white;
+        margin-top: -5rem;
         & .flatpickr-input, .form-control.input {
             display: none
         }
@@ -146,31 +153,6 @@
         margin-bottom: 20px;
         & .ln {
             border:solid .5px #EBEBEB;
-        }
-    }
-    & .info {
-        display: inline-block;
-        padding-left: 1rem;
-        position: absolute;
-        & .name {
-            font-weight: 400;
-            color: #222222;
-            font-size: 18px;
-            line-height: 24px;
-            max-height: 24px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 1;
-            -webkit-box-orient: vertical;
-        }
-        & .price {
-            -webkit-box-align: center;
-            align-items: center;
-            color: #222222;
-            font-weight: 400;
-            font-size: 18px;
-            line-height: 24px;
         }
     }
 }

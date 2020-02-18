@@ -88,9 +88,13 @@ export default {
         searchEvents() {
             if(_.has(this.searchBoxInput, 'latitude')) {
                 this.onSearchPage === true ? this.localSearch() : this.globalSearch();
-            } else {
-                this.eventSearch()
             };
+            if(_.has(this.searchBoxInput, 'twitterHandle')) {
+                window.location.href = `/organizer/${this.searchBoxInput.slug}`;
+            };
+            if(_.has(this.searchBoxInput, 'tag_line')) {
+                window.location.href = `/events/${this.searchBoxInput.slug}`;
+            }
         },
 
         globalSearch() {
@@ -106,7 +110,8 @@ export default {
         },
 
         eventSearch() {
-             window.location.href = `/events/${this.searchBoxInput.slug}`;
+            console.log()
+            //window.location.href = `/events/${this.searchBoxInput.slug}`;
         },
 
     },

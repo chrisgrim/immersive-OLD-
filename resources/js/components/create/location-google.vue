@@ -103,6 +103,7 @@
 	import Multiselect from 'vue-multiselect'
 	import { required, minLength, requiredIf } from 'vuelidate/lib/validators'
 	import {LMap, LTileLayer, LMarker} from 'vue2-leaflet'
+    import _ from 'lodash'
 
 
 
@@ -209,6 +210,7 @@
             load() {
                 axios.get(`${this.eventUrl}/location/fetch?timestamp=${new Date().getTime()}`)
                 .then(response => {
+                    console.log(response.data.regions);
                     this.updateEventFields(response.data.location);
                     this.selectedRegions = response.data.pivots;
                     this.regionOptions = response.data.regions;

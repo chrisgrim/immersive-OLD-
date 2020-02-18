@@ -35,6 +35,12 @@ Route::GET('/index/search', 'SearchController@index');
 // This is the search for vuex
 Route::POST('/vuex/search', 'SearchController@filterIndex');
 
+//Get Messages from database
+Route::GET('/messages', 'ConversationsController@index');
+Route::GET('/conversations/fetch', 'ConversationsController@fetch');
+Route::GET('/conversations/{conversation}', 'ConversationsController@show');
+Route::POST('/conversations/{conversation}', 'ConversationsController@update');
+
 //Admin Area
 Route::GET('/admin/dashboard', 'AdminAreaController@index');
 Route::GET('/finish/events', 'AdminAreaController@approval');
@@ -53,6 +59,8 @@ Route::GET('/admin/organizer/fetch', 'AdminOrganizerController@fetch');
 
 //User Profile Pages
 Route::RESOURCE('users', 'ProfilesController');
+
+Route::POST('message/organizer/{organizer}/{user}', 'OrganizerController@message');
 
 
 // favorites Button

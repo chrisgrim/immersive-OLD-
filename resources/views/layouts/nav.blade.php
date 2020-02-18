@@ -11,5 +11,4 @@
 	@guest
 		<vue-nav></vue-nav>
 	@endguest
-
 </header>

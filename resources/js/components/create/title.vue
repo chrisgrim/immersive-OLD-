@@ -17,12 +17,12 @@
                     @blur="activeItem = 'name'"
     	             />
     	             <div v-if="$v.name.$error" class="validation-error">
-    	    			<p class="error" v-if="!$v.name.required">Please add a Title</p>
-                        <p class="error" v-if="!$v.name.maxLength">The Title is too long.</p>
+    	    			<p class="error" v-if="!$v.name.required">Please add a title.</p>
+                        <p class="error" v-if="!$v.name.maxLength">The title is too long.</p>
     	    		</div>
     	        </div>
                 <div class="field">
-                    <label>Event Tag Line</label>
+                    <label>Event tag line</label>
                     <input 
                     type="text" 
                     v-model="tagLine"

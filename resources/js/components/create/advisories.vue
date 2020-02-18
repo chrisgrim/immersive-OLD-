@@ -172,6 +172,7 @@
 
 <script>
     import Multiselect from 'vue-multiselect'
+    import _ from 'lodash';
     import { required, numeric } from 'vuelidate/lib/validators'
 
 	export default {

@@ -61,7 +61,7 @@
                                     <p class="error" v-if="!v.ticket_price.maxLength">Please enter an amount under $10,000</p>
                                     <p class="error" v-if="!v.ticket_price.required">Please enter a price</p>
                                 </div>
-                                <button v-if="index != 0" @click.prevent="deleteRow(index)" class="delete-circle">X</button>
+                                <button v-if="tickets.length > 1" @click.prevent="deleteRow(index)" class="delete-circle">X</button>
                             </div>
                         </div>
                     </div>
@@ -162,7 +162,7 @@ export default {
 
         //deletes a ticket row or clears the first one
         deleteRow(index) {
-            index == 0 ? this.clearindex() : this.$delete(this.tickets, index) ;
+            this.$delete(this.tickets, index) ;
         },
 
         initializeShowtimeObject() {

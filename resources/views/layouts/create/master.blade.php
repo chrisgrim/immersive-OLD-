@@ -4,11 +4,14 @@
         @include('layouts.meta')
         @yield('meta')
         <link href="/css/app-create.css" rel="stylesheet">
+        <link href="/css/app-lite.css" rel="stylesheet">
+        <link href="/css/app.css" rel="stylesheet">
         <script src="/js/app.js" defer=""></script>
     </head>
     <body>
         @include('layouts.create.nav')
         <main>
+            @include('layouts.verifyMessage')
             @yield('content')
         </main>
         @include('layouts.create.footer')

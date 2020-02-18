@@ -4,9 +4,15 @@
             <div class="title">
                 <h2>{{events.length}} immersive shows</h2>
             </div>
-            <div v-for="(event, index) in events" v-if="index < 2">
-                <search-item :event="event"></search-item>
+            <div class="top">
+                <div class="ln"></div>
             </div>
+            <div class="vert">
+                <div v-for="(event, index) in events">
+                    <search-item :user="user" :event="event"></search-item>
+                </div>
+            </div>
+            <button @click="onLoadMore">Load More</button>
         </div>
         <div class="map" :style="this.map">
             <div>
@@ -81,6 +87,9 @@
         props: {
             events: {
                 type:Array
+            },
+            user: {
+                type:String
             }
         }, 
 
@@ -112,8 +121,8 @@
                 allowZoom: false,
                 eventList: '',
                 mapSearch: true,
-                height:0,
-
+                height: 0,
+                results: 15,
             }
         },
 
@@ -134,7 +143,13 @@
             },
 
             onMapCenterChanged () {
-              this.$emit('mapCenterUpdated', this.currentBounds)
+              this.$emit('mapCenterUpdated', this.currentBounds);
+            },
+
+            onLoadMore() {
+                this.results = this.results + 15;
+                console.log(this.results);
+                this.$emit('loadMore', this.results);
             },
 
             handleResize() {

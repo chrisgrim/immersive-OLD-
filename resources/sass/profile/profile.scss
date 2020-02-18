@@ -1,0 +1,170 @@
+.profile{
+    max-width: 72%;
+    margin: auto;
+    padding-top: 5rem;
+    & .body {
+        margin-top:7rem;
+        display: grid;
+        grid-template-columns: .33fr .66fr;
+        & .left {
+            & .image {
+                width: 11rem;
+                height: 11rem;
+                & img {
+                    width: 100%;
+                    border-radius: 50%;
+                }
+                & .error {
+                    position: absolute;
+                    color:red;
+                }
+                & input {
+                    display: none;
+                }
+                & .wrapper, .wrapper img {
+                    width: 100%;
+                    height: 100%;
+                    background-repeat: no-repeat;
+                    background-size: cover !important;
+                    border-radius: 50%;
+                    position: relative;
+                    display: block;
+                    cursor: pointer;
+                    background: #f77161;
+                    font-size: 110px;
+                    transition: width .5s ease-in-out;
+                    transition: height .5s ease-in-out;
+                    &.imageloaded {
+                        font-size: 40px;
+                        background-position: center center;
+                    }
+                    &.imageloading {
+                        background: #1b1b1bc4
+                    }
+                }
+                & span.text {
+                    position: absolute;
+                    bottom: -2.5rem;
+                    width: 6rem;
+                    left: 50%;
+                    margin-left: -3rem;
+                }
+                & .add-profile-image {
+                    background: #ff8c3c;
+                    border-radius: 50px;
+                    padding: 0px 10px 0px 10px;
+                    box-shadow: 1px 2px 5px 2px #9898984d;
+                    & p {
+                        margin: 0px;
+                        font-size: 30px;
+                    }
+                }
+            }
+        }
+        & .right {
+            & .name h2 {
+                font-size: 4.2rem;
+                margin-bottom: 0rem;
+            }
+            & .info {
+                margin-top: .6rem;
+                & .age {
+                    display: inline-block;
+                    color: #484848;
+                    font-weight: 300;
+                }
+                & .edit {
+                    display: inline-block;
+                    cursor: pointer;
+                    color: $default-color;
+                    font-weight: 300;
+                    margin-left: 1rem;
+                }
+            }
+            & .loc {
+                margin-top: 5rem;
+            }
+            & .favorites {
+                margin: 4rem 0rem;
+                border-top: 1px solid #bbbbbb;
+                padding: 2rem 0rem;
+                & #grid {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+            }
+        }
+        & .field {
+            width: 100%;
+            & label {
+                display: block;
+                margin: 2rem 0rem 1rem 0rem;
+                font-size: 1.5rem;
+                font-weight: 500;
+                color: #656565;
+            }
+            & input {
+                position: relative;
+                color: #484848;
+                background-color: white;
+                transition: border-color 0.2s ease 0s;
+                padding: 1.3rem 1rem;
+                border-width: 1px;
+                border-style: solid;
+                -o-border-image: initial;
+                border-image: initial;
+                border-radius: 5px;
+                border-color: #ebebeb;
+                margin: 0rem 0rem 1rem 0rem;
+                font-size: 1.4rem;
+                width: 100%;
+                &.active {
+                    border-color: rgb(0, 132, 137);
+                }
+                &.error {
+                    border-color: red;
+                }
+                &::placeholder {
+                    color:#adadad;
+                    font-size:1.4rem;
+                    font-family: inherit;
+                }
+            }
+            & textarea {
+                position: relative;
+                color: #484848;
+                background-color: white;
+                transition: border-color 0.2s ease 0s;
+                padding: 1.3rem 1rem;
+                border-width: 1px;
+                border-style: solid;
+                -o-border-image: initial;
+                border-image: initial;
+                border-radius: 5px;
+                border-color: #ebebeb;
+                margin: 0rem 0rem 1rem 0rem;
+                font-size: 1.4rem;
+                width: 100%;
+                &.active {
+                    border-color: rgb(0, 132, 137);
+                }
+                &.error {
+                    border-color: red;
+                }
+                &::placeholder {
+                    color:#adadad;
+                    font-size:1.4rem;
+                    font-family: inherit;
+                }
+            }
+            & button.save {
+                background: $default-color;
+                color:white;
+                border: none;
+            }
+            & button.cancel {
+                border:none;
+                color:$default-color;
+            }
+        }
+    }
+}

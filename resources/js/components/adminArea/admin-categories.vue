@@ -156,6 +156,8 @@
                 data.append('name', this.name);
                 data.append('description', this.description);
 
+                console.log(data);
+
                 axios.post('/categories', data)
                 .then(response => { 
                     console.log(response.data);

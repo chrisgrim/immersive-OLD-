@@ -12,14 +12,17 @@
 // auth
 @import 'auth/login';
 @import 'auth/register';
-@import 'auth/verify';
 
 // Profile
-@import 'profile';
+@import 'profile/profile';
 
 //Components 
 @import 'components/tab';
-@import 'components/modal';
+@import 'organizer';
+
+@import 'messages/messages';
+
+@import 'create/spinner';
 
 
 

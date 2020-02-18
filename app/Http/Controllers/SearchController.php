@@ -59,9 +59,8 @@ class SearchController extends Controller
             ->when($request->start, function($query) use ($start, $end) {
                 $query->whereBetween('dates.date', [$start,$end]);
             })
+            ->with(['location', 'organizer'])
             ->get(); 
-
-
 
         return response()->json($events);
 
@@ -81,41 +80,29 @@ class SearchController extends Controller
     public function searchNav(Request $request)
     {
         if ($request->keywords) {
-
             $ajaxCity = CityList::search($request->keywords)
             ->rule(CityListSearchRule::class)
             ->orderBy('population', 'desc')
             ->get();
-
         } else {
-
             $ajaxCity = CityList::search('*')
             ->orderBy('population', 'desc')
             ->take(20)
             ->get();
-
         }
 
         if($ajaxCity->count()) {
-
             return response()->json($ajaxCity);
-
         } else {
-
             $ajaxEvents = Event::search($request->keywords)
             ->rule(EventSearchRule::class)
             ->get();
-
             if ($ajaxEvents->count()) {
-
                 return response()->json($ajaxEvents);
-
             } else {
-
                 $ajaxOrganizers = Organizer::search($request->keywords)
                 ->rule(OrganizerSearchRule::class)
                 ->get();
-
                 return response()->json($ajaxOrganizers);
             }
         };
@@ -161,6 +148,8 @@ class SearchController extends Controller
             ->when($request->price, function($query) use ($request) {
                 $query->whereBetween('priceranges.price', [$request->price[0],$request->price[1]]);
             })
+            ->with(['location', 'organizer'])
+            ->take($request->results)
             ->get(); 
             return $events;
     }

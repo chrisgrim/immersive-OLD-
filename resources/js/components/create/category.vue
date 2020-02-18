@@ -1,7 +1,7 @@
 <template>
 	<div class="category">
         <div class="ctitle">
-            <h2>Category</h2>
+            <h2>Immersive Categories</h2>
         </div>
 		 <div class="section">
             <div class="text">

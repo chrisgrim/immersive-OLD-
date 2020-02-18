@@ -27,8 +27,6 @@
     <meta name="twitter:image" content="{{ url('/') }}/storage/{{$event->largeImagePath}}" />
     <meta name="twitter:creator" content="@everythingimmersive" />
     <link href="/css/app-lite.css" rel="stylesheet">
-    <script src="/js/applite.js" defer=""></script>
-{{--     <script src="/js/app.js" defer=""></script> --}}
 @endsection
 
 @section('content')

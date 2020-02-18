@@ -89,7 +89,7 @@ class Organizer extends Model
         $filename= $request->slug . '_' . 'organization' . '_' . rand(1,50000) . '.' . $extension;
         $imagePath = "organizer-images/$filename";
         $request->file('imagePath')->storeAs('/public/organizer-images', $filename);
-        Image::make(storage_path()."/app/public/organizer-images/$filename")->fit(1280, 720)->save(storage_path("/app/public/$imagePath"));
+        Image::make(storage_path()."/app/public/organizer-images/$filename")->fit(800, 800)->save(storage_path("/app/public/$imagePath"));
         $organizer->update([ 'imagePath' => $imagePath ]);
     }
 

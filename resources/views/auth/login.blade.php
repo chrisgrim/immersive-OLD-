@@ -1,5 +1,11 @@
 @extends('layouts.master')
 
+@section('meta')
+    <title>{{config('app.name')}} - login</title>
+    <link href="/css/app-lite.css" rel="stylesheet">
+    <link href="/css/app.css" rel="stylesheet">
+@endsection 
+
 @section('content')
 <div class="login-container">
     <div>

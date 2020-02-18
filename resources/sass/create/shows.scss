@@ -70,4 +70,7 @@
             position: relative;
         }
     }
+    & .flatpickr-calendar.inline {
+        margin:0;
+    }
 }

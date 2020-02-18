@@ -39,12 +39,32 @@ $factory->define(App\Region::class, function (Faker $faker) {
 $factory->define(App\Genre::class, function (Faker $faker) {
     return [
         'genre' => $faker->name,
+        'user_id' => 1,
     ];
 });
 
 $factory->define(App\ContactLevel::class, function (Faker $faker) {
     return [
         'level' => $faker->name,
+    ];
+});
+
+$factory->define(App\ContentAdvisory::class, function (Faker $faker) {
+    return [
+        'advisories' => $faker->name,
+        'user_id' => 1,
+    ];
+});
+
+$factory->define(App\Category::class, function (Faker $faker) {
+    $imagesave = $faker->image('public/storage/category-large-images',500,500, null, false);
+    $title = $faker->company;
+    return [
+        'name' => $title,
+        'slug' => str_slug($title),
+        'description' => $faker->paragraph,
+        'largeImagePath' => 'category-large-images/'. $imagesave,
+        'thumbImagePath' => 'category-thumb-images/'. $imagesave,
     ];
 });
 
@@ -68,16 +88,7 @@ $factory->define(App\Organizer::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(App\Category::class, function (Faker $faker) {
-    $imagesave = $faker->image('public/storage/category-images',100,100, null, false);
-    $title = $faker->company;
-    return [
-        'name' => $title,
-        'slug' => str_slug($title),
-        'description' => $faker->paragraph,
-        'imagePath' => 'category/'. $imagesave,
-    ];
-});
+
 
 $factory->define(App\Location::class, function (Faker $faker) {
     return [

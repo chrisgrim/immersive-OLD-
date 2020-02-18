@@ -6,6 +6,7 @@
     				<div class="content">	
     					<span class="category">{{event.category ? event.category.name : ''}}</span>
     					<span class="title">{{event.name}}</span>
+                        <i>{{event.tag_line}}</i>
                         <div class="info">
                             <div>
                                 <img src="/storage/website-files/price.png" alt="">
@@ -28,16 +29,10 @@
     			<div class="right">
                     <div class="image" :style="{ backgroundImage: `url('/storage/${event.largeImagePath}')` }">
                     </div>
-                    <div v-if="user.length">
-                        <favorite :inputclass="showEventClass" :event="event"></favorite>
+                    <div>
+                        <favorite :user="user" :inputclass="showEventClass" :event="event"></favorite>
                     </div>
-                    <div v-else="user.length" :class="showEventClass">
-                        <svg viewBox="0 0 32 32" class="unhearted">
-                            <a :href="'/favorite/' + event.slug + '/login'">
-                                <path d="m23.99 2.75c-.3 0-.6.02-.9.05-1.14.13-2.29.51-3.41 1.14-1.23.68-2.41 1.62-3.69 2.94-1.28-1.32-2.46-2.25-3.69-2.94-1.12-.62-2.27-1-3.41-1.14a7.96 7.96 0 0 0 -.9-.05c-1.88 0-7.26 1.54-7.26 8.38 0 7.86 12.24 16.33 14.69 17.95a1 1 0 0 0 1.11 0c2.45-1.62 14.69-10.09 14.69-17.95 0-6.84-5.37-8.38-7.26-8.38"></path>
-                            </a>
-                        </svg>
-                    </div>
+                    
     			</div>
             </div>
 		</div>
@@ -50,8 +45,23 @@
                         </div>
                     </div>
                     <div class="right">
-                        <p style="white-space: pre-wrap;" v-if="showMore !== 'description'" class="text"><i>"{{event.tag_line}}"</i><br>{{event.description.substring(0,400)}}<span class="show" @click="showMore = 'description'">... Show More</span></p>
-                        <p style="white-space: pre-wrap;" v-if="showMore == 'description'" class="text"><i>"{{event.tag_line}}"</i><br>{{event.description}}<span class="show" @click="showMore = null">... Show Less</span></p>
+                        <p 
+                        style="white-space: pre-wrap;" 
+                        v-if="showMore !== 'description'" 
+                        class="text">{{event.description.substring(0,400)}}<span 
+                            class="show" 
+                            v-if="event.description.length >= 400"
+                            @click="showMore = 'description'">... Show More
+                            </span>
+                        </p>
+                        <p 
+                        style="white-space: pre-wrap;" 
+                        v-show="showMore == 'description'" 
+                        class="text">{{event.description}}<span 
+                            class="show" 
+                            @click="showMore = null">... Show Less
+                            </span>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -107,6 +117,50 @@
                             placeholder="Select date"             
                             name="dates">
                         </flat-pickr>
+                        <div class="times">
+                            <p style="white-space: pre-wrap;">{{event.show_times}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section details">
+                <div class="content">
+                    <div class="left">
+                        <div class="text">
+                            <h3>Show Details</h3>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="block">
+                            <div class="title">
+                                <h4>Content Advisories</h4>
+                            </div>
+                            <div class="info">
+                                <div v-for="item in event.content_advisories">
+                                    <p>&#8226; {{item.advisories}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="block">
+                            <div class="title">
+                                <h4>Contact Advisories</h4>
+                            </div>
+                            <div class="info">
+                                <div v-for="item in event.contact_levels">
+                                    <p>&#8226; {{item.level}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="block">
+                            <div class="title">
+                                <h4>Mobility Advisories</h4>
+                            </div>
+                            <div class="info">
+                                <div v-for="item in event.mobility_advisories">
+                                    <p>&#8226; {{item.mobilities}}</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -118,37 +172,39 @@
                         </div>
                     </div>
     				<div class="right">
-                        <div class="image">
-                            <div :style="{ backgroundImage: `url('/storage/${event.organizer.imagePath}')` }" class="img">
+                        <a :href="`/organizer/${event.organizer.slug}`">
+                            <div class="image">
+                                <div :style="{ backgroundImage: `url('/storage/${event.organizer.imagePath}')` }" class="img">
+                                </div>
                             </div>
-                        </div>
-                        <div class="name">
-                            {{event.organizer.name}}
-                        </div>
-                        <div v-if="event.organizer.description.length>=50" class="description">
+                        </a>
+                        <a :href="`/organizer/${event.organizer.slug}`">
+                            <div class="name">
+                                {{event.organizer.name}}
+                            </div>
+                        </a>
+                        <div style="white-space: pre-wrap;" v-if="event.organizer.description.length>=50" class="description">
                             {{event.organizer.description}}
                         </div>
                         <div v-if="event.organizer.description.length<=8" class="description">
                             {{event.organizer.description}}
                         </div>
+                        <ContactOrganizer :user="user" :loadorganizer="event.organizer"></ContactOrganizer>
     				</div>
                 </div>
 			</div>
-			<div class="location-section">
+			<div class="section location">
 				<div>
-					<div class="location-header">
-						<h1>Location</h1>
+					<div class="title">
+						<h3>Location</h3>
 					</div>
-					<div class="location-place">
-						<h2>
-							<div class="text" v-if="event.location.hiddenLocationToggle">
-								{{event.location.city}} {{event.location.region}}
-							</div>
-                            <div class="text" v-else="event.location.hiddenLocationToggle">
-                                {{event.location.home}} {{event.location.street}} {{event.location.city}} {{event.location.region}}
-                            </div>
-						</h2>
+					<div class="text" v-if="event.location.hiddenLocationToggle">
+						<p>{{event.location.city}} {{event.location.region}}</p>
+                        <p>{{event.location.hiddenLocation}}</p>
 					</div>
+                    <div class="text" v-else="event.location.hiddenLocationToggle">
+                        <p>{{event.location.home}} {{event.location.street}}, {{event.location.city}},  {{event.location.region}}</p>
+                    </div>
 					<div class="location-map">
 						<div v-if="center">
 							<div class="zoom">
@@ -197,8 +253,8 @@
 <script>
 	import {LMap, LTileLayer, LMarker} from 'vue2-leaflet'
     import format from 'date-fns/format'
+    import ContactOrganizer from '../organizers/contact-organizer.vue'
     import flatPickr from 'vue-flatpickr-component'
-    import 'flatpickr/dist/flatpickr.css'
 
 	export default {
 
@@ -216,6 +272,7 @@
 			LTileLayer, 
 			LMarker,
             flatPickr,
+            ContactOrganizer,
 		},
 
         computed: {
@@ -266,7 +323,7 @@
                 });
             },
             handleScroll (event) {
-                event.path[1].scrollY > 120 ? this.bar = true : this.bar = false; 
+                event.path[1].scrollY > 60 ? this.bar = true : this.bar = false; 
             }
 		}, 
 

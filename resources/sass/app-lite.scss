@@ -1,6 +1,9 @@
 @import 'variables';
 
 // Layout
+
+@import 'components/login';
+
 @import 'layout';
 
 @import 'events/event-show';
@@ -10,9 +13,12 @@
 @import 'nav/navbar';
 @import 'nav/profilebutton';
 
+@import 'auth/verify';
+
 // Multiselect
 @import 'multiselect';
 
+@import 'components/modal';
 @import 'components/flatpickr';
 @import 'components/leaflet';
 @import 'components/multiselect';

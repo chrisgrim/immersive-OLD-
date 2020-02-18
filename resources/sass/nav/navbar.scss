@@ -9,6 +9,15 @@
             border:none;
         }
     }
+    &.org {
+        background: transparent;
+        & .nav {
+            border:none;
+            & h3 {
+                color:white;
+            }
+        }
+    }
 }
 .nav {
     align-items: center;
@@ -28,10 +37,19 @@
         width: 6.9rem;
         display: inline-block;
         float: left;
+        & h3 {
+            color:#404040;
+            font-family: "Open Sans", sans-serif;
+            font-size: 2.3rem;
+            font-weight: 800;
+            margin: 1.8rem 0rem 0rem 2.2rem;
+            letter-spacing: .2rem;
+        }
     }
     & img {
         height: 100%;
         width: 100%;
+        border-radius: 50%;
     }
     & .search {
         position: relative;
@@ -80,8 +98,18 @@
         height:100%;
         margin: 0rem 2rem;
         padding-top: 2.7rem;
+        position: relative;
         & a {
             vertical-align: bottom;
+        }
+        & .active {
+            background: red;
+            height: 1rem;
+            width: 1rem;
+            position: absolute;
+            border-radius: 50%;
+            right: -.7rem;
+            top: 2.4rem;
         }
     }
 }

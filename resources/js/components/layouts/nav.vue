@@ -3,7 +3,7 @@
 		<nav class="nav">
 			<div class="logo">
                 <a href="/">
-					<img src="/storage/website-files/ei-logo.png" alt="">
+                    <h3>EI</h3>
                 </a>
 			</div>
 	
@@ -18,14 +18,17 @@
                         <div>Create Event</div>
                     </a>
                 </div>
-                <div class="menu-nav" v-if="user.userType ? user.userType.name == 'admin' : ''">
-                    <a href="/eventreviews/create">
-                        Create Review
-                    </a>
-                </div>
                 <div class="menu-nav" v-if="user && user.hasCreatedOrganizers">
                     <a href="/create-event/edit">
-                        Edit Your Events
+                        <div>Your Events</div>
+                    </a>
+                </div>
+                <div class="menu-nav" v-if="user && loaduser.hasMessages ">
+                    <a href="/messages">
+                        <div v-if="user.has_unread" class="active">
+                            <p></p>
+                        </div>
+                        <div>Messages</div>
                     </a>
                 </div>
                 <div class="menu-nav">
@@ -73,7 +76,7 @@
             },
             createdevents: {
                 type:String
-            }
+            },
         }, 
 
 		data() {
@@ -92,8 +95,10 @@
 
 		methods: {
 			navType() {
-                console.log();
-                this.$router.currentRoute.path == `/events/test1` ? this.page = "show" : console.log('false');
+                var event = /events\/.*/;
+                var org = /organizer\/.*/;
+                event.test(this.$router.currentRoute.path) ? this.page = 'show' : '';
+                org.test(this.$router.currentRoute.path) ? this.page = 'org' : '';
             },
 		},
 

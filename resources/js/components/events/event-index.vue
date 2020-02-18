@@ -16,7 +16,7 @@
                 <div>
                     <div id="grid">
                         <div v-for="event in events">
-                            <event-listing-item :event="event"></event-listing-item>
+                            <event-listing-item :user="user" :event="event"></event-listing-item>
                         </div>
                     </div>
                 </div>
@@ -44,6 +44,9 @@
             },
             categories: {
                 type:Array
+            },
+            user: {
+                type:String
             }
         }, 
 
