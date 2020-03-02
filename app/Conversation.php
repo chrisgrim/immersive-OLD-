@@ -12,7 +12,7 @@ class Conversation extends Model
     *
     * @var array
     */
-    protected $with = ['messages', 'users'];
+    protected $with = ['messages', 'users', 'modmessages'];
 
     /**
      * This Conversation has many Messages
@@ -23,6 +23,17 @@ class Conversation extends Model
     public function messages()
     {
         return $this->hasMany(Message::class)->orderBy('updated_at', 'DESC');
+    }
+
+    /**
+     * This Conversation has many event notices
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+
+    public function modmessages()
+    {
+        return $this->hasMany(ModeratorComment::class)->orderBy('updated_at', 'DESC');
     }
 
     /**

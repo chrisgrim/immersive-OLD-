@@ -16,7 +16,7 @@
                                     <svg class="b" height="32" width="32" viewBox="0 0 24 24" aria-label="Add an image or video" role="img"><path d="M24 12c0-6.627-5.372-12-12-12C5.373 0 0 5.373 0 12s5.373 12 12 12c6.628 0 12-5.373 12-12zm-10.767 3.75a1.25 1.25 0 0 1-2.5 0v-3.948l-1.031 1.031a1.25 1.25 0 0 1-1.768-1.768L12 7l4.066 4.065a1.25 1.25 0 0 1-1.768 1.768l-1.065-1.065v3.982z"></path></svg>
                                 </div>
                                  <div>
-                                    <p v-if="!hasImage">Click here to upload image<br>Must be at least 1280 x 800 and under 2mb</p>
+                                    <p v-if="!hasImage">Click here to upload image<br>Must be at least 1280 x 800 and under 20mb</p>
                                     <p v-if="hasImage">Change Image</p>
                                 </div>
                             </div>
@@ -27,10 +27,10 @@
                 </label>
                 <div>
                     <div v-if="$v.finalImage.$error" class="validation-error">
-                        <p class="error" v-if="!$v.finalImage.required">The Image is required</p>
-                        <p class="error" v-if="!$v.finalImage.fileSize">The Image is too large</p>
-                        <p class="error" v-if="!$v.finalImage.fileType">Needs to be a Jpg, Png or Gif</p>
-                        <p class="error" v-if="!$v.finalImage.imageRatio">Needs to be at least 1200 x 800</p>
+                        <p class="error" v-if="!$v.finalImage.required">The image is required</p>
+                        <p class="error" v-if="!$v.finalImage.fileSize">The image file size is too large</p>
+                        <p class="error" v-if="!$v.finalImage.fileType">The image needs to be a JPG, PNG or GIF</p>
+                        <p class="error" v-if="!$v.finalImage.imageRatio">The image needs to be at least 1200 x 800</p>
                     </div>
                 </div>
             </div>
@@ -39,7 +39,7 @@
     </div>
     <div class="inNav">
         <button :disabled="dis" class="create" @click.prevent="goBack()"> Back </button>
-        <button :disabled="dis" v-if="readyToSubmit" class="create" @click.prevent="showModal(event)"> Submit Event </button>
+        <button :disabled="dis" v-if="readyToSubmit" class="create" @click.prevent="submitReview()"> Final Review </button>
     </div>
     <modal v-show="isModalVisible" @close="closeModal">
         <div slot="header">
@@ -132,6 +132,10 @@ export default {
             this.isModalVisible = false;
         },
 
+        submitReview() {
+            window.location.href = `${this.eventUrl}/review`;
+        },
+
         submitEvent() {
             this.dis = true;
             window.location.href = `${this.eventUrl}/thankyou`;
@@ -152,6 +156,7 @@ export default {
             window.location.href = `${this.eventUrl}/advisories`;
         },
 
+
     },
 
     created() {
@@ -162,7 +167,7 @@ export default {
         finalImage: {
             required,
             fileSize() { 
-                return this.finalImage ? this.finalImage.size < 2097152 : true 
+                return this.finalImage ? this.finalImage.size < 20971520 : true 
             },
             fileType() {
                 return this.finalImage ? ['image/jpeg','image/png','image/gif'].includes(this.finalImage.type) : true

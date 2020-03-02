@@ -46,7 +46,7 @@
                     </div>
                     <div class="right">
                         <p 
-                        style="white-space: pre-wrap;" 
+                        style="white-space: pre-line;" 
                         v-if="showMore !== 'description'" 
                         class="text">{{event.description.substring(0,400)}}<span 
                             class="show" 
@@ -55,7 +55,7 @@
                             </span>
                         </p>
                         <p 
-                        style="white-space: pre-wrap;" 
+                        style="white-space: pre-line;" 
                         v-show="showMore == 'description'" 
                         class="text">{{event.description}}<span 
                             class="show" 
@@ -183,10 +183,7 @@
                                 {{event.organizer.name}}
                             </div>
                         </a>
-                        <div style="white-space: pre-wrap;" v-if="event.organizer.description.length>=50" class="description">
-                            {{event.organizer.description}}
-                        </div>
-                        <div v-if="event.organizer.description.length<=8" class="description">
+                        <div style="white-space: pre-line;" v-if="event.organizer.description" class="description">
                             {{event.organizer.description}}
                         </div>
                         <ContactOrganizer :user="user" :loadorganizer="event.organizer"></ContactOrganizer>
@@ -297,7 +294,7 @@
 				isModalVisible: false,
 				zoom:13,
 				center: this.loadevent.location_latlon,
-				url:'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+				url:'https://{s}.tile.osm.org/{z}/{x}/{y}.png',
 				attribution:'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
 				allowZoom: false,
 				showEventClass: 'show-heart-location',

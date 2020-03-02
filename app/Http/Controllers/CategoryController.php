@@ -17,7 +17,7 @@ class CategoryController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth', 'verified']);
+        $this->middleware(['auth', 'verified'])->except('show');
         $this->middleware('admin')->except('show', 'select', 'fetch', 'add');
     }
     /**

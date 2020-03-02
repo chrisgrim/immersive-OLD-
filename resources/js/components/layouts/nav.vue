@@ -1,57 +1,58 @@
 <template>
-	<div class="head" :class="page">
-		<nav class="nav">
-			<div class="logo">
-                <a href="/">
-                    <h3>EI</h3>
-                </a>
-			</div>
-	
-			<nav-search></nav-search>
+    <div>
+        <vue-alert message="verify" v-if="loaduser ? !loaduser.email_verified_at : null"></vue-alert>
+        <div class="head" :class="page">
+            <nav class="nav">
+                <div class="logo">
+                    <a href="/">
+                        <h3>EI</h3>
+                    </a>
+                </div>
+                <nav-search></nav-search>
+                <div class="menu">
+                    <div class="menu-nav">
+                        <profile-button :user="user" v-if="user"></profile-button>
+                    </div>
+                    <div class="menu-nav" v-if="user && !user.hasCreatedOrganizers">
+                        <a href="/events/create">
+                            <div>Create Event</div>
+                        </a>
+                    </div>
+                    <div class="menu-nav" v-if="user && user.hasCreatedOrganizers">
+                        <a href="/create-event/edit">
+                            <div>Your Events</div>
+                        </a>
+                    </div>
+                    <div class="menu-nav" v-if="user && loaduser.hasMessages ">
+                        <a href="/messages">
+                            <div v-if="user.has_unread" class="active">
+                                <p></p>
+                            </div>
+                            <div>Messages</div>
+                        </a>
+                    </div>
+                    <div class="menu-nav">
+                        <a href="/login" v-if="!user">
+                            <div>Login</div>
+                        </a>
+                    </div>
+                    
+                    <div class="menu-nav">
+                        <a href="/register" v-if="!user">
+                            <div>Register</div>
+                        </a>
+                    </div>
 
-			<div class="menu">
-                <div class="menu-nav">
-                    <profile-button :user="user" v-if="user"></profile-button>
-                </div>
-                <div class="menu-nav" v-if="user && !user.hasCreatedOrganizers">
-                    <a href="/events/create">
-                        <div>Create Event</div>
-                    </a>
-                </div>
-                <div class="menu-nav" v-if="user && user.hasCreatedOrganizers">
-                    <a href="/create-event/edit">
-                        <div>Your Events</div>
-                    </a>
-                </div>
-                <div class="menu-nav" v-if="user && loaduser.hasMessages ">
-                    <a href="/messages">
-                        <div v-if="user.has_unread" class="active">
-                            <p></p>
-                        </div>
-                        <div>Messages</div>
-                    </a>
-                </div>
-                <div class="menu-nav">
-    				<a href="/login" v-if="!user">
-    					<div>Login</div>
-    				</a>
-                </div>
-                
-                <div class="menu-nav">
-    				<a href="/register" v-if="!user">
-    					<div>Register</div>
-    				</a>
-                </div>
+                    <div class="menu-nav">
+                        <a href="/register" v-if="!user">
+                            <div>Host an Experience</div>
+                        </a>
+                    </div>
 
-                <div class="menu-nav">
-                    <a href="/register" v-if="!user">
-                        <div>Host an Experience</div>
-                    </a>
                 </div>
-
-			</div>
-		</nav>
-	</div>
+            </nav>
+        </div>
+    </div>
 </template>
 
 <script>

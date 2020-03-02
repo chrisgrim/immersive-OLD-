@@ -7,6 +7,9 @@ use App\Region;
 use App\CityList;
 use App\Category;
 use App\Organizer;
+use App\StaffPick;
+use Session;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Http\Requests\TitleUpdateRequest;
@@ -16,9 +19,9 @@ class EventController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'verified'])->except('index','get','show');
+        $this->middleware(['auth', 'verified'])->except('index','show');
         $this->middleware('can:update,event')
-        ->except(['index','get','create','show','editEvents','store','fetchEditEvents']);
+        ->except(['index','create','show','editEvents','store','fetchEditEvents']);
     }
     /**
      * Display a listing of the resource.
@@ -32,7 +35,11 @@ class EventController extends Controller
             ->take(6)
             ->get();
         $categories = Category::all();
-        return view('events.index',compact('events', 'categories'));
+        $staffpicks = StaffPick::whereDate('end_date','>=', Carbon::now())
+            ->whereDate('start_date', '<=', Carbon::now())
+            ->orderBy('rank', 'ASC')
+            ->get();
+        return view('events.index',compact('events', 'categories','staffpicks'));
     }
 
     /**
@@ -87,6 +94,7 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
+        if(!$event->approved) { return redirect('/');}
         $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories');
         return view('events.show', compact('event'));
     }
@@ -155,9 +163,25 @@ class EventController extends Controller
         $event->updateEventTitle($request, $event);
     }
 
-    public function thanks(Event $event)
+    /**
+     * Returns Review Page in Creation Process
+     *
+     * @param  \App\Event  $event
+     * @return \Illuminate\Http\Response
+     */
+    public function review(Event $event)
+    {
+        $event->load('category', 'organizer', 'location');
+        return view('create.review', compact('event'));
+    }
+
+    public function submitEvent(Event $event) 
     {
         $event->finalizeEvent($event);
-        return view('create.thanks');
+    }
+
+    public function thanks(Event $event)
+    {
+        return redirect('create-event/edit')->with('message', 'Thanks for submitting your event.');
     }
 }

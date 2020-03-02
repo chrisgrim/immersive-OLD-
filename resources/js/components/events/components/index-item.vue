@@ -2,7 +2,7 @@
     <div :class="{ 'dis': isDisabled }" class="item">
         <favorite :user="user" :inputclass="showEventClass" :event="event"></favorite>
         <a :href="url">
-            <div class="image" :style="this.isDisabled ? disabledBackground : divBackground"></div>
+            <div class="image" :style="isModified ? isModified : divBackground"></div>
             <div class="etitle">
                 <h3>{{ event.name }}</h3>
             </div>
@@ -21,15 +21,15 @@
             user: { type:String }
         },
         computed: {
-            isDisabled() {
-                return this.event.approval_process == 'ready' ? true : false; 
-            },
-            shortBack() {
-                return this.event.thumbImagePath ? `/storage/${this.event.thumbImagePath}` : 'test';
-            },
-            disabledBackground() {
-                return `background-image: url('/storage/default-avatar/default-disabled.png'),url('${this.shortBack}')`;
-            },
+            // isSubmitted() {
+            //     return this.event.approval_process == 'ready' ? this.isModified = `background-image: url('/storage/default-avatar/default-disabled.png'),url('${this.shortBack}')` : false; 
+            // },
+            // shortBack() {
+            //     return this.event.thumbImagePath ? `/storage/${this.event.thumbImagePath}` : 'test';
+            // },
+            // disabledBackground() {
+            //     return `background-image: url('/storage/default-avatar/default-disabled.png'),url('${this.shortBack}')`;
+            // },
         },
 
         data() {
@@ -37,13 +37,30 @@
                 divBackground: `background-image: url('${this.event.thumbImagePath ? /storage/ + this.event.thumbImagePath : '/storage/default-avatar/default.jpg'}')`,
                 showEventClass: 'heart',
                 url: this.loadurl ? this.loadurl : '/events/' + this.event.slug,
+                isModified: '',
+                isDisabled: false,
             }
         },
 
         methods: {
+
+            eventStatus() {
+                if (this.event.approval_process == 'ready') {
+                    this.isDisabled = true;
+                    return this.isModified = `background-image: url('/storage/default-avatar/default-disabled.png'),url('/storage/${this.event.thumbImagePath}')`
+                }
+                if (this.event.approval_process == 'hasIssues') {
+                    return this.isModified = `background-image: url('/storage/default-avatar/default-disabled.png'),url('/storage/${this.event.thumbImagePath}')`
+                }
+            },
+
             getUrl() {
-                if (this.event.expectation_id) {
-                    return this.url = `/create-event/${this.event.slug}/title`;
+
+                if (this.event.largeImagePath) {
+                    return this.url = `/create-event/${this.event.slug}/images`;
+                }
+                if (this.event.advisories) {
+                    return this.url = `/create-event/${this.event.slug}/images`;
                 }
                 if (this.event.description) {
                     return this.url = `/create-event/${this.event.slug}/advisories`;
@@ -60,9 +77,7 @@
                 if (this.event.name) {
                     return this.url = `/create-event/${this.event.slug}/location`;
                 }
-                if (this.event.approved == 0) {
-                    return this.url = `/create-event/${this.event.slug}/title`;
-                }
+                return this.url = `/create-event/${this.event.slug}/title`;
             }
         },
 
@@ -74,6 +89,7 @@
 
         mounted() {
             this.event.approved ? '' : this.getUrl();
+            this.eventStatus();
         }
 
     };

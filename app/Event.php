@@ -71,14 +71,15 @@ class Event extends Model
         return $this->belongsTo(User::class);
     }
 
+
     /**
-    * Each event has One Comment
+    * Each event has multiple comments
     *
     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
     */
-    public function moderatorcomment() 
+    public function moderatorcomments() 
     {
-        return $this->hasOne(ModeratorComment::class);
+        return $this->hasMany(ModeratorComment::class);
     }
 
     /**

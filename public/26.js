@@ -53,17 +53,20 @@ __webpack_require__.r(__webpack_exports__);
     return {
       event: this.loadevent,
       comments: '',
-      commentsActive: false
+      commentsActive: false,
+      dis: false
     };
   },
   methods: {
     approved: function approved() {
       var _this = this;
 
+      this.dis = true;
       axios.post("/approve/".concat(this.event.slug)).then(function (response) {
         window.location.href = '/finish/events';
       })["catch"](function (error) {
         _this.serverErrors = error.response.data.errors;
+        _this.dis = false;
       });
     },
     denied: function denied() {
@@ -76,13 +79,17 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       ;
+      this.dis = true;
       var data = {
         comments: this.comments
       };
       axios.post("/unapprove/".concat(this.event.slug), data).then(function (response) {
+        console.log(response.data);
+        _this2.dis = false;
         window.location.href = '/finish/events';
       })["catch"](function (error) {
         _this2.serverErrors = error.response.data.errors;
+        _this2.dis = false;
       });
     },
     goBack: function goBack() {
@@ -172,6 +179,8 @@ var render = function() {
           "button",
           {
             staticClass: "create",
+            class: { bspin: _vm.dis },
+            attrs: { disabled: _vm.dis },
             on: {
               click: function($event) {
                 $event.preventDefault()
@@ -186,6 +195,8 @@ var render = function() {
           "button",
           {
             staticClass: "create",
+            class: { bspin: _vm.dis },
+            attrs: { disabled: _vm.dis },
             on: {
               click: function($event) {
                 $event.preventDefault()
@@ -200,6 +211,8 @@ var render = function() {
           "button",
           {
             staticClass: "create",
+            class: { bspin: _vm.dis },
+            attrs: { disabled: _vm.dis },
             on: {
               click: function($event) {
                 $event.preventDefault()

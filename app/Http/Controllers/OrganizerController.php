@@ -56,8 +56,10 @@ class OrganizerController extends Controller
      */
     public function store(Request $request)
     {
+        $temp = Organizer::tempSave($request);
         $organizer = Organizer::Create($request->except(['imagePath', 'user_id']) + ['user_id' => auth()->id()]);
         Organizer::saveFile($organizer, $request);
+        Storage::delete('public/organizer-images/' . $temp);
     }
 
     /**

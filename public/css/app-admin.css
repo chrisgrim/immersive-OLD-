@@ -801,3 +801,29 @@ select:-webkit-autofill:focus {
   }
 }
 
+#admin .picks .new {
+  display: grid;
+  grid-template-columns: auto auto;
+  margin: 4rem 0rem;
+}
+
+#admin .picks .new .content {
+  padding: 4rem;
+}
+
+#admin .picks .list {
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+#admin .picks .list .image img {
+  width: 10rem;
+}
+
+#admin .picks img.option__image {
+  width: 10rem;
+}
+
+#admin .picks .listing {
+  margin: 4rem 0;
+}
+

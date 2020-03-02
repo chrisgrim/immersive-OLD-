@@ -1,0 +1,24 @@
+#admin {
+    & .picks {
+        & .new {
+            display: grid;
+            grid-template-columns: auto auto;
+            margin: 4rem 0rem;
+            & .content {
+                padding:4rem;
+            }
+        }
+        & .list {
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            & .image img{
+                width:10rem;
+            }
+        }
+        & img.option__image {
+            width: 10rem;
+        }
+        & .listing {
+            margin:4rem 0;
+        }
+    }
+}

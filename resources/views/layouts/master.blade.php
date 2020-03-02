@@ -7,7 +7,7 @@
 	<body>
 		@include('layouts.nav')
 		<main>
-            @include('layouts.verifyMessage')
+            @include('layouts.flashes')
 			@yield('content')
 		</main>
 		@include('layouts.footer')

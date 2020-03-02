@@ -16,7 +16,7 @@
                 </div>
                 <div class="listing-details-block">
                 <tabs>
-                    <tab title="In Progress" :active="true" id="grid" class="tab-events">
+                    <tab title="Current Events" :active="true" id="grid" class="tab-events">
                         <div @click.prevent="newEvent(organizer)">
                             <div class="enew">
                                 <div class="body">
@@ -48,18 +48,6 @@
                             <div slot="footer">
                                 <button class="btn del" @click="deleteRow()">Delete</button>
                             </div>
-                        </modal>
-                    </tab>
-                    <tab title="Live Events" id="grid" class="tab-events">
-                        <div v-for="(event, index) in organizer.live_events" v-if="index < 4">
-                            <button @click.prevent="showModal(event)" class="delete-circle">X</button>
-                            <event-listing-item :user="user" :loadurl="'/events/' + event.slug" :event="event"></event-listing-item>
-                        </div> 
-                        <modal v-show="isModalVisible" @close="closeModal">
-                                <div slot="header">Ready to Delete?</div>
-                                <div slot="body"> Are you sure you want to delete event {{modalDelete.name}}</div>
-                                <div slot="footer">
-                                <button @click="deleteRow()">Yes</button></div>
                         </modal>
                     </tab>
                     <tab title="Past Events" id="grid" class="tab-events">

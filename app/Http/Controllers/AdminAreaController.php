@@ -7,6 +7,7 @@ use App\Event;
 use App\Category;
 use App\User;
 use App\ModeratorComment;
+use App\Conversation;
 use App\Mail\ModeratorComments;
 use Illuminate\Support\Facades\Mail;
 
@@ -148,15 +149,29 @@ class AdminAreaController extends Controller
      */
     public function fail(Request $request, Event $event)
     {
-        $ModeratorComment = ModeratorComment::updateOrCreate(
-            [
+        if($event->moderatorcomments()->count()) {
+
+            $conversation = Conversation::find($event->moderatorcomments()->first()->conversation_id);
+            $conversation->touch();
+            $ModeratorComment = ModeratorComment::create([
+                'conversation_id' => $conversation->id,
                 'event_id' => $event->id,
-            ],
-            [
                 'comments' => $request->comments,
-            ]
-        );
-        
+            ]);
+        } else {
+            $conversation = Conversation::create();
+            $conversation->users()->sync($event->user->id);
+            $ModeratorComment = ModeratorComment::create([
+                'conversation_id' => $conversation->id,
+                'event_id' => $event->id,
+                'comments' => $request->comments,
+            ]);
+        };
+
+        $event->user->update([
+            'has_unread' => true
+        ]);
+
         Mail::to($event->user)->send(new ModeratorComments($ModeratorComment));
 
         $event->update([

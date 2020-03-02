@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\StaffPick;
 use App\Event;
+use App\EventSearchRule;
 use Illuminate\Http\Request;
 
 class StaffPicksController extends Controller
@@ -15,7 +16,7 @@ class StaffPicksController extends Controller
     */
     public function __construct()
     {
-        $this->middleware('admin');
+        $this->middleware('admin')->except('fetch');
     }
     
     /**
@@ -25,7 +26,7 @@ class StaffPicksController extends Controller
      */
     public function index()
     {
-        //
+        return StaffPick::all();
     }
 
     /**
@@ -43,12 +44,14 @@ class StaffPicksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function fetch()
+    public function fetch(Request $request)
     {
-        $events = Event::search('*')
-            ->where('closingDate', '>=', 'now/d')
-            ->get(); 
-        return $events;
+        if($request->keywords) {
+            return $events = Event::search($request->keywords)
+                ->rule(EventSearchRule::class)
+                ->get();
+        }
+        return Event::all();
     }
 
     /**
@@ -59,7 +62,17 @@ class StaffPicksController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        StaffPick::updateOrCreate(
+            [
+            'event_id' => $request->event,
+            ],
+            [
+            'user_id' => auth()->id(),
+            'rank' => $request->rank ? $request->rank : 5,
+            'start_date' => $request->dates[0],
+            'end_date' => $request->dates[1]
+            ]
+    );
     }
 
     /**

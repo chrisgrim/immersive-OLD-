@@ -81,6 +81,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -99,6 +110,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     user: {
       type: String
+    },
+    staffpicks: {
+      type: Array
     }
   },
   data: function data() {
@@ -203,6 +217,31 @@ var render = function() {
           0
         )
       ]),
+      _vm._v(" "),
+      _vm.staffpicks.length
+        ? _c("div", { staticClass: "staffpicks" }, [
+            _c("h2", [_vm._v("Check out our Staff Picks of the week")]),
+            _vm._v(" "),
+            _c("div", [
+              _c(
+                "div",
+                { attrs: { id: "grid" } },
+                _vm._l(_vm.staffpicks, function(pick) {
+                  return _c(
+                    "div",
+                    [
+                      _c("event-listing-item", {
+                        attrs: { user: _vm.user, event: pick.event }
+                      })
+                    ],
+                    1
+                  )
+                }),
+                0
+              )
+            ])
+          ])
+        : _vm._e(),
       _vm._v(" "),
       _c("div", { staticClass: "events" }, [
         _c("h2", [_vm._v("Our Latest Events")]),

@@ -7,6 +7,6 @@
 
 @section('content')
     <div id="bodyArea">
-        <event-index user="{{auth()->id()}}" :events="{{$events}}" :categories="{{$categories}}"/>	
+        <event-index :staffpicks="{{$staffpicks}}" user="{{auth()->id()}}" :events="{{$events}}" :categories="{{$categories}}"/>	
     </div>
 @endsection

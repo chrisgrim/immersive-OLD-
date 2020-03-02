@@ -264,9 +264,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 
 
@@ -307,7 +304,7 @@ __webpack_require__.r(__webpack_exports__);
       isModalVisible: false,
       zoom: 13,
       center: this.loadevent.location_latlon,
-      url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+      url: 'https://{s}.tile.osm.org/{z}/{x}/{y}.png',
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       allowZoom: false,
       showEventClass: 'show-heart-location',
@@ -359,6 +356,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -390,6 +389,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['loadorganizer', 'user'],
   data: function data() {
@@ -398,7 +404,8 @@ __webpack_require__.r(__webpack_exports__);
       isLoginVisible: false,
       message: '',
       organizer: this.loadorganizer,
-      close: false
+      close: false,
+      dis: false
     };
   },
   methods: {
@@ -408,15 +415,31 @@ __webpack_require__.r(__webpack_exports__);
     sendMail: function sendMail() {
       var _this = this;
 
+      this.$v.$touch();
+
+      if (this.$v.$invalid) {
+        return false;
+      }
+
+      this.dis = true;
       var data = {
         message: this.message
       };
       axios.post("/message/organizer/".concat(this.organizer.slug, "/").concat(this.user), data).then(function (response) {
         console.log(response.data);
         _this.isModalVisible = false;
+        _this.message = '';
+        _this.dis = false;
       })["catch"](function (errorResponse) {
         _this.validationErrors = errorResponse.response.data.errors;
+        _this.dis = false;
       });
+    }
+  },
+  validations: {
+    message: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"],
+      maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["maxLength"])(2000)
     }
   }
 });
@@ -533,7 +556,7 @@ var render = function() {
                   "p",
                   {
                     staticClass: "text",
-                    staticStyle: { "white-space": "pre-wrap" }
+                    staticStyle: { "white-space": "pre-line" }
                   },
                   [
                     _vm._v(_vm._s(_vm.event.description.substring(0, 400))),
@@ -571,7 +594,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "text",
-                staticStyle: { "white-space": "pre-wrap" }
+                staticStyle: { "white-space": "pre-line" }
               },
               [
                 _vm._v(_vm._s(_vm.event.description)),
@@ -723,12 +746,12 @@ var render = function() {
                 ]
               ),
               _vm._v(" "),
-              _vm.event.organizer.description.length >= 50
+              _vm.event.organizer.description
                 ? _c(
                     "div",
                     {
                       staticClass: "description",
-                      staticStyle: { "white-space": "pre-wrap" }
+                      staticStyle: { "white-space": "pre-line" }
                     },
                     [
                       _vm._v(
@@ -738,16 +761,6 @@ var render = function() {
                       )
                     ]
                   )
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.event.organizer.description.length <= 8
-                ? _c("div", { staticClass: "description" }, [
-                    _vm._v(
-                      "\n                            " +
-                        _vm._s(_vm.event.organizer.description) +
-                        "\n                        "
-                    )
-                  ])
                 : _vm._e(),
               _vm._v(" "),
               _c("ContactOrganizer", {
@@ -1142,17 +1155,39 @@ var render = function() {
                   expression: "message"
                 }
               ],
+              class: { error: _vm.$v.message.$error },
               attrs: { rows: "8", type: "text" },
               domProps: { value: _vm.message },
               on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+                input: [
+                  function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.message = $event.target.value
+                  },
+                  function($event) {
+                    return _vm.$v.message.$touch()
                   }
-                  _vm.message = $event.target.value
-                }
+                ]
               }
-            })
+            }),
+            _vm._v(" "),
+            _vm.$v.message.$error
+              ? _c("div", { staticClass: "validation-error" }, [
+                  !_vm.$v.message.required
+                    ? _c("p", { staticClass: "error" }, [
+                        _vm._v("Please include a message")
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  !_vm.$v.message.maxLength
+                    ? _c("p", { staticClass: "error" }, [
+                        _vm._v("The message is too long.")
+                      ])
+                    : _vm._e()
+                ])
+              : _vm._e()
           ]),
           _vm._v(" "),
           _c("div", { attrs: { slot: "footer" }, slot: "footer" }, [
@@ -1160,6 +1195,8 @@ var render = function() {
               "button",
               {
                 staticClass: "btn sub",
+                class: { bspin: _vm.dis },
+                attrs: { disabled: _vm.dis },
                 on: {
                   click: function($event) {
                     return _vm.sendMail()

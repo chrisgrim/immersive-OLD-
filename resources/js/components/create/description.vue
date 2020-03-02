@@ -80,11 +80,6 @@
                     </div>
                 </div>
             </div>
-            <div class="genre">
-               <div>
-                   <h3 v-if="genreActive">Genre List</h3>
-               </div>
-            </div>
             <div class="inNav">
                 <button :disabled="dis" class="create" @click.prevent="goBack()"> Back </button>
                 <button :disabled="dis" class="create" @click.prevent="submitDescription()"> Next </button>

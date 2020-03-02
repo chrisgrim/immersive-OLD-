@@ -1,147 +1,151 @@
 <template>
-<div class="organizer">
-    <div class="section">
-        <div class="text">
-            <div class="floating-form">
-                <div class="field">
-                    <label>Organization name</label>
-                    <input 
-                    type="text" 
-                    placeholder=" " 
-                    name="name"
-                    :class="{ active: nameActive,'error': $v.organizer.name.$error }"
-                    @input="$v.organizer.name.$touch"
-                    @click="toggleName()"
-                    @blur="nameActive = false"
-                    v-model="organizer.name"
-                    />
-                    <div v-if="$v.organizer.name.$error" class="validation-error">
-                        <p class="error" v-if="!$v.organizer.name.required">The Name is required</p>
-                        <p class="error" v-if="!$v.organizer.name.serverFailed">The Name needs to be unique</p>
+<div>
+    <vue-alert v-if="uploadError" message="uploadError"></vue-alert>
+    <div class="organizer">
+        <div class="section">
+            <div class="text">
+                <div class="floating-form">
+                    <div class="field">
+                        <label>Organization name</label>
+                        <input 
+                        type="text" 
+                        placeholder=" " 
+                        name="name"
+                        :class="{ active: nameActive,'error': $v.organizer.name.$error }"
+                        @input="$v.organizer.name.$touch"
+                        @click="toggleName()"
+                        @blur="nameActive = false"
+                        v-model="organizer.name"
+                        />
+                        <div v-if="$v.organizer.name.$error" class="validation-error">
+                            <p class="error" v-if="!$v.organizer.name.required">The Name is required</p>
+                            <p class="error" v-if="!$v.organizer.name.serverFailed">The Name needs to be unique</p>
+                        </div>
                     </div>
-                </div>
-                <div class="field">
-                    <label>Organization Description</label>
-                    <textarea 
-                    type="text"
-                    name="description" 
-                    v-model="organizer.description" 
-                    placeholder=" "
-                    :class="{ active: descriptionActive,'error': $v.organizer.description.$error }"
-                    @input="$v.organizer.description.$touch"
-                    @click="descriptionActive = true"
-                    @blur="descriptionActive = false" 
-                    rows="8">
-                    </textarea>
-                    <div v-if="$v.organizer.description.$error" class="validation-error">
-                        <p class="error" v-if="!$v.organizer.description.required">The Description is required</p>
+                    <div class="field">
+                        <label>Organization description</label>
+                        <textarea 
+                        type="text"
+                        name="description" 
+                        v-model="organizer.description" 
+                        placeholder=" "
+                        :class="{ active: descriptionActive,'error': $v.organizer.description.$error }"
+                        @input="$v.organizer.description.$touch"
+                        @click="descriptionActive = true"
+                        @blur="descriptionActive = false" 
+                        rows="8">
+                        </textarea>
+                        <div v-if="$v.organizer.description.$error" class="validation-error">
+                            <p class="error" v-if="!$v.organizer.description.required">The Description is required</p>
+                        </div>
                     </div>
-                </div>
-                <div class="field">
-                    <label>Your Organization Website</label>
-                    <input 
-                    type="url" 
-                    v-model="organizer.website" 
-                    name="website"
-                    :class="{ active: websiteActive,'error': $v.organizer.website.$error }"
-                    @input="$v.organizer.website.$touch"
-                    @click="toggleWebsite()"
-                    @blur="websiteActive = false" 
-                    placeholder=" "
-                    />
-                    <div v-if="$v.organizer.website.$error" class="validation-error">
-                        <p class="error" v-if="!$v.organizer.website.url">Must be a Url (Needs http://)</p>
-                        <p class="error" v-if="!$v.organizer.website.required">The Website is required</p>
-                        <p class="error" v-if="!$v.organizer.website.serverFailed">The Website needs to be unique</p>
+                    <div class="field">
+                        <label>Your organization website</label>
+                        <input 
+                        type="url" 
+                        v-model="organizer.website" 
+                        name="website"
+                        :class="{ active: websiteActive,'error': $v.organizer.website.$error }"
+                        @input="$v.organizer.website.$touch"
+                        @click="toggleWebsite()"
+                        @blur="websiteActive = false" 
+                        placeholder=" "
+                        />
+                        <div v-if="$v.organizer.website.$error" class="validation-error">
+                            <p class="error" v-if="!$v.organizer.website.url">Must be a Url (Needs http://)</p>
+                            <p class="error" v-if="!$v.organizer.website.required">The Website is required</p>
+                            <p class="error" v-if="!$v.organizer.website.serverFailed">The Website needs to be unique</p>
+                        </div>
                     </div>
-                </div>
-                <div class="field">
-                    <label>Your Organization Email (optional)</label>
-                    <input 
-                    type="text" 
-                    v-model="organizer.email" 
-                    name="email"
-                    :class="{ active: websiteActive }"
-                    @blur="websiteActive = false" 
-                    placeholder=" "
-                    />
-                </div>
-                <div class="field">
-                    <label>Twitter handle (optional)</label>
-                    <input 
-                    type="text" 
-                    v-model="organizer.twitterHandle" 
-                    name="twitterHandle" 
-                    placeholder=" "
-                    />
-                </div>
-                <div class="field">
-                    <label>Facebook handle (optional)</label>
-                    <input 
-                    type="text" 
-                    v-model="organizer.facebookHandle" 
-                    name="facebookHandle" 
-                    placeholder=" "
-                    />
-                </div>
-                <div class="field">
-                    <label>Instagram handle (optional)</label>
-                    <input 
-                    type="text" 
-                    v-model="organizer.instagramHandle" 
-                    name="instagramHandle" 
-                    placeholder=" "
-                    />
+                    <div class="field">
+                        <label>Your organization email (optional)</label>
+                        <input 
+                        type="text" 
+                        v-model="organizer.email" 
+                        name="email"
+                        :class="{ active: websiteActive }"
+                        @blur="websiteActive = false" 
+                        placeholder=" "
+                        />
+                    </div>
+                    <div class="field">
+                        <label>Twitter handle (optional)</label>
+                        <input 
+                        type="text" 
+                        v-model="organizer.twitterHandle" 
+                        name="twitterHandle" 
+                        placeholder=" "
+                        />
+                    </div>
+                    <div class="field">
+                        <label>Facebook handle (optional)</label>
+                        <input 
+                        type="text" 
+                        v-model="organizer.facebookHandle" 
+                        name="facebookHandle" 
+                        placeholder=" "
+                        />
+                    </div>
+                    <div class="field">
+                        <label>Instagram handle (optional)</label>
+                        <input 
+                        type="text" 
+                        v-model="organizer.instagramHandle" 
+                        name="instagramHandle" 
+                        placeholder=" "
+                        />
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="image">
-            <div class="img">          
-                <div class="loader">
-                    <label 
-                    class=""
-                    :style="{ backgroundImage: `url('${imageSrc ? imageSrc : organizerImage}')` }">
-                        <div 
-                        class="dash"
-                        :class="{ over: hasImage, load: isLoading }"
-                        >
+            <div class="image">
+                <div class="img">          
+                    <div class="loader">
+                        <label 
+                        class=""
+                        :style="{ backgroundImage: `url('${imageSrc ? imageSrc : organizerImage}')` }">
                             <div 
-                            class="box"
+                            class="dash"
+                            :class="{ over: hasImage, load: isLoading }"
                             >
-                                <div class="in">
-                                    <div v-if="!isLoading">
-                                        <svg class="b" height="32" width="32" viewBox="0 0 24 24" aria-label="Add an image or video" role="img"><path d="M24 12c0-6.627-5.372-12-12-12C5.373 0 0 5.373 0 12s5.373 12 12 12c6.628 0 12-5.373 12-12zm-10.767 3.75a1.25 1.25 0 0 1-2.5 0v-3.948l-1.031 1.031a1.25 1.25 0 0 1-1.768-1.768L12 7l4.066 4.065a1.25 1.25 0 0 1-1.768 1.768l-1.065-1.065v3.982z"></path></svg>
-                                    </div>
-                                     <div>
-                                        <div v-if="!hasImage">
-                                            <p>Click here to upload image</p>
-                                            <p>Please make image at least 800 x 800</p>
-                                            <p>Image needs to be under 2 mb</p>
+                                <div 
+                                class="box"
+                                >
+                                    <div class="in">
+                                        <div v-if="!isLoading">
+                                            <svg class="b" height="32" width="32" viewBox="0 0 24 24" aria-label="Add an image or video" role="img"><path d="M24 12c0-6.627-5.372-12-12-12C5.373 0 0 5.373 0 12s5.373 12 12 12c6.628 0 12-5.373 12-12zm-10.767 3.75a1.25 1.25 0 0 1-2.5 0v-3.948l-1.031 1.031a1.25 1.25 0 0 1-1.768-1.768L12 7l4.066 4.065a1.25 1.25 0 0 1-1.768 1.768l-1.065-1.065v3.982z"></path></svg>
                                         </div>
-                                        <p v-if="hasImage">Change Image</p>
+                                         <div>
+                                            <div v-if="!hasImage">
+                                                <p>Click here to upload image</p>
+                                                <p>Please make image at least 600 x 600</p>
+                                                <p>Image needs to be under 20 mb</p>
+                                            </div>
+                                            <p v-if="hasImage">Change Image</p>
+                                        </div>
                                     </div>
                                 </div>
+                                <image-upload @loaded="onImageUpload"></image-upload>
+                                <CubeSpinner :loading="isLoading"></CubeSpinner>
                             </div>
-                            <image-upload @loaded="onImageUpload"></image-upload>
-                            <CubeSpinner :loading="isLoading"></CubeSpinner>
-                        </div>
-                    </label>
-                    <div>
-                        <div v-if="$v.finalImage.$error" class="validation-error">
-                            <p class="error" v-if="!$v.finalImage.required">The Image is required</p>
-                            <p class="error" v-if="!$v.finalImage.fileSize">The Image is too large</p>
-                            <p class="error" v-if="!$v.finalImage.fileType">Needs to be a Jpg, Png or Gif</p>
-                            <p class="error" v-if="!$v.finalImage.imageSize">The image needs to be at least 1280 x 720</p>
+                        </label>
+                        <div>
+                            <div v-if="$v.finalImage.$error" class="validation-error">
+                                <p class="error" v-if="!$v.finalImage.required">The Image is required</p>
+                                <p class="error" v-if="!$v.finalImage.fileSize">The Image is too large</p>
+                                <p class="error" v-if="!$v.finalImage.fileType">The Image needs to be a JPG, PNG or GIF</p>
+                                <p class="error" v-if="!$v.finalImage.imageSize">The image needs to be at least 600 x 600</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="inNav">
-        <button class="create" @click.prevent="createOrganizer"> Save and Create First Event </button>
+        <div class="inNav">
+            <button class="create" @click.prevent="createOrganizer"> Save and create first event </button>
+        </div>
     </div>
 </div>
+
 
 </template>
 
@@ -192,7 +196,8 @@ export default {
             finalImage: '',
             imageSrc: '',
             isLoading: false,
-            readyToSubmit: false
+            readyToSubmit: false,
+            uploadError: '',
 
         };
     },
@@ -283,8 +288,11 @@ export default {
             .then(response => { 
                 window.location.href = '/create-event/edit';
             })
-            .catch(error => {         
-                this.serverErrors = error.response.data.errors;  
+            .catch(errors => {
+                console.log(errors);
+                this.uploadError = errors;
+                this.isLoading = false;
+                this.dis = false;
             });
         },
     },
@@ -293,13 +301,13 @@ export default {
         finalImage: {
             required,
             fileSize() { 
-                return this.finalImage ? this.finalImage.size < 2097152 : true 
+                return this.finalImage ? this.finalImage.size < 20971520 : true 
             },
             fileType() {
                 return this.finalImage ? ['image/jpeg','image/png','image/gif'].includes(this.finalImage.type) : true
             },
             imageSize() {
-                return this.finalImage ? this.finalImage.width > 800 && this.finalImage.height > 800 :  true
+                return this.finalImage ? this.finalImage.width > 600 && this.finalImage.height > 600 :  true
             }
         },
         organizer: {

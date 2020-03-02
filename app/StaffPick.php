@@ -12,11 +12,18 @@ class StaffPick extends Model
     * @var array
     */
     protected $fillable = [
-        'selected_date','event_id', 'user_id'
+        'start_date','event_id', 'user_id', 'end_date', 'rank'
     ];
 
+     /**
+    * The relations to eager load on every query. I am adding shows here because I need to filter by dates for the search
+    *
+    * @var array
+    */
+    protected $with = ['event'];
+
     /**
-    * Each Staff Pick BelongsTo one event
+    * Each Staff Pick hasOne one event
     *
     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
     */

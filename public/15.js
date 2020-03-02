@@ -141,6 +141,9 @@ __webpack_require__.r(__webpack_exports__);
     closeModal: function closeModal() {
       this.isModalVisible = false;
     },
+    submitReview: function submitReview() {
+      window.location.href = "".concat(this.eventUrl, "/review");
+    },
     submitEvent: function submitEvent() {
       this.dis = true;
       window.location.href = "".concat(this.eventUrl, "/thankyou");
@@ -159,7 +162,7 @@ __webpack_require__.r(__webpack_exports__);
     finalImage: {
       required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"],
       fileSize: function fileSize() {
-        return this.finalImage ? this.finalImage.size < 2097152 : true;
+        return this.finalImage ? this.finalImage.size < 20971520 : true;
       },
       fileType: function fileType() {
         return this.finalImage ? ['image/jpeg', 'image/png', 'image/gif'].includes(this.finalImage.type) : true;
@@ -294,7 +297,7 @@ var render = function() {
                                 _vm._v("Click here to upload image"),
                                 _c("br"),
                                 _vm._v(
-                                  "Must be at least 1280 x 800 and under 2mb"
+                                  "Must be at least 1280 x 800 and under 20mb"
                                 )
                               ])
                             : _vm._e(),
@@ -320,25 +323,25 @@ var render = function() {
                 ? _c("div", { staticClass: "validation-error" }, [
                     !_vm.$v.finalImage.required
                       ? _c("p", { staticClass: "error" }, [
-                          _vm._v("The Image is required")
+                          _vm._v("The image is required")
                         ])
                       : _vm._e(),
                     _vm._v(" "),
                     !_vm.$v.finalImage.fileSize
                       ? _c("p", { staticClass: "error" }, [
-                          _vm._v("The Image is too large")
+                          _vm._v("The image file size is too large")
                         ])
                       : _vm._e(),
                     _vm._v(" "),
                     !_vm.$v.finalImage.fileType
                       ? _c("p", { staticClass: "error" }, [
-                          _vm._v("Needs to be a Jpg, Png or Gif")
+                          _vm._v("The image needs to be a JPG, PNG or GIF")
                         ])
                       : _vm._e(),
                     _vm._v(" "),
                     !_vm.$v.finalImage.imageRatio
                       ? _c("p", { staticClass: "error" }, [
-                          _vm._v("Needs to be at least 1200 x 800")
+                          _vm._v("The image needs to be at least 1200 x 800")
                         ])
                       : _vm._e()
                   ])
@@ -373,11 +376,11 @@ var render = function() {
                 on: {
                   click: function($event) {
                     $event.preventDefault()
-                    return _vm.showModal(_vm.event)
+                    return _vm.submitReview()
                   }
                 }
               },
-              [_vm._v(" Submit Event ")]
+              [_vm._v(" Final Review ")]
             )
           : _vm._e()
       ]),

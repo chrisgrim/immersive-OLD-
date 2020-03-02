@@ -45,23 +45,14 @@ class Organizer extends Model
     }
 
     /**
-     * Get Live Events for organizer
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\hasMany
-     */
-    public function liveEvents()
-    {
-        return $this->hasMany(Event::class)->whereDate('closingDate', '>=', Carbon::today())->where('approved', 1);
-    }
-
-    /**
      * Get Past Events for organizer
      *
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
     public function pastEvents()
     {
-        return $this->hasMany(Event::class)->whereDate('closingDate', '<=', Carbon::today())->where('approved', 1);
+        return $this->hasMany(Event::class)
+                    ->whereDate('closingDate', '<=', Carbon::today())->where('approved', 1);
     }
 
     /**
@@ -71,7 +62,9 @@ class Organizer extends Model
      */
     public function inProgressEvents()
     {
-        return $this->hasMany(Event::class)->where('approved', 0);
+        return $this->hasMany(Event::class)
+                    ->whereDate('closingDate', '>=', Carbon::today())
+                    ->orWhereNull('closingDate');
     }
 
     /**
@@ -93,6 +86,20 @@ class Organizer extends Model
         $organizer->update([ 'imagePath' => $imagePath ]);
     }
 
+     /**
+    * Save File and update organizer model with path name
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  $organizer
+    */
+    public static function tempSave($request)
+    {
+        $extension = $request->file('imagePath')->getClientOriginalExtension();
+        $temp = 'temp' . '_' . rand(1,50000) . '.' . $extension;
+        $request->file('imagePath')->storeAs('/public/organizer-images', $temp);
+        return $temp;
+    }
+
     /**
     * Save File and update organizer model with path name
     *
@@ -102,9 +109,6 @@ class Organizer extends Model
     public static function getOrganizerEvents()
     {
         $organizers = auth()->user()->organizers->load([
-            'liveEvents' => function ($builder) {
-                $builder->where('user_id', auth()->id());
-            },
             'pastEvents' => function ($builder) {
                 $builder->where('user_id', auth()->id());
             },
@@ -118,7 +122,6 @@ class Organizer extends Model
                         'name' => $organizer->name,
                         'slug' => $organizer->slug,
                         'imagePath' => $organizer->imagePath,
-                        'live_events' =>  $organizer->liveEvents,
                         'past_events' => $organizer->pastEvents,
                         'in_progress_events' => $organizer->inProgressEvents,
             ];

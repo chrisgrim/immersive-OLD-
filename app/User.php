@@ -88,7 +88,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function conversations()
     {
-        return $this->belongsToMany(Conversation::class);
+        return $this->belongsToMany(Conversation::class)->orderBy('updated_at', 'DESC');
     }
 
     /**
@@ -172,6 +172,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->conversations()->count() ? true : false;    
     }
+
 
     /**
     * Creates a new event

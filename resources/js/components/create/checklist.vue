@@ -1,9 +1,9 @@
 <template>
     <div class="steps">
-    	<div class="checklist">
+    	<div class="checklist" :class="{ review : onReview }">
             <div class="c_home">
                 <a href="/create-event/edit">
-                    <button class="home">Home</button>
+                    <button class="home" :class="{ review : onReview }">Home</button>
                 </a>
             </div>
             <div v-if="this.$router.currentRoute.path === `/organizer/create`" class="item">
@@ -51,7 +51,13 @@
             <div v-if="this.$router.currentRoute.path === `/create-event/${this.event.slug}/images`" class="item">
                 <div class="text">
                     <p>Image: </p>
-                    <p>Make sure its a good one!</p>
+                    <p>Entice our visitors with a great image</p>
+                </div>
+            </div>
+            <div v-if="this.$router.currentRoute.path === `/create-event/${this.event.slug}/review`" class="item">
+                <div class="text">
+                    <p>Review: </p>
+                    <p>One last chance to make sure everything looks good</p>
                 </div>
             </div>
         </div>
@@ -77,6 +83,9 @@
             <div class="link" style="width: 14.4%; left: 0%;padding-top:1rem;" :class="{ fill: onImage }">
                 <a v-if="event.largeImagePath" :href="`/create-event/${this.event.slug}/images`"></a>
             </div>
+            <div class="link" style="width: 1.9%; left: 0%;padding-top:1rem;" :class="{ fill: onReview }">
+                <a v-if="event.largeImagePath" :href="`/create-event/${this.event.slug}/review`"></a>
+            </div>
         </div>
     </div>
 </template>
@@ -92,7 +101,9 @@
 		},
 
         computed: {
-         
+            onReview() {
+                return this.$router.currentRoute.path === `/create-event/${this.event.slug}/review` ? this.onReview = true : '';
+            }
         },
 
         data() {
@@ -110,6 +121,15 @@
 
         methods: {
             getUrl(data) {
+                if (data === `/create-event/${this.event.slug}/review`) {
+                    this.onTitle = true;
+                    this.onLocation = true;
+                    this.onCategory = true;
+                    this.onShows = true;
+                    this.onDescription = true;
+                    this.onAdvisories = true;
+                    return this.onImage = true;
+                }
                 if (data === `/create-event/${this.event.slug}/images`) {
                     this.onTitle = true;
                     this.onLocation = true;
@@ -152,12 +172,23 @@
                 if (data === `/create-event/${this.event.slug}/title`) {
                     return this.onTitle = true;
                 }
+            },
+
+            notAllowed() {
+                if(this.event.approval_process) {
+                    return (['inProgress', 'hasIssues'].includes(this.event.approval_process)) ? '' : window.location.href = '/create-event/edit';
+                }
             }
+
         },
 
         mounted() {
             let data = this.$router.currentRoute.path;
             this.getUrl(data);
+        },
+
+        created() {
+            this.notAllowed();
         }
     }
 

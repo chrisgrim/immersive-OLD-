@@ -3,13 +3,11 @@
 @section('meta')
     <title>{{$category->name}}</title>
     <link href="/css/app-lite.css" rel="stylesheet">
+    <link href="/css/app.css" rel="stylesheet">
 @endsection 
 
 @section('content')
-<div class="inner-container">
-    <div id="bodyArea">
+    <div id="bodyArea"> 
         <category-show :category="{{$category}}"> 
     </div>
-</div>
-
 @endsection

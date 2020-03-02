@@ -11,6 +11,17 @@
                 </div>
             </div>
 
+            <div class="staffpicks" v-if="staffpicks.length">
+                <h2>Check out our Staff Picks of the week</h2>
+                <div>
+                    <div id="grid">
+                        <div v-for="pick in staffpicks">
+                            <event-listing-item :user="user" :event="pick.event"></event-listing-item>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="events">
                 <h2>Our Latest Events</h2>
                 <div>
@@ -47,6 +58,9 @@
             },
             user: {
                 type:String
+            },
+            staffpicks: {
+                type:Array
             }
         }, 
 

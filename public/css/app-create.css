@@ -29,6 +29,12 @@ select:-webkit-autofill:focus {
 
 #header.c .nav {
   border: none;
+  z-index: 10;
+}
+
+#create {
+  position: relative;
+  overflow: visible;
 }
 
 #create .ctitle {
@@ -224,6 +230,10 @@ select:-webkit-autofill:focus {
           align-items: center;
 }
 
+#create .checklist.review {
+  background: #008489;
+}
+
 #create .checklist button.home {
   border: solid #008489 1px;
   border-radius: 0.3rem;
@@ -232,6 +242,12 @@ select:-webkit-autofill:focus {
   background: #008489;
   color: white;
   height: 4rem;
+}
+
+#create .checklist button.home.review {
+  border: solid white 1px;
+  background: white;
+  color: #008489;
 }
 
 #create .checklist .item {
@@ -285,7 +301,7 @@ button.create {
   font-size: 1.6rem;
   border-radius: 5px;
   margin: 2rem 0rem;
-  background: none;
+  background: white;
 }
 
 button.create:disabled,
@@ -343,11 +359,6 @@ button.create[disabled] {
   padding: 1rem;
   border-radius: 0.5rem;
   color: white;
-}
-
-#create {
-  position: relative;
-  overflow: auto;
 }
 
 #create .organizer {
@@ -451,11 +462,6 @@ button.create[disabled] {
   border: none;
 }
 
-#create {
-  position: relative;
-  overflow: auto;
-}
-
 #create .image {
   padding-top: 8rem;
   width: 100%;
@@ -490,6 +496,7 @@ button.create[disabled] {
   background-repeat: no-repeat;
   border-radius: 0.5rem;
   border: 1px solid #d2d2d2;
+  background-position: center;
 }
 
 #create .image .img .loader label .dash {
@@ -673,11 +680,6 @@ label.imgclick {
   display: none !important;
 }
 
-#create {
-  position: relative;
-  overflow: auto;
-}
-
 #create .title {
   padding-top: 5rem;
   width: 90%;
@@ -696,11 +698,6 @@ label.imgclick {
   width: 50%;
   float: right;
   margin: 0;
-}
-
-#create {
-  position: relative;
-  overflow: auto;
 }
 
 #create .location {
@@ -725,11 +722,6 @@ label.imgclick {
   padding: 0;
   height: 100%;
   background: #f9f9f9;
-}
-
-#create {
-  position: relative;
-  overflow: auto;
 }
 
 #create .category {
@@ -759,11 +751,6 @@ label.imgclick {
 #create .category .image img {
   width: 100%;
   border-radius: 0.6rem;
-}
-
-#create {
-  position: relative;
-  overflow: auto;
 }
 
 #create .shows {
@@ -850,16 +837,37 @@ label.imgclick {
   margin: 0;
 }
 
-#create {
-  position: relative;
-  overflow: auto;
-}
-
 #create .description {
   padding-top: 5rem;
   width: 90%;
   margin: auto;
   position: relative;
+  /*& .multiselect {
+       position: inherit; 
+  }
+  & .multiselect__select {
+      display: none;
+  }
+  & .multiselect__content-wrapper {
+      width: 50%;
+      top: 12.6rem;
+      margin-left: 40%;
+      border: 1px solid #616161;
+      border-radius: 1rem;
+      height:65vh;
+      max-height: 65vh !important;
+  }
+  .multiselect__option {
+      border-bottom: 1px solid #949494;
+      &--highlight {
+          background:#58b4b7;
+      }
+  }
+  & .multiselect__option--selected {
+      background: #008489;
+      color: white;
+      font-weight: 700;
+  }*/
 }
 
 #create .description .text {
@@ -882,43 +890,6 @@ label.imgclick {
   position: absolute;
   top: 0;
   left: -10%;
-}
-
-#create .description .multiselect {
-  position: inherit;
-}
-
-#create .description .multiselect__select {
-  display: none;
-}
-
-#create .description .multiselect__content-wrapper {
-  width: 50%;
-  top: 12.6rem;
-  margin-left: 40%;
-  border: 1px solid #616161;
-  border-radius: 1rem;
-  height: 65vh;
-  max-height: 65vh !important;
-}
-
-#create .description .multiselect__option {
-  border-bottom: 1px solid #949494;
-}
-
-#create .description .multiselect__option--highlight {
-  background: #58b4b7;
-}
-
-#create .description .multiselect__option--selected {
-  background: #008489;
-  color: white;
-  font-weight: 700;
-}
-
-#create {
-  position: relative;
-  overflow: visible;
 }
 
 #create .advisories {

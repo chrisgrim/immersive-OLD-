@@ -11,9 +11,10 @@
     <body>
         @include('layouts.create.nav')
         <main>
-            @include('layouts.verifyMessage')
+            @include('layouts.flashes')
             @yield('content')
+            @yield('content2')
         </main>
-        @include('layouts.create.footer')
+        @include('layouts.footer')
     </body>
 </html>

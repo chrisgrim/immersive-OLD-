@@ -12,8 +12,16 @@ class ModeratorComment extends Model
     * @var array
     */
     protected $fillable = [
-        'comments', 'event_id'
+        'comments', 'event_id', 'conversation_id'
     ];
+
+    /**
+    * The relations to eager load on every query. I am adding shows here because I need to filter by dates for the search
+    *
+    * @var array
+    */
+    protected $with = ['event'];
+
     /**
     * Each comment belongs to one Event
     *

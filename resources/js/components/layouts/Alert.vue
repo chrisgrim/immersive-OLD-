@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <div v-if="visible">
         <div class="verify_bar">
             <div class="text">
-                <p>Please take a minute to verify your account</p>
+                <p>{{this.body}}</p>
             </div>
             <div class="submit">
                 <p>If you did not recieve an email </p>
@@ -15,13 +15,19 @@
 <script>
     export default {
 
-
-        data() {
-
+        props: {
+            message: { type:String },
         },
 
         computed: {
 
+        },
+
+        data() {
+            return {
+                body: this.message ? this.message : 'Please take a minute to verify your account',
+                visible: true,
+            }
         },
 
         methods: {
@@ -33,7 +39,15 @@
                 .catch(errorResponse => { 
                     console.log(errorResponse.data);
                 })
+            },
+
+            hide() {
+                this.visible = false;
             }
+        },
+
+        mounted() {
+            setTimeout(() => this.hide(), 10000);
         }
 
     }

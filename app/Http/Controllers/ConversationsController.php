@@ -33,6 +33,7 @@ class ConversationsController extends Controller
      */
     public function show(Conversation $conversation)
     {
+        $this->authorize('update', $conversation);
         auth()->user()->update(['has_unread' => false]);
         return view('messages.show', compact('conversation'));
     }
@@ -46,6 +47,7 @@ class ConversationsController extends Controller
      */
     public function update(Request $request, Conversation $conversation)
     {   
+        $this->authorize('update', $conversation);
         $receiver = $conversation->users->where('id', '!=' , auth()->id())->first();
         $message = Message::Create([
             'user_id' => auth()->id(),
@@ -58,6 +60,8 @@ class ConversationsController extends Controller
             'body' => $request->message,
             'username' => auth()->user()->name,
         ];
+
+        $conversation->touch();
 
         $receiver->update([
             'has_unread' => true
@@ -74,6 +78,6 @@ class ConversationsController extends Controller
      */
     public function fetch()
     {
-        return auth()->user()->conversations()->orderBy('updated_at', 'DESC')->get();
+        return auth()->user()->conversations()->get();
     }
 }

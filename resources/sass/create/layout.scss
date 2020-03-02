@@ -2,9 +2,12 @@
     z-index: -1;
     & .nav {
         border:none;
+        z-index: 10;
     }
 }
 #create {
+    position: relative;
+    overflow: visible;
     & .ctitle {
         padding: 0% 4.9% 0% 4.9%;
         & h2 {
@@ -126,6 +129,9 @@
         & .c_home {
 
         }
+        &.review {
+            background: rgb(0, 132, 137);
+        }
         & button.home {
             border: solid #008489 1px;
             border-radius: 0.3rem;
@@ -134,6 +140,11 @@
             background: #008489;
             color: white;
             height: 4rem;
+            &.review {
+                border: solid white 1px;
+                background: white;
+                color: #008489;
+            }
         }
         & .item {
             width: 100%;
@@ -183,7 +194,7 @@ button.create {
     font-size: 1.6rem;
     border-radius: 5px;
     margin: 2rem 0rem;
-    background: none;
+    background: white;
 }
 button.create:disabled,
 button.create[disabled]{

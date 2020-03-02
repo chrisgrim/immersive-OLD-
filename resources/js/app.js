@@ -63,7 +63,7 @@ Vue.component('modal', () => import('./components/layouts/modal.vue'));
 Vue.component('tabs', () => import('./components/layouts/tabs.vue'));
 Vue.component('tab', () => import('./components/layouts/tab.vue'));
 Vue.component('image-upload', () => import('./components/layouts/image-upload.vue'));
-Vue.component('alert', () => import('./components/layouts/Alert.vue'));
+Vue.component('vue-alert', () => import('./components/layouts/alert.vue'));
 
 //Create Events
 Vue.component('event-create-checklist', () => import('./components/create/checklist.vue'));
@@ -77,10 +77,12 @@ Vue.component('create-shows', () => import('./components/create/shows.vue'));
 Vue.component('show-listing', () => import('./components/create/show-listing.vue'));
 Vue.component('create-description', () => import('./components/create/description.vue'));
 Vue.component('create-advisories', () => import('./components/create/advisories.vue'));
+Vue.component('create-review', () => import('./components/create/review.vue'));
 
 //Admin Area
 Vue.component('admin-nav', () => import('./components/adminArea/nav.vue'));
 Vue.component('approval-bar', () => import('./components/adminArea/approve/approval-bar.vue'));
+Vue.component('approval-list', () => import('./components/adminArea/approve/approval-list.vue'));
 Vue.component('admin-categories', () => import('./components/adminArea/admin-categories.vue'));
 Vue.component('admin-contact-level', () => import('./components/adminArea/admin-contact-level.vue'));
 Vue.component('admin-genres', () => import('./components/adminArea/admin-genres.vue'));
@@ -148,5 +150,10 @@ if(document.getElementById("bodyArea")){
       el: '#bodyArea',
       store,
       router
+  });
+};
+if(document.getElementById("flash")){
+  const flash = new Vue({
+      el: '#flash',
   });
 };

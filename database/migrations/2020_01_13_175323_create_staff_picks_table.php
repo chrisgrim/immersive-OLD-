@@ -15,9 +15,11 @@ class CreateStaffPicksTable extends Migration
     {
         Schema::create('staff_picks', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('event_id');
+            $table->unsignedBigInteger('event_id')->unique();
             $table->unsignedBigInteger('user_id');
-            $table->dateTime('selected_date');
+            $table->integer('rank')->default(5);
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
             $table->timestamps();
         });
     }

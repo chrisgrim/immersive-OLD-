@@ -1,6 +1,4 @@
 #create {
-    position: relative;
-    overflow: auto;
     & .description {
         padding-top: 5rem;
         width:90%;
@@ -25,7 +23,7 @@
                 left: -10%;
             }
         }
-        & .multiselect {
+        /*& .multiselect {
              position: inherit; 
         }
         & .multiselect__select {
@@ -50,6 +48,6 @@
             background: #008489;
             color: white;
             font-weight: 700;
-        }
+        }*/
     }
 }

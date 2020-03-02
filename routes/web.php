@@ -50,7 +50,9 @@ Route::POST('/unapprove/{event}', 'AdminAreaController@fail');
 Route::GET('/master/userlist', 'UserMasterController@index');
 Route::PATCH('/master/userlist/{user}', 'UserMasterController@update');
 Route::GET('/userlist/fetch', 'UserMasterController@fetch');
-Route::GET('/admin/staffpicks/fetch', 'StaffPicksController@fetch');
+Route::POST('/admin/staffpicks', 'StaffPicksController@store');
+Route::POST('/admin/staffpicks/{staffpick}', 'StaffPicksController@update');
+Route::GET('/admin/staffpicks', 'StaffPicksController@index');
 Route::GET('/admin/organizer', 'AdminOrganizerController@index');
 Route::PATCH('/admin/organizer/{organizer}', 'AdminOrganizerController@update');
 Route::GET('/admin/organizer/fetch', 'AdminOrganizerController@fetch');
@@ -99,7 +101,10 @@ Route::PATCH('/create-event/{event}/advisories ', 'AdvisoriesController@store');
 //Create Image
 Route::GET('/create-event/{event}/images', 'ImageController@create');
 Route::POST('/create-event/{event}/images', 'ImageController@store');
+//Create Review
+Route::GET('/create-event/{event}/review', 'EventController@review');
 //Submit Event
+Route::GET('/create-event/{event}/submit', 'EventController@submitEvent');
 Route::GET('/create-event/{event}/thankyou', 'EventController@thanks');
 
 Route::GET('/login/{provider}', 'Auth\LoginController@redirectToProvider');

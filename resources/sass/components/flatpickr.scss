@@ -20,6 +20,12 @@ input.numInput.cur-year {
     color: black !important;
     font-size: 1.5rem !important;
 }
+.numInputWrapper span.arrowUp {
+    display: none
+}
+.numInputWrapper span.arrowDown {
+    display: none
+}
 span.flatpickr-prev-month {
     top: 7% !important;
 }

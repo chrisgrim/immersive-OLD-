@@ -1,9 +1,9 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[21],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminArea/admin-content-advisories.vue?vue&type=script&lang=js&":
-/*!*********************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/adminArea/admin-content-advisories.vue?vue&type=script&lang=js& ***!
-  \*********************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminArea/admin-contact-level.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/adminArea/admin-contact-level.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -85,9 +85,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      contentAdvisory: '',
-      contentActive: false,
-      contentAdvisories: '',
+      contactLevels: '',
+      levelActive: false,
+      contactLevel: '',
       isModalVisible: false,
       isEditModalVisible: false,
       modalDelete: ''
@@ -96,11 +96,11 @@ __webpack_require__.r(__webpack_exports__);
   computed: {},
   methods: {
     //check if validation rules have been followed and returns false if not. Then I submit the new name and slug. I then get the response data and pass it to the new window load.
-    submitNewContentAdvisory: function submitNewContentAdvisory() {
+    submitNewContactLevel: function submitNewContactLevel() {
       var _this = this;
 
       var data;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function submitNewContentAdvisory$(_context) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function submitNewContactLevel$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
@@ -116,14 +116,14 @@ __webpack_require__.r(__webpack_exports__);
             case 3:
               ;
               data = {
-                advisories: this.contentAdvisory
+                level: this.contactLevel
               };
-              axios.post('/contentadvisories', data).then(function (response) {
+              axios.post('/contactlevels', data).then(function (response) {
                 console.log(response.data);
                 _this.isModalVisible = false;
-                _this.contentAdvisory = '';
+                _this.contactLevel = '';
 
-                _this.loadContentAdvisories();
+                _this.loadContactLevels();
               })["catch"](function (error) {
                 _this.isModalVisible = false;
               });
@@ -135,51 +135,51 @@ __webpack_require__.r(__webpack_exports__);
         }
       }, null, this);
     },
-    showModal: function showModal(advisory) {
-      this.modalDelete = advisory;
+    showModal: function showModal(level) {
+      this.modalDelete = level;
       this.isEditModalVisible = true;
     },
-    deleteContentAdvisory: function deleteContentAdvisory(advisory) {
+    deleteContactLevel: function deleteContactLevel(level) {
       var _this2 = this;
 
-      axios["delete"]("/contentadvisories/".concat(advisory.id)).then(function (response) {
+      axios["delete"]("/contactlevels/".concat(level.id)).then(function (response) {
         console.log(response.data);
         _this2.isEditModalVisible = false;
 
-        _this2.loadContentAdvisories();
+        _this2.loadContactLevels();
       })["catch"](function (error) {
         _this2.serverErrors = error.response.data.errors;
       });
     },
-    loadContentAdvisories: function loadContentAdvisories() {
+    loadContactLevels: function loadContactLevels() {
       var _this3 = this;
 
-      axios.get('/contentadvisories').then(function (response) {
-        _this3.contentAdvisories = response.data;
+      axios.get('/contactlevels').then(function (response) {
+        _this3.contactLevels = response.data;
       })["catch"](function (error) {
         _this3.serverErrors = error.response.data.errors;
       });
     },
-    saveContentAdvisory: function saveContentAdvisory(advisory) {
+    saveContactLevel: function saveContactLevel(level) {
       var _this4 = this;
 
       var data = {
-        advisories: advisory.advisories
+        level: level.level
       };
-      axios.patch("/contentadvisories/".concat(advisory.id), data).then(function (response) {
+      axios.patch("/contactlevels/".concat(level.id), data).then(function (response) {
         console.log(response.data);
 
-        _this4.loadContentAdvisories();
+        _this4.loadContactLevels();
       })["catch"](function (error) {
         _this4.serverErrors = error.response.data.errors;
       });
     }
   },
   created: function created() {
-    this.loadContentAdvisories();
+    this.loadContactLevels();
   },
   validations: {
-    contentAdvisory: {
+    contactLevel: {
       required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"]
     }
   }
@@ -187,10 +187,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminArea/admin-content-advisories.vue?vue&type=template&id=4a138832&":
-/*!*************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/adminArea/admin-content-advisories.vue?vue&type=template&id=4a138832& ***!
-  \*************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminArea/admin-contact-level.vue?vue&type=template&id=72f1364b&":
+/*!********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/adminArea/admin-contact-level.vue?vue&type=template&id=72f1364b& ***!
+  \********************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -204,11 +204,11 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "contentlevels" },
+    { staticClass: "contactlevels" },
     [
       _c("div", {}, [
         _c("div", { staticClass: "title" }, [
-          _c("h1", [_vm._v("Content Advisories")]),
+          _c("h1", [_vm._v("Contact Levels")]),
           _vm._v(" "),
           _c("div", { staticClass: "add" }, [
             _c(
@@ -227,28 +227,28 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _vm._l(_vm.contentAdvisories, function(advisory, index) {
+      _vm._l(_vm.contactLevels, function(level, index) {
         return _c("div", { staticClass: "list" }, [
           _c("input", {
             directives: [
               {
                 name: "model",
                 rawName: "v-model",
-                value: advisory.advisories,
-                expression: "advisory.advisories"
+                value: level.level,
+                expression: "level.level"
               }
             ],
-            attrs: { type: "text", placeholder: "Content Advisories" },
-            domProps: { value: advisory.advisories },
+            attrs: { type: "text", placeholder: "Contact Level Name" },
+            domProps: { value: level.level },
             on: {
               blur: function($event) {
-                return _vm.saveContentAdvisory(advisory)
+                return _vm.saveContactLevel(level)
               },
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(advisory, "advisories", $event.target.value)
+                _vm.$set(level, "level", $event.target.value)
               }
             }
           }),
@@ -260,7 +260,7 @@ var render = function() {
               on: {
                 click: function($event) {
                   $event.preventDefault()
-                  return _vm.showModal(advisory)
+                  return _vm.showModal(level)
                 }
               }
             },
@@ -295,9 +295,7 @@ var render = function() {
             _c("h3", [_vm._v("Are you sure?")]),
             _vm._v(" "),
             _c("p", [
-              _vm._v(
-                "You are deleting " + _vm._s(_vm.modalDelete.advisories) + "."
-              )
+              _vm._v("You are deleting " + _vm._s(_vm.modalDelete.level) + ".")
             ])
           ]),
           _vm._v(" "),
@@ -309,7 +307,7 @@ var render = function() {
                 on: {
                   click: function($event) {
                     $event.preventDefault()
-                    return _vm.deleteContentAdvisory(_vm.modalDelete)
+                    return _vm.deleteContactLevel(_vm.modalDelete)
                   }
                 }
               },
@@ -356,40 +354,40 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.contentAdvisory,
-                            expression: "contentAdvisory"
+                            value: _vm.contactLevel,
+                            expression: "contactLevel"
                           }
                         ],
-                        class: { active: _vm.contentActive },
+                        class: { active: _vm.levelActive },
                         attrs: {
                           type: "text",
-                          placeholder: "Content Advisory"
+                          placeholder: "Contact Level Name"
                         },
-                        domProps: { value: _vm.contentAdvisory },
+                        domProps: { value: _vm.contactLevel },
                         on: {
                           click: function($event) {
-                            _vm.contentActive = true
+                            _vm.levelActive = true
                           },
                           blur: function($event) {
-                            _vm.contentActive = false
+                            _vm.levelActive = false
                           },
                           input: [
                             function($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.contentAdvisory = $event.target.value
+                              _vm.contactLevel = $event.target.value
                             },
-                            _vm.$v.contentAdvisory.$touch
+                            _vm.$v.contactLevel.$touch
                           ]
                         }
                       }),
                       _vm._v(" "),
-                      _vm.$v.contentAdvisory.$error
+                      _vm.$v.contactLevel.$error
                         ? _c("div", { staticClass: "validation-error" }, [
-                            !_vm.$v.contentAdvisory.required
+                            !_vm.$v.contactLevel.required
                               ? _c("p", { staticClass: "error" }, [
-                                  _vm._v("Please Add Content Advisories ")
+                                  _vm._v("Please Add Contact Level ")
                                 ])
                               : _vm._e()
                           ])
@@ -407,7 +405,7 @@ var render = function() {
                     on: {
                       click: function($event) {
                         $event.preventDefault()
-                        return _vm.submitNewContentAdvisory()
+                        return _vm.submitNewContactLevel()
                       }
                     }
                   },
@@ -537,17 +535,17 @@ function normalizeComponent (
 
 /***/ }),
 
-/***/ "./resources/js/components/adminArea/admin-content-advisories.vue":
-/*!************************************************************************!*\
-  !*** ./resources/js/components/adminArea/admin-content-advisories.vue ***!
-  \************************************************************************/
+/***/ "./resources/js/components/adminArea/admin-contact-level.vue":
+/*!*******************************************************************!*\
+  !*** ./resources/js/components/adminArea/admin-contact-level.vue ***!
+  \*******************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _admin_content_advisories_vue_vue_type_template_id_4a138832___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./admin-content-advisories.vue?vue&type=template&id=4a138832& */ "./resources/js/components/adminArea/admin-content-advisories.vue?vue&type=template&id=4a138832&");
-/* harmony import */ var _admin_content_advisories_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./admin-content-advisories.vue?vue&type=script&lang=js& */ "./resources/js/components/adminArea/admin-content-advisories.vue?vue&type=script&lang=js&");
+/* harmony import */ var _admin_contact_level_vue_vue_type_template_id_72f1364b___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./admin-contact-level.vue?vue&type=template&id=72f1364b& */ "./resources/js/components/adminArea/admin-contact-level.vue?vue&type=template&id=72f1364b&");
+/* harmony import */ var _admin_contact_level_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./admin-contact-level.vue?vue&type=script&lang=js& */ "./resources/js/components/adminArea/admin-contact-level.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -557,9 +555,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _admin_content_advisories_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _admin_content_advisories_vue_vue_type_template_id_4a138832___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _admin_content_advisories_vue_vue_type_template_id_4a138832___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _admin_contact_level_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _admin_contact_level_vue_vue_type_template_id_72f1364b___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _admin_contact_level_vue_vue_type_template_id_72f1364b___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -569,38 +567,38 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/adminArea/admin-content-advisories.vue"
+component.options.__file = "resources/js/components/adminArea/admin-contact-level.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/adminArea/admin-content-advisories.vue?vue&type=script&lang=js&":
-/*!*************************************************************************************************!*\
-  !*** ./resources/js/components/adminArea/admin-content-advisories.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************************************/
+/***/ "./resources/js/components/adminArea/admin-contact-level.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/adminArea/admin-contact-level.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_admin_content_advisories_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./admin-content-advisories.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminArea/admin-content-advisories.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_admin_content_advisories_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_admin_contact_level_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./admin-contact-level.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminArea/admin-contact-level.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_admin_contact_level_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/adminArea/admin-content-advisories.vue?vue&type=template&id=4a138832&":
-/*!*******************************************************************************************************!*\
-  !*** ./resources/js/components/adminArea/admin-content-advisories.vue?vue&type=template&id=4a138832& ***!
-  \*******************************************************************************************************/
+/***/ "./resources/js/components/adminArea/admin-contact-level.vue?vue&type=template&id=72f1364b&":
+/*!**************************************************************************************************!*\
+  !*** ./resources/js/components/adminArea/admin-contact-level.vue?vue&type=template&id=72f1364b& ***!
+  \**************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_admin_content_advisories_vue_vue_type_template_id_4a138832___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./admin-content-advisories.vue?vue&type=template&id=4a138832& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminArea/admin-content-advisories.vue?vue&type=template&id=4a138832&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_admin_content_advisories_vue_vue_type_template_id_4a138832___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_admin_contact_level_vue_vue_type_template_id_72f1364b___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./admin-contact-level.vue?vue&type=template&id=72f1364b& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminArea/admin-contact-level.vue?vue&type=template&id=72f1364b&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_admin_contact_level_vue_vue_type_template_id_72f1364b___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_admin_content_advisories_vue_vue_type_template_id_4a138832___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_admin_contact_level_vue_vue_type_template_id_72f1364b___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

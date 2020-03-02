@@ -21,9 +21,9 @@
                 </div>
             </div>
             <div class="buttons">
-                <button class="create" @click.prevent="goBack()"> Go Back </button>
-                <button class="create" @click.prevent="denied()"> Denied </button>
-                <button class="create" @click.prevent="approved()"> Approved </button>
+                <button :class="{bspin : dis}" :disabled="dis" class="create" @click.prevent="goBack()"> Go Back </button>
+                <button :class="{bspin : dis}" :disabled="dis" class="create" @click.prevent="denied()"> Denied </button>
+                <button :class="{bspin : dis}" :disabled="dis" class="create" @click.prevent="approved()"> Approved </button>
             </div>
         </div>
     </div>
@@ -44,32 +44,39 @@
                 event: this.loadevent,
                 comments: '',
                 commentsActive: false,
+                dis: false,
             }
         },
 
         methods: {
             approved() {
+                this.dis = true;
                 axios.post(`/approve/${this.event.slug}`)
                 .then(response => { 
                     window.location.href = '/finish/events';
                 })
                 .catch(error => {         
-                    this.serverErrors = error.response.data.errors;  
+                    this.serverErrors = error.response.data.errors;
+                    this.dis = false;
                 });
             },
 
             denied() {
                 this.$v.$touch(); 
                 if (this.$v.$invalid) { return false };
+                this.dis = true;
                 let data = {
                     comments: this.comments
                 };
                 axios.post(`/unapprove/${this.event.slug}`, data)
                 .then(response => { 
+                    console.log(response.data)
+                    this.dis = false;
                     window.location.href = '/finish/events';
                 })
                 .catch(error => {         
-                    this.serverErrors = error.response.data.errors;  
+                    this.serverErrors = error.response.data.errors;
+                    this.dis = false;
                 });
             },
 

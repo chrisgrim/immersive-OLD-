@@ -3,7 +3,7 @@
         <div class="vlogin" >
             <div ref="myDiv" class="body-log" >
                 <div class="left-log">
-                    <div v-if="!register">
+                    <div v-if="register">
                         <div class="title">
                             <h3>Hello There!</h3>
                         </div>
@@ -51,7 +51,7 @@
                             </div>
                         </div>
                     </div>
-                    <div v-if="register">
+                    <div>
                         <div class="title">
                             <h3>Sign Up!</h3>
                         </div>

@@ -9,6 +9,7 @@
                     <label class="area">Explain the shows content</label>
                     <multiselect 
                     v-model="contentAdvisories" 
+                    :show-labels="false"
                     :options="contentAdvisoryOptions"
                     :class="{ active: activeItem == 'content','error': $v.contentAdvisories.$error }"
                     :multiple="true" 
@@ -28,10 +29,11 @@
                     </div>
                 </div>
                 <div class="field">
-                    <label>Age Restriction</label>
+                    <label>Age restriction</label>
                     <multiselect 
                     v-model="advisories.ageRestriction" 
-                    :options="ageOptions" 
+                    :options="ageOptions"
+                    :show-labels="false"
                     placeholder="Select the appropriate age group"
                     open-direction="bottom"
                     :class="{ active: activeItem == 'age','error': $v.advisories.ageRestriction.$error }"
@@ -50,13 +52,14 @@
                     <h2>Contact Advisories</h2>
                 </div>
                 <div class="field">
-                    <label class="area">Explain the shows contact</label>
+                    <label class="area">Select physical interaction level with guests</label>
                     <multiselect 
                     v-model="contactLevel" 
                     :options="contactLevelOptions" 
                     :multiple="true" 
-                    placeholder="Choose All That Apply"
+                    placeholder="Choose all that apply"
                     open-direction="bottom"
+                    :show-labels="false"
                     :class="{ active: activeItem == 'contact','error': $v.contactLevel.$error }"
                     @click="activeItem = 'contact'"
                     @blur="activeItem = null"
@@ -121,11 +124,12 @@
                     <h2>Mobility Advisories</h2>
                 </div>
                 <div class="field">
-                    <label class="area">Explain the shows mobility restrictions</label>
+                    <label class="area">Select any mobility restrictions</label>
                     <multiselect 
                     v-model="mobilityAdvisories" 
                     :options="mobilityAdvisoryOptions" 
                     :multiple="true" 
+                    :show-labels="false"
                     tag-placeholder="Add this as new tag"
                     :taggable="true" 
                     tag-position="bottom"

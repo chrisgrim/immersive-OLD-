@@ -34,6 +34,8 @@ Route::GET('search/user/list', 'SearchController@searchUsers');
 //On admin page returns user list for editing users
 Route::GET('search/event/list', 'SearchController@searchEvents');
 
+//Admin get list of events
+Route::GET('admin/search/events', 'StaffPicksController@fetch');
 
 
 

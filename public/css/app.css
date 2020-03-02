@@ -490,6 +490,10 @@ select:-webkit-autofill:focus {
   font-weight: 300;
 }
 
+.container .category {
+  padding-top: 7rem;
+}
+
 .login-container {
   background: white;
   overflow: auto;

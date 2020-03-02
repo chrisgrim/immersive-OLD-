@@ -37,7 +37,7 @@
                             </div>
                         </a>
                     </div>
-                    <div class="descrip">
+                    <div style="white-space: pre-line;" class="descrip">
                         <p>{{organizer.description}}</p>
                     </div>
                     <ContactOrganizer :user="user" :loadorganizer="organizer"></ContactOrganizer>
@@ -89,10 +89,6 @@
 
         },
 
-
-        mounted() {
-            console.log(myToken.csrfToken);
-        },
 
         created() {
             window.addEventListener('resize', this.handleResize)

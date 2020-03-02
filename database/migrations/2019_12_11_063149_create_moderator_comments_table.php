@@ -15,7 +15,8 @@ class CreateModeratorCommentsTable extends Migration
     {
         Schema::create('moderator_comments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('event_id')->unique();
+            $table->unsignedBigInteger('event_id');
+            $table->unsignedBigInteger('conversation_id');
             $table->string('comments');
             $table->timestamps();
             $table->foreign('event_id')

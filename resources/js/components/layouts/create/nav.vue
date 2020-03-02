@@ -3,12 +3,10 @@
         <nav class="nav">
             <div class="logo">
                 <a href="/">
-                    <img src="/storage/website-files/ei-logo.png" alt="">
+                    <h3>EI</h3>
                 </a>
             </div>
-
             <div class="menu">
-        
             </div>
         </nav>
     </div>
