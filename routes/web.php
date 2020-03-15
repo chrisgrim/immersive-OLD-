@@ -22,10 +22,9 @@ Route::RESOURCE('regions', 'RegionsController');
 Route::RESOURCE('contactlevels', 'ContactLevelsController');
 Route::RESOURCE('contentadvisories', 'ContentAdvisoriesController');
 Route::RESOURCE('genres', 'GenresController');
-Route::RESOURCE('organizer', 'OrganizerController');
 Route::RESOURCE('mobilities', 'MobilityController');
 Route::RESOURCE('staffpicks', 'StaffPicksController');
-Route::RESOURCE('eventreviews', 'EventReviewController');
+Route::RESOURCE('reviewevents', 'ReviewEventsController');
 
 // ----------   Search Page -------
 // Adds Top Search to Session
@@ -50,19 +49,18 @@ Route::POST('/unapprove/{event}', 'AdminAreaController@fail');
 Route::GET('/master/userlist', 'UserMasterController@index');
 Route::PATCH('/master/userlist/{user}', 'UserMasterController@update');
 Route::GET('/userlist/fetch', 'UserMasterController@fetch');
-Route::POST('/admin/staffpicks', 'StaffPicksController@store');
-Route::POST('/admin/staffpicks/{staffpick}', 'StaffPicksController@update');
-Route::GET('/admin/staffpicks', 'StaffPicksController@index');
 Route::GET('/admin/organizer', 'AdminOrganizerController@index');
 Route::PATCH('/admin/organizer/{organizer}', 'AdminOrganizerController@update');
 Route::GET('/admin/organizer/fetch', 'AdminOrganizerController@fetch');
 
 
+//Organizer 
+Route::POST('/organizer/{organizer}/patch', 'OrganizerController@update');
+Route::RESOURCE('organizer', 'OrganizerController');
+Route::POST('message/organizer/{organizer}/{user}', 'OrganizerController@message');
 
 //User Profile Pages
 Route::RESOURCE('users', 'ProfilesController');
-
-Route::POST('message/organizer/{organizer}/{user}', 'OrganizerController@message');
 
 
 // favorites Button

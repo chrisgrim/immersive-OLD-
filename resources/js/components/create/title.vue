@@ -14,9 +14,9 @@
     	            :class="{ active: activeItem == 'name','error': $v.name.$error }"
     	            @input="$v.name.$touch()"
     	            @click="activeItem = 'name'"
-                    @blur="activeItem = 'name'"
+                    @blur="activeItem = 'null'"
     	             />
-    	             <div v-if="$v.name.$error" class="validation-error">
+    	            <div v-if="$v.name.$error" class="validation-error">
     	    			<p class="error" v-if="!$v.name.required">Please add a title.</p>
                         <p class="error" v-if="!$v.name.maxLength">The title is too long.</p>
     	    		</div>

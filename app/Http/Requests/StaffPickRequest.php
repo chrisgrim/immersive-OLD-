@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LocationStoreRequest extends FormRequest
+class StaffPickRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +23,8 @@ class LocationStoreRequest extends FormRequest
      */
     public function rules()
     {
-
         return [
-            'hiddenLocation' => 'max:500'
+            'event_id' => 'required|unique:staff_picks',
         ];
     }
 }

@@ -50,6 +50,7 @@ class SearchController extends Controller
    
         $events = Event::search('*')
             ->where('closingDate', '>=', 'now/d')
+            ->where('approval_process', '=', 'approved')
             ->when($request->category_id, function($query) use ($request) {
                 $query->where('category_id', $request->category_id);
             })
@@ -114,11 +115,13 @@ class SearchController extends Controller
 
     public function searchUsers(Request $request)
     {
-        $user = User::search($request->keywords)
-                ->rule(UserSearchRule::class)
-                ->take(10)
-                ->get();
-        return $user;  
+        if ($request->keywords) {
+            return  User::search($request->keywords)
+                    ->rule(UserSearchRule::class)
+                    ->take(10)
+                    ->get();
+        }
+        return User::all();
     }
 
     public function searchEvents(Request $request)
@@ -133,8 +136,9 @@ class SearchController extends Controller
     {
         $events = Event::search('*')
             ->where('closingDate', '>=', 'now/d')
+            ->where('approval_process', '=', 'approved')
             ->when($request->category, function($query) use ($request) {
-                $query->where('category_id', $request->category);
+                $query->where('category_id', $request->category['id']);
             })
             ->when(!$request->mapboundary, function($query) use ($request) {
                 $query->whereGeoDistance('location_latlon', [floatval($request->loc['lng']), floatval($request->loc['lat'])], '100km');

@@ -75,6 +75,7 @@ class Organizer extends Model
     */
     public static function saveFile($organizer, $request)
     {
+        ini_set('memory_limit','512M');
         if ($organizer->imagePath) {
             Storage::delete('public/' . $organizer->imagePath);
         };
@@ -86,19 +87,20 @@ class Organizer extends Model
         $organizer->update([ 'imagePath' => $imagePath ]);
     }
 
-     /**
-    * Save File and update organizer model with path name
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @param  $organizer
-    */
-    public static function tempSave($request)
-    {
-        $extension = $request->file('imagePath')->getClientOriginalExtension();
-        $temp = 'temp' . '_' . rand(1,50000) . '.' . $extension;
-        $request->file('imagePath')->storeAs('/public/organizer-images', $temp);
-        return $temp;
-    }
+    //  /**
+    // * Save File and update organizer model with path name
+    // *
+    // * @param  \Illuminate\Http\Request  $request
+    // * @param  $organizer
+    // */
+    // public static function tempSave($request)
+    // {
+    //     ini_set('memory_limit','256M');
+    //     $extension = $request->file('imagePath')->getClientOriginalExtension();
+    //     $temp = 'temp' . '_' . rand(1,50000) . '.' . $extension;
+    //     $request->file('imagePath')->storeAs('/public/organizer-images', $temp);
+    //     return $temp;
+    // }
 
     /**
     * Save File and update organizer model with path name

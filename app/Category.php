@@ -78,6 +78,7 @@ class Category extends Model
     */
     public function saveFile($request, $category)
     {
+        ini_set('memory_limit','512M');
         if ($request->imagePath) {
             if ($category->largeImagePath) {
                 Storage::delete('public/' . $category->largeImagePath);

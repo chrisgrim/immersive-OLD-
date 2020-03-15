@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\EventReview;
+use App\ReviewEvent;
 use Illuminate\Http\Request;
 
-class EventReviewController extends Controller
+class ReviewEventsController extends Controller
 {
     /**
      * Checks for admin before allowing controller access
@@ -14,7 +14,7 @@ class EventReviewController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('admin')->except('show');
+        // $this->middleware('admin')->except('show');
     }
 
     /**
@@ -24,6 +24,16 @@ class EventReviewController extends Controller
      */
     public function index()
     {
+        return ReviewEvent::orderBy('created_at', 'desc')->with('event')->get();
+    }
+
+     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function fetch()
+    {
         //
     }
 
@@ -32,6 +42,7 @@ class EventReviewController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function create()
     {
         return view('adminArea.createreview');
@@ -45,7 +56,17 @@ class EventReviewController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(auth()->user()->admin){$review->update(['rank' => $request->rank]);}; 
+        $review = ReviewEvent::create([
+            'user_id' => auth()->id(),
+            'event_id' => $request->event['id'],
+            'organizer_id' => $request->event['organizer_id'],
+            'reviewer_name' => $request->reviewername,
+            'url' => $request->url,
+            'review' => $request->review,
+        ]);
+
+    
     }
 
     /**
@@ -65,7 +86,7 @@ class EventReviewController extends Controller
      * @param  \App\EventReview  $eventReview
      * @return \Illuminate\Http\Response
      */
-    public function edit(EventReview $eventReview)
+    public function edit(ReviewEvent $ReviewEvent)
     {
         //
     }
@@ -77,9 +98,10 @@ class EventReviewController extends Controller
      * @param  \App\EventReview  $eventReview
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, EventReview $eventReview)
+    public function update(Request $request, ReviewEvent $reviewevent)
     {
-        //
+        $reviewevent->update($request->all());
+        return $reviewevent;
     }
 
     /**
@@ -88,8 +110,8 @@ class EventReviewController extends Controller
      * @param  \App\EventReview  $eventReview
      * @return \Illuminate\Http\Response
      */
-    public function destroy(EventReview $eventReview)
+    public function destroy(ReviewEvent $reviewevent)
     {
-        //
+        $reviewevent->delete();
     }
 }

@@ -35,9 +35,9 @@
             <option value="moderator">Moderator</option>
             <option value="user">User</option>
             </select>
-            <button @click.prevent="showModal(user)" class="delete-circle"><p>X</p></button>
+            <button @click.prevent="showModal(user, 'delete')" class="delete-circle"><p>X</p></button>
         </div>
-        <modal v-show="isEditModalVisible" @close="isEditModalVisible = false">
+        <modal v-show="modal == 'delete'" @close="modal = null">
             <div slot="header">
                 <div class="circle del">
                     <p>X</p>
@@ -45,10 +45,10 @@
             </div>
             <div slot="body"> 
                 <h3>Are you sure?</h3>
-                <p>You are deleting the user {{modalDelete.name}} user.</p>
+                <p>You are deleting the user {{selectedModal.name}} user.</p>
             </div>
             <div slot="footer">
-                <button class="btn del" @click.prevent="deleteUser(modalDelete)">Delete</button>
+                <button class="btn del" @click.prevent="deleteUser(selectedModal)">Delete</button>
             </div>
         </modal>
     </div>
@@ -72,8 +72,8 @@
                 regionActive: false,
                 user: '',
                 isModalVisible: false,
-                isEditModalVisible: false,
-                modalDelete: '',
+                modal: false,
+                selectedModal: '',
                 isLoading: '',
 
             }
@@ -84,36 +84,16 @@
 
         methods: {
 
-            //check if validation rules have been followed and returns false if not. Then I submit the new name and slug. I then get the response data and pass it to the new window load.
-            async submitNewRegion() {
-                this.$v.$touch(); 
-                if (this.$v.$invalid) { return false };
-                let data = {
-                    region: this.region
-                }
-
-                axios.post('/regions', data)
-                .then(response => { 
-                    console.log(response.data);
-                    this.isModalVisible = false;
-                    this.region = '';
-                    this.loadRegions();
-                })
-                .catch(error => { 
-                    this.isModalVisible = false;
-                });
+            showModal(user, arr) {
+                this.selectedModal = user;
+                this.modal = arr;
             },
 
-            showModal(region) {
-                this.modalDelete = region;
-                this.isEditModalVisible = true;
-            },
-
-            deleteRegion(region) {
-                axios.delete(`/regions/${region.id}`)
+            deleteUser(user) {
+                axios.delete(`/users/${user.id}`)
                 .then(response => { 
-                    this.isEditModalVisible = false;
-                    this.loadRegions();
+                    this.modal = null;
+                    this.loadUsers();
                 })
                 .catch(error => { this.serverErrors = error.response.data.errors; });
             },
@@ -174,7 +154,10 @@
                 .then(response => {
                     console.log(response.data);
                     this.users = response.data;
-                });
+                })
+                .catch(error => {
+                    this.loadUsers();
+                })
             },
 
             createList() {

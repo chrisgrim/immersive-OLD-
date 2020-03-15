@@ -35,7 +35,6 @@ class Location extends Model
     public static function storeEventLocation($request, $event)
     {
         $event->location->update($request->all());
-        $event->regions()->sync(request('Region'));
         $event->update([
             'location_latlon' => [
                 'lat' => $request->latitude,

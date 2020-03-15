@@ -17,7 +17,7 @@ class CreateMessagesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('conversation_id');
-            $table->string('message');
+            $table->text('message');
             $table->timestamps();
             $table->foreign('conversation_id')
                     ->references('id')->on('conversations')

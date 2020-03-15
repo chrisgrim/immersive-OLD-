@@ -21,7 +21,7 @@ class CreateUserLocationsTable extends Migration
             $table->string('city')->nullable();
             $table->string('region')->nullable();
             $table->string('country')->nullable();
-            $table->integer('postal_code')->nullable();
+            $table->string('postal_code')->nullable();
             $table->DECIMAL('longitude', 11, 8)->nullable();
             $table->DECIMAL('latitude', 10 ,8)->nullable();
             $table->timestamps();

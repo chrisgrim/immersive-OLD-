@@ -54,12 +54,11 @@ class OrganizerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(OrganizerUpdateRequest $request)
     {
-        $temp = Organizer::tempSave($request);
+        $validated = $request->validated();
         $organizer = Organizer::Create($request->except(['imagePath', 'user_id']) + ['user_id' => auth()->id()]);
         Organizer::saveFile($organizer, $request);
-        Storage::delete('public/organizer-images/' . $temp);
     }
 
     /**
@@ -81,7 +80,7 @@ class OrganizerController extends Controller
      */
     public function edit(Organizer $organizer)
     {
-        //
+        return view('organizers.edit', compact('organizer'));
     }
 
     /**
@@ -94,17 +93,29 @@ class OrganizerController extends Controller
      * @param  \App\Organizer  $organizer
      * @return \Illuminate\Http\Response
      */
-    public function update(OrganizerUpdateRequest $request, Event $event, Organizer $organizer)
+    public function update(OrganizerUpdateRequest $request, Organizer $organizer)
     {   
-        $event->update(['organizer_id' => $organizer->id]);
+        $validated = $request->validated();
+
+        // $request->imagePath ? $temp = Organizer::tempSave($request) : null;
+        $organizer = Organizer::updateOrCreate(
+            [
+                'id' => $request->id,
+            ],
+            [
+                'name' => $request->name,
+                'slug' => $request->slug,
+                'description' => $request->description,
+                'website' => $request->website,
+                'email' => $request->email,
+                'twitterHandle' => $request->twitterHandle,
+                'facebookHandle' => $request->facebookHandle,
+                'instagramHandle' => $request->instagramHandle,
+            ]
+        );
+        $request->imagePath ? Organizer::saveFile($organizer, $request) : null;
+        // $request->imagePath ? Storage::delete('public/organizer-images/' . $temp) : null;
         
-        if ($organizer->user_id == auth()->id()) {
-            $event->update(['organizer_id' => $organizer->id]);
-            $organizer->update($request->except(['imagePath', 'newImageUpload']));
-            if ($request->hasFile('imagePath') && $request->newImageUpload == true) {
-                Organizer::saveFile($organizer, $request);
-            };
-        } 
     }
 
     /**

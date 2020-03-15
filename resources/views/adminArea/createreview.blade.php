@@ -1,5 +1,5 @@
 @extends('adminArea.index')
 
 @section('adminarea')
-    <admin-create-review></admin-create-review>
+    <admin-event-reviews></admin-event-reviews>
 @endsection

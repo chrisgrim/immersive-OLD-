@@ -4,7 +4,7 @@
             <div class="filter">
                 <div class="item">
                     <div class="el">
-                        <div class="button">
+                        <div class="button" ref="dates">
                             <div @click="show('dates')" class="click">
                                 <p v-if="!datesFormatted.length">Dates</p>
                                 <p v-if="datesFormatted.length">{{datesFormatted[0]}}{{ datesFormatted[1] ? ' to ' + datesFormatted[1] : ''}} </p>
@@ -29,7 +29,7 @@
                 </div>
                 <div class="item">
                     <div class="el">
-                        <div class="button">
+                        <div class="button" ref="cat">
                             <div @click="show('category')" class="click">
                                 <p v-if="!category">Categories</p>
                                 <p v-if="category">{{category.name}}</p>
@@ -56,12 +56,12 @@
                 </div>
                 <div class="item">
                     <div class="el">
-                        <div class="button">
+                        <div class="button" ref="price">
                             <div @click="show('price')" class="click">
                                 <p v-if="showPrice">Price</p>
                                 <p v-else="showPrice">{{'$' + price[0]}}{{' to ' + '$' + price[1]}}</p>
                             </div>
-                            <div v-if="activeItem === 'price'" class="b_over price" v-clickoutside="show('test')">
+                            <div v-if="activeItem === 'price'" class="b_over price">
                                 <div class="box price">
                                     <vue-slider
                                     v-model="price" 
@@ -214,11 +214,6 @@
             },
 
             show(type) {
-                console.log(type);
-                this.activeItem === type ? this.activeItem = null : this.activeItem = type;
-            },
-            showa(type) {
-                console.log('seconshow');
                 this.activeItem === type ? this.activeItem = null : this.activeItem = type;
             },
 
@@ -271,6 +266,14 @@
                 }
             },
 
+            onClickOutside(event) {
+                let cat =  this.$refs.cat;
+                let dates =  this.$refs.dates;
+                let price =  this.$refs.price;
+                if (!cat || cat.contains(event.target) || !dates || dates.contains(event.target) || !price || price.contains(event.target)) return;
+                this.activeItem = null;
+            },
+
         },
 
         watch: {
@@ -282,26 +285,9 @@
 
         created() {
             this.updateSearchedLocation();
+            setTimeout(() => document.addEventListener("click", this.onClickOutside), 200);
         },
 
-        directives: {
-            clickoutside: {
-                bind: function (el, binding, vnode) {
-                    el.clickOutsideEvent = function (event) {
-                    // here I check that click was outside the el and his childrens
-                    if (!(el == event.target || el.contains(event.target))) {
-                    // and if it did, call method provided in attribute value
-                    vnode.context[binding.expression](event);
-                    }
-                };
-                document.body.addEventListener('click', el.clickOutsideEvent)
-            },
-            unbind: function (el) {
-            document.body.removeEventListener('click', el.clickOutsideEvent)
-            },
-            stopProp(event) { event.stopPropagation() }
-            }
-        }
 
     };
 </script>

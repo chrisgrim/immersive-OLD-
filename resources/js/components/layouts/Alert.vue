@@ -2,9 +2,9 @@
     <div v-if="visible">
         <div class="verify_bar">
             <div class="text">
-                <p>{{this.body}}</p>
+                <p v-if="this.verify">{{this.verify}}</p>
             </div>
-            <div class="submit">
+            <div v-if="this.verify" class="submit">
                 <p>If you did not recieve an email </p>
                 <button type="submit" class="another" @click="resend">click here to request another</button>.
             </div>
@@ -20,12 +20,14 @@
         },
 
         computed: {
-
+            verify() {
+                return this.message && this.message == 'verify' ? 'Please take a minute to verify your account' : '';
+            }
         },
 
         data() {
             return {
-                body: this.message ? this.message : 'Please take a minute to verify your account',
+                body: '',
                 visible: true,
             }
         },
@@ -42,7 +44,7 @@
             },
 
             hide() {
-                this.visible = false;
+                this.visible = true;
             }
         },
 

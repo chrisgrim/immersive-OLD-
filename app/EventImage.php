@@ -15,6 +15,7 @@ class EventImage extends Model
     */
     public static function saveFile($request, $event, $width, $height)
     {
+        ini_set('memory_limit','512M');
         if ($event->largeImagePath) {
             Storage::delete('public/' . $event->largeImagePath);
             Storage::delete('public/' . $event->thumbImagePath);

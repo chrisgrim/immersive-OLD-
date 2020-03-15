@@ -26,6 +26,7 @@
                     @open="loadEvents"
                     @search-change="loadEvents"
                     :show-no-results="false"
+                    @input="$v.event.$touch"
                     :allow-empty="false">
                         <template 
                         slot="singleLabel" 
@@ -39,7 +40,11 @@
                                 </span>
                             </span
                         ></template>
-                    </multiselect> 
+                    </multiselect>
+                    <div v-if="$v.event.$error" class="validation-error">
+                        <p class="error" v-if="!$v.event.required">Please select event</p>
+                        <p class="error" v-if="!$v.event.serverFailed">This event has been picked already.</p>
+                    </div>
                 </div>
                 <div class="rank">
                     <label>Rank</label>
@@ -64,6 +69,9 @@
                     placeholder="Select date"               
                     name="dates">
                 </flat-pickr>
+               <div v-if="$v.dates.$error" class="validation-error">
+                    <p class="error" v-if="!$v.dates.required">Please add at least 1 show date</p>
+                </div>
             </div>
         </div>
 
@@ -79,21 +87,44 @@
                     {{ pick.event.name }}
                 </div>
                 <div class="rank">
-                    <input 
-                    v-model="pick.rank"
-                    type="text">
+                   <multiselect 
+                    v-model="pick.rank" 
+                    :options="rankOptions"
+                    :show-labels="false"
+                    placeholder="Leave blank for default Rank of 5 (1 being most important)"
+                    open-direction="bottom"
+                    :class="{ active: activeItem == 'rank'}"
+                    @click="activeItem = 'rank'"
+                    @input="updatePick(pick, 'rank')"
+                    :preselect-first="false">
+                    </multiselect>
                 </div>
-                <div class="dates">
+                <div class="date-s">
                     <flat-pickr
+                    @input="updatePick(pick, 'dates')"
                     :value="listDates = [pick.start_date, pick.end_date]"
                     :config="pickConfig"                                         
                     placeholder="Select date"               
                     name="dates">
-                </flat-pickr>
+                    </flat-pickr>
                 </div>
+                <button @click.prevent="showModal(pick, 'delete')" class="delete-circle"><p>X</p></button>
             </div>
         </div>
-
+        <modal v-show="modal == 'delete'" @close="modal = null">
+            <div slot="header">
+                <div class="circle del">
+                    <p>X</p>
+                </div>
+            </div>
+            <div slot="body"> 
+                <h3>Are you sure?</h3>
+                <p>You are deleting the review {{selectedModal.name}}.</p>
+            </div>
+            <div slot="footer">
+                <button class="btn del" @click.prevent="deletePick(selectedModal)">Delete</button>
+            </div>
+        </modal>
     </div>
 </template>
 
@@ -101,6 +132,8 @@
     import flatPickr from 'vue-flatpickr-component'
     import 'flatpickr/dist/flatpickr.css'
     import Multiselect from 'vue-multiselect'
+    import { required } from 'vuelidate/lib/validators';
+    import _ from 'lodash'
 
     export default {
 
@@ -117,6 +150,12 @@
                 activeItem: '',
                 rankOptions: ['1', '2', '3', '4', '5'],
                 picks:[],
+                temp: '',
+                listDatesSubmit: [],
+                listDatesFormatted: [],
+                selectedModal: '',
+                modal: '',
+                serverErrors: [],
                 config: {
                     minDate: "today",
                     altFormat:'M d',
@@ -135,7 +174,7 @@
                     inline: false,
                     showMonths: 2,
                     dateFormat: 'Y-m-d H:i:s',
-                    onClose: [this.submitDateFunc()], 
+                    onClose: [this.listDateFunc()], 
                 },
             }
         },
@@ -157,27 +196,71 @@
                 });
             },
 
+            showModal(pick, arr) {
+                this.selectedModal = pick;
+                this.modal = arr;
+            },
+
             loadPicks() {
-                axios.get('/admin/staffpicks')
+                axios.get(`/staffpicks?timestamp=${new Date().getTime()}`)
                 .then(response => {
                     this.picks = response.data;
                 });
             },
 
             savePick() {
+                this.$v.$touch();
+                if (this.$v.$invalid) { return false }
                 let data = {
-                    event: this.event.id,
+                    event_id: this.event.id,
                     rank: this.rank,
                     dates: this.datesSubmit
                 };
-                axios.post('/admin/staffpicks/', data)
+                axios.post('/staffpicks/', data)
                 .then(response => { 
                     console.log(response.data);
                     this.add = false;
+                    this.loadPicks();
                 })
                 .catch(error => { 
+                    console.log(error.response.data.errors);
+                    this.serverErrors = error.response.data.errors;
+                });
+            },
+
+            deletePick(pick) {
+                axios.delete(`/staffpicks/${pick.id}`)
+                .then(response => { 
+                    this.modal = null;
+                    this.loadPicks();
+                })
+                .catch(error => { this.serverErrors = error.response.data.errors; });
+            },
+
+            updatePick(pick, arr) {
+                if(arr == 'dates' && !this.listDatesSubmit['1']) {return ''};
+                let data = new FormData();
+                data.append('_method', 'PATCH');
+                arr == 'dates' ? data.append('start_date', this.listDatesSubmit[0]) : '';
+                arr == 'dates' ? data.append('end_date', this.listDatesSubmit[1]) : '';
+                arr == 'rank' ? data.append('rank', pick.rank) : '';
+                axios.post(`/staffpicks/${pick.id}`, data)
+                .then(response => { 
+                    if(this.listDatesSubmit.length) {
+                        this.loadPicks;
+                        this.listDatesSubmit = [];
+                        this.listDatesFormatted = [];
+                    }
+
+                })
+                .catch(error => { 
+                    console.log(error.response.data.errors);
                     this.serverErrors = error.response.data.errors; 
                 });
+            },
+
+            hasServerError(field) {
+                return (field && _.has(this, 'serverErrors.' + field) && !_.isEmpty(this.serverErrors[field]));
             },
 
             dateFunc() {
@@ -190,21 +273,13 @@
                 }
             },
 
-            submitDateFunc(arr) {
-                console.log(arr)
-                return function(value) {
-                    
-                    let data = {
-                        start_date: this.formatDate(value[0], "Y-m-d H:i:S"),
-                        end_date: this.formatDate(value[1], "Y-m-d H:i:S"),
-                    };
-                    // axios.post('/admin/staffpicks/{id}', data)
-                    // .then(response => { 
-                    //     console.log(response.data);
-                    // })
-                    // .catch(error => { 
-                    //     this.serverErrors = error.response.data.errors; 
-                    // });
+            listDateFunc() {
+            const that = this;
+            return function(value) {
+                that.listDatesSubmit = value.map(date => 
+                    this.formatDate(date, "Y-m-d H:i:S"));
+                that.listDatesFormatted = value.map(date => 
+                    this.formatDate(date, "M d"));
                 }
             },
 
@@ -212,6 +287,16 @@
 
         created() {
             this.loadPicks()
+        },
+
+        validations: {
+            event: {
+                required,
+                serverFailed : function(){ return !this.hasServerError('event_id'); },
+            },
+            dates: {
+                required
+            }
         },
 
     }

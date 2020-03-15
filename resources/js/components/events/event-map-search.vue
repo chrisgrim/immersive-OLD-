@@ -113,7 +113,7 @@
                 visibility: 'visible',
                 zoom: 11,
                 center: latLng(47.41322, -1.219482),
-                url: "https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png",
+                url: "http://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png",
                 attribution:
                 '<a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia</a>',
                 currentCenter: latLng(47.41322, -1.219482),

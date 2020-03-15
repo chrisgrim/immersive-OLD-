@@ -51,7 +51,7 @@
                 </div>
             </div>
         </div>
-        <div>
+        <div v-if="conversations.modmessages.lenght">
             <h3>{{ conversations.modmessages[0].event.name }} Comments</h3>
         </div>
         <div v-for="message in conversations.modmessages" class="list">
@@ -127,6 +127,7 @@ import moment from 'moment'
             },
 
             getUrl() {
+                if(!this.conversations.modmessages.length) {return ''}; 
                 let arr = this.conversations.modmessages[0].event;
                 console.log(arr.approval_process);
                 if (arr.approval_process == 'approved') {

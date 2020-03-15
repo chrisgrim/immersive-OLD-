@@ -3,7 +3,7 @@
         <div class="vlogin" >
             <div ref="myDiv" class="body-log" >
                 <div class="left-log">
-                    <div v-if="register">
+                    <div v-if="login">
                         <div class="title">
                             <h3>Hello There!</h3>
                         </div>
@@ -30,7 +30,9 @@
                             <div class="forgot">
                                 Forgot your password?
                             </div>
-                            <button class="signin" @click="onLogin"> Sign In </button>
+                            <div>
+                                <button class="signin" @click="onLogin"> Sign In </button>
+                            </div>
                             <div class="forgot">
                                 Remember Me
                             </div>
@@ -47,11 +49,11 @@
                             </div>
                             <div class="join">
                                 <h4>New To Everything Immersive?</h4>
-                                <div @click.prevent="register = true">Join Now</div>
                             </div>
+                            <button class="join" @click.prevent="login = !login">Join Now</button>
                         </div>
                     </div>
-                    <div>
+                    <div v-else="login">
                         <div class="title">
                             <h3>Sign Up!</h3>
                         </div>
@@ -60,7 +62,6 @@
                                 <input 
                                 id="name" 
                                 type="name" 
-                                class="name" 
                                 v-model="name" 
                                 required 
                                 placeholder="name" 
@@ -70,7 +71,6 @@
                                 <input 
                                 id="email" 
                                 type="email" 
-                                class="email" 
                                 v-model="email" 
                                 required 
                                 placeholder="email" 
@@ -106,6 +106,10 @@
                                     <img src="/storage/website-files/facebook.png" alt="">
                                 </div>
                             </div>
+                            <div class="join">
+                                <h4>Already have an account?</h4>
+                            </div>
+                            <button class="join" @click.prevent="login = !login">Sign In Now</button>
                         </div>
                     </div>
                 </div>
@@ -125,7 +129,7 @@
                 email: '',
                 name: '',
                 passwordConfirm: '',
-                register: false,
+                login: true,
             }
         },
 

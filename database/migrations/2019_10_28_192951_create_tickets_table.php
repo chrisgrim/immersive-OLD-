@@ -18,7 +18,7 @@ class CreateTicketsTable extends Migration
             $table->string('name')->nullable();
             $table->unsignedBigInteger('show_id');
             $table->decimal('ticket_price', 6, 2)->nullable();
-            $table->longtext('description')->nullable();
+            $table->text('description')->nullable();
             $table->integer('ticket_amount')->nullable();
             $table->timestamps();
             $table->foreign('show_id')

@@ -7,6 +7,9 @@
     					<span class="category">{{event.category ? event.category.name : ''}}</span>
     					<span class="title">{{event.name}}</span>
                         <i>{{event.tag_line}}</i>
+                        <div v-if="event.staffpick">
+                            EI Pick of the week!
+                        </div>
                         <div class="info">
                             <div>
                                 <img src="/storage/website-files/price.png" alt="">
@@ -65,7 +68,7 @@
                     </div>
                 </div>
             </div>
-            <div class="section reviews">
+            <div v-if="event.eventreviews ? event.eventreviews.length : null" class="section reviews">
                 <div class="back"></div>
                 <div class="content">
                     <div class="left">
@@ -74,29 +77,17 @@
                         </div>
                     </div>
                     <div class="right">
-                        <div class="box">
-                            <div class="name">
-                                 no proscenium
+                        <div class="box" v-for="review in event.eventreviews">
+                            <div class="image">
+                                <img :src="review.image_path" alt="">
                             </div>
+                            <a rel="noreferrer" target="_blank" :href="review.url">
+                                <div class="name">
+                                    {{review.reviewer_name}}
+                                </div>
+                            </a>
                             <div class="review">
-                                Such a good show I would recommend everyone go see it.
-                            </div>
-                        </div>
-                        <div class="box">
-                            <div class="name">
-                                 no proscenium
-                            </div>
-                            <div class="review">
-                                Such a good show I would recommend everyone go see it.Such a good show I would recommend everyone go see it
-
-                            </div>
-                        </div>
-                        <div class="box">
-                            <div class="name">
-                                 no proscenium
-                            </div>
-                            <div class="review">
-                                Such a good show I would recommend everyone go see it.
+                                <i>{{review.review}}</i>
                             </div>
                         </div>
                     </div>
@@ -196,11 +187,16 @@
 						<h3>Location</h3>
 					</div>
 					<div class="text" v-if="event.location.hiddenLocationToggle">
-						<p>{{event.location.city}} {{event.location.region}}</p>
-                        <p>{{event.location.hiddenLocation}}</p>
+                        <a rel="noreferrer" target="_blank" :href="`http://maps.google.com/maps?q=${event.location.city},+${event.location.region}`">
+    						<p>{{event.location.city}} {{event.location.region}}</p>
+                            <br>
+                            <p>{{event.location.hiddenLocation}}</p>
+                        </a>
 					</div>
                     <div class="text" v-else="event.location.hiddenLocationToggle">
-                        <p>{{event.location.home}} {{event.location.street}}, {{event.location.city}},  {{event.location.region}}</p>
+                        <a rel="noreferrer" target="_blank" :href="`http://maps.google.com/maps?q=${event.location.home}+${event.location.street},+${event.location.city},+${event.location.region}`">
+                            <p>{{event.location.home}} {{event.location.street}}, {{event.location.city}},  {{event.location.region}}</p>  
+                        </a>
                     </div>
 					<div class="location-map">
 						<div v-if="center">
@@ -308,7 +304,7 @@
                     mode: "multiple",
                     inline: true,
                     showMonths: 2,
-                    dateFormat: 'Y-m-d H:i:s',      
+                    dateFormat: 'Y-m-d H:i:s',    
                 },
 			}
 		},

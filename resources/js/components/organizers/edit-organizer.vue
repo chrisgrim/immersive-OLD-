@@ -112,7 +112,7 @@
                     <div class="loader">
                         <label 
                         class=""
-                        :style="{ backgroundImage: `url('${imageSrc ? imageSrc : (this.loadorganizer ? '/' + this.organizer.imagePath : '')}')` }">
+                        :style="{ backgroundImage: `url('${imageSrc ? imageSrc : (this.organizer ? '/' + this.organizer.imagePath : '')}')` }">
                             <div 
                             class="dash"
                             :class="{ over: hasImage, load: isLoading }"
@@ -177,7 +177,7 @@ export default {
 
     computed: {
         hasImage() {
-            return (this.loadorganizer ? this.loadorganizer.imagePath : '') || this.imageSrc ? true : false;
+            return this.loadorganizer.imagePath || this.imageSrc ? true : false;
         }
     },
     
@@ -252,6 +252,7 @@ export default {
             this.finalImage.width = image.width;
             this.finalImage.height = image.height;
             this.$v.finalImage.$touch();
+            console.log(this.finalImage);
             if (this.$v.finalImage.$invalid) { return false };
             this.imageSrc = image.src;
         },
@@ -280,7 +281,8 @@ export default {
                 window.location.href = '/create-event/edit';
             })
             .catch(errors => {
-                this.serverErrors = errors.response.data.errors;
+                console.log(errors);
+                this.serverErrors = errors;
                 this.isLoading = false;
                 this.dis = false;
             });
@@ -316,7 +318,7 @@ export default {
                 window.location.href = `/organizer/${slug}/edit`;
             })
             .catch(errors => {
-                this.serverErrors = errors;
+                this.serverErrors = errors.response.data.errors;
                 this.isLoading = false;
                 this.dis = false;
             });

@@ -18,9 +18,9 @@ class CreateAdvisoriesTable extends Migration
             $table->unsignedBigInteger('event_id');
             $table->boolean('wheelchairReady')->nullable();
             $table->boolean('sexualViolence')->nullable();
-            $table->longtext('sexualViolenceDescription')->nullable();
+            $table->text('sexualViolenceDescription')->nullable();
             $table->string('ageRestriction')->nullable();
-            $table->longtext('contactAdvisories')->nullable();
+            $table->text('contactAdvisories')->nullable();
             $table->timestamps();
             $table->foreign('event_id')
                     ->references('id')->on('events')

@@ -65,6 +65,17 @@ class ProfilesController extends Controller
         }
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\user  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(User $user)
+    {
+        $user->delete();
+    }
+
     public function storeUserGeolocation(User $user)
     {
     	Cache::put('key', 'value', 10);

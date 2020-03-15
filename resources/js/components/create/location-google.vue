@@ -17,7 +17,7 @@
 					</div>
 			    </div>
 		    	<div class="field" v-if="location.hiddenLocationToggle">
-					<label> Please enter how participants will be notified of the location </label>
+					<label> Users searching for this event will only see the general area, not the specific street address. Please enter how participants will be notified of the location. </label>
 		            <textarea 
 		            v-model.trim="location.hiddenLocation" 
 		            rows="4" 
@@ -45,26 +45,6 @@
                         <p class="error" v-if="!$v.location.latitude.required">Please select from the list of locations</p>
                     </div>
                 </div>
-    		    <div class="field">
-    				<label>Regions</label>
-    				<multiselect 
-    				v-model.trim="selectedRegions" 
-    				:options="regionOptions" 
-    				:multiple="true" 
-    				placeholder="Select Region. You may select more than one." 
-    				track-by="id"
-    				open-direction="bottom"
-    				required 
-    				label="region"
-    				@input="$v.selectedRegions.$touch"
-    				:class="{ active: activeItem == 'region','error': $v.selectedRegions.$error}"
-    				@click="activeItem = 'region'"
-    		        @blur="activeItem = null"
-    				/>
-    				<div v-if="$v.selectedRegions.$error" class="validation-error">
-        				<p class="error" v-if="!$v.selectedRegions.required">Please select at least one Region</p>
-        			</div>
-    			</div>
                 <div class="">
                 <button :disabled="dis" @click.prevent="submitLocation()" class="create"> Next </button>
             </div>
@@ -121,7 +101,11 @@
 
 		computed: {
 			locationPlaceholder() {
-				return this.location.city ? (this.location.home ? this.location.home : '') + ' ' + (this.location.street ? this.location.street + ', ' : '') + '' + this.location.city : 'Put full address if you have one, otherwise select the city.';
+				return this.location.postal_code ? (this.location.home ? this.location.home + ' ' : '') 
+                + (this.location.street ? this.location.street + ', ' : '') 
+                + (this.location.city ? this.location.city + ', ' : '') 
+                + (this.location.country ? this.location.country : '') 
+                : 'Enter full address ';
 			},
             map() {
                 return `height:calc(${this.height}px - 7rem);`
@@ -131,8 +115,6 @@
 		data() {
 			return {
 				location:this.initializeEventObject(),
-				regionOptions:[],
-				selectedRegions: '',
 				eventUrl:`/create-event/${this.event.slug}`,
 				zoom:14,
 				center: '',
@@ -175,19 +157,37 @@
 			async submitLocation() {
 				this.$v.$touch(); 
 				if (this.$v.$invalid) { return false };
+                let data = this.location;
                 this.dis = true;
-                let data = this.location;
-           		data.Region = this.selectedRegions.map(a => a.id);
+                if (this.location.hiddenLocationToggle) {
+                    this.zipLatLng(data)
+                } else {
+                    axios.patch(`${this.eventUrl}/location`, data)
+                    .then(response => {             
+                        window.location.href = `${this.eventUrl}/category`; 
+                    })
+                    .catch(errorResponse => {
+                        this.dis = false;
+                        this.validationErrors = errorResponse.response.data.errors; 
+                    });
+                }
+			},
 
-				axios.patch(`${this.eventUrl}/location`, data)
-				.then(response => { 			
-					window.location.href = `${this.eventUrl}/category`; 
-				})
+            zipLatLng(data) {
+                axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.location.postal_code}&key=AIzaSyBxpUKfSJMC4_3xwLU73AmH-jszjexoriw`)
+                .then(response => {
+                    data.latitude = response.data.results[0].geometry.location.lat;
+                    data.longitude = response.data.results[0].geometry.location.lng;
+                })
+                .then(response => {  
+                    axios.patch(`${this.eventUrl}/location`, data)     
+                    window.location.href = `${this.eventUrl}/category`; 
+                })
                 .catch(errorResponse => {
                     this.dis = false;
                     this.validationErrors = errorResponse.response.data.errors; 
                 });
-			},
+            },
 
 			// adds lat and lon to leaflet map using this.center
 			// sends google map loc and lat info to updateLats
@@ -210,10 +210,7 @@
             load() {
                 axios.get(`${this.eventUrl}/location/fetch?timestamp=${new Date().getTime()}`)
                 .then(response => {
-                    console.log(response.data.regions);
                     this.updateEventFields(response.data.location);
-                    this.selectedRegions = response.data.pivots;
-                    this.regionOptions = response.data.regions;
                 });
             },
 
@@ -297,9 +294,6 @@
         },
 
 		validations: {
-			selectedRegions: {
-				required
-			},
 			location: {
 			 	latitude: {
 			 		required

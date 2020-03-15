@@ -209,14 +209,14 @@
                 z-index: -1;
             }
             & .content {
-                padding: 18rem 0rem 14rem 0rem;
+                padding: 16rem 0rem 12rem 0rem;
                 & .left .text h3 {
                     font-size:5.1rem;
                     line-height: 5rem;
                 }
                 & .right {
                     display: grid;
-                    grid-template-columns: 1fr 1fr 1fr;
+                    grid-template-columns: repeat( auto-fit, minmax(150px, 1fr) );;
                     grid-gap: 10%;
                     & .box {
                         & .name {
@@ -224,6 +224,12 @@
                             line-height: 2.4rem;
                             font-weight: 500;
                             color: #484848;
+                            transition: .3s;
+                            margin-bottom: .5rem;
+                            display: inline-block;
+                            &:hover {
+                                font-size: 1.63rem;
+                            }
                         }
                         & .review {
                             font-size: 1.4rem;
@@ -231,6 +237,10 @@
                             font-weight: 400;
                             color: #484848;
                         }
+                    }
+                    & img {
+                        width: 2rem;
+                        opacity: .5;
                     }
                 }
             }
@@ -278,6 +288,7 @@
                     font-weight: 400;
                     line-height: 1.8rem;
                     color: #767676;
+                    display: inline-block;
                 }
             }
         }

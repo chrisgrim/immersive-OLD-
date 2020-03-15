@@ -56,9 +56,9 @@
                 </div>
                 </a>
 
-                <a href="/eventreviews/create">
+                <a href="/reviewevents/create">
                 <div class="checklist-section" >
-                    Create Review
+                    Event Reviews
                 </div>
                 </a>
 

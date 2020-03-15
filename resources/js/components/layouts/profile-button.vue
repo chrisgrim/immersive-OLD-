@@ -1,8 +1,11 @@
 <template>
-	<div class="profile-button">
-		<label @click="toggle = !toggle" class="profile-image">
+	<div class="profile-button" :style="`background:#${Math.floor(Math.random()*16777215).toString(16)};`">
+		<label v-if="this.user.image_path" @click="toggle = !toggle" class="profile-image" >
             <img :src="avatar" height="28" width="28" :alt="user.name + `'s account`">
         </label>
+        <div v-else="this.user.image_path" @click="toggle = !toggle" class="icontext">
+            <h2>{{userName.charAt(0)}}</h2>
+        </div>
 
 		<ul v-show='toggle' class="subdropdown">
 			<li>

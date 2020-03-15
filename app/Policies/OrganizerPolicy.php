@@ -17,7 +17,7 @@ class OrganizerPolicy
      * @param  \App\Organizer  $Organizer
      * @return mixed
      */
-    public function update(User $user, Organizer $Organizer)
+    public function update(User $user, Organizer $organizer)
     {
         return $organizer->user_id == $user->id || $user->isModerator();
     }

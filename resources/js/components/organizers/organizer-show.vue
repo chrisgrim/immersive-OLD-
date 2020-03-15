@@ -12,25 +12,25 @@
                         <h2>{{organizer.name}}</h2>
                     </div>
                     <div class="info">
-                        <a target="_blank" :href="`https://www.twitter.com/${organizer.instagramHandle}`" v-if="organizer.twitterHandle">
+                        <a rel="noreferrer" target="_blank" :href="`https://www.twitter.com/${organizer.instagramHandle}`" v-if="organizer.twitterHandle">
                             <div class="box">
                                 <img src="/storage/website-files/twitter.png" alt="">
                                 <span class="des">{{organizer.twitterHandle}}</span>
                             </div>
                         </a>
-                        <a target="_blank" :href="`https://www.facebook.com/${organizer.instagramHandle}`" v-if="organizer.facebookHandle">
+                        <a rel="noreferrer" target="_blank" :href="`https://www.facebook.com/${organizer.instagramHandle}`" v-if="organizer.facebookHandle">
                             <div class="box" >
                                 <img src="/storage/website-files/facebook.png" alt="">
                                 <span class="des">{{organizer.facebookHandle}}</span>
                             </div>
                         </a>
-                        <a target="_blank" :href="`https://www.instagram.com/${organizer.instagramHandle}`" v-if="organizer.instagramHandle">
+                        <a rel="noreferrer" target="_blank" :href="`https://www.instagram.com/${organizer.instagramHandle}`" v-if="organizer.instagramHandle">
                             <div class="box">
                                 <img src="/storage/website-files/insta.png" alt="">
                                 <span class="des">{{organizer.instagramHandle}}</span>
                             </div>
                         </a>
-                        <a target="_blank" :href="`${organizer.website}`" v-if="organizer.website">
+                        <a rel="noreferrer" target="_blank" :href="`${organizer.website}`" v-if="organizer.website">
                             <div class="box">
                                 <img src="/storage/website-files/orgwebsite.png" alt="">
                                 <span class="des">{{organizer.name}}</span>

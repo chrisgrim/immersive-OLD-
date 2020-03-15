@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\StaffPick;
 use App\Event;
 use App\EventSearchRule;
+use App\Http\Requests\StaffPickRequest;
 use Illuminate\Http\Request;
 
 class StaffPicksController extends Controller
@@ -60,19 +61,18 @@ class StaffPicksController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StaffPickRequest $request)
     {
-        StaffPick::updateOrCreate(
+        $validated = $request->validated();
+        StaffPick::Create(
             [
-            'event_id' => $request->event,
-            ],
-            [
+            'event_id' => $request->event_id,
             'user_id' => auth()->id(),
             'rank' => $request->rank ? $request->rank : 5,
             'start_date' => $request->dates[0],
             'end_date' => $request->dates[1]
             ]
-    );
+        );
     }
 
     /**
@@ -92,7 +92,7 @@ class StaffPicksController extends Controller
      * @param  \App\StaffPick  $staffPick
      * @return \Illuminate\Http\Response
      */
-    public function edit(StaffPick $staffPick)
+    public function edit(StaffPick $staffpick)
     {
         //
     }
@@ -104,9 +104,15 @@ class StaffPicksController extends Controller
      * @param  \App\StaffPick  $staffPick
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $staffPick)
+    public function update(Request $request, StaffPick $staffpick)
     {
-        return $staffPick;
+        if($request->rank) { $staffpick->update(['rank' => $request->rank]); return '';}
+        $staffpick->update(
+            [
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            ]
+        );
     }
 
     /**
@@ -115,8 +121,8 @@ class StaffPicksController extends Controller
      * @param  \App\StaffPick  $staffPick
      * @return \Illuminate\Http\Response
      */
-    public function destroy(StaffPick $staffPick)
+    public function destroy(StaffPick $staffpick)
     {
-        //
+        $staffpick->delete();
     }
 }

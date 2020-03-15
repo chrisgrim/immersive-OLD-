@@ -61,7 +61,7 @@
                 </div>
             </div>
         </div>
-        <div class="bar">
+        <div v-if="!onReview" class="bar">
             <div class="link" style="width: 14.4%; left: 0%;padding-top:1rem;" :class="{ fill: onTitle }">
                 <a v-if="event.name" :href="`/create-event/${this.event.slug}/title`"></a>
             </div>
@@ -83,9 +83,6 @@
             <div class="link" style="width: 14.4%; left: 0%;padding-top:1rem;" :class="{ fill: onImage }">
                 <a v-if="event.largeImagePath" :href="`/create-event/${this.event.slug}/images`"></a>
             </div>
-            <div class="link" style="width: 1.9%; left: 0%;padding-top:1rem;" :class="{ fill: onReview }">
-                <a v-if="event.largeImagePath" :href="`/create-event/${this.event.slug}/review`"></a>
-            </div>
         </div>
     </div>
 </template>
@@ -102,7 +99,7 @@
 
         computed: {
             onReview() {
-                return this.$router.currentRoute.path === `/create-event/${this.event.slug}/review` ? this.onReview = true : '';
+                return this.$router.currentRoute.path === `/create-event/${this.event.slug}/review` ? true : '';
             }
         },
 

@@ -17,7 +17,7 @@ class CreateModeratorCommentsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('event_id');
             $table->unsignedBigInteger('conversation_id');
-            $table->string('comments');
+            $table->text('comments');
             $table->timestamps();
             $table->foreign('event_id')
                     ->references('id')->on('events')

@@ -20,7 +20,7 @@ class CreateOrganizersTable extends Migration
             $table->string('website')->nullable();
             $table->string('email')->nullable();
             $table->string('slug')->unique();
-            $table->longtext('description');
+            $table->text('description');
             $table->string('rating')->default(0);
             $table->string('imagePath')->default('organizer-images/default.png');
             $table->string('instagramHandle')->nullable();

@@ -3,13 +3,17 @@
         <div class="body">
             <div class="left">
                 <div class="image" v-if="parseFloat(this.auth)!==user.id">
-                    <img :src="`${avatar ? avatar : ''}`" alt="">
+                    <img v-if="this.loaduser.image_path" :src="`${avatar ? avatar : ''}`" alt="">
+                    <h2 v-else="this.loaduser.image_path">{{loaduser.name.charAt(0)}}</h2>
                 </div>
                 <div v-if="parseFloat(this.auth)==user.id" class="image">
+                    <div class="icontext" v-if="!this.loaduser.image_path">
+                        <h2>{{loaduser.name.charAt(0)}}</h2>
+                    </div>
                     <label 
                     class="wrapper"
                     :class="{ imageloaded: avatar, imageloading: onUpClass }"
-                    :style="{ backgroundImage: `url('${avatar ? avatar : ''}')` }">
+                    :style="`background:${avatar ? color : ''}`">
                     <image-upload @loaded="onImageUpload"></image-upload>
                     <CubeSpinner :loading="isLoading"></CubeSpinner>
                     <span class="text">
@@ -18,6 +22,7 @@
                         <p class="error" v-if="validationErrors.wrong" v-text="validationErrors.wrong"></p>
                     </span>
                     </label>
+
 
                     <input 
                     type="hidden" 
@@ -140,7 +145,7 @@
         data() {
             return {
                 user: this.loaduser,
-                avatar: this.loaduser.image_path ? `/storage/${this.loaduser.image_path}` : '/storage/website-files/default-user-icon.jpg',
+                avatar: this.loaduser.image_path ? `url("/storage/${this.loaduser.image_path}")` : `url("/storage/website-files/default-user-icon.jpg")`,
                 location: this.loc[0] ? this.loc[0] : {},
                 gettingLocation: false,
                 errorStr:'',
@@ -150,6 +155,7 @@
                 onUserEdit: false,
                 onUpClass: false,
                 validationErrors: '',
+                color: '#' + Math.floor(Math.random()*16777215).toString(16),
             }
         },
 

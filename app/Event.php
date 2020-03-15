@@ -60,6 +60,15 @@ class Event extends Model
     public function isPublished() {
         return $this->approved == true;
     }
+
+    /**
+    * Determines which events are published
+    *
+    * @return bool
+    */
+    public function getIsPickedAttribute() {
+        return $this->approved == true;
+    }
     
     /**
     * Each event belongs to One User
@@ -100,6 +109,17 @@ class Event extends Model
     public function staffpick() 
     {
         return $this->hasOne(StaffPick::class);
+    }
+
+    /**
+    * Each event hasOne StaffPick
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+    */
+    public function eventreviews() 
+    {
+        return $this->hasMany(ReviewEvent::class)
+                    ->orderBy('rank', 'ASC');
     }
 
     /**
@@ -439,6 +459,9 @@ class Event extends Model
             'approved' => [
                 'type' => 'text',
                 'index' => false
+            ],
+            'approval_process' => [
+                'type' => 'text',
             ],
             'created_at' => [
                 'type' => 'text',

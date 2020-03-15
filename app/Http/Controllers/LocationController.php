@@ -40,8 +40,6 @@ class LocationController extends Controller
     {
         return response()->json(array(
             'location' => $event->location()->first(),
-            'pivots' => $event->regions()->get(),
-            'regions' => Region::all(),
         ));
     }
 

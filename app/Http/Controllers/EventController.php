@@ -95,7 +95,7 @@ class EventController extends Controller
     public function show(Event $event)
     {
         if(!$event->approved) { return redirect('/');}
-        $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories');
+        $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'eventreviews', 'staffpick');
         return view('events.show', compact('event'));
     }
 
@@ -171,7 +171,7 @@ class EventController extends Controller
      */
     public function review(Event $event)
     {
-        $event->load('category', 'organizer', 'location');
+        $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories');
         return view('create.review', compact('event'));
     }
 
