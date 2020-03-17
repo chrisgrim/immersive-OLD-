@@ -316,6 +316,7 @@ export default {
             axios.post(`/organizer/${this.loadorganizer.slug}/patch`, params)
             .then(response => { 
                 window.location.href = `/organizer/${slug}/edit`;
+                console.log(response.data);
             })
             .catch(errors => {
                 this.serverErrors = errors.response.data.errors;

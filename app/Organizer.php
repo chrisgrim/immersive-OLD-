@@ -21,7 +21,7 @@ class Organizer extends Model
     * @var array
     */
     protected $fillable = [
-    	'user_id','name','website','slug','description','rating','imagePath','instagramHandle','twitterHandle','facebookHandle', 'email'
+    	'user_id','name','website','slug','description','rating','imagePath','thumbImagePath','instagramHandle','twitterHandle','facebookHandle', 'email'
     ];
 
     /**
@@ -73,34 +73,55 @@ class Organizer extends Model
     * @param  \Illuminate\Http\Request  $request
     * @param  $organizer
     */
-    public static function saveFile($organizer, $request)
+    public static function saveImages($organizer, $request, $width, $height)
     {
         ini_set('memory_limit','512M');
         if ($organizer->imagePath) {
-            Storage::delete('public/' . $organizer->imagePath);
+            Storage::deleteDirectory('public/organizer-images/' . pathinfo($organizer->imagePath, PATHINFO_FILENAME));
         };
+
         $extension = $request->file('imagePath')->getClientOriginalExtension();
-        $filename= $request->slug . '_' . 'organization' . '_' . rand(1,50000) . '.' . $extension;
-        $imagePath = "organizer-images/$filename";
-        $request->file('imagePath')->storeAs('/public/organizer-images', $filename);
-        Image::make(storage_path()."/app/public/organizer-images/$filename")->fit(800, 800)->save(storage_path("/app/public/$imagePath"));
-        $organizer->update([ 'imagePath' => $imagePath ]);
+        $inputFile= $request->slug . '.' . $extension;
+        $filename= $request->slug;
+
+        $request->file('imagePath')->storeAs('/public/organizer-images/' . $filename, $inputFile);
+        Image::make(storage_path()."/app/public/organizer-images/$filename/$inputFile")
+        ->fit($width, $height)
+        ->save(storage_path("/app/public/organizer-images/$filename/$filename.webp"))
+        ->save(storage_path("/app/public/organizer-images/$filename/$filename.jpg"))
+        ->fit( $width / 2, $height / 2)
+        ->save(storage_path("/app/public/organizer-images/$filename/$filename-thumb.webp"))
+        ->save(storage_path("/app/public/organizer-images/$filename/$filename-thumb.jpg"));
+
+        $organizer->update([ 
+            'imagePath' => 'organizer-images/' . $filename . '/' . $filename. '.webp',
+            'thumbImagePath' => 'organizer-images/' . $filename. '/' . $filename. '-thumb.webp',
+        ]);
     }
 
-    //  /**
-    // * Save File and update organizer model with path name
-    // *
-    // * @param  \Illuminate\Http\Request  $request
-    // * @param  $organizer
-    // */
-    // public static function tempSave($request)
-    // {
-    //     ini_set('memory_limit','256M');
-    //     $extension = $request->file('imagePath')->getClientOriginalExtension();
-    //     $temp = 'temp' . '_' . rand(1,50000) . '.' . $extension;
-    //     $request->file('imagePath')->storeAs('/public/organizer-images', $temp);
-    //     return $temp;
-    // }
+     /**
+    * Update image name 
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  $organizer
+    */
+    public static function updateImages($organizer, $request)
+    {
+        $path = pathinfo($organizer->imagePath, PATHINFO_FILENAME);
+        $newImagePath = 'organizer-images/' . $request->slug . '/' . $request->slug;
+
+        Storage::move('public/organizer-images/' . $path . '/' . $path . '.webp', 'public/' . $newImagePath . '.webp' );
+        Storage::move('public/organizer-images/' . $path . '/' . $path . '.jpg', 'public/' . $newImagePath . '.jpg' );
+        Storage::move('public/organizer-images/' . $path . '/' . $path . '-thumb.webp', 'public/' . $newImagePath . '-thumb.webp' );
+        Storage::move('public/organizer-images/' . $path . '/' . $path . '-thumb.jpg', 'public/' . $newImagePath . '-thumb.jpg' );
+
+        Storage::deleteDirectory('public/organizer-images/' . pathinfo($organizer->imagePath, PATHINFO_FILENAME));
+
+        $organizer->update([
+            'imagePath' => $newImagePath . '.webp',
+            'thumbImagePath' => $newImagePath . '-thumb.webp',
+        ]);
+    }
 
     /**
     * Save File and update organizer model with path name
@@ -124,6 +145,7 @@ class Organizer extends Model
                         'name' => $organizer->name,
                         'slug' => $organizer->slug,
                         'imagePath' => $organizer->imagePath,
+                        'thumbImagePath' => $organizer->thumbImagePath,
                         'past_events' => $organizer->pastEvents,
                         'in_progress_events' => $organizer->inProgressEvents,
             ];

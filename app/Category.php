@@ -53,7 +53,7 @@ class Category extends Model
             return '';
         }
         if($request->imagePath) {
-            $category->updateFile($request, $category);
+            $category->saveFile($request, $category, 600, 600);
             return '';
         }
     }
@@ -64,10 +64,7 @@ class Category extends Model
     * @return Nothing
     */
     public function deleteCategory($category) {
-        if ($category->largeImagePath) {
-            Storage::delete('public/' . $category->largeImagePath);
-            Storage::delete('public/' . $category->thumbImagePath);
-        };
+        Storage::deleteDirectory('public/category-images/' . pathinfo($category->largeImagePath, PATHINFO_FILENAME));
         $category->delete();
     }
 
@@ -76,54 +73,43 @@ class Category extends Model
     *
     * @return string
     */
-    public function saveFile($request, $category)
+    public function saveFile($request, $category, $width, $height)
     {
         ini_set('memory_limit','512M');
         if ($request->imagePath) {
             if ($category->largeImagePath) {
-                Storage::delete('public/' . $category->largeImagePath);
-                Storage::delete('public/' . $category->thumbImagePath);
+                Storage::deleteDirectory('public/category-images/' . pathinfo($category->imagePath, PATHINFO_FILENAME));
             };
+
             $title = str_slug($category->name);
             $extension = $request->file('imagePath')->getClientOriginalExtension();
-            $filename = $title . '.' . $extension;
-            $largeImagePath = "category-large-images/$filename";
-            $thumbImagePath = "category-thumb-images/thumb-$filename";
-            $request->file('imagePath')->storeAs('/public/category-large-images', $filename);
-            Image::make(storage_path() . "/app/public/category-large-images/$filename")->fit(1280, 720)->save(storage_path("/app/public/$largeImagePath"))->fit(640, 360)->save(storage_path("/app/public/$thumbImagePath"));
+            $inputFile= $title . '_' . 'category' . '.' . $extension;
+            $filename= $title . '_' . 'category';
 
-            $category->update([
-                'largeImagePath' => $largeImagePath,
-                'thumbImagePath' => $thumbImagePath,
-                'slug' => str_slug($request->name),
-            ]);
+            $request->file('imagePath')->storeAs('/public/category-images/' . $filename, $inputFile);
+            Image::make(storage_path()."/app/public/category-images/$filename/$inputFile")
+            ->fit($width, $height)
+            ->save(storage_path("/app/public/category-images/$filename/$filename.webp"))
+            ->save(storage_path("/app/public/category-images/$filename/$filename.jpg"))
+            ->fit( $width / 2, $height / 2)
+            ->save(storage_path("/app/public/category-images/$filename/$filename-thumb.webp"))
+            ->save(storage_path("/app/public/category-images/$filename/$filename-thumb.jpg"));
+
+            if($category->slug) {
+                $category->update([ 
+                    'largeImagePath' => 'category-images/' . $filename . '/' . $filename. '.webp',
+                    'thumbImagePath' => 'category-images/' . $filename. '/' . $filename. '-thumb.webp',
+                ]);
+            } else {
+                $category->update([ 
+                    'largeImagePath' => 'category-images/' . $filename . '/' . $filename. '.webp',
+                    'thumbImagePath' => 'category-images/' . $filename. '/' . $filename. '-thumb.webp',
+                    'slug' => str_slug($request->name),
+                ]);
+            }
         } else {
             $category->update([ 'slug' => str_slug($request->name) ]);
         };
-    }
-    /**
-    * Saves the image that is passed from the controller
-    *
-    * @return string
-    */
-    public function updateFile($request, $category)
-    {
-        if ($category->largeImagePath) {
-            Storage::delete('public/' . $category->largeImagePath);
-            Storage::delete('public/' . $category->thumbImagePath);
-        };
-        $title = $category->slug;
-        $extension = $request->file('imagePath')->getClientOriginalExtension();
-        $filename = $title . '.' . $extension;
-        $largeImagePath = "category-large-images/$filename";
-        $thumbImagePath = "category-thumb-images/thumb-$filename";
-        $request->file('imagePath')->storeAs('/public/category-large-images', $filename);
-        Image::make(storage_path() . "/app/public/category-large-images/$filename")->fit(1280, 720)->save(storage_path("/app/public/$largeImagePath"))->fit(640, 360)->save(storage_path("/app/public/$thumbImagePath"));
-
-        $category->update([
-            'largeImagePath' => $largeImagePath,
-            'thumbImagePath' => $thumbImagePath,
-        ]);
     }
 
     /**
@@ -137,15 +123,23 @@ class Category extends Model
             'name' => $request->name, 
             'slug' => str_slug($request->name)
         ]);
-        $ext = pathinfo('public/' . $category->largeImagePath, PATHINFO_EXTENSION);
-        $filename = $category->slug . '.' . $ext;
-        $largeImagePath = "category-large-images/$filename";
-        $thumbImagePath = "category-thumb-images/thumb-$filename";
-        Storage::move('public/' . $category->largeImagePath, 'public/' . $largeImagePath );
-        Storage::move('public/' . $category->thumbImagePath, 'public/' . $thumbImagePath );
+
+        $path = pathinfo($category->largeImagePath, PATHINFO_FILENAME);
+
+        $title = str_slug($request->name);
+        $filename= $title . '_' . 'category';
+        $newImagePath = 'category-images/' . $filename . '/' . $filename;
+
+        Storage::move('public/category-images/' . $path . '/' . $path . '.webp', 'public/' . $newImagePath . '.webp' );
+        Storage::move('public/category-images/' . $path . '/' . $path . '.jpg', 'public/' . $newImagePath . '.jpg' );
+        Storage::move('public/category-images/' . $path . '/' . $path . '-thumb.webp', 'public/' . $newImagePath . '-thumb.webp' );
+        Storage::move('public/category-images/' . $path . '/' . $path . '-thumb.jpg', 'public/' . $newImagePath . '-thumb.jpg' );
+
+        Storage::deleteDirectory('public/category-images/' . pathinfo($category->largeImagePath, PATHINFO_FILENAME));
+
         $category->update([
-            'largeImagePath' => $largeImagePath,
-            'thumbImagePath' => $thumbImagePath,
+            'largeImagePath' => $newImagePath . '.webp',
+            'thumbImagePath' => $newImagePath . '-thumb.webp',
         ]);
     }
 

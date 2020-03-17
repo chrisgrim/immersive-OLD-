@@ -6,9 +6,11 @@ use App\AdminArea;
 use App\Event;
 use App\Category;
 use App\User;
+use App\EventImage;
 use App\ModeratorComment;
 use App\Conversation;
 use App\Mail\ModeratorComments;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
 
 
@@ -133,11 +135,16 @@ class AdminAreaController extends Controller
      */
     public function success(Event $event)
     {
+        $slug = Event::finalSlug($event);
+        
+        EventImage::finalizeImage($event, $slug);
+
         $event->update([
             'approval_process' => 'approved',
             'approved' => true,
-            'slug' => str_slug($event->name),
+            'slug' => $slug,
         ]);
+
         return redirect('/finish/events');
     }
 

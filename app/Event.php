@@ -257,35 +257,9 @@ class Event extends Model
     public function deleteEvent($event) 
     {
         if ($event->largeImagePath) {
-            Storage::delete('public/' . $event->largeImagePath);
-            Storage::delete('public/' . $event->thumbImagePath);
+            Storage::deleteDirectory('public/event-images/' . pathinfo($event->largeImagePath, PATHINFO_FILENAME));
         };
         $event->delete();
-    }
-
-    /**
-    * Updates event title
-    *
-    * @return Nothing
-    */
-    public function updateEventTitle($request, $event) 
-    {
-
-        if ($event->name == request('name')) {
-            $event->update(['tag_line' => request('tagline')]);
-        } else {
-            if (Event::where('name', '=', request('name'))->exists()) {
-                $event->update([ 
-                    'name' => request('name') . '-' . rand(5, 9999),
-                    'tag_line' => request('tagline')
-                ]);
-            } else {
-                $event->update([ 
-                    'name' => request('name'),
-                    'tag_line' => request('tagline')
-                ]);
-            }
-        }
     }
 
     /**
@@ -305,6 +279,25 @@ class Event extends Model
         $event->update([
             'approval_process' => 'ready',
         ]);
+    }
+
+    /**
+    * Deletes the event images and then deletes event
+    *
+    * @return Nothing
+    */
+    public static function finalSlug($event) 
+    {
+        if(Event::where('slug', '=', str_slug($event->name))->exists()){
+            $slug = str_slug($event->name) . '-' . rand(2, 99);
+            if(Event::where('slug', '=', $slug)->exists()){
+                return str_slug($event->name) . '-' . rand(1,50000);
+            } else {
+                return $slug;
+            };
+        } else {
+            return str_slug($event->name);
+        };
     }
 
     /**

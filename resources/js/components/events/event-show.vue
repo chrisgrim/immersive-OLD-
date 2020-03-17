@@ -181,7 +181,7 @@
     				</div>
                 </div>
 			</div>
-			<div class="section location">
+			<div v-if="this.bar" class="section location">
 				<div>
 					<div class="title">
 						<h3>Location</h3>

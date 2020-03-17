@@ -159,8 +159,10 @@ class EventController extends Controller
 
     public function updateTitle(Request $request, Event $event)
     {
-
-        $event->updateEventTitle($request, $event);
+        $event->update([ 
+            'name' => request('name'),
+            'tag_line' => request('tagline')
+        ]);
     }
 
     /**

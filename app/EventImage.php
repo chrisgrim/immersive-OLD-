@@ -17,20 +17,45 @@ class EventImage extends Model
     {
         ini_set('memory_limit','512M');
         if ($event->largeImagePath) {
-            Storage::delete('public/' . $event->largeImagePath);
-            Storage::delete('public/' . $event->thumbImagePath);
+            Storage::deleteDirectory('public/event-images/' . pathinfo($event->largeImagePath, PATHINFO_FILENAME));
         };
+
         $title = str_slug($event->name);
         $extension = $request->file('image')->getClientOriginalExtension();
-        $filename = $title.'-'. rand(5, 9999) . '.' . $extension;
-        $largeImagePath = "event-large-images/$filename";
-        $thumbImagePath = "event-thumb-images/thumb-$filename";
-        $request->file('image')->storeAs('/public/event-large-images', $filename);
-        Image::make(storage_path() . "/app/public/event-large-images/$filename")->fit($width, $height)->save(storage_path("/app/public/$largeImagePath"))->fit( $width / 2, $height / 2)->save(storage_path("/app/public/$thumbImagePath"));
+        $rand = rand(1,50000);
+        $inputFile= $title . '_' . $rand . '.' . $extension;
+        $filename= $title . '_' . $rand;
+
+        $request->file('image')->storeAs('/public/event-images/' . $filename, $inputFile);
+        Image::make(storage_path()."/app/public/event-images/$filename/$inputFile")
+        ->fit($width, $height)
+        ->save(storage_path("/app/public/event-images/$filename/$filename.webp"))
+        ->save(storage_path("/app/public/event-images/$filename/$filename.jpg"))
+        ->fit( $width / 2, $height / 2)
+        ->save(storage_path("/app/public/event-images/$filename/$filename-thumb.webp"))
+        ->save(storage_path("/app/public/event-images/$filename/$filename-thumb.jpg"));
+
+        $event->update([ 
+            'largeImagePath' => 'event-images/' . $filename . '/' . $filename. '.webp',
+            'thumbImagePath' => 'event-images/' . $filename. '/' . $filename. '-thumb.webp',
+        ]);
+    }
+
+    public static function finalizeImage($event, $slug)
+    {
+        $path = pathinfo($event->largeImagePath, PATHINFO_FILENAME);
+        $newImagePath = 'event-images/' . $slug . '/' . $slug;
+
+        Storage::move('public/event-images/' . $path . '/' . $path . '.webp', 'public/' . $newImagePath . '.webp' );
+        Storage::move('public/event-images/' . $path . '/' . $path . '.jpg', 'public/' . $newImagePath . '.jpg' );
+        Storage::move('public/event-images/' . $path . '/' . $path . '-thumb.webp', 'public/' . $newImagePath . '-thumb.webp' );
+        Storage::move('public/event-images/' . $path . '/' . $path . '-thumb.jpg', 'public/' . $newImagePath . '-thumb.jpg' );
+
+        Storage::deleteDirectory('public/event-images/' . pathinfo($event->largeImagePath, PATHINFO_FILENAME));
 
         $event->update([
-            'largeImagePath' => $largeImagePath,
-            'thumbImagePath' => $thumbImagePath,
+            'largeImagePath' => $newImagePath . '.webp',
+            'thumbImagePath' => $newImagePath . '-thumb.webp',
         ]);
     }
 }

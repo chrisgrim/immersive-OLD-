@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use Cache;
+use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Auth;
 
 class ProfilesController extends Controller
@@ -41,7 +42,7 @@ class ProfilesController extends Controller
     public function update(Request $request, User $user)
     {
     	if($request->image) {
-			User::saveFile($request, $user);
+			User::saveFile($request, $user, 600, 600);
     	}
         if ($request->name) {
             $user->update([ 'name' => $request->name ]);

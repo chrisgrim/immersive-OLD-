@@ -3,7 +3,7 @@
 		<div v-for="(organizer,index) in organizerEvents">
 			<div class="section">
                 <div class="title-block">
-                    <div class="image" :style="{ backgroundImage: `url('/storage/${organizer.imagePath}')` }">
+                    <div class="image" :style="{ backgroundImage: `url('/storage/${organizer.thumbImagePath}')` }">
                         
                     </div>
                     <div class="title">

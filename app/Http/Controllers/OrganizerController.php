@@ -58,7 +58,7 @@ class OrganizerController extends Controller
     {
         $validated = $request->validated();
         $organizer = Organizer::Create($request->except(['imagePath', 'user_id']) + ['user_id' => auth()->id()]);
-        Organizer::saveFile($organizer, $request);
+        Organizer::saveImages($organizer, $request, 600, 600);
     }
 
     /**
@@ -96,8 +96,7 @@ class OrganizerController extends Controller
     public function update(OrganizerUpdateRequest $request, Organizer $organizer)
     {   
         $validated = $request->validated();
-
-        // $request->imagePath ? $temp = Organizer::tempSave($request) : null;
+        $request->name !== $organizer->name ? Organizer::updateImages($organizer, $request) : null;
         $organizer = Organizer::updateOrCreate(
             [
                 'id' => $request->id,
@@ -113,8 +112,7 @@ class OrganizerController extends Controller
                 'instagramHandle' => $request->instagramHandle,
             ]
         );
-        $request->imagePath ? Organizer::saveFile($organizer, $request) : null;
-        // $request->imagePath ? Storage::delete('public/organizer-images/' . $temp) : null;
+        $request->imagePath ? Organizer::saveImages($organizer, $request, 600, 600) : null;
         
     }
 

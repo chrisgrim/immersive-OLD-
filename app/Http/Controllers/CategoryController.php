@@ -46,11 +46,12 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryStoreRequest $request)
     {
-        if(Category::where('name', '=', $request->name)->exists()) { return '';}
+        $validated = $request->validated();
+        // if(Category::where('name', '=', $request->name)->exists()) { return '';}
         $category = Category::create($request->except(['imagePath']));
-        $category->saveFile($request, $category);
+        $category->saveFile($request, $category, 600, 600);
     }
 
     /**
@@ -87,6 +88,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
+        if(Category::where('name', '=', $request->name)->exists()) { return '';}
         $category->updateElements($request, $category);
     }
 

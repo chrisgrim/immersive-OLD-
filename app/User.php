@@ -23,7 +23,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','image_path', 'has_unread'
+        'name', 'email', 'password','largeImagePath','thumbImagePath', 'has_unread', 'hex'
     ];
 
     /**
@@ -199,19 +199,43 @@ class User extends Authenticatable implements MustVerifyEmail
     *
     * @return string
     */
-    public static function saveFile($request, $user)
+    public static function saveFile($request, $user, $width, $height)
     {
-        $old = $user->image_path;
-        
-        $extension = $request->file('image')->getClientOriginalExtension();
-        $filename = $user->name .'-'. rand(5,9999) . '.' .$extension;
-        $imagePath = "avatars/$filename";
-        $request->file('image')->storeAs('/public/avatars', $filename);
-        Image::make(storage_path()."/app/public/avatars/$filename")->fit(640, 640)->save(storage_path("/app/public/$imagePath"));
-        
-        $old ? Storage::delete('public/' . $old) : '';
 
-        $user->update([ 'image_path' => $imagePath ]);
+        if ($user->largeImagePath) {
+            Storage::deleteDirectory('public/user-images/' . pathinfo($user->imagePath, PATHINFO_FILENAME));
+        };
+
+        $extension = $request->file('image')->getClientOriginalExtension();
+        $rand = rand(1,50000);
+        $inputFile= $user->name . '_' . $rand . '.' . $extension;
+        $filename= $user->name . '_' . $rand;
+
+        $request->file('image')->storeAs('/public/user-images/' . $filename, $inputFile);
+        Image::make(storage_path()."/app/public/user-images/$filename/$inputFile")
+        ->fit(600, 600)
+        ->save(storage_path("/app/public/user-images/$filename/$filename.webp"))
+        ->save(storage_path("/app/public/user-images/$filename/$filename.jpg"))
+        ->fit( 300, 300)
+        ->save(storage_path("/app/public/user-images/$filename/$filename-thumb.webp"))
+        ->save(storage_path("/app/public/user-images/$filename/$filename-thumb.jpg"));
+
+        $user->update([ 
+            'largeImagePath' => 'user-images/' . $filename . '/' . $filename. '.webp',
+            'thumbImagePath' => 'user-images/' . $filename. '/' . $filename. '-thumb.webp',
+        ]);
+
+        // $old = $user->image_path;
+        
+        // $extension = $request->file('image')->getClientOriginalExtension();
+        // $filename = $user->name .'-'. rand(5,9999) . '.' .$extension;
+        // $imagePath = "avatars/$filename";
+        // $request->file('image')->storeAs('/public/avatars', $filename);
+        // Image::make(storage_path()."/app/public/avatars/$filename")->fit(640, 640)->save(storage_path("/app/public/$imagePath"));
+        
+        // $old ? Storage::delete('public/' . $old) : '';
+
+        // $user->update([ 'image_path' => $imagePath ]);
     }
 
     protected $searchRules = [

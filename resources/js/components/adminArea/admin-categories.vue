@@ -9,7 +9,6 @@
             </div>
         </div>
 
-
         <div class="list" v-for="(category, index) in categories">
             <input 
             type="text" 
@@ -82,10 +81,11 @@
                             :class="{ active: nameActive}"
                             @click="nameActive = true"
                             @blur="nameActive = false"
-                            @input="$v.name.$touch"
+                            @input="clearInfo"
                             />
                             <div v-if="$v.name.$error" class="validation-error">
                                 <p class="error" v-if="!$v.name.required">Please Add Category Name </p>
+                                <p class="error" v-if="!$v.name.serverFailed">This category has already been created</p>
                             </div>
                         </div>
                         <div class="desc">
@@ -115,8 +115,9 @@
 
 <script>
     
-    import { required, minLength } from 'vuelidate/lib/validators';
+    import { required, minLength } from 'vuelidate/lib/validators'
     import CubeSpinner  from '../layouts/loading.vue'
+    import _ from 'lodash'
 
 
     export default {
@@ -136,6 +137,7 @@
                 isEditModalVisible: false,
                 modalDelete: '',
                 tempCat: '',
+                serverErrors: [],
                 isLoading: false,
             }
         },
@@ -169,8 +171,10 @@
                     this.isLoading = false;
                     this.loadCategories();
                 })
-                .catch(error => { 
-                    this.isModalVisible = false;
+                .catch(error => {
+                    this.serverErrors = error.response.data.errors; 
+                    this.isLoading = false;
+                    this.isModalVisible = true;
                 });
             },
 
@@ -181,6 +185,11 @@
                     this.loadCategories();
                 })
                 .catch(error => { this.serverErrors = error.response.data.errors; });
+            },
+
+            clearInfo() {
+                this.$v.name.$touch;
+                this.serverErrors = [];
             },
 
             loadCategories() {
@@ -202,9 +211,9 @@
 
             onImageEdit(image) {
                 console.log(image.file);
-                if (image.file.size > 2097152) { return alert('Image Filesize Too Big') };
+                if (image.file.size > 20971520) { return alert('Image Filesize Too Big') };
                 if (!["image/jpeg","image/png",'image/gif'].includes(image.file.type)) { return alert('Image needs to be jpeg, pgn or gif') };
-                if (image.width < 1280 || image.height < 720) { return alert('Image Proportions Too Small') };
+                if (image.width < 800 || image.height < 800) { return alert('Image Proportions Too Small') };
 
                 this.isLoading = true;
                 let data = new FormData();
@@ -214,9 +223,11 @@
                 )
                 .then(response => { 
                    location.reload();
+                   console.log(response.data);
                 })
                 .catch(error => { 
-                    this.serverErrors = error.response.data.errors; 
+                    console.log(error.response.data.errors);
+                    // this.serverErrors = error.response.data.errors; 
                 });
             },
 
@@ -232,11 +243,16 @@
                 axios.patch(`/categories/${category.slug}`, data)
                 .then(response => { 
                     console.log(response.data)
-                   this.loadCategories()
+                    this.loadCategories()
                 })
                 .catch(error => { 
+                    console.log(error.response.data.errors);
                     this.serverErrors = error.response.data.errors; 
                 });
+            },
+
+            hasServerError(field) {
+                return (field && _.has(this, 'serverErrors.' + field) && !_.isEmpty(this.serverErrors[field]));
             },
 
             saveDescription(category) {
@@ -260,6 +276,7 @@
         validations: {
             name: {
                 required,
+                serverFailed : function(){ return !this.hasServerError('name'); },
             },
             description: {
                 required,
@@ -267,13 +284,13 @@
             finalImage: {
                 required,
                 fileSize() { 
-                    return this.finalImage ? this.finalImage.size < 2097152 : true 
+                    return this.finalImage ? this.finalImage.size < 20971520 : true 
                 },
                 fileType() {
                     return this.finalImage ? ['image/jpeg','image/png','image/gif'].includes(this.finalImage.type) : true
                 },
                 imageRatio() {
-                    return this.finalImage ? this.finalImage.width > 1280 && this.finalImage.height > 720 : true 
+                    return this.finalImage ? this.finalImage.width > 800 && this.finalImage.height > 800 : true 
                 }
             }
         },
