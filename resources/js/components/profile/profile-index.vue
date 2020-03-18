@@ -3,17 +3,17 @@
         <div class="body">
             <div class="left">
                 <div class="image" v-if="parseFloat(this.auth)!==user.id">
-                    <img v-if="this.loaduser.image_path" :src="`${avatar ? avatar : ''}`" alt="">
-                    <h2 v-else="this.loaduser.image_path">{{loaduser.name.charAt(0)}}</h2>
+                    <img v-if="loaduser.largeImagePath" :src="`${avatar ? avatar : ''}`" alt="">
+                    <h2 v-else="this.loaduser.thumbImagePath">{{loaduser.name.charAt(0)}}</h2>
                 </div>
                 <div v-if="parseFloat(this.auth)==user.id" class="image">
-                    <div class="icontext" v-if="!this.loaduser.image_path">
+                    <div class="icontext" v-if="!this.loaduser.thumbImagePath">
                         <h2>{{loaduser.name.charAt(0)}}</h2>
                     </div>
                     <label 
                     class="wrapper"
                     :class="{ imageloaded: avatar, imageloading: onUpClass }"
-                    :style="`background:${avatar ? color : ''}`">
+                    :style="`background:${avatar ? avatar : loaduser.hexColor}`">
                     <image-upload @loaded="onImageUpload"></image-upload>
                     <CubeSpinner :loading="isLoading"></CubeSpinner>
                     <span class="text">
@@ -145,7 +145,7 @@
         data() {
             return {
                 user: this.loaduser,
-                avatar: this.loaduser.image_path ? `url("/storage/${this.loaduser.image_path}")` : `url("/storage/website-files/default-user-icon.jpg")`,
+                avatar: this.loaduser.thumbImagePath ? `url("/storage/${this.loaduser.thumbImagePath}")` : '',
                 location: this.loc[0] ? this.loc[0] : {},
                 gettingLocation: false,
                 errorStr:'',
@@ -155,7 +155,6 @@
                 onUserEdit: false,
                 onUpClass: false,
                 validationErrors: '',
-                color: '#' + Math.floor(Math.random()*16777215).toString(16),
             }
         },
 
@@ -195,9 +194,7 @@
                 data.append('_method', 'PATCH');
                 axios.post(`/users/${this.user.id}`, data)
                 .then(response => {
-                    this.isLoading = false;
-                    this.onUpClass = false;
-                    this.dis = false;
+                    location.reload();
                     console.log(response.data)
                 })
                 .catch(errorResponse => { 

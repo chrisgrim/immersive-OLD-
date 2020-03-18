@@ -15,8 +15,13 @@
                     <button :class="{bspin : dis}" :disabled="dis" @click="sendMessage">Send message</button>
                 </div>
             </div>
-            <div class="image">
-                <img :src="`/storage/${owner.image_path ? owner.image_path : anon}`" :alt="user.name">
+            <div class="user-message" :style="`background:${owner.hexColor}`">
+                <label v-if="owner.largeImagePath" class="profile-image" >
+                    <img :src="`/storage/${owner.thumbImagePath}`" height="28" width="28" :alt="owner.name">
+                </label>
+                <div v-else="owner.largeImagePath" class="icontext">
+                    <h2>{{owner ? owner.name.charAt(0) : ''}}</h2>
+                </div>
             </div>
         </div>
         <div v-if="conversations.messages.length" v-for="message in conversations.messages" class="list">
@@ -31,13 +36,23 @@
                         </div>
                     </div>
                 </div>
-                <div class="image">
-                    <img :src="`/storage/${message.user_id == loaduser.id ? owner.image_path ? owner.image_path : anon : responder.image_path ? responder.image_path : anon}`" alt="message">
+                <div class="user-message" :style="`background:${owner.hexColor}`">
+                    <label v-if="owner.largeImagePath" class="profile-image" >
+                        <img :src="`/storage/${owner.thumbImagePath}`" height="28" width="28" :alt="owner.name">
+                    </label>
+                    <div v-else="owner.largeImagePath" class="icontext">
+                        <h2>{{owner ? owner.name.charAt(0) : ''}}</h2>
+                    </div>
                 </div>
             </div>
             <div class="row" v-else="message.user_id == loaduser.id" :class="{inv: message.user_id !== loaduser.id}">
-                <div class="image">
-                    <img :src="`/storage/${message.user_id == loaduser.id ? owner.image_path ? owner.image_path : anon : responder.image_path ? responder.image_path : anon}`" alt="message">
+                <div class="user-message" :style="`background:${responder.hexColor}`">
+                    <label v-if="responder.largeImagePath" class="profile-image" >
+                        <img :src="`/storage/${responder.thumbImagePath}`" height="28" width="28" :alt="responder.name">
+                    </label>
+                    <div v-else="responder.largeImagePath" class="icontext">
+                        <h2>{{responder ? responder.name.charAt(0) : ''}}</h2>
+                    </div>
                 </div>
                 <div class="field">
                     <div class="text">
@@ -100,6 +115,7 @@ import moment from 'moment'
                 responder: '',
                 dis: false,
                 url: '',
+                avatar: this.loaduser.thumbImagePath ? `/storage/${this.loaduser.thumbImagePath}` : '',
             }
         },
 

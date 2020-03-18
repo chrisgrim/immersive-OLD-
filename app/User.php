@@ -23,7 +23,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','largeImagePath','thumbImagePath', 'has_unread', 'hex'
+        'name', 'email', 'password','largeImagePath','thumbImagePath', 'has_unread'
     ];
 
     /**
@@ -49,7 +49,7 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array
      */
-    protected $appends = ['hasCreatedOrganizers', 'userType', 'needsApproval','hasMessages'];
+    protected $appends = ['hasCreatedOrganizers', 'userType', 'needsApproval','hasMessages', 'hexColor'];
 
     /**
      * User can have many events
@@ -164,6 +164,17 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+    * Assign the current user a color
+    *
+    * @return string
+    */
+    public function gethexColorAttribute()
+    {
+        $myarray = ['#2F405F','#DA5E8E','#20B7A6','#749EEB','#1EAA9A']; 
+        return $myarray[$this->id % count($myarray)];
+    }
+
+    /**
     * Determine if the current user has messages 
     *
     * @return bool
@@ -172,6 +183,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->conversations()->count() ? true : false;    
     }
+
 
 
     /**
@@ -202,21 +214,21 @@ class User extends Authenticatable implements MustVerifyEmail
     public static function saveFile($request, $user, $width, $height)
     {
 
+        ini_set('memory_limit','512M');
         if ($user->largeImagePath) {
-            Storage::deleteDirectory('public/user-images/' . pathinfo($user->imagePath, PATHINFO_FILENAME));
+            Storage::deleteDirectory('public/user-images/' . pathinfo($user->largeImagePath, PATHINFO_FILENAME));
         };
-
         $extension = $request->file('image')->getClientOriginalExtension();
         $rand = rand(1,50000);
-        $inputFile= $user->name . '_' . $rand . '.' . $extension;
-        $filename= $user->name . '_' . $rand;
+        $inputFile= str_slug($user->name . '_' . $rand . '.' . $extension);
+        $filename= str_slug($user->name . '_' . $rand);
 
         $request->file('image')->storeAs('/public/user-images/' . $filename, $inputFile);
         Image::make(storage_path()."/app/public/user-images/$filename/$inputFile")
-        ->fit(600, 600)
+        ->fit($width, $height)
         ->save(storage_path("/app/public/user-images/$filename/$filename.webp"))
         ->save(storage_path("/app/public/user-images/$filename/$filename.jpg"))
-        ->fit( 300, 300)
+        ->fit( $width / 2, $height / 2)
         ->save(storage_path("/app/public/user-images/$filename/$filename-thumb.webp"))
         ->save(storage_path("/app/public/user-images/$filename/$filename-thumb.jpg"));
 

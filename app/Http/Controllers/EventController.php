@@ -32,7 +32,6 @@ class EventController extends Controller
     {
         $events = Event::search('*')
             ->where('closingDate', '>=', 'now/d')
-            ->take(6)
             ->get();
         $categories = Category::all();
         $staffpicks = StaffPick::whereDate('end_date','>=', Carbon::now())

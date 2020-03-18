@@ -1,1 +1,782 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[28],{279:function(t,e,i){"use strict";i.r(e);var a=i(78),s={components:{CubeSpinner:i(87).a},props:{event:{type:Object}},computed:{hasImage:function(){return!(!this.eventImage&&!this.imageSrc)}},data:function(){return{eventImage:this.event.largeImagePath?"/storage/".concat(this.event.largeImagePath):"",defaultImage:"/storage/website-files/upload-icon.png",eventUrl:"/create-event/".concat(this.event.slug),finalImage:"",imageSrc:"",isLoading:!1,readyToSubmit:!1,isModalVisible:!1,dis:!1}},methods:{onImageUpload:function(t){if(this.finalImage=t.file,this.finalImage.width=t.width,this.finalImage.height=t.height,this.$v.$touch(),this.$v.$invalid)return!1;this.imageSrc=t.src,this.addImage(t)},addImage:function(t){var e=this;this.isLoading=!0,this.dis=!0;var i=new FormData;i.append("image",this.finalImage),axios.post("".concat(this.eventUrl,"/images"),i).then((function(t){e.isLoading=!1,e.dis=!1,e.readyToSubmit=!0})).catch((function(t){e.validationErrors=t.response.data.errors,e.dis=!1}))},showModal:function(t){this.isModalVisible=!0},closeModal:function(){this.isModalVisible=!1},submitReview:function(){window.location.href="".concat(this.eventUrl,"/review")},submitEvent:function(){this.dis=!0,window.location.href="".concat(this.eventUrl,"/thankyou")},readySubmit:function(){this.event.organizer_id&&this.event.name&&this.event.location_latlon&&this.event.category_id&&this.event.show_times&&this.event.description&&this.event.advisories_id&&(this.readyToSubmit=!0)},goBack:function(){window.location.href="".concat(this.eventUrl,"/advisories")}},created:function(){this.readySubmit()},validations:{finalImage:{required:a.required,fileSize:function(){return!this.finalImage||this.finalImage.size<20971520},fileType:function(){return!this.finalImage||["image/jpeg","image/png","image/gif"].includes(this.finalImage.type)},imageRatio:function(){return!this.finalImage||this.finalImage.width>1280&&this.finalImage.height>800}}}},n=i(81),o=Object(n.a)(s,(function(){var t=this,e=t.$createElement,i=t._self._c||e;return i("div",{staticClass:"image"},[i("div",{staticClass:"section"},[i("div",{staticClass:"img"},[i("div",{staticClass:"loader"},[i("label",{style:{backgroundImage:"url('"+(t.imageSrc?t.imageSrc:t.eventImage)+"')"}},[i("div",{staticClass:"dash",class:{over:t.hasImage,load:t.isLoading}},[i("div",{staticClass:"box"},[i("div",{staticClass:"in"},[t.isLoading?t._e():i("div",[i("svg",{staticClass:"b",attrs:{height:"32",width:"32",viewBox:"0 0 24 24","aria-label":"Add an image or video",role:"img"}},[i("path",{attrs:{d:"M24 12c0-6.627-5.372-12-12-12C5.373 0 0 5.373 0 12s5.373 12 12 12c6.628 0 12-5.373 12-12zm-10.767 3.75a1.25 1.25 0 0 1-2.5 0v-3.948l-1.031 1.031a1.25 1.25 0 0 1-1.768-1.768L12 7l4.066 4.065a1.25 1.25 0 0 1-1.768 1.768l-1.065-1.065v3.982z"}})])]),t._v(" "),i("div",[t.hasImage?t._e():i("p",[t._v("Click here to upload image"),i("br"),t._v("Must be at least 1280 x 800 and under 20mb")]),t._v(" "),t.hasImage?i("p",[t._v("Change Image")]):t._e()])])]),t._v(" "),i("image-upload",{on:{loaded:t.onImageUpload}}),t._v(" "),i("CubeSpinner",{attrs:{loading:t.isLoading}})],1)]),t._v(" "),i("div",[t.$v.finalImage.$error?i("div",{staticClass:"validation-error"},[t.$v.finalImage.required?t._e():i("p",{staticClass:"error"},[t._v("The image is required")]),t._v(" "),t.$v.finalImage.fileSize?t._e():i("p",{staticClass:"error"},[t._v("The image file size is too large")]),t._v(" "),t.$v.finalImage.fileType?t._e():i("p",{staticClass:"error"},[t._v("The image needs to be a JPG, PNG or GIF")]),t._v(" "),t.$v.finalImage.imageRatio?t._e():i("p",{staticClass:"error"},[t._v("The image needs to be at least 1200 x 800")])]):t._e()])])])]),t._v(" "),i("div",{staticClass:"inNav"},[i("button",{staticClass:"create",attrs:{disabled:t.dis},on:{click:function(e){return e.preventDefault(),t.goBack()}}},[t._v(" Back ")]),t._v(" "),t.readyToSubmit?i("button",{staticClass:"create",attrs:{disabled:t.dis},on:{click:function(e){return e.preventDefault(),t.submitReview()}}},[t._v(" Final Review ")]):t._e()]),t._v(" "),i("modal",{directives:[{name:"show",rawName:"v-show",value:t.isModalVisible,expression:"isModalVisible"}],on:{close:t.closeModal}},[i("div",{attrs:{slot:"header"},slot:"header"},[i("div",{staticClass:"circle sub"},[i("p",[t._v("✓")])])]),t._v(" "),i("div",{attrs:{slot:"body"},slot:"body"},[i("h3",[t._v("Is Everything Correct?")]),t._v(" "),i("p",[t._v("Events take 1-2 days to be reviewed")])]),t._v(" "),i("div",{attrs:{slot:"footer"},slot:"footer"},[i("button",{staticClass:"btn sub",on:{click:function(e){return t.submitEvent()}}},[t._v("Submit")])])])],1)}),[],!1,null,null,null);e.default=o.exports},81:function(t,e,i){"use strict";function a(t,e,i,a,s,n,o,r){var l,d="function"==typeof t?t.options:t;if(e&&(d.render=e,d.staticRenderFns=i,d._compiled=!0),a&&(d.functional=!0),n&&(d._scopeId="data-v-"+n),o?(l=function(t){(t=t||this.$vnode&&this.$vnode.ssrContext||this.parent&&this.parent.$vnode&&this.parent.$vnode.ssrContext)||"undefined"==typeof __VUE_SSR_CONTEXT__||(t=__VUE_SSR_CONTEXT__),s&&s.call(this,t),t&&t._registeredComponents&&t._registeredComponents.add(o)},d._ssrRegister=l):s&&(l=r?function(){s.call(this,this.$root.$options.shadowRoot)}:s),l)if(d.functional){d._injectStyles=l;var c=d.render;d.render=function(t,e){return l.call(e),c(t,e)}}else{var v=d.beforeCreate;d.beforeCreate=v?[].concat(v,l):[l]}return{exports:t,options:d}}i.d(e,"a",(function(){return a}))},87:function(t,e,i){"use strict";var a={props:{loading:{type:Boolean,default:!0}},data:function(){return{styles:{width:this.width+"px",height:this.height+"px"}}},name:"CubeSpinner"},s=i(81),n=Object(s.a)(a,(function(){var t=this.$createElement,e=this._self._c||t;return this.loading?e("div",{staticClass:"spinner"},[this._m(0),this._v(" "),e("svg",{attrs:{xmlns:"http://www.w3.org/2000/svg",version:"1.1"}},[e("defs",[e("filter",{attrs:{id:"goo"}},[e("feGaussianBlur",{attrs:{in:"SourceGraphic",stdDeviation:"10",result:"blur"}}),this._v(" "),e("feColorMatrix",{attrs:{in:"blur",mode:"matrix",values:"1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 21 -7"}})],1)])])]):this._e()}),[function(){var t=this.$createElement,e=this._self._c||t;return e("div",{staticClass:"area"},[e("div",{staticClass:"dot dot-1"}),this._v(" "),e("div",{staticClass:"dot dot-2"}),this._v(" "),e("div",{staticClass:"dot dot-3"})])}],!1,null,null,null);e.a=n.exports}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[28],{
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminArea/admin-staff-picks.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/adminArea/admin-staff-picks.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-flatpickr-component */ "./node_modules/vue-flatpickr-component/dist/vue-flatpickr.min.js");
+/* harmony import */ var vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var flatpickr_dist_flatpickr_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flatpickr/dist/flatpickr.css */ "./node_modules/flatpickr/dist/flatpickr.css");
+/* harmony import */ var flatpickr_dist_flatpickr_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flatpickr_dist_flatpickr_css__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-multiselect */ "./node_modules/vue-multiselect/dist/vue-multiselect.min.js");
+/* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_multiselect__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_4__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      event: '',
+      events: [],
+      add: false,
+      dates: [],
+      datesSubmit: [],
+      datesFormatted: [],
+      listDates: [],
+      rank: '',
+      activeItem: '',
+      rankOptions: ['1', '2', '3', '4', '5'],
+      picks: [],
+      temp: '',
+      listDatesSubmit: [],
+      listDatesFormatted: [],
+      selectedModal: '',
+      modal: '',
+      serverErrors: [],
+      config: {
+        minDate: "today",
+        altFormat: 'M d',
+        altInput: true,
+        mode: "range",
+        inline: true,
+        showMonths: 2,
+        dateFormat: 'Y-m-d H:i:s',
+        onClose: [this.dateFunc()]
+      },
+      pickConfig: {
+        minDate: "today",
+        altFormat: 'M d',
+        altInput: true,
+        mode: "range",
+        inline: false,
+        showMonths: 2,
+        dateFormat: 'Y-m-d H:i:s',
+        onClose: [this.listDateFunc()]
+      }
+    };
+  },
+  components: {
+    flatPickr: vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_0___default.a,
+    Multiselect: vue_multiselect__WEBPACK_IMPORTED_MODULE_2___default.a
+  },
+  computed: {},
+  methods: {
+    loadEvents: function loadEvents(query) {
+      var _this = this;
+
+      axios.get('/api/admin/search/events', {
+        params: {
+          keywords: query
+        }
+      }).then(function (response) {
+        _this.events = response.data;
+      });
+    },
+    showModal: function showModal(pick, arr) {
+      this.selectedModal = pick;
+      this.modal = arr;
+    },
+    loadPicks: function loadPicks() {
+      var _this2 = this;
+
+      axios.get("/staffpicks?timestamp=".concat(new Date().getTime())).then(function (response) {
+        _this2.picks = response.data;
+      });
+    },
+    savePick: function savePick() {
+      var _this3 = this;
+
+      this.$v.$touch();
+
+      if (this.$v.$invalid) {
+        return false;
+      }
+
+      var data = {
+        event_id: this.event.id,
+        rank: this.rank,
+        dates: this.datesSubmit
+      };
+      axios.post('/staffpicks/', data).then(function (response) {
+        console.log(response.data);
+        _this3.add = false;
+
+        _this3.loadPicks();
+      })["catch"](function (error) {
+        console.log(error.response.data.errors);
+        _this3.serverErrors = error.response.data.errors;
+      });
+    },
+    deletePick: function deletePick(pick) {
+      var _this4 = this;
+
+      axios["delete"]("/staffpicks/".concat(pick.id)).then(function (response) {
+        _this4.modal = null;
+
+        _this4.loadPicks();
+      })["catch"](function (error) {
+        _this4.serverErrors = error.response.data.errors;
+      });
+    },
+    updatePick: function updatePick(pick, arr) {
+      var _this5 = this;
+
+      if (arr == 'dates' && !this.listDatesSubmit['1']) {
+        return '';
+      }
+
+      ;
+      var data = new FormData();
+      data.append('_method', 'PATCH');
+      arr == 'dates' ? data.append('start_date', this.listDatesSubmit[0]) : '';
+      arr == 'dates' ? data.append('end_date', this.listDatesSubmit[1]) : '';
+      arr == 'rank' ? data.append('rank', pick.rank) : '';
+      axios.post("/staffpicks/".concat(pick.id), data).then(function (response) {
+        if (_this5.listDatesSubmit.length) {
+          _this5.loadPicks;
+          _this5.listDatesSubmit = [];
+          _this5.listDatesFormatted = [];
+        }
+      })["catch"](function (error) {
+        console.log(error.response.data.errors);
+        _this5.serverErrors = error.response.data.errors;
+      });
+    },
+    hasServerError: function hasServerError(field) {
+      return field && lodash__WEBPACK_IMPORTED_MODULE_4___default.a.has(this, 'serverErrors.' + field) && !lodash__WEBPACK_IMPORTED_MODULE_4___default.a.isEmpty(this.serverErrors[field]);
+    },
+    dateFunc: function dateFunc() {
+      var that = this;
+      return function (value) {
+        var _this6 = this;
+
+        that.datesSubmit = value.map(function (date) {
+          return _this6.formatDate(date, "Y-m-d H:i:S");
+        });
+        that.datesFormatted = value.map(function (date) {
+          return _this6.formatDate(date, "M d");
+        });
+      };
+    },
+    listDateFunc: function listDateFunc() {
+      var that = this;
+      return function (value) {
+        var _this7 = this;
+
+        that.listDatesSubmit = value.map(function (date) {
+          return _this7.formatDate(date, "Y-m-d H:i:S");
+        });
+        that.listDatesFormatted = value.map(function (date) {
+          return _this7.formatDate(date, "M d");
+        });
+      };
+    }
+  },
+  created: function created() {
+    this.loadPicks();
+  },
+  validations: {
+    event: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"],
+      serverFailed: function serverFailed() {
+        return !this.hasServerError('event_id');
+      }
+    },
+    dates: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"]
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminArea/admin-staff-picks.vue?vue&type=template&id=503b5df9&":
+/*!******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/adminArea/admin-staff-picks.vue?vue&type=template&id=503b5df9& ***!
+  \******************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "picks" },
+    [
+      _c("div", {}, [
+        _c("div", { staticClass: "title" }, [
+          _c("h1", [_vm._v("Picks of the Week")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "add" }, [
+            _c(
+              "button",
+              {
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.add = true
+                  }
+                }
+              },
+              [_c("p", [_vm._v("+")])]
+            )
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _vm.add
+        ? _c("div", { staticClass: "new" }, [
+            _c("div", { staticClass: "content" }, [
+              _c(
+                "div",
+                { staticClass: "event" },
+                [
+                  _c("label", [_vm._v("Event")]),
+                  _vm._v(" "),
+                  _c("multiselect", {
+                    attrs: {
+                      options: _vm.events,
+                      "open-direction": "bottom",
+                      placeholder: "Select the event",
+                      label: "name",
+                      "show-labels": false,
+                      "internal-search": false,
+                      "options-limit": 30,
+                      limit: 5,
+                      "track-by": "name",
+                      "show-no-results": false,
+                      "allow-empty": false
+                    },
+                    on: {
+                      open: _vm.loadEvents,
+                      "search-change": _vm.loadEvents,
+                      input: _vm.$v.event.$touch
+                    },
+                    scopedSlots: _vm._u(
+                      [
+                        {
+                          key: "singleLabel",
+                          fn: function(props) {
+                            return [
+                              _c("img", {
+                                staticClass: "option__image",
+                                attrs: {
+                                  src:
+                                    "/storage/" + props.option.thumbImagePath,
+                                  alt: props.option.name
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "option__desc" }, [
+                                _c("span", { staticClass: "option__title" }, [
+                                  _vm._v(
+                                    _vm._s(props.option.name) +
+                                      "\n                            "
+                                  )
+                                ])
+                              ])
+                            ]
+                          }
+                        }
+                      ],
+                      null,
+                      false,
+                      2578371558
+                    ),
+                    model: {
+                      value: _vm.event,
+                      callback: function($$v) {
+                        _vm.event = $$v
+                      },
+                      expression: "event"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.$v.event.$error
+                    ? _c("div", { staticClass: "validation-error" }, [
+                        !_vm.$v.event.required
+                          ? _c("p", { staticClass: "error" }, [
+                              _vm._v("Please select event")
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        !_vm.$v.event.serverFailed
+                          ? _c("p", { staticClass: "error" }, [
+                              _vm._v("This event has been picked already.")
+                            ])
+                          : _vm._e()
+                      ])
+                    : _vm._e()
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "rank" },
+                [
+                  _c("label", [_vm._v("Rank")]),
+                  _vm._v(" "),
+                  _c("multiselect", {
+                    class: { active: _vm.activeItem == "rank" },
+                    attrs: {
+                      options: _vm.rankOptions,
+                      "show-labels": false,
+                      placeholder:
+                        "Leave blank for default Rank of 5 (1 being most important)",
+                      "open-direction": "bottom",
+                      "preselect-first": false
+                    },
+                    on: {
+                      click: function($event) {
+                        _vm.activeItem = "rank"
+                      },
+                      blur: function($event) {
+                        _vm.activeItem = null
+                      }
+                    },
+                    model: {
+                      value: _vm.rank,
+                      callback: function($$v) {
+                        _vm.rank = $$v
+                      },
+                      expression: "rank"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.savePick($event)
+                    }
+                  }
+                },
+                [_vm._v("Add staff pick")]
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "dates" },
+              [
+                _c("flat-pickr", {
+                  attrs: {
+                    config: _vm.config,
+                    placeholder: "Select date",
+                    name: "dates"
+                  },
+                  model: {
+                    value: _vm.dates,
+                    callback: function($$v) {
+                      _vm.dates = $$v
+                    },
+                    expression: "dates"
+                  }
+                }),
+                _vm._v(" "),
+                _vm.$v.dates.$error
+                  ? _c("div", { staticClass: "validation-error" }, [
+                      !_vm.$v.dates.required
+                        ? _c("p", { staticClass: "error" }, [
+                            _vm._v("Please add at least 1 show date")
+                          ])
+                        : _vm._e()
+                    ])
+                  : _vm._e()
+              ],
+              1
+            )
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "listing" },
+        [
+          _vm._m(0),
+          _vm._v(" "),
+          _vm._l(_vm.picks, function(pick) {
+            return _c("div", { staticClass: "list" }, [
+              _c("div", { staticClass: "image" }, [
+                _c("img", {
+                  attrs: {
+                    src: /storage/ + pick.event.thumbImagePath,
+                    alt: pick.event.name
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "name" }, [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(pick.event.name) +
+                    "\n            "
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "rank" },
+                [
+                  _c("multiselect", {
+                    class: { active: _vm.activeItem == "rank" },
+                    attrs: {
+                      options: _vm.rankOptions,
+                      "show-labels": false,
+                      placeholder:
+                        "Leave blank for default Rank of 5 (1 being most important)",
+                      "open-direction": "bottom",
+                      "preselect-first": false
+                    },
+                    on: {
+                      click: function($event) {
+                        _vm.activeItem = "rank"
+                      },
+                      input: function($event) {
+                        return _vm.updatePick(pick, "rank")
+                      }
+                    },
+                    model: {
+                      value: pick.rank,
+                      callback: function($$v) {
+                        _vm.$set(pick, "rank", $$v)
+                      },
+                      expression: "pick.rank"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "date-s" },
+                [
+                  _c("flat-pickr", {
+                    attrs: {
+                      value: (_vm.listDates = [pick.start_date, pick.end_date]),
+                      config: _vm.pickConfig,
+                      placeholder: "Select date",
+                      name: "dates"
+                    },
+                    on: {
+                      input: function($event) {
+                        return _vm.updatePick(pick, "dates")
+                      }
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "delete-circle",
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.showModal(pick, "delete")
+                    }
+                  }
+                },
+                [_c("p", [_vm._v("X")])]
+              )
+            ])
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c(
+        "modal",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.modal == "delete",
+              expression: "modal == 'delete'"
+            }
+          ],
+          on: {
+            close: function($event) {
+              _vm.modal = null
+            }
+          }
+        },
+        [
+          _c("div", { attrs: { slot: "header" }, slot: "header" }, [
+            _c("div", { staticClass: "circle del" }, [_c("p", [_vm._v("X")])])
+          ]),
+          _vm._v(" "),
+          _c("div", { attrs: { slot: "body" }, slot: "body" }, [
+            _c("h3", [_vm._v("Are you sure?")]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "You are deleting the review " +
+                  _vm._s(_vm.selectedModal.name) +
+                  "."
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { attrs: { slot: "footer" }, slot: "footer" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn del",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.deletePick(_vm.selectedModal)
+                  }
+                }
+              },
+              [_vm._v("Delete")]
+            )
+          ])
+        ]
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("h2", [_vm._v("Current Picks")])])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/adminArea/admin-staff-picks.vue":
+/*!*****************************************************************!*\
+  !*** ./resources/js/components/adminArea/admin-staff-picks.vue ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _admin_staff_picks_vue_vue_type_template_id_503b5df9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./admin-staff-picks.vue?vue&type=template&id=503b5df9& */ "./resources/js/components/adminArea/admin-staff-picks.vue?vue&type=template&id=503b5df9&");
+/* harmony import */ var _admin_staff_picks_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./admin-staff-picks.vue?vue&type=script&lang=js& */ "./resources/js/components/adminArea/admin-staff-picks.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _admin_staff_picks_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _admin_staff_picks_vue_vue_type_template_id_503b5df9___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _admin_staff_picks_vue_vue_type_template_id_503b5df9___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/adminArea/admin-staff-picks.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/adminArea/admin-staff-picks.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/adminArea/admin-staff-picks.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_admin_staff_picks_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./admin-staff-picks.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminArea/admin-staff-picks.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_admin_staff_picks_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/adminArea/admin-staff-picks.vue?vue&type=template&id=503b5df9&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/adminArea/admin-staff-picks.vue?vue&type=template&id=503b5df9& ***!
+  \************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_admin_staff_picks_vue_vue_type_template_id_503b5df9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./admin-staff-picks.vue?vue&type=template&id=503b5df9& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminArea/admin-staff-picks.vue?vue&type=template&id=503b5df9&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_admin_staff_picks_vue_vue_type_template_id_503b5df9___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_admin_staff_picks_vue_vue_type_template_id_503b5df9___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ })
+
+}]);

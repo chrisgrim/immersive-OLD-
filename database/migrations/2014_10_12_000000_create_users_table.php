@@ -23,7 +23,6 @@ class CreateUsersTable extends Migration
             $table->string('avatar_path')->nullable();
             $table->string('largeImagePath')->nullable();
             $table->string('thumbImagePath')->nullable();
-            $table->string('hex')->nullable();
             $table->string('provider')->nullable();
             $table->string('provider_id')->nullable();
             $table->string('type')->default('default');

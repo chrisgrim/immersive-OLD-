@@ -1,1 +1,313 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[51],{295:function(e,t,i){"use strict";i.r(t);var r=i(78),a=i(84),n={components:{Multiselect:i.n(a).a},data:function(){return{event:"",events:[],add:!1,rank:"",rankOptions:["1","2","3","4","5"],modal:"",isLoading:"",isActive:"",reviewername:"",image_path:"",review:"",reviews:[],url:"",selectedModal:"",reviewerList:["No Procenium","Escape Room Artist"]}},computed:{},methods:{loadEvents:function(e){var t=this;axios.get("/api/admin/search/events",{params:{keywords:e}}).then((function(e){t.events=e.data}))},assignUrl:function(e){return this.$v.reviewername.$touch,"No Procenium"==e?(this.image_path="/reviews/nopro.png",this.url="https://noproscenium.com/"):this.url=""},addReview:function(){if(this.$v.$touch(),this.$v.$invalid)return!1;var e={reviewername:this.reviewername,review:this.review,url:this.url,rank:this.rank,event:this.event};axios.post("/reviewevents/",e).then((function(e){location.reload()}))},showModal:function(e,t){this.selectedModal=e,this.modal=t},deleteReview:function(e){var t=this;axios.delete("/reviewevents/".concat(e.id)).then((function(e){t.modal=null,t.loadReviews()})).catch((function(e){t.serverErrors=e.response.data.errors}))},loadReviews:function(){var e=this;axios.get("/reviewevents/").then((function(t){console.log(t.data),e.reviews=t.data})).catch((function(t){e.serverErrors=t.response.data.errors}))},updateReview:function(e,t){var i=this,r=new FormData;"name"==t&&r.append("reviewer_name",e.reviewer_name),"url"==t&&r.append("url",e.url),"review"==t&&r.append("review",e.review),"rank"==t&&r.append("rank",e.rank),r.append("_method","PATCH"),axios.post("/reviewevents/".concat(e.id),r).then((function(e){console.log(e.data)})).catch((function(e){i.serverErrors=e.response.data.errors}))},asyncGenerateUserList:function(e){var t=this;axios.get("/api/search/user/list",{params:{keywords:e}}).then((function(e){console.log(e.data),t.users=e.data}))},addTag:function(e){this.reviewerList.push(e),this.reviewername=e}},created:function(){this.loadReviews()},validations:{event:{required:r.required},reviewername:{required:r.required},url:{required:r.required,url:r.url},review:{required:r.required,maxLength:Object(r.maxLength)(120)}}},s=i(81),o=Object(s.a)(n,(function(){var e=this,t=e.$createElement,i=e._self._c||t;return i("div",{staticClass:"reviewevent"},[i("div",{},[i("div",{staticClass:"title"},[i("h1",[e._v("Add Reviews to events")]),e._v(" "),i("div",{staticClass:"add"},[i("button",{on:{click:function(t){t.preventDefault(),e.add=!0}}},[i("p",[e._v("+")])])])])]),e._v(" "),e.add?i("div",{staticClass:"new"},[i("div",{staticClass:"content"},[i("div",{staticClass:"event"},[i("label",[e._v("Event")]),e._v(" "),i("multiselect",{class:{active:"event"==e.isActive,error:e.$v.event.$error},attrs:{options:e.events,"open-direction":"bottom",placeholder:"Select the event",label:"name","show-labels":!1,"internal-search":!1,"options-limit":30,limit:5,"track-by":"name","show-no-results":!1,"allow-empty":!1},on:{click:function(t){e.isActive="event"},blur:function(t){e.isActive=null},open:e.loadEvents,"search-change":e.loadEvents,input:e.$v.event.$touch},scopedSlots:e._u([{key:"singleLabel",fn:function(t){return[i("img",{staticClass:"option__image",attrs:{src:"/storage/"+t.option.thumbImagePath,alt:t.option.name}}),e._v(" "),i("span",{staticClass:"option__desc"},[i("span",{staticClass:"option__title"},[e._v(e._s(t.option.name)+"\n                            ")])])]}}],null,!1,2578371558),model:{value:e.event,callback:function(t){e.event=t},expression:"event"}}),e._v(" "),e.$v.event.$error?i("div",{staticClass:"validation-error"},[e.$v.event.required?e._e():i("p",{staticClass:"error"},[e._v("Please select event")])]):e._e()],1),e._v(" "),i("div",{staticClass:"field"},[i("label",[e._v("Reviewer")]),e._v(" "),i("multiselect",{class:{active:"name"==e.isActive,error:e.$v.reviewername.$error},attrs:{"show-labels":!1,options:e.reviewerList,multiple:!1,"tag-placeholder":"Add this as new tag",taggable:!0,"tag-position":"bottom",placeholder:"Select reviewer or add your own","open-direction":"bottom"},on:{tag:e.addTag,input:function(t){return e.assignUrl(e.reviewername)},click:function(t){e.isActive="name"},blur:function(t){e.isActive=null}},model:{value:e.reviewername,callback:function(t){e.reviewername=t},expression:"reviewername"}}),e._v(" "),e.$v.reviewername.$error?i("div",{staticClass:"validation-error"},[e.$v.reviewername.required?e._e():i("p",{staticClass:"error"},[e._v("Please add reviews name")])]):e._e()],1),e._v(" "),i("div",{staticClass:"field"},[i("label",[e._v("Review URL")]),e._v(" "),i("input",{directives:[{name:"model",rawName:"v-model",value:e.url,expression:"url"}],class:{active:"url"==e.isActive,error:e.$v.url.$error},attrs:{type:"text",placeholder:"Link to the review"},domProps:{value:e.url},on:{click:function(t){e.isActive="url"},input:[function(t){t.target.composing||(e.url=t.target.value)},e.$v.url.$touch],blur:function(t){e.isActive=null}}}),e._v(" "),e.$v.url.$error?i("div",{staticClass:"validation-error"},[e.$v.url.required?e._e():i("p",{staticClass:"error"},[e._v("Please add url")])]):e._e()]),e._v(" "),i("div",{staticClass:"rank"},[i("label",[e._v("Rank")]),e._v(" "),i("multiselect",{class:{active:"rank"==e.isActive},attrs:{options:e.rankOptions,"show-labels":!1,placeholder:"Leave blank for default Rank of 5 (1 being most important)","open-direction":"bottom","preselect-first":!1},on:{click:function(t){e.isActive="rank"},blur:function(t){e.isActive=null}},model:{value:e.rank,callback:function(t){e.rank=t},expression:"rank"}})],1)]),e._v(" "),i("div",{staticClass:"content"},[i("label",[e._v("Review")]),e._v(" "),i("textarea",{directives:[{name:"model",rawName:"v-model",value:e.review,expression:"review"}],class:{active:"review"==e.isActive,error:e.$v.review.$error},attrs:{type:"textarea",rows:"6",placeholder:"Review snippet (no longer than 120 characters)"},domProps:{value:e.review},on:{click:function(t){e.isActive="review"},input:[function(t){t.target.composing||(e.review=t.target.value)},e.$v.review.$touch],blur:function(t){e.isActive=null}}}),e._v(" "),e.$v.review.$error?i("div",{staticClass:"validation-error"},[e.$v.review.required?e._e():i("p",{staticClass:"error"},[e._v("Please add review snippet.")]),e._v(" "),e.$v.review.maxLength?e._e():i("p",{staticClass:"error"},[e._v("Please keep it under 120 letters.")])]):e._e()]),e._v(" "),i("div",{staticClass:"content"},[i("button",{on:{click:function(t){return t.preventDefault(),e.addReview(t)}}},[e._v("Add Review")])])]):e._e(),e._v(" "),i("div",{staticClass:"listing"},[e._m(0),e._v(" "),e._l(e.reviews,(function(t,r){return i("div",{staticClass:"list"},[i("div",{staticClass:"field"},[e._v("\n                "+e._s(t.event.name)+"\n            ")]),e._v(" "),i("div",{staticClass:"field"},[i("input",{directives:[{name:"model",rawName:"v-model",value:t.reviewer_name,expression:"item.reviewer_name"}],class:{active:"reviewername"==e.isActive},attrs:{type:"text",placeholder:"Reviewer's name"},domProps:{value:t.reviewer_name},on:{click:function(t){e.isActive="reviewername"},blur:function(i){return e.updateReview(t,"name")},input:function(i){i.target.composing||e.$set(t,"reviewer_name",i.target.value)}}})]),e._v(" "),i("div",{staticClass:"field"},[i("input",{directives:[{name:"model",rawName:"v-model",value:t.url,expression:"item.url"}],class:{active:"url"==e.isActive},attrs:{type:"text",placeholder:"Link to the review"},domProps:{value:t.url},on:{click:function(t){e.isActive="url"},blur:function(i){return e.updateReview(t,"url")},input:function(i){i.target.composing||e.$set(t,"url",i.target.value)}}})]),e._v(" "),i("div",{staticClass:"field"},[i("textarea",{directives:[{name:"model",rawName:"v-model",value:t.review,expression:"item.review"}],class:{active:"review"==e.isActive},attrs:{type:"textarea",rows:"6",placeholder:"Review snippet (no longer than 120 characters)"},domProps:{value:t.review},on:{click:function(t){e.isActive="review"},blur:function(i){return e.updateReview(t,"review")},input:function(i){i.target.composing||e.$set(t,"review",i.target.value)}}})]),e._v(" "),i("div",{staticClass:"field"},[i("multiselect",{class:{active:"rank"==e.isActive},attrs:{options:e.rankOptions,"show-labels":!1,placeholder:"Leave blank for default Rank of 5 (1 being most important)","open-direction":"bottom","preselect-first":!1},on:{input:function(i){return e.updateReview(t,"rank")}},model:{value:t.rank,callback:function(i){e.$set(t,"rank",i)},expression:"item.rank"}})],1),e._v(" "),i("button",{staticClass:"delete-circle",on:{click:function(i){return i.preventDefault(),e.showModal(t,"delete")}}},[i("p",[e._v("X")])])])}))],2),e._v(" "),i("modal",{directives:[{name:"show",rawName:"v-show",value:"delete"==e.modal,expression:"modal == 'delete'"}],on:{close:function(t){e.modal=null}}},[i("div",{attrs:{slot:"header"},slot:"header"},[i("div",{staticClass:"circle del"},[i("p",[e._v("X")])])]),e._v(" "),i("div",{attrs:{slot:"body"},slot:"body"},[i("h3",[e._v("Are you sure?")]),e._v(" "),i("p",[e._v("You are deleting the review "+e._s(e.selectedModal.name)+".")])]),e._v(" "),i("div",{attrs:{slot:"footer"},slot:"footer"},[i("button",{staticClass:"btn del",on:{click:function(t){return t.preventDefault(),e.deleteReview(e.selectedModal)}}},[e._v("Delete")])])])],1)}),[function(){var e=this.$createElement,t=this._self._c||e;return t("div",[t("h2",[this._v("Latest Reviews")])])}],!1,null,null,null);t.default=o.exports}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[51],{
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/layouts/modal.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/layouts/modal.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'modal',
+  methods: {
+    close: function close() {
+      this.$emit('close');
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/layouts/modal.vue?vue&type=template&id=acbbe028&":
+/*!****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/layouts/modal.vue?vue&type=template&id=acbbe028& ***!
+  \****************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("transition", { attrs: { name: "modal-fade" } }, [
+    _c("div", { staticClass: "modal-backdrop" }, [
+      _c(
+        "div",
+        {
+          staticClass: "modal",
+          attrs: {
+            role: "dialog",
+            "aria-labelledby": "modalTitle",
+            "aria-describedby": "modalDescription"
+          }
+        },
+        [
+          _c(
+            "header",
+            { staticClass: "modal-header", attrs: { id: "modalTitle" } },
+            [_vm._t("header", [_vm._v(" This is the default tile!")])],
+            2
+          ),
+          _vm._v(" "),
+          _c(
+            "section",
+            { staticClass: "modal-body", attrs: { id: "modalDescription" } },
+            [
+              _vm._t("body", [
+                _vm._v("\n              I'm the default body!\n          ")
+              ])
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c(
+            "footer",
+            { staticClass: "modal-footer" },
+            [
+              _c(
+                "button",
+                {
+                  staticClass: "btn",
+                  attrs: { "aria-label": "Close modal" },
+                  on: { click: _vm.close }
+                },
+                [_vm._v("Cancel")]
+              ),
+              _vm._v(" "),
+              _vm._t("footer", [
+                _vm._v(
+                  "\n              I'm the default footer!\n              "
+                ),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn",
+                    attrs: { type: "button", "aria-label": "Close modal" },
+                    on: { click: _vm.close }
+                  },
+                  [_vm._v("\n                  Close me!\n              ")]
+                )
+              ])
+            ],
+            2
+          )
+        ]
+      )
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/runtime/componentNormalizer.js ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalizeComponent; });
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier, /* server only */
+  shadowMode /* vue-cli only */
+) {
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = 'data-v-' + scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = shadowMode
+      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
+      : injectStyles
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      var originalRender = options.render
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return originalRender(h, context)
+      }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    }
+  }
+
+  return {
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+
+/***/ "./resources/js/components/layouts/modal.vue":
+/*!***************************************************!*\
+  !*** ./resources/js/components/layouts/modal.vue ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _modal_vue_vue_type_template_id_acbbe028___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modal.vue?vue&type=template&id=acbbe028& */ "./resources/js/components/layouts/modal.vue?vue&type=template&id=acbbe028&");
+/* harmony import */ var _modal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modal.vue?vue&type=script&lang=js& */ "./resources/js/components/layouts/modal.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _modal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _modal_vue_vue_type_template_id_acbbe028___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _modal_vue_vue_type_template_id_acbbe028___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/layouts/modal.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/layouts/modal.vue?vue&type=script&lang=js&":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/layouts/modal.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_modal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./modal.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/layouts/modal.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_modal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/layouts/modal.vue?vue&type=template&id=acbbe028&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/layouts/modal.vue?vue&type=template&id=acbbe028& ***!
+  \**********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_modal_vue_vue_type_template_id_acbbe028___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./modal.vue?vue&type=template&id=acbbe028& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/layouts/modal.vue?vue&type=template&id=acbbe028&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_modal_vue_vue_type_template_id_acbbe028___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_modal_vue_vue_type_template_id_acbbe028___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ })
+
+}]);

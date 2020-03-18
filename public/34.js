@@ -1,1 +1,1008 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[34],{248:function(t,e){var s;Vue.directive("closable",{bind:function(t,e,a){s=function(s){s.stopPropagation();var i=e.value,c=i.handler,n=i.exclude,r=!1;n.forEach((function(t){if(!r){var e=a.context.$refs[t];r=e.contains(s.target)}})),t.contains(s.target)||r||a.context[c]()},document.addEventListener("click",s),document.addEventListener("touchstart",s)},unbind:function(){document.removeEventListener("click",s),document.removeEventListener("touchstart",s)}})},265:function(t,e,s){"use strict";s.r(e);var a,i=s(92),c=s.n(i),n=(s(89),s(8)),r=s(84),o=s.n(r),l=(s(248),s(249)),u=s.n(l);s(250);function d(t,e){var s=Object.keys(t);if(Object.getOwnPropertySymbols){var a=Object.getOwnPropertySymbols(t);e&&(a=a.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),s.push.apply(s,a)}return s}function v(t,e,s){return e in t?Object.defineProperty(t,e,{value:s,enumerable:!0,configurable:!0,writable:!0}):t[e]=s,t}var p=(v(a={components:{flatPickr:c.a,Multiselect:o.a,VueSlider:u.a},props:{searchedevents:{type:Object},categories:{type:Array},user:{type:String}},name:"userSearchRequest"},"name","searchEvents"),v(a,"computed",function(t){for(var e=1;e<arguments.length;e++){var s=null!=arguments[e]?arguments[e]:{};e%2?d(Object(s),!0).forEach((function(e){v(t,e,s[e])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(s)):d(Object(s)).forEach((function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(s,e))}))}return t}({},Object(n.b)(["events"]),{},Object(n.b)(["userSearchRequest"]),{location:function(){return this.$store.state.userSearchRequest.name},mapCenter:function(){return{lat:this.$store.state.userSearchRequest.latitude?this.$store.state.userSearchRequest.latitude:"",lng:this.$store.state.userSearchRequest.longitude?this.$store.state.userSearchRequest.longitude:""}},showPrice:function(){return 0==this.price[0]&&100==this.price[1]},data:function(){return{results:this.results,mapboundary:this.boundaries,category:this.category,dates:this.datesSubmit,price:this.price,loc:this.mapCenter}}})),v(a,"data",(function(){return{eventList:[],showPopup:!1,searchObject:this.initializeSearchObject(),activeItem:null,category:"",showMap:!0,price:[0,100],boundaries:"",datesSubmit:[],datesFormatted:[],dates:[],showInside:!1,pickerInstance:"",results:"",config:{minDate:"today",altFormat:"M d",altInput:!0,mode:"range",inline:!0,showMonths:2,dateFormat:"Y-m-d H:i:s",onClose:[this.dateFunc()]}}})),v(a,"methods",{initializeSearchObject:function(){return{latitude:"",longitude:""}},show:function(t){this.activeItem===t?this.activeItem=null:this.activeItem=t},updateSearchedLocation:function(){this.$store.dispatch("searchEvents",this.searchedevents),this.$store.dispatch("userSearchRequest",this.searchedevents)},filterData:function(){this.submit()},mapSearch:function(t){this.boundaries=t,this.submit()},loadMoreEvents:function(t){this.results=t,this.submit()},submit:function(){var t=this;this.activeItem=null,axios.post("/api/search/mapboundary",this.data).then((function(e){t.eventList=e.data,console.log(e.data)}))},getPriceRange:function(){var t=[];this.eventList.forEach((function(e){e.priceranges.forEach((function(e){t.push(e.price)}))}))},dateFunc:function(){var t=this;return function(e){var s=this;t.datesSubmit=e.map((function(t){return s.formatDate(t,"Y-m-d H:i:S")})),t.datesFormatted=e.map((function(t){return s.formatDate(t,"M d")}))}},onClickOutside:function(t){var e=this.$refs.cat,s=this.$refs.dates,a=this.$refs.price;e&&!e.contains(t.target)&&s&&!s.contains(t.target)&&a&&!a.contains(t.target)&&(this.activeItem=null)}}),v(a,"watch",{events:function(){this.eventList=this.events,this.getPriceRange()}}),v(a,"created",(function(){var t=this;this.updateSearchedLocation(),setTimeout((function(){return document.addEventListener("click",t.onClickOutside)}),200)})),a),h=s(81),m=Object(h.a)(p,(function(){var t=this,e=t.$createElement,s=t._self._c||e;return s("div",{staticClass:"search"},[s("div",{staticClass:"body"},[s("div",{staticClass:"filter"},[s("div",{staticClass:"item"},[s("div",{staticClass:"el"},[s("div",{ref:"dates",staticClass:"button"},[s("div",{staticClass:"click",on:{click:function(e){return t.show("dates")}}},[t.datesFormatted.length?t._e():s("p",[t._v("Dates")]),t._v(" "),t.datesFormatted.length?s("p",[t._v(t._s(t.datesFormatted[0])+t._s(t.datesFormatted[1]?" to "+t.datesFormatted[1]:"")+" ")]):t._e()]),t._v(" "),"dates"===t.activeItem?s("div",{staticClass:"b_over dates"},[s("div",[s("flat-pickr",{attrs:{config:t.config,placeholder:"Select date",name:"dates"},model:{value:t.dates,callback:function(e){t.dates=e},expression:"dates"}})],1),t._v(" "),s("div",{staticClass:"save"},[t.datesFormatted.length?s("button",{staticClass:"cancel",on:{click:function(e){t.datesFormatted=[],t.datesSubmit=[]}}},[t._v("clear")]):t._e(),t._v(" "),t.datesFormatted.length?t._e():s("button",{staticClass:"cancel",on:{click:function(e){t.activeItem=null}}},[t._v("Cancel")]),t._v(" "),s("button",{staticClass:"submit",on:{click:t.submit}},[t._v("Save")])])]):t._e()])])]),t._v(" "),s("div",{staticClass:"item"},[s("div",{staticClass:"el"},[s("div",{ref:"cat",staticClass:"button"},[s("div",{staticClass:"click",on:{click:function(e){return t.show("category")}}},[t.category?t._e():s("p",[t._v("Categories")]),t._v(" "),t.category?s("p",[t._v(t._s(t.category.name))]):t._e()]),t._v(" "),"category"===t.activeItem?s("div",{staticClass:"b_over cat"},[s("div",{staticClass:"box"},[s("multiselect",{attrs:{label:"name",options:t.categories,placeholder:"Categories","open-direction":"bottom","preselect-first":!1},model:{value:t.category,callback:function(e){t.category=e},expression:"category"}})],1),t._v(" "),s("div",{staticClass:"save"},[t.category?s("button",{staticClass:"cancel",on:{click:function(e){t.category=null}}},[t._v("clear")]):t._e(),t._v(" "),t.category?t._e():s("button",{staticClass:"cancel",on:{click:function(e){t.activeItem=null}}},[t._v("Cancel")]),t._v(" "),s("button",{staticClass:"submit",on:{click:t.submit}},[t._v("Save")])])]):t._e()])])]),t._v(" "),s("div",{staticClass:"item"},[s("div",{staticClass:"el"},[s("div",{ref:"price",staticClass:"button"},[s("div",{staticClass:"click",on:{click:function(e){return t.show("price")}}},[t.showPrice?s("p",[t._v("Price")]):s("p",[t._v(t._s("$"+t.price[0])+t._s(" to $"+t.price[1]))])]),t._v(" "),"price"===t.activeItem?s("div",{staticClass:"b_over price"},[s("div",{staticClass:"box price"},[s("vue-slider",{attrs:{"enable-cross":!1},model:{value:t.price,callback:function(e){t.price=e},expression:"price"}}),t._v(" "),s("label",[t._v(" Min ")]),t._v(" "),s("input",{directives:[{name:"model",rawName:"v-model",value:t.price[0],expression:"price[0]"}],attrs:{type:"text"},domProps:{value:t.price[0]},on:{input:function(e){e.target.composing||t.$set(t.price,0,e.target.value)}}}),t._v(" "),s("label",[t._v(" Max ")]),t._v(" "),s("input",{directives:[{name:"model",rawName:"v-model",value:t.price[1],expression:"price[1]"}],attrs:{type:"text"},domProps:{value:t.price[1]},on:{input:function(e){e.target.composing||t.$set(t.price,1,e.target.value)}}})],1),t._v(" "),s("div",{staticClass:"save"},[t.showPrice?s("button",{staticClass:"cancel",on:{click:function(e){t.activeItem=null}}},[t._v("Cancel")]):s("button",{staticClass:"cancel",on:{click:function(e){t.price=[0,100]}}},[t._v("clear")]),t._v(" "),s("button",{staticClass:"submit",on:{click:t.submit}},[t._v("Save")])])]):t._e()])])]),t._v(" "),s("div",{staticClass:"showmap"},[s("p",[t._v("Show Map")]),t._v(" "),s("div",{attrs:{id:"cover"}},[s("input",{directives:[{name:"model",rawName:"v-model",value:t.showMap,expression:"showMap"}],attrs:{type:"checkbox",id:"checkbox"},domProps:{checked:Array.isArray(t.showMap)?t._i(t.showMap,null)>-1:t.showMap},on:{change:function(e){var s=t.showMap,a=e.target,i=!!a.checked;if(Array.isArray(s)){var c=t._i(s,null);a.checked?c<0&&(t.showMap=s.concat([null])):c>-1&&(t.showMap=s.slice(0,c).concat(s.slice(c+1)))}else t.showMap=i}}}),t._v(" "),s("div",{attrs:{id:"bar"}}),t._v(" "),s("div",{attrs:{id:"knob"}},[t.showMap?s("p",[s("svg",{staticStyle:{height:"28px",width:"28px",display:"block",overflow:"visible"},attrs:{viewBox:"0 0 52 52",fill:"black","fill-opacity":"0",stroke:"currentColor","stroke-width":"3",focusable:"false","aria-hidden":"true",role:"presentation","stroke-linecap":"round","stroke-linejoin":"round"}},[s("path",{attrs:{d:"m19.1 25.2 4.7 6.2 12.1-11.2"}})])]):t._e()])])])]),t._v(" "),t.showMap?s("event-map-search",{attrs:{user:t.user,events:t.eventList},on:{mapCenterUpdated:t.mapSearch,loadMore:t.loadMoreEvents}}):s("event-list-search",{attrs:{user:t.user,events:t.eventList}})],1)])}),[],!1,null,null,null);e.default=m.exports}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[34],{
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/create/advisories.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/create/advisories.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-multiselect */ "./node_modules/vue-multiselect/dist/vue-multiselect.min.js");
+/* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_multiselect__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__);
+
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    Multiselect: vue_multiselect__WEBPACK_IMPORTED_MODULE_1___default.a
+  },
+  props: {
+    event: {
+      type: Object
+    }
+  },
+  data: function data() {
+    return {
+      advisories: this.initializeEventObject(),
+      contactLevelOptions: [],
+      contentAdvisoryOptions: [],
+      mobilityAdvisoryOptions: [],
+      contactLevel: '',
+      contentAdvisories: '',
+      mobilityAdvisories: '',
+      eventUrl: "/create-event/".concat(this.event.slug),
+      activeItem: null,
+      ageActive: false,
+      ageOptions: ['All Ages', '12+', '16+', '18+', '21+'],
+      dis: false
+    };
+  },
+  methods: {
+    initializeEventObject: function initializeEventObject() {
+      return {
+        contactAdvisories: '',
+        sexualViolence: false,
+        sexualViolenceDescription: '',
+        wheelchairReady: false,
+        ageRestriction: ''
+      };
+    },
+    //updates fields if event is stored in database.
+    updateEventFields: function updateEventFields(input) {
+      if (input !== null && _typeof(input) === "object" && input.id !== null) {
+        this.advisories = lodash__WEBPACK_IMPORTED_MODULE_2___default.a.pick(input, lodash__WEBPACK_IMPORTED_MODULE_2___default.a.intersection(lodash__WEBPACK_IMPORTED_MODULE_2___default.a.keys(this.advisories), lodash__WEBPACK_IMPORTED_MODULE_2___default.a.keys(input)));
+      }
+
+      this.advisories.wheelchairReady ? '' : this.advisories.wheelchairReady = false;
+      this.advisories.sexualViolence ? '' : this.advisories.sexualViolence = false;
+    },
+    addTag: function addTag(newTag) {
+      var tag = {
+        advisories: newTag,
+        id: newTag.substring(0, 0) + Math.floor(Math.random() * 10000000)
+      };
+      this.contentAdvisoryOptions.push(tag);
+      this.contentAdvisories.push(tag);
+    },
+    addTagMobility: function addTagMobility(newTag) {
+      var tag = {
+        mobilities: newTag,
+        id: newTag.substring(0, 0) + Math.floor(Math.random() * 10000000)
+      };
+      this.mobilityAdvisoryOptions.push(tag);
+      this.mobilityAdvisories.push(tag);
+    },
+    //submit data to the database
+    submitAdvisories: function submitAdvisories() {
+      var _this = this;
+
+      var data;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function submitAdvisories$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              this.$v.$touch();
+
+              if (!this.$v.$invalid) {
+                _context.next = 3;
+                break;
+              }
+
+              return _context.abrupt("return", false);
+
+            case 3:
+              ;
+              this.dis = true;
+              data = this.advisories;
+              data.contactLevel = this.contactLevel.map(function (a) {
+                return a.id;
+              });
+              data.contentAdvisory = this.contentAdvisories.map(function (a) {
+                return a.advisories;
+              });
+              data.mobilityAdvisory = this.mobilityAdvisories.map(function (a) {
+                return a.mobilities;
+              });
+              axios.patch("".concat(this.eventUrl, "/advisories"), data).then(function (response) {
+                window.location.href = "".concat(_this.eventUrl, "/images");
+              })["catch"](function (error) {
+                console.log(error.response.data);
+                _this.dis = false;
+              });
+
+            case 10:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, null, this);
+    },
+    goBack: function goBack() {
+      window.location.href = "".concat(this.eventUrl, "/description");
+    },
+    // If there is data in Database it will load from the database
+    load: function load() {
+      var _this2 = this;
+
+      axios.get("".concat(this.eventUrl, "/advisories/fetch?timestamp=").concat(new Date().getTime())).then(function (response) {
+        console.log(response.data);
+
+        _this2.updateEventFields(response.data.advisories);
+
+        _this2.contactLevel = response.data.contactPivots;
+        _this2.contactLevelOptions = response.data.contactLevels;
+        _this2.contentAdvisories = response.data.contentPivots;
+        _this2.contentAdvisoryOptions = response.data.contentAdvisories;
+        _this2.mobilityAdvisories = response.data.mobilityPivots;
+        _this2.mobilityAdvisoryOptions = response.data.mobilityAdvisories;
+      });
+    }
+  },
+  created: function created() {
+    this.load();
+  },
+  validations: {
+    contactLevel: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"]
+    },
+    mobilityAdvisories: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"]
+    },
+    contentAdvisories: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"]
+    },
+    advisories: {
+      contactAdvisories: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"]
+      },
+      ageRestriction: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"]
+      },
+      wheelchairReady: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"]
+      },
+      sexualViolence: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"]
+      }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/create/advisories.vue?vue&type=template&id=3244824f&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/create/advisories.vue?vue&type=template&id=3244824f& ***!
+  \********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "advisories" }, [
+    _c("div", { staticClass: "section" }, [
+      _c("div", { staticClass: "texta" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "field" },
+          [
+            _c("label", { staticClass: "area" }, [
+              _vm._v("Explain the shows content")
+            ]),
+            _vm._v(" "),
+            _c("multiselect", {
+              class: {
+                active: _vm.activeItem == "content",
+                error: _vm.$v.contentAdvisories.$error
+              },
+              attrs: {
+                "show-labels": false,
+                options: _vm.contentAdvisoryOptions,
+                multiple: true,
+                "tag-placeholder": "Add this as new tag",
+                taggable: true,
+                "tag-position": "bottom",
+                placeholder: "Search or add a tag",
+                "open-direction": "bottom",
+                label: "advisories",
+                "track-by": "id"
+              },
+              on: {
+                tag: _vm.addTag,
+                click: function($event) {
+                  _vm.activeItem = "content"
+                },
+                blur: function($event) {
+                  _vm.activeItem = null
+                }
+              },
+              model: {
+                value: _vm.contentAdvisories,
+                callback: function($$v) {
+                  _vm.contentAdvisories = $$v
+                },
+                expression: "contentAdvisories"
+              }
+            }),
+            _vm._v(" "),
+            _vm.$v.contentAdvisories.$error
+              ? _c("div", { staticClass: "validation-error" }, [
+                  !_vm.$v.contentAdvisories.required
+                    ? _c("p", { staticClass: "error" }, [
+                        _vm._v("Must enter a mobility advisory ")
+                      ])
+                    : _vm._e()
+                ])
+              : _vm._e()
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "field" },
+          [
+            _c("label", [_vm._v("Age restriction")]),
+            _vm._v(" "),
+            _c("multiselect", {
+              class: {
+                active: _vm.activeItem == "age",
+                error: _vm.$v.advisories.ageRestriction.$error
+              },
+              attrs: {
+                options: _vm.ageOptions,
+                "show-labels": false,
+                placeholder: "Select the appropriate age group",
+                "open-direction": "bottom",
+                "preselect-first": false
+              },
+              on: {
+                click: function($event) {
+                  _vm.activeItem = "age"
+                },
+                blur: function($event) {
+                  _vm.activeItem = null
+                },
+                input: _vm.$v.advisories.ageRestriction.$touch
+              },
+              model: {
+                value: _vm.advisories.ageRestriction,
+                callback: function($$v) {
+                  _vm.$set(_vm.advisories, "ageRestriction", $$v)
+                },
+                expression: "advisories.ageRestriction"
+              }
+            }),
+            _vm._v(" "),
+            _vm.$v.advisories.ageRestriction.$error
+              ? _c("div", { staticClass: "validation-error" }, [
+                  !_vm.$v.advisories.ageRestriction.required
+                    ? _c("p", { staticClass: "error" }, [_vm._v("Required")])
+                    : _vm._e()
+                ])
+              : _vm._e()
+          ],
+          1
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "textb" }, [
+        _vm._m(1),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "field" },
+          [
+            _c("label", { staticClass: "area" }, [
+              _vm._v("Select physical interaction level with guests")
+            ]),
+            _vm._v(" "),
+            _c("multiselect", {
+              class: {
+                active: _vm.activeItem == "contact",
+                error: _vm.$v.contactLevel.$error
+              },
+              attrs: {
+                options: _vm.contactLevelOptions,
+                multiple: true,
+                placeholder: "Choose all that apply",
+                "open-direction": "bottom",
+                "show-labels": false,
+                label: "level",
+                "track-by": "id",
+                "preselect-first": false
+              },
+              on: {
+                click: function($event) {
+                  _vm.activeItem = "contact"
+                },
+                blur: function($event) {
+                  _vm.activeItem = null
+                },
+                input: _vm.$v.contactLevel.$touch
+              },
+              model: {
+                value: _vm.contactLevel,
+                callback: function($$v) {
+                  _vm.contactLevel = $$v
+                },
+                expression: "contactLevel"
+              }
+            }),
+            _vm._v(" "),
+            _vm.$v.contactLevel.$error
+              ? _c("div", { staticClass: "validation-error" }, [
+                  !_vm.$v.contactLevel.required
+                    ? _c("p", { staticClass: "error" }, [
+                        _vm._v("Must choose at least one contact level ")
+                      ])
+                    : _vm._e()
+                ])
+              : _vm._e()
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _vm.contactLevel.length
+          ? _c("div", { staticClass: "field" }, [
+              _c("label", { staticClass: "area" }, [
+                _vm._v(" Explain a bit about your contact with the audience ")
+              ]),
+              _vm._v(" "),
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.advisories.contactAdvisories,
+                    expression: "advisories.contactAdvisories"
+                  }
+                ],
+                staticClass: "create-input area",
+                class: {
+                  active: _vm.activeItem == "conAdv",
+                  error: _vm.$v.advisories.contactAdvisories.$error
+                },
+                attrs: {
+                  rows: "8",
+                  placeholder: " ",
+                  required: "",
+                  autofocus: ""
+                },
+                domProps: { value: _vm.advisories.contactAdvisories },
+                on: {
+                  click: function($event) {
+                    _vm.activeItem = "conAdv"
+                  },
+                  blur: function($event) {
+                    _vm.activeItem = null
+                  },
+                  input: [
+                    function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.advisories,
+                        "contactAdvisories",
+                        $event.target.value
+                      )
+                    },
+                    _vm.$v.advisories.contactAdvisories.$touch
+                  ]
+                }
+              }),
+              _vm._v(" "),
+              _vm.$v.advisories.contactAdvisories.$error
+                ? _c("div", { staticClass: "validation-error" }, [
+                    !_vm.$v.advisories.contactAdvisories.required
+                      ? _c("p", { staticClass: "error" }, [
+                          _vm._v("Must enter a contact advisory ")
+                        ])
+                      : _vm._e()
+                  ])
+                : _vm._e()
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.contactLevel.length
+          ? _c("div", { staticClass: "field" }, [
+              _c("label", [_vm._v(" Is there sexual Violence? ")]),
+              _vm._v(" "),
+              _c("div", { attrs: { id: "cover" } }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.advisories.sexualViolence,
+                      expression: "advisories.sexualViolence"
+                    }
+                  ],
+                  attrs: { type: "checkbox", id: "checkbox" },
+                  domProps: {
+                    checked: Array.isArray(_vm.advisories.sexualViolence)
+                      ? _vm._i(_vm.advisories.sexualViolence, null) > -1
+                      : _vm.advisories.sexualViolence
+                  },
+                  on: {
+                    change: function($event) {
+                      var $$a = _vm.advisories.sexualViolence,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = null,
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 &&
+                            _vm.$set(
+                              _vm.advisories,
+                              "sexualViolence",
+                              $$a.concat([$$v])
+                            )
+                        } else {
+                          $$i > -1 &&
+                            _vm.$set(
+                              _vm.advisories,
+                              "sexualViolence",
+                              $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                            )
+                        }
+                      } else {
+                        _vm.$set(_vm.advisories, "sexualViolence", $$c)
+                      }
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("div", { attrs: { id: "bar" } }),
+                _vm._v(" "),
+                _c("div", { attrs: { id: "knob" } }, [
+                  _vm.advisories.sexualViolence
+                    ? _c("p", [_vm._v("Yes")])
+                    : _c("p", [_vm._v("No")])
+                ])
+              ]),
+              _vm._v(" "),
+              _vm.$v.advisories.sexualViolence.$error
+                ? _c("div", { staticClass: "validation-error" }, [
+                    !_vm.$v.advisories.sexualViolence.required
+                      ? _c("p", { staticClass: "error" }, [
+                          _vm._v("Must select if there is sexual violence")
+                        ])
+                      : _vm._e()
+                  ])
+                : _vm._e()
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.advisories.sexualViolence
+          ? _c("div", [
+              _c("div", { staticClass: "field" }, [
+                _c("label", { staticClass: "area" }, [
+                  _vm._v(" Explain more about the sexual violence ")
+                ]),
+                _vm._v(" "),
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.advisories.sexualViolenceDescription,
+                      expression: "advisories.sexualViolenceDescription"
+                    }
+                  ],
+                  staticClass: "create-input area",
+                  class: { active: _vm.activeItem == "sexual" },
+                  attrs: {
+                    rows: "8",
+                    placeholder: " ",
+                    required: "",
+                    autofocus: ""
+                  },
+                  domProps: { value: _vm.advisories.sexualViolenceDescription },
+                  on: {
+                    click: function($event) {
+                      _vm.activeItem = "sexual"
+                    },
+                    blur: function($event) {
+                      _vm.activeItem = null
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.advisories,
+                        "sexualViolenceDescription",
+                        $event.target.value
+                      )
+                    }
+                  }
+                })
+              ])
+            ])
+          : _vm._e()
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "textc" }, [
+        _vm._m(2),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "field" },
+          [
+            _c("label", { staticClass: "area" }, [
+              _vm._v("Select any mobility restrictions")
+            ]),
+            _vm._v(" "),
+            _c("multiselect", {
+              class: {
+                active: _vm.activeItem == "mobility",
+                error: _vm.$v.mobilityAdvisories.$error
+              },
+              attrs: {
+                options: _vm.mobilityAdvisoryOptions,
+                multiple: true,
+                "show-labels": false,
+                "tag-placeholder": "Add this as new tag",
+                taggable: true,
+                "tag-position": "bottom",
+                placeholder: "Search or add a tag",
+                "open-direction": "bottom",
+                label: "mobilities",
+                "track-by": "id"
+              },
+              on: {
+                tag: _vm.addTagMobility,
+                click: function($event) {
+                  _vm.activeItem = "mobility"
+                },
+                blur: function($event) {
+                  _vm.activeItem = null
+                },
+                input: _vm.$v.mobilityAdvisories.$touch
+              },
+              model: {
+                value: _vm.mobilityAdvisories,
+                callback: function($$v) {
+                  _vm.mobilityAdvisories = $$v
+                },
+                expression: "mobilityAdvisories"
+              }
+            }),
+            _vm._v(" "),
+            _vm.$v.mobilityAdvisories.$error
+              ? _c("div", { staticClass: "validation-error" }, [
+                  !_vm.$v.mobilityAdvisories.required
+                    ? _c("p", { staticClass: "error" }, [
+                        _vm._v("Must enter a mobility advisory ")
+                      ])
+                    : _vm._e()
+                ])
+              : _vm._e()
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "field" }, [
+          _c("label", [_vm._v(" Is the Event Wheel Chair Accessible? ")]),
+          _vm._v(" "),
+          _c("div", { attrs: { id: "cover" } }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.advisories.wheelchairReady,
+                  expression: "advisories.wheelchairReady"
+                }
+              ],
+              attrs: { type: "checkbox", id: "checkbox" },
+              domProps: {
+                checked: Array.isArray(_vm.advisories.wheelchairReady)
+                  ? _vm._i(_vm.advisories.wheelchairReady, null) > -1
+                  : _vm.advisories.wheelchairReady
+              },
+              on: {
+                change: function($event) {
+                  var $$a = _vm.advisories.wheelchairReady,
+                    $$el = $event.target,
+                    $$c = $$el.checked ? true : false
+                  if (Array.isArray($$a)) {
+                    var $$v = null,
+                      $$i = _vm._i($$a, $$v)
+                    if ($$el.checked) {
+                      $$i < 0 &&
+                        _vm.$set(
+                          _vm.advisories,
+                          "wheelchairReady",
+                          $$a.concat([$$v])
+                        )
+                    } else {
+                      $$i > -1 &&
+                        _vm.$set(
+                          _vm.advisories,
+                          "wheelchairReady",
+                          $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                        )
+                    }
+                  } else {
+                    _vm.$set(_vm.advisories, "wheelchairReady", $$c)
+                  }
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("div", { attrs: { id: "bar" } }),
+            _vm._v(" "),
+            _c("div", { attrs: { id: "knob" } }, [
+              _vm.advisories.wheelchairReady
+                ? _c("p", [_vm._v("Yes")])
+                : _c("p", [_vm._v("No")])
+            ])
+          ]),
+          _vm._v(" "),
+          _vm.$v.advisories.wheelchairReady.$error
+            ? _c("div", { staticClass: "validation-error" }, [
+                !_vm.$v.advisories.wheelchairReady.required
+                  ? _c("p", { staticClass: "error" }, [
+                      _vm._v(
+                        "Must select if the event is wheelchair accessible "
+                      )
+                    ])
+                  : _vm._e()
+              ])
+            : _vm._e()
+        ]),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "create",
+            attrs: { disabled: _vm.dis },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.submitAdvisories()
+              }
+            }
+          },
+          [_vm._v(" Next ")]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "mobile" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "inNav" }, [
+        _c(
+          "button",
+          {
+            staticClass: "create",
+            attrs: { disabled: _vm.dis },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.goBack()
+              }
+            }
+          },
+          [_vm._v(" Back ")]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "create",
+            attrs: { disabled: _vm.dis },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.submitAdvisories()
+              }
+            }
+          },
+          [_vm._v(" Next ")]
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "ctitle" }, [
+      _c("h2", [_vm._v("Content Advisories")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "ctitle" }, [
+      _c("h2", [_vm._v("Contact Advisories")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "ctitle" }, [
+      _c("h2", [_vm._v("Mobility Advisories")])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/create/advisories.vue":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/create/advisories.vue ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _advisories_vue_vue_type_template_id_3244824f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./advisories.vue?vue&type=template&id=3244824f& */ "./resources/js/components/create/advisories.vue?vue&type=template&id=3244824f&");
+/* harmony import */ var _advisories_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./advisories.vue?vue&type=script&lang=js& */ "./resources/js/components/create/advisories.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _advisories_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _advisories_vue_vue_type_template_id_3244824f___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _advisories_vue_vue_type_template_id_3244824f___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/create/advisories.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/create/advisories.vue?vue&type=script&lang=js&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/create/advisories.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_advisories_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./advisories.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/create/advisories.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_advisories_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/create/advisories.vue?vue&type=template&id=3244824f&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/create/advisories.vue?vue&type=template&id=3244824f& ***!
+  \**************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_advisories_vue_vue_type_template_id_3244824f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./advisories.vue?vue&type=template&id=3244824f& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/create/advisories.vue?vue&type=template&id=3244824f&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_advisories_vue_vue_type_template_id_3244824f___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_advisories_vue_vue_type_template_id_3244824f___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ })
+
+}]);

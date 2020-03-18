@@ -1,9 +1,9 @@
 <template>
-	<div class="profile-button" :style="`background:#${Math.floor(Math.random()*16777215).toString(16)};`">
-		<label v-if="this.user.image_path" @click="toggle = !toggle" class="profile-image" >
+	<div class="profile-button" :style="`background:${user.hexColor}`">
+		<label v-if="this.user.largeImagePath" @click="toggle = !toggle" class="profile-image" >
             <img :src="avatar" height="28" width="28" :alt="user.name + `'s account`">
         </label>
-        <div v-else="this.user.image_path" @click="toggle = !toggle" class="icontext">
+        <div v-else="this.user.largeImagePath" @click="toggle = !toggle" class="icontext">
             <h2>{{userName.charAt(0)}}</h2>
         </div>
 
@@ -39,7 +39,7 @@
 
 		data() {
 			return {
-				avatar: this.user.image_path ? `/storage/${this.user.image_path}` : '/storage/website-files/default-user-icon.jpg',
+				avatar: this.user.thumbImagePath ? `/storage/${this.user.thumbImagePath}` : '',
 				userName: this.user.name,
 				url: this.user.id,
 				toggle:false,

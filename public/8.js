@@ -258,7 +258,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       user: this.loaduser,
-      avatar: this.loaduser.image_path ? "url(\"/storage/".concat(this.loaduser.image_path, "\")") : "url(\"/storage/website-files/default-user-icon.jpg\")",
+      avatar: this.loaduser.thumbImagePath ? "url(\"/storage/".concat(this.loaduser.thumbImagePath, "\")") : '',
       location: this.loc[0] ? this.loc[0] : {},
       gettingLocation: false,
       errorStr: '',
@@ -267,8 +267,7 @@ __webpack_require__.r(__webpack_exports__);
       isLoading: false,
       onUserEdit: false,
       onUpClass: false,
-      validationErrors: '',
-      color: '#' + Math.floor(Math.random() * 16777215).toString(16)
+      validationErrors: ''
     };
   },
   methods: {
@@ -308,9 +307,7 @@ __webpack_require__.r(__webpack_exports__);
       data.append('image', this.finalImage);
       data.append('_method', 'PATCH');
       axios.post("/users/".concat(this.user.id), data).then(function (response) {
-        _this.isLoading = false;
-        _this.onUpClass = false;
-        _this.dis = false;
+        location.reload();
         console.log(response.data);
       })["catch"](function (errorResponse) {
         console.log(errorResponse.data);
@@ -827,7 +824,7 @@ var render = function() {
       _c("div", { staticClass: "left" }, [
         parseFloat(this.auth) !== _vm.user.id
           ? _c("div", { staticClass: "image" }, [
-              this.loaduser.image_path
+              _vm.loaduser.largeImagePath
                 ? _c("img", {
                     attrs: { src: "" + (_vm.avatar ? _vm.avatar : ""), alt: "" }
                   })
@@ -837,7 +834,7 @@ var render = function() {
         _vm._v(" "),
         parseFloat(this.auth) == _vm.user.id
           ? _c("div", { staticClass: "image" }, [
-              !this.loaduser.image_path
+              !this.loaduser.thumbImagePath
                 ? _c("div", { staticClass: "icontext" }, [
                     _c("h2", [_vm._v(_vm._s(_vm.loaduser.name.charAt(0)))])
                   ])
@@ -851,7 +848,9 @@ var render = function() {
                     imageloaded: _vm.avatar,
                     imageloading: _vm.onUpClass
                   },
-                  style: "background:" + (_vm.avatar ? _vm.color : "")
+                  style:
+                    "background:" +
+                    (_vm.avatar ? _vm.avatar : _vm.loaduser.hexColor)
                 },
                 [
                   _c("image-upload", { on: { loaded: _vm.onImageUpload } }),
