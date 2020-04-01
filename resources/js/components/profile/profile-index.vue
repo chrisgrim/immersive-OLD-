@@ -2,18 +2,33 @@
     <div class="profile">
         <div class="body">
             <div class="left">
-                <div class="image" v-if="parseFloat(this.auth)!==user.id">
-                    <img v-if="loaduser.largeImagePath" :src="`${avatar ? avatar : ''}`" alt="">
-                    <h2 v-else="this.loaduser.thumbImagePath">{{loaduser.name.charAt(0)}}</h2>
-                </div>
-                <div v-if="parseFloat(this.auth)==user.id" class="image">
-                    <div class="icontext" v-if="!this.loaduser.thumbImagePath">
+                <div v-if="parseFloat(this.auth)!==user.id || !user.email_verified_at">
+                    <div v-if="avatar" class="image non" :style="`background:${avatar}`">
+                    </div>
+                    <div v-else-if="user.gravatar" class="image non" :style="`background:url('${user.gravatar})center no-repeat;background-size: cover;`"></div>
+                    <div v-else class="image non" :style="`background:${user.hexColor}`">
                         <h2>{{loaduser.name.charAt(0)}}</h2>
                     </div>
+                </div>
+                <div v-else class="image">                   
                     <label 
+                    v-if="avatar"
                     class="wrapper"
                     :class="{ imageloaded: avatar, imageloading: onUpClass }"
-                    :style="`background:${avatar ? avatar : loaduser.hexColor}`">
+                    :style="`background:${avatar}`">
+                    <image-upload @loaded="onImageUpload"></image-upload>
+                    <CubeSpinner :loading="isLoading"></CubeSpinner>
+                    <span class="text">
+                        <p v-if="onUpClass">Loading</p>
+                        <p v-else="onUpClass">Update</p>
+                        <p class="error" v-if="validationErrors.wrong" v-text="validationErrors.wrong"></p>
+                    </span>
+                    </label>    
+                    <label
+                    v-else-if="user.gravatar"
+                    class="wrapper"
+                    :class="{ imageloaded: avatar, imageloading: onUpClass }"
+                    :style="`background:url('${user.gravatar})center no-repeat;background-size: cover;`">
                     <image-upload @loaded="onImageUpload"></image-upload>
                     <CubeSpinner :loading="isLoading"></CubeSpinner>
                     <span class="text">
@@ -22,7 +37,23 @@
                         <p class="error" v-if="validationErrors.wrong" v-text="validationErrors.wrong"></p>
                     </span>
                     </label>
-
+                    <div v-else class="image">
+                        <div class="icontext">
+                            <h2>{{loaduser.name.charAt(0)}}</h2>
+                        </div>
+                        <label 
+                        class="wrapper"
+                        :class="{ imageloaded: avatar, imageloading: onUpClass }"
+                        :style="`background:${user.hexColor}`">
+                        <image-upload @loaded="onImageUpload"></image-upload>
+                        <CubeSpinner :loading="isLoading"></CubeSpinner>
+                        <span class="text">
+                            <p v-if="onUpClass">Loading</p>
+                            <p v-else="onUpClass">Update</p>
+                            <p class="error" v-if="validationErrors.wrong" v-text="validationErrors.wrong"></p>
+                        </span>
+                        </label>
+                    </div>
 
                     <input 
                     type="hidden" 
@@ -63,7 +94,7 @@
                                 <label> Location </label>
                                 <input 
                                 ref="autocomplete" 
-                                :placeholder="locationPlaceholder"
+                                :placeholder="locationPlaceholder ? locationPlaceholder : 'Choose your location'"
                                 :class="{ active: activeItem == 'location'}"
                                 autocomplete="false"
                                 onfocus="value = ''" 
@@ -87,13 +118,19 @@
                         <div class="age">
                             Member since {{user.created_at | formatDate }}
                         </div>
-                        <div v-if="parseFloat(this.auth) == user.id" class="edit" @click="userEdit">
+                        <div v-if="parseFloat(this.auth) == user.id && user.email_verified_at" class="edit" @click="userEdit">
                             Edit profile
                         </div>
+                        <button :disabled="dis" @click.prevent="resend" class="ver" v-if="parseFloat(this.auth) == user.id && !user.email_verified_at && !onSent">
+                            Please verify your account.
+                        </button>
+                        <div class="ver a" v-if="parseFloat(this.auth) == user.id && !user.email_verified_at && onSent">
+                            Please check your email.
+                        </div>
                     </div>
-                    <div class="loc">
+                    <div class="loc" v-if="location.latitude">
                         <div>
-                            Lives Near {{locationPlaceholder}}
+                            Lives near {{locationPlaceholder}}
                         </div>
                     </div>
                 </div>
@@ -155,6 +192,8 @@
                 onUserEdit: false,
                 onUpClass: false,
                 validationErrors: '',
+                onSent: false,
+                dis: false,
             }
         },
 
@@ -163,6 +202,19 @@
             userEdit() {
                 this.onUserEdit=true;
                 this.validationErrors = '';
+            },
+
+            resend() {
+                this.dis = true;
+                axios.post(`/email/resend`)
+                .then(response => {
+                    this.onSent = true;
+                    this.dis = false;
+                    console.log(response.data)
+                })
+                .catch(errorResponse => { 
+                    console.log(errorResponse.data);
+                })
             },
 
             onImageUpload(image) {

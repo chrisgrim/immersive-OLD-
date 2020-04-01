@@ -104,6 +104,84 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['loaduser', 'loadmessages'],
@@ -116,6 +194,7 @@ __webpack_require__.r(__webpack_exports__);
       anon: 'website-files/default-user-icon.jpg',
       activeItem: null,
       message: '',
+      modmessage: '',
       owner: '',
       responder: '',
       dis: false,
@@ -129,7 +208,8 @@ __webpack_require__.r(__webpack_exports__);
 
       this.dis = true;
       var data = {
-        message: this.message
+        message: this.message ? this.message : '',
+        modmessage: this.modmessage ? this.modmessage : ''
       };
       axios.post("/conversations/".concat(this.conversations.id), data).then(function (response) {
         location.reload();
@@ -515,165 +595,411 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "chat" },
-    [
-      _vm.conversations.messages.length
-        ? _c("div", { staticClass: "row submit" }, [
-            _c("div", { staticClass: "field" }, [
-              _c("div", { staticClass: "text" }, [
-                _c("textarea", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.message,
-                      expression: "message"
-                    }
-                  ],
-                  class: { active: _vm.activeItem == "description" },
-                  attrs: { type: "text", rows: "8" },
-                  domProps: { value: _vm.message },
-                  on: {
-                    click: function($event) {
-                      _vm.activeItem = "description"
-                    },
-                    blur: function($event) {
-                      _vm.activeItem = null
-                    },
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.message = $event.target.value
-                    }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "bottom" }, [
-                _c(
-                  "button",
-                  {
-                    class: { bspin: _vm.dis },
-                    attrs: { disabled: _vm.dis },
-                    on: { click: _vm.sendMessage }
-                  },
-                  [_vm._v("Send message")]
-                )
-              ])
+  return _c("div", { staticClass: "chat" }, [
+    _c("div", [
+      _vm.conversations.modmessages.length
+        ? _c("div", { staticClass: "ebox" }, [
+            _c("div", [
+              _c("img", {
+                attrs: {
+                  src:
+                    "/storage/" +
+                    _vm.conversations.modmessages[0].event.thumbImagePath,
+                  alt: ""
+                }
+              })
             ]),
             _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "user-message",
-                style: "background:" + _vm.owner.hexColor
-              },
-              [
-                _vm.owner.largeImagePath
-                  ? _c("label", { staticClass: "profile-image" }, [
-                      _c("img", {
-                        attrs: {
-                          src: "/storage/" + _vm.owner.thumbImagePath,
-                          height: "28",
-                          width: "28",
-                          alt: _vm.owner.name
-                        }
-                      })
-                    ])
-                  : _c("div", { staticClass: "icontext" }, [
-                      _c("h2", [
-                        _vm._v(
-                          _vm._s(_vm.owner ? _vm.owner.name.charAt(0) : "")
-                        )
-                      ])
-                    ])
-              ]
-            )
+            _c("div", { staticClass: "cont" }, [
+              _c("h3", [
+                _vm._v(_vm._s(_vm.conversations.modmessages[0].event.name))
+              ])
+            ])
           ])
-        : _vm._e(),
-      _vm._v(" "),
-      _vm._l(_vm.conversations.messages, function(message) {
-        return _vm.conversations.messages.length
-          ? _c("div", { staticClass: "list" }, [
-              message.user_id == _vm.loaduser.id
-                ? _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "field" }, [
-                      _c("div", { staticClass: "text" }, [
-                        _c("div", [
+        : _vm._e()
+    ]),
+    _vm._v(" "),
+    _vm.conversations.messages.length
+      ? _c(
+          "div",
+          [
+            _c("div", { staticClass: "row submit" }, [
+              _c("div", { staticClass: "field" }, [
+                _c("div", { staticClass: "text" }, [
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.message,
+                        expression: "message"
+                      }
+                    ],
+                    class: { active: _vm.activeItem == "description" },
+                    attrs: { type: "text", rows: "4" },
+                    domProps: { value: _vm.message },
+                    on: {
+                      click: function($event) {
+                        _vm.activeItem = "description"
+                      },
+                      blur: function($event) {
+                        _vm.activeItem = null
+                      },
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.message = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "bottom" }, [
+                  _c(
+                    "button",
+                    {
+                      class: { bspin: _vm.dis },
+                      attrs: { disabled: _vm.dis },
+                      on: { click: _vm.sendMessage }
+                    },
+                    [_vm._v("Send message")]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "user-message",
+                  style: "background:" + _vm.owner.hexColor
+                },
+                [
+                  _vm.owner.largeImagePath
+                    ? _c("label", { staticClass: "profile-image" }, [
+                        _c("img", {
+                          attrs: {
+                            src: "/storage/" + _vm.owner.thumbImagePath,
+                            alt: _vm.owner.name + "'s account"
+                          }
+                        })
+                      ])
+                    : _vm.owner.gravatar
+                    ? _c("div", { staticClass: "profile-image" }, [
+                        _c("img", {
+                          attrs: {
+                            src: _vm.owner.gravatar,
+                            alt: _vm.owner.name + "'s account"
+                          }
+                        })
+                      ])
+                    : _c("div", { staticClass: "icontext" }, [
+                        _c("h2", [
                           _vm._v(
-                            "\n                        " +
-                              _vm._s(message.message) +
-                              "\n                    "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "date" }, [
-                          _vm._v(
-                            "\n                        " +
-                              _vm._s(_vm._f("formatDate")(message.created_at)) +
-                              "\n                    "
+                            _vm._s(_vm.owner ? _vm.owner.name.charAt(0) : "")
                           )
                         ])
                       ])
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "user-message",
-                        style: "background:" + _vm.owner.hexColor
-                      },
-                      [
-                        _vm.owner.largeImagePath
-                          ? _c("label", { staticClass: "profile-image" }, [
-                              _c("img", {
-                                attrs: {
-                                  src: "/storage/" + _vm.owner.thumbImagePath,
-                                  height: "28",
-                                  width: "28",
-                                  alt: _vm.owner.name
-                                }
-                              })
-                            ])
-                          : _c("div", { staticClass: "icontext" }, [
-                              _c("h2", [
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.conversations.messages, function(message) {
+              return _vm.conversations.messages.length
+                ? _c("div", { staticClass: "list" }, [
+                    message.user_id == _vm.loaduser.id
+                      ? _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "field" }, [
+                            _c("div", { staticClass: "text" }, [
+                              _c("div", [
                                 _vm._v(
-                                  _vm._s(
-                                    _vm.owner ? _vm.owner.name.charAt(0) : ""
-                                  )
+                                  "\n                            " +
+                                    _vm._s(message.message) +
+                                    "\n                        "
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "date" }, [
+                                _vm._v(
+                                  "\n                            " +
+                                    _vm._s(
+                                      _vm._f("formatDate")(message.created_at)
+                                    ) +
+                                    "\n                        "
                                 )
                               ])
                             ])
-                      ]
-                    )
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass: "user-message",
+                              style: "background:" + _vm.owner.hexColor
+                            },
+                            [
+                              _vm.owner.largeImagePath
+                                ? _c(
+                                    "label",
+                                    { staticClass: "profile-image" },
+                                    [
+                                      _c("img", {
+                                        attrs: {
+                                          src:
+                                            "/storage/" +
+                                            _vm.owner.thumbImagePath,
+                                          alt: _vm.owner.name + "'s account"
+                                        }
+                                      })
+                                    ]
+                                  )
+                                : _vm.owner.gravatar
+                                ? _c("div", { staticClass: "profile-image" }, [
+                                    _c("img", {
+                                      attrs: {
+                                        src: _vm.owner.gravatar,
+                                        alt: _vm.owner.name + "'s account"
+                                      }
+                                    })
+                                  ])
+                                : _c("div", { staticClass: "icontext" }, [
+                                    _c("h2", [
+                                      _vm._v(
+                                        _vm._s(
+                                          _vm.owner
+                                            ? _vm.owner.name.charAt(0)
+                                            : ""
+                                        )
+                                      )
+                                    ])
+                                  ])
+                            ]
+                          )
+                        ])
+                      : _c(
+                          "div",
+                          {
+                            staticClass: "row",
+                            class: { inv: message.user_id !== _vm.loaduser.id }
+                          },
+                          [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "user-message",
+                                style: "background:" + _vm.responder.hexColor
+                              },
+                              [
+                                _vm.responder.largeImagePath
+                                  ? _c(
+                                      "label",
+                                      { staticClass: "profile-image" },
+                                      [
+                                        _c("img", {
+                                          attrs: {
+                                            src:
+                                              "/storage/" +
+                                              _vm.responder.thumbImagePath,
+                                            alt:
+                                              _vm.responder.name + "'s account"
+                                          }
+                                        })
+                                      ]
+                                    )
+                                  : _vm.responder.gravatar
+                                  ? _c(
+                                      "div",
+                                      { staticClass: "profile-image" },
+                                      [
+                                        _c("img", {
+                                          attrs: {
+                                            src: _vm.responder.gravatar,
+                                            alt:
+                                              _vm.responder.name + "'s account"
+                                          }
+                                        })
+                                      ]
+                                    )
+                                  : _c("div", { staticClass: "icontext" }, [
+                                      _c("h2", [
+                                        _vm._v(
+                                          _vm._s(
+                                            _vm.responder
+                                              ? _vm.responder.name.charAt(0)
+                                              : ""
+                                          )
+                                        )
+                                      ])
+                                    ])
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "field" }, [
+                              _c("div", { staticClass: "text" }, [
+                                _c("div", [
+                                  _vm._v(
+                                    "\n                            " +
+                                      _vm._s(message.message) +
+                                      "\n                        "
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "date" }, [
+                                  _vm._v(
+                                    "\n                            " +
+                                      _vm._s(
+                                        _vm._f("formatDate")(message.created_at)
+                                      ) +
+                                      "\n                        "
+                                  )
+                                ])
+                              ])
+                            ])
+                          ]
+                        )
                   ])
-                : _c(
-                    "div",
+                : _vm._e()
+            })
+          ],
+          2
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _c(
+      "div",
+      [
+        _vm.conversations.modmessages.length
+          ? _c("div", { staticClass: "row submit" }, [
+              _c("div", { staticClass: "field" }, [
+                _c("div", { staticClass: "text" }, [
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.modmessage,
+                        expression: "modmessage"
+                      }
+                    ],
+                    class: { active: _vm.activeItem == "description" },
+                    attrs: { type: "text", rows: "4" },
+                    domProps: { value: _vm.modmessage },
+                    on: {
+                      click: function($event) {
+                        _vm.activeItem = "description"
+                      },
+                      blur: function($event) {
+                        _vm.activeItem = null
+                      },
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.modmessage = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "bottom" }, [
+                  _c(
+                    "button",
                     {
-                      staticClass: "row",
-                      class: { inv: message.user_id !== _vm.loaduser.id }
+                      class: { bspin: _vm.dis },
+                      attrs: { disabled: _vm.dis },
+                      on: { click: _vm.sendMessage }
                     },
-                    [
+                    [_vm._v("Send message")]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "user-message",
+                  style: "background:" + _vm.owner.hexColor
+                },
+                [
+                  _vm.owner.largeImagePath
+                    ? _c("label", { staticClass: "profile-image" }, [
+                        _c("img", {
+                          attrs: {
+                            src: "/storage/" + _vm.owner.thumbImagePath,
+                            alt: _vm.owner.name + "'s account"
+                          }
+                        })
+                      ])
+                    : _vm.owner.gravatar
+                    ? _c("div", { staticClass: "profile-image" }, [
+                        _c("img", {
+                          attrs: {
+                            src: _vm.owner.gravatar,
+                            alt: _vm.owner.name + "'s account"
+                          }
+                        })
+                      ])
+                    : _c("div", { staticClass: "icontext" }, [
+                        _c("h2", [
+                          _vm._v(
+                            _vm._s(_vm.owner ? _vm.owner.name.charAt(0) : "")
+                          )
+                        ])
+                      ])
+                ]
+              )
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm._l(_vm.conversations.modmessages, function(message) {
+          return _vm.conversations.modmessages.length
+            ? _c("div", { staticClass: "list" }, [
+                message.user_id == _vm.loaduser.id
+                  ? _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "field" }, [
+                        _c("div", { staticClass: "text" }, [
+                          _c("div", [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(message.comments) +
+                                "\n                        "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "date" }, [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(
+                                  _vm._f("formatDate")(message.created_at)
+                                ) +
+                                "\n                        "
+                            )
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
                       _c(
                         "div",
                         {
                           staticClass: "user-message",
-                          style: "background:" + _vm.responder.hexColor
+                          style: "background:" + _vm.owner.hexColor
                         },
                         [
-                          _vm.responder.largeImagePath
+                          _vm.owner.largeImagePath
                             ? _c("label", { staticClass: "profile-image" }, [
                                 _c("img", {
                                   attrs: {
-                                    src:
-                                      "/storage/" +
-                                      _vm.responder.thumbImagePath,
-                                    height: "28",
-                                    width: "28",
-                                    alt: _vm.responder.name
+                                    src: "/storage/" + _vm.owner.thumbImagePath,
+                                    alt: _vm.owner.name + "'s account"
+                                  }
+                                })
+                              ])
+                            : _vm.owner.gravatar
+                            ? _c("div", { staticClass: "profile-image" }, [
+                                _c("img", {
+                                  attrs: {
+                                    src: _vm.owner.gravatar,
+                                    alt: _vm.owner.name + "'s account"
                                   }
                                 })
                               ])
@@ -681,101 +1007,92 @@ var render = function() {
                                 _c("h2", [
                                   _vm._v(
                                     _vm._s(
-                                      _vm.responder
-                                        ? _vm.responder.name.charAt(0)
-                                        : ""
+                                      _vm.owner ? _vm.owner.name.charAt(0) : ""
                                     )
                                   )
                                 ])
                               ])
                         ]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "field" }, [
-                        _c("div", { staticClass: "text" }, [
-                          _c("div", [
-                            _vm._v(
-                              "\n                        " +
-                                _vm._s(message.message) +
-                                "\n                    "
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "date" }, [
-                            _vm._v(
-                              "\n                        " +
-                                _vm._s(
-                                  _vm._f("formatDate")(message.created_at)
-                                ) +
-                                "\n                    "
-                            )
+                      )
+                    ])
+                  : _c(
+                      "div",
+                      {
+                        staticClass: "row",
+                        class: { inv: message.user_id !== _vm.loaduser.id }
+                      },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "user-message",
+                            style: "background:" + _vm.responder.hexColor
+                          },
+                          [
+                            _vm.responder.largeImagePath
+                              ? _c("label", { staticClass: "profile-image" }, [
+                                  _c("img", {
+                                    attrs: {
+                                      src:
+                                        "/storage/" +
+                                        _vm.responder.thumbImagePath,
+                                      alt: _vm.responder.name + "'s account"
+                                    }
+                                  })
+                                ])
+                              : _vm.responder.gravatar
+                              ? _c("div", { staticClass: "profile-image" }, [
+                                  _c("img", {
+                                    attrs: {
+                                      src: _vm.responder.gravatar,
+                                      alt: _vm.responder.name + "'s account"
+                                    }
+                                  })
+                                ])
+                              : _c("div", { staticClass: "icontext" }, [
+                                  _c("h2", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.responder
+                                          ? _vm.responder.name.charAt(0)
+                                          : ""
+                                      )
+                                    )
+                                  ])
+                                ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "field" }, [
+                          _c("div", { staticClass: "text" }, [
+                            _c("div", [
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(message.comments) +
+                                  "\n                        "
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "date" }, [
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(
+                                    _vm._f("formatDate")(message.created_at)
+                                  ) +
+                                  "\n                        "
+                              )
+                            ])
                           ])
                         ])
-                      ])
-                    ]
-                  )
-            ])
-          : _vm._e()
-      }),
-      _vm._v(" "),
-      _vm.conversations.modmessages.lenght
-        ? _c("div", [
-            _c("h3", [
-              _vm._v(
-                _vm._s(_vm.conversations.modmessages[0].event.name) +
-                  " Comments"
-              )
-            ])
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _vm._l(_vm.conversations.modmessages, function(message) {
-        return _c("div", { staticClass: "list" }, [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "field" }, [
-              _c("div", { staticClass: "text" }, [
-                _c("a", { attrs: { href: _vm.url } }, [
-                  _c("div", [
-                    _vm._v(
-                      "\n                            " +
-                        _vm._s(message.comments) +
-                        "\n                        "
+                      ]
                     )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "date" }, [
-                  _vm._v(
-                    "\n                        " +
-                      _vm._s(_vm._f("formatDate")(message.created_at)) +
-                      "\n                    "
-                  )
-                ])
               ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "image" }, [
-              _c("img", {
-                attrs: {
-                  src:
-                    "/storage/" +
-                    (message.user_id == _vm.loaduser.id
-                      ? _vm.owner.image_path
-                        ? _vm.owner.image_path
-                        : _vm.anon
-                      : _vm.responder.image_path
-                      ? _vm.responder.image_path
-                      : _vm.anon),
-                  alt: "message"
-                }
-              })
-            ])
-          ])
-        ])
-      })
-    ],
-    2
-  )
+            : _vm._e()
+        })
+      ],
+      2
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true

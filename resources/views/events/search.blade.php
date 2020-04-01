@@ -9,7 +9,7 @@
 @section('content')
 
 <div id="bodyArea">
-    <search-listing user="{{ auth()->id() }}" :categories="{{ $categories }}" :searchedevents="{{json_encode($searchedevents)}}">
+    <search-listing user="{{ auth()->id() }}" :categories="{{ $categories }}" :searchedevents="{{ $searchedevents }}">
 </div>
 
 @endsection

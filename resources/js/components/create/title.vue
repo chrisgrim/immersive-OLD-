@@ -5,9 +5,14 @@
         </div>
 	    <div class="section">
             <div class="text">
-    		    <div class="field">
+                <div @mouseover="showEdit=true" v-if="approved" class="field">
+                    <label>Title</label>
+                    <p class="name">{{name}}</p>
+                    <button class="editTitle" v-if="showEdit" @click.prevent="showModal">Edit</button>
+                </div>
+    		    <div v-else="approved" class="field">
     				<label>Stand out from the other events with a great title</label>
-    	            <input 
+    	            <input
     	            type="text" 
     	            v-model="name" 
     	            placeholder=" "
@@ -48,6 +53,20 @@
 	    <div class="submit">
 	        <button :disabled="dis" @click.prevent="submitName()" class="create"> Next </button>
 	    </div>
+        <modal v-show="modal" @close="modal = false">
+            <div slot="header">
+                <div class="circle del">
+                    <p>X</p>
+                </div>
+            </div>
+            <div slot="body"> 
+                <h3>Changing the event name?</h3>
+                <p>Editing the event name will require the event to be reapproved.</p>
+            </div>
+            <div slot="footer">
+                <button class="btn del" @click="onApply()">Change</button>
+            </div>
+        </modal>
     </div>
 </template>
 
@@ -67,6 +86,10 @@
                 tagLine: '',
                 activeItem: null,
                 dis:false,
+                approved: this.event.approval_process == 'approved' ? true : false,
+                showEdit: false,
+                modal: false,
+                reapply: '',
 			}
 		},
 
@@ -85,6 +108,7 @@
 				if (this.$v.$invalid) { return false }
 				this.dis = true;
                 let submitObject = {
+                    reapply: this.reapply ? this.reapply : null,
                     name: this.name,
                     tagline: this.tagLine
                 };
@@ -94,6 +118,16 @@
                 })
             	.catch(error => { this.serverErrors = error.response.data.errors; this.dis = false; });
 			},
+
+            showModal() {
+                this.modal = true;
+            },
+
+            onApply() {
+                this.reapply = 'reapply';
+                this.approved = false;
+                this.modal = false;
+            },
 
             // If there is data in Database it will load from the database
             getDatabase() {

@@ -23,7 +23,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','largeImagePath','thumbImagePath', 'has_unread'
+        'name', 'email', 'password','largeImagePath','thumbImagePath', 'has_unread','provider','provider_id', 'gravatar'
     ];
 
     /**
@@ -68,7 +68,8 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function organizers() 
     {
-        return $this->hasMany(Organizer::class);
+        return $this->hasMany(Organizer::class)
+                    ->orderBy('created_at', 'DESC');
     }
 
     /**
@@ -184,8 +185,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->conversations()->count() ? true : false;    
     }
 
-
-
     /**
     * Creates a new event
     *
@@ -204,6 +203,15 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getUserTypeAttribute()
     {
         return $this->role()->first();    
+    }
+
+    public function getGravatar()
+    {
+        $hash = md5(strtolower(trim($this->email)));
+        $url = "http://www.gravatar.com/avatar/$hash?d=404";
+        if (!strstr(get_headers($url, 1)[0], '404 Not Found')) {
+            $this->update([ 'gravatar' => "http://www.gravatar.com/avatar/$hash?s=180"]);
+        }
     }
 
     /**

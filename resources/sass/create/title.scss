@@ -8,6 +8,18 @@
             float: left;
             margin:0;
             padding: 0% 10% 0% 5%;
+            & .name {
+                display: inline-block;
+                color: #484848;
+                font-size: 1.5rem;
+            }
+            & button.editTitle {
+                color: white;
+                padding: .4rem 1rem;
+                background: $default-color;
+                margin-left: 1rem;
+                font-family: "Montserrat", sans-serif;
+            }
         }
         & .image {
             min-height: 30rem;

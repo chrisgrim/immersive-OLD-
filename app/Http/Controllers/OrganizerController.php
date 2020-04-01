@@ -55,10 +55,11 @@ class OrganizerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(OrganizerUpdateRequest $request)
-    {
+    {   
+        if (!strstr(get_headers($request->website, 1)[0], '200 OK')) {return abort(404, "broken");}
         $validated = $request->validated();
         $organizer = Organizer::Create($request->except(['imagePath', 'user_id']) + ['user_id' => auth()->id()]);
-        Organizer::saveImages($organizer, $request, 600, 600);
+        $request->imagePath ? Organizer::saveImages($organizer, $request, 600, 600) : null;
     }
 
     /**
@@ -94,9 +95,12 @@ class OrganizerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(OrganizerUpdateRequest $request, Organizer $organizer)
-    {   
+    {
+        if (!strstr(get_headers($request->website, 1)[0], '200 OK')) {return abort(404, "broken");}
         $validated = $request->validated();
-        $request->name !== $organizer->name ? Organizer::updateImages($organizer, $request) : null;
+        if($request->name !== $organizer->name) {
+            $request->imagePath ? Organizer::updateImages($organizer, $request) : null;
+        }
         $organizer = Organizer::updateOrCreate(
             [
                 'id' => $request->id,
@@ -124,12 +128,11 @@ class OrganizerController extends Controller
      */
     public function destroy(Organizer $organizer)
     {
-        //
+        $organizer->events->first->exists() ? null :  $organizer->deleteOrganizer($organizer);
     }
 
     public function message(Request $request, Organizer $organizer, User $user)
-    {
-        
+    {        
         $conversation = DB::table('conversation_user as a')
                 ->join('conversation_user as b', 'a.id', '<','b.id')
                 ->where(function($q) use ($user, $organizer){
@@ -146,6 +149,7 @@ class OrganizerController extends Controller
                 'message' => $request->message
             ]);
         } else {
+            if( $user->id == $organizer->user->id ) {return false;};
             $ids = [$user->id, $organizer->user->id];
             $conversation = Conversation::create();
             $conversation->users()->sync($ids);
@@ -166,7 +170,12 @@ class OrganizerController extends Controller
             'username' => $user->name,
         ];
 
-        $organizer->email ? $dest = $organizer->email : $dest = $organizer->user->email;
+        if($organizer->email) {
+            $dest = $organizer->user->email;
+        } else {
+            $dest = $organizer->email;
+        };
+
         Mail::to($dest)->send(new ContactUser($attributes));
     }
 }

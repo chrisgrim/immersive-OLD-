@@ -32,6 +32,7 @@ class EventController extends Controller
     {
         $events = Event::search('*')
             ->where('closingDate', '>=', 'now/d')
+            ->take(20)
             ->get();
         $categories = Category::all();
         $staffpicks = StaffPick::whereDate('end_date','>=', Carbon::now())
@@ -39,6 +40,10 @@ class EventController extends Controller
             ->orderBy('rank', 'ASC')
             ->get();
         return view('events.index',compact('events', 'categories','staffpicks'));
+    }
+
+    public function test() {
+        return view('emails.event-approved');
     }
 
     /**
@@ -94,7 +99,7 @@ class EventController extends Controller
     public function show(Event $event)
     {
         if(!$event->approved) { return redirect('/');}
-        $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'eventreviews', 'staffpick');
+        $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'eventreviews', 'staffpick', 'advisories');
         return view('events.show', compact('event'));
     }
 
@@ -162,6 +167,12 @@ class EventController extends Controller
             'name' => request('name'),
             'tag_line' => request('tagline')
         ]);
+        if($request->reapply){
+            $event->update([
+                'approval_process' => 'inProgress',
+                'approved' => false
+            ]);
+        };
     }
 
     /**
@@ -172,7 +183,7 @@ class EventController extends Controller
      */
     public function review(Event $event)
     {
-        $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories');
+        $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'advisories');
         return view('create.review', compact('event'));
     }
 

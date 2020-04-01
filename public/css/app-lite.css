@@ -404,6 +404,14 @@ input.general {
   border-radius: 5rem;
 }
 
+.event .body .organizer .right .image .img .icontext h2 {
+  color: white;
+  padding: 1.3rem;
+  text-align: center;
+  font-size: 6rem;
+  margin: 0;
+}
+
 .event .body .organizer .right .name {
   margin: 0px;
   word-wrap: break-word;
@@ -421,7 +429,6 @@ input.general {
   font-weight: 400;
   line-height: 2.7rem;
   color: #484848;
-  margin-top: 2.2rem;
   margin-bottom: 4rem;
 }
 
@@ -533,6 +540,10 @@ input.general {
   line-height: 1.8rem;
   color: #767676;
   display: inline-block;
+}
+
+.event .body .details .content {
+  padding: 6.5rem 0rem 1rem 0rem;
 }
 
 .event .body .details .block {
@@ -654,7 +665,7 @@ input.general {
   right: 0px;
   background: white;
   display: grid;
-  grid-template-columns: 1fr 10rem 12rem;
+  grid-template-columns: 1fr auto 12rem;
   z-index: 900;
   padding: 1.6rem 8rem;
   -webkit-box-align: center;
@@ -671,7 +682,7 @@ input.general {
 .event-bottom-bar .event-name {
   margin: 0px;
   word-wrap: break-word;
-  font-size: 12px;
+  font-size: 1.4rem;
   font-weight: 800;
   line-height: 1.3333333333em;
   letter-spacing: 0.0833333333em;
@@ -1047,10 +1058,10 @@ input.general {
 .profile-button .icontext h2 {
   z-index: 10;
   color: white;
-  font-size: 2.6rem;
+  font-size: 2.4rem;
   text-transform: uppercase;
   margin: 0;
-  font-family: "Times New Roman", Times, serif;
+  font-family: "Montserrat", sans-serif;
   -webkit-touch-callout: none;
   /* iOS Safari */
   -webkit-user-select: none;
@@ -1094,8 +1105,9 @@ ul.subdropdown {
   min-width: 100%;
   right: 0;
   box-shadow: -1px 1px 5px 0px #cecece;
-  margin-right: 2rem;
   background: white;
+  top: 3.6rem;
+  right: -2rem;
 }
 
 ul.subdropdown {
@@ -1115,6 +1127,8 @@ ul.subdropdown li a {
   white-space: nowrap;
   background-color: white;
   float: left;
+  width: 100%;
+  text-align: left;
 }
 
 ul.subdropdown li a:hover {
@@ -1148,15 +1162,28 @@ ul.subdropdown li a:hover {
 }
 
 .verify_bar {
-  width: 20%;
-  background: #008489;
-  color: white;
+  width: 100%;
+  background: #00000082;
   position: fixed;
   z-index: 1000;
-  bottom: 0;
-  border-radius: 1rem 1rem 0rem 0rem;
-  min-height: 20rem;
-  right: 7%;
+  right: 0;
+  padding: 1.4rem;
+  padding-bottom: 3rem;
+  text-align: center;
+  top: 0;
+  height: 100%;
+  display: grid;
+  -webkit-box-align: center;
+          align-items: center;
+}
+
+.verify_bar .panel {
+  width: 40%;
+  background: white;
+  margin: auto;
+  border-radius: 0.4rem;
+  padding: 3rem;
+  position: relative;
 }
 
 .verify_bar .text {
@@ -1164,25 +1191,45 @@ ul.subdropdown li a:hover {
   padding: 2rem;
 }
 
+.verify_bar .text .close {
+  display: inline-block;
+  position: absolute;
+  top: 3%;
+  right: 3%;
+  border: 1px solid black;
+  border-radius: 50%;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+}
+
+.verify_bar .text p {
+  font-size: 1.34rem;
+}
+
+.verify_bar .text h3 {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+}
+
 .verify_bar .submit {
   display: inline-block;
-  float: right;
-  padding: 2rem;
+  padding: 0rem 2rem;
 }
 
 .verify_bar .submit p {
-  display: inline-block;
+  font-size: 1.34rem;
 }
 
 .verify_bar .submit form {
   display: inline-block;
 }
 
-.verify_bar .submit button {
+.verify_bar .submit .another {
   background: none;
-  color: black;
+  color: blue;
   border: none;
   padding: 0;
+  font-weight: 500;
   cursor: pointer;
 }
 
@@ -1706,6 +1753,7 @@ fieldset[disabled] .multiselect {
           justify-content: center;
   -webkit-box-align: center;
           align-items: center;
+  z-index: 901;
 }
 
 .modal {
@@ -2654,11 +2702,8 @@ span.flatpickr-weekday {
 }
 
 .leaflet-marker-icon.icons {
-  background: white;
-  border-radius: 5rem;
-  border: solid 2px black;
-  width: 5rem !important;
-  margin-left: -2.5rem !important;
+  width: 20rem !important;
+  margin-left: -10rem !important;
   height: 3rem !important;
   text-align: center;
 }
@@ -2670,6 +2715,11 @@ span.flatpickr-weekday {
   line-height: 1.28571em;
   color: inherit;
   margin: 0.4rem 0rem;
+  background: white;
+  border-radius: 5rem;
+  border: 2px solid black;
+  display: inline-block;
+  padding: 0.5rem 1rem 1rem 1rem;
 }
 
 div.leaflet-popup-content {
@@ -2685,11 +2735,11 @@ div.leaflet-popup-content-wrapper {
 
 div.leaflet-popup-content-wrapper .pop {
   width: 100%;
-  height: 25rem;
+  min-height: 16rem;
 }
 
 div.leaflet-popup-content-wrapper .pop .back {
-  height: 50%;
+  height: 12rem;
   background-size: cover;
   background-repeat: no-repeat;
   border-radius: 0.5rem 0.5rem 0rem 0rem;

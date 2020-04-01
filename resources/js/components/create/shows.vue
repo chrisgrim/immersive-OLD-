@@ -12,7 +12,9 @@
                     class="create-input area"
                     :class="{ active: activeItem == 'times','error': $v.showTimes.$error }"
                     rows="8" 
-                    placeholder="Please provide a brief description of daily show times...8:00PM and 10:00PM shows or 10:00PM shows during the week and 12:00PM during the weekend." 
+                    placeholder="Please provide a brief description of daily show times... 
+8:00PM and 10:00PM shows...
+10:00PM shows during the week and 12:00PM during the weekend..." 
                     required
                     @click="activeItem = 'times'"
                     @blur="activeItem = null"
@@ -75,7 +77,8 @@
                     <label> Select all show dates</label>
                     <flat-pickr
                         v-model="dates"
-                        :config="config"                                                  
+                        :config="config"
+                        ref="datePicker"                                              
                         class="form-control"
                         placeholder="Select date"               
                         name="dates">
@@ -221,11 +224,11 @@ export default {
                 window.location.href = `${this.eventUrl}/description`; 
             });
         },
-
     },
 
     mounted() {
     	this.load();
+        setTimeout(() => this.$refs.datePicker.fp.jumpToDate(new Date()), 100);
     },
 
     validations: {

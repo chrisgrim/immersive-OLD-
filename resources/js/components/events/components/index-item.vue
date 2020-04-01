@@ -2,7 +2,14 @@
     <div :class="{ 'dis': isDisabled }" class="item">
         <favorite :user="user" :inputclass="showEventClass" :event="event"></favorite>
         <a :href="url">
-            <div class="image" :style="isModified ? isModified : divBackground"></div>
+            <div class="image" :style="isModified ? isModified : divBackground">
+                <div v-if="this.event.approval_process == 'ready'">
+                    <h3><b>Under Review</b></h3>
+                </div>
+                <div v-if="this.event.approval_process == 'hasIssues'">
+                    <h3><b>Needs Changes</b></h3>
+                </div>
+            </div>
             <div class="etitle">
                 <h3>{{ event.name }}</h3>
             </div>
@@ -20,17 +27,6 @@
             loadurl: { type:String },
             user: { type:String }
         },
-        computed: {
-            // isSubmitted() {
-            //     return this.event.approval_process == 'ready' ? this.isModified = `background-image: url('/storage/default-avatar/default-disabled.png'),url('${this.shortBack}')` : false; 
-            // },
-            // shortBack() {
-            //     return this.event.thumbImagePath ? `/storage/${this.event.thumbImagePath}` : 'test';
-            // },
-            // disabledBackground() {
-            //     return `background-image: url('/storage/default-avatar/default-disabled.png'),url('${this.shortBack}')`;
-            // },
-        },
 
         data() {
             return {
@@ -45,17 +41,16 @@
         methods: {
 
             eventStatus() {
-                if (this.event.approval_process == 'ready') {
-                    this.isDisabled = true;
-                    return this.isModified = `background-image: url('/storage/default-avatar/default-disabled.png'),url('/storage/${this.event.thumbImagePath}')`
-                }
-                if (this.event.approval_process == 'hasIssues') {
-                    return this.isModified = `background-image: url('/storage/default-avatar/default-disabled.png'),url('/storage/${this.event.thumbImagePath}')`
+                if (this.event.approval_process == 'ready' || this.event.approval_process == 'hasIssues') {
+                    this.event.approval_process == 'ready' ? this.isDisabled = true : '';
+                    return this.isModified = `background: linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)),url('/storage/${this.event.thumbImagePath}');`
                 }
             },
 
             getUrl() {
-
+                if (this.event.approval_process == 'hasIssues') {
+                    return this.url = `/create-event/${this.event.slug}/title`;
+                }
                 if (this.event.largeImagePath) {
                     return this.url = `/create-event/${this.event.slug}/images`;
                 }

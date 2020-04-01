@@ -11,6 +11,11 @@
                 width: 11rem;
                 height: 11rem;
                 position: relative;
+                &.non {
+                    border-radius: 50%;
+                    text-align: center;
+                    padding-top: .9rem;
+                }
                 & .icontext {
                     position: absolute;
                     width: 12rem;
@@ -104,6 +109,28 @@
                     font-weight: 300;
                     margin-left: 1rem;
                 }
+                & button {
+                    background: red;
+                    display: inline-block;
+                    padding: 1rem;
+                    border-radius: .3rem;
+                    color: white;
+                    margin-left: 1rem;
+                    border:none;
+                    cursor: pointer;
+                    &:disabled,
+                        button[disabled] {
+                          border: 1px solid #999999;
+                          background-color: #cccccc;
+                          color: #666666;
+                    }
+                    &.a {
+                        background: white;
+                        color:black;
+                        cursor: auto;
+                        border:1px solid black;
+                    }
+                }
             }
             & .loc {
                 margin-top: 5rem;
@@ -115,79 +142,6 @@
                 & #grid {
                     grid-template-columns: repeat(2, 1fr);
                 }
-            }
-        }
-        & .field {
-            width: 100%;
-            & label {
-                display: block;
-                margin: 2rem 0rem 1rem 0rem;
-                font-size: 1.5rem;
-                font-weight: 500;
-                color: #656565;
-            }
-            & input {
-                position: relative;
-                color: #484848;
-                background-color: white;
-                transition: border-color 0.2s ease 0s;
-                padding: 1.3rem 1rem;
-                border-width: 1px;
-                border-style: solid;
-                -o-border-image: initial;
-                border-image: initial;
-                border-radius: 5px;
-                border-color: #ebebeb;
-                margin: 0rem 0rem 1rem 0rem;
-                font-size: 1.4rem;
-                width: 100%;
-                &.active {
-                    border-color: rgb(0, 132, 137);
-                }
-                &.error {
-                    border-color: red;
-                }
-                &::placeholder {
-                    color:#adadad;
-                    font-size:1.4rem;
-                    font-family: inherit;
-                }
-            }
-            & textarea {
-                position: relative;
-                color: #484848;
-                background-color: white;
-                transition: border-color 0.2s ease 0s;
-                padding: 1.3rem 1rem;
-                border-width: 1px;
-                border-style: solid;
-                -o-border-image: initial;
-                border-image: initial;
-                border-radius: 5px;
-                border-color: #ebebeb;
-                margin: 0rem 0rem 1rem 0rem;
-                font-size: 1.4rem;
-                width: 100%;
-                &.active {
-                    border-color: rgb(0, 132, 137);
-                }
-                &.error {
-                    border-color: red;
-                }
-                &::placeholder {
-                    color:#adadad;
-                    font-size:1.4rem;
-                    font-family: inherit;
-                }
-            }
-            & button.save {
-                background: $default-color;
-                color:white;
-                border: none;
-            }
-            & button.cancel {
-                border:none;
-                color:$default-color;
             }
         }
     }

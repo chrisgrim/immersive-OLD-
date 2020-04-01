@@ -15,6 +15,8 @@ Route::GET('/', 'EventController@index')->name('home');
 
 Auth::routes(['verify' => true]);
 
+Route::GET('/test/test', 'EventController@test');
+
 
 Route::RESOURCE('events', 'EventController');
 Route::RESOURCE('categories', 'CategoryController');

@@ -1,10 +1,10 @@
 <template>
 	<div class="category">
-        <div class="ctitle">
-            <h2>Immersive Categories</h2>
-        </div>
 		 <div class="section">
             <div class="text">
+                <div class="ctitle">
+                    <h2>Immersive Categories</h2>
+                </div>
                 <multiselect 
                 v-show="categories.length > 0" 
                 v-model="selectedCategory" 
@@ -30,17 +30,15 @@
                 <div v-if="$v.selectedCategory.$error" class="validation-error">
                     <p class="error" v-if="!$v.selectedCategory.required">Please select your event's category</p>
                 </div>
+                <div>
+                    <p v-text="this.selectedCategory ? selectedCategory.description : ''"></p>
+                </div>
                 <div class="">
                     <button :disabled="dis" @click.prevent="submitCategory()" class="create"> Next </button>
                 </div>
             </div>
-            <div class="image">
-                <img v-if="this.selectedCategory" :src="'/storage/' + selectedCategory.largeImagePath " :alt="selectedCategory.name">
-                <div>
-                    <h2 v-text="this.selectedCategory ? selectedCategory.name : ''"></h2>
-                    <p v-text="this.selectedCategory ? selectedCategory.description : ''"></p>
-                </div>
-            </div>
+            <div class="image" v-if="selectedCategory" :style="`height:calc(${this.height}px - 7rem);background: url(/storage/${selectedCategory.largeImagePath})`"></div>
+            <div v-else class="image"></div>
         </div>
         <div class="inNav">
             <button :disabled="dis" class="create" @click.prevent="goBack()"> Back </button>
@@ -71,9 +69,11 @@
 				eventUrl:_.has(this.event, 'slug') ? `/create-event/${this.event.slug}` : null,
 				categoryOptions: this.categories,
 				activeItem: null,
+                height: 0,
                 dis: false,
 			}
 		},
+
 
 		methods: {
 
@@ -86,6 +86,10 @@
 				axios.patch(`${this.eventUrl}/category`, this.selectedCategory)
 				.then(response => { window.location.href = `${this.eventUrl}/shows` });
 			},
+
+            handleResize() {
+                this.height = window.innerHeight;
+            },
 
             load() {
             axios.get(`${this.eventUrl}/category/fetch?timestamp=${new Date().getTime()}`)
@@ -101,7 +105,13 @@
 		},
 
         created() {
+            window.addEventListener('resize', this.handleResize)
+            this.handleResize();
             this.load();
+        },
+
+        destroyed() {
+            window.removeEventListener('resize', this.handleResize)
         },
 
 		validations: {

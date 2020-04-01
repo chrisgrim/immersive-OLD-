@@ -6,7 +6,7 @@
                     <h2>Content Advisories</h2>
                 </div>
                 <div class="field">
-                    <label class="area">Explain the shows content</label>
+                    <label class="area">Include warnings and advisories</label>
                     <multiselect 
                     v-model="contentAdvisories" 
                     :show-labels="false"
@@ -90,7 +90,7 @@
                     </div>
                 </div>
                 <div class="field" v-if="contactLevel.length">
-                    <label> Is there sexual Violence? </label>
+                    <label> Is there sexual violence? </label>
                     <div id="cover">
                         <input v-model="advisories.sexualViolence" type="checkbox" id="checkbox">
                         <div id="bar"></div>

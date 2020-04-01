@@ -9,9 +9,6 @@
             <div class="name">
                 {{ data.name }}
             </div>
-            <div class="price">
-                {{data.price_range}}
-            </div>
         </div>
     </a>
   </div>

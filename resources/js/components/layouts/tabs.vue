@@ -1,20 +1,22 @@
 <template>
     <div>
         <div class="tab" role="tablist">
-            <div
-                v-for="(tab, index) in tabs"
-                class="ln"
-                :class="{ 'act': tab.isActive }"
-                :style="tab.isActive ? 'margin-bottom: -1px' : ''"
-            >
-                <button
-                    v-text="tab.title"
-                    :class="{ 'font-bold': tab.isActive }"
-                    class="focus:outline-none"
-                    role="tab"
-                    :aria-selected="tab.isActive"
-                    @click="activeTab = tab"
-                ></button>
+            <div class="content">
+                <div
+                    v-for="(tab, index) in tabs"
+                    class="ln"
+                    :class="{ 'act': tab.isActive }"
+                    :style="tab.isActive ? 'margin-bottom: -1px' : ''"
+                >
+                    <button
+                        v-text="tab.title"
+                        :class="{ 'font-bold': tab.isActive }"
+                        class="focus:outline-none"
+                        role="tab"
+                        :aria-selected="tab.isActive"
+                        @click="activeTab = tab"
+                    ></button>
+                </div>
             </div>
         </div>
 

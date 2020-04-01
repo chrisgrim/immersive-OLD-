@@ -1,5 +1,5 @@
 .messages {
-    max-width: 70%;
+    max-width: 100%;
     margin: auto;
     padding-top: 8rem;
     & .title {
@@ -10,35 +10,85 @@
     }
     & .row {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        padding: 3rem 1rem;
+        grid-template-columns: auto 1fr;
+        padding: 2rem 0rem;
         border-bottom: 1px solid #cecece;
-        align-items: center;
+        grid-gap: 4rem;
+  /*      align-items: center;*/
+            & p {
+                font-size: 1.5rem;
+                & span {
+                    font-size: 1.4rem;
+                }
+            }
             & .user {
+                display: grid;
+                grid-template-columns: 7rem 1fr;
+                align-items: start;
+                & .name {
+                    padding-top: 1.3rem;
+                    padding-left: 1rem;
+                }
+            }
+            & .event {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            align-items: center;
+            grid-template-columns: 7rem 1fr;
+            align-items: start;
             & .image {
                 width:5rem;
                 height:5rem;
+                margin: 1rem auto;
                 & img {
                     width:100%;
                     border-radius: 50%;
+                    object-fit: cover;
+                    height: 100%;
                 }
             }
+            & .name {
+                padding-top: 1.3rem;
+                padding-left: 1rem;
+            }
         }
+        & .message {
+            padding-top: 1.3rem;
+            padding-left: 1rem;
+        }
+    }
+    .tab-events {
+        margin: 0rem auto 5rem auto;
     }
 }
 .chat {
-    max-width: 50%;
     margin: auto;
-    padding-top: 8rem;
+    padding-top: 12rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    width: 72%;
+    grid-gap: 4rem;
+    & .ebox {
+        width: 40rem;
+        border:1px solid #c7c7c7;
+        & img {
+            width:100%;
+        }
+        & .cont {
+            padding: 0rem 1rem;
+        }
+    }
     & .row {
         display: grid;
-        grid-template-columns: 1fr .3fr;
+        grid-template-columns: 1fr auto;
         margin: 4rem 0rem;
+        grid-gap: 4rem;
         &.inv {
-            grid-template-columns: .3fr 1fr;
+            grid-template-columns: auto 1fr;
+        }
+        &.submit {
+            margin: 0rem;
+        }
+        & b {
+            font-size: 1.3rem;
         }
         & .field {
             & .text {
@@ -75,10 +125,10 @@
 }
 .user-message {
     position: relative;
-    width: 7rem;
-    height: 7rem;
+    width: 5rem;
+    height: 5rem;
     border-radius: 50%;
-    margin: 0rem auto;
+    margin: 1rem auto;
     & .icontext {
         position: absolute;
         width: 12rem;
@@ -91,10 +141,9 @@
     & h2 {
         z-index: 10;
         color: white;
-        font-size: 4.5rem;
+        font-size: 2.7rem;
         text-transform: uppercase;
         margin: 0;
-        font-family: "Times New Roman", Times, serif;
         -webkit-touch-callout: none; /* iOS Safari */
         -webkit-user-select: none; /* Safari */
         -khtml-user-select: none; /* Konqueror HTML */

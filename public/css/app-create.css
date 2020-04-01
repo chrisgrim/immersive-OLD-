@@ -254,6 +254,10 @@ select:-webkit-autofill:focus {
   width: 100%;
 }
 
+#create .checklist .item .text.f {
+  color: white;
+}
+
 #create .bar {
   height: 1rem !important;
   line-height: 0.8px !important;
@@ -395,7 +399,7 @@ button.create[disabled] {
 #create .organizer .image .img .loader {
   width: 48rem;
   height: 48rem;
-  background-color: #efefef;
+  background-color: white;
   border-radius: 1rem;
   margin: auto;
   position: relative;
@@ -410,6 +414,11 @@ button.create[disabled] {
   background-repeat: no-repeat;
   border-radius: 0.5rem;
   border: 1px solid #d2d2d2;
+  box-shadow: 0 15px 25px -4px rgba(0, 0, 0, 0.25), 0 -10px 15px -1px rgba(255, 255, 255, 0.6), inset 0 3px 4px -1px rgba(255, 255, 255, 0.2), inset 0 0 5px 1px rgba(255, 255, 255, 0.8), inset 0 20px 30px 0 rgba(255, 255, 255, 0.2);
+}
+
+#create .organizer .image .img .loader label:hover {
+  box-shadow: 0 15px 25px -4px rgba(0, 0, 0, 0.5), 0 -10px 15px -1px rgba(255, 255, 255, 0.6), inset 0 3px 4px -1px rgba(255, 255, 255, 0.2), inset 0 0 5px 1px rgba(255, 255, 255, 0.8), inset 0 20px 30px 0 rgba(255, 255, 255, 0.2);
 }
 
 #create .organizer .image .img .loader label .dash {
@@ -693,6 +702,20 @@ label.imgclick {
   padding: 0% 10% 0% 5%;
 }
 
+#create .title .text .name {
+  display: inline-block;
+  color: #484848;
+  font-size: 1.5rem;
+}
+
+#create .title .text button.editTitle {
+  color: white;
+  padding: 0.4rem 1rem;
+  background: #008489;
+  margin-left: 1rem;
+  font-family: "Montserrat", sans-serif;
+}
+
 #create .title .image {
   min-height: 30rem;
   width: 50%;
@@ -725,20 +748,20 @@ label.imgclick {
 }
 
 #create .category {
-  padding-top: 5rem;
-  width: 90%;
+  width: 100%;
   margin: auto;
 }
 
 #create .category .ctitle {
   margin-bottom: 1rem;
+  padding: 0;
 }
 
 #create .category .text {
   width: 50%;
   float: left;
   margin: 0;
-  padding: 0% 10% 0% 5%;
+  padding: 5rem 8.7% 0% 9.5%;
 }
 
 #create .category .image {
@@ -746,11 +769,8 @@ label.imgclick {
   float: right;
   margin: 0;
   padding: 0;
-}
-
-#create .category .image img {
-  width: 100%;
-  border-radius: 0.6rem;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
 }
 
 #create .shows {

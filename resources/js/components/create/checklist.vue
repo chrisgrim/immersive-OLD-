@@ -6,56 +6,56 @@
                     <button class="home" :class="{ review : onReview }">Home</button>
                 </a>
             </div>
-            <div v-if="this.$router.currentRoute.path === `/organizer/create`" class="item">
+            <div v-if="url == `/organizer/create`" class="item">
                 <div class="text">
                     <p>Organizer: </p>
                     <p>Let users know about your team!</p>
                 </div>
             </div>
-            <div v-if="this.$router.currentRoute.path === `/create-event/${this.event.slug}/title`" class="item">
+            <div v-if="url == `/create-event/${this.event.slug}/title`" class="item">
                 <div class="text">
                     <p>Title: </p>
                     <p>Make it a good one!</p>
                 </div>
             </div>
-            <div v-if="this.$router.currentRoute.path === `/create-event/${this.event.slug}/location`" class="item">
+            <div v-if="url == `/create-event/${this.event.slug}/location`" class="item">
                 <div class="text">
                     <p>Location: </p>
                     <p>Give your event an address</p>
                 </div>
             </div>
-            <div v-if="this.$router.currentRoute.path === `/create-event/${this.event.slug}/category`" class="item">
+            <div v-if="url == `/create-event/${this.event.slug}/category`" class="item">
                 <div class="text">
                     <p>Category: </p>
                     <p>Select the best fit for your event</p>
                 </div>
             </div>
-            <div v-if="this.$router.currentRoute.path === `/create-event/${this.event.slug}/shows`" class="item">
+            <div v-if="url == `/create-event/${this.event.slug}/shows`" class="item">
                 <div class="text">
                     <p>Shows: </p>
                     <p>Choose your Dates and Pricing</p>
                 </div>
             </div>
-            <div v-if="this.$router.currentRoute.path === `/create-event/${this.event.slug}/description`" class="item">
+            <div v-if="url == `/create-event/${this.event.slug}/description`" class="item">
                 <div class="text">
                     <p>Description: </p>
                     <p>Let your users know about the event</p>
                 </div>
             </div>
-            <div v-if="this.$router.currentRoute.path === `/create-event/${this.event.slug}/advisories`" class="item">
+            <div v-if="url == `/create-event/${this.event.slug}/advisories`" class="item">
                 <div class="text">
                     <p>Advisories: </p>
                     <p>Provide warnings</p>
                 </div>
             </div>
-            <div v-if="this.$router.currentRoute.path === `/create-event/${this.event.slug}/images`" class="item">
+            <div v-if="url == `/create-event/${this.event.slug}/images`" class="item">
                 <div class="text">
                     <p>Image: </p>
                     <p>Entice our visitors with a great image</p>
                 </div>
             </div>
-            <div v-if="this.$router.currentRoute.path === `/create-event/${this.event.slug}/review`" class="item">
-                <div class="text">
+            <div v-if="url == `/create-event/${this.event.slug}/review`" class="item">
+                <div class="text f">
                     <p>Review: </p>
                     <p>One last chance to make sure everything looks good</p>
                 </div>
@@ -99,7 +99,7 @@
 
         computed: {
             onReview() {
-                return this.$router.currentRoute.path === `/create-event/${this.event.slug}/review` ? true : '';
+                return this.url === `/create-event/${this.event.slug}/review` ? true : '';
             }
         },
 
@@ -113,6 +113,7 @@
                 onDescription: false,
                 onAdvisories: false,
                 onImage: false,
+                url: window.location.pathname,
             }
         },
 
@@ -173,7 +174,7 @@
 
             notAllowed() {
                 if(this.event.approval_process) {
-                    return (['inProgress', 'hasIssues'].includes(this.event.approval_process)) ? '' : window.location.href = '/create-event/edit';
+                    return (['inProgress', 'hasIssues', 'approved'].includes(this.event.approval_process)) ? '' : window.location.href = '/create-event/edit';
                 }
             }
 

@@ -27,9 +27,9 @@
             placeholder="Owner Id"
             @blur="onSaveUser(organizer)"
             />
-            <button @click.prevent="showModal(user)" class="delete-circle"><p>X</p></button>
+            <button @click.prevent="showModal(organizer, 'deleteOrg')" class="delete-circle"><p>X</p></button>
         </div>
-        <modal v-show="isEditModalVisible" @close="isEditModalVisible = false">
+         <modal v-show="modal == 'deleteOrg'" @close="modal = null">
             <div slot="header">
                 <div class="circle del">
                     <p>X</p>
@@ -37,10 +37,10 @@
             </div>
             <div slot="body"> 
                 <h3>Are you sure?</h3>
-                <p>You are deleting the organizer {{modalDelete.name}} and its events.</p>
+                <p>You are deleting your {{selectedModal.name}} organization.</p>
             </div>
             <div slot="footer">
-                <button class="btn del" @click.prevent="onDelete(modalDelete)">Delete</button>
+                <button class="btn del" @click="deleteOrg()">Delete</button>
             </div>
         </modal>
     </div>
@@ -65,6 +65,8 @@
                 isEditModalVisible: false,
                 modalDelete: '',
                 isLoading: '',
+                selectedModal: '',
+                modal: '',
 
             }
         },
@@ -77,18 +79,22 @@
 
         methods: {
 
-            showModal(val) {
-                this.modalDelete = val;
-                this.isEditModalVisible = true;
+            showModal(event, arr) {
+                this.selectedModal = event;
+                this.modal = arr;
             },
 
-            onDelete(val) {
-                axios.delete(`/regions/${val.id}`)
-                .then(response => { 
-                    this.isEditModalVisible = false;
-                    this.onLoad();
+            deleteOrg(index) {
+                axios.delete(`/organizer/${this.selectedModal.slug}`)
+                .then(response => {
+                    this.events = response.data;
+                    this.selectedModal = '';
+                    this.modal = '';
+                    this.loadEvents();
                 })
-                .catch(error => { this.serverErrors = error.response.data.errors; });
+                .catch(errorResponse => { 
+                    errorResponse.response.data.errors 
+                });
             },
 
             onLoad() {

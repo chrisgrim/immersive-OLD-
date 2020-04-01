@@ -1,6 +1,5 @@
 <template>
     <div>
-        <vue-alert message="verify" v-if="loaduser ? !loaduser.email_verified_at : null"></vue-alert>
         <div class="head" :class="page">
             <nav class="nav">
                 <div class="logo">
@@ -76,7 +75,7 @@
                 type:Object,
             },
             createdevents: {
-                type:String
+                type:String,
             },
         }, 
 

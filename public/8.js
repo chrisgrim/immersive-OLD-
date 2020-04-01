@@ -227,6 +227,43 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -267,13 +304,27 @@ __webpack_require__.r(__webpack_exports__);
       isLoading: false,
       onUserEdit: false,
       onUpClass: false,
-      validationErrors: ''
+      validationErrors: '',
+      onSent: false,
+      dis: false
     };
   },
   methods: {
     userEdit: function userEdit() {
       this.onUserEdit = true;
       this.validationErrors = '';
+    },
+    resend: function resend() {
+      var _this = this;
+
+      this.dis = true;
+      axios.post("/email/resend").then(function (response) {
+        _this.onSent = true;
+        _this.dis = false;
+        console.log(response.data);
+      })["catch"](function (errorResponse) {
+        console.log(errorResponse.data);
+      });
     },
     onImageUpload: function onImageUpload(image) {
       this.finalImage = image.file;
@@ -298,7 +349,7 @@ __webpack_require__.r(__webpack_exports__);
       this.getAddressObject(place.address_components, place.geometry.location.lat(), place.geometry.location.lng());
     },
     addImage: function addImage(image) {
-      var _this = this;
+      var _this2 = this;
 
       this.isLoading = true;
       this.dis = true;
@@ -311,17 +362,17 @@ __webpack_require__.r(__webpack_exports__);
         console.log(response.data);
       })["catch"](function (errorResponse) {
         console.log(errorResponse.data);
-        errorResponse.data ? _this.validationErrors = errorResponse.response.data.errors : _this.validationErrors = {
+        errorResponse.data ? _this2.validationErrors = errorResponse.response.data.errors : _this2.validationErrors = {
           wrong: 'sorry! something has gone wrong'
         };
-        _this.avatar = '/storage/website-files/default-user-icon.jpg';
-        _this.isLoading = false;
-        _this.onUpClass = false;
-        _this.dis = false;
+        _this2.avatar = '/storage/website-files/default-user-icon.jpg';
+        _this2.isLoading = false;
+        _this2.onUpClass = false;
+        _this2.dis = false;
       });
     },
     submitUser: function submitUser() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.$v.$touch();
 
@@ -336,14 +387,14 @@ __webpack_require__.r(__webpack_exports__);
       };
       axios.patch("/users/".concat(this.user.id), data).then(function (response) {
         console.log(response.data);
-        _this2.onUserEdit = false;
+        _this3.onUserEdit = false;
       })["catch"](function (errorResponse) {
-        _this2.validationErrors = errorResponse.response.data.errors;
+        _this3.validationErrors = errorResponse.response.data.errors;
       });
     },
     // Gets data from Google Maps and inputs into Vue forms correctly
     getAddressObject: function getAddressObject(address_components, geometryLat, geometryLgn) {
-      var _this3 = this;
+      var _this4 = this;
 
       var ShouldBeComponent = {
         home: ["street_number"],
@@ -367,9 +418,9 @@ __webpack_require__.r(__webpack_exports__);
         for (var shouldBe in ShouldBeComponent) {
           if (ShouldBeComponent[shouldBe].indexOf(component.types[0]) !== -1) {
             if (shouldBe === "country") {
-              _this3.location[shouldBe] = component.short_name;
+              _this4.location[shouldBe] = component.short_name;
             } else {
-              _this3.location[shouldBe] = component.long_name;
+              _this4.location[shouldBe] = component.long_name;
             }
           }
         }
@@ -822,58 +873,144 @@ var render = function() {
   return _c("div", { staticClass: "profile" }, [
     _c("div", { staticClass: "body" }, [
       _c("div", { staticClass: "left" }, [
-        parseFloat(this.auth) !== _vm.user.id
-          ? _c("div", { staticClass: "image" }, [
-              _vm.loaduser.largeImagePath
-                ? _c("img", {
-                    attrs: { src: "" + (_vm.avatar ? _vm.avatar : ""), alt: "" }
+        parseFloat(this.auth) !== _vm.user.id || !_vm.user.email_verified_at
+          ? _c("div", [
+              _vm.avatar
+                ? _c("div", {
+                    staticClass: "image non",
+                    style: "background:" + _vm.avatar
                   })
-                : _c("h2", [_vm._v(_vm._s(_vm.loaduser.name.charAt(0)))])
+                : _vm.user.gravatar
+                ? _c("div", {
+                    staticClass: "image non",
+                    style:
+                      "background:url('" +
+                      _vm.user.gravatar +
+                      ")center no-repeat;background-size: cover;"
+                  })
+                : _c(
+                    "div",
+                    {
+                      staticClass: "image non",
+                      style: "background:" + _vm.user.hexColor
+                    },
+                    [_c("h2", [_vm._v(_vm._s(_vm.loaduser.name.charAt(0)))])]
+                  )
             ])
-          : _vm._e(),
-        _vm._v(" "),
-        parseFloat(this.auth) == _vm.user.id
-          ? _c("div", { staticClass: "image" }, [
-              !this.loaduser.thumbImagePath
-                ? _c("div", { staticClass: "icontext" }, [
-                    _c("h2", [_vm._v(_vm._s(_vm.loaduser.name.charAt(0)))])
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _c(
-                "label",
-                {
-                  staticClass: "wrapper",
-                  class: {
-                    imageloaded: _vm.avatar,
-                    imageloading: _vm.onUpClass
-                  },
-                  style:
-                    "background:" +
-                    (_vm.avatar ? _vm.avatar : _vm.loaduser.hexColor)
-                },
-                [
-                  _c("image-upload", { on: { loaded: _vm.onImageUpload } }),
-                  _vm._v(" "),
-                  _c("CubeSpinner", { attrs: { loading: _vm.isLoading } }),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "text" }, [
-                    _vm.onUpClass
-                      ? _c("p", [_vm._v("Loading")])
-                      : _c("p", [_vm._v("Update")]),
+          : _c("div", { staticClass: "image" }, [
+              _vm.avatar
+                ? _c(
+                    "label",
+                    {
+                      staticClass: "wrapper",
+                      class: {
+                        imageloaded: _vm.avatar,
+                        imageloading: _vm.onUpClass
+                      },
+                      style: "background:" + _vm.avatar
+                    },
+                    [
+                      _c("image-upload", { on: { loaded: _vm.onImageUpload } }),
+                      _vm._v(" "),
+                      _c("CubeSpinner", { attrs: { loading: _vm.isLoading } }),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "text" }, [
+                        _vm.onUpClass
+                          ? _c("p", [_vm._v("Loading")])
+                          : _c("p", [_vm._v("Update")]),
+                        _vm._v(" "),
+                        _vm.validationErrors.wrong
+                          ? _c("p", {
+                              staticClass: "error",
+                              domProps: {
+                                textContent: _vm._s(_vm.validationErrors.wrong)
+                              }
+                            })
+                          : _vm._e()
+                      ])
+                    ],
+                    1
+                  )
+                : _vm.user.gravatar
+                ? _c(
+                    "label",
+                    {
+                      staticClass: "wrapper",
+                      class: {
+                        imageloaded: _vm.avatar,
+                        imageloading: _vm.onUpClass
+                      },
+                      style:
+                        "background:url('" +
+                        _vm.user.gravatar +
+                        ")center no-repeat;background-size: cover;"
+                    },
+                    [
+                      _c("image-upload", { on: { loaded: _vm.onImageUpload } }),
+                      _vm._v(" "),
+                      _c("CubeSpinner", { attrs: { loading: _vm.isLoading } }),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "text" }, [
+                        _vm.onUpClass
+                          ? _c("p", [_vm._v("Loading")])
+                          : _c("p", [_vm._v("Update")]),
+                        _vm._v(" "),
+                        _vm.validationErrors.wrong
+                          ? _c("p", {
+                              staticClass: "error",
+                              domProps: {
+                                textContent: _vm._s(_vm.validationErrors.wrong)
+                              }
+                            })
+                          : _vm._e()
+                      ])
+                    ],
+                    1
+                  )
+                : _c("div", { staticClass: "image" }, [
+                    _c("div", { staticClass: "icontext" }, [
+                      _c("h2", [_vm._v(_vm._s(_vm.loaduser.name.charAt(0)))])
+                    ]),
                     _vm._v(" "),
-                    _vm.validationErrors.wrong
-                      ? _c("p", {
-                          staticClass: "error",
-                          domProps: {
-                            textContent: _vm._s(_vm.validationErrors.wrong)
-                          }
-                        })
-                      : _vm._e()
-                  ])
-                ],
-                1
-              ),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "wrapper",
+                        class: {
+                          imageloaded: _vm.avatar,
+                          imageloading: _vm.onUpClass
+                        },
+                        style: "background:" + _vm.user.hexColor
+                      },
+                      [
+                        _c("image-upload", {
+                          on: { loaded: _vm.onImageUpload }
+                        }),
+                        _vm._v(" "),
+                        _c("CubeSpinner", {
+                          attrs: { loading: _vm.isLoading }
+                        }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "text" }, [
+                          _vm.onUpClass
+                            ? _c("p", [_vm._v("Loading")])
+                            : _c("p", [_vm._v("Update")]),
+                          _vm._v(" "),
+                          _vm.validationErrors.wrong
+                            ? _c("p", {
+                                staticClass: "error",
+                                domProps: {
+                                  textContent: _vm._s(
+                                    _vm.validationErrors.wrong
+                                  )
+                                }
+                              })
+                            : _vm._e()
+                        ])
+                      ],
+                      1
+                    )
+                  ]),
               _vm._v(" "),
               _c("input", {
                 directives: [
@@ -929,7 +1066,6 @@ var render = function() {
                   ])
                 : _vm._e()
             ])
-          : _vm._e()
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "right" }, [
@@ -1015,7 +1151,9 @@ var render = function() {
                     ref: "autocomplete",
                     class: { active: _vm.activeItem == "location" },
                     attrs: {
-                      placeholder: _vm.locationPlaceholder,
+                      placeholder: _vm.locationPlaceholder
+                        ? _vm.locationPlaceholder
+                        : "Choose your location",
                       autocomplete: "false",
                       onfocus: "value = ''",
                       type: "text"
@@ -1091,7 +1229,7 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              parseFloat(this.auth) == _vm.user.id
+              parseFloat(this.auth) == _vm.user.id && _vm.user.email_verified_at
                 ? _c(
                     "div",
                     { staticClass: "edit", on: { click: _vm.userEdit } },
@@ -1101,18 +1239,53 @@ var render = function() {
                       )
                     ]
                   )
+                : _vm._e(),
+              _vm._v(" "),
+              parseFloat(this.auth) == _vm.user.id &&
+              !_vm.user.email_verified_at &&
+              !_vm.onSent
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "ver",
+                      attrs: { disabled: _vm.dis },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.resend($event)
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        Please verify your account.\n                    "
+                      )
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              parseFloat(this.auth) == _vm.user.id &&
+              !_vm.user.email_verified_at &&
+              _vm.onSent
+                ? _c("div", { staticClass: "ver a" }, [
+                    _vm._v(
+                      "\n                        Please check your email.\n                    "
+                    )
+                  ])
                 : _vm._e()
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "loc" }, [
-              _c("div", [
-                _vm._v(
-                  "\n                        Lives Near " +
-                    _vm._s(_vm.locationPlaceholder) +
-                    "\n                    "
-                )
-              ])
-            ])
+            _vm.location.latitude
+              ? _c("div", { staticClass: "loc" }, [
+                  _c("div", [
+                    _vm._v(
+                      "\n                        Lives near " +
+                        _vm._s(_vm.locationPlaceholder) +
+                        "\n                    "
+                    )
+                  ])
+                ])
+              : _vm._e()
           ]
         ),
         _vm._v(" "),

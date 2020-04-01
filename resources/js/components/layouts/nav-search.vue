@@ -35,26 +35,13 @@
 <script>
 import Multiselect from 'vue-multiselect'
 import _ from 'lodash'
-import { mapGetters } from 'vuex'
 
 
 export default {
 
     components: { Multiselect },
 
-    name: "userSearchRequest",
-    name: "searchEvents", 
-
     computed: {
-        onSearchPage() {
-          return this.$router.currentRoute.path === '/index/search' ? true : false;
-        },
-        ...mapGetters([
-            'userSearchRequest'
-        ]),
-        placeholder() {
-            return this.$store.state.userSearchRequest.name ? this.$store.state.userSearchRequest.name : 'Try "Los Angeles"';
-        },
 
     },
 
@@ -65,6 +52,7 @@ export default {
             searchBoxOptions: [],
             isLoading: false,
             search: this.initializeSearchObject(),
+            placeholder: this.$route.query.name ? this.$route.query.name : 'Try "Los Angeles"',
         }
     },
 
@@ -87,7 +75,7 @@ export default {
 
         searchEvents() {
             if(_.has(this.searchBoxInput, 'latitude')) {
-                this.onSearchPage === true ? this.localSearch() : this.globalSearch();
+                this.globalSearch();
             };
             if(_.has(this.searchBoxInput, 'twitterHandle')) {
                 window.location.href = `/organizer/${this.searchBoxInput.slug}`;
@@ -98,20 +86,7 @@ export default {
         },
 
         globalSearch() {
-            axios.post('/search/storedata', this.searchBoxInput)
-            .then(response => {
-                window.location.href = '/index/search';
-            });
-        },
-
-        localSearch() {
-            this.$store.dispatch('searchEvents', this.searchBoxInput);
-            this.$store.dispatch('userSearchRequest', this.searchBoxInput);
-        },
-
-        eventSearch() {
-            console.log()
-            //window.location.href = `/events/${this.searchBoxInput.slug}`;
+            window.location.href = `/index/search?name=${this.searchBoxInput.name}&lat=${this.searchBoxInput.latitude}&lng=${this.searchBoxInput.longitude}`;
         },
 
     },

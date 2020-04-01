@@ -68,14 +68,16 @@ class LoginController extends Controller
         if ($authUser) {
             return $authUser;
         };
-        return User::updateOrCreate(
-            [
-                'email'    => $user->email,
-            ],
-            [
-                'name'     => $user->name,
-                'provider' => $provider,
-                'provider_id' => $user->id
-            ]);
+        $user =  User::updateOrCreate(
+        [
+            'email'    => $user->email,
+        ],
+        [
+            'name'     => $user->name,
+            'provider' => $provider,
+            'provider_id' => $user->id
+        ]);
+        $user->role()->updateOrCreate(['name' => "user"]);
+        return $user;
     }
 }

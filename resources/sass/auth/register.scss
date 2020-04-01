@@ -1,27 +1,87 @@
 .register {
-    width:100%;
-    height:80vh;
-    position: relative;
-    & .form {
-        position: absolute;
-        width:40rem;
-        left:50%;
-        margin-left:-20rem;
-        top:20rem;
-        & .field {
-            width: 84%;
-            height: 4rem;
-            margin-bottom: 1rem;
+    padding-top: 7rem;
+    & .content {
+        display: grid;
+        grid-template-columns: 40% 60%;
+        & .left {
+            position: relative;
+            .sec {
+                width: 29rem;
+                position: absolute;
+                top: 50%; left: 50%;
+                transform: translate(-50%,-50%);
+                & .field {
+                    position: relative;
+                    & .forgot {
+                        color: #008489;
+                        margin: 0rem 0rem 1rem 0rem;
+                        font-size: 1.2rem;
+                        font-weight: 500;
+                        cursor: pointer;
+                        &:active {
+                            color:white;
+                        }
+                    }
+                    & .showpass {
+                        width: 2.2rem;
+                        position: absolute;
+                        right: 2.6rem;
+                        top: 1.1rem;
+                        & img {
+                            width:100%;
+                        }
+                    }
+                }
+                & h1 {
+                    font-size: 6rem;
+                    line-height: 1rem;
+                    font-weight: 700;
+                }
+                & .submit {
+                    background: $default-color;
+                    width: 84%;
+                    color: white;
+                }
+                & .social {
+                    display: grid;
+                    width: 100%;
+                    grid-template-columns: 1fr 1fr;
+                    text-align: center;
+                    margin-top: 2rem;
+                    & p {
+                        font-size: 1.3rem;
+                        color: $default-color;
+                    }
+                }
+                & .join {
+                    text-align: center;
+                    margin-top: 5rem;
+                    & p {
+                        font-size: 1.3rem;
+                    }
+                    & a {
+                        color: $default-color;
+                    }
+                }
+            }
+        }
+        & .right {
+            display: inline-block;
+            background: red;
+            & img {
+                width: 100%;
+            }
         }
     }
-    & h1 {
-        font-size: 6rem;
-        line-height: 1rem;
-        font-weight: 700;
+}
+.field {
+    button.save:disabled,
+    button.save[disabled]{
+        border: 1px solid #cacaca;
+        background-color: #f9f9f9;
+        color: #c7c7c7;
     }
-    & .submit {
-        background: $default-color;
-        width: 84%;
-        color: white;
-    }
+}
+.inprogress {
+    cursor: progress !important;
 }

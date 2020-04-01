@@ -181,6 +181,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -202,7 +203,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   computed: {
     hasImage: function hasImage() {
-      return (this.loadorganizer ? this.loadorganizer.imagePath : '') || this.imageSrc ? true : false;
+      return this.organizer.imagePath || this.imageSrc ? true : false;
     }
   },
   data: function data() {
@@ -263,6 +264,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.finalImage.width = image.width;
       this.finalImage.height = image.height;
       this.$v.finalImage.$touch();
+      console.log(this.finalImage);
 
       if (this.$v.finalImage.$invalid) {
         return false;
@@ -298,9 +300,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       params.append('imagePath', this.finalImage);
       params.append('slug', this.slugify(this.organizer.name));
       axios.post('/organizer', params).then(function (response) {
+        console.log(response.data);
         window.location.href = '/create-event/edit';
       })["catch"](function (errors) {
-        _this.serverErrors = errors.response.data.errors;
+        console.log(errors.response.data.message);
+        errors.response.data.message.length ? _this.serverErrors = {
+          broken: 'Url is broken'
+        } : '';
+        errors.response.data.errors ? _this.serverErrors = errors.response.data.errors : '';
         _this.isLoading = false;
         _this.dis = false;
       });
@@ -334,8 +341,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.finalImage ? params.append('imagePath', this.finalImage) : '';
       axios.post("/organizer/".concat(this.loadorganizer.slug, "/patch"), params).then(function (response) {
         window.location.href = "/organizer/".concat(slug, "/edit");
+        console.log(response.data);
       })["catch"](function (errors) {
-        _this2.serverErrors = errors;
+        errors.response.data.message.length ? _this2.serverErrors = {
+          broken: 'Url is broken'
+        } : '';
+        errors.response.data.errors ? _this2.serverErrors = errors.response.data.errors : '';
         _this2.isLoading = false;
         _this2.dis = false;
       });
@@ -343,6 +354,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   validations: {
     finalImage: {
+      // exists() {
+      //     return this.finalImage || this.organizer.imagePath ? true : false
+      // },
       fileSize: function fileSize() {
         return this.finalImage ? this.finalImage.size < 20971520 : true;
       },
@@ -369,6 +383,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         url: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_4__["url"],
         serverFailed: function serverFailed() {
           return !this.hasServerError('website');
+        },
+        notWorking: function notWorking() {
+          return !this.hasServerError('broken');
         }
       }
     }
@@ -664,6 +681,12 @@ var render = function() {
                         ? _c("p", { staticClass: "error" }, [
                             _vm._v("The Website needs to be unique")
                           ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      !_vm.$v.organizer.website.notWorking
+                        ? _c("p", { staticClass: "error" }, [
+                            _vm._v("The Url doesn't seem to be working")
+                          ])
                         : _vm._e()
                     ])
                   : _vm._e()
@@ -834,8 +857,8 @@ var render = function() {
                         "url('" +
                         (_vm.imageSrc
                           ? _vm.imageSrc
-                          : this.loadorganizer
-                          ? "/" + this.organizer.imagePath
+                          : this.organizer
+                          ? "/" + this.organizer.largeImagePath
                           : "") +
                         "')"
                     }
@@ -879,9 +902,7 @@ var render = function() {
                             _c("div", [
                               !_vm.hasImage
                                 ? _c("div", [
-                                    _c("p", [
-                                      _vm._v("Click here to upload image")
-                                    ]),
+                                    _vm._m(0),
                                     _vm._v(" "),
                                     _c("p", [
                                       _vm._v(
@@ -991,7 +1012,18 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h4", [
+      _vm._v("If you have an organization image "),
+      _c("br"),
+      _vm._v("click here to Upload")
+    ])
+  }
+]
 render._withStripped = true
 
 

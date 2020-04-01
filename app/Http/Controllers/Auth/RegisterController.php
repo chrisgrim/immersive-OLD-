@@ -65,8 +65,12 @@ class RegisterController extends Controller
 
         $this->guard()->login($user);
 
-        return $this->registered($request, $user)
-                        ?: redirect($this->redirectPath())->with('verify', 'Thanks');
+        $user->getGravatar();
+
+        return redirect('/email/verify');
+
+        // return $this->registered($request, $user)
+        //                 ?: redirect($this->redirectPath())->with('verify', 'Thanks');
         // return $this->registered($request, $user)
         //                 ?: view('auth.verify', ['events' => Event::all(), 'categories' => Category::all()]);
     }

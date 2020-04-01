@@ -40,6 +40,7 @@ class ModeratorComments extends Mailable
                     ->view('emails.moderator-comments')
                     ->with([
                         'comments' => $this->ModeratorComment->comments,
+                        'eventname' => $this->ModeratorComment->event->name,
                     ]);
     }
 }

@@ -71,14 +71,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-multiselect */ "./node_modules/vue-multiselect/dist/vue-multiselect.min.js");
 /* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_multiselect__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var vue2_leaflet__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue2-leaflet */ "./node_modules/vue2-leaflet/dist/vue2-leaflet.es.js");
-/* harmony import */ var vue2_leaflet_markercluster__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue2-leaflet-markercluster */ "./node_modules/vue2-leaflet-markercluster/dist/Vue2LeafletMarkercluster.js");
-/* harmony import */ var vue2_leaflet_markercluster__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue2_leaflet_markercluster__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! leaflet */ "./node_modules/leaflet/dist/leaflet-src.js");
-/* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(leaflet__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _events_components_search_item_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../events/components/search-item.vue */ "./resources/js/components/events/components/search-item.vue");
-/* harmony import */ var _read_popup_content__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../read/popup-content */ "./resources/js/components/read/popup-content.vue");
+/* harmony import */ var vue2_leaflet__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue2-leaflet */ "./node_modules/vue2-leaflet/dist/vue2-leaflet.es.js");
+/* harmony import */ var vue2_leaflet_markercluster__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue2-leaflet-markercluster */ "./node_modules/vue2-leaflet-markercluster/dist/Vue2LeafletMarkercluster.js");
+/* harmony import */ var vue2_leaflet_markercluster__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue2_leaflet_markercluster__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! leaflet */ "./node_modules/leaflet/dist/leaflet-src.js");
+/* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(leaflet__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _events_components_search_item_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../events/components/search-item.vue */ "./resources/js/components/events/components/search-item.vue");
+/* harmony import */ var _read_popup_content__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../read/popup-content */ "./resources/js/components/read/popup-content.vue");
 //
 //
 //
@@ -146,8 +145,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-
 
 
 
@@ -158,14 +155,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     Multiselect: vue_multiselect__WEBPACK_IMPORTED_MODULE_1___default.a,
-    LPopup: vue2_leaflet__WEBPACK_IMPORTED_MODULE_3__["LPopup"],
-    LMap: vue2_leaflet__WEBPACK_IMPORTED_MODULE_3__["LMap"],
-    LTileLayer: vue2_leaflet__WEBPACK_IMPORTED_MODULE_3__["LTileLayer"],
-    LMarker: vue2_leaflet__WEBPACK_IMPORTED_MODULE_3__["LMarker"],
-    'l-marker-cluster': vue2_leaflet_markercluster__WEBPACK_IMPORTED_MODULE_4___default.a,
-    PopupContent: _read_popup_content__WEBPACK_IMPORTED_MODULE_7__["default"],
-    LIcon: vue2_leaflet__WEBPACK_IMPORTED_MODULE_3__["LIcon"],
-    searchItem: _events_components_search_item_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
+    LPopup: vue2_leaflet__WEBPACK_IMPORTED_MODULE_2__["LPopup"],
+    LMap: vue2_leaflet__WEBPACK_IMPORTED_MODULE_2__["LMap"],
+    LTileLayer: vue2_leaflet__WEBPACK_IMPORTED_MODULE_2__["LTileLayer"],
+    LMarker: vue2_leaflet__WEBPACK_IMPORTED_MODULE_2__["LMarker"],
+    'l-marker-cluster': vue2_leaflet_markercluster__WEBPACK_IMPORTED_MODULE_3___default.a,
+    PopupContent: _read_popup_content__WEBPACK_IMPORTED_MODULE_6__["default"],
+    LIcon: vue2_leaflet__WEBPACK_IMPORTED_MODULE_2__["LIcon"],
+    searchItem: _events_components_search_item_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
   props: {
     events: {
@@ -178,8 +175,8 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     mapCenter: function mapCenter() {
       return {
-        lat: this.$store.state.userSearchRequest.latitude ? this.$store.state.userSearchRequest.latitude : '',
-        lng: this.$store.state.userSearchRequest.longitude ? this.$store.state.userSearchRequest.longitude : ''
+        lat: this.$route.query.lat ? this.$route.query.lat : '',
+        lng: this.$route.query.lng ? this.$route.query.lng : ''
       };
     },
     map: function map() {
@@ -193,10 +190,10 @@ __webpack_require__.r(__webpack_exports__);
       searchObject: this.initializeSearchObject(),
       visibility: 'visible',
       zoom: 11,
-      center: Object(leaflet__WEBPACK_IMPORTED_MODULE_5__["latLng"])(47.41322, -1.219482),
+      center: Object(leaflet__WEBPACK_IMPORTED_MODULE_4__["latLng"])(47.41322, -1.219482),
       url: "http://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png",
       attribution: '<a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia</a>',
-      currentCenter: Object(leaflet__WEBPACK_IMPORTED_MODULE_5__["latLng"])(47.41322, -1.219482),
+      currentCenter: Object(leaflet__WEBPACK_IMPORTED_MODULE_4__["latLng"])(47.41322, -1.219482),
       currentBounds: '',
       allowZoom: false,
       eventList: '',
@@ -228,8 +225,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     handleResize: function handleResize() {
       this.height = window.innerHeight;
-    },
-    hello: function hello(value) {//
     }
   },
   watch: {
@@ -260,9 +255,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
 //
 //
 //
@@ -414,7 +406,9 @@ var render = function() {
         0
       ),
       _vm._v(" "),
-      _c("button", { on: { click: _vm.onLoadMore } }, [_vm._v("Load More")])
+      _vm.events.length > 14
+        ? _c("button", { on: { click: _vm.onLoadMore } }, [_vm._v("Load More")])
+        : _vm._e()
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "map", style: this.map }, [
@@ -586,18 +580,11 @@ var render = function() {
                       "l-marker",
                       {
                         key: event.id,
-                        attrs: { "lat-lng": event.location_latlon },
-                        on: {
-                          click: function($event) {
-                            return _vm.hello(event)
-                          }
-                        }
+                        attrs: { "lat-lng": event.location_latlon }
                       },
                       [
                         _c("l-icon", { attrs: { "class-name": "icons" } }, [
-                          _c("p", [
-                            _vm._v(_vm._s(event.price_range.split(" -")[0]))
-                          ])
+                          _c("p", [_vm._v(_vm._s(event.price_range))])
                         ]),
                         _vm._v(" "),
                         _c(
@@ -665,12 +652,6 @@ var render = function() {
       _c("div", { staticClass: "info" }, [
         _c("div", { staticClass: "name" }, [
           _vm._v("\n              " + _vm._s(_vm.data.name) + "\n          ")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "price" }, [
-          _vm._v(
-            "\n              " + _vm._s(_vm.data.price_range) + "\n          "
-          )
         ])
       ])
     ])

@@ -17,29 +17,111 @@ use Faker\Generator as Faker;
 |
 */
 
+$factory->define(App\Event::class, function (Faker $faker) {
+    $title = $faker->company;
+    File::makeDirectory('public/storage/event-images/' . str_slug($title) . '/');
+    $imagesave = $faker->image('public/storage/event-images/' . str_slug($title) . '/',1200,800, null, false);
+
+    return [
+        'user_id' => factory('App\User'),
+        'organizer_id' => factory('App\Organizer'),
+        'category_id' => factory('App\Organizer'),
+        'name' => $title,
+        'slug' => str_slug($title),
+        'description' => $faker->paragraph,
+        'largeImagePath' => 'event-images/' . str_slug($title) .'/'. $imagesave,
+        'thumbImagePath' => 'event-images/' . str_slug($title) .'/'. $imagesave,
+        'approved' => $faker->randomElement(['1']),
+        'closingDate' => '2020-04-05 00:00:00',
+        'websiteUrl' => $faker->url,
+        'approval_process' => 'approved',
+        'price_range' => $faker->biasedNumberBetween($min = 10, $max = 20, $function = 'sqrt'),
+        'show_times' => $faker->sentence,
+        'ticketUrl' => $faker->url,
+        'location_latlon' => [
+            'lat' => 38.2675796,
+            'lon' => -122.6351578,
+        ],
+    ];
+});
 
 $factory->define(User::class, function (Faker $faker) {
-    $imagesave = $faker->image('public/storage/avatars',100,100, null, false);
+    $name = $faker->name;
+    File::makeDirectory('public/storage/user-images/' . str_slug($name) . '/');
+    $imagesave = $faker->image('public/storage/user-images/' . str_slug($name) . '/',100,100, null, false);
+    
     return [
-        'name' => $faker->name,
+        'name' => $name,
         'email' => $faker->unique()->safeEmail,
         'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
         'remember_token' => str_random(10),
-        'avatar_path' => 'avatars/'. $imagesave,
-        'image_path' => 'avatars/'. $imagesave,
+        'largeImagePath' => 'user-images/' . str_slug($name) .'/'. $imagesave,
+        'thumbImagePath' => 'user-images/' . str_slug($name) .'/'. $imagesave,
+        'email_verified_at' => $faker->dateTimeBetween('now', 'tomorrow'),
+
     ];
 });
 
-$factory->define(App\Region::class, function (Faker $faker) {
+$factory->define(App\Organizer::class, function (Faker $faker) {
+    $name = $faker->name;
+    File::makeDirectory('public/storage/organizer-images/' . str_slug($name) . '/');
+    $imagesave = $faker->image('public/storage/organizer-images/' . str_slug($name) . '/',600,600, null, false);
     return [
-        'region' => $faker->name,
+        'user_id' => factory('App\User'),
+        'name' => $name,
+        'slug' => str_slug($name),
+        'description' => $faker->paragraph,
+        'rating' => $faker->randomElement(['0']),
+        'instagramHandle' => '@'. $name,
+        'facebookHandle' => '@'. $name,
+        'twitterHandle' => '@'. $name,
+        'largeImagePath' => 'organizer-images/' . str_slug($name) .'/'. $imagesave,
+        'thumbImagePath' => 'organizer-images/' . str_slug($name) .'/'. $imagesave,
+        'website' => $faker->url,
+        'email' => $faker->unique()->safeEmail,
     ];
 });
 
-$factory->define(App\Genre::class, function (Faker $faker) {
+$factory->define(App\Category::class, function (Faker $faker) {
+    $name = $faker->name;
+    File::makeDirectory('public/storage/category-images/' . str_slug($name) . '/');
+    $imagesave = $faker->image('public/storage/category-images/' . str_slug($name) . '/',100,100, null, false);
     return [
-        'genre' => $faker->name,
-        'user_id' => 1,
+        'name' => $name,
+        'slug' => str_slug($name),
+        'description' => $faker->paragraph,
+        'largeImagePath' => 'category-images/' . str_slug($name) .'/'. $imagesave,
+        'thumbImagePath' => 'category-images/' . str_slug($name) .'/'. $imagesave,
+    ];
+});
+
+$factory->define(App\Location::class, function (Faker $faker) {
+    return [
+        'hiddenLocationToggle' => $faker->randomElement(['0']),
+        'hiddenLocation' => $faker->sentence($nbWords = 6, $variableNbWords = true),
+        'home' => $faker->buildingNumber,
+        'street' => $faker->streetName,
+        'city' => $faker->city,
+        'region' => $faker->state,
+        'country' => 'US',
+        'postal_code' => '94952',
+        'longitude' => $faker->longitude($min = -120, $max = -130),
+        'latitude' => $faker->latitude($min = 30, $max = 50),
+    ];
+});
+
+$factory->define(App\Show::class, function (Faker $faker) {
+    return [
+        'date' => $faker->dateTimeBetween('now', 'tomorrow'),
+    ];
+});
+
+$factory->define(App\Advisory::class, function (Faker $faker) {
+    return [
+        'wheelchairReady' => $faker->randomElement(['0','1']),
+        'sexualViolence' => '0',
+        'ageRestriction' => 'All Ages',
+        'contactAdvisories' => $faker->sentence,
     ];
 });
 
@@ -56,76 +138,4 @@ $factory->define(App\ContentAdvisory::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(App\Category::class, function (Faker $faker) {
-    $imagesave = $faker->image('public/storage/category-large-images',500,500, null, false);
-    $title = $faker->company;
-    return [
-        'name' => $title,
-        'slug' => str_slug($title),
-        'description' => $faker->paragraph,
-        'largeImagePath' => 'category-large-images/'. $imagesave,
-        'thumbImagePath' => 'category-thumb-images/'. $imagesave,
-    ];
-});
 
-$factory->define(App\Organizer::class, function (Faker $faker) {
-    $imagesave = $faker->image('public/storage/organizer-images',100,100, null, false);
-    $name = $faker->company;
-    return [
-        // 'user_id' => function () {
-        //     return factory('App\User')->create()->id;
-        // },
-        'user_id' => factory('App\User'),
-        'name' => $name,
-        'slug' => str_slug($name),
-        'description' => $faker->paragraph,
-        'rating' => $faker->randomElement(['1', '5', '2', '3', '4']),
-        'instagramHandle' => '@'. $name,
-        'facebookHandle' => '@'. $name,
-        'twitterHandle' => '@'. $name,
-        'website' => $faker->url,
-        'imagePath' => 'organizers/'. $imagesave,
-    ];
-});
-
-
-
-$factory->define(App\Location::class, function (Faker $faker) {
-    return [
-        'hiddenLocationToggle' => 'No',
-        'hiddenLocation' => $faker->sentence($nbWords = 6, $variableNbWords = true),
-        'home' => $faker->buildingNumber,
-        'street' => $faker->streetName,
-        'city' => $faker->city,
-        'region' => $faker->state,
-        'country' => 'US',
-        'postal_code' => '94952',
-        'longitude' => $faker->longitude($min = -180, $max = 180),
-        'latitude' => $faker->latitude($min = -90, $max = 90),
-    ];
-});
-
-$factory->define(App\Date::class, function (Faker $faker) {
-    return [
-        'event_id' => '1',
-        'date' => $faker->datetime()->format('Y-m-d H:i:s'),
-    ];
-});
-
-$factory->define(App\Event::class, function (Faker $faker) {
-    $title = $faker->company;
-    $eventimagesave = $faker->image('public/storage/event-large-images',1200,800, null, false);
-    $thumbimagesave = $faker->image('public/storage/event-thumb-images',600,400, null, false);
-    return [
-        'user_id' => factory('App\User'),
-        'organizer_id' => factory('App\Organizer'),
-        'category_id' => factory('App\Category'),
-        'name' => $title,
-        'slug' => str_slug($title),
-        'description' => $faker->paragraph,
-        'largeImagePath' => 'event-large-images/'. $eventimagesave,
-        'thumbImagePath' => 'event-thumb-images/'. $thumbimagesave,
-        'approved' => $faker->randomElement(['1', '0']),
-        'closingDate' => $faker->datetime()->format('Y-m-d H:i:s'),
-    ];
-});

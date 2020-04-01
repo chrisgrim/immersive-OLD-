@@ -21,6 +21,22 @@ Vue.use(Vuelidate);
 Vue.use(VueRouter)
 // require('./bootstrap');
 
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+/**
+ * Next we will register the CSRF Token as a common header with Axios so that
+ * all outgoing HTTP requests automatically have it attached. This is just
+ * a simple convenience so we don't have to attach every token manually.
+ */
+
+let token = document.head.querySelector('meta[name="csrf-token"]');
+
+if (token) {
+    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+} else {
+    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+}
+
 
 const router = new VueRouter({
   routes,
@@ -70,7 +86,6 @@ Vue.component('event-create-checklist', () => import('./components/create/checkl
 Vue.component('create-location-google', () => import('./components/create/location-google.vue'));
 Vue.component('create-category', () => import('./components/create/category.vue'));
 Vue.component('create-organizer', () => import('./components/create/organizer.vue'));
-Vue.component('edit-organizer', () => import('./components/organizers/edit-organizer.vue'));
 Vue.component('create-title', () => import('./components/create/title.vue'));
 Vue.component('create-image', () => import('./components/create/image.vue'));
 Vue.component('create-date-picker', () => import('./components/create/datepicker.vue'));
@@ -117,9 +132,11 @@ Vue.component('event-map-search', () => import('./components/events/event-map-se
 Vue.component('event-list-search', () => import('./components/events/event-list-search.vue'));
 Vue.component('edit-events', () => import('./components/events/event-edit.vue'));
 Vue.component('event-listing-item', () => import('./components/events/components/index-item.vue'));
+Vue.component('vue-event-edit-listing-item', () => import('./components/events/components/event-edit-item.vue'));
 
-//Login
+//Login z
 Vue.component('login-pop', () => import('./components/layouts/login-pop.vue'));
+Vue.component('vue-register', () => import('./components/layouts/register.vue'));
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -149,7 +166,6 @@ if(document.getElementById("admin")){
 if(document.getElementById("bodyArea")){
   const bodyArea = new Vue({
       el: '#bodyArea',
-      store,
       router
   });
 };

@@ -22,7 +22,7 @@
             </div>
             <div class="buttons">
                 <button :class="{bspin : dis}" :disabled="dis" class="create" @click.prevent="goBack()"> Go Back </button>
-                <button :class="{bspin : dis}" :disabled="dis" class="create" @click.prevent="denied()"> Denied </button>
+                <button :class="{bspin : dis}" :disabled="dis" class="create" @click.prevent="denied()"> Request Changes </button>
                 <button :class="{bspin : dis}" :disabled="dis" class="create" @click.prevent="approved()"> Approved </button>
             </div>
         </div>
@@ -53,6 +53,7 @@
                 this.dis = true;
                 axios.post(`/approve/${this.event.slug}`)
                 .then(response => { 
+                    console.log(response.data);
                     window.location.href = '/finish/events';
                 })
                 .catch(error => {         

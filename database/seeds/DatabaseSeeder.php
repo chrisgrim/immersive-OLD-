@@ -13,13 +13,23 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $events = factory(Event::class, 5)->create();
+        // $events = factory(User::class, 1)->create();
+        $events = factory(Event::class, 20)->create();
         $events->each(function($event) {
-        	factory('App\Date')->create(['event_id' => $event->id]);
+            factory('App\Location')->create(['event_id' => $event->id]);
         });
         $events->each(function($event) {
-        	factory('App\Location')->create(['event_id' => $event->id]);
+        	factory('App\Show')->create(['event_id' => $event->id]);
         });
-        $regions = factory(Region::class, 5)->create();
+        $events->each(function($event) {
+            factory('App\ContentAdvisory')->create();
+        });
+        $events->each(function($event) {
+            factory('App\ContactLevel')->create();
+        });
+        $events->each(function($event) {
+            factory('App\Advisory')->create(['event_id' => $event->id]);
+        });
+        
     }
 }

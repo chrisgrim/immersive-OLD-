@@ -14,9 +14,9 @@
                 </div>
                 </a>
 
-                <a href="/regions/create">
-                <div class="checklist-section">
-                    Regions
+                <a href="/genres/create">
+                <div class="checklist-section" >
+                    Genres
                 </div>
                 </a>
 
@@ -29,12 +29,6 @@
                 <a href="/contentadvisories/create">
                 <div class="checklist-section" >
                     Content Advisories
-                </div>
-                </a>
-
-                <a href="/genres/create">
-                <div class="checklist-section" >
-                    Genres
                 </div>
                 </a>
 

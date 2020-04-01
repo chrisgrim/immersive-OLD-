@@ -41,14 +41,14 @@
                                     label="name"
                                     :options="categories" 
                                     placeholder="Categories"
+                                    @select="submitCat"
                                     open-direction="bottom"
                                     :preselect-first="false">
                                     </multiselect>
                                 </div>
                                 <div class="save">
-                                    <button v-if="category" @click="category = null" class="cancel">clear</button>
-                                    <button v-if="!category" @click="activeItem = null" class="cancel">Cancel</button>
-                                    <button @click="submit" class="submit">Save</button>
+                                    <button v-if="category" @click="clearCat" class="cancel">clear</button>
+                                    <button v-if="!category" @click="activeItem = null;" class="cancel">Cancel</button>
                                 </div>
                             </div>
                         </div>
@@ -58,13 +58,15 @@
                     <div class="el">
                         <div class="button" ref="price">
                             <div @click="show('price')" class="click">
+                                <p v-if="!showPrice && price[0] == 0">{{' Up to ' + '$' + price[1]}}</p>
+                                <p v-if="!showPrice && price[0] != 0">{{'$' + price[0]}}{{' to ' + '$' + price[1]}}</p>
                                 <p v-if="showPrice">Price</p>
-                                <p v-else="showPrice">{{'$' + price[0]}}{{' to ' + '$' + price[1]}}</p>
                             </div>
                             <div v-if="activeItem === 'price'" class="b_over price">
                                 <div class="box price">
                                     <vue-slider
                                     v-model="price" 
+                                    v-bind="options"
                                     :enable-cross="false" />
                                     <label> Min </label>
                                     <input 
@@ -79,7 +81,7 @@
                                 </div>
                                 <div class="save">
                                     <button v-if="showPrice" @click="activeItem = null" class="cancel">Cancel</button>
-                                    <button v-else="showPrice" @click="price = [0,100]" class="cancel">clear</button>
+                                    <button v-if="!showPrice" @click="price = [options.min, options.max]" class="cancel">clear</button>
                                     <button @click="submit" class="submit">Save</button>
                                 </div>
                             </div>
@@ -114,7 +116,6 @@
 <script>
     import flatPickr from 'vue-flatpickr-component'
     import 'flatpickr/dist/flatpickr.css'
-    import { mapGetters } from 'vuex'
     import Multiselect from 'vue-multiselect'
     import '../events/components/clickOutside.js';
     import VueSlider from 'vue-slider-component'
@@ -129,7 +130,7 @@
 
         props: {
             searchedevents: {
-                type:Object,
+                type:Array,
             },
             categories: {
                 type:Array
@@ -139,27 +140,9 @@
             }
         },
 
-        name: "userSearchRequest",
-        name: "searchEvents",
-
         computed: {
-            ...mapGetters([
-                'events'
-            ]),
-            ...mapGetters([
-                'userSearchRequest'
-            ]),
-            location() {
-                return this.$store.state.userSearchRequest.name;
-            },
-             mapCenter() {
-                return {
-                    lat: this.$store.state.userSearchRequest.latitude ? this.$store.state.userSearchRequest.latitude : '',
-                    lng: this.$store.state.userSearchRequest.longitude ? this.$store.state.userSearchRequest.longitude : '',
-                }
-            },
             showPrice() {
-                return this.price[0] == 0 && this.price[1] == 100 ? true : false;
+                return this.price[1] == this.options.max && this.price[0] == this.options.min ? true : false;
             },
 
             data() {
@@ -168,28 +151,25 @@
                     mapboundary: this.boundaries,
                     category: this.category,
                     dates: this.datesSubmit,
-                    price: this.price,
-                    loc: this.mapCenter,
+                    price: this.hasPrice ? this.price : '',
+                    loc: this.boundaries ? '' : {lat: this.$route.query.lat, lng: this.$route.query.lng}
                 }
-            }
+            },
 
         }, 
 
         data() {
             return {
-                eventList: [],
-                showPopup: false,
-                searchObject: this.initializeSearchObject(),
+                eventList: this.searchedevents,
                 activeItem: null,
                 category: '',
                 showMap: true,
-                price: [0,100],
+                price: [0,0],
                 boundaries: '',
                 datesSubmit: [],
                 datesFormatted: [],
+                hasPrice: false,
                 dates: [],
-                showInside:false,
-                pickerInstance: '',
                 results: '',
                 config: {
                     minDate: "today",
@@ -201,28 +181,27 @@
                     dateFormat: 'Y-m-d H:i:s',
                     onClose: [this.dateFunc()], 
                 },
+                options: {
+                    min: 0,
+                    max: 500, 
+                },
             }
         },
 
         methods: {
 
-            initializeSearchObject() {
-                return {
-                    latitude: '',
-                    longitude: '',
-                }
-            },
-
             show(type) {
                 this.activeItem === type ? this.activeItem = null : this.activeItem = type;
+                setTimeout(() => document.addEventListener("click", this.onClickOutside), 200);
             },
 
-            updateSearchedLocation() {
-                this.$store.dispatch('searchEvents', this.searchedevents);
-                this.$store.dispatch('userSearchRequest', this.searchedevents);
+            submitCat(value) {
+                this.category = value;
+                this.submit();
             },
 
-            filterData() {
+            clearCat() {
+                this.category = '';
                 this.submit();
             },
 
@@ -238,10 +217,14 @@
 
             submit() {
                 this.activeItem = null;
-                 axios.post('/api/search/mapboundary', this.data)
+                console.log(this.data);
+                axios.post('/api/search/mapboundary', this.data)
                 .then(response => {
                     this.eventList = response.data;
                     console.log(response.data);
+                })
+                .catch(errorResponse => { 
+                   console.log(errorResponse.data);
                 });
             },
 
@@ -252,6 +235,10 @@
                     prices.push(pricerange.price) 
                   }) 
                 })
+                let arr = Math.ceil(parseFloat(prices.sort().slice(-1)[0]));
+
+                prices.length ? this.price[1] = arr : this.price[1] = 1000;
+                prices.length ? this.options.max = arr : this.options.max = 1000;
             },
 
             dateFunc() {
@@ -272,20 +259,19 @@
                 let price =  this.$refs.price;
                 if (!cat || cat.contains(event.target) || !dates || dates.contains(event.target) || !price || price.contains(event.target)) return;
                 this.activeItem = null;
+                this.submit();
             },
 
         },
 
         watch: {
-            events() {
-                this.eventList = this.events;
-                this.getPriceRange()
+            price() {
+                this.hasPrice = true;
             },
         },
 
         created() {
-            this.updateSearchedLocation();
-            setTimeout(() => document.addEventListener("click", this.onClickOutside), 200);
+            this.getPriceRange()
         },
 
 

@@ -4,7 +4,7 @@
             <div class="organizer">
                 <div class="left" :style="height">
                     <div class="image">
-                        <img :src="`/storage/${organizer ? organizer.imagePath : ''}`" alt="">
+                        <img :src="organizer.thumbImagePath ? `/storage/${organizer.thumbImagePath}` : `${organizer.hexColor}`" alt="">
                     </div>
                 </div>
                 <div class="right">

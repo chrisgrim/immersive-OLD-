@@ -174,7 +174,7 @@
 			},
 
             zipLatLng(data) {
-                axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.location.postal_code}&key=AIzaSyBxpUKfSJMC4_3xwLU73AmH-jszjexoriw`)
+                axios.get(`https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/geocode/json?address=${this.location.postal_code}&key=AIzaSyBxpUKfSJMC4_3xwLU73AmH-jszjexoriw`)
                 .then(response => {
                     data.latitude = response.data.results[0].geometry.location.lat;
                     data.longitude = response.data.results[0].geometry.location.lng;

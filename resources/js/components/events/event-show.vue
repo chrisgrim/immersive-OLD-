@@ -105,7 +105,8 @@
                             v-model="dates"
                             :config="config"                                                  
                             class="form-control"
-                            placeholder="Select date"             
+                            placeholder="Select date"
+                            ref="datePicker"             
                             name="dates">
                         </flat-pickr>
                         <div class="times">
@@ -127,6 +128,7 @@
                                 <h4>Content Advisories</h4>
                             </div>
                             <div class="info">
+                                <p>&#8226; {{event.advisories.ageRestriction}}</p>
                                 <div v-for="item in event.content_advisories">
                                     <p>&#8226; {{item.advisories}}</p>
                                 </div>
@@ -140,6 +142,7 @@
                                 <div v-for="item in event.contact_levels">
                                     <p>&#8226; {{item.level}}</p>
                                 </div>
+                                <p>&#8226; {{event.advisories.contactAdvisories}}</p>
                             </div>
                         </div>
                         <div class="block">
@@ -165,7 +168,10 @@
     				<div class="right">
                         <a :href="`/organizer/${event.organizer.slug}`">
                             <div class="image">
-                                <div :style="{ backgroundImage: `url('/storage/${event.organizer.imagePath}')` }" class="img">
+                                <div :style="event.organizer.thumbImagePath ? `background-image:url('/storage/${event.organizer.thumbImagePath}')` : `background:${event.organizer.hexColor}`" class="img">
+                                    <div class="icontext" v-if="!event.organizer.thumbImagePath">
+                                        <h2>{{event.organizer.name.charAt(0)}}</h2>
+                                    </div>
                                 </div>
                             </div>
                         </a>
@@ -315,13 +321,21 @@
                     this.dates.push(event.date)
                 });
             },
+
             handleScroll (event) {
                 event.path[1].scrollY > 60 ? this.bar = true : this.bar = false; 
             }
-		}, 
+		},
+
+        watch: {
+            dates() {
+                this.$refs.datePicker.fp.jumpToDate(new Date());
+            }
+        },
 
         mounted() {
             this.getDates();
+
         },
         created () {
             window.addEventListener('scroll', this.handleScroll);

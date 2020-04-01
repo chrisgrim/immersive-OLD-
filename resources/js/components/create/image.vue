@@ -1,6 +1,7 @@
 <template>
 <div class="image">
     <div class="section">
+        <h2 style="text-align:center">Upload Image</h2>
         <div class="img">          
             <div class="loader">
                 <label 
@@ -39,22 +40,8 @@
     </div>
     <div class="inNav">
         <button :disabled="dis" class="create" @click.prevent="goBack()"> Back </button>
-        <button :disabled="dis" v-if="readyToSubmit" class="create" @click.prevent="submitReview()"> Final Review </button>
+        <button :disabled="disImage" v-if="readyToSubmit" class="create" @click.prevent="submitReview()"> Final Review </button>
     </div>
-    <modal v-show="isModalVisible" @close="closeModal">
-        <div slot="header">
-            <div class="circle sub">
-                <p>&#10003;</p>
-            </div>
-        </div>
-        <div slot="body"> 
-            <h3>Is Everything Correct?</h3>
-            <p>Events take 1-2 days to be reviewed</p>
-        </div>
-        <div slot="footer">
-            <button class="btn sub" @click="submitEvent()">Submit</button>
-        </div>
-    </modal>
 </div>
 
 </template>
@@ -91,6 +78,7 @@ export default {
             readyToSubmit: false,
             isModalVisible: false,
             dis: false,
+            disImage: this.event.largeImagePath ? false : true,
         };
     },
 
@@ -118,7 +106,8 @@ export default {
             .then(response => {
                 this.isLoading = false;
                 this.dis = false;
-                this.readyToSubmit = true;
+                this.disImage = false;
+                this.event.approval_process == 'approved' ? this.readyToSubmit = false : this.readyToSubmit = true;
             })
             .catch(errorResponse => { 
                 this.validationErrors = errorResponse.response.data.errors; this.dis = false; });
@@ -136,12 +125,8 @@ export default {
             window.location.href = `${this.eventUrl}/review`;
         },
 
-        submitEvent() {
-            this.dis = true;
-            window.location.href = `${this.eventUrl}/thankyou`;
-        },
-
         readySubmit() {
+            this.event.approval_process !== 'approved' &&
             this.event.organizer_id && 
             this.event.name && 
             this.event.location_latlon && 

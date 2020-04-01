@@ -1,24 +1,20 @@
 <template>
-    <div class="container">
-        <div class="index">
-            <div class="events">
-                 <div class="create-title">
-                    <h2>Event Approval</h2>
-                    <p>These are the events that need approval</p>
+    <div class="events">
+         <div class="create-title">
+            <h2>Event Approval</h2>
+            <p>These are the events that need approval</p>
+        </div>
+        <div>
+            <div id="grid">
+                <div v-for="event in events">
+                    <div class="item">
+                    <a :href="`/finish/events/${event.slug}`">
+                        <div class="image" :style="`background-image: url(/storage/${event.thumbImagePath}`"></div>
+                        <div class="etitle">
+                            <h3>{{ event.name }}</h3>
+                        </div>
+                    </a>
                 </div>
-                <div>
-                    <div id="grid">
-                        <div v-for="event in events">
-                            <div class="item">
-                            <a :href="`/finish/events/${event.slug}`">
-                                <div class="image" :style="`background-image: url(/storage/${event.thumbImagePath}`"></div>
-                                <div class="etitle">
-                                    <h3>{{ event.name }}</h3>
-                                </div>
-                            </a>
-                        </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

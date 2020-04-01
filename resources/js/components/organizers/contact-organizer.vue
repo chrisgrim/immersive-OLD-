@@ -1,11 +1,11 @@
 <template>
     <div>
-        <div v-if="user" class="contact">
+        <div v-if="user && user != loadorganizer.user_id" class="contact">
             <button @click="isModalVisible=true">
                 Contact
             </button>
         </div>
-        <div v-else="user" class="contact">
+        <div v-if="!user" class="contact">
             <button @click="onGuest">
                 Contact
             </button>
@@ -61,6 +61,7 @@
             },
 
             sendMail() {
+                if (this.user == this.loadorganizer.user_id) { return false };
                 this.$v.$touch(); 
                 if (this.$v.$invalid) { return false }
                 this.dis = true;

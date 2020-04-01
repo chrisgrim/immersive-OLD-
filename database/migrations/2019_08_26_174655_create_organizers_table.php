@@ -22,8 +22,8 @@ class CreateOrganizersTable extends Migration
             $table->string('slug')->unique();
             $table->text('description');
             $table->string('rating')->default(0);
-            $table->string('imagePath')->default('organizer-images/default.png');
-            $table->string('thumbImagePath')->default('organizer-images/default.png');
+            $table->string('largeImagePath')->nullable();
+            $table->string('thumbImagePath')->nullable();
             $table->string('instagramHandle')->nullable();
             $table->string('twitterHandle')->nullable();
             $table->string('facebookHandle')->nullable();

@@ -119,6 +119,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -255,7 +258,12 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
+    var _this3 = this;
+
     this.load();
+    setTimeout(function () {
+      return _this3.$refs.datePicker.fp.jumpToDate(new Date());
+    }, 100);
   },
   validations: {
     tickets: {
@@ -335,7 +343,7 @@ var render = function() {
             attrs: {
               rows: "8",
               placeholder:
-                "Please provide a brief description of daily show times...8:00PM and 10:00PM shows or 10:00PM shows during the week and 12:00PM during the weekend.",
+                "Please provide a brief description of daily show times... \n8:00PM and 10:00PM shows...\n10:00PM shows during the week and 12:00PM during the weekend...",
               required: "",
               autofocus: ""
             },
@@ -706,6 +714,7 @@ var render = function() {
             _c("label", [_vm._v(" Select all show dates")]),
             _vm._v(" "),
             _c("flat-pickr", {
+              ref: "datePicker",
               staticClass: "form-control",
               attrs: {
                 config: _vm.config,

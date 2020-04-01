@@ -1,5 +1,9 @@
 .tab {
-    border-bottom: solid #b1b1b1 1px;
+    border-bottom: solid #e4e4e4 1px;
+    & .content {
+        width: 72%;
+        margin: auto;
+    }
     & .ln {
         display: inline-block;
         & button {

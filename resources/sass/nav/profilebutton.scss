@@ -15,10 +15,10 @@
         & h2 {
             z-index: 10;
             color: white;
-            font-size: 2.6rem;
+            font-size: 2.4rem;
             text-transform: uppercase;
             margin: 0;
-            font-family: "Times New Roman", Times, serif;
+            font-family: "Montserrat", sans-serif;
             -webkit-touch-callout: none; /* iOS Safari */
             -webkit-user-select: none; /* Safari */
             -khtml-user-select: none; /* Konqueror HTML */
@@ -56,26 +56,29 @@ ul.subdropdown{
     min-width:100%;
     right:0;
     box-shadow: -1px 1px 5px 0px #cecece;
-    margin-right:2rem;
     background: white;
+    top:3.6rem;
+    right: -2rem;
 }
 ul.subdropdown{
-  max-height:35rem;
-  transition:max-height 0.2s ease-in;
-  margin-top: 1.5rem;
+    max-height:35rem;
+    transition:max-height 0.2s ease-in;
+    margin-top: 1.5rem;
   }
 
 ul.subdropdown li a{
-  display:block;
-  padding:1rem;
-  padding-right:14rem;
-  text-decoration:none;
-  transition:background .1s;
-  white-space:nowrap;
-  background-color: white;
-  float: left;
+    display:block;
+    padding:1rem;
+    padding-right:14rem;
+    text-decoration:none;
+    transition:background .1s;
+    white-space:nowrap;
+    background-color: white;
+    float: left;
+    width: 100%;
+    text-align: left;
 }
 
 ul.subdropdown li a:hover{
-  background: $border-color;
+    background: $border-color;
 }

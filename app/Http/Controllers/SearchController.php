@@ -24,17 +24,24 @@ use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $searchedevents = Session::get('searchDataStore');
-        // $name = json_encode($searchedevents['name']);
-        // $lat = trim(json_encode($searchedevents['latitude']), '"');
-        // $lng = trim(json_encode($searchedevents['longitude']), '"');
-        $searchedevents = array (
-            "latitude" => trim(json_encode($searchedevents['latitude']), '"'),
-            "longitude" => trim(json_encode($searchedevents['longitude']), '"'),
-            "name" => json_encode($searchedevents['name'])
-        );
+        // $searchedevents = Session::get('searchDataStore');
+        // // $name = json_encode($searchedevents['name']);
+        // // $lat = trim(json_encode($searchedevents['latitude']), '"');
+        // // $lng = trim(json_encode($searchedevents['longitude']), '"');
+        // $searchedevents = array (
+        //     "latitude" => trim(json_encode($searchedevents['latitude']), '"'),
+        //     "longitude" => trim(json_encode($searchedevents['longitude']), '"'),
+        //     "name" => json_encode($searchedevents['name'])
+        // );
+        $searchedevents = Event::search('*')
+            ->where('closingDate', '>=', 'now/d')
+            ->where('approval_process', '=', 'approved')
+            ->whereGeoDistance('location_latlon', [floatval($request->lng), floatval($request->lat)], '40km')
+            ->with(['location', 'organizer'])
+            ->get(); 
+
         $categories = Category::all();
 
         return view('events.search',compact('searchedevents', 'categories'));
@@ -141,7 +148,7 @@ class SearchController extends Controller
                 $query->where('category_id', $request->category['id']);
             })
             ->when(!$request->mapboundary, function($query) use ($request) {
-                $query->whereGeoDistance('location_latlon', [floatval($request->loc['lng']), floatval($request->loc['lat'])], '100km');
+                $query->whereGeoDistance('location_latlon', [floatval($request->loc['lng']), floatval($request->loc['lat'])], '40km');
             })
             ->when($request->mapboundary, function($query) use ($request) {
                 $query->whereGeoBoundingBox('location_latlon', ['top_right' => [floatval($request->mapboundary['_northEast']['lng']), floatval($request->mapboundary['_northEast']['lat'])], 'bottom_left' => [floatval($request->mapboundary['_southWest']['lng']), floatval($request->mapboundary['_southWest']['lat'])]]);

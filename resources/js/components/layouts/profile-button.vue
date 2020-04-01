@@ -1,9 +1,12 @@
 <template>
 	<div class="profile-button" :style="`background:${user.hexColor}`">
-		<label v-if="this.user.largeImagePath" @click="toggle = !toggle" class="profile-image" >
+		<label v-if="user.largeImagePath" @click="toggle = !toggle" class="profile-image" >
             <img :src="avatar" height="28" width="28" :alt="user.name + `'s account`">
         </label>
-        <div v-else="this.user.largeImagePath" @click="toggle = !toggle" class="icontext">
+        <div v-else-if="user.gravatar" @click="toggle = !toggle" class="profile-image">
+            <img :src="user.gravatar" height="28" width="28" :alt="user.name + `'s account`">
+        </div>
+        <div v-else="user.largeImagePath" @click="toggle = !toggle" class="icontext">
             <h2>{{userName.charAt(0)}}</h2>
         </div>
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Conversation;
 use App\Message;
+use App\ModeratorComment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactUser;
@@ -49,17 +50,33 @@ class ConversationsController extends Controller
     {   
         $this->authorize('update', $conversation);
         $receiver = $conversation->users->where('id', '!=' , auth()->id())->first();
-        $message = Message::Create([
-            'user_id' => auth()->id(),
-            'message' => request('message'),
-            'conversation_id' => $conversation->id
-        ]);
 
-        $attributes = [
-            'email' => $receiver->email,
-            'body' => $request->message,
-            'username' => auth()->user()->name,
-        ];
+        if ($request->message) {
+            $message = Message::Create([
+                'user_id' => auth()->id(),
+                'message' => request('message'),
+                'conversation_id' => $conversation->id
+            ]);
+            $attributes = [
+                'email' => $receiver->email,
+                'body' => $request->message,
+                'username' => auth()->user()->name,
+            ];
+        };
+
+        if ($request->modmessage) {
+            $ModeratorComment = ModeratorComment::create([
+                'conversation_id' => $conversation->id,
+                'event_id' => $conversation->modmessages[0]->event_id,
+                'comments' => $request->modmessage,
+                'user_id' => auth()->id(),
+            ]);
+            $attributes = [
+                'email' => $receiver->email,
+                'body' => $request->modmessage,
+                'username' => auth()->user()->name,
+            ];
+        }
 
         $conversation->touch();
 

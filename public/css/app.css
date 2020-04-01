@@ -33,13 +33,13 @@ select:-webkit-autofill:focus {
 }
 
 .tab-events {
-  margin-top: 5rem;
+  margin: 5rem auto;
+  width: 72%;
   min-height: 320px;
 }
 
 .editevents {
-  max-width: 72%;
-  margin: auto;
+  max-width: 100%;
   padding-top: 5rem;
 }
 
@@ -48,7 +48,7 @@ select:-webkit-autofill:focus {
 }
 
 .editevents .section .title-block {
-  width: 100%;
+  width: 72%;
   height: 8rem;
   position: relative;
   display: grid;
@@ -56,6 +56,7 @@ select:-webkit-autofill:focus {
   -webkit-box-align: center;
           align-items: center;
   grid-gap: 2rem;
+  margin: auto;
 }
 
 .editevents .section .title-block .image {
@@ -68,6 +69,16 @@ select:-webkit-autofill:focus {
   float: left;
   border-radius: 50%;
   margin-right: 2rem;
+}
+
+.editevents .section .title-block .image .icontext {
+  text-align: center;
+}
+
+.editevents .section .title-block .image .icontext h2 {
+  color: white;
+  font-size: 4rem;
+  margin: 0.6rem auto;
 }
 
 .editevents .section .title-block .edit {
@@ -114,7 +125,7 @@ select:-webkit-autofill:focus {
 }
 
 .editevents .section .buttons {
-  float: right;
+  text-align: right;
 }
 
 .editevents .section .enew {
@@ -146,133 +157,6 @@ select:-webkit-autofill:focus {
   grid-gap: 2rem;
 }
 
-.editevents .section .field {
-  width: 100%;
-}
-
-.editevents .section .field label {
-  display: block;
-  margin: 2rem 0rem 1rem 0rem;
-  font-size: 1.5rem;
-  font-weight: 500;
-  color: #656565;
-}
-
-.editevents .section .field input {
-  position: relative;
-  color: #484848;
-  background-color: white;
-  -webkit-transition: border-color 0.2s ease 0s;
-  transition: border-color 0.2s ease 0s;
-  padding: 1.3rem 1rem;
-  border-width: 1px;
-  border-style: solid;
-  -o-border-image: initial;
-  -webkit-border-image: initial;
-          border-image: initial;
-  border-radius: 5px;
-  border-color: #ebebeb;
-  margin: 0rem 0rem 1rem 0rem;
-  font-size: 1.4rem;
-  width: 100%;
-  font-family: "Montserrat", sans-serif;
-}
-
-.editevents .section .field input.active {
-  border-color: #008489;
-}
-
-.editevents .section .field input.error {
-  border-color: red;
-}
-
-.editevents .section .field input::-webkit-input-placeholder {
-  color: #adadad;
-  font-size: 1.4rem;
-  font-family: inherit;
-}
-
-.editevents .section .field input::-moz-placeholder {
-  color: #adadad;
-  font-size: 1.4rem;
-  font-family: inherit;
-}
-
-.editevents .section .field input:-ms-input-placeholder {
-  color: #adadad;
-  font-size: 1.4rem;
-  font-family: inherit;
-}
-
-.editevents .section .field input::-ms-input-placeholder {
-  color: #adadad;
-  font-size: 1.4rem;
-  font-family: inherit;
-}
-
-.editevents .section .field input::placeholder {
-  color: #adadad;
-  font-size: 1.4rem;
-  font-family: inherit;
-}
-
-.editevents .section .field textarea {
-  position: relative;
-  color: #484848;
-  background-color: white;
-  -webkit-transition: border-color 0.2s ease 0s;
-  transition: border-color 0.2s ease 0s;
-  padding: 1.3rem 1rem;
-  border-width: 1px;
-  border-style: solid;
-  -o-border-image: initial;
-  -webkit-border-image: initial;
-          border-image: initial;
-  border-radius: 5px;
-  border-color: #ebebeb;
-  margin: 0rem 0rem 1rem 0rem;
-  font-size: 1.4rem;
-  width: 100%;
-}
-
-.editevents .section .field textarea.active {
-  border-color: #008489;
-}
-
-.editevents .section .field textarea.error {
-  border-color: red;
-}
-
-.editevents .section .field textarea::-webkit-input-placeholder {
-  color: #adadad;
-  font-size: 1.4rem;
-  font-family: inherit;
-}
-
-.editevents .section .field textarea::-moz-placeholder {
-  color: #adadad;
-  font-size: 1.4rem;
-  font-family: inherit;
-}
-
-.editevents .section .field textarea:-ms-input-placeholder {
-  color: #adadad;
-  font-size: 1.4rem;
-  font-family: inherit;
-}
-
-.editevents .section .field textarea::-ms-input-placeholder {
-  color: #adadad;
-  font-size: 1.4rem;
-  font-family: inherit;
-}
-
-.editevents .section .field textarea::placeholder {
-  color: #adadad;
-  font-size: 1.4rem;
-  font-family: inherit;
-}
-
 .editevents .section .validation-error {
   margin-top: -20px;
   position: absolute;
@@ -285,6 +169,11 @@ select:-webkit-autofill:focus {
   padding: 0px 5px;
   color: red;
   font-size: 1.3rem;
+}
+
+.editevents .newOrg {
+  width: 72%;
+  margin: auto;
 }
 
 .edit-events-page {
@@ -732,35 +621,110 @@ select:-webkit-autofill:focus {
 }
 
 .register {
-  width: 100%;
-  height: 80vh;
+  padding-top: 7rem;
+}
+
+.register .content {
+  display: grid;
+  grid-template-columns: 40% 60%;
+}
+
+.register .content .left {
   position: relative;
 }
 
-.register .form {
+.register .content .left .sec {
+  width: 29rem;
   position: absolute;
-  width: 40rem;
+  top: 50%;
   left: 50%;
-  margin-left: -20rem;
-  top: 20rem;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 }
 
-.register .form .field {
-  width: 84%;
-  height: 4rem;
-  margin-bottom: 1rem;
+.register .content .left .sec .field {
+  position: relative;
 }
 
-.register h1 {
+.register .content .left .sec .field .forgot {
+  color: #008489;
+  margin: 0rem 0rem 1rem 0rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.register .content .left .sec .field .forgot:active {
+  color: white;
+}
+
+.register .content .left .sec .field .showpass {
+  width: 2.2rem;
+  position: absolute;
+  right: 2.6rem;
+  top: 1.1rem;
+}
+
+.register .content .left .sec .field .showpass img {
+  width: 100%;
+}
+
+.register .content .left .sec h1 {
   font-size: 6rem;
   line-height: 1rem;
   font-weight: 700;
 }
 
-.register .submit {
+.register .content .left .sec .submit {
   background: #008489;
   width: 84%;
   color: white;
+}
+
+.register .content .left .sec .social {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 1fr;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.register .content .left .sec .social p {
+  font-size: 1.3rem;
+  color: #008489;
+}
+
+.register .content .left .sec .join {
+  text-align: center;
+  margin-top: 5rem;
+}
+
+.register .content .left .sec .join p {
+  font-size: 1.3rem;
+}
+
+.register .content .left .sec .join a {
+  color: #008489;
+}
+
+.register .content .right {
+  display: inline-block;
+  background: red;
+}
+
+.register .content .right img {
+  width: 100%;
+}
+
+.field button.save:disabled,
+.field button.save[disabled] {
+  border: 1px solid #cacaca;
+  background-color: #f9f9f9;
+  color: #c7c7c7;
+}
+
+.inprogress {
+  cursor: progress !important;
 }
 
 .profile {
@@ -779,6 +743,12 @@ select:-webkit-autofill:focus {
   width: 11rem;
   height: 11rem;
   position: relative;
+}
+
+.profile .body .left .image.non {
+  border-radius: 50%;
+  text-align: center;
+  padding-top: 0.9rem;
 }
 
 .profile .body .left .image .icontext {
@@ -896,6 +866,31 @@ select:-webkit-autofill:focus {
   margin-left: 1rem;
 }
 
+.profile .body .right .info button {
+  background: red;
+  display: inline-block;
+  padding: 1rem;
+  border-radius: 0.3rem;
+  color: white;
+  margin-left: 1rem;
+  border: none;
+  cursor: pointer;
+}
+
+.profile .body .right .info button:disabled,
+.profile .body .right .info button button[disabled] {
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
+
+.profile .body .right .info button.a {
+  background: white;
+  color: black;
+  cursor: auto;
+  border: 1px solid black;
+}
+
 .profile .body .right .loc {
   margin-top: 5rem;
 }
@@ -910,145 +905,13 @@ select:-webkit-autofill:focus {
   grid-template-columns: repeat(2, 1fr);
 }
 
-.profile .body .field {
-  width: 100%;
-}
-
-.profile .body .field label {
-  display: block;
-  margin: 2rem 0rem 1rem 0rem;
-  font-size: 1.5rem;
-  font-weight: 500;
-  color: #656565;
-}
-
-.profile .body .field input {
-  position: relative;
-  color: #484848;
-  background-color: white;
-  -webkit-transition: border-color 0.2s ease 0s;
-  transition: border-color 0.2s ease 0s;
-  padding: 1.3rem 1rem;
-  border-width: 1px;
-  border-style: solid;
-  -o-border-image: initial;
-  -webkit-border-image: initial;
-          border-image: initial;
-  border-radius: 5px;
-  border-color: #ebebeb;
-  margin: 0rem 0rem 1rem 0rem;
-  font-size: 1.4rem;
-  width: 100%;
-}
-
-.profile .body .field input.active {
-  border-color: #008489;
-}
-
-.profile .body .field input.error {
-  border-color: red;
-}
-
-.profile .body .field input::-webkit-input-placeholder {
-  color: #adadad;
-  font-size: 1.4rem;
-  font-family: inherit;
-}
-
-.profile .body .field input::-moz-placeholder {
-  color: #adadad;
-  font-size: 1.4rem;
-  font-family: inherit;
-}
-
-.profile .body .field input:-ms-input-placeholder {
-  color: #adadad;
-  font-size: 1.4rem;
-  font-family: inherit;
-}
-
-.profile .body .field input::-ms-input-placeholder {
-  color: #adadad;
-  font-size: 1.4rem;
-  font-family: inherit;
-}
-
-.profile .body .field input::placeholder {
-  color: #adadad;
-  font-size: 1.4rem;
-  font-family: inherit;
-}
-
-.profile .body .field textarea {
-  position: relative;
-  color: #484848;
-  background-color: white;
-  -webkit-transition: border-color 0.2s ease 0s;
-  transition: border-color 0.2s ease 0s;
-  padding: 1.3rem 1rem;
-  border-width: 1px;
-  border-style: solid;
-  -o-border-image: initial;
-  -webkit-border-image: initial;
-          border-image: initial;
-  border-radius: 5px;
-  border-color: #ebebeb;
-  margin: 0rem 0rem 1rem 0rem;
-  font-size: 1.4rem;
-  width: 100%;
-}
-
-.profile .body .field textarea.active {
-  border-color: #008489;
-}
-
-.profile .body .field textarea.error {
-  border-color: red;
-}
-
-.profile .body .field textarea::-webkit-input-placeholder {
-  color: #adadad;
-  font-size: 1.4rem;
-  font-family: inherit;
-}
-
-.profile .body .field textarea::-moz-placeholder {
-  color: #adadad;
-  font-size: 1.4rem;
-  font-family: inherit;
-}
-
-.profile .body .field textarea:-ms-input-placeholder {
-  color: #adadad;
-  font-size: 1.4rem;
-  font-family: inherit;
-}
-
-.profile .body .field textarea::-ms-input-placeholder {
-  color: #adadad;
-  font-size: 1.4rem;
-  font-family: inherit;
-}
-
-.profile .body .field textarea::placeholder {
-  color: #adadad;
-  font-size: 1.4rem;
-  font-family: inherit;
-}
-
-.profile .body .field button.save {
-  background: #008489;
-  color: white;
-  border: none;
-}
-
-.profile .body .field button.cancel {
-  border: none;
-  color: #008489;
-}
-
 .tab {
-  border-bottom: solid #b1b1b1 1px;
+  border-bottom: solid #e4e4e4 1px;
+}
+
+.tab .content {
+  width: 72%;
+  margin: auto;
 }
 
 .tab .ln {
@@ -1173,8 +1036,162 @@ select:-webkit-autofill:focus {
   margin: 0rem;
 }
 
+.field {
+  width: 100%;
+}
+
+.field label {
+  display: block;
+  margin: 2rem 0rem 1rem 0rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #656565;
+}
+
+.field input {
+  position: relative;
+  color: #484848;
+  background-color: white;
+  -webkit-transition: border-color 0.2s ease 0s;
+  transition: border-color 0.2s ease 0s;
+  padding: 1.3rem 1rem;
+  border-width: 1px;
+  border-style: solid;
+  -o-border-image: initial;
+  -webkit-border-image: initial;
+          border-image: initial;
+  border-radius: 5px;
+  border-color: #ebebeb;
+  margin: 0rem 0rem 1rem 0rem;
+  font-size: 1.4rem;
+  width: 100%;
+  font-family: "Montserrat", sans-serif;
+}
+
+.field input.active {
+  border-color: #008489;
+}
+
+.field input.error {
+  border-color: red;
+}
+
+.field input::-webkit-input-placeholder {
+  color: #adadad;
+  font-size: 1.4rem;
+  font-family: inherit;
+}
+
+.field input::-moz-placeholder {
+  color: #adadad;
+  font-size: 1.4rem;
+  font-family: inherit;
+}
+
+.field input:-ms-input-placeholder {
+  color: #adadad;
+  font-size: 1.4rem;
+  font-family: inherit;
+}
+
+.field input::-ms-input-placeholder {
+  color: #adadad;
+  font-size: 1.4rem;
+  font-family: inherit;
+}
+
+.field input::placeholder {
+  color: #adadad;
+  font-size: 1.4rem;
+  font-family: inherit;
+}
+
+.field textarea {
+  position: relative;
+  color: #484848;
+  background-color: white;
+  -webkit-transition: border-color 0.2s ease 0s;
+  transition: border-color 0.2s ease 0s;
+  padding: 1.3rem 1rem;
+  border-width: 1px;
+  border-style: solid;
+  -o-border-image: initial;
+  -webkit-border-image: initial;
+          border-image: initial;
+  border-radius: 5px;
+  border-color: #ebebeb;
+  margin: 0rem 0rem 1rem 0rem;
+  font-size: 1.4rem;
+  width: 100%;
+  font-family: "Montserrat", sans-serif;
+}
+
+.field textarea.active {
+  border-color: #008489;
+}
+
+.field textarea.error {
+  border-color: red;
+}
+
+.field textarea::-webkit-input-placeholder {
+  color: #adadad;
+  font-size: 1.4rem;
+  font-family: inherit;
+}
+
+.field textarea::-moz-placeholder {
+  color: #adadad;
+  font-size: 1.4rem;
+  font-family: inherit;
+}
+
+.field textarea:-ms-input-placeholder {
+  color: #adadad;
+  font-size: 1.4rem;
+  font-family: inherit;
+}
+
+.field textarea::-ms-input-placeholder {
+  color: #adadad;
+  font-size: 1.4rem;
+  font-family: inherit;
+}
+
+.field textarea::placeholder {
+  color: #adadad;
+  font-size: 1.4rem;
+  font-family: inherit;
+}
+
+.field button.save {
+  background: #008489;
+  color: white;
+  border: none;
+  width: 100%;
+}
+
+.field button.cancel {
+  border: none;
+  color: #008489;
+}
+
+.field .validation-error {
+  margin-top: -20px;
+  position: absolute;
+  background: white;
+  margin-left: 10px;
+}
+
+.field .validation-error p {
+  margin: 0px;
+  padding: 0px 5px;
+  color: red;
+  font-size: 1.3rem;
+}
+
 .messages {
-  max-width: 70%;
+  max-width: 100%;
   margin: auto;
   padding-top: 8rem;
 }
@@ -1188,44 +1205,107 @@ select:-webkit-autofill:focus {
 
 .messages .row {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  padding: 3rem 1rem;
+  grid-template-columns: auto 1fr;
+  padding: 2rem 0rem;
   border-bottom: 1px solid #cecece;
-  -webkit-box-align: center;
-          align-items: center;
+  grid-gap: 4rem;
+  /*      align-items: center;*/
+}
+
+.messages .row p {
+  font-size: 1.5rem;
+}
+
+.messages .row p span {
+  font-size: 1.4rem;
 }
 
 .messages .row .user {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  -webkit-box-align: center;
-          align-items: center;
+  grid-template-columns: 7rem 1fr;
+  -webkit-box-align: start;
+          align-items: start;
 }
 
-.messages .row .user .image {
+.messages .row .user .name {
+  padding-top: 1.3rem;
+  padding-left: 1rem;
+}
+
+.messages .row .event {
+  display: grid;
+  grid-template-columns: 7rem 1fr;
+  -webkit-box-align: start;
+          align-items: start;
+}
+
+.messages .row .event .image {
   width: 5rem;
   height: 5rem;
+  margin: 1rem auto;
 }
 
-.messages .row .user .image img {
+.messages .row .event .image img {
   width: 100%;
   border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  height: 100%;
+}
+
+.messages .row .event .name {
+  padding-top: 1.3rem;
+  padding-left: 1rem;
+}
+
+.messages .row .message {
+  padding-top: 1.3rem;
+  padding-left: 1rem;
+}
+
+.messages .tab-events {
+  margin: 0rem auto 5rem auto;
 }
 
 .chat {
-  max-width: 50%;
   margin: auto;
-  padding-top: 8rem;
+  padding-top: 12rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  width: 72%;
+  grid-gap: 4rem;
+}
+
+.chat .ebox {
+  width: 40rem;
+  border: 1px solid #c7c7c7;
+}
+
+.chat .ebox img {
+  width: 100%;
+}
+
+.chat .ebox .cont {
+  padding: 0rem 1rem;
 }
 
 .chat .row {
   display: grid;
-  grid-template-columns: 1fr 0.3fr;
+  grid-template-columns: 1fr auto;
   margin: 4rem 0rem;
+  grid-gap: 4rem;
 }
 
 .chat .row.inv {
-  grid-template-columns: 0.3fr 1fr;
+  grid-template-columns: auto 1fr;
+}
+
+.chat .row.submit {
+  margin: 0rem;
+}
+
+.chat .row b {
+  font-size: 1.3rem;
 }
 
 .chat .row .field .text {
@@ -1265,10 +1345,10 @@ select:-webkit-autofill:focus {
 
 .user-message {
   position: relative;
-  width: 7rem;
-  height: 7rem;
+  width: 5rem;
+  height: 5rem;
   border-radius: 50%;
-  margin: 0rem auto;
+  margin: 1rem auto;
 }
 
 .user-message .icontext {
@@ -1284,10 +1364,9 @@ select:-webkit-autofill:focus {
 .user-message h2 {
   z-index: 10;
   color: white;
-  font-size: 4.5rem;
+  font-size: 2.7rem;
   text-transform: uppercase;
   margin: 0;
-  font-family: "Times New Roman", Times, serif;
   -webkit-touch-callout: none;
   /* iOS Safari */
   -webkit-user-select: none;

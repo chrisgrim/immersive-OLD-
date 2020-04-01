@@ -1,26 +1,27 @@
 #create {
     & .category {
-        padding-top: 5rem;
-        width:90%;
+        width:100%;
         margin: auto;
         & .ctitle {
             margin-bottom: 1rem;
+            padding: 0;
         }
         & .text {
             width: 50%;
             float: left;
             margin:0;
-            padding: 0% 10% 0% 5%;
+            padding: 5rem 8.7% 0% 9.5%;
         }
         & .image {
             width: 50%;
             float: right;
             margin: 0;
             padding: 0;
-            & img {
-                width:100%;
-                border-radius: .6rem;
-            }
+            background-repeat: no-repeat !important;
+            -webkit-background-size: cover !important;
+            -moz-background-size: cover !important;
+            -o-background-size: cover !important;
+            background-size: cover !important;
         }
     }
 }

@@ -12,7 +12,7 @@
                     <search-item :user="user" :event="event"></search-item>
                 </div>
             </div>
-            <button @click="onLoadMore">Load More</button>
+            <button v-if="events.length >14" @click="onLoadMore">Load More</button>
         </div>
         <div class="map" :style="this.map">
             <div>
@@ -51,9 +51,8 @@
                         <l-marker 
                         v-for="event in events" 
                         :key="event.id" 
-                        :lat-lng="event.location_latlon"
-                        @click="hello(event)">
-                            <l-icon class-name="icons"><p>{{event.price_range.split(' -')[0]}}</p></l-icon>
+                        :lat-lng="event.location_latlon">
+                            <l-icon class-name="icons"><p>{{event.price_range}}</p></l-icon>
                             <l-popup>
                                 <popup-content :data="event" />
                             </l-popup>
@@ -69,7 +68,6 @@
 <script>
     import _ from 'lodash';
     import Multiselect from 'vue-multiselect';
-    import { mapGetters } from 'vuex'
     import {LMap, LTileLayer, LMarker, LPopup, LIcon} from 'vue2-leaflet'
     import Vue2LeafletMarkerCluster from 'vue2-leaflet-markercluster'
     import { latLng } from "leaflet"
@@ -96,8 +94,8 @@
         computed: {
             mapCenter() {
                 return {
-                    lat: this.$store.state.userSearchRequest.latitude ? this.$store.state.userSearchRequest.latitude : '',
-                    lng: this.$store.state.userSearchRequest.longitude ? this.$store.state.userSearchRequest.longitude : '',
+                    lat: this.$route.query.lat ? this.$route.query.lat : '',
+                    lng: this.$route.query.lng ? this.$route.query.lng : '',
                 }
             },
             map() {
@@ -143,7 +141,7 @@
             },
 
             onMapCenterChanged () {
-              this.$emit('mapCenterUpdated', this.currentBounds);
+                this.$emit('mapCenterUpdated', this.currentBounds);
             },
 
             onLoadMore() {
@@ -155,10 +153,6 @@
             handleResize() {
                 this.height = window.innerHeight;
             },
-
-            hello(value) {
-                //
-            }
             
         },
 

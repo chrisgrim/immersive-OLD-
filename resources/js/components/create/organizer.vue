@@ -55,6 +55,7 @@
                             <p class="error" v-if="!$v.organizer.website.url">Must be a Url (Needs http://)</p>
                             <p class="error" v-if="!$v.organizer.website.required">The Website is required</p>
                             <p class="error" v-if="!$v.organizer.website.serverFailed">The Website needs to be unique</p>
+                            <p class="error" v-if="!$v.organizer.website.notWorking">The Url doesn't seem to be working</p>
                         </div>
                     </div>
                     <div class="field">
@@ -112,7 +113,7 @@
                     <div class="loader">
                         <label 
                         class=""
-                        :style="{ backgroundImage: `url('${imageSrc ? imageSrc : (this.loadorganizer ? '/' + this.organizer.imagePath : '')}')` }">
+                        :style="{ backgroundImage: `url('${imageSrc ? imageSrc : (this.organizer ? '/' + this.organizer.largeImagePath : '')}')` }">
                             <div 
                             class="dash"
                             :class="{ over: hasImage, load: isLoading }"
@@ -126,7 +127,7 @@
                                         </div>
                                          <div>
                                             <div v-if="!hasImage">
-                                                <p>Click here to upload image</p>
+                                                <h4>If you have an organization image <br>click here to Upload</h4>
                                                 <p>Please make image at least 600 x 600</p>
                                                 <p>Image needs to be under 20 mb</p>
                                             </div>
@@ -177,7 +178,7 @@ export default {
 
     computed: {
         hasImage() {
-            return (this.loadorganizer ? this.loadorganizer.imagePath : '') || this.imageSrc ? true : false;
+            return this.organizer.imagePath || this.imageSrc ? true : false;
         }
     },
     
@@ -252,6 +253,7 @@ export default {
             this.finalImage.width = image.width;
             this.finalImage.height = image.height;
             this.$v.finalImage.$touch();
+            console.log(this.finalImage);
             if (this.$v.finalImage.$invalid) { return false };
             this.imageSrc = image.src;
         },
@@ -277,10 +279,13 @@ export default {
 
             axios.post('/organizer', params)
             .then(response => { 
+                console.log(response.data);
                 window.location.href = '/create-event/edit';
             })
             .catch(errors => {
-                this.serverErrors = errors.response.data.errors;
+                console.log(errors.response.data.message);
+                errors.response.data.message.length ? this.serverErrors = {broken: 'Url is broken'} : '';
+                errors.response.data.errors ? this.serverErrors = errors.response.data.errors : '';
                 this.isLoading = false;
                 this.dis = false;
             });
@@ -314,9 +319,11 @@ export default {
             axios.post(`/organizer/${this.loadorganizer.slug}/patch`, params)
             .then(response => { 
                 window.location.href = `/organizer/${slug}/edit`;
+                console.log(response.data);
             })
             .catch(errors => {
-                this.serverErrors = errors;
+                errors.response.data.message.length ? this.serverErrors = {broken: 'Url is broken'} : '';
+                errors.response.data.errors ? this.serverErrors = errors.response.data.errors : '';
                 this.isLoading = false;
                 this.dis = false;
             });
@@ -325,6 +332,9 @@ export default {
 
     validations: {
         finalImage: {
+            // exists() {
+            //     return this.finalImage || this.organizer.imagePath ? true : false
+            // },
             fileSize() { 
                 return this.finalImage ? this.finalImage.size < 20971520 : true 
             },
@@ -343,11 +353,13 @@ export default {
             name: {
                required,
                serverFailed : function(){ return !this.hasServerError('name'); },
+               
             },
             website: {
                 required,
                 url,
                 serverFailed : function(){ return !this.hasServerError('website'); },
+                notWorking : function(){ return !this.hasServerError('broken'); },
             },
         },
     },

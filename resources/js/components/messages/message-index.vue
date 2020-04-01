@@ -1,52 +1,66 @@
 <template>
     <div class="messages">
-        <div class="title">
-           <h2>Messages</h2> 
-        </div>
-        <div v-if="conversations" v-for="conversation in conversations">
-            <a v-if="conversation.messages.length" :href="`/conversations/${conversation.id}`" class="row">
-                <div v-if="loaduser.id !== user.id" class="user" v-for="user in conversation.users">
-                    <div class="user-message" :style="`background:${user.hexColor}`">
-                        <label v-if="user.largeImagePath" class="profile-image" >
-                            <img :src="`/storage/${user.thumbImagePath}`" :alt="user.name">
-                        </label>
-                        <div v-else="user.largeImagePath" class="icontext">
-                            <h2>{{user ? user.name.charAt(0) : ''}}</h2>
-                        </div>
+        <div class="listing-details-block">
+            <tabs>
+                <tab title="Messages" :active="true" class="tab-events">
+                    <div v-if="conversations" v-for="conversation in conversations">
+                        <a v-if="conversation.messages.length" :href="`/conversations/${conversation.id}`" class="row">
+                            <div v-if="loaduser.id !== user.id" v-for="user in conversation.users" class="user">
+                                <div class="user-message" :style="`background:${user.hexColor}`">
+                                    <label v-if="user.largeImagePath" class="profile-image" >
+                                        <img :src="`/storage/${user.thumbImagePath}`" :alt="user.name + `'s account`">
+                                    </label>
+                                    <div v-else-if="user.gravatar" class="profile-image">
+                                        <img :src="user.gravatar" :alt="user.name + `'s account`">
+                                    </div>
+                                    <div v-else="user.largeImagePath" class="icontext">
+                                        <h2>{{user ? user.name.charAt(0) : ''}}</h2>
+                                    </div>
+                                </div>
+                                <div class="name">
+                                    <p><b>{{user.name}}</b></p>
+                                    <div v-for="(message, index) in conversation.messages">
+                                        <p v-if="index == 0"><span>{{message.updated_at | formatDate}}</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div v-for="(message, index) in conversation.messages" class="message">
+                                    <p v-if="index == 0"><span>{{ message.message }}</span></p>
+                                </div>
+                            </div>  
+                        </a>
                     </div>
-                    <div class="name">
-                        <p>{{user.name}}</p>
+                </tab>
+                <tab title="Events" class="tab-events">
+                    <div v-if="conversations" v-for="conversation in conversations">
+                        <a v-if="conversation.modmessages.length" :href="`/conversations/${conversation.id}`" class="row">
+                            <div class="event">
+                                <div class="image">
+                                    <img :src="`/storage/${conversation.modmessages[0].event.thumbImagePath}`" >
+                                </div>
+                                <div class="name">
+                                    <p><b>{{ conversation.modmessages[0].event.name }}</b></p>
+                                    <div v-if="index == 0" v-for="(message, index) in conversation.modmessages">
+                                        <p><span>{{message.updated_at | formatDate}}</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div v-if="index == 0" v-for="(message, index) in conversation.modmessages" class="message">
+                                    <div><b>Notes:</b> <p style="white-space: pre-line;">{{ message.comments }}</p></div>
+                                </div>
+                            </div>  
+                        </a>
                     </div>
-                </div>
-                <div>
-                    <div v-for="(message, index) in conversation.messages">
-                        <div v-if="index == 0">{{ message.message }}</div>
-                    </div>
-                </div>  
-            </a>
-        </div>
-        <div v-if="conversations" v-for="conversation in conversations">
-            <a v-if="conversation.modmessages.length" :href="`/conversations/${conversation.id}`" class="row">
-                <div class="user">
-                    <div class="image">
-                        <img :src="`/storage/${conversation.modmessages[0].event.largeImagePath}`" >
-                    </div>
-                    <div>
-                        {{ conversation.modmessages[0].event.name }}
-                    </div>
-                </div>
-                <div>
-                    <div v-for="(message, index) in conversation.modmessages">
-                        <div v-if="index == 0">Notes: {{ message.comments }}</div>
-                    </div>
-                </div>  
-            </a>
+                </tab>
+            </tabs>
         </div>
     </div>
 </template>
 
 <script>
-
+    import moment from 'moment'
     export default {
 
         props: ['loaduser'],
@@ -100,6 +114,14 @@
 
         validations: {
           
+        },
+
+        filters: {
+            formatDate(value) {
+                if (value) {
+                    return moment(String(value)).format('MMM Do, YYYY')
+                }
+            }
         },
 
 
