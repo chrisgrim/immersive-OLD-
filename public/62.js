@@ -7,7 +7,7 @@
 /*! exports provided: default */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /Users/chrisgrim/code/ei/resources/js/components/events/event-show.vue: Unexpected token, expected \",\" (336:8)\n\n\u001b[0m \u001b[90m 334 | \u001b[39m          }\u001b[0m\n\u001b[0m \u001b[90m 335 | \u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 336 | \u001b[39m        mounted() {\u001b[0m\n\u001b[0m \u001b[90m     | \u001b[39m        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 337 | \u001b[39m            \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetDates()\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 338 | \u001b[39m            \u001b[90m// setTimeout(() => this.$refs.datePicker.fp.jumpToDate(new Date()), 500);\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 339 | \u001b[39m            \u001b[90m// this.$refs.datePicker.fp.jumpToDate(new Date());\u001b[39m\u001b[0m\n    at Parser.raise (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:6983:17)\n    at Parser.unexpected (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:8376:16)\n    at Parser.expect (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:8362:28)\n    at Parser.parseObj (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9949:14)\n    at Parser.parseExprAtom (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9580:28)\n    at Parser.parseExprSubscripts (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9213:23)\n    at Parser.parseMaybeUnary (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9193:21)\n    at Parser.parseExprOps (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9059:23)\n    at Parser.parseMaybeConditional (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9032:23)\n    at Parser.parseMaybeAssign (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:8978:21)\n    at Parser.parseExportDefaultExpression (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11846:24)\n    at Parser.parseExport (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11748:31)\n    at Parser.parseStatementContent (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10770:27)\n    at Parser.parseStatement (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10666:17)\n    at Parser.parseBlockOrModuleBlockBody (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11242:25)\n    at Parser.parseBlockBody (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11229:10)\n    at Parser.parseTopLevel (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10597:10)\n    at Parser.parse (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:12107:10)\n    at parse (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:12158:38)\n    at parser (/Users/chrisgrim/code/ei/node_modules/@babel/core/lib/transformation/normalize-file.js:168:34)\n    at normalizeFile (/Users/chrisgrim/code/ei/node_modules/@babel/core/lib/transformation/normalize-file.js:102:11)\n    at runSync (/Users/chrisgrim/code/ei/node_modules/@babel/core/lib/transformation/index.js:44:43)\n    at runAsync (/Users/chrisgrim/code/ei/node_modules/@babel/core/lib/transformation/index.js:35:14)\n    at process.nextTick (/Users/chrisgrim/code/ei/node_modules/@babel/core/lib/transform.js:34:34)\n    at process._tickCallback (internal/process/next_tick.js:61:11)");
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /Users/chrisgrim/code/ei/resources/js/components/events/event-show.vue: Unexpected token, expected \",\" (374:4)\n\n\u001b[0m \u001b[90m 372 | \u001b[39m\t\t\t\tallowZoom\u001b[33m:\u001b[39m \u001b[36mfalse\u001b[39m\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 373 | \u001b[39m                week\u001b[33m:\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mloadevent \u001b[33m?\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mloadevent\u001b[33m.\u001b[39mshow_on_going \u001b[33m:\u001b[39m \u001b[32m''\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 374 | \u001b[39m\t\t\t\tshowEventClass\u001b[33m:\u001b[39m \u001b[32m'show-heart-location'\u001b[39m\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m     | \u001b[39m\t\t\t\t\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 375 | \u001b[39m                showMore\u001b[33m:\u001b[39m \u001b[36mnull\u001b[39m\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 376 | \u001b[39m                dates\u001b[33m:\u001b[39m []\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 377 | \u001b[39m                remaining\u001b[33m:\u001b[39m []\u001b[33m,\u001b[39m\u001b[0m\n    at Parser.raise (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:6983:17)\n    at Parser.unexpected (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:8376:16)\n    at Parser.expect (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:8362:28)\n    at Parser.parseObj (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9949:14)\n    at Parser.parseExprAtom (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9580:28)\n    at Parser.parseExprSubscripts (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9213:23)\n    at Parser.parseMaybeUnary (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9193:21)\n    at Parser.parseExprOps (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9059:23)\n    at Parser.parseMaybeConditional (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9032:23)\n    at Parser.parseMaybeAssign (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:8978:21)\n    at Parser.parseExpression (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:8928:23)\n    at Parser.parseReturnStatement (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11035:28)\n    at Parser.parseStatementContent (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10714:21)\n    at Parser.parseStatement (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10666:17)\n    at Parser.parseBlockOrModuleBlockBody (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11242:25)\n    at Parser.parseBlockBody (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11229:10)\n    at Parser.parseBlock (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11213:10)\n    at Parser.parseFunctionBody (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10232:24)\n    at Parser.parseFunctionBodyAndFinish (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10202:10)\n    at Parser.parseMethod (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10156:10)\n    at Parser.parseObjectMethod (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10072:19)\n    at Parser.parseObjPropValue (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10114:23)\n    at Parser.parseObjectMember (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10038:10)\n    at Parser.parseObj (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9958:25)\n    at Parser.parseExprAtom (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9580:28)\n    at Parser.parseExprSubscripts (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9213:23)\n    at Parser.parseMaybeUnary (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9193:21)\n    at Parser.parseExprOps (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9059:23)\n    at Parser.parseMaybeConditional (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9032:23)\n    at Parser.parseMaybeAssign (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:8978:21)\n    at Parser.parseExportDefaultExpression (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11846:24)\n    at Parser.parseExport (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11748:31)\n    at Parser.parseStatementContent (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10770:27)\n    at Parser.parseStatement (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10666:17)\n    at Parser.parseBlockOrModuleBlockBody (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11242:25)\n    at Parser.parseBlockBody (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11229:10)");
 
 /***/ }),
 
@@ -69,9 +69,11 @@ var render = function() {
                 _vm._v(" "),
                 _c("span", { staticClass: "des" }, [_vm._v("Location")]),
                 _vm._v(" "),
-                _c("span", { staticClass: "ans" }, [
-                  _vm._v(_vm._s(_vm.event.location.city))
-                ])
+                _vm.event.location
+                  ? _c("span", { staticClass: "ans" }, [
+                      _vm._v(_vm._s(_vm.event.location.city))
+                    ])
+                  : _vm._e()
               ]),
               _vm._v(" "),
               _c("div", [
@@ -93,13 +95,24 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "right" }, [
-          _c("div", {
-            staticClass: "image",
-            style: {
-              backgroundImage:
-                "url('/storage/" + _vm.event.largeImagePath + "')"
-            }
-          }),
+          _c("div", { staticClass: "image" }, [
+            _c("picture", [
+              _c("source", {
+                attrs: {
+                  type: "image/webp",
+                  srcset: "/storage/" + _vm.event.largeImagePath
+                }
+              }),
+              _vm._v(" "),
+              _c("img", {
+                attrs: {
+                  src:
+                    "/storage/" + _vm.event.largeImagePath.slice(0, -4) + "jpg",
+                  alt: _vm.event.name + " Immersive Event"
+                }
+              })
+            ])
+          ]),
           _vm._v(" "),
           _c(
             "div",
@@ -238,49 +251,198 @@ var render = function() {
           ])
         : _vm._e(),
       _vm._v(" "),
-      _c("div", { staticClass: "section dates" }, [
-        _c("div", { staticClass: "content" }, [
-          _vm._m(2),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "right" },
-            [
-              _c("flat-pickr", {
-                ref: "datePicker",
-                staticClass: "form-control",
-                attrs: {
-                  config: _vm.config,
-                  placeholder: "Select date",
-                  name: "dates"
-                },
-                model: {
-                  value: _vm.dates,
-                  callback: function($$v) {
-                    _vm.dates = $$v
-                  },
-                  expression: "dates"
-                }
-              }),
+      _vm.event.shows.length
+        ? _c("div", { staticClass: "section dates" }, [
+            _c("div", { staticClass: "content" }, [
+              _vm._m(2),
               _vm._v(" "),
-              _c("div", { staticClass: "times" }, [
-                _c("p", { staticStyle: { "white-space": "pre-wrap" } }, [
-                  _vm._v(_vm._s(_vm.event.show_times))
+              _c(
+                "div",
+                { staticClass: "right" },
+                [
+                  _c("flat-pickr", {
+                    ref: "datePicker",
+                    staticClass: "form-control",
+                    attrs: {
+                      config: _vm.config,
+                      placeholder: "Select date",
+                      name: "dates"
+                    },
+                    model: {
+                      value: _vm.dates,
+                      callback: function($$v) {
+                        _vm.dates = $$v
+                      },
+                      expression: "dates"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "times" }, [
+                    _c("p", { staticStyle: { "white-space": "pre-wrap" } }, [
+                      _vm._v(_vm._s(_vm.event.show_times))
+                    ])
+                  ])
+                ],
+                1
+              )
+            ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.event.show_on_going
+        ? _c("div", { staticClass: "section dates" }, [
+            _c("div", { staticClass: "content" }, [
+              _vm._m(3),
+              _vm._v(" "),
+              _c("div", { staticClass: "right" }, [
+                _c("div", { staticClass: "calendar" }, [
+                  _c("div", { staticClass: "field" }, [
+                    _c("label", [_vm._v(" Shows during the week")]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "week-calendar" }, [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "day",
+                          class: { active: _vm.week.mon },
+                          on: {
+                            click: function($event) {
+                              return _vm.addWeekDay("mon")
+                            }
+                          }
+                        },
+                        [_c("h4", [_vm._v("Mon")])]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "day",
+                          class: { active: _vm.week.tue },
+                          on: {
+                            click: function($event) {
+                              return _vm.addWeekDay("tue")
+                            }
+                          }
+                        },
+                        [_c("h4", [_vm._v("Tue")])]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "day",
+                          class: { active: _vm.week.wed },
+                          on: {
+                            click: function($event) {
+                              return _vm.addWeekDay("wed")
+                            }
+                          }
+                        },
+                        [_c("h4", [_vm._v("Wed")])]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "day",
+                          class: { active: _vm.week.thu },
+                          on: {
+                            click: function($event) {
+                              return _vm.addWeekDay("thu")
+                            }
+                          }
+                        },
+                        [_c("h4", [_vm._v("Thu")])]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "day",
+                          class: { active: _vm.week.fri },
+                          on: {
+                            click: function($event) {
+                              return _vm.addWeekDay("fri")
+                            }
+                          }
+                        },
+                        [_c("h4", [_vm._v("Fri")])]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "day",
+                          class: { active: _vm.week.sat },
+                          on: {
+                            click: function($event) {
+                              return _vm.addWeekDay("sat")
+                            }
+                          }
+                        },
+                        [_c("h4", [_vm._v("Sat")])]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "day",
+                          class: { active: _vm.week.sun },
+                          on: {
+                            click: function($event) {
+                              return _vm.addWeekDay("sun")
+                            }
+                          }
+                        },
+                        [_c("h4", [_vm._v("Sun")])]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _vm.$v.week.$error
+                      ? _c("div", { staticClass: "validation-error" }, [
+                          !_vm.$v.week.ifOngoing
+                            ? _c("p", { staticClass: "error" }, [
+                                _vm._v("Please select at least one day")
+                              ])
+                            : _vm._e()
+                        ])
+                      : _vm._e()
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "create",
+                      attrs: { disabled: _vm.dis },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.submitOnGoing()
+                        }
+                      }
+                    },
+                    [_vm._v(" Next ")]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "times" }, [
+                  _c("p", { staticStyle: { "white-space": "pre-wrap" } }, [
+                    _vm._v(_vm._s(_vm.event.show_times))
+                  ])
                 ])
               ])
-            ],
-            1
-          )
-        ])
-      ]),
+            ])
+          ])
+        : _vm._e(),
       _vm._v(" "),
       _c("div", { staticClass: "section details" }, [
         _c("div", { staticClass: "content" }, [
-          _vm._m(3),
+          _vm._m(4),
           _vm._v(" "),
           _c("div", { staticClass: "right" }, [
             _c("div", { staticClass: "block" }, [
-              _vm._m(4),
+              _vm._m(5),
               _vm._v(" "),
               _c(
                 "div",
@@ -301,7 +463,7 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "block" }, [
-              _vm._m(5),
+              _vm._m(6),
               _vm._v(" "),
               _c(
                 "div",
@@ -324,7 +486,7 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "block" }, [
-              _vm._m(6),
+              _vm._m(7),
               _vm._v(" "),
               _c(
                 "div",
@@ -343,7 +505,7 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "section organizer" }, [
         _c("div", { staticClass: "content" }, [
-          _vm._m(7),
+          _vm._m(8),
           _vm._v(" "),
           _c(
             "div",
@@ -420,10 +582,10 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      this.bar
+      _vm.bar && _vm.event.location.latitude
         ? _c("div", { staticClass: "section location" }, [
             _c("div", [
-              _vm._m(8),
+              _vm._m(9),
               _vm._v(" "),
               _vm.event.location.hiddenLocationToggle
                 ? _c("div", { staticClass: "text" }, [
@@ -656,6 +818,14 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "left" }, [
       _c("div", { staticClass: "text" }, [_c("h3", [_vm._v("Show Dates")])])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "left" }, [
+      _c("div", { staticClass: "text" }, [_c("h3", [_vm._v("Show Times")])])
     ])
   },
   function() {

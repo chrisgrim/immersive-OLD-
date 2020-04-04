@@ -3,10 +3,10 @@
         <favorite :user="user" :inputclass="showEventClass" :event="event"></favorite>
         <a :href="url">
             <div class="image" :style="isModified ? isModified : divBackground">
-                <div v-if="this.event.approval_process == 'ready'">
+                <div v-if="this.event.status == 'r'">
                     <h3><b>Under Review</b></h3>
                 </div>
-                <div v-if="this.event.approval_process == 'hasIssues'">
+                <div v-if="this.event.status == 'n'">
                     <h3><b>Needs Changes</b></h3>
                 </div>
             </div>
@@ -41,14 +41,14 @@
         methods: {
 
             eventStatus() {
-                if (this.event.approval_process == 'ready' || this.event.approval_process == 'hasIssues') {
-                    this.event.approval_process == 'ready' ? this.isDisabled = true : '';
+                if (this.event.status == 'r' || this.event.status == 'n') {
+                    this.event.status == 'r' ? this.isDisabled = true : '';
                     return this.isModified = `background: linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)),url('/storage/${this.event.thumbImagePath}');`
                 }
             },
 
             getUrl() {
-                if (this.event.approval_process == 'hasIssues') {
+                if (this.event.status == 'n') {
                     return this.url = `/create-event/${this.event.slug}/title`;
                 }
                 if (this.event.largeImagePath) {
@@ -83,7 +83,7 @@
         },
 
         mounted() {
-            this.event.approved ? '' : this.getUrl();
+            this.event.status == 'p' ? '' : this.getUrl();
             this.eventStatus();
         }
 

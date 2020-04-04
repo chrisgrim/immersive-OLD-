@@ -173,8 +173,8 @@
             },
 
             notAllowed() {
-                if(this.event.approval_process) {
-                    return (['inProgress', 'hasIssues', 'approved'].includes(this.event.approval_process)) ? '' : window.location.href = '/create-event/edit';
+                if(this.event.status) {
+                    return (['d','n','p'].includes(this.event.status)) ? '' : window.location.href = '/create-event/edit';
                 }
             }
 

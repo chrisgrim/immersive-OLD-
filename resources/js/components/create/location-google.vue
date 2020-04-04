@@ -5,52 +5,65 @@
                 <div class="ctitle">
                     <h2>Location</h2>
                 </div>
-			    <div class="field">
-				 	<label> Is your location hidden? </label>
-					<div id="cover">
-						<input v-model="location.hiddenLocationToggle" type="checkbox" id="checkbox">
-						<div id="bar"></div>
-						<div id="knob">
-							<p v-if="location.hiddenLocationToggle">Yes</p>
-							<p v-else="location.hiddenLocationToggle">No</p>
-						</div>
-					</div>
-			    </div>
-		    	<div class="field" v-if="location.hiddenLocationToggle">
-					<label> Users searching for this event will only see the general area, not the specific street address. Please enter how participants will be notified of the location. </label>
-		            <textarea 
-		            v-model.trim="location.hiddenLocation" 
-		            rows="4" 
-		            :class="{ active: activeItem == 'hidden'}"
-		            required 
-		            autofocus
-		 			placeholder="...the night before you will receieve an email containing the location..."
-                    @click="activeItem = 'hidden'"
-                    @blur="activeItem = null"
-                    />
-		        </div>
                 <div class="field">
-                    <label> Event Location </label>
-                    <input 
-                    ref="autocomplete" 
-                    :placeholder="locationPlaceholder"
-                    :class="{ active: activeItem == 'location', 'error': $v.location.latitude.$error }"
-                    autocomplete="false"
-                    onfocus="value = ''" 
-                    @click="activeItem = 'location'"
-                    @blur="activeItem = null"
-                    type="text"
-                    />
-                    <div v-if="$v.location.latitude.$error" class="validation-error">
-                        <p class="error" v-if="!$v.location.latitude.required">Please select from the list of locations</p>
+                    <label> Does your event have a physical location? </label>
+                    <div id="cover">
+                        <input v-model="hasLocation" type="checkbox" id="checkbox">
+                        <div id="bar"></div>
+                        <div id="knob">
+                            <p v-if="hasLocation">Yes</p>
+                            <p v-else>No</p>
+                        </div>
                     </div>
+                </div>
+                <div v-show="hasLocation">
+                    <div class="field">
+                        <label> Is your location hidden? </label>
+                        <div id="cover">
+                            <input v-model="location.hiddenLocationToggle" type="checkbox" id="checkbox">
+                            <div id="bar"></div>
+                            <div id="knob">
+                                <p v-if="location.hiddenLocationToggle">Yes</p>
+                                <p v-else="location.hiddenLocationToggle">No</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field" v-if="location.hiddenLocationToggle">
+                        <label> Users searching for this event will only see the general area, not the specific street address. Please enter how participants will be notified of the location. </label>
+                        <textarea 
+                        v-model.trim="location.hiddenLocation" 
+                        rows="4" 
+                        :class="{ active: activeItem == 'hidden'}"
+                        required 
+                        autofocus
+                        placeholder="...the night before you will receieve an email containing the location..."
+                        @click="activeItem = 'hidden'"
+                        @blur="activeItem = null"
+                        />
+                    </div>
+                    <div class="field">
+                        <label> Event Location </label>
+                        <input 
+                        ref="autocomplete" 
+                        :placeholder="locationPlaceholder"
+                        :class="{ active: activeItem == 'location', 'error': $v.location.latitude.$error }"
+                        autocomplete="false"
+                        onfocus="value = ''" 
+                        @click="activeItem = 'location'"
+                        @blur="activeItem = null"
+                        type="text"
+                        />
+                        <div v-if="$v.location.latitude.$error" class="validation-error">
+                            <p class="error" v-if="!$v.location.latitude.ifLocation">Please select from the list of locations</p>
+                        </div>
+                    </div>   
                 </div>
                 <div class="">
-                <button :disabled="dis" @click.prevent="submitLocation()" class="create"> Next </button>
-            </div>
+                    <button :disabled="dis" @click.prevent="submitLocation()" class="create"> Next </button>
+                </div> 
             </div>
             <div class="image" :style="this.map">
-                <div v-if="center" class="map">
+                <div v-if="center && hasLocation" class="map">
                     <div class="zoom">
                         <div class="in">
                             <button @click.prevent="zoom += 1">
@@ -124,6 +137,7 @@
                 allowZoom: false,
                 dis: false,
                 height:0,
+                hasLocation: this.event.hasLocation ? true : false,
 			}
 		},
 
@@ -139,7 +153,7 @@
 	 				hiddenLocationToggle: 0,
 	                latitude: '',
 	               	longitude: '',
-                    home: ''
+                    home: '',
 				}
 			},
 
@@ -157,13 +171,18 @@
 			async submitLocation() {
 				this.$v.$touch(); 
 				if (this.$v.$invalid) { return false };
-                let data = this.location;
+
+                let data;
+                !this.hasLocation ?  data = {noLocation: true} : '';
+                this.hasLocation ?  data = this.location : '';
+
                 this.dis = true;
                 if (this.location.hiddenLocationToggle) {
                     this.zipLatLng(data)
                 } else {
                     axios.patch(`${this.eventUrl}/location`, data)
-                    .then(response => {             
+                    .then(response => {  
+                        console.log(response.data);           
                         window.location.href = `${this.eventUrl}/category`; 
                     })
                     .catch(errorResponse => {
@@ -296,7 +315,9 @@
 		validations: {
 			location: {
 			 	latitude: {
-			 		required
+                    ifLocation() { 
+                        return this.hasLocation ? this.location.latitude ? true : false : true
+                    },
 			 	},
 			},
 		},

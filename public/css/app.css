@@ -909,7 +909,7 @@ select:-webkit-autofill:focus {
   border-bottom: solid #e4e4e4 1px;
 }
 
-.tab .content {
+.tab .tabcontent {
   width: 72%;
   margin: auto;
 }
@@ -1201,6 +1201,10 @@ select:-webkit-autofill:focus {
   margin: auto;
   margin-top: 5rem;
   border-bottom: 1px solid black;
+}
+
+.messages #grid {
+  display: inherit;
 }
 
 .messages .row {

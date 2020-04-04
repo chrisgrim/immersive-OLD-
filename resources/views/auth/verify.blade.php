@@ -8,7 +8,7 @@
 
 @section('content')
 <div id="bodyArea">
-    <vue-alert :user="{{auth()->user()}}" message="verify"></vue-alert>
+    <vue-email-verify :user="{{auth()->user()}}" message="verify"></vue-email-verify>
     <event-index :staffpicks="{{$staffpicks}}" user="{{auth()->id()}}" :events="{{$events}}" :categories="{{$categories}}"/>
 </div>
 @endsection

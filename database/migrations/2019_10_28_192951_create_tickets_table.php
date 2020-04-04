@@ -16,14 +16,11 @@ class CreateTicketsTable extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
-            $table->unsignedBigInteger('show_id');
+            $table->morphs('ticket');
             $table->decimal('ticket_price', 6, 2)->nullable();
             $table->text('description')->nullable();
             $table->integer('ticket_amount')->nullable();
             $table->timestamps();
-            $table->foreign('show_id')
-                    ->references('id')->on('shows')
-                    ->onDelete('cascade');
         });
     }
 

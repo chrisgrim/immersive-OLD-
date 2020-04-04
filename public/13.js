@@ -118,7 +118,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.isLoading = false;
         _this.dis = false;
         _this.disImage = false;
-        _this.event.approval_process == 'approved' ? _this.readyToSubmit = false : _this.readyToSubmit = true;
+        _this.event.status == 'p' ? _this.readyToSubmit = false : _this.readyToSubmit = true;
       })["catch"](function (errorResponse) {
         _this.validationErrors = errorResponse.response.data.errors;
         _this.dis = false;
@@ -134,7 +134,7 @@ __webpack_require__.r(__webpack_exports__);
       window.location.href = "".concat(this.eventUrl, "/review");
     },
     readySubmit: function readySubmit() {
-      this.event.approval_process !== 'approved' && this.event.organizer_id && this.event.name && this.event.location_latlon && this.event.category_id && this.event.show_times && this.event.description && this.event.advisories_id ? this.readyToSubmit = true : false;
+      this.event.status !== 'p' && this.event.organizer_id && this.event.name && (this.event.location_latlon || !this.event.hasLocation) && this.event.category_id && this.event.show_times && this.event.description && this.event.advisories_id ? this.readyToSubmit = true : false;
     },
     goBack: function goBack() {
       window.location.href = "".concat(this.eventUrl, "/advisories");

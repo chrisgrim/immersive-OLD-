@@ -23,18 +23,15 @@
         width: 100%;
         background-color: #F2F2F2;
         & .section{
-            min-height: 536px;
-            padding: 0rem 8rem;
             width: 100%;
-            margin: auto;
-            overflow: hidden;
+            display: grid;
+            grid-template-columns: 35% auto;
             & .left {
-                width: 33.33333333333333%;
-                float: left;
                 position: relative;
                 & .content {
-                    height: 536px;
-                    padding: 5rem 5rem 0rem 0rem;
+                    height: 100%;
+                    padding: 5rem 5rem 0rem 8rem;
+                    position: relative;
                     & .category {
                         font-size: 2rem;
                         font-family: 'Annie Use Your Telescope', cursive;
@@ -62,7 +59,7 @@
                         grid-template-columns: auto auto auto;
                         position: absolute;
                         bottom: 10%;
-                        width: 90%;
+                        width: 80%;
                         & img {
                             width:1.4rem;
                             margin-bottom: .7rem;
@@ -91,17 +88,15 @@
                 }
             }
             & .right {
-                width: 66.66666666666666%;
-                float: left;
                 background-color: #F2F2F2;
                 position: relative;
                 & .image {
-                    position: absolute;
-                    background-size: cover;
-                    background-position: 50% 50%;
-                    background-repeat: no-repeat;
-                    width: 120%;
-                    height: 536px;
+                    height:53rem;
+                    & img {
+                        height:100%;
+                        width: 100%;
+                        object-fit: cover;
+                    }
                 }
             }
         }
@@ -175,7 +170,7 @@
                         & .icontext {
                             & h2 {
                                 color: white;
-                                padding: 1.3rem;
+                                padding: 1.1rem;
                                 text-align: center;
                                 font-size: 6rem;
                                 margin: 0;
@@ -275,7 +270,35 @@
                     color: #767676;
                 }
             }
-
+            & .week-calendar {
+                display: grid;
+                grid-template-columns: repeat(7, 1fr);
+                height: 10rem;
+                border: 1px solid #ebebeb;
+                border-radius: 5px;
+                text-align: center;
+                align-items: center;
+                & .day {
+                    width: 100%;
+                    height: 100%;
+                    line-height: 10rem;
+                    &.active {
+                        background: $default-color;
+                        border: 1px solid #e0e0e0;
+                        border-radius: 5px;
+                        & h4 {
+                            color:white;
+                        }
+                    }
+                    & h4 {
+                        margin: 0;
+                        -webkit-user-select: none; /* Safari */        
+                        -moz-user-select: none; /* Firefox */
+                        -ms-user-select: none; /* IE10+/Edge */
+                        user-select: none; /* Standard */
+                    }
+                }
+            }
         }
         & .location {
             & .title {

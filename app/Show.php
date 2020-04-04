@@ -30,7 +30,7 @@ class Show extends Model
      */
     public function tickets() 
     {
-        return $this->hasMany(Ticket::class);
+        return $this->morphMany(Ticket::class, 'ticket');
     }
 
     /**
@@ -64,8 +64,7 @@ class Show extends Model
             };
             $show->tickets()->whereNotIn('name', $ticketname)->delete();
             foreach ($request->tickets as $ticket) {
-                Ticket::updateOrCreate([
-                    'show_id' => $show->id,
+                 $show->tickets()->updateOrCreate([
                     'name' => $ticket['name'],
                 ],
                 [
@@ -82,7 +81,13 @@ class Show extends Model
      */
     public static function updateEvent($request, $event)
     {
-        $lastDate = $event->shows()->orderBy('date', 'DESC')->first();
+        if ($event->shows()->exists()) {
+            $lastDate = $event->shows()->orderBy('date', 'DESC')->first();
+        }
+        if ($event->showOnGoing()->exists()) {
+            $lastDate = $event->showOnGoing()->first();
+        }
+
         foreach ($request->tickets as $ticket) {
             $event->priceranges()->updateOrCreate([
                 'price' => $ticket['ticket_price']
@@ -95,11 +100,11 @@ class Show extends Model
         } else {
             $pricerange = '$' . $array[0];
         }
-
         $event->update([
-            'closingDate' => $lastDate->date,
+            'closingDate' => $lastDate->date ? $lastDate->date : $lastDate->updated_at,
             'show_times' => $request->showtimes,
             'price_range' => $pricerange,
+            'showtype' => $request->shows ? 's' : ($request->onGoing && $request->always ? 'a' : 'o'),
         ]);
     }
 }

@@ -92,6 +92,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -103,6 +115,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   props: {
     events: {
+      type: Array
+    },
+    remote: {
       type: Array
     },
     categories: {
@@ -251,6 +266,29 @@ var render = function() {
             "div",
             { attrs: { id: "grid" } },
             _vm._l(_vm.events, function(event) {
+              return _c(
+                "div",
+                [
+                  _c("event-listing-item", {
+                    attrs: { user: _vm.user, event: event }
+                  })
+                ],
+                1
+              )
+            }),
+            0
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "events" }, [
+        _c("h2", [_vm._v("Our Latest Remote Events")]),
+        _vm._v(" "),
+        _c("div", [
+          _c(
+            "div",
+            { attrs: { id: "grid" } },
+            _vm._l(_vm.remote, function(event) {
               return _c(
                 "div",
                 [

@@ -63,7 +63,7 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
         $category->load(['events' => function ($query) {
-            $query->where('approved', true);
+            $query->where('status', 'p');
         }]);
         return view('categories.show',compact('category'));
     }

@@ -25,19 +25,20 @@ $factory->define(App\Event::class, function (Faker $faker) {
     return [
         'user_id' => factory('App\User'),
         'organizer_id' => factory('App\Organizer'),
-        'category_id' => factory('App\Organizer'),
+        'category_id' => $faker->randomElement(['1','2']),
+        'advisories_id' => $faker->randomElement(['1']),
         'name' => $title,
         'slug' => str_slug($title),
         'description' => $faker->paragraph,
         'largeImagePath' => 'event-images/' . str_slug($title) .'/'. $imagesave,
         'thumbImagePath' => 'event-images/' . str_slug($title) .'/'. $imagesave,
-        'approved' => $faker->randomElement(['1']),
         'closingDate' => '2020-04-05 00:00:00',
         'websiteUrl' => $faker->url,
-        'approval_process' => 'approved',
+        'status' => 'p',
         'price_range' => $faker->biasedNumberBetween($min = 10, $max = 20, $function = 'sqrt'),
         'show_times' => $faker->sentence,
         'ticketUrl' => $faker->url,
+        'hasLocation' => $faker->randomElement([1,0]),
         'location_latlon' => [
             'lat' => 38.2675796,
             'lon' => -122.6351578,
@@ -48,7 +49,7 @@ $factory->define(App\Event::class, function (Faker $faker) {
 $factory->define(User::class, function (Faker $faker) {
     $name = $faker->name;
     File::makeDirectory('public/storage/user-images/' . str_slug($name) . '/');
-    $imagesave = $faker->image('public/storage/user-images/' . str_slug($name) . '/',100,100, null, false);
+    $imagesave = $faker->image('public/storage/user-images/' . str_slug($name) . '/',200,200, null, false);
     
     return [
         'name' => $name,
@@ -58,6 +59,7 @@ $factory->define(User::class, function (Faker $faker) {
         'largeImagePath' => 'user-images/' . str_slug($name) .'/'. $imagesave,
         'thumbImagePath' => 'user-images/' . str_slug($name) .'/'. $imagesave,
         'email_verified_at' => $faker->dateTimeBetween('now', 'tomorrow'),
+        'type' => 'g',
 
     ];
 });
@@ -85,7 +87,7 @@ $factory->define(App\Organizer::class, function (Faker $faker) {
 $factory->define(App\Category::class, function (Faker $faker) {
     $name = $faker->name;
     File::makeDirectory('public/storage/category-images/' . str_slug($name) . '/');
-    $imagesave = $faker->image('public/storage/category-images/' . str_slug($name) . '/',100,100, null, false);
+    $imagesave = $faker->image('public/storage/category-images/' . str_slug($name) . '/',600,600, null, false);
     return [
         'name' => $name,
         'slug' => str_slug($name),

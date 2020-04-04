@@ -11,15 +11,15 @@ class Ticket extends Model
     *
     * @var array
     */
-	protected $fillable = ['name','ticket_price','show_id'];
+	protected $fillable = ['name','ticket_price','ticket_id', 'ticket_type'];
     
 	/**
      * Ticket Belongs to the Show Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
-    public function event() 
+    public function ticket()
     {
-        return $this->belongsTo(Show::class);
+        return $this->morphTo();
     }
 }

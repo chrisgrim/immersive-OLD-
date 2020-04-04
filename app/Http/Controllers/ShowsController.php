@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Event;
 use App\Show;
+use App\ShowOnGoing;
 use App\Http\Requests\ShowStoreRequest;
 
 class ShowsController extends Controller
@@ -33,10 +34,24 @@ class ShowsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ShowStoreRequest $request, Event $event)
+    public function store(Request $request, Event $event)
     {
-        Show::deleteOld($request, $event);
-        Show::saveNewShows($request, $event);
+        if ($request->onGoing) {
+            foreach ($event->shows()->get() as $show) {
+                $show->tickets()->delete();
+            }
+            $event->shows()->delete();
+            ShowOnGoing::saveNewShowOnGoing($request, $event);
+        }
+        if ($request->shows) {
+            if ($event->showOnGoing()->exists()) {
+                $event->showOnGoing()->first()->tickets()->delete();
+                $event->showOnGoing()->first()->delete();
+            }
+            Show::deleteOld($request, $event);
+            Show::saveNewShows($request, $event);
+        }
+
         Show::updateEvent($request, $event);
     }
 
@@ -48,10 +63,19 @@ class ShowsController extends Controller
      */
     public function fetch(Event $event)
     {
-        return response()->json(array(
-            'dates' => $event->shows()->pluck('date'),
-            'tickets' => $event->shows()->with('tickets')->get(),
-            'showTimes' => $showTimes = $event->show_times
-        ));
+        if ($event->showtype == 's') {
+            return response()->json(array(
+                'dates' => $event->shows()->pluck('date'),
+                'tickets' => $event->shows()->with('tickets')->get(),
+                'showTimes' => $showTimes = $event->show_times
+            ));
+        }
+        if($event->showtype == 'o' || $event->showtype == 'a') {
+            return response()->json(array(
+                'week' => $event->showOnGoing()->first(),
+                'tickets' => $event->showOnGoing()->with('tickets')->get(),
+                'showTimes' => $showTimes = $event->show_times
+            ));
+        }
     }
 }

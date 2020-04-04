@@ -8,6 +8,9 @@
         margin-top:5rem;
         border-bottom:1px solid black;
     }
+    & #grid {
+        display: inherit;
+    }
     & .row {
         display: grid;
         grid-template-columns: auto 1fr;

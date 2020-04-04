@@ -51,6 +51,12 @@ class LocationController extends Controller
      */
     public function store(LocationStoreRequest $request, Event $event)
     {
+        if($request->noLocation) {
+            return $event->update([
+                'hasLocation' => false,
+                'location_latlon' => null,
+        ]);}
+
         Location::storeEventLocation($request, $event);
     }
 }

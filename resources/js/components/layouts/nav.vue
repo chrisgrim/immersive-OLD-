@@ -22,7 +22,7 @@
                             <div>Your Events</div>
                         </a>
                     </div>
-                    <div class="menu-nav" v-if="user && loaduser.hasMessages ">
+                    <div class="menu-nav" v-if="user && user.hasMessages ">
                         <a href="/messages">
                             <div v-if="user.has_unread" class="active">
                                 <p></p>
@@ -47,7 +47,6 @@
                             <div>Host an Experience</div>
                         </a>
                     </div>
-
                 </div>
             </nav>
         </div>
@@ -59,36 +58,13 @@
 	export default {
 
         props: {
-            loaduser: {
+            user: {
                 type:Object
-            },
-            username: {
-                type:String, 
-            },
-            userid: {
-                type:String,
-            },
-            avatar: {
-                type:String,
-            },
-            usertype: {
-                type:Object,
-            },
-            createdevents: {
-                type:String,
             },
         }, 
 
 		data() {
 			return {
-				// user: {
-    //                 avatar_path: this.avatar,
-    //                 name: this.username,
-    //                 userType: this.usertype,
-    //                 hasCreatedOrganizers: this.createdevents,
-    //                 id: this.userid
-    //             },
-                user:this.loaduser ? this.loaduser : '',
                 page: '',
 			};
 		},

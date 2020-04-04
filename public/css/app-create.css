@@ -774,12 +774,16 @@ label.imgclick {
 }
 
 #create .shows {
-  padding-top: 5rem;
+  margin-top: 1rem;
   width: 100%;
 }
 
 #create .shows .ctitle {
   padding: 0% 9.5% 0% 9.5%;
+}
+
+#create .shows #grid {
+  display: inline-block;
 }
 
 #create .shows .section {
@@ -791,6 +795,10 @@ label.imgclick {
 #create .shows .section .calendar {
   margin: 0;
   padding: 0% 5% 0% 0%;
+}
+
+#create .shows .section .calendar .cost {
+  margin-bottom: 4rem;
 }
 
 #create .shows .section .pricing {
@@ -812,6 +820,71 @@ label.imgclick {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   grid-column-gap: 1rem;
+}
+
+#create .shows .week-calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  height: 10rem;
+  border: 1px solid #ebebeb;
+  border-radius: 5px;
+  text-align: center;
+  -webkit-box-align: center;
+          align-items: center;
+}
+
+#create .shows .week-calendar .day {
+  width: 100%;
+  height: 100%;
+  line-height: 10rem;
+}
+
+#create .shows .week-calendar .day:hover {
+  background: #007c898a;
+  cursor: pointer;
+  border: 1px solid white;
+}
+
+#create .shows .week-calendar .day:hover h4 {
+  color: white;
+  -webkit-user-select: none;
+  /* Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE10+/Edge */
+  user-select: none;
+  /* Standard */
+}
+
+#create .shows .week-calendar .day.active {
+  background: #008489;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+}
+
+#create .shows .week-calendar .day.active h4 {
+  color: white;
+}
+
+#create .shows .week-calendar .day.active:hover {
+  background: #007c898a;
+  cursor: pointer;
+  border: 1px solid white;
+}
+
+#create .shows .week-calendar .day h4 {
+  margin: 0;
+}
+
+#create .shows .tab-events {
+  margin: 2rem auto;
+  width: 100%;
+}
+
+#create .shows .tab .tabcontent {
+  width: 82%;
+  margin: auto;
 }
 
 #create .shows button.delete-circle {

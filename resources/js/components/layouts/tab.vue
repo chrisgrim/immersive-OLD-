@@ -1,5 +1,5 @@
 <template>
-    <div role="tabpanel" v-show="isActive">
+    <div role="tabpanel" v-show="isActive" id="grid">
         <slot></slot>
     </div>
 </template>
@@ -8,7 +8,8 @@
 export default {
     props: {
         title: {},
-        active: { type: Boolean, default: false }
+        active: { type: Boolean, default: false },
+        id: {},
     },
     data() {
         return {

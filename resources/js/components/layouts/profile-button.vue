@@ -16,7 +16,7 @@
 					Profile
 				</a>
 			</li>
-			<li v-if="user.userType ? user.userType.name == 'admin' : ''">
+			<li v-if="user ? user.type == 'a' : ''">
 				<a href="/admin/dashboard">
 					Admin Dashboard
 				</a>

@@ -40,6 +40,7 @@ class Location extends Model
                 'lat' => $request->latitude,
                 'lon' => $request->longitude,
             ],
+            'hasLocation' => true,
         ]);
     }
 }

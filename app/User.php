@@ -23,7 +23,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','largeImagePath','thumbImagePath', 'has_unread','provider','provider_id', 'gravatar'
+        'name', 'email', 'password','largeImagePath','thumbImagePath', 'has_unread','provider','provider_id', 'gravatar', 'type'
     ];
 
     /**
@@ -49,7 +49,7 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array
      */
-    protected $appends = ['hasCreatedOrganizers', 'userType', 'needsApproval','hasMessages', 'hexColor'];
+    protected $appends = ['hasCreatedOrganizers', 'needsApproval','hasMessages', 'hexColor'];
 
     /**
      * User can have many events
@@ -128,21 +128,12 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-    * User belongs to a role on the site
-    *
-    * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
-    */
-    public function role() {
-        return $this->hasOne(Role::class);
-    }
-
-    /**
     * Determine if the current user is Admin
     *
     * @return bool
     */
     public function isAdmin() {
-        return $this->role()->where('name', 'admin')->exists();
+        return $this->where('type', 'a')->exists();
     }
 
     /**
@@ -151,7 +142,7 @@ class User extends Authenticatable implements MustVerifyEmail
     * @return bool
     */
     public function isModerator() {
-        return $this->role()->where('name', 'moderator')->exists();
+        return $this->where('type', 'm')->exists();
     }
 
     /**
@@ -192,25 +183,15 @@ class User extends Authenticatable implements MustVerifyEmail
     */
     public function getNeedsApprovalAttribute()
     {
-        return $this->isAdmin() ? Event::where('approval_process', 'ready')->count() : null;
-    }
-
-    /**
-    * Determine current User type
-    *
-    * @return sting
-    */
-    public function getUserTypeAttribute()
-    {
-        return $this->role()->first();    
+        return $this->isAdmin() ? Event::where('status', 'r')->count() : null;
     }
 
     public function getGravatar()
     {
         $hash = md5(strtolower(trim($this->email)));
-        $url = "http://www.gravatar.com/avatar/$hash?d=404";
+        $url = "https://www.gravatar.com/avatar/$hash?d=404";
         if (!strstr(get_headers($url, 1)[0], '404 Not Found')) {
-            $this->update([ 'gravatar' => "http://www.gravatar.com/avatar/$hash?s=180"]);
+            $this->update([ 'gravatar' => "https://www.gravatar.com/avatar/$hash?s=180"]);
         }
     }
 

@@ -227,11 +227,10 @@ import moment from 'moment'
             getUrl() {
                 if(!this.conversations.modmessages.length) {return ''}; 
                 let arr = this.conversations.modmessages[0].event;
-                console.log(arr.approval_process);
-                if (arr.approval_process == 'approved') {
+                if (arr.status == 'p') {
                     return this.url = `/events/${arr.slug}`;
                 }
-                if (arr.approval_process == 'ready') {
+                if (arr.status == 'r') {
                     return this.url = `#`;
                 }
                 if (arr.largeImagePath) {

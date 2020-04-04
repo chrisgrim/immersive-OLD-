@@ -86,7 +86,7 @@
                 tagLine: '',
                 activeItem: null,
                 dis:false,
-                approved: this.event.approval_process == 'approved' ? true : false,
+                approved: this.event.status == 'p' ? true : false,
                 showEdit: false,
                 modal: false,
                 reapply: '',

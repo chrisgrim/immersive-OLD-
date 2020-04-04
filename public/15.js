@@ -243,8 +243,8 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          (_vm.user.userType
-          ? _vm.user.userType.name == "admin"
+          (_vm.user
+          ? _vm.user.type == "a"
           : "")
             ? _c("li", [
                 _c("a", { attrs: { href: "/admin/dashboard" } }, [

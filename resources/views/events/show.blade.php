@@ -1,8 +1,27 @@
 @extends('layouts.master')
 
 @section('meta')
-    <script type="application/ld+json" data-reactid="64">{"@context":"http://schema.org","@type":"Organization","address":{"@type":"PostalAddress","addressLocality":"Petaluma","addressRegion":"SF","postalCode":"94952","streetAddress":"600 East D St"},"logo":"https://www.todaytix.com/img/TodayTix_logo.png","name":"Everything Immersive","sameAs":["https://www.facebook.com/EverythingImmersive/","https://www.linkedin.com/company/everythingimmersive","https://www.instagram.com/everythingimmersive/","https://twitter.com/everythingimmersive","https://plus.google.com/+everythingimmersive","https://en.wikipedia.org/wiki/everythingimmersive"],"url":"https://www.everythingimmersive.com"}</script>
-    <script type="application/ld+json" data-reactid="138">{"@context":"http://schema.org","@type":"Event","location":{"@type":"Place","address":{"@type":"PostalAddress","addressLocality":"{{$event->location->city}}","addressRegion":"{{$event->location->region}}","postalCode":"{{$event->location->postal_code}}","streetAddress":"{{$event->location->street}}"},"name":"{{$event->name}}"},"name":"{{$event->name}}","image":"/storage/{{$event->largeImagePath}}","description":"{{$event->description}}","startDate":"{{$event->shows[0]->date}}","endDate":"{{$event->closingDate}}"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"Organization","address":{"@type":"PostalAddress","addressLocality":"Petaluma","addressRegion":"SF","postalCode":"94952","streetAddress":"600 East D St"},"logo":"https://www.todaytix.com/img/TodayTix_logo.png","name":"Everything Immersive","sameAs":["https://www.facebook.com/EverythingImmersive/","https://www.linkedin.com/company/everythingimmersive","https://www.instagram.com/everythingimmersive/","https://twitter.com/everythingimmersive","https://plus.google.com/+everythingimmersive","https://en.wikipedia.org/wiki/everythingimmersive"],"url":"https://www.everythingimmersive.com"}</script>
+    <script type="application/ld+json">{
+        "@context":"http://schema.org",
+        "@type":"Event",
+        @if($event->hasLocation)
+        "location":{"@type":"Place",
+        "address":{"@type":"PostalAddress","addressLocality":"{{$event->location->city}}","addressRegion":"{{$event->location->region}}",
+        "postalCode":"{{$event->location->postal_code}}",
+        "streetAddress":"{{$event->location->street}}"},
+        @endif
+        "name":"{{$event->name}}"},
+        "image":"/storage/{{$event->largeImagePath}}",
+        "description":"{{$event->description}}",
+        @if($event->shows->isEmpty())
+        "startDate":{{$event->created_at}},
+        @else
+        "startDate":"{{$event->shows[0]->date}}",
+        @endif
+        "endDate":"{{$event->closingDate}}"}
+    </script>
+    
     <title>{{$event->name}}</title>
     <meta name="description" content="{{$event->tag_line}}"/>
     <meta property="og:locale" content="en_US" />

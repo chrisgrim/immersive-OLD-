@@ -4,7 +4,13 @@
             <div class="organizer">
                 <div class="left" :style="height">
                     <div class="image">
-                        <img :src="organizer.thumbImagePath ? `/storage/${organizer.thumbImagePath}` : `${organizer.hexColor}`" alt="">
+                        <div v-if="organizer.thumbImagePath">
+                            <picture>
+                                <source type="image/webp" :srcset="`/storage/${organizer.thumbImagePath}`"> 
+                                <img :src="`/storage/${organizer.thumbImagePath.slice(0, -4)}jpg`" :alt="`${organizer.name} organizer`">
+                            </picture>
+                        </div>
+                        <div v-else></div>
                     </div>
                 </div>
                 <div class="right">

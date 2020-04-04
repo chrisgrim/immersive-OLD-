@@ -18,19 +18,35 @@
                             </div>
                             <div>
                                 <img src="/storage/website-files/location.png" alt="">
-                                <span class="des">Location</span>
-                                <span class="ans">{{event.location.city}}</span>
+                                <div v-if="event.hasLocation">
+                                    <span class="des">Location</span>
+                                    <span class="ans">{{event.location.city}}</span>
+                                </div>
+                                <div v-else>
+                                    <span class="des">Location</span>
+                                    <span class="ans">Anywhere</span>
+                                </div>
                             </div>
                             <div>
                                 <img src="/storage/website-files/calendar.png" alt="">
-                                <span class="des">Shows</span>
-                                <span class="ans">{{dateArray ? dateArray.length : ''}} dates left</span>
+                                <div v-if="event.shows">
+                                    <span class="des">Shows</span>
+                                    <span class="ans">{{dateArray ? dateArray.length : ''}} dates left</span>
+                                </div>
+                                <div v-if="event.show_on_going">
+                                    <span class="des">Show Days</span>
+                                    <span class="ans">M W T</span>
+                                </div>
                             </div>
                         </div>
     				</div>
     			</div>
     			<div class="right">
-                    <div class="image" :style="{ backgroundImage: `url('/storage/${event.largeImagePath}')` }">
+                    <div class="image">
+                        <picture>
+                            <source type="image/webp" :srcset="`/storage/${event.largeImagePath}`"> 
+                            <img :src="`/storage/${event.largeImagePath.slice(0, -4)}jpg`" :alt="`${event.name} Immersive Event`">
+                        </picture>
                     </div>
                     <div>
                         <favorite :user="user" :inputclass="showEventClass" :event="event"></favorite>
@@ -44,7 +60,7 @@
                 <div class="content">
                     <div class="left">
                         <div class="text">
-                            <h3>About the show</h3>
+                            <h3>About the {{event.category.name}}</h3>
                         </div>
                     </div>
                     <div class="right">
@@ -93,7 +109,7 @@
                     </div>
                 </div>
             </div>
-            <div class="section dates">
+            <div v-if="event.shows" class="section dates">
                 <div class="content">
                     <div class="left">
                         <div class="text">
@@ -109,6 +125,61 @@
                             ref="datePicker"             
                             name="dates">
                         </flat-pickr>
+                        <div class="times">
+                            <p style="white-space: pre-wrap;">{{event.show_times}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div v-if="event.show_on_going" class="section dates">
+                <div class="content">
+                    <div class="left">
+                        <div class="text">
+                            <h3>Show Times</h3>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="calendar">
+                            <div class="field">
+                                <div class="week-calendar">
+                                    <div 
+                                    class="day" 
+                                    :class="{ active: week.mon }" >
+                                        <h4>Mon</h4>
+                                    </div>
+                                    <div 
+                                    class="day"
+                                    :class="{ active: week.tue }" >
+                                        <h4>Tue</h4>
+                                    </div>
+                                    <div 
+                                    class="day" 
+                                    :class="{ active: week.wed }" >
+                                        <h4>Wed</h4>
+                                    </div>
+                                    <div 
+                                    class="day" 
+                                    :class="{ active: week.thu }" >
+                                        <h4>Thu</h4>
+                                    </div>
+                                    <div 
+                                    class="day"
+                                    :class="{ active: week.fri }" >
+                                        <h4>Fri</h4>
+                                    </div>
+                                    <div 
+                                    class="day"
+                                    :class="{ active: week.sat }">
+                                        <h4>Sat</h4>
+                                    </div>
+                                    <div 
+                                    class="day"
+                                    :class="{ active: week.sun }">
+                                        <h4>Sun</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="times">
                             <p style="white-space: pre-wrap;">{{event.show_times}}</p>
                         </div>
@@ -187,7 +258,7 @@
     				</div>
                 </div>
 			</div>
-			<div v-if="this.bar" class="section location">
+			<div v-if="bar && event.location.latitude" class="section location">
 				<div>
 					<div class="title">
 						<h3>Location</h3>
@@ -276,7 +347,6 @@
 
         computed: {
 
-            // return this.dates.length > 10 ? this.dates.split(",") : '';
             dateArray() {
                 if(!Array.isArray(this.dates) && this.dates.includes(",")) {
                     return this.dates.split(",");
@@ -299,6 +369,7 @@
 				url:'https://{s}.tile.osm.org/{z}/{x}/{y}.png',
 				attribution:'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
 				allowZoom: false,
+                week: this.loadevent ? this.loadevent.show_on_going : '',
 				showEventClass: 'show-heart-location',
                 showMore: null,
                 dates: [],
@@ -317,9 +388,11 @@
 
 		methods: {
             getDates() {
-                this.event.shows.forEach(event=> {
-                    this.dates.push(event.date)
-                });
+                if(this.event.shows) {
+                    this.event.shows.forEach(event=> {
+                        this.dates.push(event.date)
+                    });
+                }
             },
 
             handleScroll (event) {

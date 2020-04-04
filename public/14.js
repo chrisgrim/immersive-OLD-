@@ -266,6 +266,77 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -287,7 +358,6 @@ __webpack_require__.r(__webpack_exports__);
     ContactOrganizer: _organizers_contact_organizer_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   computed: {
-    // return this.dates.length > 10 ? this.dates.split(",") : '';
     dateArray: function dateArray() {
       if (!Array.isArray(this.dates) && this.dates.includes(",")) {
         return this.dates.split(",");
@@ -309,6 +379,7 @@ __webpack_require__.r(__webpack_exports__);
       url: 'https://{s}.tile.osm.org/{z}/{x}/{y}.png',
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       allowZoom: false,
+      week: this.loadevent ? this.loadevent.show_on_going : '',
       showEventClass: 'show-heart-location',
       showMore: null,
       dates: [],
@@ -328,9 +399,11 @@ __webpack_require__.r(__webpack_exports__);
     getDates: function getDates() {
       var _this = this;
 
-      this.event.shows.forEach(function (event) {
-        _this.dates.push(event.date);
-      });
+      if (this.event.shows) {
+        this.event.shows.forEach(function (event) {
+          _this.dates.push(event.date);
+        });
+      }
     },
     handleScroll: function handleScroll(event) {
       event.path[1].scrollY > 60 ? this.bar = true : this.bar = false;
@@ -514,11 +587,19 @@ var render = function() {
                   attrs: { src: "/storage/website-files/location.png", alt: "" }
                 }),
                 _vm._v(" "),
-                _c("span", { staticClass: "des" }, [_vm._v("Location")]),
-                _vm._v(" "),
-                _c("span", { staticClass: "ans" }, [
-                  _vm._v(_vm._s(_vm.event.location.city))
-                ])
+                _vm.event.hasLocation
+                  ? _c("div", [
+                      _c("span", { staticClass: "des" }, [_vm._v("Location")]),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "ans" }, [
+                        _vm._v(_vm._s(_vm.event.location.city))
+                      ])
+                    ])
+                  : _c("div", [
+                      _c("span", { staticClass: "des" }, [_vm._v("Location")]),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "ans" }, [_vm._v("Anywhere")])
+                    ])
               ]),
               _vm._v(" "),
               _c("div", [
@@ -526,27 +607,50 @@ var render = function() {
                   attrs: { src: "/storage/website-files/calendar.png", alt: "" }
                 }),
                 _vm._v(" "),
-                _c("span", { staticClass: "des" }, [_vm._v("Shows")]),
+                _vm.event.shows
+                  ? _c("div", [
+                      _c("span", { staticClass: "des" }, [_vm._v("Shows")]),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "ans" }, [
+                        _vm._v(
+                          _vm._s(_vm.dateArray ? _vm.dateArray.length : "") +
+                            " dates left"
+                        )
+                      ])
+                    ])
+                  : _vm._e(),
                 _vm._v(" "),
-                _c("span", { staticClass: "ans" }, [
-                  _vm._v(
-                    _vm._s(_vm.dateArray ? _vm.dateArray.length : "") +
-                      " dates left"
-                  )
-                ])
+                _vm.event.show_on_going
+                  ? _c("div", [
+                      _c("span", { staticClass: "des" }, [_vm._v("Show Days")]),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "ans" }, [_vm._v("M W T")])
+                    ])
+                  : _vm._e()
               ])
             ])
           ])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "right" }, [
-          _c("div", {
-            staticClass: "image",
-            style: {
-              backgroundImage:
-                "url('/storage/" + _vm.event.largeImagePath + "')"
-            }
-          }),
+          _c("div", { staticClass: "image" }, [
+            _c("picture", [
+              _c("source", {
+                attrs: {
+                  type: "image/webp",
+                  srcset: "/storage/" + _vm.event.largeImagePath
+                }
+              }),
+              _vm._v(" "),
+              _c("img", {
+                attrs: {
+                  src:
+                    "/storage/" + _vm.event.largeImagePath.slice(0, -4) + "jpg",
+                  alt: _vm.event.name + " Immersive Event"
+                }
+              })
+            ])
+          ]),
           _vm._v(" "),
           _c(
             "div",
@@ -568,7 +672,11 @@ var render = function() {
     _c("div", { staticClass: "body" }, [
       _c("div", { staticClass: "section about" }, [
         _c("div", { staticClass: "content" }, [
-          _vm._m(0),
+          _c("div", { staticClass: "left" }, [
+            _c("div", { staticClass: "text" }, [
+              _c("h3", [_vm._v("About the " + _vm._s(_vm.event.category.name))])
+            ])
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "right" }, [
             _vm.showMore !== "description"
@@ -643,7 +751,7 @@ var render = function() {
             _c("div", { staticClass: "back" }),
             _vm._v(" "),
             _c("div", { staticClass: "content" }, [
-              _vm._m(1),
+              _vm._m(0),
               _vm._v(" "),
               _c(
                 "div",
@@ -685,41 +793,107 @@ var render = function() {
           ])
         : _vm._e(),
       _vm._v(" "),
-      _c("div", { staticClass: "section dates" }, [
-        _c("div", { staticClass: "content" }, [
-          _vm._m(2),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "right" },
-            [
-              _c("flat-pickr", {
-                ref: "datePicker",
-                staticClass: "form-control",
-                attrs: {
-                  config: _vm.config,
-                  placeholder: "Select date",
-                  name: "dates"
-                },
-                model: {
-                  value: _vm.dates,
-                  callback: function($$v) {
-                    _vm.dates = $$v
-                  },
-                  expression: "dates"
-                }
-              }),
+      _vm.event.shows
+        ? _c("div", { staticClass: "section dates" }, [
+            _c("div", { staticClass: "content" }, [
+              _vm._m(1),
               _vm._v(" "),
-              _c("div", { staticClass: "times" }, [
-                _c("p", { staticStyle: { "white-space": "pre-wrap" } }, [
-                  _vm._v(_vm._s(_vm.event.show_times))
+              _c(
+                "div",
+                { staticClass: "right" },
+                [
+                  _c("flat-pickr", {
+                    ref: "datePicker",
+                    staticClass: "form-control",
+                    attrs: {
+                      config: _vm.config,
+                      placeholder: "Select date",
+                      name: "dates"
+                    },
+                    model: {
+                      value: _vm.dates,
+                      callback: function($$v) {
+                        _vm.dates = $$v
+                      },
+                      expression: "dates"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "times" }, [
+                    _c("p", { staticStyle: { "white-space": "pre-wrap" } }, [
+                      _vm._v(_vm._s(_vm.event.show_times))
+                    ])
+                  ])
+                ],
+                1
+              )
+            ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.event.show_on_going
+        ? _c("div", { staticClass: "section dates" }, [
+            _c("div", { staticClass: "content" }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _c("div", { staticClass: "right" }, [
+                _c("div", { staticClass: "calendar" }, [
+                  _c("div", { staticClass: "field" }, [
+                    _c("div", { staticClass: "week-calendar" }, [
+                      _c(
+                        "div",
+                        { staticClass: "day", class: { active: _vm.week.mon } },
+                        [_c("h4", [_vm._v("Mon")])]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "day", class: { active: _vm.week.tue } },
+                        [_c("h4", [_vm._v("Tue")])]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "day", class: { active: _vm.week.wed } },
+                        [_c("h4", [_vm._v("Wed")])]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "day", class: { active: _vm.week.thu } },
+                        [_c("h4", [_vm._v("Thu")])]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "day", class: { active: _vm.week.fri } },
+                        [_c("h4", [_vm._v("Fri")])]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "day", class: { active: _vm.week.sat } },
+                        [_c("h4", [_vm._v("Sat")])]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "day", class: { active: _vm.week.sun } },
+                        [_c("h4", [_vm._v("Sun")])]
+                      )
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "times" }, [
+                  _c("p", { staticStyle: { "white-space": "pre-wrap" } }, [
+                    _vm._v(_vm._s(_vm.event.show_times))
+                  ])
                 ])
               ])
-            ],
-            1
-          )
-        ])
-      ]),
+            ])
+          ])
+        : _vm._e(),
       _vm._v(" "),
       _c("div", { staticClass: "section details" }, [
         _c("div", { staticClass: "content" }, [
@@ -867,7 +1041,7 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      this.bar
+      _vm.bar && _vm.event.location.latitude
         ? _c("div", { staticClass: "section location" }, [
             _c("div", [
               _vm._m(8),
@@ -1084,14 +1258,6 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "left" }, [
-      _c("div", { staticClass: "text" }, [_c("h3", [_vm._v("About the show")])])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "left" }, [
       _c("div", { staticClass: "text" }, [
         _c("h3", [_vm._v("Show"), _c("br"), _vm._v("Reviews")])
       ])
@@ -1103,6 +1269,14 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "left" }, [
       _c("div", { staticClass: "text" }, [_c("h3", [_vm._v("Show Dates")])])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "left" }, [
+      _c("div", { staticClass: "text" }, [_c("h3", [_vm._v("Show Times")])])
     ])
   },
   function() {

@@ -80,6 +80,7 @@ Vue.component('tabs', () => import('./components/layouts/tabs.vue'));
 Vue.component('tab', () => import('./components/layouts/tab.vue'));
 Vue.component('image-upload', () => import('./components/layouts/image-upload.vue'));
 Vue.component('vue-alert', () => import('./components/layouts/alert.vue'));
+Vue.component('vue-email-verify', () => import('./components/layouts/email-verified.vue'));
 
 //Create Events
 Vue.component('event-create-checklist', () => import('./components/create/checklist.vue'));

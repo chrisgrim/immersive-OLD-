@@ -112,7 +112,7 @@ class AdminAreaController extends Controller
      */
     public function approval()
     {
-        $events = Event::where('approval_process', 'ready')->get();
+        $events = Event::where('status', 'r')->get();
         return view('adminArea.approval',compact('events'));
     }
 
@@ -143,8 +143,7 @@ class AdminAreaController extends Controller
         EventImage::finalizeImage($event, $slug);
 
         $event->update([
-            'approval_process' => 'approved',
-            'approved' => true,
+            'status' => 'p',
             'slug' => $slug,
         ]);
 
@@ -217,7 +216,7 @@ class AdminAreaController extends Controller
         Mail::to($event->user)->send(new ModeratorComments($ModeratorComment));
 
         $event->update([
-            'approval_process' => 'hasIssues',
+            'status' => 'n',
         ]);
     }
 

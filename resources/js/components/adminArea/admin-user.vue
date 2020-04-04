@@ -28,12 +28,12 @@
             @blur="saveEmail(user)"
             />
             <select 
-            v-model="user.userType.name" 
+            v-model="user.type" 
             placeholder="User Type"
             @blur="saveUserType(user)">
-            <option value="admin">Admin</option>
-            <option value="moderator">Moderator</option>
-            <option value="user">User</option>
+            <option value="a">Admin</option>
+            <option value="m">Moderator</option>
+            <option value="g">Guest</option>
             </select>
             <button @click.prevent="showModal(user, 'delete')" class="delete-circle"><p>X</p></button>
         </div>
@@ -137,7 +137,7 @@
 
             saveUserType(user) {
                 let data = {
-                    userType: user.userType.name
+                    type: user.type
                 };
                 axios.patch(`/master/userlist/${user.id}`, data)
                 .then(response => { 

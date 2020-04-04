@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="tab" role="tablist">
-            <div class="content">
+            <div class="tabcontent">
                 <div
                     v-for="(tab, index) in tabs"
                     class="ln"
@@ -29,7 +29,8 @@ export default {
     data() {
         return {
             tabs: [],
-            activeTab: null
+            activeTab: null,
+
         };
     },
     mounted() {
@@ -39,12 +40,13 @@ export default {
     watch: {
         activeTab(activeTab) {
             this.tabs.map(tab => (tab.isActive = tab == activeTab));
+            this.$emit('current', activeTab.id);
         }
     },
     methods: {
         setInitialActiveTab() {
             this.activeTab = this.tabs.find(tab => tab.active) || this.tabs[0];
-        }
+        },
     }
 };
 </script>

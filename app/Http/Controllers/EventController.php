@@ -30,9 +30,10 @@ class EventController extends Controller
      */
     public function index(Event $event)
     {
-        $events = Event::search('*')
-            ->where('closingDate', '>=', 'now/d')
-            ->take(20)
+        $events = Event::where('closingDate', '>=', Carbon::now())
+            ->where('status', 'p')
+            ->orderBy('updated_at', 'desc')
+            ->limit(22)
             ->get();
         $categories = Category::all();
         $staffpicks = StaffPick::whereDate('end_date','>=', Carbon::now())
@@ -98,8 +99,8 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        if(!$event->approved) { return redirect('/');}
-        $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'eventreviews', 'staffpick', 'advisories');
+        if($event->status !== 'p') { return redirect('/');}
+        $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'eventreviews', 'staffpick', 'advisories', 'showOnGoing');
         return view('events.show', compact('event'));
     }
 
@@ -169,7 +170,7 @@ class EventController extends Controller
         ]);
         if($request->reapply){
             $event->update([
-                'approval_process' => 'inProgress',
+                'status' => 'd',
                 'approved' => false
             ]);
         };
@@ -183,7 +184,7 @@ class EventController extends Controller
      */
     public function review(Event $event)
     {
-        $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'advisories');
+        $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'advisories', 'showOnGoing');
         return view('create.review', compact('event'));
     }
 

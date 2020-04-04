@@ -32,6 +32,18 @@
                     </div>
                 </div>
             </div>
+
+            <div class="events">
+                <h2>Our Latest Remote Events</h2>
+                <div>
+                    <div id="grid">
+                        <div v-for="event in remote">
+                            <event-listing-item :user="user" :event="event"></event-listing-item>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </template>
@@ -51,6 +63,9 @@
 
         props: {
             events: {
+                type:Array,
+            },
+            remote: {
                 type:Array,
             },
             categories: {

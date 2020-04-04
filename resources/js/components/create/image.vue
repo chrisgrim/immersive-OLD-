@@ -107,7 +107,7 @@ export default {
                 this.isLoading = false;
                 this.dis = false;
                 this.disImage = false;
-                this.event.approval_process == 'approved' ? this.readyToSubmit = false : this.readyToSubmit = true;
+                this.event.status == 'p' ? this.readyToSubmit = false : this.readyToSubmit = true;
             })
             .catch(errorResponse => { 
                 this.validationErrors = errorResponse.response.data.errors; this.dis = false; });
@@ -126,10 +126,10 @@ export default {
         },
 
         readySubmit() {
-            this.event.approval_process !== 'approved' &&
+            this.event.status !== 'p' &&
             this.event.organizer_id && 
             this.event.name && 
-            this.event.location_latlon && 
+            (this.event.location_latlon || !this.event.hasLocation) && 
             this.event.category_id &&
             this.event.show_times &&
             this.event.description &&

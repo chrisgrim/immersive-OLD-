@@ -28,13 +28,16 @@ class CreateEventsTable extends Migration
             $table->string('ticketUrl')->nullable();
             $table->string('largeImagePath')->nullable();
             $table->string('thumbImagePath')->nullable();
-            $table->string('overallRating')->default(0);
             $table->json('location_latlon')->nullable();
             $table->dateTime('closingDate')->nullable();
             $table->string('price_range')->nullable();
-            $table->string('approval_process')->default('inProgress');
-            $table->boolean('approved')->default(0);
+            $table->char('status', 1)->default('d');
+            $table->char('showtype', 1)->nullable();
+            // $table->string('approval_process')->default('inProgress');
+            // $table->boolean('approved')->default(0);
+            $table->boolean('hasLocation')->default(1);
             $table->timestamps();
+            $table->index(['status', 'updated_at','closingDate']);
         });
     }
 

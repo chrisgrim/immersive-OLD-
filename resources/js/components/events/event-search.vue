@@ -117,7 +117,7 @@
     import flatPickr from 'vue-flatpickr-component'
     import 'flatpickr/dist/flatpickr.css'
     import Multiselect from 'vue-multiselect'
-    import '../events/components/clickOutside.js';
+    // import '../events/components/clickOutside.js';
     import VueSlider from 'vue-slider-component'
     import 'vue-slider-component/theme/antd.css'
 
@@ -254,6 +254,7 @@
             },
 
             onClickOutside(event) {
+                console.log('test');
                 let cat =  this.$refs.cat;
                 let dates =  this.$refs.dates;
                 let price =  this.$refs.price;

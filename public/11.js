@@ -217,6 +217,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -459,14 +465,28 @@ var render = function() {
       _c("div", { staticClass: "organizer" }, [
         _c("div", { staticClass: "left", style: _vm.height }, [
           _c("div", { staticClass: "image" }, [
-            _c("img", {
-              attrs: {
-                src: _vm.organizer.thumbImagePath
-                  ? "/storage/" + _vm.organizer.thumbImagePath
-                  : "" + _vm.organizer.hexColor,
-                alt: ""
-              }
-            })
+            _vm.organizer.thumbImagePath
+              ? _c("div", [
+                  _c("picture", [
+                    _c("source", {
+                      attrs: {
+                        type: "image/webp",
+                        srcset: "/storage/" + _vm.organizer.thumbImagePath
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("img", {
+                      attrs: {
+                        src:
+                          "/storage/" +
+                          _vm.organizer.thumbImagePath.slice(0, -4) +
+                          "jpg",
+                        alt: _vm.organizer.name + " organizer"
+                      }
+                    })
+                  ])
+                ])
+              : _c("div")
           ])
         ]),
         _vm._v(" "),

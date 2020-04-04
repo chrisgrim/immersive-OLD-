@@ -79,7 +79,6 @@ class UserMasterController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        if($request->userType) {return $user->role()->update(['name' => $request->userType]);}
         $user->update($request->all());
     }
 

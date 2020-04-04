@@ -40,7 +40,7 @@
 				return '/favorite/' + this.event.slug + '/favorites';
 			},
             isApproved() {
-                return this.event.approved == 0 ? 'dis' : '';
+                return this.event.approved !== 'p' ? 'dis' : '';
             },
 		},
 

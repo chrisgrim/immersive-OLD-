@@ -16,7 +16,9 @@ class Event extends Model
 
     protected $casts = [
         'location_latlon' => 'array',
+        'hasLocation' => 'boolean'
     ];
+
     
     /**
     * What protected variables are allowed to be passed to the database
@@ -24,7 +26,7 @@ class Event extends Model
     * @var array
     */
 	protected $fillable = [
-    	'slug', 'user_id', 'category_id','organizer_id','description','name','largeImagePath','thumbImagePath','advisories_id', 'organizer_id', 'location_latlon', 'closingDate','websiteUrl','ticketUrl','show_times','price_range', 'approval_process', 'approved','tag_line'
+    	'slug', 'user_id', 'category_id','organizer_id','description','name','largeImagePath','thumbImagePath','advisories_id', 'organizer_id', 'location_latlon', 'closingDate','websiteUrl','ticketUrl','show_times','price_range', 'status','tag_line', 'hasLocation', 'showtype'
 
     ];
 
@@ -33,7 +35,7 @@ class Event extends Model
     *
     * @var array
     */
-    protected $with = ['shows', 'favorites', 'priceranges'];
+    protected $with = ['favorites', 'priceranges'];
 
     /**
     * The accessors to append to the model's array form.
@@ -58,7 +60,7 @@ class Event extends Model
     * @return bool
     */
     public function isPublished() {
-        return $this->approved == true;
+        return $this->status == 'p';
     }
 
     /**
@@ -67,7 +69,7 @@ class Event extends Model
     * @return bool
     */
     public function getIsPickedAttribute() {
-        return $this->approved == true;
+        return $this->status == 'p';
     }
     
     /**
@@ -160,6 +162,16 @@ class Event extends Model
     public function shows() 
     {
         return $this->hasMany(Show::class);
+    }
+
+    /**
+     * Each event has many shows
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function showOnGoing() 
+    {
+        return $this->hasOne(ShowOnGoing::class);
     }
 
     /**
@@ -277,7 +289,7 @@ class Event extends Model
             $event->update([ 'ticketUrl' => $website ]);
         }
         $event->update([
-            'approval_process' => 'ready',
+            'status' => 'r',
         ]);
     }
 
@@ -445,16 +457,18 @@ class Event extends Model
             'organizer_id' => [
                 'type' => 'integer',
             ],
+            'status' => [
+                'type' => 'text',
+            ],
+            'showtype' => [
+                'type' => 'text',
+            ],
+            'hasLocation' => [
+                'type' => 'boolean',
+            ],
             'overallRating' => [
                 'type' => 'integer',
                 'index' => false
-            ],
-            'approved' => [
-                'type' => 'text',
-                'index' => false
-            ],
-            'approval_process' => [
-                'type' => 'text',
             ],
             'created_at' => [
                 'type' => 'text',
@@ -468,10 +482,10 @@ class Event extends Model
                 'type' => 'text',
                 'index' => false,
             ],
-            'updated_at' => [
-                'type' => 'text',
-                'index' => false
-            ],
+            // 'updated_at' => [
+            //     'type' => 'text',
+            //     'index' => false
+            // ],
             'location_latlon' => [
                 'type' => 'geo_point'                
             ],
