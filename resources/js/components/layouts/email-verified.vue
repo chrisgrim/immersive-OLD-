@@ -51,36 +51,24 @@
                 })
             },
 
-            verified() {
-                this.user.email_verified_at ? window.location.href = '/' : '';
-            },
-
             onClickOutside(event) {
-                console.log('test2');
                 let panel =  this.$refs.panel;
                 if (!panel || panel.contains(event.target)) return console.log('one');;
                 this.visible = false;
-                console.log('test');
-            },
-
-            test() {
-                console.log('test3');
             },
 
             hide() {
-                this.visible = true;
+                this.visible = false;
             }
         },
 
         mounted() {
             setTimeout(() => this.hide(), 20000);
-            // document.addEventListener("hideemail", this.onClickOutside);
-            setTimeout(() => document.addEventListener("hideemail", this.onClickOutside), 200);
+            setTimeout(() => document.addEventListener("click", this.onClickOutside), 200);
         },
 
-        created() {
-            // this.verified();
-        }
-
+        beforeDestroy() {
+            document.removeEventListener("click", this.onClickOutside);
+        },
     }
 </script>

@@ -14,7 +14,7 @@
                 <h3>{{ event.name }}</h3>
             </div>
             <div class="eprice">
-                <h4>{{ event.price_range }}</h4><p> / show</p>
+                <h4>{{ event.price_range }}</h4>
             </div>
         </a>
     </div>

@@ -37,7 +37,7 @@ class SearchController extends Controller
         // );
         $searchedevents = Event::search('*')
             ->where('closingDate', '>=', 'now/d')
-            ->where('approval_process', '=', 'approved')
+            ->where('status', 'p')
             ->whereGeoDistance('location_latlon', [floatval($request->lng), floatval($request->lat)], '40km')
             ->with(['location', 'organizer'])
             ->get(); 
@@ -57,7 +57,7 @@ class SearchController extends Controller
    
         $events = Event::search('*')
             ->where('closingDate', '>=', 'now/d')
-            ->where('approval_process', '=', 'approved')
+            ->where('status', 'p')
             ->when($request->category_id, function($query) use ($request) {
                 $query->where('category_id', $request->category_id);
             })
@@ -143,7 +143,7 @@ class SearchController extends Controller
     {
         $events = Event::search('*')
             ->where('closingDate', '>=', 'now/d')
-            ->where('approval_process', '=', 'approved')
+            ->where('status', 'p')
             ->when($request->category, function($query) use ($request) {
                 $query->where('category_id', $request->category['id']);
             })

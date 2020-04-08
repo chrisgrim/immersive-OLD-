@@ -419,7 +419,7 @@ select:-webkit-autofill:focus {
   border-radius: 50%;
   width: 4rem;
   height: 4rem;
-  padding: 0rem;
+  padding: 1.3rem 0rem;
   border: solid #008489 1px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 0px 0px, rgba(0, 0, 0, 0.04) 0px 0px 0px 0.5px;
 }

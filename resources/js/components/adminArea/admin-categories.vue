@@ -30,7 +30,7 @@
             </div>
             <button @click.prevent="showModal(category)" class="delete-circle"><p>X</p></button>
         </div>
-        <modal v-show="isEditModalVisible" @close="isEditModalVisible = false">
+        <modal v-if="isEditModalVisible" @close="isEditModalVisible = false">
             <div slot="header">
                 <div class="circle del">
                     <p>X</p>
@@ -46,7 +46,7 @@
         </modal>
 
         <div class="pin">
-            <modal v-show="isModalVisible" @close="isModalVisible = false">
+            <modal v-if="isModalVisible" @close="isModalVisible = false">
                 <div slot="header">
                     <div></div>
                 </div>

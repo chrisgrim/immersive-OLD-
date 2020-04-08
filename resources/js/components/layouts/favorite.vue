@@ -40,12 +40,13 @@
 				return '/favorite/' + this.event.slug + '/favorites';
 			},
             isApproved() {
-                return this.event.approved !== 'p' ? 'dis' : '';
+                return this.event.status !== 'p' ? 'dis' : '';
             },
 		},
 
 		methods: {
 			toggle() {
+                console.log('test1');
 				return this.isFavorited ? this.destroy() : this.create();
 			},
 

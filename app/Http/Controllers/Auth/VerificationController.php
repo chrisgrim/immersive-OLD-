@@ -44,6 +44,7 @@ class VerificationController extends Controller
     }
 
     public function show() {
+        if (auth()->user()->email_verified_at) {return redirect('/');}
         $events = Event::search('*')
             ->where('closingDate', '>=', 'now/d')
             ->get();

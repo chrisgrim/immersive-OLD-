@@ -11,19 +11,22 @@
             </button>
         </div>
         <login-pop v-if="isLoginVisible" :visible="isLoginVisible" @close="isLoginVisible=false"></login-pop>
-        <modal v-show="isModalVisible" @close="isModalVisible=false">
+        <modal v-if="isModalVisible" @close="isModalVisible=false">
             <div slot="header">
             </div>
             <div slot="body"> 
                 <h3>Ask {{organizer.name}}</h3>
                 <p>Send a question to the organizer or about an event.</p>
-                <textarea
-                v-model="message" 
-                rows="8"
-                :class="{ 'error': $v.message.$error }"
-                @input="$v.message.$touch()"
-                type="text">
-                </textarea>
+                <div class="field">
+                    <textarea
+                    v-model="message" 
+                    rows="8"
+                    class="message"
+                    :class="{ 'error': $v.message.$error }"
+                    @input="$v.message.$touch()"
+                    type="text">
+                    </textarea>
+                </div>
                 <div v-if="$v.message.$error" class="validation-error">
                     <p class="error" v-if="!$v.message.required">Please include a message</p>
                     <p class="error" v-if="!$v.message.maxLength">The message is too long.</p>
@@ -73,7 +76,8 @@
                     this.message = '';
                     this.dis = false;
                 })
-                .catch(errorResponse => { 
+                .catch(error => { 
+                    console.log(error.response.data)
                     this.validationErrors = errorResponse.response.data.errors;
                     this.dis = false;
                 });
@@ -86,6 +90,7 @@
                 maxLength: maxLength(2000)
             },
         },
+
     }
     
 </script>

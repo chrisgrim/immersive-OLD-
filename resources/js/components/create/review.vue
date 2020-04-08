@@ -45,29 +45,7 @@
             goBack() {
                 window.location.href = `${this.eventUrl}/images`;
             },
-
-            notReady() {
-                console.log('test');
-                this.event.status !== 'p' &&
-                this.event.organizer_id && 
-                this.event.name && 
-                (this.event.location_latlon || !this.event.hasLocation) && 
-                this.event.category_id &&
-                this.event.show_times &&
-                this.event.description &&
-                this.event.largeImagePath &&
-                this.event.advisories_id
-                ? '' : window.history.back();
-            },
-
-
         },
-
-        created() {
-            this.notReady();
-        },
-
-
     };
 
 </script>

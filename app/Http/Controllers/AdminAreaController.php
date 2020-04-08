@@ -124,7 +124,7 @@ class AdminAreaController extends Controller
      */
     public function showApproval(Event $event)
     {
-        $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'advisories');
+        $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'advisories','showOnGoing');
         return view('adminArea.showapproval',compact('event'));
     }
 

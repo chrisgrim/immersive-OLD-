@@ -16,6 +16,9 @@
                         :aria-selected="tab.isActive"
                         @click="activeTab = tab"
                     ></button>
+                    <div v-if="tab.notification" class="active">
+                        <p></p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -26,6 +29,7 @@
 
 <script>
 export default {
+
     data() {
         return {
             tabs: [],

@@ -56,7 +56,7 @@
                             <div class="list">
                                 <div class="social">
                                     <div>
-                                        <a href="/login/Google">
+                                        <a href="/login/Facebook">
                                             <p>Facebook</p>
                                         </a>
                                     </div>
@@ -151,7 +151,7 @@
                             <div class="list">
                                 <div class="social">
                                     <div>
-                                        <a href="/login/Google">
+                                        <a href="/login/Facebook">
                                             <p>Facebook</p>
                                         </a>
                                     </div>

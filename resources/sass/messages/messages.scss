@@ -1,7 +1,6 @@
 .messages {
     max-width: 100%;
     margin: auto;
-    padding-top: 8rem;
     & .title {
         width:100%;
         margin:auto;
@@ -37,7 +36,7 @@
             display: grid;
             grid-template-columns: 7rem 1fr;
             align-items: start;
-            & .image {
+            & .message-image {
                 width:5rem;
                 height:5rem;
                 margin: 1rem auto;
@@ -64,7 +63,7 @@
 }
 .chat {
     margin: auto;
-    padding-top: 12rem;
+    padding-top: 5rem;
     display: grid;
     grid-template-columns: auto 1fr;
     width: 72%;

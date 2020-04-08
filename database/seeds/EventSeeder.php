@@ -13,7 +13,7 @@ class EventSeeder extends Seeder
      */
     public function run()
     {
-        $events = factory(Event::class, 20)->create();
+        $events = factory(Event::class, 30)->create();
         $events->each(function($event) {
             factory('App\Location')->create(['event_id' => $event->id]);
         });

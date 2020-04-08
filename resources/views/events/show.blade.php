@@ -14,6 +14,7 @@
         "name":"{{$event->name}}"},
         "image":"/storage/{{$event->largeImagePath}}",
         "description":"{{$event->description}}",
+        "name":"{{$event->name}}",
         @if($event->shows->isEmpty())
         "startDate":{{$event->created_at}},
         @else

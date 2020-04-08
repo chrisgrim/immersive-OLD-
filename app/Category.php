@@ -16,6 +16,13 @@ class Category extends Model
     protected $fillable = [
     	'name', 'slug','description','largeImagePath', 'thumbImagePath'
     ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['hasEvent'];
     
     /**
     * Each Category has many events
@@ -25,6 +32,16 @@ class Category extends Model
     public function events() 
     {
         return $this->hasMany(Event::class);
+    }
+
+        /**
+    * Determine if the current user has created events
+    *
+    * @return bool
+    */
+    public function getHasEventAttribute()
+    {
+        return $this->events()->count() ? true : false;    
     }
     
     /**

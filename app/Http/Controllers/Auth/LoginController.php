@@ -75,9 +75,9 @@ class LoginController extends Controller
         [
             'name'     => $user->name,
             'provider' => $provider,
-            'provider_id' => $user->id
+            'provider_id' => $user->id,
+            'email_verified_at' => now(),
         ]);
-        $user->role()->updateOrCreate(['name' => "user"]);
         return $user;
     }
 }

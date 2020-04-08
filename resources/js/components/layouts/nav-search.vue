@@ -52,7 +52,7 @@ export default {
             searchBoxOptions: [],
             isLoading: false,
             search: this.initializeSearchObject(),
-            placeholder: this.$route.query.name ? this.$route.query.name : 'Try "Los Angeles"',
+            placeholder: this.$route.query.name ? this.$route.query.name : 'Try "New York"',
         }
     },
 

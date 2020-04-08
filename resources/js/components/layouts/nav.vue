@@ -78,9 +78,6 @@
             },
 		},
 
-        mounted() {
-            this.navType();
-        }
 
 	}
 </script>

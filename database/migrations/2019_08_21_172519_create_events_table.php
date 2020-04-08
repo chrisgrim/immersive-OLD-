@@ -33,11 +33,9 @@ class CreateEventsTable extends Migration
             $table->string('price_range')->nullable();
             $table->char('status', 1)->default('d');
             $table->char('showtype', 1)->nullable();
-            // $table->string('approval_process')->default('inProgress');
-            // $table->boolean('approved')->default(0);
             $table->boolean('hasLocation')->default(1);
             $table->timestamps();
-            $table->index(['status', 'updated_at','closingDate']);
+            $table->index(['status','closingDate', 'updated_at']);
         });
     }
 

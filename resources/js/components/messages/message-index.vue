@@ -2,7 +2,7 @@
     <div class="messages">
         <div class="listing-details-block">
             <tabs>
-                <tab title="Messages" :active="true" class="tab-events">
+                <tab title="Messages" notification="true" :active="true" class="tab-events">
                     <div v-if="conversations" v-for="conversation in conversations">
                         <a v-if="conversation.messages.length" :href="`/conversations/${conversation.id}`" class="row">
                             <div v-if="loaduser.id !== user.id" v-for="user in conversation.users" class="user">
@@ -19,24 +19,24 @@
                                 </div>
                                 <div class="name">
                                     <p><b>{{user.name}}</b></p>
-                                    <div v-for="(message, index) in conversation.messages">
-                                        <p v-if="index == 0"><span>{{message.updated_at | formatDate}}</span></p>
+                                    <div v-for="(message, index) in conversation.messages" v-if="index == 0">
+                                        <p><span>{{message.updated_at | formatDate}}</span></p>
                                     </div>
                                 </div>
                             </div>
                             <div>
-                                <div v-for="(message, index) in conversation.messages" class="message">
-                                    <p v-if="index == 0"><span>{{ message.message }}</span></p>
+                                <div v-if="index == 0" v-for="(message, index) in conversation.messages" class="message">
+                                    <p><span>{{ message.message }}</span></p>
                                 </div>
                             </div>  
                         </a>
                     </div>
                 </tab>
-                <tab title="Events" class="tab-events">
+                <tab title="Events" notification="true" class="tab-events">
                     <div v-if="conversations" v-for="conversation in conversations">
                         <a v-if="conversation.modmessages.length" :href="`/conversations/${conversation.id}`" class="row">
                             <div class="event">
-                                <div class="image">
+                                <div class="message-image">
                                     <img :src="`/storage/${conversation.modmessages[0].event.thumbImagePath}`" >
                                 </div>
                                 <div class="name">

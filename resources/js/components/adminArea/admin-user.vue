@@ -37,7 +37,7 @@
             </select>
             <button @click.prevent="showModal(user, 'delete')" class="delete-circle"><p>X</p></button>
         </div>
-        <modal v-show="modal == 'delete'" @close="modal = null">
+        <modal v-if="modal == 'delete'" @close="modal = null">
             <div slot="header">
                 <div class="circle del">
                     <p>X</p>

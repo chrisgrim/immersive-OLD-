@@ -3,7 +3,7 @@
         <div class="index">
             <div class="categories">
                 <div class="section">
-                    <div v-for="category in categories" class="block">
+                    <div v-for="category in categories" class="block" v-if="category.hasEvent">
                         <a :href="'/categories/' + category.slug">
                             <catitem :category="category"></catitem>
                         </a>
@@ -43,7 +43,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </template>

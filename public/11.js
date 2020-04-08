@@ -96,6 +96,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['loadorganizer', 'user'],
@@ -136,7 +139,8 @@ __webpack_require__.r(__webpack_exports__);
         _this.isModalVisible = false;
         _this.message = '';
         _this.dis = false;
-      })["catch"](function (errorResponse) {
+      })["catch"](function (error) {
+        console.log(error.response.data);
         _this.validationErrors = errorResponse.response.data.errors;
         _this.dis = false;
       });
@@ -345,95 +349,92 @@ var render = function() {
           })
         : _vm._e(),
       _vm._v(" "),
-      _c(
-        "modal",
-        {
-          directives: [
+      _vm.isModalVisible
+        ? _c(
+            "modal",
             {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.isModalVisible,
-              expression: "isModalVisible"
-            }
-          ],
-          on: {
-            close: function($event) {
-              _vm.isModalVisible = false
-            }
-          }
-        },
-        [
-          _c("div", { attrs: { slot: "header" }, slot: "header" }),
-          _vm._v(" "),
-          _c("div", { attrs: { slot: "body" }, slot: "body" }, [
-            _c("h3", [_vm._v("Ask " + _vm._s(_vm.organizer.name))]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v("Send a question to the organizer or about an event.")
-            ]),
-            _vm._v(" "),
-            _c("textarea", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.message,
-                  expression: "message"
-                }
-              ],
-              class: { error: _vm.$v.message.$error },
-              attrs: { rows: "8", type: "text" },
-              domProps: { value: _vm.message },
               on: {
-                input: [
-                  function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.message = $event.target.value
-                  },
-                  function($event) {
-                    return _vm.$v.message.$touch()
-                  }
-                ]
-              }
-            }),
-            _vm._v(" "),
-            _vm.$v.message.$error
-              ? _c("div", { staticClass: "validation-error" }, [
-                  !_vm.$v.message.required
-                    ? _c("p", { staticClass: "error" }, [
-                        _vm._v("Please include a message")
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  !_vm.$v.message.maxLength
-                    ? _c("p", { staticClass: "error" }, [
-                        _vm._v("The message is too long.")
-                      ])
-                    : _vm._e()
-                ])
-              : _vm._e()
-          ]),
-          _vm._v(" "),
-          _c("div", { attrs: { slot: "footer" }, slot: "footer" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn sub",
-                class: { bspin: _vm.dis },
-                attrs: { disabled: _vm.dis },
-                on: {
-                  click: function($event) {
-                    return _vm.sendMail()
-                  }
+                close: function($event) {
+                  _vm.isModalVisible = false
                 }
-              },
-              [_vm._v("Submit")]
-            )
-          ])
-        ]
-      )
+              }
+            },
+            [
+              _c("div", { attrs: { slot: "header" }, slot: "header" }),
+              _vm._v(" "),
+              _c("div", { attrs: { slot: "body" }, slot: "body" }, [
+                _c("h3", [_vm._v("Ask " + _vm._s(_vm.organizer.name))]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v("Send a question to the organizer or about an event.")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "field" }, [
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.message,
+                        expression: "message"
+                      }
+                    ],
+                    staticClass: "message",
+                    class: { error: _vm.$v.message.$error },
+                    attrs: { rows: "8", type: "text" },
+                    domProps: { value: _vm.message },
+                    on: {
+                      input: [
+                        function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.message = $event.target.value
+                        },
+                        function($event) {
+                          return _vm.$v.message.$touch()
+                        }
+                      ]
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _vm.$v.message.$error
+                  ? _c("div", { staticClass: "validation-error" }, [
+                      !_vm.$v.message.required
+                        ? _c("p", { staticClass: "error" }, [
+                            _vm._v("Please include a message")
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      !_vm.$v.message.maxLength
+                        ? _c("p", { staticClass: "error" }, [
+                            _vm._v("The message is too long.")
+                          ])
+                        : _vm._e()
+                    ])
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("div", { attrs: { slot: "footer" }, slot: "footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn sub",
+                    class: { bspin: _vm.dis },
+                    attrs: { disabled: _vm.dis },
+                    on: {
+                      click: function($event) {
+                        return _vm.sendMail()
+                      }
+                    }
+                  },
+                  [_vm._v("Submit")]
+                )
+              ])
+            ]
+          )
+        : _vm._e()
     ],
     1
   )

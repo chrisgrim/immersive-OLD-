@@ -56,7 +56,6 @@ class OrganizerController extends Controller
      */
     public function store(OrganizerUpdateRequest $request)
     {   
-        if (!strstr(get_headers($request->website, 1)[0], '200 OK')) {return abort(404, "broken");}
         $validated = $request->validated();
         $organizer = Organizer::Create($request->except(['imagePath', 'user_id']) + ['user_id' => auth()->id()]);
         $request->imagePath ? Organizer::saveImages($organizer, $request, 600, 600) : null;
@@ -96,10 +95,13 @@ class OrganizerController extends Controller
      */
     public function update(OrganizerUpdateRequest $request, Organizer $organizer)
     {
-        if (!strstr(get_headers($request->website, 1)[0], '200 OK')) {return abort(404, "broken");}
+        // $web = get_headers($request->website, 1)[0];
+        // if (strstr($web, '302') || strstr($web, '200 OK') || strstr($web, '301')) {
+        // } else { return abort(404, "broken");}
+        
         $validated = $request->validated();
         if($request->name !== $organizer->name) {
-            $request->imagePath ? Organizer::updateImages($organizer, $request) : null;
+            Organizer::updateImages($organizer, $request) ;
         }
         $organizer = Organizer::updateOrCreate(
             [
@@ -160,9 +162,11 @@ class OrganizerController extends Controller
             ]);
         }
 
+
         $organizer->user->update([
             'has_unread' => true
         ]);
+
 
         $attributes = [
             'email' => $user->email,
@@ -170,12 +174,14 @@ class OrganizerController extends Controller
             'username' => $user->name,
         ];
 
+
         if($organizer->email) {
-            $dest = $organizer->user->email;
-        } else {
             $dest = $organizer->email;
+        } else {
+            $dest = $organizer->user->email;
         };
 
         Mail::to($dest)->send(new ContactUser($attributes));
+
     }
 }

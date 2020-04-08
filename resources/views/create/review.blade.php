@@ -4,5 +4,5 @@
     <create-review :event="{{$event}}" /></create-review> 
 @endsection
 @section('review')
-    <event-show :loadevent="{{$event}}"></event-show>
+    <vue-create-review-event :loadevent="{{$event}}"></vue-create-review-event>
 @endsection

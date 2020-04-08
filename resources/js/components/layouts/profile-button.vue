@@ -1,16 +1,16 @@
 <template>
-	<div class="profile-button" :style="`background:${user.hexColor}`">
-		<label v-if="user.largeImagePath" @click="toggle = !toggle" class="profile-image" >
+	<div class="profile-button" :style="`background:${user.hexColor}`" ref="dropdown">
+		<label v-if="user.largeImagePath" @click="toggle" class="profile-image" >
             <img :src="avatar" height="28" width="28" :alt="user.name + `'s account`">
         </label>
-        <div v-else-if="user.gravatar" @click="toggle = !toggle" class="profile-image">
+        <div v-else-if="user.gravatar" @click="toggle" class="profile-image">
             <img :src="user.gravatar" height="28" width="28" :alt="user.name + `'s account`">
         </div>
-        <div v-else="user.largeImagePath" @click="toggle = !toggle" class="icontext">
+        <div v-else="user.largeImagePath" @click="toggle" class="icontext">
             <h2>{{userName.charAt(0)}}</h2>
         </div>
 
-		<ul v-show='toggle' class="subdropdown">
+		<ul v-show='onToggle' class="subdropdown" >
 			<li>
 				<a :href="'/users/'+ url">
 					Profile
@@ -45,15 +45,12 @@
 				avatar: this.user.thumbImagePath ? `/storage/${this.user.thumbImagePath}` : '',
 				userName: this.user.name,
 				url: this.user.id,
-				toggle:false,
-
+				onToggle:false,
 			};
-
 		},
 
 
 		methods: {
-
 			logout(){
 				axios.post('/logout').
 					then(response => {
@@ -64,8 +61,26 @@
 						}
 					}).catch(error => {
 				});
+            }, 
+
+            toggle() {
+                this.onToggle = !this.onToggle;
             },
-		}
+
+            onClickOutside(event) {
+                let arr =  this.$refs.dropdown;
+                if (!arr || arr.contains(event.target)) return;
+                this.onToggle = false;
+            },
+		},
+
+        mounted() {
+            document.addEventListener("click", this.onClickOutside);
+        },
+
+        beforeDestroy() {
+            document.removeEventListener("click", this.onClickOutside);
+        }
 	}
 </script>
 

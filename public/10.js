@@ -180,7 +180,7 @@ __webpack_require__.r(__webpack_exports__);
       };
     },
     map: function map() {
-      return "height:calc(".concat(this.height, "px - 12rem);");
+      return "height:calc(".concat(this.height, "px - 5rem);");
     }
   },
   data: function data() {

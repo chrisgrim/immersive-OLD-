@@ -53,7 +53,7 @@
 	    <div class="submit">
 	        <button :disabled="dis" @click.prevent="submitName()" class="create"> Next </button>
 	    </div>
-        <modal v-show="modal" @close="modal = false">
+        <modal v-if="modal" @close="modal = false">
             <div slot="header">
                 <div class="circle del">
                     <p>X</p>

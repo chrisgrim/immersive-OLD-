@@ -30,21 +30,24 @@ class EventController extends Controller
      */
     public function index(Event $event)
     {
-        $events = Event::where('closingDate', '>=', Carbon::now())
+        $events = Event::where('closingDate', '>=', Carbon::yesterday()->endOfDay())
             ->where('status', 'p')
+            ->where('hasLocation', 1)
             ->orderBy('updated_at', 'desc')
-            ->limit(22)
+            ->limit(42)
+            ->get();
+        $remote = Event::where('closingDate', '>=', Carbon::yesterday()->endOfDay())
+            ->where('status', 'p')
+            ->where('hasLocation', 0)
+            ->orderBy('updated_at', 'desc')
+            ->limit(42)
             ->get();
         $categories = Category::all();
-        $staffpicks = StaffPick::whereDate('end_date','>=', Carbon::now())
+        $staffpicks = StaffPick::whereDate('end_date','>=', Carbon::yesterday()->endOfDay())
             ->whereDate('start_date', '<=', Carbon::now())
             ->orderBy('rank', 'ASC')
             ->get();
-        return view('events.index',compact('events', 'categories','staffpicks'));
-    }
-
-    public function test() {
-        return view('emails.event-approved');
+        return view('events.index',compact('events', 'categories','staffpicks', 'remote'));
     }
 
     /**
@@ -184,12 +187,14 @@ class EventController extends Controller
      */
     public function review(Event $event)
     {
+        $this->authorize('finalize', $event);
         $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'advisories', 'showOnGoing');
         return view('create.review', compact('event'));
     }
 
     public function submitEvent(Event $event) 
     {
+        $this->authorize('finalize', $event);
         $event->finalizeEvent($event);
     }
 

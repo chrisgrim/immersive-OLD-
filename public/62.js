@@ -1,20 +1,20 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[62],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/events/event-show.vue?vue&type=script&lang=js&":
-/*!****************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/events/event-show.vue?vue&type=script&lang=js& ***!
-  \****************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/create/organizer.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/create/organizer.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /Users/chrisgrim/code/ei/resources/js/components/events/event-show.vue: Unexpected token, expected \",\" (374:4)\n\n\u001b[0m \u001b[90m 372 | \u001b[39m\t\t\t\tallowZoom\u001b[33m:\u001b[39m \u001b[36mfalse\u001b[39m\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 373 | \u001b[39m                week\u001b[33m:\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mloadevent \u001b[33m?\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mloadevent\u001b[33m.\u001b[39mshow_on_going \u001b[33m:\u001b[39m \u001b[32m''\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 374 | \u001b[39m\t\t\t\tshowEventClass\u001b[33m:\u001b[39m \u001b[32m'show-heart-location'\u001b[39m\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m     | \u001b[39m\t\t\t\t\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 375 | \u001b[39m                showMore\u001b[33m:\u001b[39m \u001b[36mnull\u001b[39m\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 376 | \u001b[39m                dates\u001b[33m:\u001b[39m []\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 377 | \u001b[39m                remaining\u001b[33m:\u001b[39m []\u001b[33m,\u001b[39m\u001b[0m\n    at Parser.raise (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:6983:17)\n    at Parser.unexpected (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:8376:16)\n    at Parser.expect (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:8362:28)\n    at Parser.parseObj (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9949:14)\n    at Parser.parseExprAtom (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9580:28)\n    at Parser.parseExprSubscripts (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9213:23)\n    at Parser.parseMaybeUnary (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9193:21)\n    at Parser.parseExprOps (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9059:23)\n    at Parser.parseMaybeConditional (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9032:23)\n    at Parser.parseMaybeAssign (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:8978:21)\n    at Parser.parseExpression (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:8928:23)\n    at Parser.parseReturnStatement (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11035:28)\n    at Parser.parseStatementContent (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10714:21)\n    at Parser.parseStatement (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10666:17)\n    at Parser.parseBlockOrModuleBlockBody (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11242:25)\n    at Parser.parseBlockBody (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11229:10)\n    at Parser.parseBlock (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11213:10)\n    at Parser.parseFunctionBody (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10232:24)\n    at Parser.parseFunctionBodyAndFinish (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10202:10)\n    at Parser.parseMethod (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10156:10)\n    at Parser.parseObjectMethod (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10072:19)\n    at Parser.parseObjPropValue (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10114:23)\n    at Parser.parseObjectMember (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10038:10)\n    at Parser.parseObj (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9958:25)\n    at Parser.parseExprAtom (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9580:28)\n    at Parser.parseExprSubscripts (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9213:23)\n    at Parser.parseMaybeUnary (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9193:21)\n    at Parser.parseExprOps (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9059:23)\n    at Parser.parseMaybeConditional (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9032:23)\n    at Parser.parseMaybeAssign (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:8978:21)\n    at Parser.parseExportDefaultExpression (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11846:24)\n    at Parser.parseExport (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11748:31)\n    at Parser.parseStatementContent (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10770:27)\n    at Parser.parseStatement (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10666:17)\n    at Parser.parseBlockOrModuleBlockBody (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11242:25)\n    at Parser.parseBlockBody (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11229:10)");
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /Users/chrisgrim/code/ei/resources/js/components/create/organizer.vue: Unexpected token, expected \",\" (219:44)\n\n\u001b[0m \u001b[90m 217 | \u001b[39m            showEdit\u001b[33m:\u001b[39m \u001b[36mfalse\u001b[39m\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 218 | \u001b[39m            modal\u001b[33m:\u001b[39m \u001b[36mfalse\u001b[39m\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 219 | \u001b[39m            backgroundImage\u001b[33m:\u001b[39m backgroundImage\u001b[33m:\u001b[39m \u001b[32m`url('${imageSrc ? imageSrc : (this.organizer ? '/' + this.organizer.largeImagePath : '')}')`\u001b[39m\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m     | \u001b[39m                                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 220 | \u001b[39m        }\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 221 | \u001b[39m    }\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 222 | \u001b[39m\u001b[0m\n    at Parser.raise (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:6983:17)\n    at Parser.unexpected (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:8376:16)\n    at Parser.expect (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:8362:28)\n    at Parser.parseObj (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9949:14)\n    at Parser.parseExprAtom (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9580:28)\n    at Parser.parseExprSubscripts (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9213:23)\n    at Parser.parseMaybeUnary (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9193:21)\n    at Parser.parseExprOps (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9059:23)\n    at Parser.parseMaybeConditional (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9032:23)\n    at Parser.parseMaybeAssign (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:8978:21)\n    at Parser.parseExpression (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:8928:23)\n    at Parser.parseReturnStatement (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11035:28)\n    at Parser.parseStatementContent (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10714:21)\n    at Parser.parseStatement (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10666:17)\n    at Parser.parseBlockOrModuleBlockBody (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11242:25)\n    at Parser.parseBlockBody (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11229:10)\n    at Parser.parseBlock (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11213:10)\n    at Parser.parseFunctionBody (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10232:24)\n    at Parser.parseFunctionBodyAndFinish (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10202:10)\n    at Parser.parseMethod (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10156:10)\n    at Parser.parseObjectMethod (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10072:19)\n    at Parser.parseObjPropValue (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10114:23)\n    at Parser.parseObjectMember (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10038:10)\n    at Parser.parseObj (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9958:25)\n    at Parser.parseExprAtom (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9580:28)\n    at Parser.parseExprSubscripts (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9213:23)\n    at Parser.parseMaybeUnary (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9193:21)\n    at Parser.parseExprOps (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9059:23)\n    at Parser.parseMaybeConditional (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9032:23)\n    at Parser.parseMaybeAssign (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:8978:21)\n    at Parser.parseExportDefaultExpression (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11846:24)\n    at Parser.parseExport (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11748:31)\n    at Parser.parseStatementContent (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10770:27)\n    at Parser.parseStatement (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10666:17)\n    at Parser.parseBlockOrModuleBlockBody (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11242:25)\n    at Parser.parseBlockBody (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11229:10)");
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/events/event-show.vue?vue&type=template&id=26bbc96a&":
-/*!********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/events/event-show.vue?vue&type=template&id=26bbc96a& ***!
-  \********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/create/organizer.vue?vue&type=template&id=27181e27&":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/create/organizer.vue?vue&type=template&id=27181e27& ***!
+  \*******************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -26,855 +26,604 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "event" }, [
-    _c("div", { staticClass: "header" }, [
-      _c("div", { staticClass: "section" }, [
-        _c("div", { staticClass: "left" }, [
-          _c("div", { staticClass: "content" }, [
-            _c("span", { staticClass: "category" }, [
-              _vm._v(_vm._s(_vm.event.category ? _vm.event.category.name : ""))
-            ]),
-            _vm._v(" "),
-            _c("span", { staticClass: "title" }, [
-              _vm._v(_vm._s(_vm.event.name))
-            ]),
-            _vm._v(" "),
-            _c("i", [_vm._v(_vm._s(_vm.event.tag_line))]),
-            _vm._v(" "),
-            _vm.event.staffpick
-              ? _c("div", [
-                  _vm._v(
-                    "\n                            EI Pick of the week!\n                        "
-                  )
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _c("div", { staticClass: "info" }, [
-              _c("div", [
-                _c("img", {
-                  attrs: { src: "/storage/website-files/price.png", alt: "" }
-                }),
-                _vm._v(" "),
-                _c("span", { staticClass: "des" }, [_vm._v("Price")]),
-                _vm._v(" "),
-                _c("span", { staticClass: "ans" }, [
-                  _vm._v(_vm._s(_vm.event.price_range))
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", [
-                _c("img", {
-                  attrs: { src: "/storage/website-files/location.png", alt: "" }
-                }),
-                _vm._v(" "),
-                _c("span", { staticClass: "des" }, [_vm._v("Location")]),
-                _vm._v(" "),
-                _vm.event.location
-                  ? _c("span", { staticClass: "ans" }, [
-                      _vm._v(_vm._s(_vm.event.location.city))
-                    ])
-                  : _vm._e()
-              ]),
-              _vm._v(" "),
-              _c("div", [
-                _c("img", {
-                  attrs: { src: "/storage/website-files/calendar.png", alt: "" }
-                }),
-                _vm._v(" "),
-                _c("span", { staticClass: "des" }, [_vm._v("Shows")]),
-                _vm._v(" "),
-                _c("span", { staticClass: "ans" }, [
-                  _vm._v(
-                    _vm._s(_vm.dateArray ? _vm.dateArray.length : "") +
-                      " dates left"
-                  )
-                ])
-              ])
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "right" }, [
-          _c("div", { staticClass: "image" }, [
-            _c("picture", [
-              _c("source", {
-                attrs: {
-                  type: "image/webp",
-                  srcset: "/storage/" + _vm.event.largeImagePath
-                }
-              }),
-              _vm._v(" "),
-              _c("img", {
-                attrs: {
-                  src:
-                    "/storage/" + _vm.event.largeImagePath.slice(0, -4) + "jpg",
-                  alt: _vm.event.name + " Immersive Event"
-                }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            [
-              _c("favorite", {
-                attrs: {
-                  user: _vm.user,
-                  inputclass: _vm.showEventClass,
-                  event: _vm.event
-                }
-              })
-            ],
-            1
-          )
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "body" }, [
-      _c("div", { staticClass: "section about" }, [
-        _c("div", { staticClass: "content" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c("div", { staticClass: "right" }, [
-            _vm.showMore !== "description"
-              ? _c(
-                  "p",
-                  {
-                    staticClass: "text",
-                    staticStyle: { "white-space": "pre-line" }
-                  },
-                  [
-                    _vm._v(_vm._s(_vm.event.description.substring(0, 400))),
-                    _vm.event.description.length >= 400
-                      ? _c(
-                          "span",
-                          {
-                            staticClass: "show",
-                            on: {
-                              click: function($event) {
-                                _vm.showMore = "description"
-                              }
-                            }
-                          },
-                          [
-                            _vm._v(
-                              "... Show More\n                            "
-                            )
-                          ]
-                        )
-                      : _vm._e()
-                  ]
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _c(
-              "p",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.showMore == "description",
-                    expression: "showMore == 'description'"
-                  }
-                ],
-                staticClass: "text",
-                staticStyle: { "white-space": "pre-line" }
-              },
-              [
-                _vm._v(_vm._s(_vm.event.description)),
-                _c(
-                  "span",
-                  {
-                    staticClass: "show",
-                    on: {
-                      click: function($event) {
-                        _vm.showMore = null
-                      }
-                    }
-                  },
-                  [_vm._v("... Show Less\n                            ")]
-                )
-              ]
-            )
-          ])
-        ])
-      ]),
+  return _c(
+    "div",
+    [
+      _vm.serverErrors.length
+        ? _c("vue-alert", { attrs: { message: "serverErrors" } })
+        : _vm._e(),
       _vm._v(" "),
-      (_vm.event.eventreviews
-      ? _vm.event.eventreviews.length
-      : null)
-        ? _c("div", { staticClass: "section reviews" }, [
-            _c("div", { staticClass: "back" }),
-            _vm._v(" "),
-            _c("div", { staticClass: "content" }, [
-              _vm._m(1),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "right" },
-                _vm._l(_vm.event.eventreviews, function(review) {
-                  return _c("div", { staticClass: "box" }, [
-                    _c("div", { staticClass: "image" }, [
-                      _c("img", { attrs: { src: review.image_path, alt: "" } })
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "a",
+      _c(
+        "div",
+        { staticClass: "organizer" },
+        [
+          _c("div", { staticClass: "section" }, [
+            _c("div", { staticClass: "text" }, [
+              _c("div", { staticClass: "floating-form" }, [
+                _vm.approved
+                  ? _c(
+                      "div",
                       {
-                        attrs: {
-                          rel: "noreferrer",
-                          target: "_blank",
-                          href: review.url
+                        staticClass: "field",
+                        on: {
+                          mouseover: function($event) {
+                            _vm.showEdit = true
+                          }
                         }
                       },
                       [
-                        _c("div", { staticClass: "name" }, [
-                          _vm._v(
-                            "\n                                    " +
-                              _vm._s(review.reviewer_name) +
-                              "\n                                "
-                          )
-                        ])
+                        _c("p", { staticClass: "name" }, [
+                          _vm._v(_vm._s(_vm.organizer.name))
+                        ]),
+                        _vm._v(" "),
+                        _vm.showEdit
+                          ? _c(
+                              "button",
+                              {
+                                staticClass: "editTitle",
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    return _vm.showModal($event)
+                                  }
+                                }
+                              },
+                              [_vm._v("Edit")]
+                            )
+                          : _vm._e()
                       ]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "review" }, [
-                      _c("i", [_vm._v(_vm._s(review.review))])
-                    ])
-                  ])
-                }),
-                0
-              )
-            ])
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.event.shows.length
-        ? _c("div", { staticClass: "section dates" }, [
-            _c("div", { staticClass: "content" }, [
-              _vm._m(2),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "right" },
-                [
-                  _c("flat-pickr", {
-                    ref: "datePicker",
-                    staticClass: "form-control",
-                    attrs: {
-                      config: _vm.config,
-                      placeholder: "Select date",
-                      name: "dates"
+                    )
+                  : _c("div", { staticClass: "field" }, [
+                      _c("label", [_vm._v("Organization name")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.organizer.name,
+                            expression: "organizer.name"
+                          }
+                        ],
+                        class: {
+                          active: _vm.isActive == "name",
+                          error: _vm.$v.organizer.name.$error
+                        },
+                        attrs: { type: "text", placeholder: " ", name: "name" },
+                        domProps: { value: _vm.organizer.name },
+                        on: {
+                          input: [
+                            function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.organizer,
+                                "name",
+                                $event.target.value
+                              )
+                            },
+                            _vm.$v.organizer.name.$touch
+                          ],
+                          click: function($event) {
+                            return _vm.toggle("name")
+                          },
+                          blur: function($event) {
+                            _vm.isActive = null
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.$v.organizer.name.$error
+                        ? _c("div", { staticClass: "validation-error" }, [
+                            !_vm.$v.organizer.name.required
+                              ? _c("p", { staticClass: "error" }, [
+                                  _vm._v("The Name is required")
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            !_vm.$v.organizer.name.serverFailed
+                              ? _c("p", { staticClass: "error" }, [
+                                  _vm._v("The Name needs to be unique")
+                                ])
+                              : _vm._e()
+                          ])
+                        : _vm._e()
+                    ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "field" }, [
+                  _c("label", [_vm._v("Organization description")]),
+                  _vm._v(" "),
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.organizer.description,
+                        expression: "organizer.description"
+                      }
+                    ],
+                    class: {
+                      active: _vm.isActive == "description",
+                      error: _vm.$v.organizer.description.$error
                     },
-                    model: {
-                      value: _vm.dates,
-                      callback: function($$v) {
-                        _vm.dates = $$v
+                    attrs: {
+                      type: "text",
+                      name: "description",
+                      placeholder: " ",
+                      rows: "8"
+                    },
+                    domProps: { value: _vm.organizer.description },
+                    on: {
+                      input: [
+                        function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.organizer,
+                            "description",
+                            $event.target.value
+                          )
+                        },
+                        _vm.$v.organizer.description.$touch
+                      ],
+                      click: function($event) {
+                        _vm.isActive = "description"
                       },
-                      expression: "dates"
+                      blur: function($event) {
+                        _vm.isActive = null
+                      }
                     }
                   }),
                   _vm._v(" "),
-                  _c("div", { staticClass: "times" }, [
-                    _c("p", { staticStyle: { "white-space": "pre-wrap" } }, [
-                      _vm._v(_vm._s(_vm.event.show_times))
-                    ])
-                  ])
-                ],
-                1
-              )
-            ])
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.event.show_on_going
-        ? _c("div", { staticClass: "section dates" }, [
-            _c("div", { staticClass: "content" }, [
-              _vm._m(3),
-              _vm._v(" "),
-              _c("div", { staticClass: "right" }, [
-                _c("div", { staticClass: "calendar" }, [
-                  _c("div", { staticClass: "field" }, [
-                    _c("label", [_vm._v(" Shows during the week")]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "week-calendar" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass: "day",
-                          class: { active: _vm.week.mon },
-                          on: {
-                            click: function($event) {
-                              return _vm.addWeekDay("mon")
-                            }
+                  _vm.$v.organizer.description.$error
+                    ? _c("div", { staticClass: "validation-error" }, [
+                        !_vm.$v.organizer.description.required
+                          ? _c("p", { staticClass: "error" }, [
+                              _vm._v("The Description is required")
+                            ])
+                          : _vm._e()
+                      ])
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "field" }, [
+                  _c("label", [_vm._v("Your organization website")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.organizer.website,
+                        expression: "organizer.website"
+                      }
+                    ],
+                    class: {
+                      active: _vm.isActive == "website",
+                      error: _vm.$v.organizer.website.$error
+                    },
+                    attrs: { type: "url", name: "website", placeholder: " " },
+                    domProps: { value: _vm.organizer.website },
+                    on: {
+                      input: [
+                        function($event) {
+                          if ($event.target.composing) {
+                            return
                           }
+                          _vm.$set(
+                            _vm.organizer,
+                            "website",
+                            $event.target.value
+                          )
                         },
-                        [_c("h4", [_vm._v("Mon")])]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "day",
-                          class: { active: _vm.week.tue },
-                          on: {
-                            click: function($event) {
-                              return _vm.addWeekDay("tue")
-                            }
-                          }
-                        },
-                        [_c("h4", [_vm._v("Tue")])]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "day",
-                          class: { active: _vm.week.wed },
-                          on: {
-                            click: function($event) {
-                              return _vm.addWeekDay("wed")
-                            }
-                          }
-                        },
-                        [_c("h4", [_vm._v("Wed")])]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "day",
-                          class: { active: _vm.week.thu },
-                          on: {
-                            click: function($event) {
-                              return _vm.addWeekDay("thu")
-                            }
-                          }
-                        },
-                        [_c("h4", [_vm._v("Thu")])]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "day",
-                          class: { active: _vm.week.fri },
-                          on: {
-                            click: function($event) {
-                              return _vm.addWeekDay("fri")
-                            }
-                          }
-                        },
-                        [_c("h4", [_vm._v("Fri")])]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "day",
-                          class: { active: _vm.week.sat },
-                          on: {
-                            click: function($event) {
-                              return _vm.addWeekDay("sat")
-                            }
-                          }
-                        },
-                        [_c("h4", [_vm._v("Sat")])]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "day",
-                          class: { active: _vm.week.sun },
-                          on: {
-                            click: function($event) {
-                              return _vm.addWeekDay("sun")
-                            }
-                          }
-                        },
-                        [_c("h4", [_vm._v("Sun")])]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _vm.$v.week.$error
+                        _vm.$v.organizer.website.$touch
+                      ],
+                      click: function($event) {
+                        return _vm.toggle("website")
+                      },
+                      blur: function($event) {
+                        _vm.isActive = null
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.$v.organizer.website.$error
+                    ? _c("div", { staticClass: "validation-error" }, [
+                        !_vm.$v.organizer.website.url
+                          ? _c("p", { staticClass: "error" }, [
+                              _vm._v("Must be a Url (Needs http://)")
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        !_vm.$v.organizer.website.required
+                          ? _c("p", { staticClass: "error" }, [
+                              _vm._v("The Website is required")
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        !_vm.$v.organizer.website.serverFailed
+                          ? _c("p", { staticClass: "error" }, [
+                              _vm._v("The Website needs to be unique")
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        !_vm.$v.organizer.website.notWorking
+                          ? _c("p", { staticClass: "error" }, [
+                              _vm._v("The Url doesn't seem to be working")
+                            ])
+                          : _vm._e()
+                      ])
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "field" }, [
+                  _c("label", [_vm._v("Your organization email (optional)")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.organizer.email,
+                        expression: "organizer.email"
+                      }
+                    ],
+                    class: { active: _vm.isActive == "email" },
+                    attrs: { type: "text", name: "email", placeholder: " " },
+                    domProps: { value: _vm.organizer.email },
+                    on: {
+                      click: function($event) {
+                        _vm.isActive = "email"
+                      },
+                      blur: function($event) {
+                        _vm.isActive = null
+                      },
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.organizer, "email", $event.target.value)
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "field" }, [
+                  _c("label", [_vm._v("Twitter handle (optional)")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.organizer.twitterHandle,
+                        expression: "organizer.twitterHandle"
+                      }
+                    ],
+                    class: { active: _vm.isActive == "twitter" },
+                    attrs: {
+                      type: "text",
+                      name: "twitterHandle",
+                      placeholder: " "
+                    },
+                    domProps: { value: _vm.organizer.twitterHandle },
+                    on: {
+                      click: function($event) {
+                        _vm.isActive = "twitter"
+                      },
+                      blur: function($event) {
+                        _vm.isActive = null
+                      },
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.organizer,
+                          "twitterHandle",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "field" }, [
+                  _c("label", [_vm._v("Facebook handle (optional)")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.organizer.facebookHandle,
+                        expression: "organizer.facebookHandle"
+                      }
+                    ],
+                    class: { active: _vm.isActive == "facebook" },
+                    attrs: {
+                      type: "text",
+                      name: "facebookHandle",
+                      placeholder: " "
+                    },
+                    domProps: { value: _vm.organizer.facebookHandle },
+                    on: {
+                      click: function($event) {
+                        _vm.isActive = "facebook"
+                      },
+                      blur: function($event) {
+                        _vm.isActive = null
+                      },
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.organizer,
+                          "facebookHandle",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "field" }, [
+                  _c("label", [_vm._v("Instagram handle (optional)")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.organizer.instagramHandle,
+                        expression: "organizer.instagramHandle"
+                      }
+                    ],
+                    class: { active: _vm.isActive == "instagram" },
+                    attrs: {
+                      type: "text",
+                      name: "instagramHandle",
+                      placeholder: " "
+                    },
+                    domProps: { value: _vm.organizer.instagramHandle },
+                    on: {
+                      click: function($event) {
+                        _vm.isActive = "instagram"
+                      },
+                      blur: function($event) {
+                        _vm.isActive = null
+                      },
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.organizer,
+                          "instagramHandle",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "image" }, [
+              _c("div", { staticClass: "img" }, [
+                _c("div", { staticClass: "loader" }, [
+                  _c("label", { style: _vm.backgroundImage }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "dash",
+                        class: { over: _vm.hasImage, load: _vm.isLoading }
+                      },
+                      [
+                        _c("div", { staticClass: "box" }, [
+                          _c("div", { staticClass: "in" }, [
+                            !_vm.isLoading
+                              ? _c("div", [
+                                  _c(
+                                    "svg",
+                                    {
+                                      staticClass: "b",
+                                      attrs: {
+                                        height: "32",
+                                        width: "32",
+                                        viewBox: "0 0 24 24",
+                                        "aria-label": "Add an image or video",
+                                        role: "img"
+                                      }
+                                    },
+                                    [
+                                      _c("path", {
+                                        attrs: {
+                                          d:
+                                            "M24 12c0-6.627-5.372-12-12-12C5.373 0 0 5.373 0 12s5.373 12 12 12c6.628 0 12-5.373 12-12zm-10.767 3.75a1.25 1.25 0 0 1-2.5 0v-3.948l-1.031 1.031a1.25 1.25 0 0 1-1.768-1.768L12 7l4.066 4.065a1.25 1.25 0 0 1-1.768 1.768l-1.065-1.065v3.982z"
+                                        }
+                                      })
+                                    ]
+                                  )
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c("div", [
+                              !_vm.hasImage
+                                ? _c("div", [
+                                    _vm._m(0),
+                                    _vm._v(" "),
+                                    _c("p", [
+                                      _vm._v(
+                                        "Please make image at least 400 x 400"
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("p", [
+                                      _vm._v("Image needs to be under 20 mb")
+                                    ])
+                                  ])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _vm.hasImage
+                                ? _c("p", [_vm._v("Change Image")])
+                                : _vm._e()
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("image-upload", {
+                          on: { loaded: _vm.onImageUpload }
+                        }),
+                        _vm._v(" "),
+                        _c("CubeSpinner", { attrs: { loading: _vm.isLoading } })
+                      ],
+                      1
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _vm.$v.finalImage.$error
                       ? _c("div", { staticClass: "validation-error" }, [
-                          !_vm.$v.week.ifOngoing
+                          !_vm.$v.finalImage.fileSize
                             ? _c("p", { staticClass: "error" }, [
-                                _vm._v("Please select at least one day")
+                                _vm._v("The Image is too large")
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          !_vm.$v.finalImage.fileType
+                            ? _c("p", { staticClass: "error" }, [
+                                _vm._v(
+                                  "The Image needs to be a JPG, PNG or GIF"
+                                )
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          !_vm.$v.finalImage.imageSize
+                            ? _c("p", { staticClass: "error" }, [
+                                _vm._v(
+                                  "The image needs to be at least 400 x 400"
+                                )
                               ])
                             : _vm._e()
                         ])
                       : _vm._e()
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "create",
-                      attrs: { disabled: _vm.dis },
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          return _vm.submitOnGoing()
-                        }
-                      }
-                    },
-                    [_vm._v(" Next ")]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "times" }, [
-                  _c("p", { staticStyle: { "white-space": "pre-wrap" } }, [
-                    _vm._v(_vm._s(_vm.event.show_times))
                   ])
                 ])
               ])
             ])
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _c("div", { staticClass: "section details" }, [
-        _c("div", { staticClass: "content" }, [
-          _vm._m(4),
+          ]),
           _vm._v(" "),
-          _c("div", { staticClass: "right" }, [
-            _c("div", { staticClass: "block" }, [
-              _vm._m(5),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "info" },
+          _vm.modal
+            ? _c(
+                "modal",
+                {
+                  on: {
+                    close: function($event) {
+                      _vm.modal = false
+                    }
+                  }
+                },
                 [
-                  _c("p", [
-                    _vm._v("• " + _vm._s(_vm.event.advisories.ageRestriction))
+                  _c("div", { attrs: { slot: "header" }, slot: "header" }, [
+                    _c("div", { staticClass: "circle del" }, [
+                      _c("p", [_vm._v("?")])
+                    ])
                   ]),
                   _vm._v(" "),
-                  _vm._l(_vm.event.content_advisories, function(item) {
-                    return _c("div", [
-                      _c("p", [_vm._v("• " + _vm._s(item.advisories))])
-                    ])
-                  })
-                ],
-                2
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "block" }, [
-              _vm._m(6),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "info" },
-                [
-                  _vm._l(_vm.event.contact_levels, function(item) {
-                    return _c("div", [
-                      _c("p", [_vm._v("• " + _vm._s(item.level))])
-                    ])
-                  }),
-                  _vm._v(" "),
-                  _c("p", [
-                    _vm._v(
-                      "• " + _vm._s(_vm.event.advisories.contactAdvisories)
-                    )
-                  ])
-                ],
-                2
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "block" }, [
-              _vm._m(7),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "info" },
-                _vm._l(_vm.event.mobility_advisories, function(item) {
-                  return _c("div", [
-                    _c("p", [_vm._v("• " + _vm._s(item.mobilities))])
-                  ])
-                }),
-                0
-              )
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "section organizer" }, [
-        _c("div", { staticClass: "content" }, [
-          _vm._m(8),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "right" },
-            [
-              _c(
-                "a",
-                { attrs: { href: "/organizer/" + _vm.event.organizer.slug } },
-                [
-                  _c("div", { staticClass: "image" }, [
-                    _c(
-                      "div",
-                      {
-                        staticClass: "img",
-                        style: _vm.event.organizer.thumbImagePath
-                          ? "background-image:url('/storage/" +
-                            _vm.event.organizer.thumbImagePath +
-                            "')"
-                          : "background:" + _vm.event.organizer.hexColor
-                      },
-                      [
-                        !_vm.event.organizer.thumbImagePath
-                          ? _c("div", { staticClass: "icontext" }, [
-                              _c("h2", [
-                                _vm._v(
-                                  _vm._s(_vm.event.organizer.name.charAt(0))
-                                )
-                              ])
-                            ])
-                          : _vm._e()
-                      ]
-                    )
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "a",
-                { attrs: { href: "/organizer/" + _vm.event.organizer.slug } },
-                [
-                  _c("div", { staticClass: "name" }, [
-                    _vm._v(
-                      "\n                                " +
-                        _vm._s(_vm.event.organizer.name) +
-                        "\n                            "
-                    )
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _vm.event.organizer.description
-                ? _c(
-                    "div",
-                    {
-                      staticClass: "description",
-                      staticStyle: { "white-space": "pre-line" }
-                    },
-                    [
+                  _c("div", { attrs: { slot: "body" }, slot: "body" }, [
+                    _c("h3", [_vm._v("Changing the name?")]),
+                    _vm._v(" "),
+                    _c("p", [
                       _vm._v(
-                        "\n                            " +
-                          _vm._s(_vm.event.organizer.description) +
-                          "\n                        "
-                      )
-                    ]
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _c("ContactOrganizer", {
-                attrs: { user: _vm.user, loadorganizer: _vm.event.organizer }
-              })
-            ],
-            1
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _vm.bar && _vm.event.location.latitude
-        ? _c("div", { staticClass: "section location" }, [
-            _c("div", [
-              _vm._m(9),
-              _vm._v(" "),
-              _vm.event.location.hiddenLocationToggle
-                ? _c("div", { staticClass: "text" }, [
-                    _c(
-                      "a",
-                      {
-                        attrs: {
-                          rel: "noreferrer",
-                          target: "_blank",
-                          href:
-                            "http://maps.google.com/maps?q=" +
-                            _vm.event.location.city +
-                            ",+" +
-                            _vm.event.location.region
-                        }
-                      },
-                      [
-                        _c("p", [
-                          _vm._v(
-                            _vm._s(_vm.event.location.city) +
-                              " " +
-                              _vm._s(_vm.event.location.region)
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("br"),
-                        _vm._v(" "),
-                        _c("p", [
-                          _vm._v(_vm._s(_vm.event.location.hiddenLocation))
-                        ])
-                      ]
-                    )
-                  ])
-                : _c("div", { staticClass: "text" }, [
-                    _c(
-                      "a",
-                      {
-                        attrs: {
-                          rel: "noreferrer",
-                          target: "_blank",
-                          href:
-                            "http://maps.google.com/maps?q=" +
-                            _vm.event.location.home +
-                            "+" +
-                            _vm.event.location.street +
-                            ",+" +
-                            _vm.event.location.city +
-                            ",+" +
-                            _vm.event.location.region
-                        }
-                      },
-                      [
-                        _c("p", [
-                          _vm._v(
-                            _vm._s(_vm.event.location.home) +
-                              " " +
-                              _vm._s(_vm.event.location.street) +
-                              ", " +
-                              _vm._s(_vm.event.location.city) +
-                              ",  " +
-                              _vm._s(_vm.event.location.region)
-                          )
-                        ])
-                      ]
-                    )
-                  ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "location-map" }, [
-                _vm.center
-                  ? _c("div", [
-                      _c("div", { staticClass: "zoom" }, [
-                        _c("div", { staticClass: "in" }, [
-                          _c(
-                            "button",
-                            {
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  _vm.zoom += 1
-                                }
-                              }
-                            },
-                            [
-                              _c(
-                                "svg",
-                                {
-                                  attrs: {
-                                    viewBox: "0 0 16 16",
-                                    height: "16",
-                                    width: "16",
-                                    fill: "currentColor"
-                                  }
-                                },
-                                [
-                                  _c("path", {
-                                    attrs: {
-                                      "fill-rule": "evenodd",
-                                      "clip-rule": "evenodd",
-                                      d:
-                                        "M7 1a1 1 0 0 1 2 0v14a1 1 0 1 1-2 0V1z"
-                                    }
-                                  }),
-                                  _c("path", {
-                                    attrs: {
-                                      "fill-rule": "evenodd",
-                                      "clip-rule": "evenodd",
-                                      d:
-                                        "M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"
-                                    }
-                                  })
-                                ]
-                              )
-                            ]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "out" }, [
-                          _c(
-                            "button",
-                            {
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  _vm.zoom -= 1
-                                }
-                              }
-                            },
-                            [
-                              _c(
-                                "svg",
-                                {
-                                  attrs: {
-                                    viewBox: "0 0 16 16",
-                                    height: "16",
-                                    width: "16",
-                                    fill: "currentColor"
-                                  }
-                                },
-                                [
-                                  _c("path", {
-                                    attrs: {
-                                      "fill-rule": "evenodd",
-                                      "clip-rule": "evenodd",
-                                      d:
-                                        "M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"
-                                    }
-                                  })
-                                ]
-                              )
-                            ]
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticStyle: { width: "100%", height: "400px" } },
-                        [
-                          _c(
-                            "l-map",
-                            {
-                              attrs: {
-                                zoom: _vm.zoom,
-                                center: _vm.center,
-                                options: {
-                                  scrollWheelZoom: _vm.allowZoom,
-                                  zoomControl: _vm.allowZoom
-                                }
-                              }
-                            },
-                            [
-                              _c("l-tile-layer", { attrs: { url: _vm.url } }),
-                              _vm._v(" "),
-                              _c("l-marker", {
-                                attrs: { "lat-lng": _vm.center }
-                              })
-                            ],
-                            1
-                          )
-                        ],
-                        1
+                        "Changing the organization name will break any links you have sent out. This is not advised."
                       )
                     ])
-                  : _vm._e()
-              ])
-            ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { attrs: { slot: "footer" }, slot: "footer" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn del",
+                        on: {
+                          click: function($event) {
+                            return _vm.onApply()
+                          }
+                        }
+                      },
+                      [_vm._v("Change Anyways")]
+                    )
+                  ])
+                ]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _c("div", { staticClass: "inNav" }, [
+            this.loadorganizer
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "create",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.updateOrganizer($event)
+                      }
+                    }
+                  },
+                  [_vm._v(" Update Organizer ")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            this.loadorganizer
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "create",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.goBack($event)
+                      }
+                    }
+                  },
+                  [_vm._v(" Back ")]
+                )
+              : _c(
+                  "button",
+                  {
+                    staticClass: "create",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.createOrganizer($event)
+                      }
+                    }
+                  },
+                  [_vm._v(" Save Organizer ")]
+                )
           ])
-        : _vm._e()
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "event-bottom-bar", class: { active: _vm.bar } }, [
-      _c("div", { staticClass: "event-name" }, [
-        _vm._v("\n\t\t\t\t" + _vm._s(_vm.event.name) + "\n\t\t\t")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "event-price" }, [
-        _vm._v("\n\t\t\t\t" + _vm._s(_vm.event.price_range) + "\n\t\t\t")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "event-get-tickets" }, [
-        _c("a", { attrs: { href: _vm.event.ticketUrl } }, [
-          _c("button", [_vm._v("\n\t\t\t\t\t\tGet Tickets\n\t\t\t\t\t")])
-        ])
-      ])
-    ])
-  ])
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "left" }, [
-      _c("div", { staticClass: "text" }, [_c("h3", [_vm._v("About the show")])])
+    return _c("h4", [
+      _vm._v("If you have an organization image "),
+      _c("br"),
+      _vm._v("click here to Upload")
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "left" }, [
-      _c("div", { staticClass: "text" }, [
-        _c("h3", [_vm._v("Show"), _c("br"), _vm._v("Reviews")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "left" }, [
-      _c("div", { staticClass: "text" }, [_c("h3", [_vm._v("Show Dates")])])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "left" }, [
-      _c("div", { staticClass: "text" }, [_c("h3", [_vm._v("Show Times")])])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "left" }, [
-      _c("div", { staticClass: "text" }, [_c("h3", [_vm._v("Show Details")])])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "title" }, [
-      _c("h4", [_vm._v("Content Advisories")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "title" }, [
-      _c("h4", [_vm._v("Contact Advisories")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "title" }, [
-      _c("h4", [_vm._v("Mobility Advisories")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "left" }, [
-      _c("div", { staticClass: "text" }, [
-        _c("h3", [_vm._v("About the organizer")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "title" }, [_c("h3", [_vm._v("Location")])])
   }
 ]
 render._withStripped = true
@@ -990,17 +739,17 @@ function normalizeComponent (
 
 /***/ }),
 
-/***/ "./resources/js/components/events/event-show.vue":
-/*!*******************************************************!*\
-  !*** ./resources/js/components/events/event-show.vue ***!
-  \*******************************************************/
+/***/ "./resources/js/components/create/organizer.vue":
+/*!******************************************************!*\
+  !*** ./resources/js/components/create/organizer.vue ***!
+  \******************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _event_show_vue_vue_type_template_id_26bbc96a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./event-show.vue?vue&type=template&id=26bbc96a& */ "./resources/js/components/events/event-show.vue?vue&type=template&id=26bbc96a&");
-/* harmony import */ var _event_show_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./event-show.vue?vue&type=script&lang=js& */ "./resources/js/components/events/event-show.vue?vue&type=script&lang=js&");
+/* harmony import */ var _organizer_vue_vue_type_template_id_27181e27___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./organizer.vue?vue&type=template&id=27181e27& */ "./resources/js/components/create/organizer.vue?vue&type=template&id=27181e27&");
+/* harmony import */ var _organizer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./organizer.vue?vue&type=script&lang=js& */ "./resources/js/components/create/organizer.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -1010,9 +759,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _event_show_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _event_show_vue_vue_type_template_id_26bbc96a___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _event_show_vue_vue_type_template_id_26bbc96a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _organizer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _organizer_vue_vue_type_template_id_27181e27___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _organizer_vue_vue_type_template_id_27181e27___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -1022,38 +771,38 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/events/event-show.vue"
+component.options.__file = "resources/js/components/create/organizer.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/events/event-show.vue?vue&type=script&lang=js&":
-/*!********************************************************************************!*\
-  !*** ./resources/js/components/events/event-show.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************/
+/***/ "./resources/js/components/create/organizer.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/create/organizer.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_event_show_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./event-show.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/events/event-show.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_event_show_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_organizer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./organizer.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/create/organizer.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_organizer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/events/event-show.vue?vue&type=template&id=26bbc96a&":
-/*!**************************************************************************************!*\
-  !*** ./resources/js/components/events/event-show.vue?vue&type=template&id=26bbc96a& ***!
-  \**************************************************************************************/
+/***/ "./resources/js/components/create/organizer.vue?vue&type=template&id=27181e27&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/create/organizer.vue?vue&type=template&id=27181e27& ***!
+  \*************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_event_show_vue_vue_type_template_id_26bbc96a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./event-show.vue?vue&type=template&id=26bbc96a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/events/event-show.vue?vue&type=template&id=26bbc96a&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_event_show_vue_vue_type_template_id_26bbc96a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_organizer_vue_vue_type_template_id_27181e27___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./organizer.vue?vue&type=template&id=27181e27& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/create/organizer.vue?vue&type=template&id=27181e27&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_organizer_vue_vue_type_template_id_27181e27___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_event_show_vue_vue_type_template_id_26bbc96a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_organizer_vue_vue_type_template_id_27181e27___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

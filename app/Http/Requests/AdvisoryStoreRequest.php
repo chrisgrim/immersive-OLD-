@@ -27,8 +27,8 @@ class AdvisoryStoreRequest extends FormRequest
             'wheelchairReady' => 'required',
             'sexualViolence' => 'required',
             'contactAdvisories' => 'required',
-            'mobilityAdvisory' => 'required',
-            'contentAdvisory' => 'required',
+            // 'mobilityAdvisory' => 'required',
+            // 'contentAdvisory' => 'required',
             'ageRestriction' => 'required'
         ];
     }

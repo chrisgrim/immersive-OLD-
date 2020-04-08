@@ -29,7 +29,7 @@
                         tag-placeholder="Add this as new tag" 
                         placeholder="Search or add your own here" 
                         label="genre"
-                        :close-on-select="false"
+                        :close-on-select="true"
                         track-by="id" 
                         :options="options" 
                         :multiple="true" 
@@ -51,13 +51,14 @@
                         type="text" 
                         v-model="websiteUrl"
                         :class="{ active: activeItem == 'website','error': $v.websiteUrl.$error }"
-                        @click="activeItem = 'website'"
+                        @click="toggleWebsite()"
                         @blur="activeItem = null"
                         @input="$v.websiteUrl.$touch"
                         placeholder="Leave blank if using Organizer Website Url"
                         />
                         <div v-if="$v.websiteUrl.$error" class="validation-error">
                             <p class="error" v-if="!$v.websiteUrl.url">Must be a url (https://...)</p>
+                            <p class="error" v-if="!$v.websiteUrl.webNotWorking">One of your urls isn't working</p>
                         </div>
                     </div>
                     <div class="field">   
@@ -66,13 +67,14 @@
                         type="text" 
                         v-model="ticketUrl"
                         :class="{ active: activeItem == 'ticket','error': $v.ticketUrl.$error }"
-                        @click="activeItem = 'ticket'"
+                        @click="toggleTicket()"
                         @blur="activeItem = null"
                         @input="$v.ticketUrl.$touch"
                         placeholder="Leave blank if using Organizer Website Url"
                         />
                         <div v-if="$v.ticketUrl.$error" class="validation-error">
                             <p class="error" v-if="!$v.ticketUrl.url"> Must be a url (https://...)</p>
+                            <p class="error" v-if="!$v.ticketUrl.ticketNotWorking">One of your urls isn't working</p>
                         </div>
                     </div>
                     <div class="">
@@ -91,6 +93,7 @@
 <script>
     import Multiselect from 'vue-multiselect'
     import { required, url } from 'vuelidate/lib/validators'
+    import _ from 'lodash'
 
 	export default {
         components: {
@@ -111,6 +114,7 @@
                 eventUrl:`/create-event/${this.event.slug}`,
                 dis: false,
                 genres: [],
+                serverErrors: [],
                 activeItem: null,
 			}
 		},
@@ -118,7 +122,7 @@
 		methods: {
 
             //submit the data to the database adding the genres then load the new page
-			async submitDescription() {
+			submitDescription() {
                 this.$v.$touch(); 
                 if (this.$v.$invalid) { return false; };
                 this.dis = true;
@@ -130,8 +134,27 @@
                 data.genre = this.genreName.map(a => a.genre);
 
 				axios.patch(`${this.eventUrl}/description`, data)
-                .then(response => { window.location.href = `${this.eventUrl}/advisories`; });
+                .then(response => { 
+                    console.log(response.data);
+                    window.location.href = `${this.eventUrl}/advisories`; 
+                })
+                .catch(errors => {
+                    errors.response.data.message.length ? this.serverErrors = {broken: 'Url is broken'} : '';
+                    errors.response.data.errors ? this.serverErrors = errors.response.data.errors : '';
+                    this.dis = false;
+                });
 			},
+
+             // makes the organizer website field class active and clears any vuelidate server errors 
+            toggleWebsite() {
+                this.isActive = 'website';
+                this.serverErrors = [];
+            },
+
+            toggleTicket() {
+                this.isActive = 'ticket';
+                this.serverErrors = [];
+            },
 
             // adds new tags in the multi select
             addTag (newTag) {
@@ -145,6 +168,10 @@
 
             goBack() {
                 window.location.href = `${this.eventUrl}/shows`;
+            },
+
+            hasServerError(field) {
+                return (field && _.has(this, 'serverErrors.' + field) && !_.isEmpty(this.serverErrors[field]));
             },
 
             // If there is data in Database it will load from the database
@@ -177,9 +204,11 @@
             },
             websiteUrl: {
                url,
+               webNotWorking(){ return this.websiteUrl ? !this.hasServerError('broken') : true },
             },
             ticketUrl: {
-               url
+               url,
+               ticketNotWorking(){ return this.ticketUrl ? !this.hasServerError('broken') : true },
             },
         },
     };

@@ -148,6 +148,7 @@ h1 {
   color: #484848;
   -webkit-transform: scale(1, 1.11);
           transform: scale(1, 1.11);
+  display: inherit;
 }
 
 /* =24px */
@@ -179,6 +180,14 @@ a {
   color: inherit;
 }
 
+p {
+  line-height: 2.1rem;
+}
+
+button {
+  cursor: pointer;
+}
+
 *,
 *:before,
 *:after {
@@ -189,10 +198,15 @@ a {
 .container {
   width: 89%;
   margin: auto;
+  padding-bottom: 10rem;
 }
 
 .bspin {
   cursor: wait;
+}
+
+#bodyArea {
+  padding: 7rem 0rem;
 }
 
 button {
@@ -208,6 +222,63 @@ input.general {
   border-radius: 0.5rem;
   border: 1px solid #969696;
   font-size: 1.4rem;
+}
+
+textarea {
+  position: relative;
+  color: #484848;
+  background-color: white;
+  -webkit-transition: border-color 0.2s ease 0s;
+  transition: border-color 0.2s ease 0s;
+  padding: 1.3rem 1rem;
+  border-width: 1px;
+  border-style: solid;
+  -o-border-image: initial;
+  -webkit-border-image: initial;
+          border-image: initial;
+  border-radius: 5px;
+  border-color: #ebebeb;
+  margin: 1rem 0rem 1rem 0rem;
+  font-size: 1.4rem;
+  width: 100%;
+}
+
+textarea.active {
+  border-color: #008489;
+}
+
+textarea.error {
+  border-color: red;
+}
+
+textarea::-webkit-input-placeholder {
+  color: #adadad;
+  font-size: 1.4rem;
+  font-family: inherit;
+}
+
+textarea::-moz-placeholder {
+  color: #adadad;
+  font-size: 1.4rem;
+  font-family: inherit;
+}
+
+textarea:-ms-input-placeholder {
+  color: #adadad;
+  font-size: 1.4rem;
+  font-family: inherit;
+}
+
+textarea::-ms-input-placeholder {
+  color: #adadad;
+  font-size: 1.4rem;
+  font-family: inherit;
+}
+
+textarea::placeholder {
+  color: #adadad;
+  font-size: 1.4rem;
+  font-family: inherit;
 }
 
 .show-heart-location {
@@ -241,7 +312,7 @@ input.general {
 .event .header .section {
   width: 100%;
   display: grid;
-  grid-template-columns: 35% auto;
+  grid-template-columns: 50rem auto;
 }
 
 .event .header .section .left {
@@ -262,14 +333,12 @@ input.general {
 }
 
 .event .header .section .left .content .title {
-  position: -webkit-sticky;
-  position: sticky;
+  /*                        position: -webkit-sticky;
+                          position: sticky;*/
   top: 0px;
   font-size: 4.6rem;
   line-height: 5.2rem;
   max-height: 31.3rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 6;
   -webkit-box-orient: vertical;
@@ -319,7 +388,7 @@ input.general {
 }
 
 .event .header .section .right .image {
-  height: 53rem;
+  height: 48rem;
 }
 
 .event .header .section .right .image img {
@@ -331,8 +400,9 @@ input.general {
 
 .body {
   margin: auto;
-  margin-bottom: 72px;
+  margin-bottom: 7.2rem;
   width: 100%;
+  padding-bottom: 15rem;
 }
 
 .body .section {
@@ -383,6 +453,7 @@ input.general {
 .body .section .content .right .show {
   color: #008489;
   cursor: pointer;
+  padding-left: 2rem;
 }
 
 .event .body .organizer .right .image {
@@ -510,7 +581,18 @@ input.general {
   margin: 0rem;
   font-size: 1.6rem;
   font-weight: 400;
-  line-height: 1.8rem;
+  color: #767676;
+}
+
+.event .body .dates .weektimes {
+  width: 560px;
+  margin-top: 4rem;
+}
+
+.event .body .dates .weektimes p {
+  margin: 0rem;
+  font-size: 1.6rem;
+  font-weight: 400;
   color: #767676;
 }
 
@@ -768,10 +850,6 @@ input.general {
   line-height: 24px;
 }
 
-.index {
-  padding-top: 7rem;
-}
-
 .index .categories {
   padding: 8rem 0rem 4rem 0rem;
   width: 100%;
@@ -820,6 +898,10 @@ input.general {
   line-height: 1.28571em;
   color: #484848;
   margin-top: 2.2rem;
+}
+
+.index .events {
+  margin-bottom: 6rem;
 }
 
 #grid {
@@ -1853,7 +1935,7 @@ fieldset[disabled] .multiselect {
   color: #f15e5e;
   font-size: 46px;
   display: inline-block;
-  margin-top: 1rem;
+  margin-top: 2.5rem;
   font-weight: 500;
 }
 

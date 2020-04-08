@@ -382,6 +382,20 @@ button.create[disabled] {
   margin-bottom: 5rem;
 }
 
+#create .organizer .text .name {
+  display: inline-block;
+  color: #484848;
+  font-size: 1.5rem;
+}
+
+#create .organizer .text button.editTitle {
+  color: white;
+  padding: 0.4rem 1rem;
+  background: #008489;
+  margin-left: 1rem;
+  font-family: "Montserrat", sans-serif;
+}
+
 #create .organizer .image {
   width: 50%;
   float: right;
@@ -414,6 +428,7 @@ button.create[disabled] {
   background-repeat: no-repeat;
   border-radius: 0.5rem;
   border: 1px solid #d2d2d2;
+  border-radius: 50%;
   box-shadow: 0 15px 25px -4px rgba(0, 0, 0, 0.25), 0 -10px 15px -1px rgba(255, 255, 255, 0.6), inset 0 3px 4px -1px rgba(255, 255, 255, 0.2), inset 0 0 5px 1px rgba(255, 255, 255, 0.8), inset 0 20px 30px 0 rgba(255, 255, 255, 0.2);
 }
 
@@ -432,6 +447,7 @@ button.create[disabled] {
   border: dashed 2px #dadada;
   height: 100%;
   position: relative;
+  border-radius: 50%;
 }
 
 #create .organizer .image .img .loader label .dash .box .in {
@@ -455,6 +471,7 @@ button.create[disabled] {
 #create .organizer .image .img .loader label .dash.over:hover {
   background: #ffffffba;
   opacity: 1;
+  border-radius: 50%;
 }
 
 #create .organizer .image .img .loader label .dash.over .box {
@@ -1111,7 +1128,7 @@ input#checkbox {
   right: 0;
   bottom: 0;
   background-color: #ffffff;
-  z-index: 1;
+  z-index: 0;
   border-radius: 5px;
   border: 1px solid #e8e8e8;
 }
@@ -1127,7 +1144,7 @@ input#checkbox {
   -webkit-transition: left 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28), margin-left 0.3s ease, width 0.3s ease, border-radius 0.3s ease;
   transition: left 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28), margin-left 0.3s ease, width 0.3s ease, border-radius 0.3s ease;
   box-shadow: 0px 1px 1px #7d7d7d;
-  z-index: 2;
+  z-index: 0;
   border: 1px solid #b5b5b5;
 }
 

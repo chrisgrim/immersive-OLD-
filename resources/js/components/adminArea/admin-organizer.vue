@@ -29,7 +29,7 @@
             />
             <button @click.prevent="showModal(organizer, 'deleteOrg')" class="delete-circle"><p>X</p></button>
         </div>
-         <modal v-show="modal == 'deleteOrg'" @close="modal = null">
+         <modal v-if="modal == 'deleteOrg'" @close="modal = null">
             <div slot="header">
                 <div class="circle del">
                     <p>X</p>

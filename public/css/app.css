@@ -40,7 +40,6 @@ select:-webkit-autofill:focus {
 
 .editevents {
   max-width: 100%;
-  padding-top: 5rem;
 }
 
 .editevents .section {
@@ -78,7 +77,7 @@ select:-webkit-autofill:focus {
 .editevents .section .title-block .image .icontext h2 {
   color: white;
   font-size: 4rem;
-  margin: 0.6rem auto;
+  margin: 0.4rem auto;
 }
 
 .editevents .section .title-block .edit {
@@ -92,9 +91,9 @@ select:-webkit-autofill:focus {
   min-width: 4.8rem;
   color: #008489;
   border-radius: 0.4rem;
-  border-width: 0.1rem;
   background: white;
-  border-color: #008489;
+  border: 1px solid #008489;
+  display: inline-block;
 }
 
 .editevents .section .title-block .prev {
@@ -122,25 +121,38 @@ select:-webkit-autofill:focus {
   color: #484848;
   margin: 0px;
   padding: 0;
+  line-height: 4.4rem;
 }
 
 .editevents .section .buttons {
   text-align: right;
 }
 
-.editevents .section .enew {
-  background-color: #efefef;
-  border-radius: 0.5rem;
-}
-
-.editevents .section .enew .body {
-  border: dashed 2px #dadada;
-  border-radius: 0.5rem;
+.editevents .section .new-event {
   position: relative;
-  padding: 33%;
+  border: none;
 }
 
-.editevents .section .enew .body .event {
+.editevents .section .new-event .body {
+  background-color: white;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.editevents .section .new-event .body:hover {
+  background-color: #008489;
+}
+
+.editevents .section .new-event .body:hover .event {
+  color: white;
+}
+
+.editevents .section .new-event .body:hover .event svg.b {
+  fill: white;
+}
+
+.editevents .section .new-event .body .event {
   position: absolute;
   top: 50%;
   height: 7rem;
@@ -149,6 +161,10 @@ select:-webkit-autofill:focus {
   left: 50%;
   margin-left: -7.5rem;
   text-align: center;
+}
+
+.editevents .section .new-event .body .event svg.b {
+  fill: #008489;
 }
 
 .editevents .section .review {
@@ -176,6 +192,20 @@ select:-webkit-autofill:focus {
   margin: auto;
 }
 
+.editevents .newOrg .title {
+  display: inline-block;
+}
+
+.editevents .newOrg .title .add {
+  background: #008489;
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  border-radius: 50%;
+  color: white;
+  margin-left: 1rem;
+  font-size: 3rem;
+}
+
 .edit-events-page {
   max-width: 100rem;
   margin: auto;
@@ -188,7 +218,7 @@ select:-webkit-autofill:focus {
 }
 
 .search .body {
-  margin-top: 12rem;
+  margin-top: 5rem;
 }
 
 .search .filter {
@@ -620,10 +650,6 @@ select:-webkit-autofill:focus {
   width: 50%;
 }
 
-.register {
-  padding-top: 7rem;
-}
-
 .register .content {
   display: grid;
   grid-template-columns: 40% 60%;
@@ -730,7 +756,6 @@ select:-webkit-autofill:focus {
 .profile {
   max-width: 72%;
   margin: auto;
-  padding-top: 5rem;
 }
 
 .profile .body {
@@ -973,7 +998,7 @@ select:-webkit-autofill:focus {
 .show .organizer .right {
   width: 100%;
   position: relative;
-  padding: 15rem 10rem 0rem 25rem;
+  padding: 10rem 10rem 0rem 25rem;
 }
 
 .show .organizer .right .name h2 {
@@ -1193,7 +1218,6 @@ select:-webkit-autofill:focus {
 .messages {
   max-width: 100%;
   margin: auto;
-  padding-top: 8rem;
 }
 
 .messages .title {
@@ -1243,13 +1267,13 @@ select:-webkit-autofill:focus {
           align-items: start;
 }
 
-.messages .row .event .image {
+.messages .row .event .message-image {
   width: 5rem;
   height: 5rem;
   margin: 1rem auto;
 }
 
-.messages .row .event .image img {
+.messages .row .event .message-image img {
   width: 100%;
   border-radius: 50%;
   -o-object-fit: cover;
@@ -1273,7 +1297,7 @@ select:-webkit-autofill:focus {
 
 .chat {
   margin: auto;
-  padding-top: 12rem;
+  padding-top: 5rem;
   display: grid;
   grid-template-columns: auto 1fr;
   width: 72%;

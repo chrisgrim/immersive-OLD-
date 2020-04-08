@@ -525,288 +525,293 @@ var render = function() {
         ])
       }),
       _vm._v(" "),
-      _c(
-        "modal",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.isEditModalVisible,
-              expression: "isEditModalVisible"
-            }
-          ],
-          on: {
-            close: function($event) {
-              _vm.isEditModalVisible = false
-            }
-          }
-        },
-        [
-          _c("div", { attrs: { slot: "header" }, slot: "header" }, [
-            _c("div", { staticClass: "circle del" }, [_c("p", [_vm._v("X")])])
-          ]),
-          _vm._v(" "),
-          _c("div", { attrs: { slot: "body" }, slot: "body" }, [
-            _c("h3", [_vm._v("Are you sure?")]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "You are deleting your " +
-                  _vm._s(_vm.modalDelete.name) +
-                  " category."
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { attrs: { slot: "footer" }, slot: "footer" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn del",
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    return _vm.deleteCategory(_vm.modalDelete)
-                  }
-                }
-              },
-              [_vm._v("Delete")]
-            )
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "pin" },
-        [
-          _c(
+      _vm.isEditModalVisible
+        ? _c(
             "modal",
             {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.isModalVisible,
-                  expression: "isModalVisible"
-                }
-              ],
               on: {
                 close: function($event) {
-                  _vm.isModalVisible = false
+                  _vm.isEditModalVisible = false
                 }
               }
             },
             [
               _c("div", { attrs: { slot: "header" }, slot: "header" }, [
-                _c("div")
+                _c("div", { staticClass: "circle del" }, [
+                  _c("p", [_vm._v("X")])
+                ])
               ]),
               _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "body", attrs: { slot: "body" }, slot: "body" },
-                [
-                  _c(
-                    "label",
-                    {
-                      style: { backgroundImage: "url('" + _vm.imageSrc + "')" }
-                    },
-                    [
-                      !_vm.imageSrc
-                        ? _c("div", { staticClass: "box" }, [
-                            _c("div", { staticClass: "in" }, [
-                              _c("div", [
-                                _c(
-                                  "svg",
-                                  {
-                                    staticClass: "b",
-                                    attrs: {
-                                      height: "32",
-                                      width: "32",
-                                      viewBox: "0 0 24 24",
-                                      "aria-label": "Add an image or video",
-                                      role: "img"
-                                    }
-                                  },
-                                  [
-                                    _c("path", {
-                                      attrs: {
-                                        d:
-                                          "M24 12c0-6.627-5.372-12-12-12C5.373 0 0 5.373 0 12s5.373 12 12 12c6.628 0 12-5.373 12-12zm-10.767 3.75a1.25 1.25 0 0 1-2.5 0v-3.948l-1.031 1.031a1.25 1.25 0 0 1-1.768-1.768L12 7l4.066 4.065a1.25 1.25 0 0 1-1.768 1.768l-1.065-1.065v3.982z"
-                                      }
-                                    })
-                                  ]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("div", [
-                                _c("p", [_vm._v("Click here to upload image")]),
-                                _vm._v(" "),
-                                _c("p", [
-                                  _vm._v(
-                                    "Must be at least 720x960 and under 2mb"
-                                  )
-                                ])
-                              ])
-                            ])
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _c("image-upload", { on: { loaded: _vm.onImageUpload } }),
-                      _vm._v(" "),
-                      _c("CubeSpinner", { attrs: { loading: _vm.isLoading } }),
-                      _vm._v(" "),
-                      _vm.$v.finalImage.$error
-                        ? _c("div", { staticClass: "validation-error" }, [
-                            !_vm.$v.finalImage.required
-                              ? _c("p", { staticClass: "error" }, [
-                                  _vm._v("Please Add Image ")
-                                ])
-                              : _vm._e(),
-                            _vm._v(" "),
-                            !_vm.$v.finalImage.fileSize
-                              ? _c("p", { staticClass: "error" }, [
-                                  _vm._v("Image needs to be less than 2mb ")
-                                ])
-                              : _vm._e(),
-                            _vm._v(" "),
-                            !_vm.$v.finalImage.fileType
-                              ? _c("p", { staticClass: "error" }, [
-                                  _vm._v("Image should be jpg, gif, or png")
-                                ])
-                              : _vm._e(),
-                            _vm._v(" "),
-                            !_vm.$v.finalImage.imageRatio
-                              ? _c("p", { staticClass: "error" }, [
-                                  _vm._v("Needs to be at least 720 x 960")
-                                ])
-                              : _vm._e()
-                          ])
-                        : _vm._e()
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "text" }, [
-                    _c("div", { staticClass: "name" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.name,
-                            expression: "name"
-                          }
-                        ],
-                        class: { active: _vm.nameActive },
-                        attrs: { type: "text", placeholder: "Category Name" },
-                        domProps: { value: _vm.name },
-                        on: {
-                          click: function($event) {
-                            _vm.nameActive = true
-                          },
-                          blur: function($event) {
-                            _vm.nameActive = false
-                          },
-                          input: [
-                            function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.name = $event.target.value
-                            },
-                            _vm.clearInfo
-                          ]
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.$v.name.$error
-                        ? _c("div", { staticClass: "validation-error" }, [
-                            !_vm.$v.name.required
-                              ? _c("p", { staticClass: "error" }, [
-                                  _vm._v("Please Add Category Name ")
-                                ])
-                              : _vm._e(),
-                            _vm._v(" "),
-                            !_vm.$v.name.serverFailed
-                              ? _c("p", { staticClass: "error" }, [
-                                  _vm._v(
-                                    "This category has already been created"
-                                  )
-                                ])
-                              : _vm._e()
-                          ])
-                        : _vm._e()
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "desc" }, [
-                      _c("textarea", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.description,
-                            expression: "description"
-                          }
-                        ],
-                        class: { active: _vm.nameActive },
-                        attrs: {
-                          type: "text",
-                          rows: "6",
-                          placeholder: "Category Description"
-                        },
-                        domProps: { value: _vm.description },
-                        on: {
-                          click: function($event) {
-                            _vm.nameActive = true
-                          },
-                          blur: function($event) {
-                            _vm.nameActive = false
-                          },
-                          input: [
-                            function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.description = $event.target.value
-                            },
-                            _vm.$v.description.$touch
-                          ]
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.$v.description.$error
-                        ? _c("div", { staticClass: "validation-error" }, [
-                            !_vm.$v.description.required
-                              ? _c("p", { staticClass: "error" }, [
-                                  _vm._v("Please Add Category Description ")
-                                ])
-                              : _vm._e()
-                          ])
-                        : _vm._e()
-                    ])
-                  ])
-                ]
-              ),
+              _c("div", { attrs: { slot: "body" }, slot: "body" }, [
+                _c("h3", [_vm._v("Are you sure?")]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    "You are deleting your " +
+                      _vm._s(_vm.modalDelete.name) +
+                      " category."
+                  )
+                ])
+              ]),
               _vm._v(" "),
               _c("div", { attrs: { slot: "footer" }, slot: "footer" }, [
                 _c(
                   "button",
                   {
-                    staticClass: "btn sub",
+                    staticClass: "btn del",
                     on: {
                       click: function($event) {
                         $event.preventDefault()
-                        return _vm.submitNewCategory()
+                        return _vm.deleteCategory(_vm.modalDelete)
                       }
                     }
                   },
-                  [_vm._v("Submit")]
+                  [_vm._v("Delete")]
                 )
               ])
             ]
           )
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "pin" },
+        [
+          _vm.isModalVisible
+            ? _c(
+                "modal",
+                {
+                  on: {
+                    close: function($event) {
+                      _vm.isModalVisible = false
+                    }
+                  }
+                },
+                [
+                  _c("div", { attrs: { slot: "header" }, slot: "header" }, [
+                    _c("div")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "body",
+                      attrs: { slot: "body" },
+                      slot: "body"
+                    },
+                    [
+                      _c(
+                        "label",
+                        {
+                          style: {
+                            backgroundImage: "url('" + _vm.imageSrc + "')"
+                          }
+                        },
+                        [
+                          !_vm.imageSrc
+                            ? _c("div", { staticClass: "box" }, [
+                                _c("div", { staticClass: "in" }, [
+                                  _c("div", [
+                                    _c(
+                                      "svg",
+                                      {
+                                        staticClass: "b",
+                                        attrs: {
+                                          height: "32",
+                                          width: "32",
+                                          viewBox: "0 0 24 24",
+                                          "aria-label": "Add an image or video",
+                                          role: "img"
+                                        }
+                                      },
+                                      [
+                                        _c("path", {
+                                          attrs: {
+                                            d:
+                                              "M24 12c0-6.627-5.372-12-12-12C5.373 0 0 5.373 0 12s5.373 12 12 12c6.628 0 12-5.373 12-12zm-10.767 3.75a1.25 1.25 0 0 1-2.5 0v-3.948l-1.031 1.031a1.25 1.25 0 0 1-1.768-1.768L12 7l4.066 4.065a1.25 1.25 0 0 1-1.768 1.768l-1.065-1.065v3.982z"
+                                          }
+                                        })
+                                      ]
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", [
+                                    _c("p", [
+                                      _vm._v("Click here to upload image")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("p", [
+                                      _vm._v(
+                                        "Must be at least 720x960 and under 2mb"
+                                      )
+                                    ])
+                                  ])
+                                ])
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _c("image-upload", {
+                            on: { loaded: _vm.onImageUpload }
+                          }),
+                          _vm._v(" "),
+                          _c("CubeSpinner", {
+                            attrs: { loading: _vm.isLoading }
+                          }),
+                          _vm._v(" "),
+                          _vm.$v.finalImage.$error
+                            ? _c("div", { staticClass: "validation-error" }, [
+                                !_vm.$v.finalImage.required
+                                  ? _c("p", { staticClass: "error" }, [
+                                      _vm._v("Please Add Image ")
+                                    ])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                !_vm.$v.finalImage.fileSize
+                                  ? _c("p", { staticClass: "error" }, [
+                                      _vm._v("Image needs to be less than 2mb ")
+                                    ])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                !_vm.$v.finalImage.fileType
+                                  ? _c("p", { staticClass: "error" }, [
+                                      _vm._v("Image should be jpg, gif, or png")
+                                    ])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                !_vm.$v.finalImage.imageRatio
+                                  ? _c("p", { staticClass: "error" }, [
+                                      _vm._v("Needs to be at least 720 x 960")
+                                    ])
+                                  : _vm._e()
+                              ])
+                            : _vm._e()
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "text" }, [
+                        _c("div", { staticClass: "name" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.name,
+                                expression: "name"
+                              }
+                            ],
+                            class: { active: _vm.nameActive },
+                            attrs: {
+                              type: "text",
+                              placeholder: "Category Name"
+                            },
+                            domProps: { value: _vm.name },
+                            on: {
+                              click: function($event) {
+                                _vm.nameActive = true
+                              },
+                              blur: function($event) {
+                                _vm.nameActive = false
+                              },
+                              input: [
+                                function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.name = $event.target.value
+                                },
+                                _vm.clearInfo
+                              ]
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.$v.name.$error
+                            ? _c("div", { staticClass: "validation-error" }, [
+                                !_vm.$v.name.required
+                                  ? _c("p", { staticClass: "error" }, [
+                                      _vm._v("Please Add Category Name ")
+                                    ])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                !_vm.$v.name.serverFailed
+                                  ? _c("p", { staticClass: "error" }, [
+                                      _vm._v(
+                                        "This category has already been created"
+                                      )
+                                    ])
+                                  : _vm._e()
+                              ])
+                            : _vm._e()
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "desc" }, [
+                          _c("textarea", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.description,
+                                expression: "description"
+                              }
+                            ],
+                            class: { active: _vm.nameActive },
+                            attrs: {
+                              type: "text",
+                              rows: "6",
+                              placeholder: "Category Description"
+                            },
+                            domProps: { value: _vm.description },
+                            on: {
+                              click: function($event) {
+                                _vm.nameActive = true
+                              },
+                              blur: function($event) {
+                                _vm.nameActive = false
+                              },
+                              input: [
+                                function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.description = $event.target.value
+                                },
+                                _vm.$v.description.$touch
+                              ]
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.$v.description.$error
+                            ? _c("div", { staticClass: "validation-error" }, [
+                                !_vm.$v.description.required
+                                  ? _c("p", { staticClass: "error" }, [
+                                      _vm._v("Please Add Category Description ")
+                                    ])
+                                  : _vm._e()
+                              ])
+                            : _vm._e()
+                        ])
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { attrs: { slot: "footer" }, slot: "footer" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn sub",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.submitNewCategory()
+                          }
+                        }
+                      },
+                      [_vm._v("Submit")]
+                    )
+                  ])
+                ]
+              )
+            : _vm._e()
         ],
         1
       )

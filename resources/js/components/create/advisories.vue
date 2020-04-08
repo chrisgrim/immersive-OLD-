@@ -73,7 +73,7 @@
                     </div>
                 </div>
                 <div class="field" v-if="contactLevel.length">
-                    <label class="area"> Explain a bit about your contact with the audience </label>
+                    <label class="area"> Explain a bit about your contact/no contact with the audience </label>
                     <textarea 
                     v-model="advisories.contactAdvisories" 
                     class="create-input area" 
@@ -289,10 +289,10 @@
         		required
         	},
             mobilityAdvisories: {
-                required
+                
             },
             contentAdvisories: {
-                required
+                
             },
 			advisories: {
 			   	contactAdvisories: {

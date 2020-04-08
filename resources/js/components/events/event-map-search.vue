@@ -99,7 +99,7 @@
                 }
             },
             map() {
-                return `height:calc(${this.height}px - 12rem);`
+                return `height:calc(${this.height}px - 5rem);`
             }
         }, 
 

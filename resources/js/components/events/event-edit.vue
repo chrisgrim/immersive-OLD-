@@ -3,8 +3,9 @@
 		<div v-for="(organizer,index) in organizerEvents">
 			<div class="section">
                 <div class="title-block">
-                    <div class="image" :style="organizer.thumbImagePath ? `background-image:url('/storage/${organizer.thumbImagePath}')` : `background:${organizer.hexColor}`">
+                    <div class="image" :style="organizerStyle(organizer)">
                         <div class="icontext" v-if="!organizer.thumbImagePath">
+                            
                             <h2>{{organizer.name.charAt(0)}}</h2>
                         </div>
                     </div>
@@ -12,8 +13,8 @@
                         {{organizer.name}}
                     </div>
                     <div class="buttons">
-                        <a :href="`/organizer/${organizer.slug}/edit`">
-                            <button class="edit">Edit</button>
+                        <a :href="`/organizer/${organizer.slug}/edit`" class="edit">
+                            Edit
                         </a>
                         <button v-if="!organizer.in_progress_events.length || organizer.past_events.length" @click.prevent="showModal(organizer, 'deleteOrg')" class="edit">Delete</button>
                         <button @click.prevent="showOrganizer(organizer)" class="prev">Preview Organizer</button>
@@ -21,20 +22,18 @@
                 </div>
                 <div class="listing-details-block">
                 <tabs>
-                    <tab title="Current Events" :active="true" id="grid" class="tab-events">
-                        <div @click.prevent="newEvent(organizer)">
-                            <div class="enew">
-                                <div class="body">
-                                    <div class="event">
-                                        <div>
-                                            <svg class="b" height="32" width="32" viewBox="0 0 24 24" aria-label="Add an image or video" role="img"><path d="M24 12c0-6.627-5.372-12-12-12C5.373 0 0 5.373 0 12s5.373 12 12 12c6.628 0 12-5.373 12-12zm-10.767 3.75a1.25 1.25 0 0 1-2.5 0v-3.948l-1.031 1.031a1.25 1.25 0 0 1-1.768-1.768L12 7l4.066 4.065a1.25 1.25 0 0 1-1.768 1.768l-1.065-1.065v3.982z"></path></svg>
-                                        </div>
-                                         <div>
-                                            <p>Add New Event</p>
-                                        </div>
+                    <tab title="Current Events" :active="true" :id="organizer.id" class="tab-events">
+                        <div class="new-event">
+                            <button @click.prevent="newEvent(organizer)" class="body">
+                                <div class="event">
+                                    <div>
+                                        <svg class="b" height="32" width="32" viewBox="0 0 24 24" aria-label="Add an Event" role="img"><path d="M24 12c0-6.627-5.372-12-12-12C5.373 0 0 5.373 0 12s5.373 12 12 12c6.628 0 12-5.373 12-12zm-10.767 3.75a1.25 1.25 0 0 1-2.5 0v-3.948l-1.031 1.031a1.25 1.25 0 0 1-1.768-1.768L12 7l4.066 4.065a1.25 1.25 0 0 1-1.768 1.768l-1.065-1.065v3.982z"></path></svg>
+                                    </div>
+                                     <div>
+                                        <p>Add New Event</p>
                                     </div>
                                 </div>
-                            </div>
+                            </button>
                         </div>
                         <div v-for="(event, index) in organizer.in_progress_events" v-if="index < 10" class="item">
                             <vue-event-edit-listing-item :user="user" :event="event"></vue-event-edit-listing-item>
@@ -42,7 +41,7 @@
                             <button @click.prevent="showModal(event, 'delete')" class="del">Delete</button>
                             <button v-if="false" @click.prevent="showModal(event, 'addreview')" class="del">Add Review</button>
                         </div> 
-                        <modal v-show="modal == 'delete'" @close="modal = null">
+                        <modal v-if="modal == 'delete'" @close="modal = null">
                             <div slot="header">
                                 <div class="circle del">
                                     <p>X</p>
@@ -56,7 +55,7 @@
                                 <button class="btn del" @click="deleteRow()">Delete</button>
                             </div>
                         </modal>
-                        <modal v-show="modal == 'deleteOrg'" @close="modal = null">
+                        <modal v-if="modal == 'deleteOrg'" @close="modal = null">
                             <div slot="header">
                                 <div class="circle del">
                                     <p>X</p>
@@ -70,7 +69,7 @@
                                 <button class="btn del" @click="deleteOrg()">Delete</button>
                             </div>
                         </modal>
-                        <modal v-show="modal == 'addreview'" @close="modal = null">
+                        <modal v-if="modal == 'addreview'" @close="modal = null">
                             <div slot="header">
                                 <h3>Add Review</h3>
                             </div>
@@ -129,12 +128,12 @@
                             </div>
                         </modal>
                     </tab>
-                    <tab title="Past Events" id="grid" class="tab-events">
+                    <tab title="Past Events" :id="organizer.id + 1" class="tab-events">
                         <div v-for="(event, index) in organizer.past_events" v-if="index < 4">
                             <button @click.prevent="showModal(event)" class="delete-circle">X</button>
                             <vue-event-edit-listing-item :user="user" :loadurl="'/events/' + event.slug" :event="event"></vue-event-edit-listing-item>
                         </div> 
-                        <modal v-show="modal == 'delete'" @close="modal = null">
+                        <modal v-if="modal == 'delete'" @close="modal = null">
                                 <div slot="header">Ready to Delete?</div>
                                 <div slot="body"> Are you sure you want to delete event {{selectedModal.name}}</div>
                                 <div slot="footer">
@@ -149,11 +148,7 @@
            <div class="newOrg">
                 <div class="title">
                     <h1>Add another organization</h1>
-                    <div class="add">
-                        <a href="/organizer/create">
-                            <p>+</p>
-                        </a>
-                    </div>
+                    <a href="/organizer/create" class="add">+</a>
                 </div>
             </div>
         </div>
@@ -187,6 +182,9 @@
             getUrl(event) {
                 return this.events.in_progress_events;
             },
+            organizerStyle() {
+                return organizer => organizer.thumbImagePath ? `background-image:url('/storage/${organizer.thumbImagePath}')` : `background:${organizer.hexColor}`
+            }
         },
 
 		methods: {
@@ -194,10 +192,11 @@
 			deleteRow(index) {
 				axios.delete(`/events/${this.selectedModal.slug}`)
 	            .then(response => {
-	                this.events = response.data;
-	                this.selectedModal = '';
-	                this.modal = '';
-                    this.loadEvents();
+                    location.reload();
+	                // this.events = response.data;
+	                // this.selectedModal = '';
+	                // this.modal = '';
+                 //    this.loadEvents();
 	            })
 	            .catch(errorResponse => { 
 	            	errorResponse.response.data.errors 
@@ -235,6 +234,7 @@
             },
 
 			showModal(event, arr) {
+                console.log(event);
 				this.selectedModal = event;
 			    this.modal = arr;
 			},

@@ -1,11 +1,21 @@
 <template>
 <div>
-    <vue-alert v-if="serverErrors.length" message="serverErrors"></vue-alert>
+    <vue-alert 
+    v-if="serverErrors.length" 
+    message="serverErrors">      
+    </vue-alert>
     <div class="organizer">
         <div class="section">
             <div class="text">
                 <div class="floating-form">
-                    <div class="field">
+                    <div 
+                    @mouseover="showEdit=true" 
+                    v-if="approved" 
+                    class="field">
+                        <p class="name">{{organizer.name}}</p>
+                        <button class="editTitle" v-if="showEdit" @click.prevent="showModal">Edit</button>
+                    </div>
+                    <div v-else class="field">
                         <label>Organization name</label>
                         <input 
                         type="text" 
@@ -13,7 +23,7 @@
                         name="name"
                         :class="{ active: isActive == 'name','error': $v.organizer.name.$error }"
                         @input="$v.organizer.name.$touch"
-                        @click="toggleName()"
+                        @click="toggle('name')"
                         @blur="isActive = null"
                         v-model="organizer.name"
                         />
@@ -47,7 +57,7 @@
                         name="website"
                         :class="{ active: isActive == 'website','error': $v.organizer.website.$error }"
                         @input="$v.organizer.website.$touch"
-                        @click="toggleWebsite()"
+                        @click="toggle('website')"
                         @blur="isActive = null" 
                         placeholder=" "
                         />
@@ -111,16 +121,9 @@
             <div class="image">
                 <div class="img">          
                     <div class="loader">
-                        <label 
-                        class=""
-                        :style="{ backgroundImage: `url('${imageSrc ? imageSrc : (this.organizer ? '/' + this.organizer.largeImagePath : '')}')` }">
-                            <div 
-                            class="dash"
-                            :class="{ over: hasImage, load: isLoading }"
-                            >
-                                <div 
-                                class="box"
-                                >
+                        <label class="" :style="backgroundImage">
+                            <div class="dash" :class="{ over: hasImage, load: isLoading }">
+                                <div class="box">
                                     <div class="in">
                                         <div v-if="!isLoading">
                                             <svg class="b" height="32" width="32" viewBox="0 0 24 24" aria-label="Add an image or video" role="img"><path d="M24 12c0-6.627-5.372-12-12-12C5.373 0 0 5.373 0 12s5.373 12 12 12c6.628 0 12-5.373 12-12zm-10.767 3.75a1.25 1.25 0 0 1-2.5 0v-3.948l-1.031 1.031a1.25 1.25 0 0 1-1.768-1.768L12 7l4.066 4.065a1.25 1.25 0 0 1-1.768 1.768l-1.065-1.065v3.982z"></path></svg>
@@ -128,7 +131,7 @@
                                          <div>
                                             <div v-if="!hasImage">
                                                 <h4>If you have an organization image <br>click here to Upload</h4>
-                                                <p>Please make image at least 600 x 600</p>
+                                                <p>Please make image at least 400 x 400</p>
                                                 <p>Image needs to be under 20 mb</p>
                                             </div>
                                             <p v-if="hasImage">Change Image</p>
@@ -143,22 +146,34 @@
                             <div v-if="$v.finalImage.$error" class="validation-error">
                                 <p class="error" v-if="!$v.finalImage.fileSize">The Image is too large</p>
                                 <p class="error" v-if="!$v.finalImage.fileType">The Image needs to be a JPG, PNG or GIF</p>
-                                <p class="error" v-if="!$v.finalImage.imageSize">The image needs to be at least 600 x 600</p>
+                                <p class="error" v-if="!$v.finalImage.imageSize">The image needs to be at least 400 x 400</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <modal v-if="modal" @close="modal = false">
+            <div slot="header">
+                <div class="circle del">
+                    <p>?</p>
+                </div>
+            </div>
+            <div slot="body"> 
+                <h3>Changing the name?</h3>
+                <p>Changing the organization name will break any links you have sent out. This is not advised.</p>
+            </div>
+            <div slot="footer">
+                <button class="btn del" @click="onApply()">Change Anyways</button>
+            </div>
+        </modal>
         <div class="inNav">
             <button v-if="this.loadorganizer" class="create" @click.prevent="updateOrganizer"> Update Organizer </button>
             <button v-if="this.loadorganizer" class="create" @click.prevent="goBack"> Back </button>
-            <button v-else="this.loadorganizer" class="create" @click.prevent="createOrganizer"> Save and create first event </button>
+            <button v-else="this.loadorganizer" class="create" @click.prevent="createOrganizer"> Save Organizer </button>
         </div>
     </div>
 </div>
-
-
 </template>
 
 <script>
@@ -178,7 +193,10 @@ export default {
 
     computed: {
         hasImage() {
-            return this.organizer.imagePath || this.imageSrc ? true : false;
+            return this.organizer.largeImagePath || this.imageSrc ? true : false;
+        },
+        backgroundImage() {
+            return `backgroundImage: url('${this.imageSrc ? this.imageSrc : (this.loadorganizer ? '/' + this.loadorganizer.largeImagePath : '')}')`
         }
     },
     
@@ -192,6 +210,10 @@ export default {
             finalImage: '',
             imageSrc: '',
             isLoading: false,
+            approved: this.loadorganizer ? true : false,
+            showEdit: false,
+            modal: false,
+
         };
     },
 
@@ -214,36 +236,19 @@ export default {
         },
 
         // makes the name field class active and clears any vuelidate server errors 
-        toggleName() {
-            this.isActive = 'name';
+        toggle(value) {
+            this.isActive = value;
             this.serverErrors = [];
         },
 
-        // makes the organizer website field class active and clears any vuelidate server errors 
-        toggleWebsite() {
-            this.isActive = 'website';
-            this.serverErrors = [];
+        showModal() {
+            this.modal = true;
         },
 
-        //creates a slug that is sent to be checked by database
-        slugify (text, ampersand = 'and') {
-            const a = 'àáäâèéëêìíïîòóöôùúüûñçßÿỳýœæŕśńṕẃǵǹḿǘẍźḧ'
-            const b = 'aaaaeeeeiiiioooouuuuncsyyyoarsnpwgnmuxzh'
-            const p = new RegExp(a.split('').join('|'), 'g')
-
-            return text.toString().toLowerCase()
-                .replace(/[\s_]+/g, '-')
-                .replace(p, c =>
-                  b.charAt(a.indexOf(c)))
-                .replace(/&/g, `-${ampersand}-`)
-                .replace(/[^\w-]+/g, '')
-                .replace(/--+/g, '-')
-                .replace(/^-+|-+$/g, '')
-        },
-
-        //checks to see if passed variable is in the server errors
-        hasServerError(field) {
-            return (field && _.has(this, 'serverErrors.' + field) && !_.isEmpty(this.serverErrors[field]));
+        onApply() {
+            this.reapply = 'reapply';
+            this.approved = false;
+            this.modal = false;
         },
 
         // adds image to the page so user can see it
@@ -265,10 +270,7 @@ export default {
         //adds the slug to the form data
         // submits to database. If statement is for new organizer or if updating organizer
         createOrganizer() {
-            this.$v.$touch(); 
-            if (this.$v.$invalid) { return false };
-            this.isLoading = true;
-            this.dis = true;
+            this.onVerify()
 
             const params = new FormData();
             for (var field in this.organizer) {
@@ -279,28 +281,15 @@ export default {
 
             axios.post('/organizer', params)
             .then(response => { 
-                console.log(response.data);
                 window.location.href = '/create-event/edit';
             })
             .catch(errors => {
-                console.log(errors.response.data.message);
-                errors.response.data.message.length ? this.serverErrors = {broken: 'Url is broken'} : '';
-                errors.response.data.errors ? this.serverErrors = errors.response.data.errors : '';
-                this.isLoading = false;
-                this.dis = false;
+                this.onErrors(errors);
             });
         },
 
-        goBack() {
-            window.location.href = '/create-event/edit';
-        },
-
         updateOrganizer() {
-
-            this.$v.$touch(); 
-            if (this.$v.$invalid) { return false };
-            this.isLoading = true;
-            this.dis = true;
+            this.onVerify()
 
             const params = new FormData();
 
@@ -309,7 +298,7 @@ export default {
             params.append('name', this.organizer.name);
             params.append('description', this.organizer.description);
             params.append('website', this.organizer.website);
-            params.append('email', this.organizer.email);
+            this.organizer.email ? params.append('email', this.organizer.email) : '';
             this.organizer.twitterHandle ? params.append('twitterHandle', this.organizer.twitterHandle) : '';
             this.organizer.facebookHandle ? params.append('facebookHandle', this.organizer.facebookHandle) : '';
             this.organizer.instagramHandle ? params.append('instagramHandle', this.organizer.instagramHandle) :'';
@@ -319,14 +308,49 @@ export default {
             axios.post(`/organizer/${this.loadorganizer.slug}/patch`, params)
             .then(response => { 
                 window.location.href = `/organizer/${slug}/edit`;
-                console.log(response.data);
             })
             .catch(errors => {
-                errors.response.data.message.length ? this.serverErrors = {broken: 'Url is broken'} : '';
-                errors.response.data.errors ? this.serverErrors = errors.response.data.errors : '';
-                this.isLoading = false;
-                this.dis = false;
+                this.onErrors(errors);
             });
+        },
+
+        onErrors(errors) {
+            errors.response.data.message.length ? this.serverErrors = {broken: 'Url is broken'} : '';
+            errors.response.data.errors ? this.serverErrors = errors.response.data.errors : '';
+            this.isLoading = false;
+            this.dis = false;
+        },
+
+        goBack() {
+            window.location.href = '/create-event/edit';
+        },
+
+
+        onVerify() {
+            this.$v.$touch(); 
+            if (this.$v.$invalid) { return false };
+            this.finalImage ? this.isLoading = true : '';
+            this.dis = true;
+        },
+
+        //checks to see if passed variable is in the server errors
+        hasServerError(field) {
+            return (field && _.has(this, 'serverErrors.' + field) && !_.isEmpty(this.serverErrors[field]));
+        },
+
+        slugify (text, ampersand = 'and') {
+            const a = 'àáäâèéëêìíïîòóöôùúüûñçßÿỳýœæŕśńṕẃǵǹḿǘẍźḧ'
+            const b = 'aaaaeeeeiiiioooouuuuncsyyyoarsnpwgnmuxzh'
+            const p = new RegExp(a.split('').join('|'), 'g')
+
+            return text.toString().toLowerCase()
+                .replace(/[\s_]+/g, '-')
+                .replace(p, c =>
+                  b.charAt(a.indexOf(c)))
+                .replace(/&/g, `-${ampersand}-`)
+                .replace(/[^\w-]+/g, '')
+                .replace(/--+/g, '-')
+                .replace(/^-+|-+$/g, '')
         },
     },
 
@@ -342,7 +366,7 @@ export default {
                 return this.finalImage ? ['image/jpeg','image/png','image/gif'].includes(this.finalImage.type) : true
             },
             imageSize() {
-                return this.finalImage ? this.finalImage.width > 600 && this.finalImage.height > 600 :  true
+                return this.finalImage ? this.finalImage.width > 400 && this.finalImage.height > 400 :  true
             }
         },
         organizer: {

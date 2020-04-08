@@ -1,7 +1,7 @@
 <template>
   <transition name="modal-fade">
     <div class="modal-backdrop">
-      <div class="modal" role="dialog" aria-labelledby="modalTitle" aria-describedby="modalDescription">
+      <div ref="modal" class="modal" role="dialog" aria-labelledby="modalTitle" aria-describedby="modalDescription">
         <header class="modal-header" id="modalTitle">
             <slot name="header"> This is the default tile!</slot>
         </header>
@@ -27,9 +27,25 @@
 export default {
     name: 'modal',
     methods: {
+
         close() {
         this.$emit('close');
         },
+
+        onClickOutside(event) {
+            let temp =  this.$refs.modal;
+            if (!temp || temp.contains(event.target)) return;
+            this.$emit('close');
+        },
+
     },
+
+    mounted() {
+        setTimeout(() => document.addEventListener("click", this.onClickOutside), 200);
+    },
+
+    beforeDestroy() {
+        document.removeEventListener("click", this.onClickOutside);
+    }
 };
 </script>

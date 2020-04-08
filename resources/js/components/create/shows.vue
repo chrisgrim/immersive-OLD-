@@ -8,13 +8,11 @@
                             <div class="field">
                                 <label> Show Times</label>
                                 <textarea 
-                                v-model="showTimes" 
+                                v-model="showTimes"
                                 class="create-input area"
                                 :class="{ active: activeItem == 'times','error': $v.showTimes.$error }"
                                 rows="8" 
-                                placeholder="Please provide a brief description of daily show times... 
-            8:00PM and 10:00PM shows...
-            10:00PM shows during the week and 12:00PM during the weekend..." 
+                                :placeholder="placeholder" 
                                 required
                                 @click="activeItem = 'times'"
                                 @blur="activeItem = null"
@@ -101,9 +99,7 @@
                                 class="create-input area"
                                 :class="{ active: activeItem == 'times','error': $v.showTimes.$error }"
                                 rows="8" 
-                                placeholder="Please provide a brief description of daily show times... 
-            8:00PM and 10:00PM shows...
-            10:00PM shows during the week and 12:00PM during the weekend..." 
+                                :placeholder="placeholder" 
                                 required
                                 @click="activeItem = 'times'"
                                 @blur="activeItem = null"
@@ -226,7 +222,7 @@
                                 class="create-input area"
                                 :class="{ active: activeItem == 'times','error': $v.showTimes.$error }"
                                 rows="8" 
-                                placeholder="Please provide a brief description of daily show times... 8:00PM and 10:00PM shows...10:00PM shows during the week and 12:00PM during the weekend..." 
+                                :placeholder="placeholder" 
                                 required
                                 @click="activeItem = 'times'"
                                 @blur="activeItem = null"
@@ -291,6 +287,20 @@
                 </tab>
             </tabs>
         </div>
+        <modal v-if="isVisible" @close="isVisible = false">
+            <div slot="header">
+                <div class="circle del">
+                    <p>?</p>
+                </div>
+            </div>
+            <div slot="body"> 
+                <h3>You are submitting a free ticket price or forgot to add a price</h3>
+                <p>We just want to double check this is correct.</p>
+            </div>
+            <div slot="footer">
+                <button class="btn del" @click.prevent="onFree()">It is</button>
+            </div>
+        </modal>
         <div class="inNav">
             <button :disabled="dis" class="create" @click.prevent="goBack()"> Back </button>
             <button v-show="selectedTab == 's'" :disabled="dis" class="create" @click.prevent="submitDates()"> Next </button>
@@ -363,6 +373,9 @@ export default {
             dis: false,
             num: false,
             activeItem: null,
+            isVisible: false,
+            free: false,
+            placeholder: 'Please provide a brief description of daily show times...' + '\n' + '\n' + '10:00PM shows during the week ' + '\n' + '12:00PM shows during the weekend'
         }
     },
 
@@ -375,6 +388,11 @@ export default {
 
         selectTab(value) {
             this.selectedTab = value;
+        },
+
+        onFree() {
+            this.free = true;
+            this.isVisible = false;
         },
 
         initializeShowtimeObject() {
@@ -438,10 +456,18 @@ export default {
             window.location.href = `${this.eventUrl}/category`;
         },
 
+        checkFree() {
+            this.tickets.map(value => {
+                if (value.ticket_price == 0)  {return this.isVisible = true};
+            });
+        },
+
         submitAlways() {
             this.week = {mon: true, tue: true, wed: true, thu: true, fri: true, sat: true, sun: true };
             this.$v.$touch();
-            if (this.$v.$invalid) { return false }
+            if (this.$v.$invalid) { return false };
+            this.free ? '' : this.checkFree(); 
+            if (this.isVisible) { return false };
             this.dis = true;
             let data = {
                 'week': this.week,
@@ -463,6 +489,8 @@ export default {
         submitOnGoing() {
             this.$v.$touch();
             if (this.$v.$invalid) { return false }
+            this.free ? '' : this.checkFree(); 
+            if (this.isVisible) { return false };
             this.dis = true;
             let data = {
                 'week': this.week,
@@ -482,10 +510,12 @@ export default {
 
         //Submits the users dates and tickets to the database
         submitDates() {
-            // this.num = true;
+            this.num = true;
          	this.$v.$touch();
 			if (this.$v.$invalid) { return false }
-            // this.dis = true;
+            this.free ? '' : this.checkFree(); 
+            if (this.isVisible) { return false };
+            this.dis = true;
             let data = {
                 'dates': this.dateArray,
                 'showtimes': this.showTimes,
@@ -496,7 +526,7 @@ export default {
             axios.post(`${this.eventUrl}/shows`, data)
             .then(response => {
                 console.log(response.data)
-                // window.location.href = `${this.eventUrl}/description`; 
+                window.location.href = `${this.eventUrl}/description`; 
             });
         },
     },
@@ -516,7 +546,7 @@ export default {
                 },
                 ticket_price: {
                     required,
-                    minValue: minValue(0.01),
+                    minValue: minValue(0.00),
                     maxLength: maxLength(7),
                 },
             }

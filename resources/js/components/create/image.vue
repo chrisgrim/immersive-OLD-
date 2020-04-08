@@ -31,7 +31,7 @@
                         <p class="error" v-if="!$v.finalImage.required">The image is required</p>
                         <p class="error" v-if="!$v.finalImage.fileSize">The image file size is too large</p>
                         <p class="error" v-if="!$v.finalImage.fileType">The image needs to be a JPG, PNG or GIF</p>
-                        <p class="error" v-if="!$v.finalImage.imageRatio">The image needs to be at least 1200 x 800</p>
+                        <p class="error" v-if="!$v.finalImage.imageRatio">The image needs to be at least 800 x 400</p>
                     </div>
                 </div>
             </div>
@@ -158,7 +158,7 @@ export default {
                 return this.finalImage ? ['image/jpeg','image/png','image/gif'].includes(this.finalImage.type) : true
             },
             imageRatio() {
-                return this.finalImage ? this.finalImage.width > 1280 && this.finalImage.height > 800 : true 
+                return this.finalImage ? this.finalImage.width > 800 && this.finalImage.height > 400 : true 
             }
         },
     },

@@ -153,7 +153,7 @@ __webpack_require__.r(__webpack_exports__);
         return this.finalImage ? ['image/jpeg', 'image/png', 'image/gif'].includes(this.finalImage.type) : true;
       },
       imageRatio: function imageRatio() {
-        return this.finalImage ? this.finalImage.width > 1280 && this.finalImage.height > 800 : true;
+        return this.finalImage ? this.finalImage.width > 800 && this.finalImage.height > 400 : true;
       }
     }
   }
@@ -327,7 +327,7 @@ var render = function() {
                   _vm._v(" "),
                   !_vm.$v.finalImage.imageRatio
                     ? _c("p", { staticClass: "error" }, [
-                        _vm._v("The image needs to be at least 1200 x 800")
+                        _vm._v("The image needs to be at least 800 x 400")
                       ])
                     : _vm._e()
                 ])

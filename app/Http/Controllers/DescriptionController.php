@@ -48,7 +48,7 @@ class DescriptionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(DescriptionStoreRequest $request, Event $event)
-    {
+    {  
         $event->storeDescription($request, $event);
     }
 }

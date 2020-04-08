@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Show extends Model
@@ -101,7 +102,7 @@ class Show extends Model
             $pricerange = '$' . $array[0];
         }
         $event->update([
-            'closingDate' => $lastDate->date ? $lastDate->date : $lastDate->updated_at,
+            'closingDate' => $lastDate->date ? $lastDate->date : Carbon::now()->addMonths(6)->format('Y-m-d H:i:s'),
             'show_times' => $request->showtimes,
             'price_range' => $pricerange,
             'showtype' => $request->shows ? 's' : ($request->onGoing && $request->always ? 'a' : 'o'),

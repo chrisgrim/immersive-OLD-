@@ -319,6 +319,15 @@ class Event extends Model
     */
     public function storeDescription($request, $event) 
     {
+
+        // $web = get_headers($request->websiteUrl, 1)[0];
+        // if (strstr($web, '302') || strstr($web, '200 OK') || strstr($web, '301')) {
+        // } else { return abort(404, "broken");}
+
+        // $ticket = get_headers($request->ticketUrl, 1)[0];
+        // if (strstr($ticket, '302') || strstr($ticket, '200 OK') || strstr($ticket, '301')) {
+        // } else { return abort(404, "broken");}
+
         $event->update($request->except(['genre']));
         if ($request->has('genre')) {
             foreach ($request['genre'] as $genre) {

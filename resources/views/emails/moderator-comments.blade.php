@@ -23,7 +23,7 @@
             </div>
         </div>
         <div style="text-align: center;max-width: 550px;margin: auto;padding: 2rem 1rem;">
-            <a href="https://ei.test/create-event/edit">
+            <a href="https://secretchickens.com/create-event/edit">
                 <button style="border: 1px solid #1abdb6;padding: .5rem 1rem;font-size: 1rem;color:#0c8a84;">Check it out</button>
             </a>
         </div>
