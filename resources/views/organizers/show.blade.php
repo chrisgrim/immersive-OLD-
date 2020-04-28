@@ -5,15 +5,24 @@
     <script> window.myToken =  <?php echo json_encode(['csrfToken' => csrf_token()]); ?></script>
     <link href="/css/app-lite.css" rel="stylesheet">
     <link href="/css/app.css" rel="stylesheet">
-@endsection 
+@endsection
 
-@section('content')
-<div id="bodyArea">
+@section('nav')
     @auth
-        <organizer-show :user="{{auth()->user()}}" :loadorganizer="{{ $organizer }}"></organizer-show> 
+        <vue-nav onclass="org" :user= "{{auth()->user()}}"></vue-nav>
     @endauth
     @guest
-        <organizer-show :loadorganizer="{{ $organizer }}"></organizer-show> 
+        <vue-nav onclass="org"></vue-nav>
     @endguest
-</div>
+@endsection
+
+@section('content')
+    <div id="bodyArea" class="org">
+        @auth
+            <organizer-show :user="{{auth()->user()}}" :loadorganizer="{{ $organizer }}"></organizer-show> 
+        @endauth
+        @guest
+            <organizer-show :loadorganizer="{{ $organizer }}"></organizer-show> 
+        @endguest
+    </div>
 @endsection

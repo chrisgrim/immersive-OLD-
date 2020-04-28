@@ -1,92 +1,92 @@
 <template>
-	<div class="description">
-        <div class="ctitle">
-            <h2>Description</h2>
-        </div>
-        <div class="section">
+	<div class="event-create__description container grid">
+        <section class="event-create">
+            <div class="title">
+                <h2>Description</h2>
+            </div>
             <div class="field">
-                <div class="text">
-                    <div class="field">
-                        <label class="area"> Describe your event to our readers </label>
-                        <textarea 
-                        type="text" 
-                        name="description" 
-                        v-model="description" 
-                        placeholder="eg. Our super scary event will bring your fears to the surface..."
-                        :class="{ active: activeItem == 'description','error': $v.description.$error }"
-                        @input="$v.description.$touch"
-                        @click="activeItem = 'description'"
-                        @blur="activeItem = null" 
-                        rows="8"></textarea>
-                        <div v-if="$v.description.$error" class="validation-error">
-                            <p class="error" v-if="!$v.description.required">Must provide a description</p>
-                        </div>
-                    </div>
-                    <div class="field"> 
-                        <label>Event genres</label>
-                        <multiselect 
-                        v-model="genreName"
-                        tag-placeholder="Add this as new tag" 
-                        placeholder="Search or add your own here" 
-                        label="genre"
-                        :close-on-select="true"
-                        track-by="id" 
-                        :options="options" 
-                        :multiple="true" 
-                        :taggable="true" 
-                        tag-position="bottom"
-                        :class="{ active: activeItem == 'genre','error': $v.genreName.$error }"
-                        @tag="addTag"
-                        @input="$v.genreName.$touch"
-                        @click="activeItem = 'genre'"
-                        @blur="activeItem = null"
-                        ></multiselect>
-                        <div v-if="$v.genreName.$error" class="validation-error">
-                            <p class="error" v-if="!$v.genreName.required">Must select at least one Genre</p>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label>Event website</label>
-                        <input 
-                        type="text" 
-                        v-model="websiteUrl"
-                        :class="{ active: activeItem == 'website','error': $v.websiteUrl.$error }"
-                        @click="toggleWebsite()"
-                        @blur="activeItem = null"
-                        @input="$v.websiteUrl.$touch"
-                        placeholder="Leave blank if using Organizer Website Url"
-                        />
-                        <div v-if="$v.websiteUrl.$error" class="validation-error">
-                            <p class="error" v-if="!$v.websiteUrl.url">Must be a url (https://...)</p>
-                            <p class="error" v-if="!$v.websiteUrl.webNotWorking">One of your urls isn't working</p>
-                        </div>
-                    </div>
-                    <div class="field">   
-                        <label>Ticket website</label>
-                        <input 
-                        type="text" 
-                        v-model="ticketUrl"
-                        :class="{ active: activeItem == 'ticket','error': $v.ticketUrl.$error }"
-                        @click="toggleTicket()"
-                        @blur="activeItem = null"
-                        @input="$v.ticketUrl.$touch"
-                        placeholder="Leave blank if using Organizer Website Url"
-                        />
-                        <div v-if="$v.ticketUrl.$error" class="validation-error">
-                            <p class="error" v-if="!$v.ticketUrl.url"> Must be a url (https://...)</p>
-                            <p class="error" v-if="!$v.ticketUrl.ticketNotWorking">One of your urls isn't working</p>
-                        </div>
-                    </div>
-                    <div class="">
-                        <button :disabled="dis" @click.prevent="submitDescription()" class="create"> Next </button>
-                    </div>
+                <label class="area"> Describe your event to our readers </label>
+                <textarea 
+                type="text" 
+                name="description" 
+                v-model="description" 
+                placeholder="eg. Our super scary event will bring your fears to the surface..."
+                :class="{ active: activeItem == 'description','error': $v.description.$error }"
+                @input="$v.description.$touch"
+                @click="activeItem = 'description'"
+                @blur="activeItem = null" 
+                rows="8"></textarea>
+                <div v-if="$v.description.$error" class="validation-error">
+                    <p class="error" v-if="!$v.description.required">Must provide a description</p>
+                </div>
+            </div>
+            <div class="field"> 
+                <label>Event genres</label>
+                <multiselect 
+                v-model="genreName"
+                tag-placeholder="Add this as new tag" 
+                placeholder="Type here to create your own" 
+                label="genre"
+                :close-on-select="true"
+                track-by="id" 
+                :options="options" 
+                :multiple="true" 
+                :taggable="true" 
+                tag-position="bottom"
+                :class="{ active: activeItem == 'genre','error': $v.genreName.$error }"
+                @tag="addTag"
+                @input="$v.genreName.$touch"
+                @click="activeItem = 'genre'"
+                @blur="activeItem = null"
+                ></multiselect>
+                <div v-if="$v.genreName.$error" class="validation-error">
+                    <p class="error" v-if="!$v.genreName.required">Must select at least one Genre</p>
+                </div>
+            </div>
+            <div class="field">
+                <label>Event website</label>
+                <input 
+                type="text" 
+                v-model="websiteUrl"
+                :class="{ active: activeItem == 'website','error': $v.websiteUrl.$error }"
+                @click="toggleWebsite()"
+                @blur="activeItem = null"
+                @input="$v.websiteUrl.$touch"
+                placeholder="Leave blank if using Organizer Website Url"
+                />
+                <div v-if="$v.websiteUrl.$error" class="validation-error">
+                    <p class="error" v-if="!$v.websiteUrl.url">Must be a url (https://...)</p>
+                    <p class="error" v-if="!$v.websiteUrl.webNotWorking">One of your urls isn't working</p>
+                </div>
+            </div>
+            <div class="field">   
+                <label>Ticket website</label>
+                <input 
+                type="text" 
+                v-model="ticketUrl"
+                :class="{ active: activeItem == 'ticket','error': $v.ticketUrl.$error }"
+                @click="toggleTicket()"
+                @blur="activeItem = null"
+                @input="$v.ticketUrl.$touch"
+                placeholder="Leave blank if using Organizer Website Url"
+                />
+                <div v-if="$v.ticketUrl.$error" class="validation-error">
+                    <p class="error" v-if="!$v.ticketUrl.url"> Must be a url (https://...)</p>
+                    <p class="error" v-if="!$v.ticketUrl.ticketNotWorking">One of your urls isn't working</p>
+                </div>
+            </div>
+            <div class="event-create__submit-button">
+                <button :disabled="dis" @click.prevent="submitDescription()" class="create"> Next </button>
+            </div>
+        </section>
+
+        <section></section>
+
+        <div class="create-button__in-nav">
+                    <button :disabled="dis" class="create" @click.prevent="goBack()"> Back </button>
+                    <button :disabled="dis" class="create" @click.prevent="submitDescription()"> Next </button>
                 </div>
-            </div>
-            <div class="inNav">
-                <button :disabled="dis" class="create" @click.prevent="goBack()"> Back </button>
-                <button :disabled="dis" class="create" @click.prevent="submitDescription()"> Next </button>
-            </div>
-        </div>
+        
     </div>
 </template>
 
@@ -147,12 +147,12 @@
 
              // makes the organizer website field class active and clears any vuelidate server errors 
             toggleWebsite() {
-                this.isActive = 'website';
+                this.activeItem = 'website';
                 this.serverErrors = [];
             },
 
             toggleTicket() {
-                this.isActive = 'ticket';
+                this.activeItem = 'ticket';
                 this.serverErrors = [];
             },
 

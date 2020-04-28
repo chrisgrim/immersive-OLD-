@@ -9,16 +9,21 @@ import store from './store/index'
 import vuelidateErrorExtractor, { templates } from "vuelidate-error-extractor";
 import { Icon }  from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import VueRouter from 'vue-router';
-import {routes} from './routes';
-
+// import VueRouter from 'vue-router';
+// import {routes} from './routes';
+// Vue.use(VueRouter);
+// const router = new VueRouter({
+//   routes,
+//   mode: 'history'
+// });
 
 
 window.axios = require('axios');
 window.Vue = require('vue');
 
 Vue.use(Vuelidate);
-Vue.use(VueRouter)
+
+Vue.use(require('vue-cookies'));
 // require('./bootstrap');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -38,10 +43,7 @@ if (token) {
 }
 
 
-const router = new VueRouter({
-  routes,
-  mode: 'history'
-});
+
 
 
 
@@ -70,7 +72,6 @@ Icon.Default.mergeOptions({
 Vue.component('vue-nav', () => import('./components/layouts/nav.vue'));
 Vue.component('nav-search', () => import('./components/layouts/nav-search.vue'));
 Vue.component('profile-button', () => import('./components/layouts/profile-button.vue'));
-Vue.component('vue-create-nav', () => import('./components/layouts/create/nav.vue'));
 
 
 //Components
@@ -83,7 +84,7 @@ Vue.component('vue-alert', () => import('./components/layouts/alert.vue'));
 Vue.component('vue-email-verify', () => import('./components/layouts/email-verified.vue'));
 
 //Create Events
-Vue.component('event-create-checklist', () => import('./components/create/checklist.vue'));
+Vue.component('vue-create-nav', () => import('./components/create/nav.vue'));
 Vue.component('create-location-google', () => import('./components/create/location-google.vue'));
 Vue.component('create-category', () => import('./components/create/category.vue'));
 Vue.component('create-organizer', () => import('./components/create/organizer.vue'));
@@ -114,6 +115,8 @@ Vue.component('admin-content-advisories', () => import('./components/adminArea/a
 
 //Profile
 Vue.component('user-profile', () => import('./components/profile/profile-index.vue'));
+Vue.component('vue-user-notifications', () => import('./components/profile/notifications.vue'));
+Vue.component('vue-user-account', () => import('./components/profile/account.vue'));
 
 // Messages
 Vue.component('message-index', () => import('./components/messages/message-index.vue'));
@@ -125,6 +128,7 @@ Vue.component('category-show', () => import('./components/categories/category-sh
 
 //Organizers
 Vue.component('organizer-show', () => import('./components/organizers/organizer-show.vue'));
+Vue.component('organizer-show-events', () => import('./components/organizers/components/event-list-item.vue'));
 
 //Events
 Vue.component('event-show', () => import('./components/events/event-show.vue'));
@@ -151,24 +155,23 @@ if(document.getElementById("header")){
 	const header = new Vue({
     	el: '#header',
         store,
-        router
+        
 	});
 };
 if(document.getElementById("create")){
 	const create = new Vue({
     	el: '#create',
-        router
 	});
 };
 if(document.getElementById("admin")){
-  const create = new Vue({
+  const admin = new Vue({
       el: '#admin',
   });
 };
 if(document.getElementById("bodyArea")){
   const bodyArea = new Vue({
       el: '#bodyArea',
-      router
+      store,
   });
 };
 if(document.getElementById("flash")){

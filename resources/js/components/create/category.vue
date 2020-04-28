@@ -1,46 +1,47 @@
 <template>
-	<div class="category">
-		 <div class="section">
-            <div class="text">
-                <div class="ctitle">
-                    <h2>Immersive Categories</h2>
-                </div>
-                <multiselect 
-                v-show="categories.length > 0" 
-                v-model="selectedCategory" 
-                placeholder="Select Category"
-                label="name" 
-                track-by="name" 
-                deselectLabel=''
-                :allow-empty="false"  
-                :options="categoryOptions" 
-                open-direction="bottom"
-                @input="$v.selectedCategory.$touch"
-                :class="{ active: activeItem == 'category','error': $v.selectedCategory.$error}"
-                @click="activeItem = 'category'"
-                @blur="activeItem = null" 
-                >
-                    <template slot="option" slot-scope="props">
-                        <div class="option__desc">
-                            <span class="option__title">{{ props.option.name }}</span>
-                        </div>
-                    </template>
-                </multiselect>
-                <input type="hidden" name="category" v-model="selectedCategory">
-                <div v-if="$v.selectedCategory.$error" class="validation-error">
-                    <p class="error" v-if="!$v.selectedCategory.required">Please select your event's category</p>
-                </div>
-                <div>
-                    <p v-text="this.selectedCategory ? selectedCategory.description : ''"></p>
-                </div>
-                <div class="">
-                    <button :disabled="dis" @click.prevent="submitCategory()" class="create"> Next </button>
-                </div>
+	<div class="event-create__category container grid">
+        <section class="event-enter-category">
+            <div class="title">
+                <h2>Immersive Categories</h2>
             </div>
-            <div class="image" v-if="selectedCategory" :style="`height:calc(${this.height}px - 7rem);background: url(/storage/${selectedCategory.largeImagePath})`"></div>
-            <div v-else class="image"></div>
-        </div>
-        <div class="inNav">
+            <multiselect 
+            v-show="categories.length > 0" 
+            v-model="selectedCategory" 
+            placeholder="Select Category"
+            label="name" 
+            track-by="name" 
+            deselectLabel=''
+            :allow-empty="false"  
+            :options="categoryOptions" 
+            open-direction="bottom"
+            @input="$v.selectedCategory.$touch"
+            :class="{ active: activeItem == 'category','error': $v.selectedCategory.$error}"
+            @click="activeItem = 'category'"
+            @blur="activeItem = null" 
+            >
+                <template slot="option" slot-scope="props">
+                    <div class="option__desc">
+                        <span class="option__title">{{ props.option.name }}</span>
+                    </div>
+                </template>
+            </multiselect>
+            <input type="hidden" name="category" v-model="selectedCategory">
+            <div v-if="$v.selectedCategory.$error" class="validation-error">
+                <p class="error" v-if="!$v.selectedCategory.required">Please select your event's category</p>
+            </div>
+            <div>
+                <p v-text="this.selectedCategory ? selectedCategory.description : ''"></p>
+            </div>
+            <div class="event-create__submit-button">
+                <button :disabled="dis" @click.prevent="submitCategory()" class="create"> Next </button>
+            </div>
+        </section>
+        <section class="event-show-category" 
+        v-if="selectedCategory" 
+        :style="`height:calc(${this.height}px - 8rem);background: url(/storage/${selectedCategory.largeImagePath})`"></section>
+        <section v-else class="image"></section>
+
+        <div class="create-button__in-nav">
             <button :disabled="dis" class="create" @click.prevent="goBack()"> Back </button>
             <button :disabled="dis" class="create" @click.prevent="submitCategory()"> Next </button>
         </div>

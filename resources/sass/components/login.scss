@@ -5,70 +5,24 @@
     background: #000000ab;
     width: 100%;
     z-index: 901;
-    height: 100vh;
+    height: 100%;
     & .body-log {
         background: white;
+        position: relative;
         margin:auto;
         margin-top:10%;
         width:60%;
         display: grid;
         grid-template-columns: .4fr .6fr;
+        overflow-y: auto;
         & .left-log {
             padding: 3rem 4rem;
+            & .close {
+                display: none;
+            }
             & .title h3 {
                 font-size:3rem;
                 margin-bottom: 1rem;
-            }
-            & input {
-                border: none;
-                border-bottom: 1px solid #adadad;
-                padding: 2rem 0rem .4rem 0rem;
-                width: 100%;
-                font-size: 1.4rem;
-                font-weight: 300;
-            }
-            & .forgot {
-                font-size: 1rem;
-                text-align: right;
-                color: blue;
-                font-weight: 600;
-                margin-top: 1rem;
-                margin-bottom: 2rem
-            }
-            & button.signin {
-                width: 100%;
-                background: black;
-                color: white;
-            }
-            & .social {
-                margin:auto;
-                margin-left:0;
-                & p {
-                    font-weight: 600;
-                    text-transform: uppercase;
-                    font-size: 1.2rem;
-                }
-            }
-            & .list {
-                display: grid;
-                grid-template-columns: auto auto auto;
-                & .icon img {
-                    width:2.2rem;
-                }
-            }
-            & button.join {
-                border: none;
-                padding-left: 0;
-                font-weight: 600;
-                font-size: 1.4rem;
-                color: #ff5e00;
-                padding-top: 0rem;
-                text-transform: uppercase;
-            }
-            & .join h4 {
-                font-size: 1.3rem;
-                font-weight: 600;
-                margin-bottom: 0rem;
             }
         }
         & .rightimg {
@@ -79,5 +33,31 @@
                 object-fit: cover;
             }
         }
+    }
+}
+
+@media (max-width: 768px) {
+    .vlogin {
+        overflow-y: auto;
+        & .body-log {
+            width: 100%;
+            margin-top: 0;
+            border-radius: 5px;
+            display: inline-block;
+            border-radius: 0;
+            height:100%;
+            & .left-log {
+                & .close {
+                    display: inline-block;
+                    position: absolute;
+                    left: 5%;
+                    top: 5%;
+                }
+            }
+            & .rightimg {
+                display: none;
+            }
+        }
+
     }
 }

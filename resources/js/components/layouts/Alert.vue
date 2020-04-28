@@ -1,23 +1,16 @@
 <template>
     <div v-if="visible">
-        <div v-if="verify" class="verify_bar">
-            <div class="panel"  ref="panel">
+        <div class="verify_bar" v-if="submitted">
+            <div class="panel" ref="panel">
                 <div class="text">
                     <div @click="visible = false" class="close">
-                        X
+                        ✓
                     </div>
                     <img style="width: 10rem" src="/storage/website-files/email-logo.png" alt="">
-                    <h3 v-if="this.verify">Email Confirmation</h3>
-                    <p>We have sent you an email to confirm your email account.</p>
-                </div>
-                <div class="submit">
-                    <hr>
-                    <p>Recieved nothing?<span class="another" @click="resend"> Click here to request another.</span></p>
+                    <h3>Thanks for submitting your event</h3>
+                    <p>Events take 1-3 business days to review.</p>
                 </div>
             </div>
-        </div>
-        <div v-if="reset">
-            <h3 >{{reset}}</h3>
         </div>
     </div>
 </template>
@@ -38,8 +31,7 @@
             return {
                 body: '',
                 visible: true,
-                verify: this.message && this.message == 'verify' && !this.user.email_verified_at ? 'Please take a minute to verify your account' : '',
-                reset: this.message == 'We have e-mailed your password reset link!' ? 'We have e-mailed your password reset link!' : '',
+                submitted: this.message && this.message == 'submitted' ? true : false,
             }
         },
 
@@ -55,10 +47,6 @@
                 })
             },
 
-            verified() {
-                this.user.email_verified_at ? window.location.href = '/' : '';
-            },
-
             onClickOutside(event) {
                 console.log('test2');
                 let panel =  this.$refs.panel;
@@ -68,18 +56,18 @@
             },
 
             hide() {
-                this.visible = true;
+                this.visible = false;
             }
         },
 
         mounted() {
-            setTimeout(() => this.hide(), 10000);
-            document.addEventListener("hide", this.onClickOutside);
+            setTimeout(() => this.hide(), 20000);
+            setTimeout(() => document.addEventListener("click", this.onClickOutside), 200);
         },
 
-        created() {
-            this.verified();
-        }
+        beforeDestroy() {
+            document.removeEventListener("click", this.onClickOutside);
+        },
 
     }
 </script>

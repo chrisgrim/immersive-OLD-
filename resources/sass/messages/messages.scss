@@ -12,11 +12,10 @@
     }
     & .row {
         display: grid;
-        grid-template-columns: auto 1fr;
-        padding: 2rem 0rem;
+        grid-template-columns: 30rem 1fr;
+        padding: 2rem 0;
         border-bottom: 1px solid #cecece;
-        grid-gap: 4rem;
-  /*      align-items: center;*/
+        grid-gap: 1rem;
             & p {
                 font-size: 1.5rem;
                 & span {

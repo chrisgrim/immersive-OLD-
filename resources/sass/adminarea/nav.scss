@@ -1,12 +1,11 @@
-#header.a {
-    position: fixed;
-    width: 20%;
-    background: white;
-    height:100%;
-    z-index: 901;
-    border-right: solid #c1c1c1 1px;
-    & .nav {
-        border:none;
+#header {
+    & .nav.a {
+        position: fixed;
+        width: 20%;
+        background: white;
+        height:100%;
+        z-index: 901;
+        border-right: solid #c1c1c1 1px;
         padding: 2.5rem;
         & button.home {
             border: solid #008489 1px;

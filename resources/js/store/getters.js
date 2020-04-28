@@ -4,7 +4,8 @@
          },
          userSearchRequest: state => {
          	return state.userSearchRequest
-         }
+         },
+         user: state => state.user
     }
 
     export default  getters

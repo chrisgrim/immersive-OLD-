@@ -1,130 +1,112 @@
-#create {
-    & .shows {
-        margin-top: 1rem;
-        width:100%;
-        & .ctitle {
-            padding: 0% 9.5% 0% 9.5%;
-        }
-        & #grid {
-            display: inline-block;
-        }
-        & .section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            overflow: hidden;
-            & .calendar {
-                margin:0;
-                padding: 0% 5% 0% 0%;
-                & .cost {
-                    margin-bottom: 4rem;
-                }
-            }
-            & .pricing {
-                margin: 0;
-                padding: 0% 9% 0% 19.5%;
-                margin-bottom: 20%;
-            }
-        }
-        & .ticket-box {
-            box-shadow: -3px 5px 5px 1px #e8e8e899;
-            padding: 2rem;
-            border-radius: 5px 5px 5px 0px;
-            margin-top: 15px;
-            border: solid 1px #ebebeb;
-            position: relative;
-            &-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-                grid-column-gap: 1rem;
-            }
-        }
-        & .week-calendar {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            height: 10rem;
-            border: 1px solid #ebebeb;
-            border-radius: 5px;
-            text-align: center;
-            align-items: center;
-            & .day {
-                width: 100%;
-                height: 100%;
-                line-height: 10rem;
-                &:hover {
-                    background:#007c898a;
-                    cursor: pointer;
-                    border: 1px solid white;
-                    & h4 {
-                        color:white;
-                        -webkit-user-select: none; /* Safari */        
-                        -moz-user-select: none; /* Firefox */
-                        -ms-user-select: none; /* IE10+/Edge */
-                        user-select: none; /* Standard */
-                    }
-                }
-                &.active {
-                    background: $default-color;
-                    border: 1px solid #e0e0e0;
-                    border-radius: 5px;
-                    & h4 {
-                        color:white;
-                    }
-                    &:hover {
-                        background:#007c898a;
-                        cursor: pointer;
-                        border: 1px solid white;
-                    }
-                }
-                & h4 {
-                    margin: 0;
-                }
-            }
-        }
-        & .tab-events {
-            margin: 2rem auto;
-            width:100%;
-        }
-        & .tab .tabcontent {
-            width: 82%;
-            margin: auto;
-        }
-        & button.delete-circle {
-            border-radius: 100px;
-            padding: 0.7rem 1rem;
-            border: solid #ebebeb 1px;
-            background: white;
-            margin-right: -3.5rem;
-            margin-top: 0.8rem;
-            float: right;
-            font-weight: 800;
-            color: red;
-        }
-        & button.add-button {
-            border: none;
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #008489;
-            width: 100%;
-            padding: 1rem;
-            border: solid 1px #ebebeb;
-            border-top: none;
-            border-radius: 0px 0px 50px 5px;
-            box-shadow: -3px 5px 5px 1px #cecece40;
-            text-align: left;
-            margin-right: 4rem;
-        }
-        & div.add-button {
-            position: absolute;
-            margin-top: -1px;
-            display: inline-block;
-            z-index: 1;
-            border-top: none;
-        }
-        & .cost {
-            position: relative;
-        }
-    }
-    & .flatpickr-calendar.inline {
-        margin:0;
+/*------------------------------------*\
+  #Create Section- Shows Page
+\*------------------------------------*/
+
+
+.event-create__shows {
+    margin-top: 1rem;
+}
+.specific-show-dates, .ongoing-show-dates, .everyday-show-dates {
+    width: 100% !important;
+    grid-template-columns: 1fr 1fr;
+}
+
+.event-create-tab__section {
+    margin: 5rem auto;
+    width: 90%;
+    min-height: 320px;
+}
+section.event-enter-showtimes {
+    margin-left: 9rem;
+}
+section.event-enter-showdates {
+    
+}
+
+.create-shows__ticket-box {
+    box-shadow: -3px 5px 5px 1px hsla(0,0%,91%,.6);
+    padding: 2rem;
+    border-radius: 5px 5px 5px 0;
+    margin-top: 15px;
+    border: 1px solid #ebebeb;
+    position: relative;
+}
+.ticket-box__element {
+    grid-template-columns: repeat(auto-fit,minmax(150px,1fr));
+    grid-column-gap: 1rem;
+}
+.ticket-box__add-button {
+    position: absolute;
+    margin-top: -1px;
+    display: inline-block;
+    z-index: 1;
+    border-top: none; 
+    & button {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #008489;
+        width: 100%;
+        padding: 1rem;
+        border: 1px solid #ebebeb;
+        border-top: none;
+        border-radius: 0 0 50px 5px;
+        box-shadow: -3px 5px 5px 1px hsla(0,0%,80.8%,.25);
+        text-align: left;
+        margin-right: 4rem;
     }
 }
+
+.week-calendar {
+    grid-template-columns: repeat(7,1fr);
+    grid-column-gap:0 !important;
+    border: 1px solid #ebebeb;
+    border-radius: 5px;
+    text-align: center;
+    align-items: center;
+}
+.week-calendar__day {
+    width: 100%;
+    height: 100%;
+    line-height: 10rem;
+    &:hover {
+        background:#007c898a;
+        cursor: pointer;
+        border: 1px solid white;
+        & h4 {
+            color:white;
+            -webkit-user-select: none; /* Safari */        
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* IE10+/Edge */
+            user-select: none; /* Standard */
+        }
+    }
+    &.active {
+        background: $default-color;
+        border: 1px solid #e0e0e0;
+        border-radius: 5px;
+        & h4 {
+            color:white;
+        }
+        &:hover {
+            background:#007c898a;
+            cursor: pointer;
+            border: 1px solid white;
+        }
+    }
+}
+button.delete-circle {
+    border-radius: 100px;
+    padding: .7rem 1rem;
+    border: 1px solid #ebebeb;
+    background: #fff;
+    margin-right: -3.5rem;
+    margin-top: .8rem;
+    float: right;
+    font-weight: 800;
+    color: red;
+}
+
+.flatpickr-calendar.inline {
+        margin:0;
+    }
+

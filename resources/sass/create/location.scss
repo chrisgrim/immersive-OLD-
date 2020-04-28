@@ -1,22 +1,15 @@
-#create {
-    & .location {
-        width:100%;
-        & .ctitle {
-            padding: 0;
-        }
-        & .text {
-            width: 50%;
-            float: left;
-            margin:0;
-            padding: 5rem 8.7% 0% 9.5%;
-        }
-        & .image {
-            width: 50%;
-            float: right;
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            background: #f9f9f9;
-        }
-    }
+/*------------------------------------*\
+  #Create Section- Locaton Page
+\*------------------------------------*/
+
+.event-create__location {
+    width:100% !important;
+    grid-template-columns: 1fr 1fr;
+}
+.event-enter-location {
+    width: 70%;
+    margin: 4rem auto;
+}
+.event-show-location {
+    width: 100%;
 }

@@ -12,6 +12,6 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .extract(['vue','vuelidate','leaflet','vue-router','vuelidate-error-extractor']);
+    .extract(['vue','vuelidate','leaflet','vuelidate-error-extractor','vue-cookies']);
 
 

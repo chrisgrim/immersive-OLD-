@@ -1,91 +1,89 @@
 <template>
-	<div class="location">
-    	<div class="section">
-			<div class="text">
-                <div class="ctitle">
-                    <h2>Location</h2>
+	<div class="event-create__location container grid">
+		<section class="event-enter-location">
+            <div class="title">
+                <h2>Location</h2>
+            </div>
+            <div class="field">
+                <label> Does your event have a physical location? </label>
+                <div id="cover">
+                    <input v-model="hasLocation" type="checkbox" id="checkbox">
+                    <div id="bar"></div>
+                    <div id="knob">
+                        <p v-if="hasLocation">Yes</p>
+                        <p v-else>No</p>
+                    </div>
                 </div>
+            </div>
+            <div v-show="hasLocation">
                 <div class="field">
-                    <label> Does your event have a physical location? </label>
+                    <label> Is your location hidden? </label>
                     <div id="cover">
-                        <input v-model="hasLocation" type="checkbox" id="checkbox">
+                        <input v-model="location.hiddenLocationToggle" type="checkbox" id="checkbox">
                         <div id="bar"></div>
                         <div id="knob">
-                            <p v-if="hasLocation">Yes</p>
-                            <p v-else>No</p>
+                            <p v-if="location.hiddenLocationToggle">Yes</p>
+                            <p v-else="location.hiddenLocationToggle">No</p>
                         </div>
                     </div>
                 </div>
-                <div v-show="hasLocation">
-                    <div class="field">
-                        <label> Is your location hidden? </label>
-                        <div id="cover">
-                            <input v-model="location.hiddenLocationToggle" type="checkbox" id="checkbox">
-                            <div id="bar"></div>
-                            <div id="knob">
-                                <p v-if="location.hiddenLocationToggle">Yes</p>
-                                <p v-else="location.hiddenLocationToggle">No</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="field" v-if="location.hiddenLocationToggle">
-                        <label> Users searching for this event will only see the general area, not the specific street address. Please enter how participants will be notified of the location. </label>
-                        <textarea 
-                        v-model.trim="location.hiddenLocation" 
-                        rows="4" 
-                        :class="{ active: activeItem == 'hidden'}"
-                        required 
-                        autofocus
-                        placeholder="...the night before you will receieve an email containing the location..."
-                        @click="activeItem = 'hidden'"
-                        @blur="activeItem = null"
-                        />
-                    </div>
-                    <div class="field">
-                        <label> Event Location </label>
-                        <input 
-                        ref="autocomplete" 
-                        :placeholder="locationPlaceholder"
-                        :class="{ active: activeItem == 'location', 'error': $v.location.latitude.$error }"
-                        autocomplete="false"
-                        onfocus="value = ''" 
-                        @click="activeItem = 'location'"
-                        @blur="activeItem = null"
-                        type="text"
-                        />
-                        <div v-if="$v.location.latitude.$error" class="validation-error">
-                            <p class="error" v-if="!$v.location.latitude.ifLocation">Please select from the list of locations</p>
-                        </div>
-                    </div>   
-                </div>
-                <div class="">
-                    <button :disabled="dis" @click.prevent="submitLocation()" class="create"> Next </button>
-                </div> 
-            </div>
-            <div class="image" :style="this.map">
-                <div v-if="center && hasLocation" class="map">
-                    <div class="zoom">
-                        <div class="in">
-                            <button @click.prevent="zoom += 1">
-                                <svg viewBox="0 0 16 16" height="16" width="16" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M7 1a1 1 0 0 1 2 0v14a1 1 0 1 1-2 0V1z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"></path></svg>
-                            </button>
-                        </div>
-                        <div class="out">
-                            <button @click.prevent="zoom -= 1">
-                                <svg viewBox="0 0 16 16" height="16" width="16" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"></path></svg>
-                            </button>
-                        </div>
+                <div class="field" v-if="location.hiddenLocationToggle">
+                    <label> Users searching for this event will only see the general area, not the specific street address. Please enter how participants will be notified of the location. </label>
+                    <textarea 
+                    v-model.trim="location.hiddenLocation" 
+                    rows="4" 
+                    :class="{ active: activeItem == 'hidden'}"
+                    required 
+                    autofocus
+                    placeholder="...the night before you will receieve an email containing the location..."
+                    @click="activeItem = 'hidden'"
+                    @blur="activeItem = null"
+                    />
+                </div>
+                <div class="field">
+                    <label> Event Location </label>
+                    <input 
+                    ref="autocomplete" 
+                    :placeholder="locationPlaceholder"
+                    :class="{ active: activeItem == 'location', 'error': $v.location.latitude.$error }"
+                    autocomplete="false"
+                    onfocus="value = ''" 
+                    @click="activeItem = 'location'"
+                    @blur="activeItem = null"
+                    type="text"
+                    />
+                    <div v-if="$v.location.latitude.$error" class="validation-error">
+                        <p class="error" v-if="!$v.location.latitude.ifLocation">Please select from the list of locations</p>
                     </div>
-                    <div :style="this.map" style="width:100%;">
-                        <l-map :zoom="zoom" :center="center" :options="{ scrollWheelZoom: allowZoom, zoomControl: allowZoom }">
-                        <l-tile-layer :url="url"></l-tile-layer>
-                        <l-marker :lat-lng="center"></l-marker>
-                        </l-map>
-                    </div>  
-                </div>
+                </div>   
             </div>
-        </div>
-		<div class="inNav">
+            <div class="event-create__submit-button">
+                <button :disabled="dis" @click.prevent="submitLocation()" class="create"> Next </button>
+            </div> 
+        </section>
+        <section class="event-show-location" :style="this.map">
+            <div v-if="center && hasLocation" class="map">
+                <div class="zoom">
+                    <div class="in">
+                        <button @click.prevent="zoom += 1">
+                            <svg viewBox="0 0 16 16" height="16" width="16" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M7 1a1 1 0 0 1 2 0v14a1 1 0 1 1-2 0V1z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"></path></svg>
+                        </button>
+                    </div>
+                    <div class="out">
+                        <button @click.prevent="zoom -= 1">
+                            <svg viewBox="0 0 16 16" height="16" width="16" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"></path></svg>
+                        </button>
+                    </div>
+                </div>
+                <div :style="this.map" style="width:100%;">
+                    <l-map :zoom="zoom" :center="center" :options="{ scrollWheelZoom: allowZoom, zoomControl: allowZoom }">
+                    <l-tile-layer :url="url"></l-tile-layer>
+                    <l-marker :lat-lng="center"></l-marker>
+                    </l-map>
+                </div>  
+            </div>
+        </section>
+		<div class="create-button__in-nav">
             <button :disabled="dis" class="create" @click.prevent="goBack()"> Back </button>
             <button :disabled="dis" class="create" @click.prevent="submitLocation()"> Next </button>
         </div>
@@ -114,14 +112,14 @@
 
 		computed: {
 			locationPlaceholder() {
-				return this.location.postal_code ? (this.location.home ? this.location.home + ' ' : '') 
+				return this.location.postal_code || this.location.city ? (this.location.home ? this.location.home + ' ' : '') 
                 + (this.location.street ? this.location.street + ', ' : '') 
                 + (this.location.city ? this.location.city + ', ' : '') 
                 + (this.location.country ? this.location.country : '') 
                 : 'Enter full address ';
 			},
             map() {
-                return `height:calc(${this.height}px - 7rem);`
+                return `height:calc(${this.height}px - 8rem);`
             }
 		},
 
@@ -193,7 +191,8 @@
 			},
 
             zipLatLng(data) {
-                axios.get(`https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/geocode/json?address=${this.location.postal_code}&key=AIzaSyBxpUKfSJMC4_3xwLU73AmH-jszjexoriw`)
+
+                axios.get(`https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/geocode/json?address=${this.location.postal_code ? this.location.postal_code : this.location.city}&key=AIzaSyBxpUKfSJMC4_3xwLU73AmH-jszjexoriw`)
                 .then(response => {
                     data.latitude = response.data.results[0].geometry.location.lat;
                     data.longitude = response.data.results[0].geometry.location.lng;

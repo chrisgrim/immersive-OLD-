@@ -63,6 +63,16 @@
                 this.isLoginVisible = true
             },
 
+            toggleBodyClass(addRemoveClass, className) {
+                const el = document.body;
+
+                if (addRemoveClass === 'addClass') {
+                    el.classList.add(className);
+                } else {
+                    el.classList.remove(className);
+                }
+            },
+
             sendMail() {
                 if (this.user == this.loadorganizer.user_id) { return false };
                 this.$v.$touch(); 
@@ -78,10 +88,25 @@
                 })
                 .catch(error => { 
                     console.log(error.response.data)
-                    this.validationErrors = errorResponse.response.data.errors;
+                    // this.validationErrors = errorResponse.response.data.errors;
                     this.dis = false;
                 });
             },
+        },
+
+        mounted() {
+
+        },
+
+
+        watch: {
+            isModalVisible() {
+                return this.isModalVisible ? this.toggleBodyClass('addClass', 'noscroll') : this.toggleBodyClass('removeClass', 'noscroll');
+            },
+            isLoginVisible() {
+                return this.isLoginVisible ? this.toggleBodyClass('addClass', 'noscroll') : this.toggleBodyClass('removeClass', 'noscroll');
+            },
+
         },
 
         validations: {

@@ -6,12 +6,19 @@
     <link href="/css/app.css" rel="stylesheet">
 @endsection 
 
+@section('nav')
+    @auth
+        <vue-nav :user= "{{auth()->user()}}"></vue-nav>
+    @endauth
+    @guest
+        <vue-nav></vue-nav>
+    @endguest
+@endsection
+
 @section('content')
-
-<div>
-	<div id="bodyArea">
-		<edit-events user="{{auth()->id()}}"/>	
-	</div>
-</div>
-
+    <div>
+    	<div id="bodyArea">
+    		<edit-events user="{{auth()->id()}}"/>	
+    	</div>
+    </div>
 @endsection

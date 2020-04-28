@@ -1,48 +1,30 @@
 <template>
     <div class="container">
-        <div class="index">
-            <div class="categories">
-                <div class="section">
-                    <div v-for="category in categories" class="block" v-if="category.hasEvent">
-                        <a :href="'/categories/' + category.slug">
-                            <catitem :category="category"></catitem>
-                        </a>
-                    </div>
-                </div>
-            </div>
+        <div class="event-index">
 
             <div class="staffpicks" v-if="staffpicks.length">
                 <h2>Check out our Staff Picks of the week</h2>
-                <div>
-                    <div id="grid">
-                        <div v-for="pick in staffpicks">
-                            <event-listing-item :user="user" :event="pick.event"></event-listing-item>
-                        </div>
+                <div class="event-index-eventlist grid">
+                    <div v-for="(pick, index) in staffpicks" class="eventlist__element">
+                        <event-listing-item :user="user" :event="pick.event"></event-listing-item>
                     </div>
+                </div>
+            </div>
+            
+            <h2>Our Latest Immersive Events</h2>
+            <div class="event-index-eventlist grid">
+                <div v-for="(event, index) in events" class="eventlist__element">
+                    <event-listing-item :event="event"></event-listing-item>
                 </div>
             </div>
 
-            <div class="events">
-                <h2>Our Latest Events</h2>
-                <div>
-                    <div id="grid">
-                        <div v-for="event in events">
-                            <event-listing-item :user="user" :event="event"></event-listing-item>
-                        </div>
-                    </div>
+            <h2>Our Latest Remote Events</h2>
+            <div class="event-index-eventlist grid">
+                <div v-for="(event, index) in remote" class="eventlist__element">
+                    <event-listing-item :event="event"></event-listing-item>
                 </div>
             </div>
 
-            <div class="events">
-                <h2>Our Latest Remote Events</h2>
-                <div>
-                    <div id="grid">
-                        <div v-for="event in remote">
-                            <event-listing-item :user="user" :event="event"></event-listing-item>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </template>
@@ -70,13 +52,16 @@
             categories: {
                 type:Array
             },
-            user: {
-                type:String
-            },
             staffpicks: {
                 type:Array
-            }
+            },
         }, 
+
+        computed: {
+            user () {
+                return this.$store.state.user ? this.$store.state.user : ''
+            }
+        },
 
         data() {
             return {
@@ -96,12 +81,9 @@
                 }, err => {
                     console.log(err)
                 });
-            }
+            },
 
         },
 
-        // mounted() {
-  //           this.$store.dispatch('fetchEvents')
-  //       },
     };
 </script>

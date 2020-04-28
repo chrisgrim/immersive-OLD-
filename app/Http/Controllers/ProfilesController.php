@@ -28,9 +28,18 @@ class ProfilesController extends Controller
 
     public function show(User $user)
     {
-        $events = $user->favouritedEvents()->get();
+        $events = $user->favouritedEvents()->get()->load('organizer');
         $loc = $user->location()->get();
         return view('profiles.index', compact('user', 'events', 'loc'));
+    }
+
+    public function account()
+    {
+        return view('profiles.account');
+    }
+    public function notifications()
+    {
+        return view('profiles.notifications');
     }
 
     /**
@@ -47,6 +56,36 @@ class ProfilesController extends Controller
         if ($request->name) {
             $user->update([ 'name' => $request->name ]);
         }
+        if ($request->email) {
+            $user->update([ 'email' => $request->email ]);
+        }
+        
+        if ($request->monthly && $request->updates) {
+            $user->update([ 'newsletter_type' => 'a' ]);
+        } elseif ($request->monthly) {
+            $user->update([ 'newsletter_type' => 'm' ]);
+        } elseif ($request->updates) {
+            $user->update([ 'newsletter_type' => 'u' ]);
+        } else {
+            $user->update([ 'newsletter_type' => 'n' ]);
+        }
+        
+        if ($request->newsletter) {
+            if ($user->newsletter_type == 'n') {
+                $user->update([ 'newsletter_type' => 'u' ]);
+            }
+            if ($user->newsletter_type == 'm') {
+                $user->update([ 'newsletter_type' => 'a' ]);
+            }
+        }
+        
+        if ($request->messages) {
+            $user->update([ 'silence' => 'n' ]);
+        } else {
+            $user->update([ 'silence' => 'y' ]);
+        }
+
+        
         if ($request->location) {
             $user->location()->updateOrCreate(
                 [
@@ -81,4 +120,5 @@ class ProfilesController extends Controller
     {
     	Cache::put('key', 'value', 10);
     }
+
 }

@@ -132,7 +132,9 @@
                 }
             }
             & .loc {
-                margin-top: 5rem;
+                margin-top: 1rem;
+                color: #484848;
+                font-weight: 300;
             }
             & .favorites {
                 margin: 4rem 0rem;
@@ -140,6 +142,37 @@
                 padding: 2rem 0rem;
                 & #grid {
                     grid-template-columns: repeat(2, 1fr);
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .profile {
+        & .body {
+            display: inline-block;
+            & .left {
+                & .image {
+                    width: 5rem;
+                    height: 5rem;
+                    & span.text {
+                        top: -2.5rem;
+                        margin: 0;
+                        left:0;
+                    }
+                }
+            }
+            & .right {
+                & .name {
+                    & h2 {
+                        font-size: 2.4rem;
+                    }
+                }
+                & .info {
+                    & .edit {
+                        margin: 0;
+                    }
                 }
             }
         }

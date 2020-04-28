@@ -2,7 +2,7 @@
     <div class="show">
         <div>
             <div class="organizer">
-                <div class="left" :style="height">
+                <div class="left" style="height:100%">
                     <div class="image">
                         <div v-if="organizer.thumbImagePath">
                             <picture>
@@ -47,6 +47,16 @@
                         <p>{{organizer.description}}</p>
                     </div>
                     <ContactOrganizer :user="user" :loadorganizer="organizer"></ContactOrganizer>
+                    <div class="events">
+                        <h2>{{organizer.name}} Events</h2>
+                        <div>
+                            <div id="grid">
+                                <div v-for="event in loadorganizer.events">
+                                    <organizer-show-events :event="event"></organizer-show-events>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -88,22 +98,11 @@
 
         methods: {
 
-            handleResize() {
-                this.height = 'height:' + window.innerHeight + 'px';
-            },
-
 
         },
 
 
-        created() {
-            window.addEventListener('resize', this.handleResize)
-            this.handleResize();
-        },
 
-        destroyed() {
-            window.removeEventListener('resize', this.handleResize)
-        },
 
         validations: {
         },

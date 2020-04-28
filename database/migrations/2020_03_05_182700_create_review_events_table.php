@@ -18,7 +18,7 @@ class CreateReviewEventsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('event_id');
             $table->unsignedBigInteger('organizer_id');
-            $table->string('image_path')->default('/reviews/default.png');
+            $table->string('image_path')->default('/storage/reviews/default.png');
             $table->string('reviewer_name');
             $table->string('url');
             $table->text('review');

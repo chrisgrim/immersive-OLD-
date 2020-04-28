@@ -1,20 +1,31 @@
 #grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 15px 15px;
     & .item {
         position: relative;
         &:hover div.heart{
             visibility: visible;
             opacity: 1;
         }
+        & .fav {
+            display: inline-block;
+        }
     }
     & .image {
-        padding: 33%;
-        border-radius: 4px;
-        background-size: cover; 
-        background-repeat: no-repeat;
-        position: relative;
+        & img {
+            border-radius: 1rem;
+            object-fit: cover;
+            height: 100% !important;
+            width: 100% !important;
+        }
+        & .progress {
+            position: absolute;
+            background: #1d1d1d87;
+            border-radius: 1rem;
+            padding: 1rem;
+                & h3 {
+                    color:white;
+                }
+        }
     }
     & .heart {
         position: absolute;
@@ -44,6 +55,13 @@
     & .etitle {
         & h3 {
             margin: 1rem 0rem .5rem 0rem;
+            font-size: 1.6rem;
+            font-weight: 500;
+        }
+    }
+    & .eorganizer {
+        & h3 {
+            margin: .2rem 0rem 0.3rem 0rem;
             font-size: 1.6rem;
             font-weight: 400;
         }
@@ -79,6 +97,33 @@
         }
     }
 }
+
+.layout {
+    & .ind {
+        display: inline-block;
+        width: 100%;
+        position: relative;
+        & .item {
+            display: flex !important;
+            grid-template-rows: 1fr !important;
+            & .area {
+                width: 100% !important;
+                padding: .5rem;
+            }
+        }
+        & .buttons {
+            position: absolute;
+            top: 1rem;
+            display: none;
+            z-index: 100;
+            right: 1rem;
+        }
+    }
+}
+.ind:hover .buttons{
+    display: block;
+}
+
 .hearted {
     fill:#FF5A5F; 
     fill-opacity:1;
@@ -98,4 +143,26 @@
     stroke-width: 2;
     margin-left: .9rem;
     margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+    #grid {
+        grid-template-columns: 1fr;
+        & .item {
+            & .fav {
+                display: none;
+            }
+        }
+        & .image {
+            border-radius: 1rem;
+        }
+    }
+    .layout {
+        height: 100%;
+        overflow-y: auto;
+        white-space: nowrap;
+        overflow-x: scroll;
+        scrollbar-width: none;
+        display: flex !important;
+    }
 }

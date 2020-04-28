@@ -1,31 +1,30 @@
 <template>
-	<div class="editevents">
+	<div class="event-edit">
 		<div v-for="(organizer,index) in organizerEvents">
-			<div class="section">
-                <div class="title-block">
-                    <div class="image" :style="organizerStyle(organizer)">
-                        <div class="icontext" v-if="!organizer.thumbImagePath">
-                            
+			<div class="event-edit__organizer">
+                <div class="organizer-card grid">
+                    <div class="organizer-card__image" :style="organizerStyle(organizer)">
+                        <div class="organizer-card__image-icontext" v-if="!organizer.thumbImagePath">
                             <h2>{{organizer.name.charAt(0)}}</h2>
                         </div>
                     </div>
-                    <div class="title">
+                    <div class="organizer-card__title">
                         {{organizer.name}}
                     </div>
-                    <div class="buttons">
-                        <a :href="`/organizer/${organizer.slug}/edit`" class="edit">
-                            Edit
+                    <div class="organizer-card__nav">
+                        <a :href="`/organizer/${organizer.slug}/edit`">
+                            <button class="edit-organizer">Edit</button>
                         </a>
-                        <button v-if="!organizer.in_progress_events.length || organizer.past_events.length" @click.prevent="showModal(organizer, 'deleteOrg')" class="edit">Delete</button>
-                        <button @click.prevent="showOrganizer(organizer)" class="prev">Preview Organizer</button>
+                        <button v-if="!organizer.in_progress_events.length || organizer.past_events.length" @click.prevent="showModal(organizer, 'deleteOrg')" class="edit-organizer">Delete</button>
+                        <button @click.prevent="showOrganizer(organizer)" class="preview-organizer">Preview Organizer</button>
                     </div>
                 </div>
                 <div class="listing-details-block">
                 <tabs>
-                    <tab title="Current Events" :active="true" :id="organizer.id" class="tab-events">
-                        <div class="new-event">
-                            <button @click.prevent="newEvent(organizer)" class="body">
-                                <div class="event">
+                    <tab title="Current Events" :active="true" :id="organizer.id" class="event-edit-eventlist grid">
+                        <div class="add-new-event-card">
+                            <button @click.prevent="newEvent(organizer)" class="new-event__button">
+                                <div class="new-event__center">
                                     <div>
                                         <svg class="b" height="32" width="32" viewBox="0 0 24 24" aria-label="Add an Event" role="img"><path d="M24 12c0-6.627-5.372-12-12-12C5.373 0 0 5.373 0 12s5.373 12 12 12c6.628 0 12-5.373 12-12zm-10.767 3.75a1.25 1.25 0 0 1-2.5 0v-3.948l-1.031 1.031a1.25 1.25 0 0 1-1.768-1.768L12 7l4.066 4.065a1.25 1.25 0 0 1-1.768 1.768l-1.065-1.065v3.982z"></path></svg>
                                     </div>
@@ -35,11 +34,14 @@
                                 </div>
                             </button>
                         </div>
-                        <div v-for="(event, index) in organizer.in_progress_events" v-if="index < 10" class="item">
+                        <div v-for="(event, index) in organizer.in_progress_events" :key="event.id" v-if="index < 10" class="edit-event__element">
+                            <div class="edit-event__buttons">
+                                <a v-if="status(event)" :href="`/events/${event.slug}`"><button class="edit-event__sub-button">View</button></a>
+                                <button v-if="status(event)" @click.prevent="showModal(event, 'delete')" class="edit-event__sub-button">Delete</button>
+                                <button v-if="false" @click.prevent="showModal(event, 'addreview')" class="edit-event__sub-button">Add Review</button>
+                            </div>
                             <vue-event-edit-listing-item :user="user" :event="event"></vue-event-edit-listing-item>
-                            <a :href="`/events/${event.slug}`"><button class="del">View</button></a>
-                            <button @click.prevent="showModal(event, 'delete')" class="del">Delete</button>
-                            <button v-if="false" @click.prevent="showModal(event, 'addreview')" class="del">Add Review</button>
+                            
                         </div> 
                         <modal v-if="modal == 'delete'" @close="modal = null">
                             <div slot="header">
@@ -129,7 +131,7 @@
                         </modal>
                     </tab>
                     <tab title="Past Events" :id="organizer.id + 1" class="tab-events">
-                        <div v-for="(event, index) in organizer.past_events" v-if="index < 4">
+                        <div :key="event.id" v-for="(event, index) in organizer.past_events" v-if="index < 4" class="ind">
                             <button @click.prevent="showModal(event)" class="delete-circle">X</button>
                             <vue-event-edit-listing-item :user="user" :loadurl="'/events/' + event.slug" :event="event"></vue-event-edit-listing-item>
                         </div> 
@@ -175,6 +177,7 @@
                 reviewername: '',
                 url: '',
                 activeItem: '',
+                webp: false,
 			}
 		},
 
@@ -183,7 +186,10 @@
                 return this.events.in_progress_events;
             },
             organizerStyle() {
-                return organizer => organizer.thumbImagePath ? `background-image:url('/storage/${organizer.thumbImagePath}')` : `background:${organizer.hexColor}`
+                return organizer => organizer.thumbImagePath ? this.webp ? `background-image:url('/storage/${organizer.thumbImagePath}')` : `background-image:url('/storage/${organizer.thumbImagePath.slice(0, -4)}jpg')` : `background:${organizer.hexColor}`
+            },
+            status() {
+                return event => event.status!=='r' ? true : false;
             }
         },
 
@@ -260,7 +266,18 @@
             showOrganizer(organizer) {
                 window.location.href = `/organizer/${organizer.slug}`;
             },
+
+            canUseWebP() {
+                let webp = (document.createElement('canvas').toDataURL('image/webp').indexOf('data:image/webp') == 0);
+                if (webp) {
+                    return this.webp = true
+                };
+            },
 		},
+
+        mounted() {
+            this.canUseWebP();
+        },
 
         created() {
             this.loadEvents();

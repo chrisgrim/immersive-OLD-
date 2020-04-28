@@ -1,4 +1,95 @@
-.index {
+/*------------------------------------*\
+  #Event- Index Page
+\*------------------------------------*/
+
+.event-index {
+    padding-top: 15rem;
+}
+.event-index-eventlist{
+    width:100%;
+    grid-template-columns: repeat(4,1fr);
+}
+.eventlist__element {
+    width:100%;
+    &:hover div.heart{
+        visibility: visible;
+        opacity: 1;
+    }
+}
+.card {
+    position: relative;
+}
+.card-image{
+    & img {
+        border-radius: 1rem;
+        object-fit: cover;
+        height: 19rem;
+        width: 100%;
+    }
+}
+.card-title h3 {
+    margin: 1rem 0 .5rem;
+    font-size: 1.6rem;
+    font-weight: 500;
+}
+.card-organizer h3 {
+    margin: .2rem 0 .3rem;
+    font-size: 1.6rem;
+    font-weight: 400;
+}
+.card-price h4{
+    display: inline-block;
+    margin: 0 .5rem 0 0;
+    font-size: 1.3rem;
+}
+
+.heart {
+    position: absolute;
+    right: 5%;
+    top: 5%;
+    border-radius: 50%;
+    width: 4rem;
+    height: 4rem;
+    background-color:white;
+    border: 1px solid white;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 0px 0px, rgba(0, 0, 0, 0.04) 0px 0px 0px 0.5px;
+    -webkit-transition-duration: 0.3s;
+    -webkit-transition-property: -webkit-transform;
+    transition-property: transform, visibility;
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
+    visibility: hidden;
+    opacity: 0;
+    z-index: 100;
+    &:hover {
+        -webkit-transform: scale(1.07);
+        -ms-transform: scale(1.07);
+        transform: scale(1.07);
+    }
+}
+
+@media (max-width: 768px) {
+    .event-index-eventlist {
+        height: 100%;
+        overflow-y: auto;
+        white-space: nowrap;
+        overflow-x: scroll;
+        scrollbar-width: none;
+        display: -webkit-box!important;
+        display: flex!important;
+    }
+    .eventlist__element {
+        padding: .7rem;
+    }
+}
+
+
+
+
+
+
+/*.index {
     & .categories {
         padding: 8rem 0rem 4rem 0rem;
         width: 100%;
@@ -43,9 +134,9 @@
             }
         }
     }
-    & .events {
-        margin-bottom: 6rem;
-    }
 }
+@media (max-width: 768px) {
+    
+}*/
 
 

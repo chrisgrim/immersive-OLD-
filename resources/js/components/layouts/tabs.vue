@@ -8,17 +8,15 @@
                     :class="{ 'act': tab.isActive }"
                     :style="tab.isActive ? 'margin-bottom: -1px' : ''"
                 >
-                    <button
-                        v-text="tab.title"
-                        :class="{ 'font-bold': tab.isActive }"
-                        class="focus:outline-none"
-                        role="tab"
-                        :aria-selected="tab.isActive"
-                        @click="activeTab = tab"
-                    ></button>
-                    <div v-if="tab.notification" class="active">
-                        <p></p>
-                    </div>
+                    <button        
+                    :class="{ 'font-bold': tab.isActive }"
+                    class="focus:outline-none"
+                    role="tab"
+                    :aria-selected="tab.isActive"
+                    @click="activeTab = tab" >
+                        <h2>{{tab.title}}</h2>
+                    </button>
+                    <div :class="{ 'active-dot': tab.notification }"></div>
                 </div>
             </div>
         </div>

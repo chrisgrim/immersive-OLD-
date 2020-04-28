@@ -1,25 +1,12 @@
-#create {
-    & .advisories {
-        padding-top: 5rem;
-        width:90%;
-        margin: auto;
-        & .texta, .textb, .textc {
-            width: 30%;
-            float: left;
-            margin:0;
-            padding: 0% 0% 0% 5%;
-            & .ctitle {
-                padding:0;
-                &.pg {
-                    margin-top:4rem;
-                }
-            }
-        }
-        & .mobile {
-            width: 64%;
-            float: right;
-            margin: 0;
-            padding: 0% 0% 0% 5%;
-        }
-    }
+/*------------------------------------*\
+  #Create Section- Advisories Page
+\*------------------------------------*/
+
+
+.event-create__advisories {
+    padding-top: 5rem;
+    width:90%;
+    grid-template-columns: 1fr 1fr 1fr;
 }
+
+

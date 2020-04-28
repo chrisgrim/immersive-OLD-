@@ -34,15 +34,19 @@ class EventController extends Controller
             ->where('status', 'p')
             ->where('hasLocation', 1)
             ->orderBy('updated_at', 'desc')
-            ->limit(42)
+            ->limit(4)
+            ->with('organizer')
             ->get();
         $remote = Event::where('closingDate', '>=', Carbon::yesterday()->endOfDay())
             ->where('status', 'p')
             ->where('hasLocation', 0)
             ->orderBy('updated_at', 'desc')
-            ->limit(42)
+            ->limit(4)
+            ->with('organizer')
             ->get();
-        $categories = Category::all();
+        $categories = Category::take(4)
+            // ->orderBy('rank', 'desc')
+            ->get();
         $staffpicks = StaffPick::whereDate('end_date','>=', Carbon::yesterday()->endOfDay())
             ->whereDate('start_date', '<=', Carbon::now())
             ->orderBy('rank', 'ASC')
@@ -200,6 +204,6 @@ class EventController extends Controller
 
     public function thanks(Event $event)
     {
-        return redirect('create-event/edit')->with('message', 'Thanks for submitting your event.');
+        return redirect('create-event/edit')->with('message', 'submitted');
     }
 }

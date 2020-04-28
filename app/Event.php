@@ -35,7 +35,7 @@ class Event extends Model
     *
     * @var array
     */
-    protected $with = ['favorites', 'priceranges'];
+    protected $with = ['favorites', 'priceranges', 'shows'];
 
     /**
     * The accessors to append to the model's array form.
@@ -52,6 +52,10 @@ class Event extends Model
     public function shouldBeSearchable()
     {
         return $this->isPublished();
+    }
+
+    public function scopeABC($query) {
+        return $query->where('showtype', 'f');
     }
 
     /**

@@ -56,7 +56,8 @@
                     console.log(response.data);
                     window.location.href = '/finish/events';
                 })
-                .catch(error => {         
+                .catch(error => {   
+                    console.log(error.response.data);      
                     this.serverErrors = error.response.data.errors;
                     this.dis = false;
                 });
@@ -75,7 +76,8 @@
                     this.dis = false;
                     window.location.href = '/finish/events';
                 })
-                .catch(error => {         
+                .catch(error => {  
+                    console.log(error.response.data);       
                     this.serverErrors = error.response.data.errors;
                     this.dis = false;
                 });

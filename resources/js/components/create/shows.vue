@@ -1,10 +1,10 @@
 <template>
-    <div class="shows">
+    <div class="event-create__shows">
         <div class="listing-details-block">
             <tabs @current="selectTab">
-                <tab id="s" title="Specific Show Dates" :active="event.showtype == 's'" class="tab-events">
-                    <div class="section">
-                        <div class="pricing">
+                <tab id="s" title="Specific Show Dates" :active="event.showtype == 's'" class="event-create-tab__section">
+                    <div class="specific-show-dates container grid">
+                        <section class="event-enter-showtimes">
                             <div class="field">
                                 <label> Show Times</label>
                                 <textarea 
@@ -12,7 +12,7 @@
                                 class="create-input area"
                                 :class="{ active: activeItem == 'times','error': $v.showTimes.$error }"
                                 rows="8" 
-                                :placeholder="placeholder" 
+                                :placeholder="placeholders" 
                                 required
                                 @click="activeItem = 'times'"
                                 @blur="activeItem = null"
@@ -25,8 +25,8 @@
                             </div>
                             <div class="field cost">
                                 <label class="area"> Ticket types and prices </label>
-                                <div class="ticket-box">
-                                    <div v-for="(v, index) in $v.tickets.$each.$iter" class="ticket-box-grid">
+                                <div class="create-shows__ticket-box">
+                                    <div v-for="(v, index) in $v.tickets.$each.$iter" class="ticket-box__element grid">
                                         <div class="field">
                                             <label>Ticket Type</label>
                                             <input 
@@ -65,12 +65,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                 <div class="add-button" @click.prevent="addTickets">
-                                    <button class="add-button">&#43; Ticket Types</button>
+                                 <div class="ticket-box__add-button" @click.prevent="addTickets">
+                                    <button>&#43; Ticket Types</button>
                                 </div>
                             </div>
-                        </div>
-                        <div class="calendar">
+                        </section>
+                        <section class="event-enter-showdates">
                             <div class="field">
                                 <label> Select all show dates</label>
                                 <flat-pickr
@@ -85,13 +85,15 @@
                                     <p class="error" v-if="!$v.dates.required">Please add at least 1 show date</p>
                                 </div>
                             </div>
-                            <button :disabled="dis" @click.prevent="submitDates()" class="create"> Next </button> 
-                        </div>
+                            <div class="event-create__submit-button">
+                                <button :disabled="dis" @click.prevent="submitDates()" class="create"> Next </button> 
+                            </div>
+                        </section>
                     </div>
                 </tab>
-                <tab id="o" title="On-Going Shows" :active="event.showtype == 'o'" class="tab-events">
-                    <div class="section">
-                        <div class="pricing">
+                <tab id="o" title="On-Going Shows" :active="event.showtype == 'o'" class="event-create-tab__section">
+                    <div class="ongoing-show-dates container grid">
+                        <section class="event-enter-showtimes">
                             <div class="field">
                                 <label> Show Times</label>
                                 <textarea 
@@ -99,7 +101,7 @@
                                 class="create-input area"
                                 :class="{ active: activeItem == 'times','error': $v.showTimes.$error }"
                                 rows="8" 
-                                :placeholder="placeholder" 
+                                :placeholder="placeholdero" 
                                 required
                                 @click="activeItem = 'times'"
                                 @blur="activeItem = null"
@@ -112,8 +114,8 @@
                             </div>
                             <div class="field cost">
                                 <label class="area"> Ticket types and prices </label>
-                                <div class="ticket-box">
-                                    <div v-for="(v, index) in $v.tickets.$each.$iter" class="ticket-box-grid">
+                                <div class="create-shows__ticket-box">
+                                    <div v-for="(v, index) in $v.tickets.$each.$iter" class="ticket-box__element grid">
                                         <div class="field">
                                             <label>Ticket Type</label>
                                             <input 
@@ -152,53 +154,53 @@
                                         </div>
                                     </div>
                                 </div>
-                                 <div class="add-button" @click.prevent="addTickets">
-                                    <button class="add-button">&#43; Ticket Types</button>
+                                 <div class="ticket-box__add-button" @click.prevent="addTickets">
+                                    <button>&#43; Ticket Types</button>
                                 </div>
                             </div>
-                        </div>
-                        <div class="calendar">
+                        </section>
+                        <section class="event-enter-showdates">
                             <div class="field">
                                 <label> Select show days</label>
-                                <div class="week-calendar">
+                                <div class="week-calendar grid">
                                     <div 
-                                    class="day" 
+                                    class="week-calendar__day" 
                                     :class="{ active: week.mon }" 
                                     @click="addWeekDay('mon')">
                                         <h4>Mon</h4>
                                     </div>
                                     <div 
-                                    class="day"
+                                    class="week-calendar__day"
                                     :class="{ active: week.tue }" 
                                     @click="addWeekDay('tue')">
                                         <h4>Tue</h4>
                                     </div>
                                     <div 
-                                    class="day" 
+                                    class="week-calendar__day" 
                                     :class="{ active: week.wed }" 
                                     @click="addWeekDay('wed')">
                                         <h4>Wed</h4>
                                     </div>
                                     <div 
-                                    class="day" 
+                                    class="week-calendar__day" 
                                     :class="{ active: week.thu }" 
                                     @click="addWeekDay('thu')">
                                         <h4>Thu</h4>
                                     </div>
                                     <div 
-                                    class="day"
+                                    class="week-calendar__day"
                                     :class="{ active: week.fri }" 
                                     @click="addWeekDay('fri')">
                                         <h4>Fri</h4>
                                     </div>
                                     <div 
-                                    class="day"
+                                    class="week-calendar__day"
                                     :class="{ active: week.sat }"
                                     @click="addWeekDay('sat')">
                                         <h4>Sat</h4>
                                     </div>
                                     <div 
-                                    class="day"
+                                    class="week-calendar__day"
                                     :class="{ active: week.sun }"
                                     @click="addWeekDay('sun')">
                                         <h4>Sun</h4>
@@ -208,13 +210,15 @@
                                     <p class="error" v-if="!$v.week.ifOngoing">Please select at least one day</p>
                                 </div>
                             </div>
-                            <button :disabled="dis" @click.prevent="submitOnGoing()" class="create"> Next </button> 
-                        </div>
+                            <div class="event-create__submit-button">
+                                <button :disabled="dis" @click.prevent="submitOnGoing()" class="create"> Next </button>
+                            </div>
+                        </section>
                     </div>
                 </tab>
-                <tab id="a" title="All Times" :active="event.showtype == 'a'" class="tab-events">
-                    <div class="section">
-                        <div class="pricing">
+                <tab id="a" title="All Times" :active="event.showtype == 'a'" class="event-create-tab__section">
+                    <div class="everyday-show-dates container grid">
+                        <section class="event-enter-showtimes">
                             <div class="field">
                                 <label> Show Times</label>
                                 <textarea 
@@ -222,7 +226,7 @@
                                 class="create-input area"
                                 :class="{ active: activeItem == 'times','error': $v.showTimes.$error }"
                                 rows="8" 
-                                :placeholder="placeholder" 
+                                :placeholder="placeholdera" 
                                 required
                                 @click="activeItem = 'times'"
                                 @blur="activeItem = null"
@@ -233,12 +237,12 @@
                                     <p class="error" v-if="!$v.showTimes.required">Please give a brief description of show times</p>
                                 </div>
                             </div>
-                        </div>
-                        <div class="calendar">
+                        </section>
+                        <section class="event-enter-showdates">
                             <div class="field cost">
                                 <label class="area"> Ticket types and prices </label>
-                                <div class="ticket-box">
-                                    <div v-for="(v, index) in $v.tickets.$each.$iter" class="ticket-box-grid">
+                                <div class="create-shows__ticket-box">
+                                    <div v-for="(v, index) in $v.tickets.$each.$iter" class="ticket-box__element grid">
                                         <div class="field">
                                             <label>Ticket Type</label>
                                             <input 
@@ -277,16 +281,19 @@
                                         </div>
                                     </div>
                                 </div>
-                                 <div class="add-button" @click.prevent="addTickets">
-                                    <button class="add-button">&#43; Ticket Types</button>
+                                 <div class="ticket-box__add-button" @click.prevent="addTickets">
+                                    <button>&#43; Ticket Types</button>
                                 </div>
                             </div>
-                            <button :disabled="dis" @click.prevent="submitAlways()" class="create"> Next </button> 
-                        </div>
+                            <div class="event-create__submit-button" style="margin-top:6rem">
+                                <button :disabled="dis" @click.prevent="submitAlways()" class="create"> Next </button> 
+                            </div>
+                        </section>
                     </div>
                 </tab>
             </tabs>
         </div>
+
         <modal v-if="isVisible" @close="isVisible = false">
             <div slot="header">
                 <div class="circle del">
@@ -301,7 +308,8 @@
                 <button class="btn del" @click.prevent="onFree()">It is</button>
             </div>
         </modal>
-        <div class="inNav">
+
+        <div class="create-button__in-nav">
             <button :disabled="dis" class="create" @click.prevent="goBack()"> Back </button>
             <button v-show="selectedTab == 's'" :disabled="dis" class="create" @click.prevent="submitDates()"> Next </button>
             <button v-show="selectedTab == 'o'" :disabled="dis" class="create" @click.prevent="submitOnGoing()"> Next </button>
@@ -375,7 +383,10 @@ export default {
             activeItem: null,
             isVisible: false,
             free: false,
-            placeholder: 'Please provide a brief description of daily show times...' + '\n' + '\n' + '10:00PM shows during the week ' + '\n' + '12:00PM shows during the weekend'
+            placeholders: 'Please provide a brief description of show times...' + '\n' + '\n' + 'Shows begin at 9PM.',
+            placeholdero: 'Please provide a brief description of weekly show times...' + '\n' + '\n' + '10:00PM shows on Monday & Tuesday.' + '\n' + '12:00PM on Wednesday and Thursday.',
+            placeholdera: 'Please provide a brief description of daily times...' + '\n' + '\n' + 'Show begins everyday at 12PM.' + '\n' + 'Enjoy at any time.',
+
         }
     },
 

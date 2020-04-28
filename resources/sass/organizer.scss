@@ -1,3 +1,6 @@
+#bodyArea.org {
+    padding: 0rem;
+}
 .show{
     max-width: 100%;
     margin: auto;
@@ -75,6 +78,35 @@
                     &.sub {
                         margin:0rem;
                     }
+                }
+            }
+            & .contact {
+                margin-bottom: 5rem;
+            }
+        }
+    }
+}
+@media (max-width: 768px) {
+    .show {
+        & .organizer {
+            display: inline-block;
+            margin: 10rem 2rem 5rem 2rem;
+            & .left {
+                background: white;
+                & .image {
+                    height: 15rem;
+                    width: 15rem;
+                    position: relative;
+                    margin: 0;
+                }
+            }
+            & .right {
+                padding:0rem;
+                & .name h2 {
+                    font-size: 2.4rem;
+                }
+                & .modal {
+                    width:100%;
                 }
             }
         }

@@ -9,7 +9,9 @@ $line-height-base: 1.6;
 $basic-font: 'Open Sans', sans-serif;
 $basic-font-1: 'Montserrat', sans-serif;
 
+
 // Colors
+$font-color: #484848;
 $default-color: #008489; 
 $circle-color: green;
 $outside-color: #a3d4ff; 
@@ -32,8 +34,30 @@ select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
 -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
 }
+input, select { font-size: 100% !important; }
 
+input[type="color"],
+input[type="date"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="email"],
+input[type="month"],
+input[type="number"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="text"],
+input[type="time"],
+input[type="url"],
+input[type="week"],
+select:focus,
+textarea {
+  font-size: 16px !important;
+}
 
+.grey {
+    background: #f2f2f2;
+}
 
 .dis {
     pointer-events:none;

@@ -1,4 +1,5 @@
  let actions = {
+
         createEvent({commit}, event) {
             axios.post('/api/posts', event)
                 .then(res => {

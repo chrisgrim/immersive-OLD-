@@ -35,7 +35,7 @@ class ConversationsController extends Controller
     public function show(Conversation $conversation)
     {
         $this->authorize('update', $conversation);
-        auth()->user()->update(['has_unread' => false]);
+        auth()->user()->update(['unread' => null]);
         return view('messages.show', compact('conversation'));
     }
 
@@ -62,6 +62,7 @@ class ConversationsController extends Controller
                 'body' => $request->message,
                 'username' => auth()->user()->name,
             ];
+            $receiver->update(['unread' => 'm']);
         };
 
         if ($request->modmessage) {
@@ -76,13 +77,10 @@ class ConversationsController extends Controller
                 'body' => $request->modmessage,
                 'username' => auth()->user()->name,
             ];
+            $receiver->update(['unread' => 'e']);
         }
 
         $conversation->touch();
-
-        $receiver->update([
-            'has_unread' => true
-        ]);
         
         Mail::to($receiver->email)->send(new ContactUser($attributes));
         

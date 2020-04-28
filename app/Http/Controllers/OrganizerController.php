@@ -8,6 +8,7 @@ use App\Event;
 use App\Message;
 use App\User;
 use DB;
+use Swift_SmtpTransport;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Storage;
@@ -69,6 +70,9 @@ class OrganizerController extends Controller
      */
     public function show(Organizer $organizer)
     {
+        $organizer->load(['events' => function ($query) {
+            $query->where('status', 'p');
+        }]);
         return view('organizers.show', compact('organizer'));
     }
 
@@ -163,11 +167,6 @@ class OrganizerController extends Controller
         }
 
 
-        $organizer->user->update([
-            'has_unread' => true
-        ]);
-
-
         $attributes = [
             'email' => $user->email,
             'body' => $request->message,
@@ -181,7 +180,11 @@ class OrganizerController extends Controller
             $dest = $organizer->user->email;
         };
 
-        Mail::to($dest)->send(new ContactUser($attributes));
+        if ($organizer->user->silence == 'n') {
+            Mail::mailer('smtp')->to($dest)->send(new ContactUser($attributes));
+        }
+
+        $organizer->user->update(['unread' => 'm']);
 
     }
 }

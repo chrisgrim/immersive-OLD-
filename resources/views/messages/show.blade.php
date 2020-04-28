@@ -4,7 +4,11 @@
     <title>{{config('app.name')}}</title>
     <link href="/css/app-lite.css" rel="stylesheet">
     <link href="/css/app.css" rel="stylesheet">
-@endsection 
+@endsection
+
+@section('nav')
+        <vue-nav onclass="message" :user= "{{auth()->user()}}"></vue-nav>
+@endsection
 
 @section('content')
     <div id="bodyArea">

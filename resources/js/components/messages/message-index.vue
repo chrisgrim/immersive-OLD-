@@ -2,7 +2,7 @@
     <div class="messages">
         <div class="listing-details-block">
             <tabs>
-                <tab title="Messages" notification="true" :active="true" class="tab-events">
+                <tab title="Messages" :notification="user.unread=='m'" :active="true" class="tab-events">
                     <div v-if="conversations" v-for="conversation in conversations">
                         <a v-if="conversation.messages.length" :href="`/conversations/${conversation.id}`" class="row">
                             <div v-if="loaduser.id !== user.id" v-for="user in conversation.users" class="user">
@@ -32,7 +32,7 @@
                         </a>
                     </div>
                 </tab>
-                <tab title="Events" notification="true" class="tab-events">
+                <tab title="Events" :notification="user.unread=='e'" class="tab-events">
                     <div v-if="conversations" v-for="conversation in conversations">
                         <a v-if="conversation.modmessages.length" :href="`/conversations/${conversation.id}`" class="row">
                             <div class="event">

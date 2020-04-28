@@ -56,7 +56,6 @@ class ReviewEventsController extends Controller
      */
     public function store(Request $request)
     {
-        if(auth()->user()->admin){$review->update(['rank' => $request->rank]);}; 
         $review = ReviewEvent::create([
             'user_id' => auth()->id(),
             'event_id' => $request->event['id'],
@@ -64,7 +63,10 @@ class ReviewEventsController extends Controller
             'reviewer_name' => $request->reviewername,
             'url' => $request->url,
             'review' => $request->review,
+            'image_path' => $request->image_path,
         ]);
+
+        // if(auth()->user()->type == 'a'){$review->update(['rank' => $request->rank]);}; 
 
     
     }

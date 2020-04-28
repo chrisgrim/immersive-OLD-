@@ -1,28 +1,41 @@
 .tab {
     border-bottom: solid #e4e4e4 1px;
     & .tabcontent {
-        width: 72%;
+        width: 77%;
         margin: auto;
     }
     & .ln {
         display: inline-block;
+        position: relative;
+        margin-right: 3rem;
         & button {
             border: none;
-            font-size: 1.6rem;
-            line-height: 2.2rem;
-            color: #5f5f5f;
-            margin-right: 3.2rem;
-            padding-left:0rem;
-            padding-right:0rem;
-            padding-top: 2.4rem;
-            padding-bottom: 2.4rem;
-            font-weight: 500;
-            letter-spacing: .06rem;
+            padding: 2.4rem 0rem;
+            background-color: white;
+            & h2 {
+                font-size: 1.6rem;
+                line-height: 2.2rem;
+                color: #5f5f5f;
+                font-weight: 500;
+                letter-spacing: .06rem;
+            }
         }
     }
     & .ln.act button {
-        color:#008489;
-        border-bottom: 2px solid #008489;
+        border-bottom: 2px solid $default-color;
         border-radius:0;
+        position: relative;
+        & h2 {
+            color:$default-color;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .tab {
+        
+        & .tabcontent {
+            width: 100%;
+        }
     }
 }

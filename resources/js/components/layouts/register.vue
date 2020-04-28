@@ -51,20 +51,20 @@
                                 <p @click="onForget" :class="{ inprogress: dis}" class="forgot">Forgot your password?</p>
                             </div>
                             <div class="field">
-                                <button :disabled="dis" class="save" @click="onLogin"> Sign In </button>
+                                <button type="submit" :disabled="dis" class="save" @click="onLogin"> Sign In </button>
+                            </div>
+                            <div class="line">
+                                <hr>
+                                <span>or</span>
                             </div>
                             <div class="list">
                                 <div class="social">
-                                    <div>
-                                        <a href="/login/Facebook">
-                                            <p>Facebook</p>
-                                        </a>
-                                    </div>
-                                   <div>
-                                        <a href="/login/Google">
-                                            <p>Google</p>
-                                        </a>
-                                   </div>
+                                    <button @click="urlClick('Facebook')" class="button">
+                                        <p>Facebook</p>
+                                    </button>
+                                   <button @click="urlClick('Google')" class="button">
+                                        <p>Google</p>
+                                   </button>
                                 </div>
                             </div>
                             <div class="join">
@@ -146,20 +146,20 @@
                                 </div>
                             </div>
                             <div class="field">
-                                <button :disabled="dis" class="save" @click="onRegister"> Register </button>
+                                <button type="submit" :disabled="dis" class="save" @click="onRegister"> Register </button>
+                            </div>
+                            <div class="line">
+                                <hr>
+                                <span>or</span>
                             </div>
                             <div class="list">
                                 <div class="social">
-                                    <div>
-                                        <a href="/login/Facebook">
-                                            <p>Facebook</p>
-                                        </a>
-                                    </div>
-                                   <div>
-                                        <a href="/login/Google">
-                                            <p>Google</p>
-                                        </a>
-                                   </div>
+                                    <button @click="urlClick('Facebook')" class="button">
+                                        <p>Facebook</p>
+                                    </button>
+                                   <button @click="urlClick('Google')" class="button">
+                                        <p>Google</p>
+                                   </button>
                                 </div>
                             </div>
                             <div class="join">
@@ -179,8 +179,10 @@
 
 <script>
 
+import _ from 'lodash';
 import { required, requiredIf, maxLength } from 'vuelidate/lib/validators'
 import CubeSpinner  from '../layouts/loading.vue'
+
     
     export default {
 
@@ -225,6 +227,7 @@ import CubeSpinner  from '../layouts/loading.vue'
                     type: 'axios',
                     email: this.user.email,
                     password: this.user.password,
+                    remember: true,
                 }
                 this.dis = true;
                 axios.post('/login', data)
@@ -251,6 +254,10 @@ import CubeSpinner  from '../layouts/loading.vue'
 
             switchVisibility() {
                 this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password'
+            },
+
+            urlClick(value) {
+                window.location.href = `/login/${value}`
             },
 
             onForget() {

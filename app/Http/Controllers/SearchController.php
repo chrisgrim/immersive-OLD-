@@ -15,6 +15,7 @@ use App\EventSearchRule;
 use App\GenreSearchRule;
 use App\DateSearchRule;
 use App\UserSearchRule;
+use App\EventDatesRule;
 use DB;
 use Carbon\Carbon;
 use Session;
@@ -26,15 +27,60 @@ class SearchController extends Controller
 {
     public function index(Request $request)
     {
-        // $searchedevents = Session::get('searchDataStore');
-        // // $name = json_encode($searchedevents['name']);
-        // // $lat = trim(json_encode($searchedevents['latitude']), '"');
-        // // $lng = trim(json_encode($searchedevents['longitude']), '"');
-        // $searchedevents = array (
-        //     "latitude" => trim(json_encode($searchedevents['latitude']), '"'),
-        //     "longitude" => trim(json_encode($searchedevents['longitude']), '"'),
-        //     "name" => json_encode($searchedevents['name'])
-        // );
+
+        // $searchedevents =  Event::search('a')
+            // ->rule(function($builder) use ($request) {
+            //     return [
+            //         'must' => [
+
+            //             [
+            //                 'range' => [
+            //                     'closingDate' => [
+            //                         'gte' => 'now/d',
+            //                     ],
+            //                 ],
+            //             ],
+
+            //             [
+            //                 'match' => [
+            //                     'status' => 'p'
+            //                 ]
+            //             ]
+
+            //         ],
+            //         'should' => [
+
+            //             [
+            //                 'bool' => [
+            //                     'should' => [
+            //                         'range' => [
+            //                             'shows.date' => [
+            //                                 'gte' => $request->dates[0],
+            //                                 'lte' => $request->dates[1],
+            //                             ]
+            //                         ]
+            //                     ]
+            //                 ]
+            //             ],
+
+            //             [
+            //                 'bool' => [
+            //                     'must' => [
+            //                         'match' => [
+            //                             'showtype' => 'a'
+            //                         ]
+            //                     ]
+            //                 ],
+            //             ],
+
+            //         ],
+            //         'minimum_should_match' => 1,
+            //     ];
+            // })
+            // ->with(['location', 'organizer'])
+            // ->get();
+
+
         $searchedevents = Event::search('*')
             ->where('closingDate', '>=', 'now/d')
             ->where('status', 'p')
@@ -140,29 +186,12 @@ class SearchController extends Controller
     }
 
     public function searchMapBoundary(Request $request)
-    {
-        $events = Event::search('*')
-            ->where('closingDate', '>=', 'now/d')
-            ->where('status', 'p')
-            ->when($request->category, function($query) use ($request) {
-                $query->where('category_id', $request->category['id']);
-            })
-            ->when(!$request->mapboundary, function($query) use ($request) {
-                $query->whereGeoDistance('location_latlon', [floatval($request->loc['lng']), floatval($request->loc['lat'])], '40km');
-            })
-            ->when($request->mapboundary, function($query) use ($request) {
-                $query->whereGeoBoundingBox('location_latlon', ['top_right' => [floatval($request->mapboundary['_northEast']['lng']), floatval($request->mapboundary['_northEast']['lat'])], 'bottom_left' => [floatval($request->mapboundary['_southWest']['lng']), floatval($request->mapboundary['_southWest']['lat'])]]);
-            })
-            ->when($request->dates, function($query) use ($request) {
-                $query->whereBetween('shows.date', [$request->dates[0],$request->dates[1]]);
-            })
-            ->when($request->price, function($query) use ($request) {
-                $query->whereBetween('priceranges.price', [$request->price[0],$request->price[1]]);
-            })
+    {   
+        return $events =  Event::search('a')
+            ->rule(EventDatesRule::class)
             ->with(['location', 'organizer'])
             ->take($request->results)
-            ->get(); 
-            return $events;
+            ->get();
     }
 
     

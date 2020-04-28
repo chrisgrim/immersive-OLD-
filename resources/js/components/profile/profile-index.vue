@@ -2,10 +2,10 @@
     <div class="profile">
         <div class="body">
             <div class="left">
-                <div v-if="parseFloat(this.auth)!==user.id || !user.email_verified_at">
-                    <div v-if="avatar" class="image non" :style="`background:${avatar}`">
+                <div v-if="!onSelf || !user.email_verified_at">
+                    <div v-if="avatar" class="image non" :style="`background:url('/storage/${avatar}')`">
                     </div>
-                    <div v-else-if="user.gravatar" class="image non" :style="`background:url('${user.gravatar})center no-repeat;background-size: cover;`"></div>
+                    <div v-else-if="user.gravatar" class="image non" :style="`background:url('${user.gravatar}')center no-repeat;background-size: cover;`"></div>
                     <div v-else class="image non" :style="`background:${user.hexColor}`">
                         <h2>{{loaduser.name.charAt(0)}}</h2>
                     </div>
@@ -15,7 +15,7 @@
                     v-if="avatar"
                     class="wrapper"
                     :class="{ imageloaded: avatar, imageloading: onUpClass }"
-                    :style="`background:${avatar}`">
+                    :style="`background:url('/storage/${avatar}')`">
                     <image-upload @loaded="onImageUpload"></image-upload>
                     <CubeSpinner :loading="isLoading"></CubeSpinner>
                     <span class="text">
@@ -28,7 +28,7 @@
                     v-else-if="user.gravatar"
                     class="wrapper"
                     :class="{ imageloaded: avatar, imageloading: onUpClass }"
-                    :style="`background:url('${user.gravatar})center no-repeat;background-size: cover;`">
+                    :style="`background:url('${user.gravatar}')center no-repeat;background-size: cover;`">
                     <image-upload @loaded="onImageUpload"></image-upload>
                     <CubeSpinner :loading="isLoading"></CubeSpinner>
                     <span class="text">
@@ -103,6 +103,22 @@
                                 type="text"
                                 />
                             </div>
+                            <div class="field">
+                                <label> Email </label>
+                                <input 
+                                type="email" 
+                                v-model="user.email"
+                                :class="{ active: activeItem == 'email','error': $v.user.email.$error }"
+                                @click="activeItem = 'email'"
+                                @blur="activeItem = null"
+                                @input="$v.user.email.$touch"
+                                />
+                                <div v-if="$v.user.email.$error" class="validation-error">
+                                    <p class="error" v-if="!$v.user.email.required">Must have an email</p>
+                                    <p class="error" v-if="!$v.user.email.email">Must be a valid email</p>
+                                    <p class="error" v-if="!$v.user.email.auth">You don't have permission to edit</p>
+                                </div>
+                            </div>
                             <div class="">
                                 <button @click.prevent="submitUser()" class="save"> Save </button>
                                 <button @click.prevent="onUserEdit=false" class="cancel"> Cancel </button>
@@ -118,23 +134,24 @@
                         <div class="age">
                             Member since {{user.created_at | formatDate }}
                         </div>
-                        <div v-if="parseFloat(this.auth) == user.id && user.email_verified_at" class="edit" @click="userEdit">
+                        <div v-if="onSelf && user.email_verified_at" class="edit" @click="userEdit">
                             Edit profile
                         </div>
-                        <button :disabled="dis" @click.prevent="resend" class="ver" v-if="parseFloat(this.auth) == user.id && !user.email_verified_at && !onSent">
+                        <button :disabled="dis" @click.prevent="resend" class="ver" v-if="onSelf && !user.email_verified_at && !onSent">
                             Please verify your account.
                         </button>
-                        <div class="ver a" v-if="parseFloat(this.auth) == user.id && !user.email_verified_at && onSent">
+                        <div class="ver a" v-if="onSelf && !user.email_verified_at && onSent">
                             Please check your email.
                         </div>
                     </div>
                     <div class="loc" v-if="location.latitude">
                         <div>
-                            Lives near {{locationPlaceholder}}
+                            Lives near <span style="font-weight:600;color:#616161">{{locationPlaceholder}}</span> 
+                            }
                         </div>
                     </div>
                 </div>
-                <div class="favorites">
+                <div class="favorites" v-if="onSelf">
                     <div>
                         <h3>Your Favorited Events</h3>
                     </div>
@@ -144,6 +161,9 @@
                         </div>
                     </div>
                 </div>
+                <div class="logout">
+                    <button @click.prevent="logout()">Log out</button>
+                </div>
             </div>
         </div>
     </div>
@@ -152,7 +172,7 @@
     import _ from 'lodash';
     import ImageUpload from '../layouts/image-upload.vue'
     import Multiselect from 'vue-multiselect'
-    import { required, maxLength } from 'vuelidate/lib/validators'
+    import { required, maxLength, email } from 'vuelidate/lib/validators'
     import CubeSpinner  from '../layouts/loading.vue'
     import moment from 'moment'
 
@@ -177,16 +197,21 @@
                     return ' the ' + this.location.country
                 }
             },
+
+            visible() {
+                return this.webp ? 'is webp able' : 'is not webp able';
+            }
         },
 
         data() {
             return {
                 user: this.loaduser,
-                avatar: this.loaduser.thumbImagePath ? `url("/storage/${this.loaduser.thumbImagePath}")` : '',
+                avatar: '',
                 location: this.loc[0] ? this.loc[0] : {},
                 gettingLocation: false,
                 errorStr:'',
                 finalImage: '',
+                onSelf: parseFloat(this.auth) == this.loaduser.id ? true : false,
                 activeItem: null,
                 isLoading: false,
                 onUserEdit: false,
@@ -194,6 +219,7 @@
                 validationErrors: '',
                 onSent: false,
                 dis: false,
+                webp: '',
             }
         },
 
@@ -202,6 +228,28 @@
             userEdit() {
                 this.onUserEdit=true;
                 this.validationErrors = '';
+            },
+
+            canUseWebP() {
+                let webp = (document.createElement('canvas').toDataURL('image/webp').indexOf('data:image/webp') == 0);
+                if (this.loaduser.thumbImagePath && webp) {
+                    return this.avatar = this.loaduser.thumbImagePath
+                };
+                if (this.loaduser.thumbImagePath) {
+                    return this.avatar = `${this.loaduser.thumbImagePath.slice(0, -4)}jpg`
+                }
+            },
+
+            logout(){
+                axios.post('/logout').
+                    then(response => {
+                        if (response.status === 302 || 401) {
+                            window.location.href = '/';
+                        } else {
+                        // throw error and go to catch block
+                        }
+                    }).catch(error => {
+                });
             },
 
             resend() {
@@ -264,7 +312,8 @@
 
                 let data = {
                     name: this.user.name,
-                    location:this.location
+                    location:this.location,
+                    email: this.user.email,
                 };
 
                 axios.patch(`/users/${this.user.id}`, data)
@@ -332,13 +381,13 @@
                 },
             );
             this.autocomplete.addListener('place_changed', this.setPlace);
-            console.log(parseFloat(this.auth) !== this.user.id ? 'yes' : 'no');
+            this.canUseWebP();
         },
 
         filters: {
             formatDate(value) {
                 return value ? moment(String(value)).format('MMM YYYY') : ''
-            }
+            },
         },
 
         validations: {
@@ -360,6 +409,13 @@
                 name: {
                     required,
                     maxLength: maxLength(50),
+                    auth() {
+                        return this.auth ? this.auth !== this.user.id : true
+                    }
+                },
+                email: {
+                    required,
+                    email,
                     auth() {
                         return this.auth ? this.auth !== this.user.id : true
                     }

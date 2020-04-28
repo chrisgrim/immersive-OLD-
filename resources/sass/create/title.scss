@@ -1,31 +1,18 @@
-#create {
-    & .title {
-        padding-top: 5rem;
-        width:90%;
-        margin: auto;
-        & .text {
-            width: 50%;
-            float: left;
-            margin:0;
-            padding: 0% 10% 0% 5%;
-            & .name {
-                display: inline-block;
-                color: #484848;
-                font-size: 1.5rem;
-            }
-            & button.editTitle {
-                color: white;
-                padding: .4rem 1rem;
-                background: $default-color;
-                margin-left: 1rem;
-                font-family: "Montserrat", sans-serif;
-            }
-        }
-        & .image {
-            min-height: 30rem;
-            width: 50%;
-            float: right;
-            margin: 0;
-        }
-    }
+/*------------------------------------*\
+  #Create Section- Title Page
+\*------------------------------------*/
+
+.event-create__title {
+    padding-top: 5rem;
+    width:90%;
+    grid-template-columns: 1fr 1fr;
 }
+
+button.editTitle {
+    color: white;
+    padding: .4rem 1rem;
+    background: orange;
+    font-family: "Montserrat", sans-serif;
+}
+
+

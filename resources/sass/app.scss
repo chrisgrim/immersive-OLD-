@@ -11,15 +11,16 @@
 
 // auth
 @import 'auth/login';
-@import 'auth/register';
+
 
 // Profile
 @import 'profile/profile';
+@import 'profile/account';
+@import 'profile/notifications';
 
 //Components 
 @import 'components/tab';
 @import 'organizer';
-@import 'slowlayout';
 
 @import 'messages/messages';
 

@@ -1,22 +1,30 @@
 <template>
-    <div :class="{ 'dis': isDisabled }" class="item">
-        <favorite :user="user" :inputclass="showEventClass" :event="event"></favorite>
-        <a :href="url">
-            <div class="image" :style="isModified ? isModified : divBackground">
-                <div v-if="this.event.status == 'r'">
-                    <h3><b>Under Review</b></h3>
-                </div>
-                <div v-if="this.event.status == 'n'">
-                    <h3><b>Needs Changes</b></h3>
+    <div :class="{ 'dis': isDisabled }" class="card">
+        <a :href="url" class="url">
+            <div v-if="event.thumbImagePath" class="card-image" :style="`width:${imageWidth}px`">
+                <picture>
+                    <source type="image/webp" :srcset="`/storage/${event.thumbImagePath}`"> 
+                    <img :src="`/storage/${event.thumbImagePath.slice(0, -4)}jpg`" :alt="`${event.name} Immersive Event`">
+                </picture>
+            </div>
+            <div class="card-without-image" v-else :style="`width:${imageWidth}px`">
+                <div class="card-without-image_name">
+                    <h4>{{event.name ? event.name : 'New Event'}}</h4>
                 </div>
             </div>
-            <div class="etitle">
-                <h3>{{ event.name }}</h3>
+            <div class="card-title">
+                <h3>{{ event.name ? event.name : 'New Event'}}</h3>
             </div>
-            <div class="eprice">
-                <h4>{{ event.price_range }}</h4><p> / show</p>
+            <div class="card-price">
+                <h4>{{ event.price_range }}</h4>
             </div>
         </a>
+        <div class="card-inprogress" v-if="event.status == 'r'">
+            <h3><b>Under Review</b></h3>
+        </div>
+        <div class="card-inprogress" v-if="event.status == 'n'">
+            <h3><b>Needs Changes</b></h3>
+        </div>
     </div>
 </template>
 
@@ -35,6 +43,7 @@
                 url: `/create-event/${this.event.slug}/title`,
                 isModified: '',
                 isDisabled: false,
+                imageWidth: '',
             }
         },
 
@@ -73,6 +82,12 @@
                     return this.url = `/create-event/${this.event.slug}/location`;
                 }
                 return this.url = `/create-event/${this.event.slug}/title`;
+            },
+
+            handleResize() {
+                if (window.innerWidth < 768) {
+                    this.imageWidth = window.innerWidth/1.4;
+                }
             }
         },
 
@@ -85,6 +100,8 @@
         mounted() {
             this.event.status == 'p' ? '' : this.getUrl();
             this.eventStatus();
+            window.addEventListener('resize', this.handleResize);
+            this.handleResize();
         }
 
     };

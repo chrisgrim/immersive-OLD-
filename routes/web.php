@@ -25,6 +25,8 @@ Route::RESOURCE('mobilities', 'MobilityController');
 Route::RESOURCE('staffpicks', 'StaffPicksController');
 Route::RESOURCE('reviewevents', 'ReviewEventsController');
 
+
+
 // ----------   Search Page -------
 // Adds Top Search to Session
 Route::POST('/search/storedata', 'SearchController@searchDatastore');
@@ -60,7 +62,8 @@ Route::POST('message/organizer/{organizer}/{user}', 'OrganizerController@message
 
 //User Profile Pages
 Route::RESOURCE('users', 'ProfilesController');
-
+Route::GET('account-settings', 'ProfilesController@account');
+Route::GET('account-settings/notifications', 'ProfilesController@notifications');
 
 // favorites Button
 Route::GET('myFavorites/{user}', 'FavoritesController@index');

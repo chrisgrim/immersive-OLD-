@@ -30,6 +30,7 @@ class ContactUser extends Mailable
     public function build()
     {
         return $this->view('emails.ContactUser')
+                    ->from('chris@secretchickens.com')
                     ->subject('You have recieved a message');
     }
 }

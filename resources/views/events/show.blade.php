@@ -24,6 +24,7 @@
     </script>
     
     <title>{{$event->name}}</title>
+    <link rel="canonical" href="{{url()->current()}}">
     <meta name="description" content="{{$event->tag_line}}"/>
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="event" />
@@ -49,9 +50,18 @@
     <link href="/css/app-lite.css" rel="stylesheet">
 @endsection
 
+@section('nav')
+    @auth
+        <vue-nav onclass="show" :user= "{{auth()->user()}}"></vue-nav>
+    @endauth
+    @guest
+        <vue-nav onclass="show"></vue-nav>
+    @endguest
+@endsection
+
 @section('content')
 
-<div id="bodyArea">
+<div id="bodyArea" class="show">
 	<event-show :loadevent="{{$event}}" user="{{auth()->id()}}">	
 </div>
 

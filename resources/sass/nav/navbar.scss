@@ -1,116 +1,211 @@
-.head {
+/*------------------------------------*\
+  #Nav
+\*------------------------------------*/
+
+.nav {
     position: fixed;
     width: 100%;
     background: white;
-    z-index: 901;
+    z-index: 1001;
+    height: 7rem;
+    border-bottom: 0.1rem solid #ebebeb;
     &.show {
         position: relative;
-        & .nav {
-            border:none;
-        }
+        border:0;
     }
     &.org {
         background: transparent;
-        & .nav {
-            border:none;
-            & h3 {
-                color:white;
-            }
+        border:0;
+        & .logo h3 {
+            color:white;
         }
+    }
+    &.mobile {
+        height: 8rem;
+        text-align: center;
+        margin: 0;
+    }
+    &.create {
+        display: none;
     }
 }
-.nav {
-    align-items: center;
-    border-bottom: 0.1rem solid #ebebeb;
-    height: 7rem;
+
+
+
+.nav-logo {
+    height: 6.9rem;
+    width: 6.9rem;
+    display: inline-block;
+    float: left;
+    & h3 {
+        color:#404040;
+        font-family: "Open Sans", sans-serif;
+        font-size: 2.3rem;
+        font-weight: 800;
+        margin: 1.8rem 0rem 0rem 2.2rem;
+        letter-spacing: .2rem;
+    }
+}
+
+.nav-search {
     position: relative;
-    & a {
-        font-family: "Montserrat", sans-serif;
-        color: #484848;
-        text-decoration: none;
-        font-size: 1.35rem;
-        font-weight: 500;
-        transition: all 0.2s ease-in-out;
+    width: 40%;
+    display: inline-block;
+    float: left;
+    margin-top: 1.2rem;
+    &.mobile {
+        width: 100%;
+        margin-top: 1.7rem;
     }
-    & .logo {
-        height: 6.9rem;
-        width: 6.9rem;
-        display: inline-block;
-        float: left;
-        & h3 {
-            color:#404040;
-            font-family: "Open Sans", sans-serif;
-            font-size: 2.3rem;
-            font-weight: 800;
-            margin: 1.8rem 0rem 0rem 2.2rem;
-            letter-spacing: .2rem;
-        }
+}
+
+.nav-search__content {
+    width: 74%;
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    & .icon {
+        position: absolute;
+        top: 1.3rem;
+        z-index: 10;
+        left: 1.3rem;
     }
+}
+
+.nav-menu {
+    width: 100%;
+    list-style-type:none;
+    padding:0px;
+    height:100%;
+    &.mobile.active {
+        position: fixed;
+        bottom: 0;
+        background: #fff;
+        width: 100%;
+        z-index: 1001;
+        height: 6rem;
+        border-top: .1rem solid #ebebeb;
+        display: grid;
+        grid-template-columns: repeat(5,20%);
+        -webkit-box-align: center;
+        align-items: center;
+        text-align: center;
+    }
+}
+
+.nav-menu-item {
+    float: right;
+    margin: 0rem 2rem;
+    padding-top: 2.7rem;
+    position: relative;
+    &.mobile {
+        margin: 0;
+        padding: 0;
+        float: inherit;
+    }
+}
+
+a.menu-link {
+    font-family: "Montserrat", sans-serif;
+    color: #484848;
+    text-decoration: none;
+    font-size: 1.35rem;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+}
+
+.nav-dropdown {
+    position: relative;
+    width: 3.3rem;
+    height: 3.3rem;
+    margin-top: -8px;
+    border-radius: 50%;
+    margin-right: 1rem;
+}
+
+button.dropdown-image {
+    margin:0;
+    padding:0;
+    border:0;
+    position: absolute;
+    background: none;
     & img {
         height: 100%;
         width: 100%;
         border-radius: 50%;
     }
-    & .search {
-        position: relative;
-        width: 40%;
-        display: inline-block;
-        float:left;
-        margin-top: 1.4rem;
-        & .multiselect {
-            width: 74%;
-            display: inline-block;
-            vertical-align: top;
-            &__tags {
-              border-radius: 5px 0px 0px 5px;
-            }
-        }
-        & .multiselect__input {
-            font-weight: 800;
-            font-size: 17px;
-            color: #484848;
-        }
-        & .multiselect__single {
-            font-weight: 800;
-            font-size: 17px;
-            color: #484848;
-        }
-        & .multiselect__placeholder {
-            padding: 0px;
-            width: 100%;
-            font-weight: 800;
-            font-size: 17px;
-            color: #b9b9b9;
-        }
-        & .multiselect__select{
-            display: none;
-        }
+}
+
+.dropdown-button-text {
+    position: absolute;
+    width: 4rem;
+    z-index: 10;
+    left: 50%;
+    margin-left: -.5rem;
+    margin-top: .24rem;
+    text-align: center;
+    & h2 {
+        z-index: 10;
+        color: white;
+        font-size: 2.4rem;
+        text-transform: uppercase;
+        margin: 0;
+        font-family: "Montserrat", sans-serif;
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Safari */
+        -khtml-user-select: none; /* Konqueror HTML */
+        -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+        user-select: none; 
     }
 }
-.menu {
-    width: 100%;
+
+ul.sub-dropdown{
+    z-index: 1;
+    max-height:0;
+    padding:0;
+    overflow:hidden;
     list-style-type:none;
-    padding:0px;
-    height:100%;
-    &-nav {
-        float: right;
-        text-align: center;
-        height:100%;
-        margin: 0rem 2rem;
-        padding-top: 2.7rem;
-        position: relative;
-        & a {
-            vertical-align: bottom;
-        }
-        & .active {
-            background: red;
-            height: 1rem;
-            width: 1rem;
-            position: absolute;
-            border-radius: 50%;
-            right: -.7rem;
-            top: 2.4rem;
+    position:absolute;
+    min-width:100%;
+    right:0;
+    box-shadow: -1px 1px 5px 0px #cecece;
+    background: white;
+    top:3.6rem;
+    right: -3rem;
+    max-height:35rem;
+    transition:max-height 0.2s ease-in;
+    margin-top: 1.5rem;
+    & li a {
+        display:block;
+        padding:1rem;
+        padding-right:14rem;
+        text-decoration:none;
+        transition:background .1s;
+        white-space:nowrap;
+        background-color: white;
+        float: left;
+        width: 100%;
+        text-align: left;
+        &:hover{
+            background: $border-color;
         }
     }
 }
+
+.nav-backarrow {
+    display: inline-block;
+    vertical-align: top;
+    padding-top: 1.3rem;
+    margin-right: 3rem;
+}
+
+.nav.fullmap {
+    display: none;
+}
+.nav-menu.mobile.fullmap {
+    display: none;
+}
+
+
 

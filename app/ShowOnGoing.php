@@ -45,21 +45,21 @@ class ShowOnGoing extends Model
             ]
         );
         // return $ongoing;
-        foreach ($request->tickets as $ticket) {
-            $ticketname[] = $ticket['name'];
-        };
+        // foreach ($request->tickets as $ticket) {
+        //     $ticketname[] = $ticket['name'];
+        // };
 
-        $ongoing->tickets()->whereNotIn('name', $ticketname)->delete();
+        // $ongoing->tickets()->whereNotIn('name', $ticketname)->delete();
         
-        foreach($request->tickets as $ticket) {
-            $ongoing->tickets()->updateOrCreate(
-                [
-                    'name' => $ticket['name']
-                ],
-                [
-                    'ticket_price' => str_replace('$', '', $ticket['ticket_price'])
-                ]
-            );
-        }
+        // foreach($request->tickets as $ticket) {
+        //     $ongoing->tickets()->updateOrCreate(
+        //         [
+        //             'name' => $ticket['name']
+        //         ],
+        //         [
+        //             'ticket_price' => str_replace('$', '', $ticket['ticket_price'])
+        //         ]
+        //     );
+        // }
     }
 }

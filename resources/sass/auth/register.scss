@@ -9,59 +9,6 @@
                 position: absolute;
                 top: 50%; left: 50%;
                 transform: translate(-50%,-50%);
-                & .field {
-                    position: relative;
-                    & .forgot {
-                        color: #008489;
-                        margin: 0rem 0rem 1rem 0rem;
-                        font-size: 1.2rem;
-                        font-weight: 500;
-                        cursor: pointer;
-                        &:active {
-                            color:white;
-                        }
-                    }
-                    & .showpass {
-                        width: 2.2rem;
-                        position: absolute;
-                        right: 2.6rem;
-                        top: 1.1rem;
-                        & img {
-                            width:100%;
-                        }
-                    }
-                }
-                & h1 {
-                    font-size: 6rem;
-                    line-height: 1rem;
-                    font-weight: 700;
-                }
-                & .submit {
-                    background: $default-color;
-                    width: 84%;
-                    color: white;
-                }
-                & .social {
-                    display: grid;
-                    width: 100%;
-                    grid-template-columns: 1fr 1fr;
-                    text-align: center;
-                    margin-top: 2rem;
-                    & p {
-                        font-size: 1.3rem;
-                        color: $default-color;
-                    }
-                }
-                & .join {
-                    text-align: center;
-                    margin-top: 5rem;
-                    & p {
-                        font-size: 1.3rem;
-                    }
-                    & a {
-                        color: $default-color;
-                    }
-                }
             }
         }
         & .right {
@@ -73,6 +20,79 @@
         }
     }
 }
+.register {
+    & .field {
+        position: relative;
+        & .forgot {
+            color: #008489;
+            margin: 0rem 0rem 1rem 0rem;
+            font-size: 1.2rem;
+            font-weight: 500;
+            cursor: pointer;
+            &:active {
+                color:white;
+            }
+        }
+        & .showpass {
+            width: 2.2rem;
+            position: absolute;
+            right: 2.6rem;
+            top: 1.1rem;
+            & img {
+                width:100%;
+            }
+        }
+    }
+    & h1 {
+        font-size: 6rem;
+        line-height: 1rem;
+        font-weight: 700;
+    }
+    & .submit {
+        background: $default-color;
+        width: 84%;
+        color: white;
+    }
+    & .social {
+        display: grid;
+        width: 100%;
+        grid-template-columns: 1fr 1fr;
+        text-align: center;
+        margin-top: 2rem;
+        & button {
+            border:none;
+            background: none;
+            & p {
+            font-size: 1.3rem;
+            color: $default-color;
+            }
+        }
+    }
+    & .join {
+        text-align: center;
+        margin-top: 5rem;
+        & p {
+            font-size: 1.3rem;
+        }
+        & a {
+            color: $default-color;
+        }
+    }
+    & .line {
+        margin: 3rem 0rem;
+        position: relative;
+        & span {
+            position: absolute;
+            background: white;
+            width: 4rem;
+            left: 50%;
+            margin-left: -2rem;
+            top: -1rem;
+            text-align: center;
+            color: #484848;
+        }
+    }
+}
 .field {
     button.save:disabled,
     button.save[disabled]{
@@ -81,6 +101,44 @@
         color: #c7c7c7;
     }
 }
+.field button.save {
+    background: #008489;
+    color: white;
+    border: none;
+    width: 100%;
+}
 .inprogress {
     cursor: progress !important;
 }
+
+@media (max-width: 768px) { 
+    .register {
+        & .content {
+            display: grid;
+            grid-template-columns: 1fr;
+            & .left {
+                width: 100%;
+                padding: 0rem 2rem;
+                margin-bottom: 5rem;
+                & .sec {
+                    width: 100%;
+                    position: relative;
+                    transform: translate(0%,0%);
+                    top: 0%; 
+                    left: 0%;
+                    & .social {
+                        grid-template-columns: 1fr;
+                        grid-gap: 1rem;
+                        & button {
+                            border:1px solid black;
+                        }
+                    }
+                }
+            }
+            & .right {
+                display: none;
+            }
+        }
+    }
+}
+

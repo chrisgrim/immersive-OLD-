@@ -116,7 +116,7 @@
                 </textarea>
                 <div v-if="$v.review.$error" class="validation-error">
                     <p class="error" v-if="!$v.review.required">Please add review snippet.</p>
-                    <p class="error" v-if="!$v.review.maxLength">Please keep it under 120 letters.</p>
+                    <p class="error" v-if="!$v.review.maxLength">Please keep it under 1200 letters.</p>
                 </div>
             </div>
             <div class="content">
@@ -157,7 +157,7 @@
                     type="textarea" 
                     v-model="item.review"
                     rows="6"
-                    placeholder="Review snippet (no longer than 120 characters)"
+                    placeholder="Review snippet"
                     :class="{ active: isActive == 'review'}"
                     @click="isActive = 'review'"
                     @blur="updateReview(item, 'review')"
@@ -179,7 +179,7 @@
                 <button @click.prevent="showModal(item, 'delete')" class="delete-circle"><p>X</p></button>
             </div>
         </div>
-        <modal v-show="modal == 'delete'" @close="modal = null">
+        <modal v-if="modal == 'delete'" @close="modal = null">
             <div slot="header">
                 <div class="circle del">
                     <p>X</p>
@@ -242,8 +242,7 @@
             assignUrl(arr) {
                 this.$v.reviewername.$touch;
                 if(arr == 'No Procenium') {
-                   this.image_path = '/reviews/nopro.png' 
-                   return this.url = 'https://noproscenium.com/'
+                    return this.image_path = '/storage/reviews/nopro.png'
                 }
                 return this.url = '';
             },
@@ -257,11 +256,16 @@
                     url: this.url,
                     rank: this.rank,
                     event: this.event,
+                    image_path: this.image_path ? this.image_path : ''
                 }
-                axios.post('/reviewevents/', data)
+                axios.post('/reviewevents', data)
                  .then(response => {
+                    // console.log(response.data);
                     location.reload();
                 })
+                .catch(error => {
+                    // console.log(error.response.data);
+                });
             },
 
             showModal(item, arr) {
@@ -303,14 +307,6 @@
                 });
             },
 
-            asyncGenerateUserList (query) {
-                axios.get('/api/search/user/list', { params: { keywords: query } })
-                .then(response => {
-                    console.log(response.data);
-                    this.users = response.data;
-                });
-            },
-
             addTag (newTag) {
                 this.reviewerList.push(newTag)
                 this.reviewername = newTag;
@@ -335,7 +331,7 @@
             },
             review: {
                 required,
-                maxLength: maxLength(120)
+                maxLength: maxLength(1200)
             },
         },
     }

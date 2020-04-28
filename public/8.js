@@ -264,6 +264,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -290,29 +310,55 @@ __webpack_require__.r(__webpack_exports__);
       if (this.location.country) {
         return ' the ' + this.location.country;
       }
+    },
+    visible: function visible() {
+      return this.webp ? 'is webp able' : 'is not webp able';
     }
   },
   data: function data() {
     return {
       user: this.loaduser,
-      avatar: this.loaduser.thumbImagePath ? "url(\"/storage/".concat(this.loaduser.thumbImagePath, "\")") : '',
+      avatar: '',
       location: this.loc[0] ? this.loc[0] : {},
       gettingLocation: false,
       errorStr: '',
       finalImage: '',
+      onSelf: parseFloat(this.auth) == this.loaduser.id ? true : false,
       activeItem: null,
       isLoading: false,
       onUserEdit: false,
       onUpClass: false,
       validationErrors: '',
       onSent: false,
-      dis: false
+      dis: false,
+      webp: ''
     };
   },
   methods: {
     userEdit: function userEdit() {
       this.onUserEdit = true;
       this.validationErrors = '';
+    },
+    canUseWebP: function canUseWebP() {
+      var webp = document.createElement('canvas').toDataURL('image/webp').indexOf('data:image/webp') == 0;
+
+      if (this.loaduser.thumbImagePath && webp) {
+        return this.avatar = this.loaduser.thumbImagePath;
+      }
+
+      ;
+
+      if (this.loaduser.thumbImagePath) {
+        return this.avatar = "".concat(this.loaduser.thumbImagePath.slice(0, -4), "jpg");
+      }
+    },
+    logout: function logout() {
+      axios.post('/logout').then(function (response) {
+        if (response.status === 302 || 401) {
+          window.location.href = '/';
+        } else {// throw error and go to catch block
+        }
+      })["catch"](function (error) {});
     },
     resend: function resend() {
       var _this = this;
@@ -383,7 +429,8 @@ __webpack_require__.r(__webpack_exports__);
       ;
       var data = {
         name: this.user.name,
-        location: this.location
+        location: this.location,
+        email: this.user.email
       };
       axios.patch("/users/".concat(this.user.id), data).then(function (response) {
         console.log(response.data);
@@ -433,7 +480,7 @@ __webpack_require__.r(__webpack_exports__);
 
     });
     this.autocomplete.addListener('place_changed', this.setPlace);
-    console.log(parseFloat(this.auth) !== this.user.id ? 'yes' : 'no');
+    this.canUseWebP();
   },
   filters: {
     formatDate: function formatDate(value) {
@@ -459,6 +506,13 @@ __webpack_require__.r(__webpack_exports__);
       name: {
         required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"],
         maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["maxLength"])(50),
+        auth: function auth() {
+          return this.auth ? this.auth !== this.user.id : true;
+        }
+      },
+      email: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"],
+        email: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["email"],
         auth: function auth() {
           return this.auth ? this.auth !== this.user.id : true;
         }
@@ -873,12 +927,12 @@ var render = function() {
   return _c("div", { staticClass: "profile" }, [
     _c("div", { staticClass: "body" }, [
       _c("div", { staticClass: "left" }, [
-        parseFloat(this.auth) !== _vm.user.id || !_vm.user.email_verified_at
+        !_vm.onSelf || !_vm.user.email_verified_at
           ? _c("div", [
               _vm.avatar
                 ? _c("div", {
                     staticClass: "image non",
-                    style: "background:" + _vm.avatar
+                    style: "background:url('/storage/" + _vm.avatar + "')"
                   })
                 : _vm.user.gravatar
                 ? _c("div", {
@@ -886,7 +940,7 @@ var render = function() {
                     style:
                       "background:url('" +
                       _vm.user.gravatar +
-                      ")center no-repeat;background-size: cover;"
+                      "')center no-repeat;background-size: cover;"
                   })
                 : _c(
                     "div",
@@ -907,7 +961,7 @@ var render = function() {
                         imageloaded: _vm.avatar,
                         imageloading: _vm.onUpClass
                       },
-                      style: "background:" + _vm.avatar
+                      style: "background:url('/storage/" + _vm.avatar + "')"
                     },
                     [
                       _c("image-upload", { on: { loaded: _vm.onImageUpload } }),
@@ -943,7 +997,7 @@ var render = function() {
                       style:
                         "background:url('" +
                         _vm.user.gravatar +
-                        ")center no-repeat;background-size: cover;"
+                        "')center no-repeat;background-size: cover;"
                     },
                     [
                       _c("image-upload", { on: { loaded: _vm.onImageUpload } }),
@@ -1169,6 +1223,66 @@ var render = function() {
                   })
                 ]),
                 _vm._v(" "),
+                _c("div", { staticClass: "field" }, [
+                  _c("label", [_vm._v(" Email ")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.user.email,
+                        expression: "user.email"
+                      }
+                    ],
+                    class: {
+                      active: _vm.activeItem == "email",
+                      error: _vm.$v.user.email.$error
+                    },
+                    attrs: { type: "email" },
+                    domProps: { value: _vm.user.email },
+                    on: {
+                      click: function($event) {
+                        _vm.activeItem = "email"
+                      },
+                      blur: function($event) {
+                        _vm.activeItem = null
+                      },
+                      input: [
+                        function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.user, "email", $event.target.value)
+                        },
+                        _vm.$v.user.email.$touch
+                      ]
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.$v.user.email.$error
+                    ? _c("div", { staticClass: "validation-error" }, [
+                        !_vm.$v.user.email.required
+                          ? _c("p", { staticClass: "error" }, [
+                              _vm._v("Must have an email")
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        !_vm.$v.user.email.email
+                          ? _c("p", { staticClass: "error" }, [
+                              _vm._v("Must be a valid email")
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        !_vm.$v.user.email.auth
+                          ? _c("p", { staticClass: "error" }, [
+                              _vm._v("You don't have permission to edit")
+                            ])
+                          : _vm._e()
+                      ])
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
                 _c("div", {}, [
                   _c(
                     "button",
@@ -1229,7 +1343,7 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              parseFloat(this.auth) == _vm.user.id && _vm.user.email_verified_at
+              _vm.onSelf && _vm.user.email_verified_at
                 ? _c(
                     "div",
                     { staticClass: "edit", on: { click: _vm.userEdit } },
@@ -1241,9 +1355,7 @@ var render = function() {
                   )
                 : _vm._e(),
               _vm._v(" "),
-              parseFloat(this.auth) == _vm.user.id &&
-              !_vm.user.email_verified_at &&
-              !_vm.onSent
+              _vm.onSelf && !_vm.user.email_verified_at && !_vm.onSent
                 ? _c(
                     "button",
                     {
@@ -1264,9 +1376,7 @@ var render = function() {
                   )
                 : _vm._e(),
               _vm._v(" "),
-              parseFloat(this.auth) == _vm.user.id &&
-              !_vm.user.email_verified_at &&
-              _vm.onSent
+              _vm.onSelf && !_vm.user.email_verified_at && _vm.onSent
                 ? _c("div", { staticClass: "ver a" }, [
                     _vm._v(
                       "\n                        Please check your email.\n                    "
@@ -1278,35 +1388,56 @@ var render = function() {
             _vm.location.latitude
               ? _c("div", { staticClass: "loc" }, [
                   _c("div", [
-                    _vm._v(
-                      "\n                        Lives near " +
-                        _vm._s(_vm.locationPlaceholder) +
-                        "\n                    "
-                    )
+                    _vm._v("\n                        Lives near "),
+                    _c(
+                      "span",
+                      {
+                        staticStyle: { "font-weight": "600", color: "#616161" }
+                      },
+                      [_vm._v(_vm._s(_vm.locationPlaceholder))]
+                    ),
+                    _vm._v(" \n                        }\n                    ")
                   ])
                 ])
               : _vm._e()
           ]
         ),
         _vm._v(" "),
-        _c("div", { staticClass: "favorites" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c(
-            "div",
-            { attrs: { id: "grid" } },
-            _vm._l(_vm.events, function(event) {
-              return _c(
+        _vm.onSelf
+          ? _c("div", { staticClass: "favorites" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
                 "div",
-                [
-                  _c("event-listing-item", {
-                    attrs: { user: _vm.auth, event: event }
-                  })
-                ],
-                1
+                { attrs: { id: "grid" } },
+                _vm._l(_vm.events, function(event) {
+                  return _c(
+                    "div",
+                    [
+                      _c("event-listing-item", {
+                        attrs: { user: _vm.auth, event: event }
+                      })
+                    ],
+                    1
+                  )
+                }),
+                0
               )
-            }),
-            0
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("div", { staticClass: "logout" }, [
+          _c(
+            "button",
+            {
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.logout()
+                }
+              }
+            },
+            [_vm._v("Log out")]
           )
         ])
       ])

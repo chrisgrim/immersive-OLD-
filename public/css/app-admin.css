@@ -19,6 +19,34 @@ select:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
 }
 
+input,
+select {
+  font-size: 100% !important;
+}
+
+input[type=color],
+input[type=date],
+input[type=datetime],
+input[type=datetime-local],
+input[type=email],
+input[type=month],
+input[type=number],
+input[type=password],
+input[type=search],
+input[type=tel],
+input[type=text],
+input[type=time],
+input[type=url],
+input[type=week],
+select:focus,
+textarea {
+  font-size: 16px !important;
+}
+
+.grey {
+  background: #f2f2f2;
+}
+
 .dis {
   pointer-events: none;
 }
@@ -89,21 +117,17 @@ select:-webkit-autofill:focus {
   display: inline;
 }
 
-#header.a {
+#header .nav.a {
   position: fixed;
   width: 20%;
   background: white;
   height: 100%;
   z-index: 901;
   border-right: solid #c1c1c1 1px;
-}
-
-#header.a .nav {
-  border: none;
   padding: 2.5rem;
 }
 
-#header.a .nav button.home {
+#header .nav.a button.home {
   border: solid #008489 1px;
   border-radius: 0.3rem;
   padding: 0.9rem 2rem;
@@ -113,25 +137,25 @@ select:-webkit-autofill:focus {
   color: white;
 }
 
-#header.a .nav .logo {
+#header .nav.a .logo {
   float: none;
   display: block;
 }
 
-#header.a .nav .title {
+#header .nav.a .title {
   display: block;
 }
 
-#header.a .nav .title h3 {
+#header .nav.a .title h3 {
   font-size: 1.7rem;
   margin: 0;
 }
 
-#header.a .menu {
+#header .menu {
   height: 100vh;
 }
 
-#header.a .menu a {
+#header .menu a {
   margin: 1rem 1rem;
   font-size: 1.5rem;
   color: #767676;

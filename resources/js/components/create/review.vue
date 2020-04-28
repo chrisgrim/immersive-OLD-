@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="inNav">
+        <div class="create-button__in-nav review">
             <button :disabled="dis" class="create review" @click.prevent="goBack()"> Back </button>
             <button :disabled="dis" class="create review" @click.prevent="submitEvent()"> Submit </button>
         </div>

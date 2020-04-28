@@ -37,6 +37,30 @@ div.leaflet-popup {
                     background-repeat: no-repeat;
                     border-radius: .5rem .5rem 0rem 0rem;
                 }
+                & .info {
+                    padding: 1rem;
+                    & .name {
+                        font-family: 'Montserrat', sans-serif; 
+                        color:#484848;
+                    }
+                }
+            }
+            & .show-pop {
+                width: 100%;
+                
+                & .back {
+                    height:12rem;
+                    background-size: cover;
+                    background-repeat: no-repeat;
+                    border-radius: .5rem .5rem 0rem 0rem;
+                }
+                & .info {
+                    padding: 1rem;
+                    & .name {
+                        font-family: 'Montserrat', sans-serif; 
+                        color:#484848;
+                    }
+                }
             }
         }
     }

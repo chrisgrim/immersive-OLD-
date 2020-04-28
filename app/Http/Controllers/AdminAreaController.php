@@ -7,6 +7,7 @@ use App\Event;
 use App\Category;
 use App\User;
 use App\EventImage;
+use App\Message;
 use App\ModeratorComment;
 use App\Conversation;
 use App\Mail\ModeratorComments;
@@ -124,7 +125,7 @@ class AdminAreaController extends Controller
      */
     public function showApproval(Event $event)
     {
-        $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'advisories','showOnGoing');
+        $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'advisories','showOnGoing','shows');
         return view('adminArea.showapproval',compact('event'));
     }
 
@@ -147,31 +148,7 @@ class AdminAreaController extends Controller
             'slug' => $slug,
         ]);
 
-        if($event->moderatorcomments()->count()) {
-
-            $conversation = Conversation::find($event->moderatorcomments()->first()->conversation_id);
-            $conversation->touch();
-            $ModeratorComment = ModeratorComment::create([
-                'conversation_id' => $conversation->id,
-                'event_id' => $event->id,
-                'comments' => 'Your event has been approved!',
-                'user_id' => auth()->id(),
-            ]);
-        } else {
-            $ids = [$event->user_id, auth()->id()];
-            $conversation = Conversation::create();
-            $conversation->users()->sync($ids);
-            $ModeratorComment = ModeratorComment::create([
-                'conversation_id' => $conversation->id,
-                'event_id' => $event->id,
-                'comments' => 'Your event has been approved!',
-                'user_id' => auth()->id(),
-            ]);
-        };
-
-        $event->user->update([
-            'has_unread' => true
-        ]);
+        Message::eventnotification($event, 'Thanks, your event has been approved!', $slug);
 
         Mail::to($event->user)->send(new EventApproved($event));
 
@@ -185,33 +162,7 @@ class AdminAreaController extends Controller
      */
     public function fail(Request $request, Event $event)
     {
-        if($event->moderatorcomments()->count()) {
-
-            $conversation = Conversation::find($event->moderatorcomments()->first()->conversation_id);
-            $conversation->touch();
-            $ModeratorComment = ModeratorComment::create([
-                'conversation_id' => $conversation->id,
-                'event_id' => $event->id,
-                'comments' => $request->comments,
-                'user_id' => auth()->id(),
-            ]);
-        } else {
-            $ids = [$event->user_id, auth()->id()];
-            $conversation = Conversation::create();
-            $conversation->users()->sync($ids);
-            $ModeratorComment = ModeratorComment::create([
-                'conversation_id' => $conversation->id,
-                'event_id' => $event->id,
-                'comments' => $request->comments,
-                'user_id' => auth()->id(),
-            ]);
-        };
-
-        $event->user->update([
-            'has_unread' => true
-        ]);
-
-        $ModeratorComment = $ModeratorComment->load('event');
+        $ModeratorComment = Message::eventnotification($event, 'denied', $request)->load('event');
 
         Mail::to($event->user)->send(new ModeratorComments($ModeratorComment));
 
@@ -219,6 +170,4 @@ class AdminAreaController extends Controller
             'status' => 'n',
         ]);
     }
-
-
 }

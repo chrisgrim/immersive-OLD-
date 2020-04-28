@@ -1,14 +1,14 @@
 <template>
-<div class="image">
-    <div class="section">
+<div class="event-create__image container">
+    <section class="event-create">
         <h2 style="text-align:center">Upload Image</h2>
-        <div class="img">          
-            <div class="loader">
+        <div class="event-create-image">          
+            <div class="image-loader">
                 <label 
-                class=""
+                class="image-loader__label"
                 :style="{ backgroundImage: `url('${imageSrc ? imageSrc : eventImage}')` }">
                     <div 
-                    class="dash"
+                    class="image-loader__label-body"
                     :class="{ over: hasImage, load: isLoading }">
                         <div 
                         class="box">
@@ -36,12 +36,13 @@
                 </div>
             </div>
         </div>
-        
-    </div>
-    <div class="inNav">
+    </section>
+
+    <div class="create-button__in-nav">
         <button :disabled="dis" class="create" @click.prevent="goBack()"> Back </button>
         <button :disabled="disImage" v-if="readyToSubmit" class="create" @click.prevent="submitReview()"> Final Review </button>
     </div>
+
 </div>
 
 </template>

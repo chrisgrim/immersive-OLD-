@@ -86,3 +86,17 @@
         }
     }
 }
+
+@media (max-width: 768px) {
+    .field {
+        & input {
+            color: black;
+            border-color: #333333;
+            &::placeholder {
+                color:black;
+                font-size:1.4rem;
+                font-family: inherit;
+            }
+        }
+    }
+}

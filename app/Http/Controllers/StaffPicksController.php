@@ -50,10 +50,10 @@ class StaffPicksController extends Controller
         if($request->keywords) {
             return $events = Event::search($request->keywords)
                 ->rule(EventSearchRule::class)
-                ->where('approval_process', '=', 'approved')
+                ->where('status', 'p')
                 ->get();
         }
-        return Event::all()->where('approval_process', '=', 'approved');
+        return Event::all()->where('status', 'p');
     }
 
     /**

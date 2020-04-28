@@ -1,4 +1,7 @@
 let mutations = {
+        adduser(state, user) {
+          state.user = user
+        },
         CREATE_EVENT(state, event) {
             state.events.unshift(event)
         },

@@ -1,11 +1,13 @@
 html { font-size: 62.5%; font-family: 'Montserrat', sans-serif; height:100%;} 
-body, p { font-size: 14px; font-size: 1.6rem; font-family: 'Montserrat', sans-serif; margin:0px; height:100%;} /* =14px */
-h1   { font-size: 24px; font-size: 2.4rem; font-family: 'Montserrat', sans-serif; color:#484848; transform: scale(1, 1.11);display: inherit;} /* =24px */
-h2   { font-size: 20px; font-size: 2.2rem; font-family: 'Montserrat', sans-serif; color:#484848; transform: scale(1, 1.11);} /* =24px */
-h3   { font-size: 16px; font-size: 2.0rem; font-family: 'Montserrat', sans-serif; color:#484848; transform: scale(1, 1.11);} /* =24px */
+body, p { font-size: 17px; font-size: 1.7rem; font-family: 'Montserrat', sans-serif; margin:0px; height:100%;color:$font-color;} /* =14px */
+h1   { font-size: 46px; font-size: 4.6rem; font-family: 'Montserrat', sans-serif; margin:0px; color:$font-color;display: inherit;} /* =24px */
+h2   { font-size: 31px; font-size: 3.1rem; font-family: 'Montserrat', sans-serif; margin:0px; color:$font-color; transform: scale(1, 1.11);margin:0;} /* =24px */
+h3   { font-size: 24px; font-size: 2.4rem; font-family: 'Montserrat', sans-serif; margin:0px; color:$font-color; transform: scale(1, 1.11);font-weight: 500;} /* =24px */
+h4   { font-size: 16px; font-size: 2.0rem; font-family: 'Montserrat', sans-serif; margin:0px; color:$font-color; transform: scale(1, 1.11);font-weight: 500;} /* =24px */
 a { text-decoration: none; color: inherit; }
-p {line-height: 2.1rem;}
+p {line-height: 2.5rem;}
 button {cursor: pointer;}
+ul {margin:0;padding:0;}
 
 
 *, *:before, *:after {
@@ -14,11 +16,21 @@ button {cursor: pointer;}
     box-sizing: border-box;
     -ms-flex: 0 1 auto;
 }
+.noscroll {
+    overflow: hidden;
+}
 
 .container {
-    width:89%;
+    width:90%;
     margin:auto;
-    padding-bottom: 10rem;
+}
+
+.show-text {
+    color: #008489;
+    cursor: pointer;
+    padding-left: 2rem;
+    font-size: 1.3rem;
+    font-weight: 800;
 }
 
 .bspin {
@@ -26,7 +38,36 @@ button {cursor: pointer;}
 }
 
 #bodyArea {
-    padding: 7rem 0rem;
+
+}
+
+.grid {
+    display: grid;
+    grid-column-gap: 3rem;
+}
+
+.mobile {
+    display: none;
+}
+.desktop {
+    display: inherit;
+}
+
+.link {
+    &.remember a{
+        font-size: 1rem;
+    }
+    & a {
+    font-family: $basic-font-1;
+    color: $default-font-color;
+    text-decoration: none;
+    font-size: 1.3rem;
+    font-weight: 400;
+    transition: all .2s ease-in-out;
+        &:hover {
+            text-decoration:underline;
+        }
+    }
 }
 
 button { 
@@ -35,6 +76,13 @@ button {
     border-radius: 4px;
     padding: 1rem;
     font-size: 1.6rem;
+}
+
+.organizer-icon-text {
+    color: #fff;
+    padding: 1.1rem;
+    text-align: center;
+    font-weight: 800;
 }
 
 input.general {
@@ -70,4 +118,27 @@ textarea {
         font-family: inherit;
     }
 }
+.active-dot {
+    background: red;
+    height: 1rem;
+    width: 1rem;
+    position: absolute;
+    border-radius: 50%;
+    right: -.7rem;
+    top: 2.4rem;
+}
 
+
+@media (max-width: 768px) {
+    html { font-size: 62.5%; font-family: 'Montserrat', sans-serif; height:100%;} 
+    body, p { font-size: 14px; font-size: 1.6rem; font-family: 'Montserrat', sans-serif; margin:0px; height:100%;} /* =14px */
+    h1   { font-size: 32px; font-size: 3.2rem;color:#484848; transform: scale(1, 1.11);display: inherit;} /* =24px */
+    h2   { font-size: 24px; font-size: 2.4rem;color:rgb(34, 34, 34); transform: scale(1, 1.11);} /* =24px */
+    h3   { color:#484848; transform: scale(1, 1.11);} /* =24px */
+    a { text-decoration: none; color: inherit; }
+    p {line-height: 2.1rem;}
+    button {cursor: pointer;}
+    .mobile { display: inherit;}
+    .desktop { display: none;}
+    .grid {grid-template-columns: 1fr;}
+}

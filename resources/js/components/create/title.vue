@@ -1,62 +1,62 @@
 <template>
-	<div class="title">
-        <div class="ctitle">
-            <h2>Title</h2>
-        </div>
-	    <div class="section">
-            <div class="text">
-                <div @mouseover="showEdit=true" v-if="approved" class="field">
-                    <label>Title</label>
-                    <p class="name">{{name}}</p>
-                    <button class="editTitle" v-if="showEdit" @click.prevent="showModal">Edit</button>
+	<div class="event-create__title container grid">
+        <section class="event-create">
+            <div class="title">
+                <h2>Title</h2>
+            </div>
+            <div @mouseover="showEdit=true" v-if="approved" class="field">
+                <label>Title</label>
+                <p class="create-titlename">{{name}}</p>
+                <button class="editTitle" v-if="showEdit" @click.prevent="showModal">Edit</button>
+            </div>
+            <div v-else="approved" class="field">
+                <label>Stand out from the other events with a great title</label>
+                <input
+                type="text" 
+                v-model="name" 
+                placeholder=" "
+                :class="{ active: activeItem == 'name','error': $v.name.$error }"
+                @input="$v.name.$touch()"
+                @click="activeItem = 'name'"
+                @blur="activeItem = 'null'"
+                 />
+                <div v-if="$v.name.$error" class="validation-error">
+                    <p class="error" v-if="!$v.name.required">Please add a title.</p>
+                    <p class="error" v-if="!$v.name.maxLength">The title is too long.</p>
+                </div>
+            </div>
+            <div class="field">
+                <label>Event tag line</label>
+                <input 
+                type="text" 
+                v-model="tagLine"
+                :class="{ active: activeItem == 'tag','error': $v.tagLine.$error }"
+                @input="$v.tagLine.$touch()"
+                @click="activeItem = 'tag'"
+                @blur="activeItem = 'null'"
+                placeholder="Quick, one sentence line to get the audience hooked!"
+                />
+                <div v-if="$v.tagLine.$error" class="validation-error">
+                    <p class="error" v-if="!$v.tagLine.maxLength">The tag line is too long.</p>
                 </div>
-    		    <div v-else="approved" class="field">
-    				<label>Stand out from the other events with a great title</label>
-    	            <input
-    	            type="text" 
-    	            v-model="name" 
-    	            placeholder=" "
-    	            :class="{ active: activeItem == 'name','error': $v.name.$error }"
-    	            @input="$v.name.$touch()"
-    	            @click="activeItem = 'name'"
-                    @blur="activeItem = 'null'"
-    	             />
-    	            <div v-if="$v.name.$error" class="validation-error">
-    	    			<p class="error" v-if="!$v.name.required">Please add a title.</p>
-                        <p class="error" v-if="!$v.name.maxLength">The title is too long.</p>
-    	    		</div>
-    	        </div>
-                <div class="field">
-                    <label>Event tag line</label>
-                    <input 
-                    type="text" 
-                    v-model="tagLine"
-                    :class="{ active: activeItem == 'tag','error': $v.tagLine.$error }"
-                    @input="$v.tagLine.$touch()"
-                    @click="activeItem = 'tag'"
-                    @blur="activeItem = 'tag'"
-                    placeholder="Quick, one sentence line to get the audience hooked!"
-                    />
-                    <div v-if="$v.tagLine.$error" class="validation-error">
-                        <p class="error" v-if="!$v.tagLine.maxLength">The tag line is too long.</p>
-                    </div>
-                </div>
             </div>
-            <div class="image">
-                
+            <div class="event-create__submit-button">
+                <button :disabled="dis" @click.prevent="submitName()" class="create"> Next </button>
             </div>
-	    </div>
-        <div class="inNav">
+        </section>
+
+        <section></section>
+
+        <div class="create-button__in-nav">
             <button :disabled="dis" class="create" @click.prevent="goBack()"> Back </button>
             <button :disabled="dis" class="create" @click.prevent="submitName()"> Next </button>
         </div>
-	    <div class="submit">
-	        <button :disabled="dis" @click.prevent="submitName()" class="create"> Next </button>
-	    </div>
+        
+
         <modal v-if="modal" @close="modal = false">
             <div slot="header">
                 <div class="circle del">
-                    <p>X</p>
+                    <p>?</p>
                 </div>
             </div>
             <div slot="body"> 

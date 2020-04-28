@@ -1,3 +1,13 @@
+.show .flatpickr-calendar {
+    box-shadow: none;
+}
+.show .flatpickr-day {
+    pointer-events: none;
+    &.selected:hover {
+        background-color:red;
+    }
+}
+
 .flatpickr-calendar.inline {
     margin: auto;
 }

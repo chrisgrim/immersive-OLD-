@@ -4,6 +4,10 @@
     <title>{{config('app.name')}} - Login</title>
     <link href="/css/app-lite.css" rel="stylesheet">
     <link href="/css/app.css" rel="stylesheet">
+@endsection
+
+@section('nav')
+    <vue-nav onclass="entry"></vue-nav>
 @endsection 
 
 @section('content')

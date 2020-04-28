@@ -1,13 +1,24 @@
-@extends('layouts.create.master')
+@extends('layouts.master')
+
+@section('meta')
+        <link href="/css/app-create.css" rel="stylesheet">
+        <link href="/css/app-lite.css" rel="stylesheet">
+        <link href="/css/app.css" rel="stylesheet">
+        @yield('location')
+@endsection
+
+@section('nav')
+    <vue-create-nav :event="{{$event}}"></vue-create-nav>
+@endsection
 
 @section('content')
     <div id="create">
-    	<event-create-checklist :event="{{$event}}"></event-create-checklist>	
-    	<div class="content">
+    	<div class="create-body">
     		@yield('created')
     	</div>
     </div>	
 @endsection
+
 @section('content2')
     <div id="bodyArea">
         @yield('review')
