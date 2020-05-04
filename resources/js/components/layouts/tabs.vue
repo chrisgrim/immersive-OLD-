@@ -1,16 +1,16 @@
 <template>
     <div>
-        <div class="tab" role="tablist">
-            <div class="tabcontent">
+        <div class="vue-tab" role="tablist">
+            <div class="vue-tab-content">
                 <div
                     v-for="(tab, index) in tabs"
-                    class="ln"
-                    :class="{ 'act': tab.isActive }"
+                    class="vue-tab-element"
+                    :class="{ 'active': tab.isActive }"
                     :style="tab.isActive ? 'margin-bottom: -1px' : ''"
                 >
                     <button        
                     :class="{ 'font-bold': tab.isActive }"
-                    class="focus:outline-none"
+                    class="vue-tab-button"
                     role="tab"
                     :aria-selected="tab.isActive"
                     @click="activeTab = tab" >

@@ -249,12 +249,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 
 
@@ -330,6 +324,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { staticClass: "organizer-show-contact" },
     [
       _vm.user && _vm.user != _vm.loadorganizer.user_id
         ? _c("div", { staticClass: "contact" }, [
@@ -478,198 +473,205 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "show" }, [
-    _c("div", [
-      _c("div", { staticClass: "organizer" }, [
-        _c("div", { staticClass: "left", staticStyle: { height: "100%" } }, [
-          _c("div", { staticClass: "image" }, [
-            _vm.organizer.thumbImagePath
-              ? _c("div", [
-                  _c("picture", [
-                    _c("source", {
+  return _c("div", { staticClass: "organizer-show grid" }, [
+    _c(
+      "div",
+      { staticClass: "organizer-show-image", staticStyle: { height: "100%" } },
+      [
+        _c("div", { staticClass: "organizer-show-image__media" }, [
+          _vm.organizer.thumbImagePath
+            ? _c("div", [
+                _c("picture", [
+                  _c("source", {
+                    attrs: {
+                      type: "image/webp",
+                      srcset: "/storage/" + _vm.organizer.thumbImagePath
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("img", {
+                    attrs: {
+                      src:
+                        "/storage/" +
+                        _vm.organizer.thumbImagePath.slice(0, -4) +
+                        "jpg",
+                      alt: _vm.organizer.name + " organizer"
+                    }
+                  })
+                ])
+              ])
+            : _c("div")
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "organizer-show-info" },
+      [
+        _c("div", { staticClass: "organizer-show-info__name" }, [
+          _c("h2", [_vm._v(_vm._s(_vm.organizer.name))])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "organizer-show-info__contact grid" }, [
+          _vm.organizer.twitterHandle
+            ? _c(
+                "a",
+                {
+                  attrs: {
+                    rel: "noreferrer",
+                    target: "_blank",
+                    href:
+                      "https://www.twitter.com/" + _vm.organizer.instagramHandle
+                  }
+                },
+                [
+                  _c("div", {}, [
+                    _c("img", {
+                      staticClass: "organizer-info-contact__image",
                       attrs: {
-                        type: "image/webp",
-                        srcset: "/storage/" + _vm.organizer.thumbImagePath
+                        src: "/storage/website-files/twitter.png",
+                        alt: ""
                       }
                     }),
                     _vm._v(" "),
-                    _c("img", {
-                      attrs: {
-                        src:
-                          "/storage/" +
-                          _vm.organizer.thumbImagePath.slice(0, -4) +
-                          "jpg",
-                        alt: _vm.organizer.name + " organizer"
-                      }
-                    })
+                    _c(
+                      "span",
+                      { staticClass: "organizer-info-contact__type" },
+                      [_vm._v(_vm._s(_vm.organizer.twitterHandle))]
+                    )
                   ])
-                ])
-              : _c("div")
-          ])
+                ]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.organizer.facebookHandle
+            ? _c(
+                "a",
+                {
+                  attrs: {
+                    rel: "noreferrer",
+                    target: "_blank",
+                    href:
+                      "https://www.facebook.com/" +
+                      _vm.organizer.instagramHandle
+                  }
+                },
+                [
+                  _c("div", {}, [
+                    _c("img", {
+                      staticClass: "organizer-info-contact__image",
+                      attrs: {
+                        src: "/storage/website-files/facebook.png",
+                        alt: ""
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "span",
+                      { staticClass: "organizer-info-contact__type" },
+                      [_vm._v(_vm._s(_vm.organizer.facebookHandle))]
+                    )
+                  ])
+                ]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.organizer.instagramHandle
+            ? _c(
+                "a",
+                {
+                  attrs: {
+                    rel: "noreferrer",
+                    target: "_blank",
+                    href:
+                      "https://www.instagram.com/" +
+                      _vm.organizer.instagramHandle
+                  }
+                },
+                [
+                  _c("div", {}, [
+                    _c("img", {
+                      staticClass: "organizer-info-contact__image",
+                      attrs: {
+                        src: "/storage/website-files/insta.png",
+                        alt: ""
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "span",
+                      { staticClass: "organizer-info-contact__type" },
+                      [_vm._v(_vm._s(_vm.organizer.instagramHandle))]
+                    )
+                  ])
+                ]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.organizer.website
+            ? _c(
+                "a",
+                {
+                  attrs: {
+                    rel: "noreferrer",
+                    target: "_blank",
+                    href: "" + _vm.organizer.website
+                  }
+                },
+                [
+                  _c("div", {}, [
+                    _c("img", {
+                      staticClass: "organizer-info-contact__image",
+                      attrs: {
+                        src: "/storage/website-files/orgwebsite.png",
+                        alt: ""
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "span",
+                      { staticClass: "organizer-info-contact__type" },
+                      [_vm._v(_vm._s(_vm.organizer.name))]
+                    )
+                  ])
+                ]
+              )
+            : _vm._e()
         ]),
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "right" },
-          [
-            _c("div", { staticClass: "name" }, [
-              _c("h2", [_vm._v(_vm._s(_vm.organizer.name))])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "info" }, [
-              _vm.organizer.twitterHandle
-                ? _c(
-                    "a",
-                    {
-                      attrs: {
-                        rel: "noreferrer",
-                        target: "_blank",
-                        href:
-                          "https://www.twitter.com/" +
-                          _vm.organizer.instagramHandle
-                      }
-                    },
-                    [
-                      _c("div", { staticClass: "box" }, [
-                        _c("img", {
-                          attrs: {
-                            src: "/storage/website-files/twitter.png",
-                            alt: ""
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("span", { staticClass: "des" }, [
-                          _vm._v(_vm._s(_vm.organizer.twitterHandle))
-                        ])
-                      ])
-                    ]
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.organizer.facebookHandle
-                ? _c(
-                    "a",
-                    {
-                      attrs: {
-                        rel: "noreferrer",
-                        target: "_blank",
-                        href:
-                          "https://www.facebook.com/" +
-                          _vm.organizer.instagramHandle
-                      }
-                    },
-                    [
-                      _c("div", { staticClass: "box" }, [
-                        _c("img", {
-                          attrs: {
-                            src: "/storage/website-files/facebook.png",
-                            alt: ""
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("span", { staticClass: "des" }, [
-                          _vm._v(_vm._s(_vm.organizer.facebookHandle))
-                        ])
-                      ])
-                    ]
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.organizer.instagramHandle
-                ? _c(
-                    "a",
-                    {
-                      attrs: {
-                        rel: "noreferrer",
-                        target: "_blank",
-                        href:
-                          "https://www.instagram.com/" +
-                          _vm.organizer.instagramHandle
-                      }
-                    },
-                    [
-                      _c("div", { staticClass: "box" }, [
-                        _c("img", {
-                          attrs: {
-                            src: "/storage/website-files/insta.png",
-                            alt: ""
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("span", { staticClass: "des" }, [
-                          _vm._v(_vm._s(_vm.organizer.instagramHandle))
-                        ])
-                      ])
-                    ]
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.organizer.website
-                ? _c(
-                    "a",
-                    {
-                      attrs: {
-                        rel: "noreferrer",
-                        target: "_blank",
-                        href: "" + _vm.organizer.website
-                      }
-                    },
-                    [
-                      _c("div", { staticClass: "box" }, [
-                        _c("img", {
-                          attrs: {
-                            src: "/storage/website-files/orgwebsite.png",
-                            alt: ""
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("span", { staticClass: "des" }, [
-                          _vm._v(_vm._s(_vm.organizer.name))
-                        ])
-                      ])
-                    ]
-                  )
-                : _vm._e()
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "descrip",
-                staticStyle: { "white-space": "pre-line" }
-              },
-              [_c("p", [_vm._v(_vm._s(_vm.organizer.description))])]
-            ),
-            _vm._v(" "),
-            _c("ContactOrganizer", {
-              attrs: { user: _vm.user, loadorganizer: _vm.organizer }
+          {
+            staticClass: "organizer-show-info__description",
+            staticStyle: { "white-space": "pre-line" }
+          },
+          [_c("p", [_vm._v(_vm._s(_vm.organizer.description))])]
+        ),
+        _vm._v(" "),
+        _c("ContactOrganizer", {
+          attrs: { user: _vm.user, loadorganizer: _vm.organizer }
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "organizer-show-events" }, [
+          _c("h2", [_vm._v(_vm._s(_vm.organizer.name) + " Events")]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "grid organizer-show__event-list" },
+            _vm._l(_vm.loadorganizer.events, function(event) {
+              return _c(
+                "div",
+                [_c("organizer-show-events", { attrs: { event: event } })],
+                1
+              )
             }),
-            _vm._v(" "),
-            _c("div", { staticClass: "events" }, [
-              _c("h2", [_vm._v(_vm._s(_vm.organizer.name) + " Events")]),
-              _vm._v(" "),
-              _c("div", [
-                _c(
-                  "div",
-                  { attrs: { id: "grid" } },
-                  _vm._l(_vm.loadorganizer.events, function(event) {
-                    return _c(
-                      "div",
-                      [
-                        _c("organizer-show-events", { attrs: { event: event } })
-                      ],
-                      1
-                    )
-                  }),
-                  0
-                )
-              ])
-            ])
-          ],
-          1
-        )
-      ])
-    ])
+            0
+          )
+        ])
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = []

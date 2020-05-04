@@ -1,4 +1,108 @@
-#bodyArea.org {
+/*------------------------------------*\
+  #Organizer- Show Page
+\*------------------------------------*/
+
+.organizer-show {
+    grid-template-columns: .23fr .76fr;
+    width:100%;
+    margin: auto;
+}
+.organizer-show-image {
+    width: 100%;
+    background: black;
+    position: relative;
+    height: 100%
+}
+.organizer-show-image__media {
+    position: absolute;
+    height: 30rem;
+    width: 30rem;
+    right: 0;
+    margin: 15rem -15rem 0rem 0rem;
+    & img {
+        width: 100%;
+        border-radius: 50%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+.organizer-show-info {
+    width: 100%;
+    position: relative;
+    padding: 10rem 10rem 0rem 25rem;
+}
+.organizer-show-info__name h2 {
+    font-size: 9rem;
+    margin-bottom: 1rem;
+}
+.organizer-show-info__contact {
+    grid-template-columns: auto auto auto auto;
+    width: 61%;
+    border-bottom: 1px solid #c3c3c3;
+}
+img.organizer-info-contact__image {
+    width: 1.4rem;
+    margin-bottom: 0.7rem;
+}
+.organizer-info-contact__type {
+    margin: 0px;
+    word-wrap: break-word;
+    font-size: 1.4rem;
+    font-weight: 300;
+    line-height: 1.2857142857rem;
+    color: #484848;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+.organizer-show-info__description {
+    color: #676767;
+    margin: 2rem 0rem;
+}
+.organizer-show-contact {
+    padding: 1rem 0 3rem 0;
+    border-bottom: 1px solid #c3c3c3;
+}
+.organizer-show-events {
+    padding: 2rem 0rem 4rem 0rem;
+    & h2 {
+        font-size: 1.6rem;
+        font-weight: 500;
+    }
+}
+.organizer-show__event-list {
+    grid-template-columns: repeat(2, 1fr);
+    margin: 1rem 0rem;
+}
+
+
+@media (max-width: 768px) {
+    .organizer-show {
+        grid-template-columns: 1fr;
+        padding: 10rem 2rem 6rem 2rem;
+    }
+    .organizer-show-image__media {
+        position: relative;
+        height: 20rem;
+        width: 20rem;
+        margin: 0;
+    }
+    .organizer-show-image {
+        background: white;
+    }
+    .organizer-show-info {
+        padding: 0;
+    }
+    .organizer-show-info__name h2 {
+        font-size: 4rem;
+    }
+}
+
+
+
+
+
+
+/*#bodyArea.org {
     padding: 0rem;
 }
 .show{
@@ -85,8 +189,8 @@
             }
         }
     }
-}
-@media (max-width: 768px) {
+}*/
+/*@media (max-width: 768px) {
     .show {
         & .organizer {
             display: inline-block;
@@ -111,4 +215,4 @@
             }
         }
     }
-}
+}*/

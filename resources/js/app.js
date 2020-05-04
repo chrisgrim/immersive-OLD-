@@ -97,6 +97,10 @@ Vue.component('create-description', () => import('./components/create/descriptio
 Vue.component('create-advisories', () => import('./components/create/advisories.vue'));
 Vue.component('create-review', () => import('./components/create/review.vue'));
 Vue.component('vue-create-review-event', () => import('./components/create/review-event.vue'));
+Vue.component('vue-create-first-event', () => import('./components/create/start-event-creation.vue'));
+
+
+
 
 //Admin Area
 Vue.component('admin-nav', () => import('./components/adminArea/nav.vue'));

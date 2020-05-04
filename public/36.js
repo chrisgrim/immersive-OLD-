@@ -170,6 +170,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -205,6 +210,8 @@ __webpack_require__.r(__webpack_exports__);
       return function (event) {
         return event.status !== 'r' ? true : false;
       };
+    },
+    inProgress: function inProgress() {//
     }
   },
   methods: {
@@ -918,7 +925,7 @@ var render = function() {
                     _c(
                       "tab",
                       {
-                        staticClass: "tab-events",
+                        staticClass: "event-edit-eventlist grid",
                         attrs: { title: "Past Events", id: organizer.id + 1 }
                       },
                       [
@@ -926,20 +933,56 @@ var render = function() {
                           return index < 4
                             ? _c(
                                 "div",
-                                { key: event.id, staticClass: "ind" },
+                                {
+                                  key: event.id,
+                                  staticClass: "edit-event__element"
+                                },
                                 [
                                   _c(
-                                    "button",
-                                    {
-                                      staticClass: "delete-circle",
-                                      on: {
-                                        click: function($event) {
-                                          $event.preventDefault()
-                                          return _vm.showModal(event)
-                                        }
-                                      }
-                                    },
-                                    [_vm._v("X")]
+                                    "div",
+                                    { staticClass: "edit-event__buttons" },
+                                    [
+                                      _vm.status(event)
+                                        ? _c(
+                                            "a",
+                                            {
+                                              attrs: {
+                                                href: "/events/" + event.slug
+                                              }
+                                            },
+                                            [
+                                              _c(
+                                                "button",
+                                                {
+                                                  staticClass:
+                                                    "edit-event__sub-button"
+                                                },
+                                                [_vm._v("View")]
+                                              )
+                                            ]
+                                          )
+                                        : _vm._e(),
+                                      _vm._v(" "),
+                                      _vm.status(event)
+                                        ? _c(
+                                            "button",
+                                            {
+                                              staticClass:
+                                                "edit-event__sub-button",
+                                              on: {
+                                                click: function($event) {
+                                                  $event.preventDefault()
+                                                  return _vm.showModal(
+                                                    event,
+                                                    "delete"
+                                                  )
+                                                }
+                                              }
+                                            },
+                                            [_vm._v("Delete")]
+                                          )
+                                        : _vm._e()
+                                    ]
                                   ),
                                   _vm._v(" "),
                                   _c("vue-event-edit-listing-item", {
@@ -1027,15 +1070,15 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", [
-      _c("div", { staticClass: "newOrg" }, [
-        _c("div", { staticClass: "title" }, [
-          _c("h1", [_vm._v("Add another organization")]),
+      _c("div", { staticClass: "new-organization" }, [
+        _c("div", { staticClass: "new-organization__title" }, [
+          _c("h3", [_vm._v("Add another organization")]),
           _vm._v(" "),
-          _c(
-            "a",
-            { staticClass: "add", attrs: { href: "/organizer/create" } },
-            [_vm._v("+")]
-          )
+          _c("a", { attrs: { href: "/organizer/create" } }, [
+            _c("button", { staticClass: "new-organization__add" }, [
+              _c("p", [_vm._v("+")])
+            ])
+          ])
         ])
       ])
     ])

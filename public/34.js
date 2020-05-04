@@ -102,11 +102,6 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return this.url = "/create-event/".concat(this.event.slug, "/title");
-    },
-    handleResize: function handleResize() {
-      if (window.innerWidth < 768) {
-        this.imageWidth = window.innerWidth / 1.4;
-      }
     }
   },
   watch: {
@@ -118,8 +113,6 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     this.event.status == 'p' ? '' : this.getUrl();
     this.eventStatus();
-    window.addEventListener('resize', this.handleResize);
-    this.handleResize();
   }
 });
 
@@ -143,47 +136,31 @@ var render = function() {
   return _c("div", { staticClass: "card", class: { dis: _vm.isDisabled } }, [
     _c("a", { staticClass: "url", attrs: { href: _vm.url } }, [
       _vm.event.thumbImagePath
-        ? _c(
-            "div",
-            {
-              staticClass: "card-image",
-              style: "width:" + _vm.imageWidth + "px"
-            },
-            [
-              _c("picture", [
-                _c("source", {
-                  attrs: {
-                    type: "image/webp",
-                    srcset: "/storage/" + _vm.event.thumbImagePath
-                  }
-                }),
-                _vm._v(" "),
-                _c("img", {
-                  attrs: {
-                    src:
-                      "/storage/" +
-                      _vm.event.thumbImagePath.slice(0, -4) +
-                      "jpg",
-                    alt: _vm.event.name + " Immersive Event"
-                  }
-                })
+        ? _c("div", { staticClass: "card-image" }, [
+            _c("picture", [
+              _c("source", {
+                attrs: {
+                  type: "image/webp",
+                  srcset: "/storage/" + _vm.event.thumbImagePath
+                }
+              }),
+              _vm._v(" "),
+              _c("img", {
+                attrs: {
+                  src:
+                    "/storage/" + _vm.event.thumbImagePath.slice(0, -4) + "jpg",
+                  alt: _vm.event.name + " Immersive Event"
+                }
+              })
+            ])
+          ])
+        : _c("div", { staticClass: "card-without-image" }, [
+            _c("div", { staticClass: "card-without-image_name" }, [
+              _c("h4", [
+                _vm._v(_vm._s(_vm.event.name ? _vm.event.name : "New Event"))
               ])
-            ]
-          )
-        : _c(
-            "div",
-            {
-              staticClass: "card-without-image",
-              style: "width:" + _vm.imageWidth + "px"
-            },
-            [
-              _c("div", { staticClass: "card-without-image_name" }, [
-                _c("h4", [
-                  _vm._v(_vm._s(_vm.event.name ? _vm.event.name : "New Event"))
-                ])
-              ])
-            ]
-          ),
+            ])
+          ]),
       _vm._v(" "),
       _c("div", { staticClass: "card-title" }, [
         _c("h3", [

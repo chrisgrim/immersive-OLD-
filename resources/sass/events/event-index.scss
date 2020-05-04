@@ -11,10 +11,6 @@
 }
 .eventlist__element {
     width:100%;
-    &:hover div.heart{
-        visibility: visible;
-        opacity: 1;
-    }
 }
 .card {
     position: relative;
@@ -69,6 +65,7 @@
     }
 }
 
+
 @media (max-width: 768px) {
     .event-index-eventlist {
         height: 100%;
@@ -81,6 +78,15 @@
     }
     .eventlist__element {
         padding: .7rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .eventlist__element {
+        &:hover div.heart{
+            visibility: visible;
+            opacity: 1;
+        }
     }
 }
 

@@ -1,180 +1,176 @@
 <template>
-    <div class="container-r">
-        <div class="register" >
-            <div class="content" :style="this.map">
-                <div class="left">
-                    <div v-if="url == '/login'" class="sec">
-                        <div class="title">
-                            <h3>Everything Immersive</h3>
-                        </div>
-                        <div class="">
-                            <div class="field">
-                                <input 
-                                id="email" 
-                                type="email" 
-                                class="email" 
-                                v-model="user.email" 
-                                :class="{ active: activeItem == 'email','error': $v.user.email.$error }"
-                                @click="toggleEmail"
-                                @blur="activeItem = null" 
-                                @input="$v.user.email.$touch"
-                                required
-                                placeholder="email" 
-                                autofocus>
-                                <div v-if="$v.user.email.$error" class="validation-error">
-                                    <p class="error" v-if="!$v.user.email.serverFailed">The login doesn't match our records</p>
-                                    <p class="error" v-if="!$v.user.email.required">The email is required</p>
-                                </div>
-                            </div>
-                            <div class="field">
-                                <input 
-                                id="password" 
-                                :type="passwordFieldType" 
-                                class="pass" 
-                                v-model="user.password"
-                                :class="{ active: activeItem == 'password','error': $v.user.password.$error }"
-                                @click="activeItem = 'password'"
-                                @blur="activeItem = null" 
-                                @input="$v.user.password.$touch"
-                                required
-                                placeholder="password">
-                                <div v-if="$v.user.password.$error" class="validation-error">
-                                    <p class="error" v-if="!$v.user.email.serverFailed">The login doesn't match our records</p>
-                                    <p class="error" v-if="!$v.user.password.required">The password is required</p>
-                                </div>
-                                <div class="showpass">
-                                    <img v-if="passwordFieldType=='password'" @click="switchVisibility" src="/storage/website-files/password-eye.png" alt="">
-                                    <img v-if="passwordFieldType!=='password'" @click="switchVisibility" src="/storage/website-files/password-eye-closed.png" alt="">
-                                </div>
-                            </div>
-                            <div class="field">
-                                <p @click="onForget" :class="{ inprogress: dis}" class="forgot">Forgot your password?</p>
-                            </div>
-                            <div class="field">
-                                <button type="submit" :disabled="dis" class="save" @click="onLogin"> Sign In </button>
-                            </div>
-                            <div class="line">
-                                <hr>
-                                <span>or</span>
-                            </div>
-                            <div class="list">
-                                <div class="social">
-                                    <button @click="urlClick('Facebook')" class="button">
-                                        <p>Facebook</p>
-                                    </button>
-                                   <button @click="urlClick('Google')" class="button">
-                                        <p>Google</p>
-                                   </button>
-                                </div>
-                            </div>
-                            <div class="join">
-                                <p>Don't have an account? <a href="" @click.prevent="switchLogin">Join Now</a></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div v-if="url == '/register'" class="sec">
-                        <div class="title">
-                            <h3>Everything Immersive</h3>
-                        </div>
-                        <div class="">
-                            <div class="field">
-                                <input 
-                                id="name" 
-                                type="name" 
-                                v-model="user.name" 
-                                required
-                                :class="{ active: activeItem == 'name','error': $v.user.name.$error }"
-                                @click="activeItem = 'name'"
-                                @blur="activeItem = null" 
-                                @input="$v.user.name.$touch"
-                                placeholder="Name" 
-                                autofocus>
-                                <div v-if="$v.user.name.$error" class="validation-error">
-                                    <p class="error" v-if="!$v.user.name.required">The name is required</p>
-                                    <p class="error" v-if="!$v.user.name.maxLength">The name too long</p>
-                                </div>
-                            </div>
-                            <div class="field">
-                                <input 
-                                id="email" 
-                                type="email" 
-                                v-model="user.email" 
-                                required 
-                                :class="{ active: activeItem == 'email','error': $v.user.email.$error }"
-                                @click="toggleEmail"
-                                @blur="activeItem = null" 
-                                @input="$v.user.email.$touch"
-                                placeholder="Email" 
-                                autofocus>
-                                <div v-if="$v.user.email.$error" class="validation-error">
-                                    <p class="error" v-if="!$v.user.email.required">The email is required</p>
-                                    <p class="error" v-if="!$v.user.email.serverFailed">{{serverErrors.email[0]}}</p>
-                                </div>
-                            </div>
-                            <div class="field">
-                                <input 
-                                id="password" 
-                                type="password" 
-                                class="pass" 
-                                v-model="user.password" 
-                                :class="{ active: activeItem == 'password','error': $v.user.password.$error }"
-                                @click="activeItem = 'password'"
-                                @blur="activeItem = null" 
-                                @input="$v.user.password.$touch"
-                                required
-                                placeholder="Password">
-                                <div v-if="$v.user.password.$error" class="validation-error">
-                                    <p class="error" v-if="!$v.user.password.serverFailed">Must be at least 8 characters</p>
-                                    <p class="error" v-if="!$v.user.password.required">The password is required</p>
-                                </div>
-                            </div>
-                            <div class="field">
-                                <input 
-                                id="password" 
-                                type="password" 
-                                class="pass" 
-                                v-model="user.passwordConfirm"
-                                :class="{ active: activeItem == 'passwordConfirm','error': $v.user.passwordConfirm.$error }"
-                                @click="toggleConfirm"
-                                @blur="activeItem = null" 
-                                @input="$v.user.passwordConfirm.$touch"
-                                required
-                                placeholder="Confirm Password">
-                                <div v-if="$v.user.passwordConfirm.$error" class="validation-error">
-                                    <p class="error" v-if="!$v.user.passwordConfirm.serverFailed">{{serverErrors.password[0]}}</p>
-                                    <p class="error" v-if="!$v.user.passwordConfirm.isRequiredRegister">The passwordConfirm is required</p>
-                                </div>
-                            </div>
-                            <div class="field">
-                                <button type="submit" :disabled="dis" class="save" @click="onRegister"> Register </button>
-                            </div>
-                            <div class="line">
-                                <hr>
-                                <span>or</span>
-                            </div>
-                            <div class="list">
-                                <div class="social">
-                                    <button @click="urlClick('Facebook')" class="button">
-                                        <p>Facebook</p>
-                                    </button>
-                                   <button @click="urlClick('Google')" class="button">
-                                        <p>Google</p>
-                                   </button>
-                                </div>
-                            </div>
-                            <div class="join">
-                                <p>Already have an account? <a href="" @click.prevent="switchLogin">Sign In Now</a></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="right" style="background:url(/storage/website-files/login-image.jpg) no-repeat;background-size: cover;">
-    
+    <div class="login-index grid" :style="map">
+        <div v-if="url == '/login'" class="login-information">
+            <div class="login-information__title">
+                <h3>Everything Immersive</h3>
+            </div>
+            <div class="field">
+                <input 
+                id="email" 
+                type="email" 
+                class="email" 
+                v-model="user.email" 
+                :class="{ active: activeItem == 'email','error': $v.user.email.$error }"
+                @click="toggleEmail"
+                @blur="activeItem = null" 
+                @input="$v.user.email.$touch"
+                @keyup.enter="onLogin"
+                required
+                placeholder="email" 
+                autofocus>
+                <div v-if="$v.user.email.$error" class="validation-error">
+                    <p class="error" v-if="!$v.user.email.serverFailed">The login doesn't match our records</p>
+                    <p class="error" v-if="!$v.user.email.required">The email is required</p>
                 </div>
             </div>
+            <div class="field">
+                <input 
+                id="password" 
+                :type="passwordFieldType" 
+                class="pass" 
+                v-model="user.password"
+                :class="{ active: activeItem == 'password','error': $v.user.password.$error }"
+                @click="activeItem = 'password'"
+                @blur="activeItem = null" 
+                @keyup.enter="onLogin"
+                @input="$v.user.password.$touch"
+                required
+                placeholder="password">
+                <div v-if="$v.user.password.$error" class="validation-error">
+                    <p class="error" v-if="!$v.user.email.serverFailed">The login doesn't match our records</p>
+                    <p class="error" v-if="!$v.user.password.required">The password is required</p>
+                </div>
+                <div class="login-information__showpass">
+                    <img v-if="passwordFieldType=='password'" @click="switchVisibility" src="/storage/website-files/password-eye.png" alt="">
+                    <img v-if="passwordFieldType!=='password'" @click="switchVisibility" src="/storage/website-files/password-eye-closed.png" alt="">
+                </div>
+            </div>
+            <div class="field">
+                <p @click="onForget" :class="{ inprogress: dis}" class="login-information__forgot-password">Forgot your password?</p>
+            </div>
+            <div class="field">
+                <button type="submit" :disabled="dis" class="login-button" @click="onLogin"> Sign In </button>
+            </div>
+            <div class="login-information__line">
+                <hr>
+                <span>or</span>
+            </div>
+            <div class="login-information__social-login grid">
+                <button @click="urlClick('Facebook')" class="social-login">
+                    <p>Facebook</p>
+                </button>
+               <button @click="urlClick('Google')" class="social-login">
+                    <p>Google</p>
+               </button>
+            </div>
+            <div class="login-information__switch">
+                <p>Don't have an account? <button @click.prevent="switchLogin" class="switch_login">Join Now</button></p>
+            </div>
+        </div>
+        <div v-if="url == '/register'" class="login-information">
+            <div class="login-information__title">
+                <h3>Everything Immersive</h3>
+            </div>
+            <div class="field">
+                <input 
+                id="name" 
+                type="name" 
+                v-model="user.name" 
+                required
+                :class="{ active: activeItem == 'name','error': $v.user.name.$error }"
+                @click="activeItem = 'name'"
+                @blur="activeItem = null" 
+                @input="$v.user.name.$touch"
+                @keyup.enter="onRegister"
+                placeholder="Name" 
+                autofocus>
+                <div v-if="$v.user.name.$error" class="validation-error">
+                    <p class="error" v-if="!$v.user.name.required">The name is required</p>
+                    <p class="error" v-if="!$v.user.name.maxLength">The name too long</p>
+                </div>
+            </div>
+            <div class="field">
+                <input 
+                id="email" 
+                type="email" 
+                v-model="user.email" 
+                required 
+                :class="{ active: activeItem == 'email','error': $v.user.email.$error }"
+                @click="toggleEmail"
+                @blur="activeItem = null" 
+                @input="$v.user.email.$touch"
+                @keyup.enter="onRegister"
+                placeholder="Email" 
+                autofocus>
+                <div v-if="$v.user.email.$error" class="validation-error">
+                    <p class="error" v-if="!$v.user.email.required">The email is required</p>
+                    <p class="error" v-if="!$v.user.email.serverFailed">{{serverErrors.email[0]}}</p>
+                </div>
+            </div>
+            <div class="field">
+                <input 
+                id="password" 
+                type="password" 
+                class="pass" 
+                v-model="user.password" 
+                :class="{ active: activeItem == 'password','error': $v.user.password.$error }"
+                @click="activeItem = 'password'"
+                @blur="activeItem = null" 
+                @input="$v.user.password.$touch"
+                @keyup.enter="onRegister"
+                required
+                placeholder="Password">
+                <div v-if="$v.user.password.$error" class="validation-error">
+                    <p class="error" v-if="!$v.user.password.serverFailed">Must be at least 8 characters</p>
+                    <p class="error" v-if="!$v.user.password.required">The password is required</p>
+                </div>
+            </div>
+            <div class="field">
+                <input 
+                id="password" 
+                type="password" 
+                class="pass" 
+                v-model="user.passwordConfirm"
+                :class="{ active: activeItem == 'passwordConfirm','error': $v.user.passwordConfirm.$error }"
+                @click="toggleConfirm"
+                @blur="activeItem = null" 
+                @input="$v.user.passwordConfirm.$touch"
+                @keyup.enter="onRegister"
+                required
+                placeholder="Confirm Password">
+                <div v-if="$v.user.passwordConfirm.$error" class="validation-error">
+                    <p class="error" v-if="!$v.user.passwordConfirm.serverFailed">{{serverErrors.password[0]}}</p>
+                    <p class="error" v-if="!$v.user.passwordConfirm.isRequiredRegister">The passwordConfirm is required</p>
+                </div>
+            </div>
+            <div class="field">
+                <button type="submit" :disabled="dis" class="login-button" @click="onRegister"> Register </button>
+            </div>
+            <div class="login-information__line">
+                <hr>
+                <span>or</span>
+            </div>
+            <div class="login-information__social-login grid">
+                <button @click="urlClick('Facebook')" class="social-login">
+                    <p>Facebook</p>
+                </button>
+               <button @click="urlClick('Google')" class="social-login">
+                    <p>Google</p>
+               </button>
+            </div>
+            <div class="login-information__switch">
+                <p>Already have an account? <button @click.prevent="switchLogin" class="switch_login">Sign In Now</button></p>
+            </div>
+        </div>
+        <div class="login-image">
+            <picture>
+                
+                <img :style="map" src="/storage/website-files/login-image.jpg">
+            </picture>
         </div>
         <vue-alert v-if="alerts.message" :message="alerts.message"></vue-alert>
     </div>
+    
 </template>
 
 <script>
@@ -206,7 +202,7 @@ import CubeSpinner  from '../layouts/loading.vue'
 
         computed: {
             map() {
-                return `height:calc(${this.height}px - 7rem);`
+                return `height:${this.height}px;`
             },
         }, 
 

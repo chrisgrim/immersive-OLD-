@@ -195,8 +195,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
 
 
 
@@ -525,483 +523,475 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "organizer" },
+        { staticClass: "event-create__organizer container grid" },
         [
-          _c("div", { staticClass: "section" }, [
-            _c("div", { staticClass: "text" }, [
-              _c("div", { staticClass: "floating-form" }, [
-                _vm.approved
-                  ? _c(
-                      "div",
-                      {
-                        staticClass: "field",
-                        on: {
-                          mouseover: function($event) {
-                            _vm.showEdit = true
-                          }
+          _c("section", { staticClass: "event-enter-organization" }, [
+            _c("div", { staticClass: "floating-form" }, [
+              _vm.approved
+                ? _c(
+                    "div",
+                    {
+                      staticClass: "field",
+                      on: {
+                        mouseover: function($event) {
+                          _vm.showEdit = true
                         }
-                      },
-                      [
-                        _c("p", { staticClass: "name" }, [
-                          _vm._v(_vm._s(_vm.organizer.name))
-                        ]),
-                        _vm._v(" "),
-                        _vm.showEdit
-                          ? _c(
-                              "button",
-                              {
-                                staticClass: "editTitle",
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.showModal($event)
-                                  }
+                      }
+                    },
+                    [
+                      _c("p", { staticClass: "name" }, [
+                        _vm._v(_vm._s(_vm.organizer.name))
+                      ]),
+                      _vm._v(" "),
+                      _vm.showEdit
+                        ? _c(
+                            "button",
+                            {
+                              staticClass: "editTitle",
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.showModal($event)
                                 }
-                              },
-                              [_vm._v("Edit")]
-                            )
-                          : _vm._e()
-                      ]
-                    )
-                  : _c("div", { staticClass: "field" }, [
-                      _c("label", [_vm._v("Organization name")]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.organizer.name,
-                            expression: "organizer.name"
-                          }
-                        ],
-                        class: {
-                          active: _vm.isActive == "name",
-                          error: _vm.$v.organizer.name.$error
-                        },
-                        attrs: { type: "text", placeholder: " ", name: "name" },
-                        domProps: { value: _vm.organizer.name },
-                        on: {
-                          input: [
-                            function($event) {
-                              if ($event.target.composing) {
-                                return
                               }
-                              _vm.$set(
-                                _vm.organizer,
-                                "name",
-                                $event.target.value
-                              )
                             },
-                            _vm.$v.organizer.name.$touch
-                          ],
-                          click: function($event) {
-                            return _vm.toggle("name")
-                          },
-                          blur: function($event) {
-                            _vm.isActive = null
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.$v.organizer.name.$error
-                        ? _c("div", { staticClass: "validation-error" }, [
-                            !_vm.$v.organizer.name.required
-                              ? _c("p", { staticClass: "error" }, [
-                                  _vm._v("The Name is required")
-                                ])
-                              : _vm._e(),
-                            _vm._v(" "),
-                            !_vm.$v.organizer.name.serverFailed
-                              ? _c("p", { staticClass: "error" }, [
-                                  _vm._v("The Name needs to be unique")
-                                ])
-                              : _vm._e()
-                          ])
+                            [_vm._v("Edit")]
+                          )
                         : _vm._e()
-                    ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "field" }, [
-                  _c("label", [_vm._v("Organization description")]),
-                  _vm._v(" "),
-                  _c("textarea", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.organizer.description,
-                        expression: "organizer.description"
-                      }
-                    ],
-                    class: {
-                      active: _vm.isActive == "description",
-                      error: _vm.$v.organizer.description.$error
-                    },
-                    attrs: {
-                      type: "text",
-                      name: "description",
-                      placeholder: " ",
-                      rows: "8"
-                    },
-                    domProps: { value: _vm.organizer.description },
-                    on: {
-                      input: [
-                        function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.organizer,
-                            "description",
-                            $event.target.value
-                          )
+                    ]
+                  )
+                : _c("div", { staticClass: "field" }, [
+                    _c("label", [_vm._v("Organization name")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.organizer.name,
+                          expression: "organizer.name"
+                        }
+                      ],
+                      class: {
+                        active: _vm.isActive == "name",
+                        error: _vm.$v.organizer.name.$error
+                      },
+                      attrs: { type: "text", placeholder: " ", name: "name" },
+                      domProps: { value: _vm.organizer.name },
+                      on: {
+                        input: [
+                          function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.organizer, "name", $event.target.value)
+                          },
+                          _vm.$v.organizer.name.$touch
+                        ],
+                        click: function($event) {
+                          return _vm.toggle("name")
                         },
-                        _vm.$v.organizer.description.$touch
-                      ],
-                      click: function($event) {
-                        _vm.isActive = "description"
-                      },
-                      blur: function($event) {
-                        _vm.isActive = null
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm.$v.organizer.description.$error
-                    ? _c("div", { staticClass: "validation-error" }, [
-                        !_vm.$v.organizer.description.required
-                          ? _c("p", { staticClass: "error" }, [
-                              _vm._v("The Description is required")
-                            ])
-                          : _vm._e()
-                      ])
-                    : _vm._e()
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "field" }, [
-                  _c("label", [_vm._v("Your organization website")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.organizer.website,
-                        expression: "organizer.website"
-                      }
-                    ],
-                    class: {
-                      active: _vm.isActive == "website",
-                      error: _vm.$v.organizer.website.$error
-                    },
-                    attrs: { type: "url", name: "website", placeholder: " " },
-                    domProps: { value: _vm.organizer.website },
-                    on: {
-                      input: [
-                        function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.organizer,
-                            "website",
-                            $event.target.value
-                          )
-                        },
-                        _vm.$v.organizer.website.$touch
-                      ],
-                      click: function($event) {
-                        return _vm.toggle("website")
-                      },
-                      blur: function($event) {
-                        _vm.isActive = null
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm.$v.organizer.website.$error
-                    ? _c("div", { staticClass: "validation-error" }, [
-                        !_vm.$v.organizer.website.url
-                          ? _c("p", { staticClass: "error" }, [
-                              _vm._v("Must be a Url (Needs http://)")
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        !_vm.$v.organizer.website.required
-                          ? _c("p", { staticClass: "error" }, [
-                              _vm._v("The Website is required")
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        !_vm.$v.organizer.website.serverFailed
-                          ? _c("p", { staticClass: "error" }, [
-                              _vm._v("The Website needs to be unique")
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        !_vm.$v.organizer.website.notWorking
-                          ? _c("p", { staticClass: "error" }, [
-                              _vm._v("The Url doesn't seem to be working")
-                            ])
-                          : _vm._e()
-                      ])
-                    : _vm._e()
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "field" }, [
-                  _c("label", [_vm._v("Your organization email (optional)")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.organizer.email,
-                        expression: "organizer.email"
-                      }
-                    ],
-                    class: { active: _vm.isActive == "email" },
-                    attrs: { type: "text", name: "email", placeholder: " " },
-                    domProps: { value: _vm.organizer.email },
-                    on: {
-                      click: function($event) {
-                        _vm.isActive = "email"
-                      },
-                      blur: function($event) {
-                        _vm.isActive = null
-                      },
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
+                        blur: function($event) {
+                          _vm.isActive = null
                         }
-                        _vm.$set(_vm.organizer, "email", $event.target.value)
                       }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "field" }, [
-                  _c("label", [_vm._v("Twitter handle (optional)")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.organizer.twitterHandle,
-                        expression: "organizer.twitterHandle"
-                      }
-                    ],
-                    class: { active: _vm.isActive == "twitter" },
-                    attrs: {
-                      type: "text",
-                      name: "twitterHandle",
-                      placeholder: " "
-                    },
-                    domProps: { value: _vm.organizer.twitterHandle },
-                    on: {
-                      click: function($event) {
-                        _vm.isActive = "twitter"
-                      },
-                      blur: function($event) {
-                        _vm.isActive = null
-                      },
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.organizer,
-                          "twitterHandle",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "field" }, [
-                  _c("label", [_vm._v("Facebook handle (optional)")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.organizer.facebookHandle,
-                        expression: "organizer.facebookHandle"
-                      }
-                    ],
-                    class: { active: _vm.isActive == "facebook" },
-                    attrs: {
-                      type: "text",
-                      name: "facebookHandle",
-                      placeholder: " "
-                    },
-                    domProps: { value: _vm.organizer.facebookHandle },
-                    on: {
-                      click: function($event) {
-                        _vm.isActive = "facebook"
-                      },
-                      blur: function($event) {
-                        _vm.isActive = null
-                      },
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.organizer,
-                          "facebookHandle",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "field" }, [
-                  _c("label", [_vm._v("Instagram handle (optional)")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.organizer.instagramHandle,
-                        expression: "organizer.instagramHandle"
-                      }
-                    ],
-                    class: { active: _vm.isActive == "instagram" },
-                    attrs: {
-                      type: "text",
-                      name: "instagramHandle",
-                      placeholder: " "
-                    },
-                    domProps: { value: _vm.organizer.instagramHandle },
-                    on: {
-                      click: function($event) {
-                        _vm.isActive = "instagram"
-                      },
-                      blur: function($event) {
-                        _vm.isActive = null
-                      },
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.organizer,
-                          "instagramHandle",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  })
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "image" }, [
-              _c("div", { staticClass: "img" }, [
-                _c("div", { staticClass: "loader" }, [
-                  _c("label", { style: _vm.backgroundImage }, [
-                    _c(
-                      "div",
-                      {
-                        staticClass: "dash",
-                        class: { over: _vm.hasImage, load: _vm.isLoading }
-                      },
-                      [
-                        _c("div", { staticClass: "box" }, [
-                          _c("div", { staticClass: "in" }, [
-                            !_vm.isLoading
-                              ? _c("div", [
-                                  _c(
-                                    "svg",
-                                    {
-                                      staticClass: "b",
-                                      attrs: {
-                                        height: "32",
-                                        width: "32",
-                                        viewBox: "0 0 24 24",
-                                        "aria-label": "Add an image or video",
-                                        role: "img"
-                                      }
-                                    },
-                                    [
-                                      _c("path", {
-                                        attrs: {
-                                          d:
-                                            "M24 12c0-6.627-5.372-12-12-12C5.373 0 0 5.373 0 12s5.373 12 12 12c6.628 0 12-5.373 12-12zm-10.767 3.75a1.25 1.25 0 0 1-2.5 0v-3.948l-1.031 1.031a1.25 1.25 0 0 1-1.768-1.768L12 7l4.066 4.065a1.25 1.25 0 0 1-1.768 1.768l-1.065-1.065v3.982z"
-                                        }
-                                      })
-                                    ]
-                                  )
-                                ])
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _c("div", [
-                              !_vm.hasImage
-                                ? _c("div", [
-                                    _vm._m(0),
-                                    _vm._v(" "),
-                                    _c("p", [
-                                      _vm._v(
-                                        "Please make image at least 400 x 400"
-                                      )
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("p", [
-                                      _vm._v("Image needs to be under 20 mb")
-                                    ])
-                                  ])
-                                : _vm._e(),
-                              _vm._v(" "),
-                              _vm.hasImage
-                                ? _c("p", [_vm._v("Change Image")])
-                                : _vm._e()
-                            ])
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("image-upload", {
-                          on: { loaded: _vm.onImageUpload }
-                        }),
-                        _vm._v(" "),
-                        _c("CubeSpinner", { attrs: { loading: _vm.isLoading } })
-                      ],
-                      1
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _vm.$v.finalImage.$error
+                    }),
+                    _vm._v(" "),
+                    _vm.$v.organizer.name.$error
                       ? _c("div", { staticClass: "validation-error" }, [
-                          !_vm.$v.finalImage.fileSize
+                          !_vm.$v.organizer.name.required
                             ? _c("p", { staticClass: "error" }, [
-                                _vm._v("The Image is too large")
+                                _vm._v("The Name is required")
                               ])
                             : _vm._e(),
                           _vm._v(" "),
-                          !_vm.$v.finalImage.fileType
+                          !_vm.$v.organizer.name.serverFailed
                             ? _c("p", { staticClass: "error" }, [
-                                _vm._v(
-                                  "The Image needs to be a JPG, PNG or GIF"
-                                )
-                              ])
-                            : _vm._e(),
-                          _vm._v(" "),
-                          !_vm.$v.finalImage.imageSize
-                            ? _c("p", { staticClass: "error" }, [
-                                _vm._v(
-                                  "The image needs to be at least 400 x 400"
-                                )
+                                _vm._v("The Name needs to be unique")
                               ])
                             : _vm._e()
                         ])
                       : _vm._e()
-                  ])
+                  ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "field" }, [
+                _c("label", [_vm._v("Organization description")]),
+                _vm._v(" "),
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.organizer.description,
+                      expression: "organizer.description"
+                    }
+                  ],
+                  class: {
+                    active: _vm.isActive == "description",
+                    error: _vm.$v.organizer.description.$error
+                  },
+                  attrs: {
+                    type: "text",
+                    name: "description",
+                    placeholder: " ",
+                    rows: "8"
+                  },
+                  domProps: { value: _vm.organizer.description },
+                  on: {
+                    input: [
+                      function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.organizer,
+                          "description",
+                          $event.target.value
+                        )
+                      },
+                      _vm.$v.organizer.description.$touch
+                    ],
+                    click: function($event) {
+                      _vm.isActive = "description"
+                    },
+                    blur: function($event) {
+                      _vm.isActive = null
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.$v.organizer.description.$error
+                  ? _c("div", { staticClass: "validation-error" }, [
+                      !_vm.$v.organizer.description.required
+                        ? _c("p", { staticClass: "error" }, [
+                            _vm._v("The Description is required")
+                          ])
+                        : _vm._e()
+                    ])
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "field" }, [
+                _c("label", [_vm._v("Your organization website")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.organizer.website,
+                      expression: "organizer.website"
+                    }
+                  ],
+                  class: {
+                    active: _vm.isActive == "website",
+                    error: _vm.$v.organizer.website.$error
+                  },
+                  attrs: { type: "url", name: "website", placeholder: " " },
+                  domProps: { value: _vm.organizer.website },
+                  on: {
+                    input: [
+                      function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.organizer, "website", $event.target.value)
+                      },
+                      _vm.$v.organizer.website.$touch
+                    ],
+                    click: function($event) {
+                      return _vm.toggle("website")
+                    },
+                    blur: function($event) {
+                      _vm.isActive = null
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.$v.organizer.website.$error
+                  ? _c("div", { staticClass: "validation-error" }, [
+                      !_vm.$v.organizer.website.url
+                        ? _c("p", { staticClass: "error" }, [
+                            _vm._v("Must be a Url (Needs http://)")
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      !_vm.$v.organizer.website.required
+                        ? _c("p", { staticClass: "error" }, [
+                            _vm._v("The Website is required")
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      !_vm.$v.organizer.website.serverFailed
+                        ? _c("p", { staticClass: "error" }, [
+                            _vm._v("The Website needs to be unique")
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      !_vm.$v.organizer.website.notWorking
+                        ? _c("p", { staticClass: "error" }, [
+                            _vm._v("The Url doesn't seem to be working")
+                          ])
+                        : _vm._e()
+                    ])
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "field" }, [
+                _c("label", [_vm._v("Your organization email (optional)")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.organizer.email,
+                      expression: "organizer.email"
+                    }
+                  ],
+                  class: { active: _vm.isActive == "email" },
+                  attrs: { type: "text", name: "email", placeholder: " " },
+                  domProps: { value: _vm.organizer.email },
+                  on: {
+                    click: function($event) {
+                      _vm.isActive = "email"
+                    },
+                    blur: function($event) {
+                      _vm.isActive = null
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.organizer, "email", $event.target.value)
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "field" }, [
+                _c("label", [_vm._v("Twitter handle (optional)")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.organizer.twitterHandle,
+                      expression: "organizer.twitterHandle"
+                    }
+                  ],
+                  class: { active: _vm.isActive == "twitter" },
+                  attrs: {
+                    type: "text",
+                    name: "twitterHandle",
+                    placeholder: " "
+                  },
+                  domProps: { value: _vm.organizer.twitterHandle },
+                  on: {
+                    click: function($event) {
+                      _vm.isActive = "twitter"
+                    },
+                    blur: function($event) {
+                      _vm.isActive = null
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.organizer,
+                        "twitterHandle",
+                        $event.target.value
+                      )
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "field" }, [
+                _c("label", [_vm._v("Facebook handle (optional)")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.organizer.facebookHandle,
+                      expression: "organizer.facebookHandle"
+                    }
+                  ],
+                  class: { active: _vm.isActive == "facebook" },
+                  attrs: {
+                    type: "text",
+                    name: "facebookHandle",
+                    placeholder: " "
+                  },
+                  domProps: { value: _vm.organizer.facebookHandle },
+                  on: {
+                    click: function($event) {
+                      _vm.isActive = "facebook"
+                    },
+                    blur: function($event) {
+                      _vm.isActive = null
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.organizer,
+                        "facebookHandle",
+                        $event.target.value
+                      )
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "field" }, [
+                _c("label", [_vm._v("Instagram handle (optional)")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.organizer.instagramHandle,
+                      expression: "organizer.instagramHandle"
+                    }
+                  ],
+                  class: { active: _vm.isActive == "instagram" },
+                  attrs: {
+                    type: "text",
+                    name: "instagramHandle",
+                    placeholder: " "
+                  },
+                  domProps: { value: _vm.organizer.instagramHandle },
+                  on: {
+                    click: function($event) {
+                      _vm.isActive = "instagram"
+                    },
+                    blur: function($event) {
+                      _vm.isActive = null
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.organizer,
+                        "instagramHandle",
+                        $event.target.value
+                      )
+                    }
+                  }
+                })
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("section", { staticClass: "event-enter-organization-image" }, [
+            _c("div", { staticClass: "add-organzation-image" }, [
+              _c("div", { staticClass: "add-organzation-image_loader" }, [
+                _c("label", { style: _vm.backgroundImage }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "add-organzation-image__card",
+                      class: { over: _vm.hasImage, load: _vm.isLoading }
+                    },
+                    [
+                      _c(
+                        "div",
+                        { staticClass: "add-organzation-image__dotted" },
+                        [
+                          _c(
+                            "div",
+                            { staticClass: "add-organzation-image__text" },
+                            [
+                              !_vm.isLoading
+                                ? _c("div", [
+                                    _c(
+                                      "svg",
+                                      {
+                                        staticClass: "b",
+                                        attrs: {
+                                          height: "32",
+                                          width: "32",
+                                          viewBox: "0 0 24 24",
+                                          "aria-label": "Add an image or video",
+                                          role: "img"
+                                        }
+                                      },
+                                      [
+                                        _c("path", {
+                                          attrs: {
+                                            d:
+                                              "M24 12c0-6.627-5.372-12-12-12C5.373 0 0 5.373 0 12s5.373 12 12 12c6.628 0 12-5.373 12-12zm-10.767 3.75a1.25 1.25 0 0 1-2.5 0v-3.948l-1.031 1.031a1.25 1.25 0 0 1-1.768-1.768L12 7l4.066 4.065a1.25 1.25 0 0 1-1.768 1.768l-1.065-1.065v3.982z"
+                                          }
+                                        })
+                                      ]
+                                    )
+                                  ])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _c("div", [
+                                !_vm.hasImage
+                                  ? _c("div", [
+                                      _vm._m(0),
+                                      _vm._v(" "),
+                                      _c("p", [
+                                        _vm._v(
+                                          "Please make image at least 400 x 400"
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("p", [
+                                        _vm._v("Image needs to be under 20 mb")
+                                      ])
+                                    ])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _vm.hasImage
+                                  ? _c("p", [_vm._v("Change Image")])
+                                  : _vm._e()
+                              ])
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("image-upload", { on: { loaded: _vm.onImageUpload } }),
+                      _vm._v(" "),
+                      _c("CubeSpinner", { attrs: { loading: _vm.isLoading } })
+                    ],
+                    1
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", [
+                  _vm.$v.finalImage.$error
+                    ? _c("div", { staticClass: "validation-error" }, [
+                        !_vm.$v.finalImage.fileSize
+                          ? _c("p", { staticClass: "error" }, [
+                              _vm._v("The Image is too large")
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        !_vm.$v.finalImage.fileType
+                          ? _c("p", { staticClass: "error" }, [
+                              _vm._v("The Image needs to be a JPG, PNG or GIF")
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        !_vm.$v.finalImage.imageSize
+                          ? _c("p", { staticClass: "error" }, [
+                              _vm._v("The image needs to be at least 400 x 400")
+                            ])
+                          : _vm._e()
+                      ])
+                    : _vm._e()
                 ])
               ])
             ])
@@ -1052,7 +1042,7 @@ var render = function() {
               )
             : _vm._e(),
           _vm._v(" "),
-          _c("div", { staticClass: "inNav" }, [
+          _c("div", { staticClass: "create-button__in-nav" }, [
             this.loadorganizer
               ? _c(
                   "button",

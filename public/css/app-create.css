@@ -203,6 +203,72 @@ button.create[disabled] {
   margin-top: 2rem;
 }
 
+@media (max-width: 768px) {
+  .create-menu {
+    grid-template-columns: 8rem 1fr !important;
+    grid-gap: 0rem !important;
+  }
+
+  section.event-create {
+    width: 100%;
+  }
+
+  .create-button__in-nav {
+    position: fixed;
+    bottom: 0rem;
+    right: 0rem;
+    width: 100%;
+    background: white;
+    top: inherit;
+    border-top: 1px solid #ebebeb;
+    padding: 1rem;
+    text-align: right;
+  }
+
+  .create-button__in-nav.review {
+    top: inherit;
+    right: inherit;
+  }
+
+  .event-create__submit-button {
+    display: none;
+  }
+}
+
+.event-create-start {
+  grid-template-columns: 55% 45%;
+  -webkit-box-align: center;
+  align-items: center;
+  justify-items: center;
+  grid-gap: 0rem !important;
+}
+
+.start-content__nav {
+  position: absolute;
+}
+
+.start-content {
+  width: 70%;
+  margin: auto;
+}
+
+.start-content__text h2 {
+  margin: 1rem 0rem;
+}
+
+.start-content__text p {
+  font-size: 1.6rem;
+}
+
+button.event-start-button {
+  border: none;
+  background: #008489;
+  color: white;
+  font-weight: 500;
+  padding: 1.3rem;
+  margin: 2rem 0rem;
+}
+
 #create.start {
   background-image: url("/storage/website-files/create-background.jpg");
   background-size: cover;
@@ -231,62 +297,41 @@ button.create[disabled] {
   color: white;
 }
 
-#create .organizer {
-  padding-top: 4%;
-  width: 90%;
-  margin: auto;
+/*------------------------------------*\
+  #Create Section- Organizer Page
+\*------------------------------------*/
+
+.event-create__organizer {
+  width: 90% !important;
+  grid-template-columns: 1fr 1fr;
+  margin: 5rem auto !important;
 }
 
-#create .organizer .text {
-  width: 50%;
-  float: left;
-  margin: 0;
-  padding: 0% 0% 0% 5%;
+.event-enter-organization {
+  padding: 0 0 0 13%;
 }
 
-#create .organizer .text .floating-form {
-  margin-bottom: 5rem;
+.event-enter-organization-image {
+  margin-top: 3rem;
 }
 
-#create .organizer .text .name {
-  display: inline-block;
-  color: #484848;
-  font-size: 1.5rem;
-}
-
-#create .organizer .text button.editTitle {
-  color: white;
-  padding: 0.4rem 1rem;
-  background: #008489;
-  margin-left: 1rem;
-  font-family: "Montserrat", sans-serif;
-}
-
-#create .organizer .image {
-  width: 50%;
-  float: right;
-  margin: 0;
-  padding: 0% 0% 0% 5%;
-  margin-top: 5rem;
-}
-
-#create .organizer .image .img {
+.add-organzation-image {
   width: 100%;
   margin: 0;
-  padding: 0% 5% 0% 5%;
+  padding: 0 5%;
 }
 
-#create .organizer .image .img .loader {
+.add-organzation-image_loader {
   width: 48rem;
   height: 48rem;
-  background-color: white;
+  background-color: #fff;
   border-radius: 1rem;
   margin: auto;
   position: relative;
   text-align: center;
 }
 
-#create .organizer .image .img .loader label {
+.add-organzation-image_loader label {
   height: 100%;
   width: 100%;
   display: inline-block;
@@ -298,61 +343,160 @@ button.create[disabled] {
   box-shadow: 0 15px 25px -4px rgba(0, 0, 0, 0.25), 0 -10px 15px -1px rgba(255, 255, 255, 0.6), inset 0 3px 4px -1px rgba(255, 255, 255, 0.2), inset 0 0 5px 1px rgba(255, 255, 255, 0.8), inset 0 20px 30px 0 rgba(255, 255, 255, 0.2);
 }
 
-#create .organizer .image .img .loader label:hover {
-  box-shadow: 0 15px 25px -4px rgba(0, 0, 0, 0.5), 0 -10px 15px -1px rgba(255, 255, 255, 0.6), inset 0 3px 4px -1px rgba(255, 255, 255, 0.2), inset 0 0 5px 1px rgba(255, 255, 255, 0.8), inset 0 20px 30px 0 rgba(255, 255, 255, 0.2);
-}
-
-#create .organizer .image .img .loader label .dash {
+.add-organzation-image__card {
   display: inline-block;
   width: 100%;
   height: 100%;
   padding: 1rem;
 }
 
-#create .organizer .image .img .loader label .dash .box {
-  border: dashed 2px #dadada;
+.add-organzation-image__card.over {
+  opacity: 0;
+  border-radius: 0.5rem;
+}
+
+.add-organzation-image__card.over:hover {
+  background: rgba(255, 255, 255, 0.73);
+  opacity: 1;
+  border-radius: 50%;
+}
+
+.add-organzation-image__dotted {
+  border: 2px dashed #dadada;
   height: 100%;
   position: relative;
   border-radius: 50%;
 }
 
-#create .organizer .image .img .loader label .dash .box .in {
-  margin: auto;
+.add-organzation-image__text {
   position: absolute;
   height: 10rem;
   top: 50%;
-  margin-top: -3.5rem;
+  margin: -3.5rem auto auto;
   width: 100%;
 }
 
-#create .organizer .image .img .loader label .dash .box .in .b {
-  fill: #8e8e8e;
+@media (max-width: 768px) {
+  .event-create__organizer {
+    margin: 2rem auto 5rem auto !important;
+  }
+
+  .event-enter-organization {
+    padding: 0;
+  }
+
+  .add-organzation-image_loader {
+    width: 18rem;
+    height: 18rem;
+  }
 }
 
-#create .organizer .image .img .loader label .dash.over {
-  opacity: 0;
-  border-radius: 0.5rem;
-}
-
-#create .organizer .image .img .loader label .dash.over:hover {
-  background: #ffffffba;
-  opacity: 1;
-  border-radius: 50%;
-}
-
-#create .organizer .image .img .loader label .dash.over .box {
-  border: none;
-}
-
-#create .organizer .image .img .loader label .dash.load {
-  background: black;
-  opacity: 0.8;
-  border-radius: 0.5rem;
-}
-
-#create .organizer .image .img .loader label .dash.load .box {
-  border: none;
-}
+/*#create {
+    & .organizer {
+        padding-top: 4%;
+        width:90%;
+        margin: auto;
+        & .text {
+            width: 50%;
+            float: left;
+            margin:0;
+            padding: 0% 0% 0% 5%;
+            & .floating-form {
+                margin-bottom: 5rem;
+            }
+            & .name {
+                display: inline-block;
+                color: #484848;
+                font-size: 1.5rem;
+            }
+            & button.editTitle {
+                color: white;
+                padding: .4rem 1rem;
+                background: $default-color;
+                margin-left: 1rem;
+                font-family: "Montserrat", sans-serif;
+            }
+        }
+        & .image {
+            width: 50%;
+            float: right;
+            margin: 0;
+            padding: 0% 0% 0% 5%;
+            margin-top: 5rem;
+            & .img {
+                width: 100%;
+                margin:0;
+                padding: 0% 5% 0% 5%;
+                & .loader {
+                    width: 48rem;
+                    height: 48rem;
+                    background-color: white;
+                    border-radius: 1rem;
+                    margin: auto;
+                    position: relative;
+                    text-align: center;
+                    & label {
+                        height: 100%;
+                        width:100%;
+                        display: inline-block;
+                        background-size: cover;
+                        background-repeat: no-repeat;
+                        border-radius: .5rem;
+                        border: 1px solid #d2d2d2;
+                        border-radius: 50%;
+                        box-shadow: 0 15px 25px -4px rgba(0,0,0,0.25), 0 -10px 15px -1px rgba(255,255,255,0.6), inset 0 3px 4px -1px rgba(255,255,255,0.2), inset 0 0 5px 1px rgba(255,255,255,0.8), inset 0 20px 30px 0 rgba(255,255,255,0.2); 
+                        &:hover {
+                            box-shadow: 0 15px 25px -4px rgba(0,0,0,0.50), 0 -10px 15px -1px rgba(255,255,255,0.6), inset 0 3px 4px -1px rgba(255,255,255,0.2), inset 0 0 5px 1px rgba(255,255,255,0.8), inset 0 20px 30px 0 rgba(255,255,255,0.2);
+                        }                       
+                        & .dash{
+                            display: inline-block;
+                            width: 100%;
+                            height: 100%;
+                            padding: 1rem;
+                            & .box {
+                                border: dashed 2px #dadada;
+                                height: 100%;
+                                position: relative;
+                                border-radius: 50%;
+                                & .in {
+                                    margin: auto;
+                                    position: absolute;
+                                    height: 10rem;
+                                    top: 50%;
+                                    margin-top: -3.5rem;
+                                    width: 100%;
+                                    & .b {
+                                        fill: #8e8e8e;
+                                    }
+                                }
+                            }
+                            &.over{
+                                opacity: 0;
+                                border-radius: .5rem;
+                                &:hover {
+                                    background: #ffffffba;
+                                    opacity: 1;
+                                    border-radius: 50%;
+                                }
+                                & .box {
+                                    border: none;
+                                }
+                            }
+                            &.load {
+                                background: black;
+                                opacity: .8;
+                                border-radius: .5rem;
+                                & .box {
+                                    border: none;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}*/
 
 /*------------------------------------*\
   #Create Section- Image Page
@@ -443,6 +587,13 @@ button.create[disabled] {
 
 .fileinput {
   display: none !important;
+}
+
+@media (max-width: 768px) {
+  .image-loader {
+    width: 100%;
+    height: 200px;
+  }
 }
 
 /*
@@ -741,12 +892,27 @@ button.delete-circle {
   margin: 0;
 }
 
+@media (max-width: 768px) {
+  section.event-enter-showtimes {
+    margin: 0;
+    margin-bottom: 4rem;
+  }
+
+  section.event-enter-showdates {
+    margin-bottom: 4rem;
+  }
+
+  .event-create-tab__section {
+    margin: 2rem auto 10rem auto;
+  }
+}
+
 /*------------------------------------*\
   #Create Section- Description Page
 \*------------------------------------*/
 
 .event-create__description {
-  padding-top: 5rem;
+  padding: 5rem 0rem 10rem 0rem;
   width: 90%;
   grid-template-columns: 1fr 1fr;
 }
@@ -756,41 +922,9 @@ button.delete-circle {
 \*------------------------------------*/
 
 .event-create__advisories {
-  padding-top: 5rem;
+  padding: 5rem 0 10rem 0;
   width: 90%;
   grid-template-columns: 1fr 1fr 1fr;
-}
-
-#thanks {
-  margin-top: -7rem;
-}
-
-#thanks.end {
-  background-image: url("/storage/website-files/create-background.jpg");
-  background-size: cover;
-  height: 100vh;
-}
-
-#thanks.end .content {
-  padding: 7% 2% 2rem 7%;
-  width: 40%;
-  float: left;
-}
-
-#thanks.end .content .text {
-  margin-bottom: 4rem;
-}
-
-#thanks.end .content .text h2 {
-  font-size: 3.2rem;
-  font-weight: 400;
-}
-
-#thanks.end a.cbut {
-  background: #008489;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  color: white;
 }
 
 .event.review {

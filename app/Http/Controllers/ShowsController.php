@@ -87,6 +87,7 @@ class ShowsController extends Controller
 
         Show::updateEvent($request, $event);
         //updates scout for elastic search
+        $event = $event->fresh();
         $event->searchable();
     }
 

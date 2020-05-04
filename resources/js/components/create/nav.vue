@@ -2,9 +2,11 @@
     <nav class="create">
     	<div class="grid create-menu" :class="{ review : onReview }">
             <div class="create-menu__home">
-                <a href="/create-event/edit">
-                    <button class="home" :class="{ review : onReview }">Home</button>
-                </a>
+                <div class="nav-logo">
+                    <a href="/">
+                        <h3>EI</h3>
+                    </a>
+                </div>
             </div>
             <div class="create-menu__item">     
                 <p v-if="url == `/organizer/create`">Organizer: Let users know about your team!</p>
@@ -18,7 +20,7 @@
                 <p :class="{ 'review-nav-text' : onReview }" v-if="url == `/create-event/${this.event.slug}/review`">Review: One last chance to make sure everything looks good</p>
             </div>
         </div>
-        <div v-if="!onReview" class="create-navbar" :class="{over:hover}">
+        <div v-if="showBar" class="create-navbar" :class="{over:hover}">
             <div @mouseover="hover = 'name'" @mouseleave="hover = null" class="create-navbar__page" style="width: 14.4%; left: 0%;padding-top:1rem;" :class="{ fill: onTitle }">
                 <a v-if="event.name" :href="`/create-event/${this.event.slug}/title`">
                     <div class="create-navbar__hover" v-if="hover=='name'"><span>Event Name</span></div>
@@ -62,15 +64,14 @@
     import Multiselect from 'vue-multiselect'
 
 	export default {
-		props: {
-			event: {
-				type:Object
-			},
-		},
+		props: ['event'],
 
         computed: {
             onReview() {
                 return this.url === `/create-event/${this.event.slug}/review` ? true : '';
+            },
+            showBar() {
+                return this.onReview || this.url === `/organizer/create` ? false : true;
             }
         },
 

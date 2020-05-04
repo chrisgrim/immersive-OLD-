@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="organizer-show-contact">
         <div v-if="user && user != loadorganizer.user_id" class="contact">
             <button @click="isModalVisible=true">
                 Contact

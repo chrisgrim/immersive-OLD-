@@ -89,8 +89,11 @@ class Show extends Model
             $lastDate = $event->showOnGoing()->first();
         }
 
+
+        $event->priceranges()->delete();
+
         foreach ($request->tickets as $ticket) {
-            $event->priceranges()->updateOrCreate([
+            $event->priceranges()->Create([
                 'price' => $ticket['ticket_price']
             ]);
             $array[] = $ticket['ticket_price'] + 0;

@@ -1,4 +1,177 @@
-.register {
+/*------------------------------------*\
+  #Login- Login Page
+\*------------------------------------*/
+
+
+.login-index {
+    grid-template-columns: 40% 60%;
+    align-items: center;
+   justify-items: center;
+   padding-top: 7rem;
+   grid-gap: 0 !important;
+   &.popup {
+        background: white;
+        position: relative;
+        margin: auto;
+        margin-top: 10%;
+        width: 60%;
+        overflow-y: auto;
+        padding:0;
+    }
+}
+
+.login-information {
+    padding: 1rem 0rem 1rem 0rem;
+    width: 30rem;
+    margin: auto;
+}
+.login-information__title {
+    margin: 6rem 0rem 2rem 0rem;
+}
+.login-information__forgot-password {
+    color: #008489;
+    margin: 0rem 0rem 1rem 0rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+    cursor: pointer;
+    &:active {
+        color:white;
+    }
+}
+.login-information__showpass {
+    width: 2.2rem;
+    position: absolute;
+    right: 2.6rem;
+    top: 1.1rem;
+    & img {
+        width:100%;
+    }
+}
+
+button.login-button {
+    background: #008489;
+    color: white;
+    border: none;
+    width: 100%;
+}
+.inprogress {
+    cursor: progress !important;
+}
+
+.login-information__line {
+    margin: 3rem 0rem;
+    position: relative;
+    & span {
+        position: absolute;
+        background: white;
+        width: 4rem;
+        left: 50%;
+        margin-left: -2rem;
+        top: -1rem;
+        text-align: center;
+        color: #484848;
+    }
+}
+.login-information__social-login {
+    width: 100%;
+    grid-template-columns: 1fr 1fr;
+    text-align: center;
+    margin-top: 2rem;
+}
+button.social-login {
+    border: none;
+    background: none;
+    & p {
+        font-size: 1.3rem;
+        color: #008489;
+    }
+}
+.login-information__switch {
+    text-align: center;
+    margin-top: 5rem;
+    & p {
+        font-size: 1.3rem;
+    }
+}
+button.switch_login {
+    border: none;
+    background: none;
+    color: #008489;
+}
+
+.field {
+    button.save:disabled,
+    button.save[disabled]{
+        border: 1px solid #cacaca;
+        background-color: #f9f9f9;
+        color: #c7c7c7;
+    }
+}
+.login-image {
+    display: inline-block;
+    width:100%;
+    height: 100%;
+    overflow: hidden;
+    & img {
+        width:100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.login-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,.67);
+    width: 100%;
+    z-index: 901;
+    height: 100%;
+}
+
+.login-close-button {
+    position: absolute;
+    top: 1.2rem;
+    left: 1.2rem;
+}
+
+
+
+@media (max-width: 768px) { 
+    .login-index {
+        grid-template-columns: 1fr;
+        &.popup {
+            margin:0;
+            width:100%;
+            height: 100%;
+        }
+    }
+    .login-information {
+        width: 70%;
+        margin: 0 auto;
+    }
+    .login-image {
+        display: none;
+    }
+    .login-information__social-login {
+    grid-template-columns: 1fr 1fr !important;
+    }
+    .login-close-button {
+        top: 2.5rem;
+        left: 2rem;
+    }
+
+}
+
+
+
+
+
+
+
+
+
+/*.register {
     & .content {
         display: grid;
         grid-template-columns: 40% 60%;
@@ -109,9 +282,13 @@
 }
 .inprogress {
     cursor: progress !important;
-}
+}*/
 
-@media (max-width: 768px) { 
+
+
+
+
+/*@media (max-width: 768px) { 
     .register {
         & .content {
             display: grid;
@@ -140,5 +317,5 @@
             }
         }
     }
-}
+}*/
 

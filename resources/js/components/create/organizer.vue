@@ -4,155 +4,153 @@
     v-if="serverErrors.length" 
     message="serverErrors">      
     </vue-alert>
-    <div class="organizer">
-        <div class="section">
-            <div class="text">
-                <div class="floating-form">
-                    <div 
-                    @mouseover="showEdit=true" 
-                    v-if="approved" 
-                    class="field">
-                        <p class="name">{{organizer.name}}</p>
-                        <button class="editTitle" v-if="showEdit" @click.prevent="showModal">Edit</button>
-                    </div>
-                    <div v-else class="field">
-                        <label>Organization name</label>
-                        <input 
-                        type="text" 
-                        placeholder=" " 
-                        name="name"
-                        :class="{ active: isActive == 'name','error': $v.organizer.name.$error }"
-                        @input="$v.organizer.name.$touch"
-                        @click="toggle('name')"
-                        @blur="isActive = null"
-                        v-model="organizer.name"
-                        />
-                        <div v-if="$v.organizer.name.$error" class="validation-error">
-                            <p class="error" v-if="!$v.organizer.name.required">The Name is required</p>
-                            <p class="error" v-if="!$v.organizer.name.serverFailed">The Name needs to be unique</p>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label>Organization description</label>
-                        <textarea 
-                        type="text"
-                        name="description" 
-                        v-model="organizer.description" 
-                        placeholder=" "
-                        :class="{ active: isActive == 'description','error': $v.organizer.description.$error }"
-                        @input="$v.organizer.description.$touch"
-                        @click="isActive = 'description'"
-                        @blur="isActive = null" 
-                        rows="8">
-                        </textarea>
-                        <div v-if="$v.organizer.description.$error" class="validation-error">
-                            <p class="error" v-if="!$v.organizer.description.required">The Description is required</p>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label>Your organization website</label>
-                        <input 
-                        type="url" 
-                        v-model="organizer.website" 
-                        name="website"
-                        :class="{ active: isActive == 'website','error': $v.organizer.website.$error }"
-                        @input="$v.organizer.website.$touch"
-                        @click="toggle('website')"
-                        @blur="isActive = null" 
-                        placeholder=" "
-                        />
-                        <div v-if="$v.organizer.website.$error" class="validation-error">
-                            <p class="error" v-if="!$v.organizer.website.url">Must be a Url (Needs http://)</p>
-                            <p class="error" v-if="!$v.organizer.website.required">The Website is required</p>
-                            <p class="error" v-if="!$v.organizer.website.serverFailed">The Website needs to be unique</p>
-                            <p class="error" v-if="!$v.organizer.website.notWorking">The Url doesn't seem to be working</p>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label>Your organization email (optional)</label>
-                        <input 
-                        type="text" 
-                        v-model="organizer.email" 
-                        name="email"
-                        @click="isActive = 'email'"
-                        :class="{ active: isActive == 'email' }"
-                        @blur="isActive = null" 
-                        placeholder=" "
-                        />
-                    </div>
-                    <div class="field">
-                        <label>Twitter handle (optional)</label>
-                        <input 
-                        type="text" 
-                        v-model="organizer.twitterHandle" 
-                        name="twitterHandle"
-                        @click="isActive = 'twitter'"
-                        :class="{ active: isActive == 'twitter' }"
-                        @blur="isActive = null" 
-                        placeholder=" "
-                        />
-                    </div>
-                    <div class="field">
-                        <label>Facebook handle (optional)</label>
-                        <input 
-                        type="text" 
-                        v-model="organizer.facebookHandle" 
-                        name="facebookHandle"
-                        @click="isActive = 'facebook'"
-                        :class="{ active: isActive == 'facebook' }"
-                        @blur="isActive = null" 
-                        placeholder=" "
-                        />
-                    </div>
-                    <div class="field">
-                        <label>Instagram handle (optional)</label>
-                        <input 
-                        type="text" 
-                        v-model="organizer.instagramHandle" 
-                        name="instagramHandle"
-                        @click="isActive = 'instagram'"
-                        :class="{ active: isActive == 'instagram' }"
-                        @blur="isActive = null" 
-                        placeholder=" "
-                        />
+    <div class="event-create__organizer container grid">
+        <section class="event-enter-organization">
+            <div class="floating-form">
+                <div 
+                @mouseover="showEdit=true" 
+                v-if="approved" 
+                class="field">
+                    <p class="name">{{organizer.name}}</p>
+                    <button class="editTitle" v-if="showEdit" @click.prevent="showModal">Edit</button>
+                </div>
+                <div v-else class="field">
+                    <label>Organization name</label>
+                    <input 
+                    type="text" 
+                    placeholder=" " 
+                    name="name"
+                    :class="{ active: isActive == 'name','error': $v.organizer.name.$error }"
+                    @input="$v.organizer.name.$touch"
+                    @click="toggle('name')"
+                    @blur="isActive = null"
+                    v-model="organizer.name"
+                    />
+                    <div v-if="$v.organizer.name.$error" class="validation-error">
+                        <p class="error" v-if="!$v.organizer.name.required">The Name is required</p>
+                        <p class="error" v-if="!$v.organizer.name.serverFailed">The Name needs to be unique</p>
                     </div>
                 </div>
+                <div class="field">
+                    <label>Organization description</label>
+                    <textarea 
+                    type="text"
+                    name="description" 
+                    v-model="organizer.description" 
+                    placeholder=" "
+                    :class="{ active: isActive == 'description','error': $v.organizer.description.$error }"
+                    @input="$v.organizer.description.$touch"
+                    @click="isActive = 'description'"
+                    @blur="isActive = null" 
+                    rows="8">
+                    </textarea>
+                    <div v-if="$v.organizer.description.$error" class="validation-error">
+                        <p class="error" v-if="!$v.organizer.description.required">The Description is required</p>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Your organization website</label>
+                    <input 
+                    type="url" 
+                    v-model="organizer.website" 
+                    name="website"
+                    :class="{ active: isActive == 'website','error': $v.organizer.website.$error }"
+                    @input="$v.organizer.website.$touch"
+                    @click="toggle('website')"
+                    @blur="isActive = null" 
+                    placeholder=" "
+                    />
+                    <div v-if="$v.organizer.website.$error" class="validation-error">
+                        <p class="error" v-if="!$v.organizer.website.url">Must be a Url (Needs http://)</p>
+                        <p class="error" v-if="!$v.organizer.website.required">The Website is required</p>
+                        <p class="error" v-if="!$v.organizer.website.serverFailed">The Website needs to be unique</p>
+                        <p class="error" v-if="!$v.organizer.website.notWorking">The Url doesn't seem to be working</p>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Your organization email (optional)</label>
+                    <input 
+                    type="text" 
+                    v-model="organizer.email" 
+                    name="email"
+                    @click="isActive = 'email'"
+                    :class="{ active: isActive == 'email' }"
+                    @blur="isActive = null" 
+                    placeholder=" "
+                    />
+                </div>
+                <div class="field">
+                    <label>Twitter handle (optional)</label>
+                    <input 
+                    type="text" 
+                    v-model="organizer.twitterHandle" 
+                    name="twitterHandle"
+                    @click="isActive = 'twitter'"
+                    :class="{ active: isActive == 'twitter' }"
+                    @blur="isActive = null" 
+                    placeholder=" "
+                    />
+                </div>
+                <div class="field">
+                    <label>Facebook handle (optional)</label>
+                    <input 
+                    type="text" 
+                    v-model="organizer.facebookHandle" 
+                    name="facebookHandle"
+                    @click="isActive = 'facebook'"
+                    :class="{ active: isActive == 'facebook' }"
+                    @blur="isActive = null" 
+                    placeholder=" "
+                    />
+                </div>
+                <div class="field">
+                    <label>Instagram handle (optional)</label>
+                    <input 
+                    type="text" 
+                    v-model="organizer.instagramHandle" 
+                    name="instagramHandle"
+                    @click="isActive = 'instagram'"
+                    :class="{ active: isActive == 'instagram' }"
+                    @blur="isActive = null" 
+                    placeholder=" "
+                    />
+                </div>
             </div>
-            <div class="image">
-                <div class="img">          
-                    <div class="loader">
-                        <label class="" :style="backgroundImage">
-                            <div class="dash" :class="{ over: hasImage, load: isLoading }">
-                                <div class="box">
-                                    <div class="in">
-                                        <div v-if="!isLoading">
-                                            <svg class="b" height="32" width="32" viewBox="0 0 24 24" aria-label="Add an image or video" role="img"><path d="M24 12c0-6.627-5.372-12-12-12C5.373 0 0 5.373 0 12s5.373 12 12 12c6.628 0 12-5.373 12-12zm-10.767 3.75a1.25 1.25 0 0 1-2.5 0v-3.948l-1.031 1.031a1.25 1.25 0 0 1-1.768-1.768L12 7l4.066 4.065a1.25 1.25 0 0 1-1.768 1.768l-1.065-1.065v3.982z"></path></svg>
+        </section>
+        <section class="event-enter-organization-image">
+            <div class="add-organzation-image">          
+                <div class="add-organzation-image_loader">
+                    <label class="" :style="backgroundImage">
+                        <div class="add-organzation-image__card" :class="{ over: hasImage, load: isLoading }">
+                            <div class="add-organzation-image__dotted">
+                                <div class="add-organzation-image__text">
+                                    <div v-if="!isLoading">
+                                        <svg class="b" height="32" width="32" viewBox="0 0 24 24" aria-label="Add an image or video" role="img"><path d="M24 12c0-6.627-5.372-12-12-12C5.373 0 0 5.373 0 12s5.373 12 12 12c6.628 0 12-5.373 12-12zm-10.767 3.75a1.25 1.25 0 0 1-2.5 0v-3.948l-1.031 1.031a1.25 1.25 0 0 1-1.768-1.768L12 7l4.066 4.065a1.25 1.25 0 0 1-1.768 1.768l-1.065-1.065v3.982z"></path></svg>
+                                    </div>
+                                     <div>
+                                        <div v-if="!hasImage">
+                                            <h4>If you have an organization image <br>click here to Upload</h4>
+                                            <p>Please make image at least 400 x 400</p>
+                                            <p>Image needs to be under 20 mb</p>
                                         </div>
-                                         <div>
-                                            <div v-if="!hasImage">
-                                                <h4>If you have an organization image <br>click here to Upload</h4>
-                                                <p>Please make image at least 400 x 400</p>
-                                                <p>Image needs to be under 20 mb</p>
-                                            </div>
-                                            <p v-if="hasImage">Change Image</p>
-                                        </div>
+                                        <p v-if="hasImage">Change Image</p>
                                     </div>
                                 </div>
-                                <image-upload @loaded="onImageUpload"></image-upload>
-                                <CubeSpinner :loading="isLoading"></CubeSpinner>
                             </div>
-                        </label>
-                        <div>
-                            <div v-if="$v.finalImage.$error" class="validation-error">
-                                <p class="error" v-if="!$v.finalImage.fileSize">The Image is too large</p>
-                                <p class="error" v-if="!$v.finalImage.fileType">The Image needs to be a JPG, PNG or GIF</p>
-                                <p class="error" v-if="!$v.finalImage.imageSize">The image needs to be at least 400 x 400</p>
-                            </div>
+                            <image-upload @loaded="onImageUpload"></image-upload>
+                            <CubeSpinner :loading="isLoading"></CubeSpinner>
+                        </div>
+                    </label>
+                    <div>
+                        <div v-if="$v.finalImage.$error" class="validation-error">
+                            <p class="error" v-if="!$v.finalImage.fileSize">The Image is too large</p>
+                            <p class="error" v-if="!$v.finalImage.fileType">The Image needs to be a JPG, PNG or GIF</p>
+                            <p class="error" v-if="!$v.finalImage.imageSize">The image needs to be at least 400 x 400</p>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
         <modal v-if="modal" @close="modal = false">
             <div slot="header">
                 <div class="circle del">
@@ -167,7 +165,7 @@
                 <button class="btn del" @click="onApply()">Change Anyways</button>
             </div>
         </modal>
-        <div class="inNav">
+        <div class="create-button__in-nav">
             <button v-if="this.loadorganizer" class="create" @click.prevent="updateOrganizer"> Update Organizer </button>
             <button v-if="this.loadorganizer" class="create" @click.prevent="goBack"> Back </button>
             <button v-else="this.loadorganizer" class="create" @click.prevent="createOrganizer"> Save Organizer </button>

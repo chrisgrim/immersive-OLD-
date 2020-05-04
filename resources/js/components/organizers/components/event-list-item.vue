@@ -1,14 +1,17 @@
 <template>
-    <div :class="{ 'dis': isDisabled }" class="item">
+    <div :class="{ 'dis': isDisabled }" class="card">
         <favorite :inputclass="showEventClass" :event="event"></favorite>
         <a :href="url">
-            <div class="image" :style="eventImage">
-               
+             <div class="card-image" :style="`width:${imageWidth}px`">
+                <picture>
+                    <source type="image/webp" :srcset="`/storage/${event.thumbImagePath}`"> 
+                    <img :src="`/storage/${event.thumbImagePath.slice(0, -4)}jpg`" :alt="`${event.name} Immersive Event`">
+                </picture>
             </div>
-            <div class="etitle">
+            <div class="card-title">
                 <h3>{{ event.name }}</h3>
             </div>
-            <div class="eprice">
+            <div class="card-organizer">
                 <h4>{{ event.price_range }}</h4> 
             </div>
         </a>
@@ -26,26 +29,22 @@
             return {
                 showEventClass: 'heart',
                 url: this.loadurl ? this.loadurl : '/events/' + this.event.slug,
-                isModified: '',
                 isDisabled: false,
-                eventImage: '',
+                imageWidth: '',
             }
         },
 
         methods: {
-            canUseWebP() {
-                let webp = (document.createElement('canvas').toDataURL('image/webp').indexOf('data:image/webp') == 0);
-                if (this.event.thumbImagePath && webp) {
-                    return this.eventImage = `background-image: url('/storage/${this.event.thumbImagePath}')`
-                };
-                if (this.event.thumbImagePath) {
-                    return this.eventImage = `background-image: url('/storage/${this.event.thumbImagePath.slice(0, -4)}jpg')`
+           handleResize() {
+                if (window.innerWidth < 768) {
+                    this.imageWidth = window.innerWidth/1.4;
                 }
-            },
+            }
         },
 
         mounted() {
-            this.canUseWebP();
+            window.addEventListener('resize', this.handleResize);
+            this.handleResize();
         },
 
 

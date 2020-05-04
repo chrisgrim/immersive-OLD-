@@ -73,14 +73,26 @@
                         <section class="event-enter-showdates">
                             <div class="field">
                                 <label> Select all show dates</label>
-                                <flat-pickr
-                                    v-model="dates"
-                                    :config="config"
-                                    ref="datePicker"                                              
-                                    class="form-control"
-                                    placeholder="Select date"               
-                                    name="dates">
-                                </flat-pickr>
+                                <div class="calendar desktop">
+                                    <flat-pickr
+                                        v-model="dates"
+                                        :config="config"
+                                        ref="datePicker"                                              
+                                        class="form-control"
+                                        placeholder="Select date"               
+                                        name="dates">
+                                    </flat-pickr>
+                                </div>
+                                <div class="calendar mobile">
+                                    <flat-pickr
+                                        v-model="dates"
+                                        :config="configmobile"
+                                        ref="datePicker"                                              
+                                        class="form-control"
+                                        placeholder="Select date"               
+                                        name="dates">
+                                    </flat-pickr>
+                                </div>
                                 <div v-if="$v.dates.$error" class="validation-error">
                                     <p class="error" v-if="!$v.dates.required">Please add at least 1 show date</p>
                                 </div>
@@ -367,6 +379,14 @@ export default {
 				showMonths: 2,
 				dateFormat: 'Y-m-d H:i:s',        
 	        },
+            configmobile: {
+                minDate: "today",
+                maxDate: new Date().fp_incr(180),
+                mode: "multiple",
+                inline: true,
+                showMonths: 1,
+                dateFormat: 'Y-m-d H:i:s',        
+            },
             week: this.initializeWeekObject(),
             tickets: [this.initializeTicketObject()],
             showTimes: '',

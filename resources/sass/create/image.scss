@@ -82,6 +82,14 @@
   display: none !important;
 }
 
+@media (max-width: 768px) { 
+    .image-loader {
+        width: 100%;
+        height: 200px;
+    }
+}
+
+
 
 
 

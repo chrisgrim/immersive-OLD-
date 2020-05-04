@@ -236,10 +236,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 
 
 
@@ -262,7 +258,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     map: function map() {
-      return "height:calc(".concat(this.height, "px - 7rem);");
+      return "height:".concat(this.height, "px;");
     }
   },
   methods: {
@@ -499,652 +495,707 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "container-r" },
+    { staticClass: "login-index grid", style: _vm.map },
     [
-      _c("div", { staticClass: "register" }, [
-        _c("div", { staticClass: "content", style: this.map }, [
-          _c("div", { staticClass: "left" }, [
-            _vm.url == "/login"
-              ? _c("div", { staticClass: "sec" }, [
-                  _vm._m(0),
-                  _vm._v(" "),
-                  _c("div", {}, [
-                    _c("div", { staticClass: "field" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.user.email,
-                            expression: "user.email"
-                          }
-                        ],
-                        staticClass: "email",
-                        class: {
-                          active: _vm.activeItem == "email",
-                          error: _vm.$v.user.email.$error
-                        },
-                        attrs: {
-                          id: "email",
-                          type: "email",
-                          required: "",
-                          placeholder: "email",
-                          autofocus: ""
-                        },
-                        domProps: { value: _vm.user.email },
-                        on: {
-                          click: _vm.toggleEmail,
-                          blur: function($event) {
-                            _vm.activeItem = null
-                          },
-                          input: [
-                            function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(_vm.user, "email", $event.target.value)
-                            },
-                            _vm.$v.user.email.$touch
-                          ]
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.$v.user.email.$error
-                        ? _c("div", { staticClass: "validation-error" }, [
-                            !_vm.$v.user.email.serverFailed
-                              ? _c("p", { staticClass: "error" }, [
-                                  _vm._v("The login doesn't match our records")
-                                ])
-                              : _vm._e(),
-                            _vm._v(" "),
-                            !_vm.$v.user.email.required
-                              ? _c("p", { staticClass: "error" }, [
-                                  _vm._v("The email is required")
-                                ])
-                              : _vm._e()
-                          ])
-                        : _vm._e()
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "field" }, [
-                      _vm.passwordFieldType === "checkbox"
-                        ? _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.user.password,
-                                expression: "user.password"
-                              }
-                            ],
-                            staticClass: "pass",
-                            class: {
-                              active: _vm.activeItem == "password",
-                              error: _vm.$v.user.password.$error
-                            },
-                            attrs: {
-                              id: "password",
-                              required: "",
-                              placeholder: "password",
-                              type: "checkbox"
-                            },
-                            domProps: {
-                              checked: Array.isArray(_vm.user.password)
-                                ? _vm._i(_vm.user.password, null) > -1
-                                : _vm.user.password
-                            },
-                            on: {
-                              click: function($event) {
-                                _vm.activeItem = "password"
-                              },
-                              blur: function($event) {
-                                _vm.activeItem = null
-                              },
-                              input: _vm.$v.user.password.$touch,
-                              change: function($event) {
-                                var $$a = _vm.user.password,
-                                  $$el = $event.target,
-                                  $$c = $$el.checked ? true : false
-                                if (Array.isArray($$a)) {
-                                  var $$v = null,
-                                    $$i = _vm._i($$a, $$v)
-                                  if ($$el.checked) {
-                                    $$i < 0 &&
-                                      _vm.$set(
-                                        _vm.user,
-                                        "password",
-                                        $$a.concat([$$v])
-                                      )
-                                  } else {
-                                    $$i > -1 &&
-                                      _vm.$set(
-                                        _vm.user,
-                                        "password",
-                                        $$a
-                                          .slice(0, $$i)
-                                          .concat($$a.slice($$i + 1))
-                                      )
-                                  }
-                                } else {
-                                  _vm.$set(_vm.user, "password", $$c)
-                                }
-                              }
-                            }
-                          })
-                        : _vm.passwordFieldType === "radio"
-                        ? _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.user.password,
-                                expression: "user.password"
-                              }
-                            ],
-                            staticClass: "pass",
-                            class: {
-                              active: _vm.activeItem == "password",
-                              error: _vm.$v.user.password.$error
-                            },
-                            attrs: {
-                              id: "password",
-                              required: "",
-                              placeholder: "password",
-                              type: "radio"
-                            },
-                            domProps: {
-                              checked: _vm._q(_vm.user.password, null)
-                            },
-                            on: {
-                              click: function($event) {
-                                _vm.activeItem = "password"
-                              },
-                              blur: function($event) {
-                                _vm.activeItem = null
-                              },
-                              input: _vm.$v.user.password.$touch,
-                              change: function($event) {
-                                return _vm.$set(_vm.user, "password", null)
-                              }
-                            }
-                          })
-                        : _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.user.password,
-                                expression: "user.password"
-                              }
-                            ],
-                            staticClass: "pass",
-                            class: {
-                              active: _vm.activeItem == "password",
-                              error: _vm.$v.user.password.$error
-                            },
-                            attrs: {
-                              id: "password",
-                              required: "",
-                              placeholder: "password",
-                              type: _vm.passwordFieldType
-                            },
-                            domProps: { value: _vm.user.password },
-                            on: {
-                              click: function($event) {
-                                _vm.activeItem = "password"
-                              },
-                              blur: function($event) {
-                                _vm.activeItem = null
-                              },
-                              input: [
-                                function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.user,
-                                    "password",
-                                    $event.target.value
-                                  )
-                                },
-                                _vm.$v.user.password.$touch
-                              ]
-                            }
-                          }),
-                      _vm._v(" "),
-                      _vm.$v.user.password.$error
-                        ? _c("div", { staticClass: "validation-error" }, [
-                            !_vm.$v.user.email.serverFailed
-                              ? _c("p", { staticClass: "error" }, [
-                                  _vm._v("The login doesn't match our records")
-                                ])
-                              : _vm._e(),
-                            _vm._v(" "),
-                            !_vm.$v.user.password.required
-                              ? _c("p", { staticClass: "error" }, [
-                                  _vm._v("The password is required")
-                                ])
-                              : _vm._e()
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "showpass" }, [
-                        _vm.passwordFieldType == "password"
-                          ? _c("img", {
-                              attrs: {
-                                src: "/storage/website-files/password-eye.png",
-                                alt: ""
-                              },
-                              on: { click: _vm.switchVisibility }
-                            })
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm.passwordFieldType !== "password"
-                          ? _c("img", {
-                              attrs: {
-                                src:
-                                  "/storage/website-files/password-eye-closed.png",
-                                alt: ""
-                              },
-                              on: { click: _vm.switchVisibility }
-                            })
-                          : _vm._e()
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "field" }, [
-                      _c(
-                        "p",
-                        {
-                          staticClass: "forgot",
-                          class: { inprogress: _vm.dis },
-                          on: { click: _vm.onForget }
-                        },
-                        [_vm._v("Forgot your password?")]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "field" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "save",
-                          attrs: { type: "submit", disabled: _vm.dis },
-                          on: { click: _vm.onLogin }
-                        },
-                        [_vm._v(" Sign In ")]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _vm._m(1),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "list" }, [
-                      _c("div", { staticClass: "social" }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "button",
-                            on: {
-                              click: function($event) {
-                                return _vm.urlClick("Facebook")
-                              }
-                            }
-                          },
-                          [_c("p", [_vm._v("Facebook")])]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass: "button",
-                            on: {
-                              click: function($event) {
-                                return _vm.urlClick("Google")
-                              }
-                            }
-                          },
-                          [_c("p", [_vm._v("Google")])]
-                        )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "join" }, [
-                      _c("p", [
-                        _vm._v("Don't have an account? "),
-                        _c(
-                          "a",
-                          {
-                            attrs: { href: "" },
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                return _vm.switchLogin($event)
-                              }
-                            }
-                          },
-                          [_vm._v("Join Now")]
-                        )
-                      ])
-                    ])
-                  ])
-                ])
-              : _vm._e(),
+      _vm.url == "/login"
+        ? _c("div", { staticClass: "login-information" }, [
+            _vm._m(0),
             _vm._v(" "),
-            _vm.url == "/register"
-              ? _c("div", { staticClass: "sec" }, [
-                  _vm._m(2),
-                  _vm._v(" "),
-                  _c("div", {}, [
-                    _c("div", { staticClass: "field" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.user.name,
-                            expression: "user.name"
-                          }
-                        ],
-                        class: {
-                          active: _vm.activeItem == "name",
-                          error: _vm.$v.user.name.$error
-                        },
-                        attrs: {
-                          id: "name",
-                          type: "name",
-                          required: "",
-                          placeholder: "Name",
-                          autofocus: ""
-                        },
-                        domProps: { value: _vm.user.name },
-                        on: {
-                          click: function($event) {
-                            _vm.activeItem = "name"
-                          },
-                          blur: function($event) {
-                            _vm.activeItem = null
-                          },
-                          input: [
-                            function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(_vm.user, "name", $event.target.value)
-                            },
-                            _vm.$v.user.name.$touch
-                          ]
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.$v.user.name.$error
-                        ? _c("div", { staticClass: "validation-error" }, [
-                            !_vm.$v.user.name.required
-                              ? _c("p", { staticClass: "error" }, [
-                                  _vm._v("The name is required")
-                                ])
-                              : _vm._e(),
-                            _vm._v(" "),
-                            !_vm.$v.user.name.maxLength
-                              ? _c("p", { staticClass: "error" }, [
-                                  _vm._v("The name too long")
-                                ])
-                              : _vm._e()
-                          ])
-                        : _vm._e()
-                    ]),
+            _c("div", { staticClass: "field" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.user.email,
+                    expression: "user.email"
+                  }
+                ],
+                staticClass: "email",
+                class: {
+                  active: _vm.activeItem == "email",
+                  error: _vm.$v.user.email.$error
+                },
+                attrs: {
+                  id: "email",
+                  type: "email",
+                  required: "",
+                  placeholder: "email",
+                  autofocus: ""
+                },
+                domProps: { value: _vm.user.email },
+                on: {
+                  click: _vm.toggleEmail,
+                  blur: function($event) {
+                    _vm.activeItem = null
+                  },
+                  input: [
+                    function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.user, "email", $event.target.value)
+                    },
+                    _vm.$v.user.email.$touch
+                  ],
+                  keyup: function($event) {
+                    if (
+                      !$event.type.indexOf("key") &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    return _vm.onLogin($event)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.$v.user.email.$error
+                ? _c("div", { staticClass: "validation-error" }, [
+                    !_vm.$v.user.email.serverFailed
+                      ? _c("p", { staticClass: "error" }, [
+                          _vm._v("The login doesn't match our records")
+                        ])
+                      : _vm._e(),
                     _vm._v(" "),
-                    _c("div", { staticClass: "field" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.user.email,
-                            expression: "user.email"
-                          }
-                        ],
-                        class: {
-                          active: _vm.activeItem == "email",
-                          error: _vm.$v.user.email.$error
-                        },
-                        attrs: {
-                          id: "email",
-                          type: "email",
-                          required: "",
-                          placeholder: "Email",
-                          autofocus: ""
-                        },
-                        domProps: { value: _vm.user.email },
-                        on: {
-                          click: _vm.toggleEmail,
-                          blur: function($event) {
-                            _vm.activeItem = null
-                          },
-                          input: [
-                            function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(_vm.user, "email", $event.target.value)
-                            },
-                            _vm.$v.user.email.$touch
-                          ]
+                    !_vm.$v.user.email.required
+                      ? _c("p", { staticClass: "error" }, [
+                          _vm._v("The email is required")
+                        ])
+                      : _vm._e()
+                  ])
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "field" }, [
+              _vm.passwordFieldType === "checkbox"
+                ? _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.user.password,
+                        expression: "user.password"
+                      }
+                    ],
+                    staticClass: "pass",
+                    class: {
+                      active: _vm.activeItem == "password",
+                      error: _vm.$v.user.password.$error
+                    },
+                    attrs: {
+                      id: "password",
+                      required: "",
+                      placeholder: "password",
+                      type: "checkbox"
+                    },
+                    domProps: {
+                      checked: Array.isArray(_vm.user.password)
+                        ? _vm._i(_vm.user.password, null) > -1
+                        : _vm.user.password
+                    },
+                    on: {
+                      click: function($event) {
+                        _vm.activeItem = "password"
+                      },
+                      blur: function($event) {
+                        _vm.activeItem = null
+                      },
+                      keyup: function($event) {
+                        if (
+                          !$event.type.indexOf("key") &&
+                          _vm._k(
+                            $event.keyCode,
+                            "enter",
+                            13,
+                            $event.key,
+                            "Enter"
+                          )
+                        ) {
+                          return null
                         }
-                      }),
-                      _vm._v(" "),
-                      _vm.$v.user.email.$error
-                        ? _c("div", { staticClass: "validation-error" }, [
-                            !_vm.$v.user.email.required
-                              ? _c("p", { staticClass: "error" }, [
-                                  _vm._v("The email is required")
-                                ])
-                              : _vm._e(),
-                            _vm._v(" "),
-                            !_vm.$v.user.email.serverFailed
-                              ? _c("p", { staticClass: "error" }, [
-                                  _vm._v(_vm._s(_vm.serverErrors.email[0]))
-                                ])
-                              : _vm._e()
-                          ])
-                        : _vm._e()
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "field" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.user.password,
-                            expression: "user.password"
-                          }
-                        ],
-                        staticClass: "pass",
-                        class: {
-                          active: _vm.activeItem == "password",
-                          error: _vm.$v.user.password.$error
-                        },
-                        attrs: {
-                          id: "password",
-                          type: "password",
-                          required: "",
-                          placeholder: "Password"
-                        },
-                        domProps: { value: _vm.user.password },
-                        on: {
-                          click: function($event) {
-                            _vm.activeItem = "password"
-                          },
-                          blur: function($event) {
-                            _vm.activeItem = null
-                          },
-                          input: [
-                            function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
+                        return _vm.onLogin($event)
+                      },
+                      input: _vm.$v.user.password.$touch,
+                      change: function($event) {
+                        var $$a = _vm.user.password,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = null,
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 &&
+                              _vm.$set(_vm.user, "password", $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
                               _vm.$set(
                                 _vm.user,
                                 "password",
-                                $event.target.value
+                                $$a.slice(0, $$i).concat($$a.slice($$i + 1))
                               )
-                            },
-                            _vm.$v.user.password.$touch
-                          ]
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.$v.user.password.$error
-                        ? _c("div", { staticClass: "validation-error" }, [
-                            !_vm.$v.user.password.serverFailed
-                              ? _c("p", { staticClass: "error" }, [
-                                  _vm._v("Must be at least 8 characters")
-                                ])
-                              : _vm._e(),
-                            _vm._v(" "),
-                            !_vm.$v.user.password.required
-                              ? _c("p", { staticClass: "error" }, [
-                                  _vm._v("The password is required")
-                                ])
-                              : _vm._e()
-                          ])
-                        : _vm._e()
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "field" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.user.passwordConfirm,
-                            expression: "user.passwordConfirm"
                           }
-                        ],
-                        staticClass: "pass",
-                        class: {
-                          active: _vm.activeItem == "passwordConfirm",
-                          error: _vm.$v.user.passwordConfirm.$error
-                        },
-                        attrs: {
-                          id: "password",
-                          type: "password",
-                          required: "",
-                          placeholder: "Confirm Password"
-                        },
-                        domProps: { value: _vm.user.passwordConfirm },
-                        on: {
-                          click: _vm.toggleConfirm,
-                          blur: function($event) {
-                            _vm.activeItem = null
-                          },
-                          input: [
-                            function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.user,
-                                "passwordConfirm",
-                                $event.target.value
-                              )
-                            },
-                            _vm.$v.user.passwordConfirm.$touch
-                          ]
+                        } else {
+                          _vm.$set(_vm.user, "password", $$c)
                         }
-                      }),
-                      _vm._v(" "),
-                      _vm.$v.user.passwordConfirm.$error
-                        ? _c("div", { staticClass: "validation-error" }, [
-                            !_vm.$v.user.passwordConfirm.serverFailed
-                              ? _c("p", { staticClass: "error" }, [
-                                  _vm._v(_vm._s(_vm.serverErrors.password[0]))
-                                ])
-                              : _vm._e(),
-                            _vm._v(" "),
-                            !_vm.$v.user.passwordConfirm.isRequiredRegister
-                              ? _c("p", { staticClass: "error" }, [
-                                  _vm._v("The passwordConfirm is required")
-                                ])
-                              : _vm._e()
-                          ])
-                        : _vm._e()
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "field" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "save",
-                          attrs: { type: "submit", disabled: _vm.dis },
-                          on: { click: _vm.onRegister }
+                      }
+                    }
+                  })
+                : _vm.passwordFieldType === "radio"
+                ? _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.user.password,
+                        expression: "user.password"
+                      }
+                    ],
+                    staticClass: "pass",
+                    class: {
+                      active: _vm.activeItem == "password",
+                      error: _vm.$v.user.password.$error
+                    },
+                    attrs: {
+                      id: "password",
+                      required: "",
+                      placeholder: "password",
+                      type: "radio"
+                    },
+                    domProps: { checked: _vm._q(_vm.user.password, null) },
+                    on: {
+                      click: function($event) {
+                        _vm.activeItem = "password"
+                      },
+                      blur: function($event) {
+                        _vm.activeItem = null
+                      },
+                      keyup: function($event) {
+                        if (
+                          !$event.type.indexOf("key") &&
+                          _vm._k(
+                            $event.keyCode,
+                            "enter",
+                            13,
+                            $event.key,
+                            "Enter"
+                          )
+                        ) {
+                          return null
+                        }
+                        return _vm.onLogin($event)
+                      },
+                      input: _vm.$v.user.password.$touch,
+                      change: function($event) {
+                        return _vm.$set(_vm.user, "password", null)
+                      }
+                    }
+                  })
+                : _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.user.password,
+                        expression: "user.password"
+                      }
+                    ],
+                    staticClass: "pass",
+                    class: {
+                      active: _vm.activeItem == "password",
+                      error: _vm.$v.user.password.$error
+                    },
+                    attrs: {
+                      id: "password",
+                      required: "",
+                      placeholder: "password",
+                      type: _vm.passwordFieldType
+                    },
+                    domProps: { value: _vm.user.password },
+                    on: {
+                      click: function($event) {
+                        _vm.activeItem = "password"
+                      },
+                      blur: function($event) {
+                        _vm.activeItem = null
+                      },
+                      keyup: function($event) {
+                        if (
+                          !$event.type.indexOf("key") &&
+                          _vm._k(
+                            $event.keyCode,
+                            "enter",
+                            13,
+                            $event.key,
+                            "Enter"
+                          )
+                        ) {
+                          return null
+                        }
+                        return _vm.onLogin($event)
+                      },
+                      input: [
+                        function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.user, "password", $event.target.value)
                         },
-                        [_vm._v(" Register ")]
-                      )
-                    ]),
+                        _vm.$v.user.password.$touch
+                      ]
+                    }
+                  }),
+              _vm._v(" "),
+              _vm.$v.user.password.$error
+                ? _c("div", { staticClass: "validation-error" }, [
+                    !_vm.$v.user.email.serverFailed
+                      ? _c("p", { staticClass: "error" }, [
+                          _vm._v("The login doesn't match our records")
+                        ])
+                      : _vm._e(),
                     _vm._v(" "),
-                    _vm._m(3),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "list" }, [
-                      _c("div", { staticClass: "social" }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "button",
-                            on: {
-                              click: function($event) {
-                                return _vm.urlClick("Facebook")
-                              }
-                            }
-                          },
-                          [_c("p", [_vm._v("Facebook")])]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass: "button",
-                            on: {
-                              click: function($event) {
-                                return _vm.urlClick("Google")
-                              }
-                            }
-                          },
-                          [_c("p", [_vm._v("Google")])]
-                        )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "join" }, [
-                      _c("p", [
-                        _vm._v("Already have an account? "),
-                        _c(
-                          "a",
-                          {
-                            attrs: { href: "" },
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                return _vm.switchLogin($event)
-                              }
-                            }
-                          },
-                          [_vm._v("Sign In Now")]
-                        )
-                      ])
-                    ])
+                    !_vm.$v.user.password.required
+                      ? _c("p", { staticClass: "error" }, [
+                          _vm._v("The password is required")
+                        ])
+                      : _vm._e()
                   ])
-                ])
-              : _vm._e()
-          ]),
-          _vm._v(" "),
-          _c("div", {
-            staticClass: "right",
-            staticStyle: {
-              background:
-                "url(/storage/website-files/login-image.jpg) no-repeat",
-              "background-size": "cover"
-            }
+                : _vm._e(),
+              _vm._v(" "),
+              _c("div", { staticClass: "login-information__showpass" }, [
+                _vm.passwordFieldType == "password"
+                  ? _c("img", {
+                      attrs: {
+                        src: "/storage/website-files/password-eye.png",
+                        alt: ""
+                      },
+                      on: { click: _vm.switchVisibility }
+                    })
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.passwordFieldType !== "password"
+                  ? _c("img", {
+                      attrs: {
+                        src: "/storage/website-files/password-eye-closed.png",
+                        alt: ""
+                      },
+                      on: { click: _vm.switchVisibility }
+                    })
+                  : _vm._e()
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "field" }, [
+              _c(
+                "p",
+                {
+                  staticClass: "login-information__forgot-password",
+                  class: { inprogress: _vm.dis },
+                  on: { click: _vm.onForget }
+                },
+                [_vm._v("Forgot your password?")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "field" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "login-button",
+                  attrs: { type: "submit", disabled: _vm.dis },
+                  on: { click: _vm.onLogin }
+                },
+                [_vm._v(" Sign In ")]
+              )
+            ]),
+            _vm._v(" "),
+            _vm._m(1),
+            _vm._v(" "),
+            _c("div", { staticClass: "login-information__social-login grid" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "social-login",
+                  on: {
+                    click: function($event) {
+                      return _vm.urlClick("Facebook")
+                    }
+                  }
+                },
+                [_c("p", [_vm._v("Facebook")])]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "social-login",
+                  on: {
+                    click: function($event) {
+                      return _vm.urlClick("Google")
+                    }
+                  }
+                },
+                [_c("p", [_vm._v("Google")])]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "login-information__switch" }, [
+              _c("p", [
+                _vm._v("Don't have an account? "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "switch_login",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.switchLogin($event)
+                      }
+                    }
+                  },
+                  [_vm._v("Join Now")]
+                )
+              ])
+            ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.url == "/register"
+        ? _c("div", { staticClass: "login-information" }, [
+            _vm._m(2),
+            _vm._v(" "),
+            _c("div", { staticClass: "field" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.user.name,
+                    expression: "user.name"
+                  }
+                ],
+                class: {
+                  active: _vm.activeItem == "name",
+                  error: _vm.$v.user.name.$error
+                },
+                attrs: {
+                  id: "name",
+                  type: "name",
+                  required: "",
+                  placeholder: "Name",
+                  autofocus: ""
+                },
+                domProps: { value: _vm.user.name },
+                on: {
+                  click: function($event) {
+                    _vm.activeItem = "name"
+                  },
+                  blur: function($event) {
+                    _vm.activeItem = null
+                  },
+                  input: [
+                    function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.user, "name", $event.target.value)
+                    },
+                    _vm.$v.user.name.$touch
+                  ],
+                  keyup: function($event) {
+                    if (
+                      !$event.type.indexOf("key") &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    return _vm.onRegister($event)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.$v.user.name.$error
+                ? _c("div", { staticClass: "validation-error" }, [
+                    !_vm.$v.user.name.required
+                      ? _c("p", { staticClass: "error" }, [
+                          _vm._v("The name is required")
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    !_vm.$v.user.name.maxLength
+                      ? _c("p", { staticClass: "error" }, [
+                          _vm._v("The name too long")
+                        ])
+                      : _vm._e()
+                  ])
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "field" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.user.email,
+                    expression: "user.email"
+                  }
+                ],
+                class: {
+                  active: _vm.activeItem == "email",
+                  error: _vm.$v.user.email.$error
+                },
+                attrs: {
+                  id: "email",
+                  type: "email",
+                  required: "",
+                  placeholder: "Email",
+                  autofocus: ""
+                },
+                domProps: { value: _vm.user.email },
+                on: {
+                  click: _vm.toggleEmail,
+                  blur: function($event) {
+                    _vm.activeItem = null
+                  },
+                  input: [
+                    function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.user, "email", $event.target.value)
+                    },
+                    _vm.$v.user.email.$touch
+                  ],
+                  keyup: function($event) {
+                    if (
+                      !$event.type.indexOf("key") &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    return _vm.onRegister($event)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.$v.user.email.$error
+                ? _c("div", { staticClass: "validation-error" }, [
+                    !_vm.$v.user.email.required
+                      ? _c("p", { staticClass: "error" }, [
+                          _vm._v("The email is required")
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    !_vm.$v.user.email.serverFailed
+                      ? _c("p", { staticClass: "error" }, [
+                          _vm._v(_vm._s(_vm.serverErrors.email[0]))
+                        ])
+                      : _vm._e()
+                  ])
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "field" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.user.password,
+                    expression: "user.password"
+                  }
+                ],
+                staticClass: "pass",
+                class: {
+                  active: _vm.activeItem == "password",
+                  error: _vm.$v.user.password.$error
+                },
+                attrs: {
+                  id: "password",
+                  type: "password",
+                  required: "",
+                  placeholder: "Password"
+                },
+                domProps: { value: _vm.user.password },
+                on: {
+                  click: function($event) {
+                    _vm.activeItem = "password"
+                  },
+                  blur: function($event) {
+                    _vm.activeItem = null
+                  },
+                  input: [
+                    function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.user, "password", $event.target.value)
+                    },
+                    _vm.$v.user.password.$touch
+                  ],
+                  keyup: function($event) {
+                    if (
+                      !$event.type.indexOf("key") &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    return _vm.onRegister($event)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.$v.user.password.$error
+                ? _c("div", { staticClass: "validation-error" }, [
+                    !_vm.$v.user.password.serverFailed
+                      ? _c("p", { staticClass: "error" }, [
+                          _vm._v("Must be at least 8 characters")
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    !_vm.$v.user.password.required
+                      ? _c("p", { staticClass: "error" }, [
+                          _vm._v("The password is required")
+                        ])
+                      : _vm._e()
+                  ])
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "field" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.user.passwordConfirm,
+                    expression: "user.passwordConfirm"
+                  }
+                ],
+                staticClass: "pass",
+                class: {
+                  active: _vm.activeItem == "passwordConfirm",
+                  error: _vm.$v.user.passwordConfirm.$error
+                },
+                attrs: {
+                  id: "password",
+                  type: "password",
+                  required: "",
+                  placeholder: "Confirm Password"
+                },
+                domProps: { value: _vm.user.passwordConfirm },
+                on: {
+                  click: _vm.toggleConfirm,
+                  blur: function($event) {
+                    _vm.activeItem = null
+                  },
+                  input: [
+                    function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.user, "passwordConfirm", $event.target.value)
+                    },
+                    _vm.$v.user.passwordConfirm.$touch
+                  ],
+                  keyup: function($event) {
+                    if (
+                      !$event.type.indexOf("key") &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    return _vm.onRegister($event)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.$v.user.passwordConfirm.$error
+                ? _c("div", { staticClass: "validation-error" }, [
+                    !_vm.$v.user.passwordConfirm.serverFailed
+                      ? _c("p", { staticClass: "error" }, [
+                          _vm._v(_vm._s(_vm.serverErrors.password[0]))
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    !_vm.$v.user.passwordConfirm.isRequiredRegister
+                      ? _c("p", { staticClass: "error" }, [
+                          _vm._v("The passwordConfirm is required")
+                        ])
+                      : _vm._e()
+                  ])
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "field" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "login-button",
+                  attrs: { type: "submit", disabled: _vm.dis },
+                  on: { click: _vm.onRegister }
+                },
+                [_vm._v(" Register ")]
+              )
+            ]),
+            _vm._v(" "),
+            _vm._m(3),
+            _vm._v(" "),
+            _c("div", { staticClass: "login-information__social-login grid" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "social-login",
+                  on: {
+                    click: function($event) {
+                      return _vm.urlClick("Facebook")
+                    }
+                  }
+                },
+                [_c("p", [_vm._v("Facebook")])]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "social-login",
+                  on: {
+                    click: function($event) {
+                      return _vm.urlClick("Google")
+                    }
+                  }
+                },
+                [_c("p", [_vm._v("Google")])]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "login-information__switch" }, [
+              _c("p", [
+                _vm._v("Already have an account? "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "switch_login",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.switchLogin($event)
+                      }
+                    }
+                  },
+                  [_vm._v("Sign In Now")]
+                )
+              ])
+            ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c("div", { staticClass: "login-image" }, [
+        _c("picture", [
+          _c("img", {
+            style: _vm.map,
+            attrs: { src: "/storage/website-files/login-image.jpg" }
           })
         ])
       ]),
@@ -1161,7 +1212,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "title" }, [
+    return _c("div", { staticClass: "login-information__title" }, [
       _c("h3", [_vm._v("Everything Immersive")])
     ])
   },
@@ -1169,7 +1220,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "line" }, [
+    return _c("div", { staticClass: "login-information__line" }, [
       _c("hr"),
       _vm._v(" "),
       _c("span", [_vm._v("or")])
@@ -1179,7 +1230,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "title" }, [
+    return _c("div", { staticClass: "login-information__title" }, [
       _c("h3", [_vm._v("Everything Immersive")])
     ])
   },
@@ -1187,7 +1238,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "line" }, [
+    return _c("div", { staticClass: "login-information__line" }, [
       _c("hr"),
       _vm._v(" "),
       _c("span", [_vm._v("or")])

@@ -1,57 +1,22 @@
 <template>
-    <div class="messages">
+    <div class="message-index">
+        <div class="message-index__title mobile">
+            <h3>Inbox</h3>
+        </div>
         <div class="listing-details-block">
             <tabs>
                 <tab title="Messages" :notification="user.unread=='m'" :active="true" class="tab-events">
-                    <div v-if="conversations" v-for="conversation in conversations">
-                        <a v-if="conversation.messages.length" :href="`/conversations/${conversation.id}`" class="row">
-                            <div v-if="loaduser.id !== user.id" v-for="user in conversation.users" class="user">
-                                <div class="user-message" :style="`background:${user.hexColor}`">
-                                    <label v-if="user.largeImagePath" class="profile-image" >
-                                        <img :src="`/storage/${user.thumbImagePath}`" :alt="user.name + `'s account`">
-                                    </label>
-                                    <div v-else-if="user.gravatar" class="profile-image">
-                                        <img :src="user.gravatar" :alt="user.name + `'s account`">
-                                    </div>
-                                    <div v-else="user.largeImagePath" class="icontext">
-                                        <h2>{{user ? user.name.charAt(0) : ''}}</h2>
-                                    </div>
-                                </div>
-                                <div class="name">
-                                    <p><b>{{user.name}}</b></p>
-                                    <div v-for="(message, index) in conversation.messages" v-if="index == 0">
-                                        <p><span>{{message.updated_at | formatDate}}</span></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <div v-if="index == 0" v-for="(message, index) in conversation.messages" class="message">
-                                    <p><span>{{ message.message }}</span></p>
-                                </div>
-                            </div>  
-                        </a>
+                    <div v-if="conversations">
+                        <div v-for="conversation in userConversations">
+                            <MessageIndexTab :conversation="conversation" :loaduser="loaduser"></MessageIndexTab>
+                        </div>
                     </div>
                 </tab>
                 <tab title="Events" :notification="user.unread=='e'" class="tab-events">
-                    <div v-if="conversations" v-for="conversation in conversations">
-                        <a v-if="conversation.modmessages.length" :href="`/conversations/${conversation.id}`" class="row">
-                            <div class="event">
-                                <div class="message-image">
-                                    <img :src="`/storage/${conversation.modmessages[0].event.thumbImagePath}`" >
-                                </div>
-                                <div class="name">
-                                    <p><b>{{ conversation.modmessages[0].event.name }}</b></p>
-                                    <div v-if="index == 0" v-for="(message, index) in conversation.modmessages">
-                                        <p><span>{{message.updated_at | formatDate}}</span></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <div v-if="index == 0" v-for="(message, index) in conversation.modmessages" class="message">
-                                    <div><b>Notes:</b> <p style="white-space: pre-line;">{{ message.comments }}</p></div>
-                                </div>
-                            </div>  
-                        </a>
+                    <div v-if="conversations">
+                        <div v-for="conversation in eventConversations">
+                            <MessageIndexTab :conversation="conversation" :loaduser="loaduser"></MessageIndexTab> 
+                        </div>
                     </div>
                 </tab>
             </tabs>
@@ -61,17 +26,26 @@
 
 <script>
     import moment from 'moment'
+    import MessageIndexTab from '../messages/components/message-index-tab.vue'
     export default {
 
         props: ['loaduser'],
 
         components: {
+            MessageIndexTab
         },
 
         computed: {
-            lastItem() {
-
-            }
+            userConversations() {
+                return this.conversations.filter(function (conversation) {
+                    return conversation.messages.length;
+                })
+            },
+            eventConversations() {
+                return this.conversations.filter(function (conversation) {
+                    return conversation.modmessages.length;
+                })
+            },
         },
 
         data() {
@@ -114,14 +88,6 @@
 
         validations: {
           
-        },
-
-        filters: {
-            formatDate(value) {
-                if (value) {
-                    return moment(String(value)).format('MMM Do, YYYY')
-                }
-            }
         },
 
 

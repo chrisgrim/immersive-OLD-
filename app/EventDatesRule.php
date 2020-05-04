@@ -20,52 +20,6 @@ class EventDatesRule extends SearchRule
      */
     public function buildQueryPayload()
     {
-        if (!Request::get('mapboundary') && Request::get('price')) {
-            return [
-                'must' => 
-                [
-                    [
-                        'match' => 
-                        [
-                            'status' => 'p'
-                        ]
-                    ],
-                    [
-                        'range' => 
-                        [
-                            'closingDate' => 
-                            [
-                                'gte' => 'now/d',
-                            ],
-                        ],
-                    ],
-                    [
-                        'range' => 
-                        [
-                            'priceranges.price' =>
-                            [
-                                'gte' => Request::get('price')[0],
-                                'lte' => Request::get('price')[1],
-                            ]
-                        ]
-                    ],
-
-                ],
-
-                'filter' => 
-                [
-                    'geo_distance' => 
-                    [
-                        'distance' => '40km',
-                        'location_latlon' => 
-                        [
-                            'lat' => Request::get('loc')['lat'],
-                            'lon' => Request::get('loc')['lng']
-                        ]
-                    ]
-                ],
-            ];  
-        }
         if (!Request::get('mapboundary') && Request::get('category')) {
             return [
                 'must' => 
@@ -278,6 +232,52 @@ class EventDatesRule extends SearchRule
                     ],
                 ],
                 'minimum_should_match' => 1,
+            ];  
+        }
+        if (!Request::get('mapboundary')) {
+            return [
+                'must' => 
+                [
+                    [
+                        'match' => 
+                        [
+                            'status' => 'p'
+                        ]
+                    ],
+                    [
+                        'range' => 
+                        [
+                            'closingDate' => 
+                            [
+                                'gte' => 'now/d',
+                            ],
+                        ],
+                    ],
+                    [
+                        'range' => 
+                        [
+                            'priceranges.price' =>
+                            [
+                                'gte' => Request::get('price')[0],
+                                'lte' => Request::get('price')[1],
+                            ]
+                        ]
+                    ],
+
+                ],
+
+                'filter' => 
+                [
+                    'geo_distance' => 
+                    [
+                        'distance' => '40km',
+                        'location_latlon' => 
+                        [
+                            'lat' => Request::get('loc')['lat'],
+                            'lon' => Request::get('loc')['lng']
+                        ]
+                    ]
+                ],
             ];  
         }
         if (Request::get('category') && Request::get('dates')) {

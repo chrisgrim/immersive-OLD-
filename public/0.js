@@ -5,173 +5,9 @@
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/create/nav.vue?vue&type=script&lang=js& ***!
   \*********************************************************************************************************************************************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-multiselect */ "./node_modules/vue-multiselect/dist/vue-multiselect.min.js");
-/* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_multiselect__WEBPACK_IMPORTED_MODULE_0__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: {
-    event: {
-      type: Object
-    }
-  },
-  computed: {
-    onReview: function onReview() {
-      return this.url === "/create-event/".concat(this.event.slug, "/review") ? true : '';
-    }
-  },
-  data: function data() {
-    return {
-      onOrganizer: false,
-      onTitle: false,
-      onLocation: false,
-      onCategory: false,
-      onShows: false,
-      onDescription: false,
-      onAdvisories: false,
-      onImage: false,
-      url: window.location.pathname,
-      hover: ''
-    };
-  },
-  methods: {
-    getUrl: function getUrl(data) {
-      if (data === "/create-event/".concat(this.event.slug, "/review")) {
-        this.onTitle = true;
-        this.onLocation = true;
-        this.onCategory = true;
-        this.onShows = true;
-        this.onDescription = true;
-        this.onAdvisories = true;
-        return this.onImage = true;
-      }
-
-      if (data === "/create-event/".concat(this.event.slug, "/images")) {
-        this.onTitle = true;
-        this.onLocation = true;
-        this.onCategory = true;
-        this.onShows = true;
-        this.onDescription = true;
-        this.onAdvisories = true;
-        return this.onImage = true;
-      }
-
-      if (data === "/create-event/".concat(this.event.slug, "/advisories")) {
-        this.onTitle = true;
-        this.onLocation = true;
-        this.onCategory = true;
-        this.onShows = true;
-        this.onDescription = true;
-        return this.onAdvisories = true;
-      }
-
-      if (data === "/create-event/".concat(this.event.slug, "/description")) {
-        this.onTitle = true;
-        this.onLocation = true;
-        this.onCategory = true;
-        this.onShows = true;
-        return this.onDescription = true;
-      }
-
-      if (data === "/create-event/".concat(this.event.slug, "/shows")) {
-        this.onTitle = true;
-        this.onLocation = true;
-        this.onCategory = true;
-        return this.onShows = true;
-      }
-
-      if (data === "/create-event/".concat(this.event.slug, "/category")) {
-        this.onTitle = true;
-        this.onLocation = true;
-        return this.onCategory = true;
-      }
-
-      if (data === "/create-event/".concat(this.event.slug, "/location")) {
-        this.onTitle = true;
-        return this.onLocation = true;
-      }
-
-      if (data === "/create-event/".concat(this.event.slug, "/title")) {
-        return this.onTitle = true;
-      }
-    },
-    notAllowed: function notAllowed() {
-      if (this.event.status) {
-        return ['d', 'n', 'p'].includes(this.event.status) ? '' : window.location.href = '/create-event/edit';
-      }
-    }
-  },
-  mounted: function mounted() {
-    var data = window.location.pathname;
-    this.getUrl(data);
-  },
-  created: function created() {
-    this.notAllowed();
-  }
-});
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /Users/chrisgrim/code/ei/resources/js/components/create/nav.vue: Unexpected token (69:2)\n\n\u001b[0m \u001b[90m 67 | \u001b[39m\t\tprops\u001b[33m:\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m 68 | \u001b[39m\t\t\t[event]\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 69 | \u001b[39m\t\t}\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    | \u001b[39m\t\t\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 70 | \u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 71 | \u001b[39m        computed\u001b[33m:\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m 72 | \u001b[39m            onReview() {\u001b[0m\n    at Parser.raise (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:6983:17)\n    at Parser.unexpected (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:8376:16)\n    at Parser.parseObjPropValue (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10115:21)\n    at Parser.parseObjectMember (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10038:10)\n    at Parser.parseObj (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9958:25)\n    at Parser.parseExprAtom (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9580:28)\n    at Parser.parseExprSubscripts (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9213:23)\n    at Parser.parseMaybeUnary (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9193:21)\n    at Parser.parseExprOps (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9059:23)\n    at Parser.parseMaybeConditional (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9032:23)\n    at Parser.parseMaybeAssign (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:8978:21)\n    at Parser.parseObjectProperty (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10089:101)\n    at Parser.parseObjPropValue (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10114:101)\n    at Parser.parseObjectMember (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10038:10)\n    at Parser.parseObj (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9958:25)\n    at Parser.parseExprAtom (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9580:28)\n    at Parser.parseExprSubscripts (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9213:23)\n    at Parser.parseMaybeUnary (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9193:21)\n    at Parser.parseExprOps (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9059:23)\n    at Parser.parseMaybeConditional (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9032:23)\n    at Parser.parseMaybeAssign (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:8978:21)\n    at Parser.parseExportDefaultExpression (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11846:24)\n    at Parser.parseExport (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11748:31)\n    at Parser.parseStatementContent (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10770:27)\n    at Parser.parseStatement (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10666:17)\n    at Parser.parseBlockOrModuleBlockBody (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11242:25)\n    at Parser.parseBlockBody (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11229:10)\n    at Parser.parseTopLevel (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10597:10)\n    at Parser.parse (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:12107:10)\n    at parse (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:12158:38)\n    at parser (/Users/chrisgrim/code/ei/node_modules/@babel/core/lib/transformation/normalize-file.js:168:34)\n    at normalizeFile (/Users/chrisgrim/code/ei/node_modules/@babel/core/lib/transformation/normalize-file.js:102:11)\n    at runSync (/Users/chrisgrim/code/ei/node_modules/@babel/core/lib/transformation/index.js:44:43)\n    at runAsync (/Users/chrisgrim/code/ei/node_modules/@babel/core/lib/transformation/index.js:35:14)\n    at process.nextTick (/Users/chrisgrim/code/ei/node_modules/@babel/core/lib/transform.js:34:34)\n    at process._tickCallback (internal/process/next_tick.js:61:11)");
 
 /***/ }),
 
@@ -195,15 +31,7 @@ var render = function() {
       "div",
       { staticClass: "grid create-menu", class: { review: _vm.onReview } },
       [
-        _c("div", { staticClass: "create-menu__home" }, [
-          _c("a", { attrs: { href: "/create-event/edit" } }, [
-            _c(
-              "button",
-              { staticClass: "home", class: { review: _vm.onReview } },
-              [_vm._v("Home")]
-            )
-          ])
-        ]),
+        _vm._m(0),
         _vm._v(" "),
         _c("div", { staticClass: "create-menu__item" }, [
           _vm.url == "/organizer/create"
@@ -251,7 +79,7 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    !_vm.onReview
+    _vm.showBar
       ? _c(
           "div",
           { staticClass: "create-navbar", class: { over: _vm.hover } },
@@ -542,9 +370,127 @@ var render = function() {
       : _vm._e()
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "create-menu__home" }, [
+      _c("div", { staticClass: "nav-logo" }, [
+        _c("a", { attrs: { href: "/" } }, [_c("h3", [_vm._v("EI")])])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/runtime/componentNormalizer.js ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalizeComponent; });
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier, /* server only */
+  shadowMode /* vue-cli only */
+) {
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = 'data-v-' + scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = shadowMode
+      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
+      : injectStyles
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      var originalRender = options.render
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return originalRender(h, context)
+      }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    }
+  }
+
+  return {
+    exports: scriptExports,
+    options: options
+  }
+}
 
 
 /***/ }),

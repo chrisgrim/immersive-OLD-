@@ -1,3 +1,36 @@
+.event-create-start {
+    grid-template-columns: 55% 45%;
+    -webkit-box-align: center;
+    align-items: center;
+    justify-items: center;
+    grid-gap: 0rem !important;
+}
+.start-content__nav {
+    position: absolute;
+}
+.start-content {
+    width:70%;
+    margin: auto;
+}
+.start-content__text {
+    & h2 {
+        margin:1rem 0rem;
+    }
+    & p {
+        font-size: 1.6rem;
+    }
+}
+button.event-start-button {
+    border: none;
+    background: $default-color;
+    color: white;
+    font-weight: 500;
+    padding: 1.3rem;
+    margin: 2rem 0rem;
+}
+
+
+
 #create {
     &.start {
     background-image: url("/storage/website-files/create-background.jpg");

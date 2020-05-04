@@ -22,9 +22,10 @@
 @import 'components/tab';
 @import 'organizer';
 
-@import 'messages/messages';
+@import 'messages/messages-index';
+@import 'messages/messages-show';
 
-@import 'create/spinner';
+@import 'components/spinner';
 
 
 

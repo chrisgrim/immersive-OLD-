@@ -53,7 +53,7 @@
             </div>
         </nav>
 
-        <nav v-if="mobileDevice && onclass!='show'" class="nav mobile" :class="{ fullmap: fullmap, entry: onclass=='entry', show: onclass=='show' }" >
+        <nav v-if="mobileDevice && dontShowNav" class="nav mobile" :class="{ fullmap: fullmap, entry: onclass=='entry', show: onclass=='show', message: onclass=='message', messageshow: onclass=='messageshow'  }" >
             <div v-if="onClassType">
                 <div class="nav-search mobile">
                     <div class="nav-backarrow" v-if="onclass">
@@ -67,47 +67,47 @@
                     <nav-search></nav-search>
                 </div>
             </div>
-            <div v-if="onclass!='show'" class="nav-menu mobile" :class="{ fullmap: fullmap, active: bar }">
-                <div v-if="!user">
-                </div>
-                <div class="nav-logo">
-                    <a href="/">
-                        <h3>EI</h3>
-                    </a>
-                </div>
-                <div class="nav-menu-item mobile">
-                    <a class="menu-link" href="/">
-                        <div>Liked</div>
-                    </a>
-                </div>
-                <div class="nav-menu-item mobile" v-if="user && user.hasCreatedOrganizers">
-                    <a class="menu-link" href="/create-event/edit">
-                        <div>Events</div>
-                    </a>
-                </div>
-                <div class="nav-menu-item mobile" v-if="user && !user.hasCreatedOrganizers">
-                    <a class="menu-link" href="/events/create">
-                        <div>Events</div>
-                    </a>
-                </div>
-                <div class="nav-menu-item mobile" v-if="!user">
-                    <a class="menu-link" href="/login">
-                        <div>Login</div>
-                    </a>
-                </div>
-                <div class="nav-menu-item mobile" v-if="user">
-                    <a class="menu-link" href="/messages">
-                        <div v-if="user.unread" class="active-dot">
-                            <p></p>
-                        </div>
-                        <div>Inbox</div>
-                    </a>
-                </div>
-                <div class="nav-menu-item mobile" v-if="user">
-                    <profile-button :screenwidth="mobileDevice" :user="user"></profile-button>
-                </div>
-            </div>
         </nav>
+        <menu v-if="mobileDevice && dontShowMenu" class="nav-menu mobile" :class="{ fullmap: fullmap, active: bar }">
+            <div v-if="!user">
+            </div>
+            <div class="nav-logo">
+                <a href="/">
+                    <h3>EI</h3>
+                </a>
+            </div>
+            <div class="nav-menu-item mobile">
+                <a class="menu-link" href="/">
+                    <div>Liked</div>
+                </a>
+            </div>
+            <div class="nav-menu-item mobile" v-if="user && user.hasCreatedOrganizers">
+                <a class="menu-link" href="/create-event/edit">
+                    <div>Events</div>
+                </a>
+            </div>
+            <div class="nav-menu-item mobile" v-if="user && !user.hasCreatedOrganizers">
+                <a class="menu-link" href="/events/create">
+                    <div>Events</div>
+                </a>
+            </div>
+            <div class="nav-menu-item mobile" v-if="!user">
+                <a class="menu-link" href="/login">
+                    <div>Login</div>
+                </a>
+            </div>
+            <div class="nav-menu-item mobile" v-if="user">
+                <a class="menu-link" href="/messages">
+                    <div v-if="user.unread" class="active-dot">
+                        <p></p>
+                    </div>
+                    <div>Inbox</div>
+                </a>
+            </div>
+            <div class="nav-menu-item mobile" v-if="user">
+                <profile-button :screenwidth="mobileDevice" :user="user"></profile-button>
+            </div>
+        </menu>
     </div>
 </template>
 
@@ -130,6 +130,12 @@
             },
             onClassType() {
                 return this.onclass=='show' || this.onclass=='message' || this.onclass=='entry' ?  false : true;
+            },
+            dontShowNav() {
+                return this.onclass == 'show' || this.onclass == 'message' || this.onclass == 'profile' || this.onclass == 'messageshow' || this.onclass == 'entry' ? false : true;
+            },
+            dontShowMenu() {
+                return this.onclass == 'show' || this.onclass == 'messageshow' ? false : true;
             }
         },
 

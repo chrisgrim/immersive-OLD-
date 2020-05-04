@@ -1,9 +1,5 @@
-@extends('layouts.create.master')
+@extends('create.index')
 
-@section('content')
-    <div id="create">  
-        <div class="content">
-            <create-organizer :loadorganizer="{{$organizer}}" :user="{{auth()->user()}}" />
-        </div>
-    </div>  
+@section('created')
+    <create-organizer :loadorganizer="{{$organizer}}" :user="{{auth()->user()}}" />
 @endsection

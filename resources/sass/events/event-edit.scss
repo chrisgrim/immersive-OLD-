@@ -1,3 +1,8 @@
+/*------------------------------------*\
+  #Event- Event Edit Page
+\*------------------------------------*/
+
+
 .event-edit {
     padding-top:5rem;
 }
@@ -166,31 +171,66 @@ button.edit-event__sub-button {
     }
 }
 
+.new-organization {
+    width: 80%;
+    margin: 4rem auto;
+}
+    
+button.new-organization__add {
+    background: #008489;
+    display: inline-block;
+    padding: 1rem 1.4rem;
+    border-radius: 50%;
+    & p {
+    color: #fff;
+    font-size: 3rem;
+    }
+}
+
+
 
 
 @media (max-width: 768px) {
     .event-edit__organizer {
         text-align: center;
     }
+    .event-edit-eventlist {
+        grid-template-columns: 1fr;
+    }
     .organizer-card {
         display: inline-block;
-        min-height: 10rem;
+        height:100%;
         margin-top: 1rem;
+        width:100%;
     }
     .organizer-card__image {
-        display: inline-block;
+        display: block;
         float: inherit;
-        margin: 0;
+        margin: 1rem auto;
     }
     .organizer-card__title {
         float: inherit;
-        display: inline-block;
+        display: block;
         font-size: 2.5rem;
         line-height: normal;
+        margin: 1rem auto;
     }
     .organizer-card__nav {
         display: inline-block;
     }
+    .organizer-card__image-icontext {
+        & h2 {
+           padding-top:.5rem;
+        }
+    }
+    button.new-event__button {
+        position: relative;
+        margin-bottom: 2rem;
+    }
+    .new-organization {
+        text-align: center;
+    }
+
 }
 
 
@@ -199,7 +239,12 @@ button.edit-event__sub-button {
 
 
 
-.edit-events {
+
+
+
+
+
+/*.edit-events {
     width: 300px;
     margin: auto;
     & img {
@@ -417,4 +462,4 @@ button.edit-event__sub-button {
         margin: 2rem auto;
         width: 100%;
     }
-}
+}*/

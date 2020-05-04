@@ -130,9 +130,12 @@
                             </div>
                         </modal>
                     </tab>
-                    <tab title="Past Events" :id="organizer.id + 1" class="tab-events">
-                        <div :key="event.id" v-for="(event, index) in organizer.past_events" v-if="index < 4" class="ind">
-                            <button @click.prevent="showModal(event)" class="delete-circle">X</button>
+                    <tab title="Past Events" :id="organizer.id + 1" class="event-edit-eventlist grid">
+                        <div :key="event.id" v-for="(event, index) in organizer.past_events" v-if="index < 4" class="edit-event__element">
+                            <div class="edit-event__buttons">
+                                <a v-if="status(event)" :href="`/events/${event.slug}`"><button class="edit-event__sub-button">View</button></a>
+                                <button v-if="status(event)" @click.prevent="showModal(event, 'delete')" class="edit-event__sub-button">Delete</button>
+                            </div>
                             <vue-event-edit-listing-item :user="user" :loadurl="'/events/' + event.slug" :event="event"></vue-event-edit-listing-item>
                         </div> 
                         <modal v-if="modal == 'delete'" @close="modal = null">
@@ -147,10 +150,12 @@
 			</div>
 		</div>
         <div>
-           <div class="newOrg">
-                <div class="title">
-                    <h1>Add another organization</h1>
-                    <a href="/organizer/create" class="add">+</a>
+           <div class="new-organization">
+                <div class="new-organization__title">
+                    <h3>Add another organization</h3>
+                    <a href="/organizer/create">
+                        <button class="new-organization__add"><p>+</p></button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -190,6 +195,9 @@
             },
             status() {
                 return event => event.status!=='r' ? true : false;
+            },
+            inProgress() {
+                //
             }
         },
 

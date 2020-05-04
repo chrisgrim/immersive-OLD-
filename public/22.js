@@ -340,6 +340,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -380,6 +392,14 @@ __webpack_require__.r(__webpack_exports__);
         mode: "multiple",
         inline: true,
         showMonths: 2,
+        dateFormat: 'Y-m-d H:i:s'
+      },
+      configmobile: {
+        minDate: "today",
+        maxDate: new Date().fp_incr(180),
+        mode: "multiple",
+        inline: true,
+        showMonths: 1,
         dateFormat: 'Y-m-d H:i:s'
       },
       week: this.initializeWeekObject(),
@@ -1152,43 +1172,67 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("section", { staticClass: "event-enter-showdates" }, [
-                        _c(
-                          "div",
-                          { staticClass: "field" },
-                          [
-                            _c("label", [_vm._v(" Select all show dates")]),
-                            _vm._v(" "),
-                            _c("flat-pickr", {
-                              ref: "datePicker",
-                              staticClass: "form-control",
-                              attrs: {
-                                config: _vm.config,
-                                placeholder: "Select date",
-                                name: "dates"
-                              },
-                              model: {
-                                value: _vm.dates,
-                                callback: function($$v) {
-                                  _vm.dates = $$v
+                        _c("div", { staticClass: "field" }, [
+                          _c("label", [_vm._v(" Select all show dates")]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "calendar desktop" },
+                            [
+                              _c("flat-pickr", {
+                                ref: "datePicker",
+                                staticClass: "form-control",
+                                attrs: {
+                                  config: _vm.config,
+                                  placeholder: "Select date",
+                                  name: "dates"
                                 },
-                                expression: "dates"
-                              }
-                            }),
-                            _vm._v(" "),
-                            _vm.$v.dates.$error
-                              ? _c("div", { staticClass: "validation-error" }, [
-                                  !_vm.$v.dates.required
-                                    ? _c("p", { staticClass: "error" }, [
-                                        _vm._v(
-                                          "Please add at least 1 show date"
-                                        )
-                                      ])
-                                    : _vm._e()
-                                ])
-                              : _vm._e()
-                          ],
-                          1
-                        ),
+                                model: {
+                                  value: _vm.dates,
+                                  callback: function($$v) {
+                                    _vm.dates = $$v
+                                  },
+                                  expression: "dates"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "calendar mobile" },
+                            [
+                              _c("flat-pickr", {
+                                ref: "datePicker",
+                                staticClass: "form-control",
+                                attrs: {
+                                  config: _vm.configmobile,
+                                  placeholder: "Select date",
+                                  name: "dates"
+                                },
+                                model: {
+                                  value: _vm.dates,
+                                  callback: function($$v) {
+                                    _vm.dates = $$v
+                                  },
+                                  expression: "dates"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _vm.$v.dates.$error
+                            ? _c("div", { staticClass: "validation-error" }, [
+                                !_vm.$v.dates.required
+                                  ? _c("p", { staticClass: "error" }, [
+                                      _vm._v("Please add at least 1 show date")
+                                    ])
+                                  : _vm._e()
+                              ])
+                            : _vm._e()
+                        ]),
                         _vm._v(" "),
                         _c(
                           "div",

@@ -1,21 +1,21 @@
 <template>
-    <div class="account">
-        <div class="header">
+    <div class="account-index">
+        <div class="account-notifications_header">
             <h2>Account</h2>
             <p>{{user.name}} <span>Back to Profile</span></p> 
         </div>
-        <div class="content">
+        <section class="account-index-content grid">
             <a href="/account-settings/notifications">
-                <div class="item">
+                <div class="account-index__element">
                     <h3>Notifications</h3>
                     <p>Choose your newsletter and contact preferences</p>
                 </div>
             </a>
-            <div class="item">
+            <div class="account-index__element">
                 <h3>Login</h3>
                 <p>Update your password and login information</p>
             </div>
-        </div>
+        </section>
         
     </div>
 </template>

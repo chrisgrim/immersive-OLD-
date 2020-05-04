@@ -1,13 +1,13 @@
 <template>
     <div :class="{ 'dis': isDisabled }" class="card">
         <a :href="url" class="url">
-            <div v-if="event.thumbImagePath" class="card-image" :style="`width:${imageWidth}px`">
+            <div v-if="event.thumbImagePath" class="card-image">
                 <picture>
                     <source type="image/webp" :srcset="`/storage/${event.thumbImagePath}`"> 
                     <img :src="`/storage/${event.thumbImagePath.slice(0, -4)}jpg`" :alt="`${event.name} Immersive Event`">
                 </picture>
             </div>
-            <div class="card-without-image" v-else :style="`width:${imageWidth}px`">
+            <div class="card-without-image" v-else>
                 <div class="card-without-image_name">
                     <h4>{{event.name ? event.name : 'New Event'}}</h4>
                 </div>
@@ -84,11 +84,6 @@
                 return this.url = `/create-event/${this.event.slug}/title`;
             },
 
-            handleResize() {
-                if (window.innerWidth < 768) {
-                    this.imageWidth = window.innerWidth/1.4;
-                }
-            }
         },
 
         watch: {
@@ -100,8 +95,6 @@
         mounted() {
             this.event.status == 'p' ? '' : this.getUrl();
             this.eventStatus();
-            window.addEventListener('resize', this.handleResize);
-            this.handleResize();
         }
 
     };

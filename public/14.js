@@ -1751,6 +1751,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { staticClass: "organizer-show-contact" },
     [
       _vm.user && _vm.user != _vm.loadorganizer.user_id
         ? _c("div", { staticClass: "contact" }, [

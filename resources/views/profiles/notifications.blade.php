@@ -8,7 +8,7 @@
 
 @section('nav')
     @auth
-        <vue-nav :user= "{{auth()->user()}}"></vue-nav>
+        <vue-nav onclass="profile" :user= "{{auth()->user()}}"></vue-nav>
     @endauth
     @guest
         <vue-nav></vue-nav>

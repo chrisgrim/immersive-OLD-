@@ -1,4 +1,4 @@
-#grid {
+/*#grid {
     display: grid;
     & .item {
         position: relative;
@@ -122,30 +122,10 @@
 }
 .ind:hover .buttons{
     display: block;
-}
+}*/
 
-.hearted {
-    fill:#FF5A5F; 
-    fill-opacity:1;
-    stroke:#FF5A5F; 
-    height: 24px; 
-    width: 24px; 
-    overflow: visible;
-    stroke-width:2;
-    margin-left: .9rem;
-    margin-top: 1rem;
-}
-.unhearted {
-    fill: none;
-    fill-opacity: 0;
-    stroke: #000;
-    width: 24px;
-    stroke-width: 2;
-    margin-left: .9rem;
-    margin-top: 1rem;
-}
 
-@media (max-width: 768px) {
+/*@media (max-width: 768px) {
     #grid {
         grid-template-columns: 1fr;
         & .item {
@@ -165,4 +145,4 @@
         scrollbar-width: none;
         display: flex !important;
     }
-}
+}*/

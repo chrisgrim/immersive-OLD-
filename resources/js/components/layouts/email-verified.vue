@@ -7,7 +7,7 @@
                         X
                     </div>
                     <img style="width: 10rem" src="/storage/website-files/email-logo.png" alt="">
-                    <h3 v-if="this.verify">Email Confirmation</h3>
+                    <h3 v-if="this.verify">Please confirm your email</h3>
                     <p>We have sent you an email to confirm your email account.</p>
                 </div>
                 <div class="submit">

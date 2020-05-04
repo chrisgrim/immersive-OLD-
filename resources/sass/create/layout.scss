@@ -135,3 +135,32 @@ button.create[disabled]{
     margin-top:2rem;
 }
 
+@media (max-width: 768px) { 
+    .create-menu {
+        grid-template-columns: 8rem 1fr !important;
+        grid-gap:0rem !important;
+    }
+    section.event-create {
+        width:100%;
+    }
+    .create-button__in-nav {
+        position: fixed;
+        bottom: 0rem;
+        right: 0rem;
+        width:100%;
+        background: white;
+        top: inherit;
+        border-top: 1px solid #ebebeb;
+        padding: 1rem;
+        text-align: right;
+        &.review {
+            top: inherit;
+            right: inherit;
+        }
+    }
+    .event-create__submit-button {
+        display: none;
+    }
+
+}
+

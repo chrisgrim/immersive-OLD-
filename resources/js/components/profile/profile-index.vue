@@ -1,171 +1,171 @@
 <template>
-    <div class="profile">
-        <div class="body">
-            <div class="left">
-                <div v-if="!onSelf || !user.email_verified_at">
-                    <div v-if="avatar" class="image non" :style="`background:url('/storage/${avatar}')`">
-                    </div>
-                    <div v-else-if="user.gravatar" class="image non" :style="`background:url('${user.gravatar}')center no-repeat;background-size: cover;`"></div>
-                    <div v-else class="image non" :style="`background:${user.hexColor}`">
+    <div class="user-profile grid">
+        <section class="user-profile-image">
+            <div v-if="!onSelf || !user.email_verified_at">
+                <div v-if="avatar" class="image non" :style="`background:url('/storage/${avatar}')`">
+                </div>
+                <div v-else-if="user.gravatar" class="image non" :style="`background:url('${user.gravatar}')center no-repeat;background-size: cover;`"></div>
+                <div v-else class="image non" :style="`background:${user.hexColor}`">
+                    <h2>{{loaduser.name.charAt(0)}}</h2>
+                </div>
+            </div>
+            <div v-else class="user-profile-image">  
+
+                <label 
+                v-if="avatar"
+                class="user-profile-image__wrapper"
+                :class="{ imageloaded: avatar, imageloading: onUpClass }"
+                :style="`background:url('/storage/${avatar}')`">
+                <image-upload @loaded="onImageUpload"></image-upload>
+                <CubeSpinner :loading="isLoading"></CubeSpinner>
+                <span class="user-profile-image__update-text">
+                    <p v-if="onUpClass">Loading</p>
+                    <p v-else="onUpClass">Update</p>
+                    <p class="error" v-if="validationErrors.wrong" v-text="validationErrors.wrong"></p>
+                </span>
+                </label>
+
+                <label
+                v-else-if="user.gravatar"
+                class="wrapper"
+                :class="{ imageloaded: avatar, imageloading: onUpClass }"
+                :style="`background:url('${user.gravatar}')center no-repeat;background-size: cover;`">
+                <image-upload @loaded="onImageUpload"></image-upload>
+                <CubeSpinner :loading="isLoading"></CubeSpinner>
+                <span class="user-profile-image__update-text">
+                    <p v-if="onUpClass">Loading</p>
+                    <p v-else="onUpClass">Update</p>
+                    <p class="error" v-if="validationErrors.wrong" v-text="validationErrors.wrong"></p>
+                </span>
+
+                </label>
+                <div v-else class="user-profile-image">
+                    <div class="user-profile-noimage__text">
                         <h2>{{loaduser.name.charAt(0)}}</h2>
                     </div>
-                </div>
-                <div v-else class="image">                   
                     <label 
-                    v-if="avatar"
                     class="wrapper"
                     :class="{ imageloaded: avatar, imageloading: onUpClass }"
-                    :style="`background:url('/storage/${avatar}')`">
+                    :style="`background:${user.hexColor}`">
                     <image-upload @loaded="onImageUpload"></image-upload>
                     <CubeSpinner :loading="isLoading"></CubeSpinner>
-                    <span class="text">
-                        <p v-if="onUpClass">Loading</p>
-                        <p v-else="onUpClass">Update</p>
-                        <p class="error" v-if="validationErrors.wrong" v-text="validationErrors.wrong"></p>
-                    </span>
-                    </label>    
-                    <label
-                    v-else-if="user.gravatar"
-                    class="wrapper"
-                    :class="{ imageloaded: avatar, imageloading: onUpClass }"
-                    :style="`background:url('${user.gravatar}')center no-repeat;background-size: cover;`">
-                    <image-upload @loaded="onImageUpload"></image-upload>
-                    <CubeSpinner :loading="isLoading"></CubeSpinner>
-                    <span class="text">
+                    <span class="user-profile-image__update-text">
                         <p v-if="onUpClass">Loading</p>
                         <p v-else="onUpClass">Update</p>
                         <p class="error" v-if="validationErrors.wrong" v-text="validationErrors.wrong"></p>
                     </span>
                     </label>
-                    <div v-else class="image">
-                        <div class="icontext">
-                            <h2>{{loaduser.name.charAt(0)}}</h2>
+                </div>
+
+                <input 
+                type="hidden" 
+                name="profileImagePath"
+                v-model="avatar"
+                @input="$v.avatar.$touch()"
+                />
+
+                <div v-if="$v.avatar.$error" class="validation-error">
+                    <p class="error" v-if="!$v.avatar.fileSize">Image size is over 20MB</p>
+                    <p class="error" v-if="!$v.finalImage.fileType">Needs to be a Jpg, Png or Gif</p>
+                    <p class="error" v-if="!$v.finalImage.imageRatio">Needs to be at least 400 x 400</p>
+                    <p class="error" v-if="!$v.finalImage.auth">you don't have permission to edit</p>
+                </div>
+            </div>
+        </section>
+        <section class="user-enter-profile">
+            <div v-show="onUserEdit">
+                <div class="field">
+                    <div class="text">
+                        <div class="field">
+                            <label>User Name</label>
+                            <input 
+                            type="text" 
+                            v-model="user.name"
+                            :class="{ active: activeItem == 'user','error': $v.user.name.$error }"
+                            @click="activeItem = 'website'"
+                            @blur="activeItem = null"
+                            @input="$v.user.name.$touch"
+                            />
+                            <div v-if="$v.user.name.$error" class="validation-error">
+                                <p class="error" v-if="!$v.user.name.required">Must have a name</p>
+                                <p class="error" v-if="!$v.user.name.maxLength">Can't be more than 50 characters</p>
+                                <p class="error" v-if="!$v.user.name.auth">You don't have permission to edit</p>
+                            </div>
                         </div>
-                        <label 
-                        class="wrapper"
-                        :class="{ imageloaded: avatar, imageloading: onUpClass }"
-                        :style="`background:${user.hexColor}`">
-                        <image-upload @loaded="onImageUpload"></image-upload>
-                        <CubeSpinner :loading="isLoading"></CubeSpinner>
-                        <span class="text">
-                            <p v-if="onUpClass">Loading</p>
-                            <p v-else="onUpClass">Update</p>
-                            <p class="error" v-if="validationErrors.wrong" v-text="validationErrors.wrong"></p>
-                        </span>
-                        </label>
-                    </div>
-
-                    <input 
-                    type="hidden" 
-                    name="profileImagePath"
-                    v-model="avatar"
-                    @input="$v.avatar.$touch()"
-                    />
-
-                    <div v-if="$v.avatar.$error" class="validation-error">
-                        <p class="error" v-if="!$v.avatar.fileSize">Image size is over 20MB</p>
-                        <p class="error" v-if="!$v.finalImage.fileType">Needs to be a Jpg, Png or Gif</p>
-                        <p class="error" v-if="!$v.finalImage.imageRatio">Needs to be at least 400 x 400</p>
-                        <p class="error" v-if="!$v.finalImage.auth">you don't have permission to edit</p>
+                        <div class="field">
+                            <label> Location </label>
+                            <input 
+                            ref="autocomplete" 
+                            :placeholder="locationPlaceholder ? locationPlaceholder : 'Choose your location'"
+                            :class="{ active: activeItem == 'location'}"
+                            autocomplete="false"
+                            onfocus="value = ''" 
+                            @click="activeItem = 'location'"
+                            @blur="activeItem = null"
+                            type="text"
+                            />
+                        </div>
+                        <div class="field">
+                            <label> Email </label>
+                            <input 
+                            type="email" 
+                            v-model="user.email"
+                            :class="{ active: activeItem == 'email','error': $v.user.email.$error }"
+                            @click="activeItem = 'email'"
+                            @blur="activeItem = null"
+                            @input="$v.user.email.$touch"
+                            />
+                            <div v-if="$v.user.email.$error" class="validation-error">
+                                <p class="error" v-if="!$v.user.email.required">Must have an email</p>
+                                <p class="error" v-if="!$v.user.email.email">Must be a valid email</p>
+                                <p class="error" v-if="!$v.user.email.auth">You don't have permission to edit</p>
+                            </div>
+                        </div>
+                        <div class="">
+                            <button @click.prevent="submitUser()" class="save"> Save </button>
+                            <button @click.prevent="onUserEdit=false" class="cancel"> Cancel </button>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="right">
-                <div v-show="onUserEdit">
-                    <div class="field">
-                        <div class="text">
-                            <div class="field">
-                                <label>User Name</label>
-                                <input 
-                                type="text" 
-                                v-model="user.name"
-                                :class="{ active: activeItem == 'user','error': $v.user.name.$error }"
-                                @click="activeItem = 'website'"
-                                @blur="activeItem = null"
-                                @input="$v.user.name.$touch"
-                                />
-                                <div v-if="$v.user.name.$error" class="validation-error">
-                                    <p class="error" v-if="!$v.user.name.required">Must have a name</p>
-                                    <p class="error" v-if="!$v.user.name.maxLength">Can't be more than 50 characters</p>
-                                    <p class="error" v-if="!$v.user.name.auth">You don't have permission to edit</p>
-                                </div>
-                            </div>
-                            <div class="field">
-                                <label> Location </label>
-                                <input 
-                                ref="autocomplete" 
-                                :placeholder="locationPlaceholder ? locationPlaceholder : 'Choose your location'"
-                                :class="{ active: activeItem == 'location'}"
-                                autocomplete="false"
-                                onfocus="value = ''" 
-                                @click="activeItem = 'location'"
-                                @blur="activeItem = null"
-                                type="text"
-                                />
-                            </div>
-                            <div class="field">
-                                <label> Email </label>
-                                <input 
-                                type="email" 
-                                v-model="user.email"
-                                :class="{ active: activeItem == 'email','error': $v.user.email.$error }"
-                                @click="activeItem = 'email'"
-                                @blur="activeItem = null"
-                                @input="$v.user.email.$touch"
-                                />
-                                <div v-if="$v.user.email.$error" class="validation-error">
-                                    <p class="error" v-if="!$v.user.email.required">Must have an email</p>
-                                    <p class="error" v-if="!$v.user.email.email">Must be a valid email</p>
-                                    <p class="error" v-if="!$v.user.email.auth">You don't have permission to edit</p>
-                                </div>
-                            </div>
-                            <div class="">
-                                <button @click.prevent="submitUser()" class="save"> Save </button>
-                                <button @click.prevent="onUserEdit=false" class="cancel"> Cancel </button>
-                            </div>
-                        </div>
+            <div v-show="!onUserEdit">
+                <div class="profile-user-name">
+                    <h1>{{user.name}}</h1>
+                </div>
+                <div class="info">
+                    <div class="profile-user-info">
+                        Member since {{user.created_at | formatDate }}
+                    </div>
+                    <div v-if="onSelf && user.email_verified_at" class="profile-user-edit" @click="userEdit">
+                        Edit profile
+                    </div>
+                    <button :disabled="dis" @click.prevent="resend" class="ver" v-if="onSelf && !user.email_verified_at && !onSent">
+                        Please verify your account.
+                    </button>
+                    <div class="ver a" v-if="onSelf && !user.email_verified_at && onSent">
+                        Please check your email.
                     </div>
                 </div>
-                <div v-show="!onUserEdit">
-                    <div class="name">
-                        <h2>{{user.name}}</h2>
-                    </div>
-                    <div class="info">
-                        <div class="age">
-                            Member since {{user.created_at | formatDate }}
-                        </div>
-                        <div v-if="onSelf && user.email_verified_at" class="edit" @click="userEdit">
-                            Edit profile
-                        </div>
-                        <button :disabled="dis" @click.prevent="resend" class="ver" v-if="onSelf && !user.email_verified_at && !onSent">
-                            Please verify your account.
-                        </button>
-                        <div class="ver a" v-if="onSelf && !user.email_verified_at && onSent">
-                            Please check your email.
-                        </div>
-                    </div>
-                    <div class="loc" v-if="location.latitude">
-                        <div>
-                            Lives near <span style="font-weight:600;color:#616161">{{locationPlaceholder}}</span> 
-                            }
-                        </div>
-                    </div>
-                </div>
-                <div class="favorites" v-if="onSelf">
+                <div class="profile-user-info" v-if="location.latitude">
                     <div>
-                        <h3>Your Favorited Events</h3>
+                        Lives near <span style="font-weight:600;color:#616161">{{locationPlaceholder}}</span> 
                     </div>
-                    <div id="grid">
-                        <div v-for="event in events">
-                            <event-listing-item :user="auth" :event="event"></event-listing-item>
-                        </div>
-                    </div>
-                </div>
-                <div class="logout">
-                    <button @click.prevent="logout()">Log out</button>
                 </div>
             </div>
-        </div>
+            <div class="profile-user-favorites" v-if="onSelf">
+                <div>
+                    <h3>Your Favorited Events</h3>
+                </div>
+                <div id="grid">
+                    <div v-for="event in events">
+                        <event-listing-item :user="auth" :event="event"></event-listing-item>
+                    </div>
+                </div>
+            </div>
+            <div class="logout mobile">
+                <button @click.prevent="logout()">Log out</button>
+            </div>
+        </section>
     </div>
 </template>
 <script>
@@ -266,6 +266,7 @@
             },
 
             onImageUpload(image) {
+
                 this.finalImage = image.file;
                 this.finalImage.width = image.width;
                 this.finalImage.height = image.height;
@@ -274,7 +275,7 @@
                 if (this.$v.$invalid) { return false };
                 // this.imageSrc = image.src;
                 this.onUpClass = true;
-                this.avatar = image.src;
+                // this.avatar = image.src;
                 this.addImage(image);
             },
 
@@ -288,22 +289,24 @@
 
                 this.isLoading = true;
                 this.dis = true;
-                console.log(image);
+
                 let data = new FormData();
                 data.append('image', this.finalImage);
                 data.append('_method', 'PATCH');
+
                 axios.post(`/users/${this.user.id}`, data)
                 .then(response => {
                     location.reload();
-                    console.log(response.data)
                 })
                 .catch(errorResponse => { 
                     console.log(errorResponse.data)
+                    console.log('failed');
                     errorResponse.data ? this.validationErrors = errorResponse.response.data.errors : this.validationErrors = {wrong: 'sorry! something has gone wrong'}; 
                     this.avatar = '/storage/website-files/default-user-icon.jpg';
                     this.isLoading = false;
                     this.onUpClass = false;
-                    this.dis = false; });
+                    this.dis = false; 
+                });
             },
 
             submitUser() {

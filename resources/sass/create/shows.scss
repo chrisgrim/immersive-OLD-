@@ -110,3 +110,15 @@ button.delete-circle {
         margin:0;
     }
 
+@media (max-width: 768px) {
+    section.event-enter-showtimes {
+        margin: 0;
+        margin-bottom: 4rem;
+    }
+    section.event-enter-showdates {
+        margin-bottom: 4rem;
+    }
+    .event-create-tab__section {
+        margin: 2rem auto 10rem auto;
+    }
+}

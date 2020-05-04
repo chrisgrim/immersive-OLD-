@@ -385,8 +385,8 @@ __webpack_require__.r(__webpack_exports__);
 
       ; // this.imageSrc = image.src;
 
-      this.onUpClass = true;
-      this.avatar = image.src;
+      this.onUpClass = true; // this.avatar = image.src;
+
       this.addImage(image);
     },
     setPlace: function setPlace() {
@@ -399,15 +399,14 @@ __webpack_require__.r(__webpack_exports__);
 
       this.isLoading = true;
       this.dis = true;
-      console.log(image);
       var data = new FormData();
       data.append('image', this.finalImage);
       data.append('_method', 'PATCH');
       axios.post("/users/".concat(this.user.id), data).then(function (response) {
         location.reload();
-        console.log(response.data);
       })["catch"](function (errorResponse) {
         console.log(errorResponse.data);
+        console.log('failed');
         errorResponse.data ? _this2.validationErrors = errorResponse.response.data.errors : _this2.validationErrors = {
           wrong: 'sorry! something has gone wrong'
         };
@@ -924,128 +923,134 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "profile" }, [
-    _c("div", { staticClass: "body" }, [
-      _c("div", { staticClass: "left" }, [
-        !_vm.onSelf || !_vm.user.email_verified_at
-          ? _c("div", [
-              _vm.avatar
-                ? _c("div", {
+  return _c("div", { staticClass: "user-profile grid" }, [
+    _c("section", { staticClass: "user-profile-image" }, [
+      !_vm.onSelf || !_vm.user.email_verified_at
+        ? _c("div", [
+            _vm.avatar
+              ? _c("div", {
+                  staticClass: "image non",
+                  style: "background:url('/storage/" + _vm.avatar + "')"
+                })
+              : _vm.user.gravatar
+              ? _c("div", {
+                  staticClass: "image non",
+                  style:
+                    "background:url('" +
+                    _vm.user.gravatar +
+                    "')center no-repeat;background-size: cover;"
+                })
+              : _c(
+                  "div",
+                  {
                     staticClass: "image non",
+                    style: "background:" + _vm.user.hexColor
+                  },
+                  [_c("h2", [_vm._v(_vm._s(_vm.loaduser.name.charAt(0)))])]
+                )
+          ])
+        : _c("div", { staticClass: "user-profile-image" }, [
+            _vm.avatar
+              ? _c(
+                  "label",
+                  {
+                    staticClass: "user-profile-image__wrapper",
+                    class: {
+                      imageloaded: _vm.avatar,
+                      imageloading: _vm.onUpClass
+                    },
                     style: "background:url('/storage/" + _vm.avatar + "')"
-                  })
-                : _vm.user.gravatar
-                ? _c("div", {
-                    staticClass: "image non",
+                  },
+                  [
+                    _c("image-upload", { on: { loaded: _vm.onImageUpload } }),
+                    _vm._v(" "),
+                    _c("CubeSpinner", { attrs: { loading: _vm.isLoading } }),
+                    _vm._v(" "),
+                    _c(
+                      "span",
+                      { staticClass: "user-profile-image__update-text" },
+                      [
+                        _vm.onUpClass
+                          ? _c("p", [_vm._v("Loading")])
+                          : _c("p", [_vm._v("Update")]),
+                        _vm._v(" "),
+                        _vm.validationErrors.wrong
+                          ? _c("p", {
+                              staticClass: "error",
+                              domProps: {
+                                textContent: _vm._s(_vm.validationErrors.wrong)
+                              }
+                            })
+                          : _vm._e()
+                      ]
+                    )
+                  ],
+                  1
+                )
+              : _vm.user.gravatar
+              ? _c(
+                  "label",
+                  {
+                    staticClass: "wrapper",
+                    class: {
+                      imageloaded: _vm.avatar,
+                      imageloading: _vm.onUpClass
+                    },
                     style:
                       "background:url('" +
                       _vm.user.gravatar +
                       "')center no-repeat;background-size: cover;"
-                  })
-                : _c(
-                    "div",
-                    {
-                      staticClass: "image non",
-                      style: "background:" + _vm.user.hexColor
-                    },
-                    [_c("h2", [_vm._v(_vm._s(_vm.loaduser.name.charAt(0)))])]
-                  )
-            ])
-          : _c("div", { staticClass: "image" }, [
-              _vm.avatar
-                ? _c(
-                    "label",
-                    {
-                      staticClass: "wrapper",
-                      class: {
-                        imageloaded: _vm.avatar,
-                        imageloading: _vm.onUpClass
-                      },
-                      style: "background:url('/storage/" + _vm.avatar + "')"
-                    },
-                    [
-                      _c("image-upload", { on: { loaded: _vm.onImageUpload } }),
-                      _vm._v(" "),
-                      _c("CubeSpinner", { attrs: { loading: _vm.isLoading } }),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "text" }, [
-                        _vm.onUpClass
-                          ? _c("p", [_vm._v("Loading")])
-                          : _c("p", [_vm._v("Update")]),
-                        _vm._v(" "),
-                        _vm.validationErrors.wrong
-                          ? _c("p", {
-                              staticClass: "error",
-                              domProps: {
-                                textContent: _vm._s(_vm.validationErrors.wrong)
-                              }
-                            })
-                          : _vm._e()
-                      ])
-                    ],
-                    1
-                  )
-                : _vm.user.gravatar
-                ? _c(
-                    "label",
-                    {
-                      staticClass: "wrapper",
-                      class: {
-                        imageloaded: _vm.avatar,
-                        imageloading: _vm.onUpClass
-                      },
-                      style:
-                        "background:url('" +
-                        _vm.user.gravatar +
-                        "')center no-repeat;background-size: cover;"
-                    },
-                    [
-                      _c("image-upload", { on: { loaded: _vm.onImageUpload } }),
-                      _vm._v(" "),
-                      _c("CubeSpinner", { attrs: { loading: _vm.isLoading } }),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "text" }, [
-                        _vm.onUpClass
-                          ? _c("p", [_vm._v("Loading")])
-                          : _c("p", [_vm._v("Update")]),
-                        _vm._v(" "),
-                        _vm.validationErrors.wrong
-                          ? _c("p", {
-                              staticClass: "error",
-                              domProps: {
-                                textContent: _vm._s(_vm.validationErrors.wrong)
-                              }
-                            })
-                          : _vm._e()
-                      ])
-                    ],
-                    1
-                  )
-                : _c("div", { staticClass: "image" }, [
-                    _c("div", { staticClass: "icontext" }, [
-                      _c("h2", [_vm._v(_vm._s(_vm.loaduser.name.charAt(0)))])
-                    ]),
+                  },
+                  [
+                    _c("image-upload", { on: { loaded: _vm.onImageUpload } }),
+                    _vm._v(" "),
+                    _c("CubeSpinner", { attrs: { loading: _vm.isLoading } }),
                     _vm._v(" "),
                     _c(
-                      "label",
-                      {
-                        staticClass: "wrapper",
-                        class: {
-                          imageloaded: _vm.avatar,
-                          imageloading: _vm.onUpClass
-                        },
-                        style: "background:" + _vm.user.hexColor
-                      },
+                      "span",
+                      { staticClass: "user-profile-image__update-text" },
                       [
-                        _c("image-upload", {
-                          on: { loaded: _vm.onImageUpload }
-                        }),
+                        _vm.onUpClass
+                          ? _c("p", [_vm._v("Loading")])
+                          : _c("p", [_vm._v("Update")]),
                         _vm._v(" "),
-                        _c("CubeSpinner", {
-                          attrs: { loading: _vm.isLoading }
-                        }),
-                        _vm._v(" "),
-                        _c("span", { staticClass: "text" }, [
+                        _vm.validationErrors.wrong
+                          ? _c("p", {
+                              staticClass: "error",
+                              domProps: {
+                                textContent: _vm._s(_vm.validationErrors.wrong)
+                              }
+                            })
+                          : _vm._e()
+                      ]
+                    )
+                  ],
+                  1
+                )
+              : _c("div", { staticClass: "user-profile-image" }, [
+                  _c("div", { staticClass: "user-profile-noimage__text" }, [
+                    _c("h2", [_vm._v(_vm._s(_vm.loaduser.name.charAt(0)))])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      staticClass: "wrapper",
+                      class: {
+                        imageloaded: _vm.avatar,
+                        imageloading: _vm.onUpClass
+                      },
+                      style: "background:" + _vm.user.hexColor
+                    },
+                    [
+                      _c("image-upload", { on: { loaded: _vm.onImageUpload } }),
+                      _vm._v(" "),
+                      _c("CubeSpinner", { attrs: { loading: _vm.isLoading } }),
+                      _vm._v(" "),
+                      _c(
+                        "span",
+                        { staticClass: "user-profile-image__update-text" },
+                        [
                           _vm.onUpClass
                             ? _c("p", [_vm._v("Loading")])
                             : _c("p", [_vm._v("Update")]),
@@ -1060,386 +1065,386 @@ var render = function() {
                                 }
                               })
                             : _vm._e()
-                        ])
-                      ],
-                      1
-                    )
-                  ]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.avatar,
-                    expression: "avatar"
-                  }
-                ],
-                attrs: { type: "hidden", name: "profileImagePath" },
-                domProps: { value: _vm.avatar },
-                on: {
-                  input: [
-                    function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.avatar = $event.target.value
-                    },
-                    function($event) {
-                      return _vm.$v.avatar.$touch()
-                    }
-                  ]
-                }
-              }),
-              _vm._v(" "),
-              _vm.$v.avatar.$error
-                ? _c("div", { staticClass: "validation-error" }, [
-                    !_vm.$v.avatar.fileSize
-                      ? _c("p", { staticClass: "error" }, [
-                          _vm._v("Image size is over 20MB")
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    !_vm.$v.finalImage.fileType
-                      ? _c("p", { staticClass: "error" }, [
-                          _vm._v("Needs to be a Jpg, Png or Gif")
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    !_vm.$v.finalImage.imageRatio
-                      ? _c("p", { staticClass: "error" }, [
-                          _vm._v("Needs to be at least 400 x 400")
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    !_vm.$v.finalImage.auth
-                      ? _c("p", { staticClass: "error" }, [
-                          _vm._v("you don't have permission to edit")
-                        ])
-                      : _vm._e()
-                  ])
-                : _vm._e()
-            ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "right" }, [
-        _c(
-          "div",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.onUserEdit,
-                expression: "onUserEdit"
-              }
-            ]
-          },
-          [
-            _c("div", { staticClass: "field" }, [
-              _c("div", { staticClass: "text" }, [
-                _c("div", { staticClass: "field" }, [
-                  _c("label", [_vm._v("User Name")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.user.name,
-                        expression: "user.name"
-                      }
-                    ],
-                    class: {
-                      active: _vm.activeItem == "user",
-                      error: _vm.$v.user.name.$error
-                    },
-                    attrs: { type: "text" },
-                    domProps: { value: _vm.user.name },
-                    on: {
-                      click: function($event) {
-                        _vm.activeItem = "website"
-                      },
-                      blur: function($event) {
-                        _vm.activeItem = null
-                      },
-                      input: [
-                        function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.user, "name", $event.target.value)
-                        },
-                        _vm.$v.user.name.$touch
-                      ]
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm.$v.user.name.$error
-                    ? _c("div", { staticClass: "validation-error" }, [
-                        !_vm.$v.user.name.required
-                          ? _c("p", { staticClass: "error" }, [
-                              _vm._v("Must have a name")
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        !_vm.$v.user.name.maxLength
-                          ? _c("p", { staticClass: "error" }, [
-                              _vm._v("Can't be more than 50 characters")
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        !_vm.$v.user.name.auth
-                          ? _c("p", { staticClass: "error" }, [
-                              _vm._v("You don't have permission to edit")
-                            ])
-                          : _vm._e()
-                      ])
-                    : _vm._e()
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "field" }, [
-                  _c("label", [_vm._v(" Location ")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    ref: "autocomplete",
-                    class: { active: _vm.activeItem == "location" },
-                    attrs: {
-                      placeholder: _vm.locationPlaceholder
-                        ? _vm.locationPlaceholder
-                        : "Choose your location",
-                      autocomplete: "false",
-                      onfocus: "value = ''",
-                      type: "text"
-                    },
-                    on: {
-                      click: function($event) {
-                        _vm.activeItem = "location"
-                      },
-                      blur: function($event) {
-                        _vm.activeItem = null
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "field" }, [
-                  _c("label", [_vm._v(" Email ")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.user.email,
-                        expression: "user.email"
-                      }
-                    ],
-                    class: {
-                      active: _vm.activeItem == "email",
-                      error: _vm.$v.user.email.$error
-                    },
-                    attrs: { type: "email" },
-                    domProps: { value: _vm.user.email },
-                    on: {
-                      click: function($event) {
-                        _vm.activeItem = "email"
-                      },
-                      blur: function($event) {
-                        _vm.activeItem = null
-                      },
-                      input: [
-                        function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.user, "email", $event.target.value)
-                        },
-                        _vm.$v.user.email.$touch
-                      ]
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm.$v.user.email.$error
-                    ? _c("div", { staticClass: "validation-error" }, [
-                        !_vm.$v.user.email.required
-                          ? _c("p", { staticClass: "error" }, [
-                              _vm._v("Must have an email")
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        !_vm.$v.user.email.email
-                          ? _c("p", { staticClass: "error" }, [
-                              _vm._v("Must be a valid email")
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        !_vm.$v.user.email.auth
-                          ? _c("p", { staticClass: "error" }, [
-                              _vm._v("You don't have permission to edit")
-                            ])
-                          : _vm._e()
-                      ])
-                    : _vm._e()
-                ]),
-                _vm._v(" "),
-                _c("div", {}, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "save",
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          return _vm.submitUser()
-                        }
-                      }
-                    },
-                    [_vm._v(" Save ")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "cancel",
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          _vm.onUserEdit = false
-                        }
-                      }
-                    },
-                    [_vm._v(" Cancel ")]
-                  )
-                ])
-              ])
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: !_vm.onUserEdit,
-                expression: "!onUserEdit"
-              }
-            ]
-          },
-          [
-            _c("div", { staticClass: "name" }, [
-              _c("h2", [_vm._v(_vm._s(_vm.user.name))])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "info" }, [
-              _c("div", { staticClass: "age" }, [
-                _vm._v(
-                  "\n                        Member since " +
-                    _vm._s(_vm._f("formatDate")(_vm.user.created_at)) +
-                    "\n                    "
-                )
-              ]),
-              _vm._v(" "),
-              _vm.onSelf && _vm.user.email_verified_at
-                ? _c(
-                    "div",
-                    { staticClass: "edit", on: { click: _vm.userEdit } },
-                    [
-                      _vm._v(
-                        "\n                        Edit profile\n                    "
+                        ]
                       )
-                    ]
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.onSelf && !_vm.user.email_verified_at && !_vm.onSent
-                ? _c(
-                    "button",
-                    {
-                      staticClass: "ver",
-                      attrs: { disabled: _vm.dis },
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          return _vm.resend($event)
-                        }
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n                        Please verify your account.\n                    "
-                      )
-                    ]
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.onSelf && !_vm.user.email_verified_at && _vm.onSent
-                ? _c("div", { staticClass: "ver a" }, [
-                    _vm._v(
-                      "\n                        Please check your email.\n                    "
-                    )
-                  ])
-                : _vm._e()
-            ]),
-            _vm._v(" "),
-            _vm.location.latitude
-              ? _c("div", { staticClass: "loc" }, [
-                  _c("div", [
-                    _vm._v("\n                        Lives near "),
-                    _c(
-                      "span",
-                      {
-                        staticStyle: { "font-weight": "600", color: "#616161" }
-                      },
-                      [_vm._v(_vm._s(_vm.locationPlaceholder))]
-                    ),
-                    _vm._v(" \n                        }\n                    ")
-                  ])
-                ])
-              : _vm._e()
-          ]
-        ),
-        _vm._v(" "),
-        _vm.onSelf
-          ? _c("div", { staticClass: "favorites" }, [
-              _vm._m(0),
-              _vm._v(" "),
-              _c(
-                "div",
-                { attrs: { id: "grid" } },
-                _vm._l(_vm.events, function(event) {
-                  return _c(
-                    "div",
-                    [
-                      _c("event-listing-item", {
-                        attrs: { user: _vm.auth, event: event }
-                      })
                     ],
                     1
                   )
-                }),
-                0
-              )
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        _c("div", { staticClass: "logout" }, [
-          _c(
-            "button",
-            {
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  return _vm.logout()
+                ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.avatar,
+                  expression: "avatar"
                 }
+              ],
+              attrs: { type: "hidden", name: "profileImagePath" },
+              domProps: { value: _vm.avatar },
+              on: {
+                input: [
+                  function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.avatar = $event.target.value
+                  },
+                  function($event) {
+                    return _vm.$v.avatar.$touch()
+                  }
+                ]
               }
-            },
-            [_vm._v("Log out")]
-          )
-        ])
+            }),
+            _vm._v(" "),
+            _vm.$v.avatar.$error
+              ? _c("div", { staticClass: "validation-error" }, [
+                  !_vm.$v.avatar.fileSize
+                    ? _c("p", { staticClass: "error" }, [
+                        _vm._v("Image size is over 20MB")
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  !_vm.$v.finalImage.fileType
+                    ? _c("p", { staticClass: "error" }, [
+                        _vm._v("Needs to be a Jpg, Png or Gif")
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  !_vm.$v.finalImage.imageRatio
+                    ? _c("p", { staticClass: "error" }, [
+                        _vm._v("Needs to be at least 400 x 400")
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  !_vm.$v.finalImage.auth
+                    ? _c("p", { staticClass: "error" }, [
+                        _vm._v("you don't have permission to edit")
+                      ])
+                    : _vm._e()
+                ])
+              : _vm._e()
+          ])
+    ]),
+    _vm._v(" "),
+    _c("section", { staticClass: "user-enter-profile" }, [
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.onUserEdit,
+              expression: "onUserEdit"
+            }
+          ]
+        },
+        [
+          _c("div", { staticClass: "field" }, [
+            _c("div", { staticClass: "text" }, [
+              _c("div", { staticClass: "field" }, [
+                _c("label", [_vm._v("User Name")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.user.name,
+                      expression: "user.name"
+                    }
+                  ],
+                  class: {
+                    active: _vm.activeItem == "user",
+                    error: _vm.$v.user.name.$error
+                  },
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.user.name },
+                  on: {
+                    click: function($event) {
+                      _vm.activeItem = "website"
+                    },
+                    blur: function($event) {
+                      _vm.activeItem = null
+                    },
+                    input: [
+                      function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.user, "name", $event.target.value)
+                      },
+                      _vm.$v.user.name.$touch
+                    ]
+                  }
+                }),
+                _vm._v(" "),
+                _vm.$v.user.name.$error
+                  ? _c("div", { staticClass: "validation-error" }, [
+                      !_vm.$v.user.name.required
+                        ? _c("p", { staticClass: "error" }, [
+                            _vm._v("Must have a name")
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      !_vm.$v.user.name.maxLength
+                        ? _c("p", { staticClass: "error" }, [
+                            _vm._v("Can't be more than 50 characters")
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      !_vm.$v.user.name.auth
+                        ? _c("p", { staticClass: "error" }, [
+                            _vm._v("You don't have permission to edit")
+                          ])
+                        : _vm._e()
+                    ])
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "field" }, [
+                _c("label", [_vm._v(" Location ")]),
+                _vm._v(" "),
+                _c("input", {
+                  ref: "autocomplete",
+                  class: { active: _vm.activeItem == "location" },
+                  attrs: {
+                    placeholder: _vm.locationPlaceholder
+                      ? _vm.locationPlaceholder
+                      : "Choose your location",
+                    autocomplete: "false",
+                    onfocus: "value = ''",
+                    type: "text"
+                  },
+                  on: {
+                    click: function($event) {
+                      _vm.activeItem = "location"
+                    },
+                    blur: function($event) {
+                      _vm.activeItem = null
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "field" }, [
+                _c("label", [_vm._v(" Email ")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.user.email,
+                      expression: "user.email"
+                    }
+                  ],
+                  class: {
+                    active: _vm.activeItem == "email",
+                    error: _vm.$v.user.email.$error
+                  },
+                  attrs: { type: "email" },
+                  domProps: { value: _vm.user.email },
+                  on: {
+                    click: function($event) {
+                      _vm.activeItem = "email"
+                    },
+                    blur: function($event) {
+                      _vm.activeItem = null
+                    },
+                    input: [
+                      function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.user, "email", $event.target.value)
+                      },
+                      _vm.$v.user.email.$touch
+                    ]
+                  }
+                }),
+                _vm._v(" "),
+                _vm.$v.user.email.$error
+                  ? _c("div", { staticClass: "validation-error" }, [
+                      !_vm.$v.user.email.required
+                        ? _c("p", { staticClass: "error" }, [
+                            _vm._v("Must have an email")
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      !_vm.$v.user.email.email
+                        ? _c("p", { staticClass: "error" }, [
+                            _vm._v("Must be a valid email")
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      !_vm.$v.user.email.auth
+                        ? _c("p", { staticClass: "error" }, [
+                            _vm._v("You don't have permission to edit")
+                          ])
+                        : _vm._e()
+                    ])
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("div", {}, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "save",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.submitUser()
+                      }
+                    }
+                  },
+                  [_vm._v(" Save ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "cancel",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        _vm.onUserEdit = false
+                      }
+                    }
+                  },
+                  [_vm._v(" Cancel ")]
+                )
+              ])
+            ])
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: !_vm.onUserEdit,
+              expression: "!onUserEdit"
+            }
+          ]
+        },
+        [
+          _c("div", { staticClass: "profile-user-name" }, [
+            _c("h1", [_vm._v(_vm._s(_vm.user.name))])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "info" }, [
+            _c("div", { staticClass: "profile-user-info" }, [
+              _vm._v(
+                "\n                    Member since " +
+                  _vm._s(_vm._f("formatDate")(_vm.user.created_at)) +
+                  "\n                "
+              )
+            ]),
+            _vm._v(" "),
+            _vm.onSelf && _vm.user.email_verified_at
+              ? _c(
+                  "div",
+                  {
+                    staticClass: "profile-user-edit",
+                    on: { click: _vm.userEdit }
+                  },
+                  [
+                    _vm._v(
+                      "\n                    Edit profile\n                "
+                    )
+                  ]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.onSelf && !_vm.user.email_verified_at && !_vm.onSent
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "ver",
+                    attrs: { disabled: _vm.dis },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.resend($event)
+                      }
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                    Please verify your account.\n                "
+                    )
+                  ]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.onSelf && !_vm.user.email_verified_at && _vm.onSent
+              ? _c("div", { staticClass: "ver a" }, [
+                  _vm._v(
+                    "\n                    Please check your email.\n                "
+                  )
+                ])
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _vm.location.latitude
+            ? _c("div", { staticClass: "profile-user-info" }, [
+                _c("div", [
+                  _vm._v("\n                    Lives near "),
+                  _c(
+                    "span",
+                    { staticStyle: { "font-weight": "600", color: "#616161" } },
+                    [_vm._v(_vm._s(_vm.locationPlaceholder))]
+                  )
+                ])
+              ])
+            : _vm._e()
+        ]
+      ),
+      _vm._v(" "),
+      _vm.onSelf
+        ? _c("div", { staticClass: "profile-user-favorites" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "div",
+              { attrs: { id: "grid" } },
+              _vm._l(_vm.events, function(event) {
+                return _c(
+                  "div",
+                  [
+                    _c("event-listing-item", {
+                      attrs: { user: _vm.auth, event: event }
+                    })
+                  ],
+                  1
+                )
+              }),
+              0
+            )
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c("div", { staticClass: "logout mobile" }, [
+        _c(
+          "button",
+          {
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.logout()
+              }
+            }
+          },
+          [_vm._v("Log out")]
+        )
       ])
     ])
   ])
