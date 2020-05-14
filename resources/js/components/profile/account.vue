@@ -15,6 +15,12 @@
                 <h3>Login</h3>
                 <p>Update your password and login information</p>
             </div>
+            <a href="/account-settings/favorited">
+                <div class="account-index__element">
+                    <h3>Favorites</h3>
+                    <p>Look through your favorited events and their organizers</p>
+                </div>
+            </a>
         </section>
         
     </div>

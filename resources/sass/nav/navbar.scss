@@ -9,9 +9,14 @@
     z-index: 1001;
     height: 7rem;
     border-bottom: 0.1rem solid #ebebeb;
+    padding: 0rem 8rem;
     &.show {
         position: relative;
         border:0;
+    }
+    &.homepage {
+        border:0;
+        position: absolute;
     }
     &.org {
         background: transparent;
@@ -25,12 +30,16 @@
         height: 8rem;
         text-align: center;
         margin: 0;
+        padding: 0rem 2rem;
     }
     &.create {
         display: none;
     }
 }
-
+.nav-grid {
+    grid-template-columns: 7rem auto auto;
+    align-items: center;
+}
 
 
 .nav-logo {
@@ -43,33 +52,35 @@
         font-family: "Open Sans", sans-serif;
         font-size: 2.3rem;
         font-weight: 800;
-        margin: 1.8rem 0rem 0rem 2.2rem;
+        margin: 1.8rem 0rem;;
         letter-spacing: .2rem;
     }
 }
 
 .nav-search {
     position: relative;
-    width: 40%;
-    display: inline-block;
-    float: left;
-    margin-top: 1.2rem;
+    width: 100%;
+    display: flex;
     &.mobile {
         width: 100%;
-        margin-top: 1.7rem;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        align-items: center;
+        height: 8rem;
     }
 }
 
 .nav-search__content {
     width: 74%;
-    display: inline-block;
+    display: flex;;
     vertical-align: top;
     position: relative;
     & .icon {
         position: absolute;
-        top: 1.3rem;
         z-index: 10;
-        left: 1.3rem;
+        align-self: center;
+        left:1.3rem;
+        margin-top: -0.2rem;
     }
 }
 
@@ -85,7 +96,7 @@
         background: #fff;
         width: 100%;
         z-index: 1001;
-        height: 6rem;
+        height: 7rem;
         border-top: .1rem solid #ebebeb;
         display: grid;
         grid-template-columns: repeat(5,20%);
@@ -202,9 +213,7 @@ ul.sub-dropdown{
 
 .nav-backarrow {
     display: inline-block;
-    vertical-align: top;
-    padding-top: 1.3rem;
-    margin-right: 3rem;
+    padding: 3rem 3rem 3rem 1rem;
 }
 
 .nav.fullmap {
@@ -214,5 +223,10 @@ ul.sub-dropdown{
     display: none;
 }
 
+@media (max-width: 768px) {
+    .nav-search__content {
+        width: 100%;
+    }
+}
 
 

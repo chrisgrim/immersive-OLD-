@@ -97,6 +97,29 @@
                                     <p class="error" v-if="!$v.dates.required">Please add at least 1 show date</p>
                                 </div>
                             </div>
+                            <div class="field">
+                                <label> Does the event have a specific embargo date? (date you would like it to appear on EI) </label>
+                                <div id="cover">
+                                    <input v-model="showEmbargoDate" type="checkbox" id="checkbox">
+                                    <div id="bar"></div>
+                                    <div id="knob">
+                                        <p v-if="showEmbargoDate">Yes</p>
+                                        <p v-else="showEmbargoDate">No</p>
+                                    </div>
+                                </div>
+                                <div v-if="showEmbargoDate">
+                                    <div class="calendar">
+                                        <flat-pickr
+                                            v-model="embargoDate"
+                                            :config="configembargo"
+                                            ref="datePicker"                                              
+                                            class="form-control"
+                                            placeholder="Select date"               
+                                            name="dates">
+                                        </flat-pickr>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="event-create__submit-button">
                                 <button :disabled="dis" @click.prevent="submitDates()" class="create"> Next </button> 
                             </div>
@@ -222,6 +245,29 @@
                                     <p class="error" v-if="!$v.week.ifOngoing">Please select at least one day</p>
                                 </div>
                             </div>
+                            <div class="field">
+                                <label> Does the event have a specific embargo date? (date you would like it to appear on EI) </label>
+                                <div id="cover">
+                                    <input v-model="showEmbargoDate" type="checkbox" id="checkbox">
+                                    <div id="bar"></div>
+                                    <div id="knob">
+                                        <p v-if="showEmbargoDate">Yes</p>
+                                        <p v-else="showEmbargoDate">No</p>
+                                    </div>
+                                </div>
+                                <div v-if="showEmbargoDate">
+                                    <div class="calendar">
+                                        <flat-pickr
+                                            v-model="embargoDate"
+                                            :config="configembargo"
+                                            ref="datePicker"                                              
+                                            class="form-control"
+                                            placeholder="Select date"               
+                                            name="dates">
+                                        </flat-pickr>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="event-create__submit-button">
                                 <button :disabled="dis" @click.prevent="submitOnGoing()" class="create"> Next </button>
                             </div>
@@ -297,6 +343,29 @@
                                     <button>&#43; Ticket Types</button>
                                 </div>
                             </div>
+                            <div class="field" style="margin-top:6rem">
+                                <label> Does the event have a specific embargo date? (date you would like it to appear on EI) </label>
+                                <div id="cover">
+                                    <input v-model="showEmbargoDate" type="checkbox" id="checkbox">
+                                    <div id="bar"></div>
+                                    <div id="knob">
+                                        <p v-if="showEmbargoDate">Yes</p>
+                                        <p v-else="showEmbargoDate">No</p>
+                                    </div>
+                                </div>
+                                <div v-if="showEmbargoDate">
+                                    <div class="calendar">
+                                        <flat-pickr
+                                            v-model="embargoDate"
+                                            :config="configembargo"
+                                            ref="datePicker"                                              
+                                            class="form-control"
+                                            placeholder="Select date"               
+                                            name="dates">
+                                        </flat-pickr>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="event-create__submit-button" style="margin-top:6rem">
                                 <button :disabled="dis" @click.prevent="submitAlways()" class="create"> Next </button> 
                             </div>
@@ -364,6 +433,8 @@ export default {
                 }
         	}
         },
+
+
     },
 
     data() {
@@ -371,6 +442,8 @@ export default {
             eventUrl:`/create-event/${this.event.slug}`,
             selectedTab: this.event.showtype !== null ? this.event.showtype : 's',
             dates: '',
+            embargoDate: '',
+            showEmbargoDate: this.event.embargo_date ? true : false,
 	        config: {
 				minDate: "today",
                 maxDate: new Date().fp_incr(180),
@@ -383,6 +456,14 @@ export default {
                 minDate: "today",
                 maxDate: new Date().fp_incr(180),
                 mode: "multiple",
+                inline: true,
+                showMonths: 1,
+                dateFormat: 'Y-m-d H:i:s',        
+            },
+            configembargo: {
+                minDate: "today",
+                maxDate: new Date().fp_incr(180),
+                mode: "single",
                 inline: true,
                 showMonths: 1,
                 dateFormat: 'Y-m-d H:i:s',        
@@ -403,9 +484,9 @@ export default {
             activeItem: null,
             isVisible: false,
             free: false,
-            placeholders: 'Please provide a brief description of show times...' + '\n' + '\n' + 'Shows begin at 9PM.',
-            placeholdero: 'Please provide a brief description of weekly show times...' + '\n' + '\n' + '10:00PM shows on Monday & Tuesday.' + '\n' + '12:00PM on Wednesday and Thursday.',
-            placeholdera: 'Please provide a brief description of daily times...' + '\n' + '\n' + 'Show begins everyday at 12PM.' + '\n' + 'Enjoy at any time.',
+            placeholders: 'Please provide a brief description of show times. For example:' + '\n' + '\n' + '“Doors at 7, Show at 8.”' + '\n' + '“Two shows an hour from 8-10.”',
+            placeholdero: 'Please provide a brief description of weekly show times. For example:' + '\n' + '\n' + '10:00PM shows on Monday & Tuesday.' + '\n' + '12:00PM on Wednesday and Thursday.',
+            placeholdera: 'Please provide a brief description of daily times. For example:' + '\n' + '\n' + 'Show begins everyday at 12PM.' + '\n' + 'Enjoy at any time.',
 
         }
     },
@@ -423,7 +504,10 @@ export default {
 
         onFree() {
             this.free = true;
-            this.isVisible = false;
+            this.isVisible = false
+            this.selectedTab == 's' ? this.submitDates() : '';
+            this.selectedTab == 'o' ? this.submitOnGoing() : '';
+            this.selectedTab == 'a' ? this.submitAlways() : '';
         },
 
         initializeShowtimeObject() {
@@ -479,6 +563,7 @@ export default {
                 }
                 response.data.tickets ? this.tickets = response.data.tickets[0].tickets : '';
                 response.data.showTimes ? this.showTimes = response.data.showTimes : '';
+                this.embargoDate = response.data.embargo_date;
 
             });
     	},
@@ -506,6 +591,7 @@ export default {
                 'tickets': this.tickets,
                 'onGoing' : true,
                 'always': true,
+                'embargo_date' : this.showEmbargoDate ? this.embargoDate : null,
             };
             axios.post(`${this.eventUrl}/shows`, data)
             .then(response => {
@@ -527,7 +613,8 @@ export default {
                 'week': this.week,
                 'showtimes': this.showTimes,
                 'tickets': this.tickets,
-                'onGoing': true
+                'onGoing': true,
+                'embargo_date' : this.showEmbargoDate ? this.embargoDate : null,
             };
             axios.post(`${this.eventUrl}/shows`, data)
             .then(response => {
@@ -541,17 +628,20 @@ export default {
 
         //Submits the users dates and tickets to the database
         submitDates() {
+
             this.num = true;
          	this.$v.$touch();
 			if (this.$v.$invalid) { return false }
             this.free ? '' : this.checkFree(); 
             if (this.isVisible) { return false };
+            
             this.dis = true;
             let data = {
                 'dates': this.dateArray,
                 'showtimes': this.showTimes,
                 'tickets': this.tickets,
-                'shows': true
+                'shows': true,
+                'embargo_date' : this.showEmbargoDate ? this.embargoDate : null,
             };
 
             axios.post(`${this.eventUrl}/shows`, data)

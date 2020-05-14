@@ -4,20 +4,27 @@
             <h2>Event Approval</h2>
             <p>These are the events that need approval</p>
         </div>
-        <div>
-            <div id="grid">
-                <div v-for="event in events">
-                    <div class="item">
-                    <a :href="`/finish/events/${event.slug}`">
-                        <div class="image" :style="`background-image: url(/storage/${event.thumbImagePath}`"></div>
-                        <div class="etitle">
+        
+        <section class="">
+            <div class="event-index-eventlist grid">
+                <div v-for="(event, index) in events" class="eventlist__element">
+                    <a :href="`/finish/events/${event.slug}`" class="url">
+                        <div class="card-image" :style="`width:${imageWidth}px`">
+                            <picture>
+                                <source type="image/webp" :srcset="`/storage/${event.thumbImagePath}`"> 
+                                <img :src="`/storage/${event.thumbImagePath.slice(0, -4)}jpg`" :alt="`${event.name} Immersive Event`">
+                            </picture>
+                        </div>
+                        <div class="card-title">
                             <h3>{{ event.name }}</h3>
+                        </div>
+                        <div class="card-price">
+                            <h4>{{ event.price_range }}</h4>
                         </div>
                     </a>
                 </div>
-                </div>
             </div>
-        </div>
+        </section>
     </div>
 </template>
 
@@ -49,6 +56,7 @@
                 price: '',
                 eventName: '',
                 location: [],
+                imageWidth: '',
             }
         },
 
@@ -60,7 +68,18 @@
                 }, err => {
                     console.log(err)
                 });
+            },
+
+             handleResize() {
+                if (window.innerWidth < 768) {
+                    this.imageWidth = window.innerWidth/1.4;
+                }
             }
         },
+
+        mounted() {
+            window.addEventListener('resize', this.handleResize);
+            this.handleResize();
+        }
     };
 </script>

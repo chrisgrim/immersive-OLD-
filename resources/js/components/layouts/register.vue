@@ -114,9 +114,9 @@
                 class="pass" 
                 v-model="user.password" 
                 :class="{ active: activeItem == 'password','error': $v.user.password.$error }"
-                @click="activeItem = 'password'"
+                @click="toggleConfirm"
                 @blur="activeItem = null" 
-                @input="$v.user.password.$touch"
+                @input="toggleConfirm"
                 @keyup.enter="onRegister"
                 required
                 placeholder="Password">
@@ -132,14 +132,14 @@
                 class="pass" 
                 v-model="user.passwordConfirm"
                 :class="{ active: activeItem == 'passwordConfirm','error': $v.user.passwordConfirm.$error }"
-                @click="toggleConfirm"
+                @click="activeItem = 'passwordConfirm'"
                 @blur="activeItem = null" 
-                @input="$v.user.passwordConfirm.$touch"
+                @input="activeItem = 'passwordConfirm'"
                 @keyup.enter="onRegister"
                 required
                 placeholder="Confirm Password">
                 <div v-if="$v.user.passwordConfirm.$error" class="validation-error">
-                    <p class="error" v-if="!$v.user.passwordConfirm.serverFailed">{{serverErrors.password[0]}}</p>
+                    <p class="error" v-if="!$v.user.passwordConfirm.sameAsPassword">Passwords must be the same</p>
                     <p class="error" v-if="!$v.user.passwordConfirm.isRequiredRegister">The passwordConfirm is required</p>
                 </div>
             </div>
@@ -176,7 +176,7 @@
 <script>
 
 import _ from 'lodash';
-import { required, requiredIf, maxLength } from 'vuelidate/lib/validators'
+import { required, requiredIf, maxLength, sameAs } from 'vuelidate/lib/validators'
 import CubeSpinner  from '../layouts/loading.vue'
 
     
@@ -277,7 +277,8 @@ import CubeSpinner  from '../layouts/loading.vue'
             },
 
             toggleConfirm() {
-                this.activeItem = 'passwordConfirm';
+                this.activeItem = 'password';
+                this.$v.user.password.$touch;
                 this.serverErrors = [];
             },
 
@@ -340,10 +341,11 @@ import CubeSpinner  from '../layouts/loading.vue'
                     required
                 },
                 passwordConfirm: {
-                    serverFailed(){ return !this.hasServerError('password'); },
-                    required: requiredIf(function(form){
-                        return this.url == '/register'
-                    }),
+                    // serverFailed(){ return !this.hasServerError('password'); },
+                    // required: requiredIf(function(form){
+                    //     return this.url == '/register'
+                    // }),
+                    sameAsPassword: sameAs('password')
                 }
             }
         },

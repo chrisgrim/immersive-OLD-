@@ -45,7 +45,11 @@ class ContactLevelsController extends Controller
      */
     public function store(Request $request)
     {
-        ContactLevel::create($request->all());
+         ContactLevel::create([
+            'level' => $request->level,
+            'admin' => true,
+            'user_id' => auth()->user()->id
+        ]);
     }
 
     /**
@@ -79,7 +83,18 @@ class ContactLevelsController extends Controller
      */
     public function update(Request $request, ContactLevel $contactlevel)
     {
-        $contactlevel->update($request->all());
+        if ($request->rank) {
+            return $contactlevel->update([
+                'rank' => $request->rank,
+                'user_id' => auth()->user()->id
+            ]);
+        }
+        if ($request->level) {
+            return $contactlevel->update([
+                'level' => $request->level,
+                'user_id' => auth()->user()->id
+            ]);
+        }
     }
 
     /**

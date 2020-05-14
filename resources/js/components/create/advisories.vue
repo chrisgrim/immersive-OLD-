@@ -72,7 +72,7 @@
                 </div>
             </div>
             <div class="field" v-if="contactLevel.length">
-                <label class="area"> Explain a bit about your contact/no contact with the audience </label>
+                <label class="area"> Audience Role </label>
                 <textarea 
                 v-model="advisories.contactAdvisories" 
                 class="create-input area" 
@@ -85,7 +85,7 @@
                 required 
                 autofocus></textarea>
                 <div v-if="$v.advisories.contactAdvisories.$error" class="validation-error">
-                    <p class="error" v-if="!$v.advisories.contactAdvisories.required">Must enter a contact advisory </p>
+                    <p class="error" v-if="!$v.advisories.contactAdvisories.required">Must enter the audience's role </p>
                 </div>
             </div>
             <div class="field" v-if="contactLevel.length">
@@ -287,10 +287,10 @@
         		required
         	},
             mobilityAdvisories: {
-                
+                required
             },
             contentAdvisories: {
-                
+                required
             },
 			advisories: {
 			   	contactAdvisories: {

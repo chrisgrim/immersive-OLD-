@@ -37,9 +37,16 @@ class ProfilesController extends Controller
     {
         return view('profiles.account');
     }
+
     public function notifications()
     {
         return view('profiles.notifications');
+    }
+
+    public function favorited()
+    {
+        $events = auth()->user()->favouritedEvents()->get()->load('organizer');
+        return view('profiles.favorited', compact('events'));
     }
 
     /**

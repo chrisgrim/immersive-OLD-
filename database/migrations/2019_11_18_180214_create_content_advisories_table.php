@@ -18,6 +18,7 @@ class CreateContentAdvisoriesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('advisories')->unique();
             $table->boolean('admin')->default(0);
+            $table->integer('rank')->default(0);
             $table->timestamps();
         });
         Schema::create('content_advisory_event', function(Blueprint $table) {

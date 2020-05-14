@@ -28,7 +28,8 @@
                     </div>
                 </div>
                 <div class="field" v-if="location.hiddenLocationToggle">
-                    <label> Users searching for this event will only see the general area, not the specific street address. Please enter how participants will be notified of the location. </label>
+                    <label> We still need your address so that users searching for this event can see the general area. They will not see the specific street address. </label>
+                     <label> Please enter how participants will be notified of the location. (Required) </label>
                     <textarea 
                     v-model.trim="location.hiddenLocation" 
                     rows="4" 
@@ -56,6 +57,30 @@
                         <p class="error" v-if="!$v.location.latitude.ifLocation">Please select from the list of locations</p>
                     </div>
                 </div>   
+            </div>
+            <div v-show="!hasLocation">
+                <div class="field">
+                    <label> What mediums will your remote event be using? </label>
+                    <multiselect 
+                    v-model="remoteLocation"
+                    tag-placeholder="Add this as new tag" 
+                    placeholder="Type here to create your own" 
+                    label="location"
+                    :close-on-select="true"
+                    track-by="id" 
+                    :options="remoteOptions" 
+                    :multiple="true" 
+                    :taggable="true" 
+                    tag-position="bottom"
+                    :class="{ active: activeItem == 'remote','error': $v.remoteLocation.$error}"
+                    @tag="addTag"
+                    @click="activeItem = 'remote'"
+                    @blur="activeItem = null"
+                    ></multiselect>
+                    <div v-if="$v.remoteLocation.$error" class="validation-error">
+                        <p class="error" v-if="!$v.remoteLocation.ifNoLocation">Please choose at least one Mobile Location</p>
+                    </div>
+                </div>
             </div>
             <div class="event-create__submit-button">
                 <button :disabled="dis" @click.prevent="submitLocation()" class="create"> Next </button>
@@ -99,9 +124,7 @@
 
 
 	export default {
-		props: {
-			event: { type:Object },
-		},
+		props: ['event'],
 
 		components: { 
 			Multiselect, 
@@ -136,6 +159,8 @@
                 dis: false,
                 height:0,
                 hasLocation: this.event.hasLocation ? true : false,
+                remoteOptions: [],
+                remoteLocation: '',
 			}
 		},
 
@@ -170,8 +195,10 @@
 				this.$v.$touch(); 
 				if (this.$v.$invalid) { return false };
 
+
                 let data;
                 !this.hasLocation ?  data = {noLocation: true} : '';
+                !this.hasLocation ? data.remoteLocation = this.remoteLocation.map(a => a.location) : '';
                 this.hasLocation ?  data = this.location : '';
 
                 this.dis = true;
@@ -228,7 +255,10 @@
             load() {
                 axios.get(`${this.eventUrl}/location/fetch?timestamp=${new Date().getTime()}`)
                 .then(response => {
+                    console.log(response.data);
                     this.updateEventFields(response.data.location);
+                    this.remoteLocation = response.data.pivots;
+                    this.remoteOptions = response.data.remoteLocations;
                 });
             },
 
@@ -245,6 +275,16 @@
 
             handleResize() {
                 this.height = window.innerHeight;
+            },
+
+            // adds new tags in the multi select
+            addTag (newTag) {
+                const tag = {
+                    location: newTag,
+                    id: newTag.substring(0, 0) + Math.floor((Math.random() * 10000000))
+                }
+                this.remoteOptions.push(tag)
+                this.remoteLocation.push(tag)
             },
 
 			// Gets data from Google Maps and inputs into Vue forms correctly
@@ -319,6 +359,11 @@
                     },
 			 	},
 			},
+            remoteLocation: {
+                ifNoLocation() {
+                    return !this.hasLocation ? this.remoteLocation.length ? true : false : true
+                }
+            }
 		},
 			
 };

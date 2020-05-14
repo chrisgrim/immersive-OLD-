@@ -88,7 +88,6 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        if(Category::where('name', '=', $request->name)->exists()) { return '';}
         $category->updateElements($request, $category);
     }
 

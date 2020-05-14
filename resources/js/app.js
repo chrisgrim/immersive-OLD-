@@ -116,11 +116,13 @@ Vue.component('admin-regions', () => import('./components/adminArea/admin-region
 Vue.component('admin-user', () => import('./components/adminArea/admin-user.vue'));
 Vue.component('admin-organizer', () => import('./components/adminArea/admin-organizer.vue'));
 Vue.component('admin-content-advisories', () => import('./components/adminArea/admin-content-advisories.vue'));
+Vue.component('vue-admin-remote-locations', () => import('./components/adminArea/admin-remote-locations.vue'));
 
 //Profile
 Vue.component('user-profile', () => import('./components/profile/profile-index.vue'));
 Vue.component('vue-user-notifications', () => import('./components/profile/notifications.vue'));
 Vue.component('vue-user-account', () => import('./components/profile/account.vue'));
+Vue.component('vue-user-favorited', () => import('./components/profile/favorited.vue'));
 
 // Messages
 Vue.component('message-index', () => import('./components/messages/message-index.vue'));

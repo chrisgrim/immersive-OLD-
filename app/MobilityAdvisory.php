@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Scopes\RankScope;
 use Illuminate\Database\Eloquent\Model;
 
 class MobilityAdvisory extends Model
@@ -11,7 +12,17 @@ class MobilityAdvisory extends Model
     *
     * @var array
     */
-    protected $fillable = [ 'mobilities','admin', 'user_id' ];
+    protected $fillable = [ 'mobilities','admin', 'user_id', 'rank' ];
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::addGlobalScope(new RankScope);
+    }
     
     /**
     * Each ContentAdvisory can belong to many events
@@ -34,13 +45,13 @@ class MobilityAdvisory extends Model
         if ($request->has('mobilityAdvisory')) {
             foreach ($request['mobilityAdvisory'] as $content) {
                 MobilityAdvisory::firstOrCreate([
-                    'mobilities' => $content
+                    'mobilities' => strtolower($content)
                 ],
                 [
                     'user_id' => auth()->user()->id,
                 ]);
             };
-            $newSync = MobilityAdvisory::all()->whereIn('mobilities', $request['mobilityAdvisory']);
+            $newSync = MobilityAdvisory::all()->whereIn('mobilities', array_map('strtolower', $request['mobilityAdvisory']));
             $event->mobilityadvisories()->sync($newSync);
         };
     }

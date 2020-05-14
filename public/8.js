@@ -273,17 +273,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -310,9 +299,6 @@ __webpack_require__.r(__webpack_exports__);
       if (this.location.country) {
         return ' the ' + this.location.country;
       }
-    },
-    visible: function visible() {
-      return this.webp ? 'is webp able' : 'is not webp able';
     }
   },
   data: function data() {
@@ -426,6 +412,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       ;
+      this.dis = true;
       var data = {
         name: this.user.name,
         location: this.location,
@@ -434,8 +421,10 @@ __webpack_require__.r(__webpack_exports__);
       axios.patch("/users/".concat(this.user.id), data).then(function (response) {
         console.log(response.data);
         _this3.onUserEdit = false;
+        _this3.dis = false;
       })["catch"](function (errorResponse) {
         _this3.validationErrors = errorResponse.response.data.errors;
+        _this3.dis = false;
       });
     },
     // Gets data from Google Maps and inputs into Vue forms correctly
@@ -991,7 +980,7 @@ var render = function() {
               ? _c(
                   "label",
                   {
-                    staticClass: "wrapper",
+                    staticClass: "user-profile-image__wrapper",
                     class: {
                       imageloaded: _vm.avatar,
                       imageloading: _vm.onUpClass
@@ -1028,19 +1017,23 @@ var render = function() {
                   1
                 )
               : _c("div", { staticClass: "user-profile-image" }, [
-                  _c("div", { staticClass: "user-profile-noimage__text" }, [
-                    _c("h2", [_vm._v(_vm._s(_vm.loaduser.name.charAt(0)))])
-                  ]),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "user-profile-noimage__text",
+                      style: "background:" + _vm.user.hexColor
+                    },
+                    [_c("h2", [_vm._v(_vm._s(_vm.loaduser.name.charAt(0)))])]
+                  ),
                   _vm._v(" "),
                   _c(
                     "label",
                     {
-                      staticClass: "wrapper",
+                      staticClass: "profile-wrapper",
                       class: {
                         imageloaded: _vm.avatar,
                         imageloading: _vm.onUpClass
-                      },
-                      style: "background:" + _vm.user.hexColor
+                      }
                     },
                     [
                       _c("image-upload", { on: { loaded: _vm.onImageUpload } }),
@@ -1294,6 +1287,7 @@ var render = function() {
                   "button",
                   {
                     staticClass: "save",
+                    attrs: { disabled: _vm.dis },
                     on: {
                       click: function($event) {
                         $event.preventDefault()
@@ -1409,29 +1403,6 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
-      _vm.onSelf
-        ? _c("div", { staticClass: "profile-user-favorites" }, [
-            _vm._m(0),
-            _vm._v(" "),
-            _c(
-              "div",
-              { attrs: { id: "grid" } },
-              _vm._l(_vm.events, function(event) {
-                return _c(
-                  "div",
-                  [
-                    _c("event-listing-item", {
-                      attrs: { user: _vm.auth, event: event }
-                    })
-                  ],
-                  1
-                )
-              }),
-              0
-            )
-          ])
-        : _vm._e(),
-      _vm._v(" "),
       _c("div", { staticClass: "logout mobile" }, [
         _c(
           "button",
@@ -1449,14 +1420,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("h3", [_vm._v("Your Favorited Events")])])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

@@ -2,7 +2,7 @@
     <div class="genres">
         <div class="">
             <div class="title">
-                <h1>Genres</h1>
+                <h1>Tags</h1>
                 <div class="add">
                     <button @click.prevent="isModalVisible = true"><p>+</p></button>
                 </div>
@@ -16,6 +16,12 @@
             v-model="genre.genre" 
             placeholder="Genre"
             @blur="saveGenre(genre)"
+            />
+             <input 
+            type="text" 
+            v-model="genre.rank" 
+            placeholder="Genre"
+            @blur="saveRank(genre)"
             />
             <button @click.prevent="showModal(genre)" class="delete-circle"><p>X</p></button>
         </div>
@@ -136,6 +142,20 @@
             saveGenre(genre) {
                 let data = {
                     genre: genre.genre
+                };
+                axios.patch(`/genres/${genre.id}`, data)
+                .then(response => { 
+                    console.log(response.data)
+                    this.loadGenres()
+                })
+                .catch(error => { 
+                    this.serverErrors = error.response.data.errors; 
+                });
+            },
+
+            saveRank(genre) {
+                let data = {
+                    rank: genre.rank
                 };
                 axios.patch(`/genres/${genre.id}`, data)
                 .then(response => { 

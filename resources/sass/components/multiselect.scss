@@ -2,33 +2,76 @@
   #MultiSelect
 \*------------------------------------*/
 
-.nav-search {
+.nav-search{
     & .multiselect {
+        margin:0;
         &__tags {
             box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 10px, rgba(0, 0, 0, 0.04) 0px 0px 0px 1px !important;
             border: none;
+            padding: 1rem 1rem;
         }
     }
     & .multiselect__input {
         font-weight: 400;
         font-size: 1.7rem !important;
         color: black;
-        padding: .3rem 3rem 0 3rem;
+        padding: 0rem 3rem;
+        margin:0;
     }
     & .multiselect__single {
         font-weight: 800;
-        padding: .3rem 3rem 0 3rem;
+        padding: 0rem 3rem;
         font-size: 1.7rem;
         color: #484848;
+        margin:0;
     }
     & .multiselect__placeholder {
-        padding: .3rem 3rem 0 3rem;
+        padding: 0rem 3rem;
         width: 100%;
         font-weight: 400;
         font-size: 1.7rem;
         color: #949494;
         white-space: nowrap;
         overflow: hidden;
+        margin:0;
+    }
+    & .multiselect__select{
+        display: none;
+    }
+}
+
+.index-nav-search {
+    & .multiselect {
+        margin: 0;
+        &__tags {
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 10px, rgba(0, 0, 0, 0.04) 0px 0px 0px 1px !important;
+            border: none;
+            padding: 1rem;
+        }
+    }
+    & .multiselect__input {
+        font-weight: 400;
+        font-size: 1.7rem !important;
+        color: black;
+        padding: 1rem 3rem;
+        margin:0;
+    }
+    & .multiselect__single {
+        font-weight: 800;
+        padding: 1rem 3rem;
+        font-size: 1.7rem;
+        color: #484848;
+        margin: 0;
+    }
+    & .multiselect__placeholder {
+        padding: 1rem 3rem;
+        width: 100%;
+        font-weight: 400;
+        font-size: 1.7rem;
+        color: #949494;
+        white-space: nowrap;
+        overflow: hidden;
+        margin:0;
     }
     & .multiselect__select{
         display: none;

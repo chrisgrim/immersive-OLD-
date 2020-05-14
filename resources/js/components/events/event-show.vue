@@ -18,7 +18,7 @@
 				<div class="content">	
 					<span class="header-left__cat">{{event.category ? event.category.name : ''}}</span>
 					<span class="header-left__title"><h1>{{event.name}}</h1></span>
-                    <i>{{event.tag_line}}</i>
+                    <span class="header-left__tag"><i>{{event.tag_line}}</i></span>
                     <div v-if="event.staffpick">
                         EI Pick of the week!
                     </div>
@@ -151,7 +151,7 @@
             <div class="event-title">
                 <h2>Show Dates</h2>
             </div>
-            <div class="right desktop">
+            <div class="right lockedcalendar desktop">
                 <flat-pickr
                     v-model="dates"
                     :config="config"                                                  
@@ -164,7 +164,7 @@
                     <p style="white-space: pre-wrap;">{{event.show_times}}</p>
                 </div>
             </div>
-            <div class="right mobile">
+            <div class="right lockedcalendar mobile">
                 <flat-pickr
                     v-model="dates"
                     :config="configMob"                                  
@@ -334,10 +334,9 @@
 						</div>
 						<div style="width:100%;height:400px">
 							<l-map :zoom="zoom" :center="center" :options="{ scrollWheelZoom: allowZoom, zoomControl: allowZoom }">
-							<l-tile-layer 
-							:url="url"></l-tile-layer>
-							<l-marker 
-							:lat-lng="center">
+							<l-tile-layer :url="url"></l-tile-layer>
+							<l-marker :lat-lng="center">
+                                <l-icon class-name="icons"><p>{{event.organizer.name.slice(0,20)}}<span v-if="event.organizer.name.length > 20">...</span></p></l-icon>
                                 <l-popup>
                                     <div class="show-pop">
                                         <a rel="noreferrer" target="_blank" :href="`http://maps.google.com/maps?q=${event.location.home}+${event.location.street},+${event.location.city},+${event.location.region}`">
@@ -375,7 +374,7 @@
 </template>
 
 <script>
-	import {LMap, LTileLayer, LMarker, LPopup} from 'vue2-leaflet'
+	import {LMap, LTileLayer, LMarker, LPopup, LIcon} from 'vue2-leaflet'
     import format from 'date-fns/format'
     import ContactOrganizer from '../organizers/contact-organizer.vue'
     import flatPickr from 'vue-flatpickr-component'
@@ -397,7 +396,8 @@
 			LMarker,
             flatPickr,
             ContactOrganizer,
-            LPopup
+            LPopup,
+            LIcon
 		},
 
         computed: {

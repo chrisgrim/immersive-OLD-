@@ -1,14 +1,35 @@
 /*------------------------------------*\
   #Event- Index Page
 \*------------------------------------*/
-
+.event-index-container {
+    width:100%;
+    margin:auto;
+}
 .event-index {
-    padding-top: 15rem;
+    padding-top: 8rem;
+}
+header.padded {
+    padding: 4rem 8rem 8rem 8rem;
+}
+.header-title {
+    margin:2rem 0rem;
+}
+section.padded {
+    padding: 4rem 8rem;
 }
 .event-index-eventlist{
     width:100%;
     grid-template-columns: repeat(4,1fr);
 }
+.index-nav-search {
+    position: relative;
+    width: 100%;
+    &.mobile {
+        width: 100%;
+        margin-top: 1.7rem;
+    }
+}
+
 .eventlist__element {
     width:100%;
 }
@@ -65,8 +86,26 @@
     }
 }
 
+.index-nopro {
+    background: black;
+}
+.nopro-content {
+    padding:6rem 8rem 4rem 8rem;
+    & h2, h3 {
+        color:white;
+    }
+}
+button.nopro-button {
+    background: none;
+    border: 1px solid white;
+    color: white;
+    margin: 5rem 0rem;
+}
 
 @media (max-width: 768px) {
+    .event-index {
+        padding-top: 0;
+    }
     .event-index-eventlist {
         height: 100%;
         overflow-y: auto;
@@ -78,6 +117,15 @@
     }
     .eventlist__element {
         padding: .7rem;
+    }
+    header.padded {
+        padding: 4rem 2rem 8rem 2rem;
+    }
+    section.padded {
+        padding: 4rem 2rem;
+        &.events {
+            padding:4rem 0rem;
+        }
     }
 }
 

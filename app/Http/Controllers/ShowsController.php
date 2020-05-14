@@ -103,21 +103,24 @@ class ShowsController extends Controller
             return response()->json(array(
                 'dates' => $event->shows()->pluck('date'),
                 'tickets' => $event->shows()->with('tickets')->get(),
-                'showTimes' => $showTimes = $event->show_times
+                'showTimes' => $showTimes = $event->show_times,
+                'embargo_date' => $event->embargo_date,
             ));
         }
         if($event->showtype == 'o') {
             return response()->json(array(
                 'week' => $event->showOnGoing()->first(),
                 'tickets' => $event->shows()->with('tickets')->get(),
-                'showTimes' => $showTimes = $event->show_times
+                'showTimes' => $showTimes = $event->show_times,
+                'embargo_date' => $event->embargo_date,
             ));
         }
         if($event->showtype == 'a') {
             return response()->json(array(
                 'week' => $event->showOnGoing()->first(),
                 'tickets' => $event->showOnGoing()->with('tickets')->get(),
-                'showTimes' => $showTimes = $event->show_times
+                'showTimes' => $showTimes = $event->show_times,
+                'embargo_date' => $event->embargo_date,
             ));
         }
     }

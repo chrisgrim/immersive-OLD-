@@ -28,6 +28,14 @@
                      <CubeSpinner :loading="isLoading"></CubeSpinner>
                 </label> 
             </div>
+            <div>
+                <input 
+                type="text" 
+                v-model="category.rank" 
+                placeholder="Category Rank"
+                @blur="saveRank(category)"
+                />
+            </div>
             <button @click.prevent="showModal(category)" class="delete-circle"><p>X</p></button>
         </div>
         <modal v-if="isEditModalVisible" @close="isEditModalVisible = false">
@@ -210,7 +218,6 @@
             },
 
             onImageEdit(image) {
-                console.log(image.file);
                 if (image.file.size > 20971520) { return alert('Image Filesize Too Big') };
                 if (!["image/jpeg","image/png",'image/gif'].includes(image.file.type)) { return alert('Image needs to be jpeg, pgn or gif') };
                 if (image.width < 800 || image.height < 800) { return alert('Image Proportions Too Small') };
@@ -222,12 +229,11 @@
                 axios.post(`/categories/${this.tempCat.slug}`, data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
                 )
                 .then(response => { 
-                   location.reload();
+                   window.location.href = `/categories/create`;
                    console.log(response.data);
                 })
                 .catch(error => { 
                     console.log(error.response.data.errors);
-                    // this.serverErrors = error.response.data.errors; 
                 });
             },
 
@@ -239,6 +245,21 @@
             saveName(category) {
                 let data = {
                     name: category.name
+                };
+                axios.patch(`/categories/${category.slug}`, data)
+                .then(response => { 
+                    console.log(response.data)
+                    this.loadCategories()
+                })
+                .catch(error => { 
+                    console.log(error.response.data.errors);
+                    this.serverErrors = error.response.data.errors; 
+                });
+            },
+
+            saveRank(category) {
+                let data = {
+                    rank: category.rank
                 };
                 axios.patch(`/categories/${category.slug}`, data)
                 .then(response => { 

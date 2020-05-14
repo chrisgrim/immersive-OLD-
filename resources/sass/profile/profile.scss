@@ -32,7 +32,6 @@
     position: relative;
     display: block;
     cursor: pointer;
-    background: #f77161;
     font-size: 110px;
     -webkit-transition: width 0.5s ease-in-out;
     transition: width 0.5s ease-in-out;
@@ -50,13 +49,13 @@
 
 }
 .user-profile-noimage__text {
-    position: absolute;
-    width: 12rem;
+    position: relative;
+    width: 11rem;
     z-index: 10;
-    left: 50%;
-    margin-left: -6rem;
-    margin-top: .9rem;
     text-align: center;
+    border-radius: 50%;
+    height: 11rem;
+    padding: 1rem;
     & h2 {
         z-index: 10;
         color: white;
@@ -71,6 +70,14 @@
         -ms-user-select: none; /* Internet Explorer/Edge */
         user-select: none; 
     }
+}
+.profile-wrapper {
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: absolute;
+    top: 0;
+    z-index: 10;
 }
 .user-profile-image__update-text {
     position: absolute;

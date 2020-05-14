@@ -31,9 +31,7 @@
     
     export default {
 
-        props: {
-            user: {type:Object},
-        },
+        props: ['user'],
 
         components: { 
             

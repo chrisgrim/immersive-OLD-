@@ -1,108 +1,19 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[36],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/events/event-edit.vue?vue&type=script&lang=js&":
-/*!****************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/events/event-edit.vue?vue&type=script&lang=js& ***!
-  \****************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/create/title.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/create/title.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
-/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__);
+
 //
 //
 //
@@ -178,145 +89,119 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    user: {
-      type: String
+    event: {
+      type: Object
     }
   },
+  computed: {},
   data: function data() {
     return {
-      modal: '',
-      selectedModal: '',
-      showMore: '',
-      organizerEvents: [],
-      review: '',
-      reviewername: '',
-      url: '',
-      activeItem: '',
-      webp: false
+      title: this.initializeTitleObject(),
+      name: '',
+      eventUrl: "/create-event/".concat(this.event.slug),
+      tagLine: '',
+      activeItem: null,
+      dis: false,
+      approved: this.event.status == 'p' || this.event.status == 'e' ? true : false,
+      showEdit: false,
+      modal: false,
+      reapply: ''
     };
   },
-  computed: {
-    getUrl: function getUrl(event) {
-      return this.events.in_progress_events;
+  methods: {
+    initializeTitleObject: function initializeTitleObject() {
+      return {
+        name: '',
+        tagLine: '',
+        reSubmitEvent: ''
+      };
     },
-    organizerStyle: function organizerStyle() {
+    //On click Sets class to green to remove error
+    //clears out all server errors
+    clearinput: function clearinput() {
+      this.nameActive = true;
+      this.serverErrors = [];
+    },
+    //check if validation rules have been followed and returns false if not. Then I submit the new name and slug. I then get the response data and pass it to the new window load.
+    submitName: function submitName() {
       var _this = this;
 
-      return function (organizer) {
-        return organizer.thumbImagePath ? _this.webp ? "background-image:url('/storage/".concat(organizer.thumbImagePath, "')") : "background-image:url('/storage/".concat(organizer.thumbImagePath.slice(0, -4), "jpg')") : "background:".concat(organizer.hexColor);
-      };
+      var submitObject;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function submitName$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              this.$v.$touch();
+
+              if (!this.$v.$invalid) {
+                _context.next = 3;
+                break;
+              }
+
+              return _context.abrupt("return", false);
+
+            case 3:
+              this.dis = true;
+              submitObject = {
+                reapply: this.reapply ? this.reapply : null,
+                name: this.name,
+                tagline: this.tagLine
+              };
+              axios.patch("".concat(this.eventUrl, "/title"), submitObject).then(function (response) {
+                window.location.href = "".concat(_this.eventUrl, "/location");
+              })["catch"](function (error) {
+                _this.serverErrors = error.response.data.errors;
+                _this.dis = false;
+              });
+
+            case 6:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, null, this);
     },
-    status: function status() {
-      return function (event) {
-        return event.status !== 'r' ? true : false;
-      };
+    showModal: function showModal() {
+      this.modal = true;
     },
-    inProgress: function inProgress() {//
-    }
-  },
-  methods: {
-    //deletes a ticket row or clears the first one
-    deleteRow: function deleteRow(index) {
-      axios["delete"]("/events/".concat(this.selectedModal.slug)).then(function (response) {
-        location.reload(); // this.events = response.data;
-        // this.selectedModal = '';
-        // this.modal = '';
-        //    this.loadEvents();
-      })["catch"](function (errorResponse) {
-        errorResponse.response.data.errors;
-      });
+    onApply: function onApply() {
+      this.reapply = 'reapply';
+      this.approved = false;
+      this.modal = false;
     },
-    deleteOrg: function deleteOrg(index) {
+    // If there is data in Database it will load from the database
+    getDatabase: function getDatabase() {
       var _this2 = this;
 
-      axios["delete"]("/organizer/".concat(this.selectedModal.slug)).then(function (response) {
-        _this2.events = response.data;
-        _this2.selectedModal = '';
-        _this2.modal = '';
-
-        _this2.loadEvents();
-      })["catch"](function (errorResponse) {
-        errorResponse.response.data.errors;
+      axios.get("".concat(this.eventUrl, "/title/fetch?timestamp=").concat(new Date().getTime())).then(function (response) {
+        response.data.name ? _this2.name = response.data.name : '';
+        response.data.tag_line ? _this2.tagLine = response.data.tag_line : '';
       });
     },
-    submitReview: function submitReview(index) {
-      var _this3 = this;
-
-      var data = {
-        event: this.selectedModal,
-        url: this.url,
-        review: this.review,
-        reviewername: this.reviewername
-      };
-      axios.post("/reviewevents", data).then(function (response) {
-        _this3.selectedModal = '';
-        _this3.modal = '';
-      })["catch"](function (errorResponse) {});
-    },
-    showModal: function showModal(event, arr) {
-      console.log(event);
-      this.selectedModal = event;
-      this.modal = arr;
-    },
-    closeModal: function closeModal() {
-      this.isModalVisible = false;
-    },
-    loadEvents: function loadEvents() {
-      var _this4 = this;
-
-      axios.get("/create-event/edit/fetch?timestamp=".concat(new Date().getTime())).then(function (response) {
-        _this4.organizerEvents = response.data;
-      });
-    },
-    newEvent: function newEvent(organizer) {
-      var _this5 = this;
-
-      axios.post("/events", organizer).then(function (response) {
-        window.location.href = "/create-event/".concat(response.data.slug, "/title");
-      })["catch"](function (error) {
-        _this5.serverErrors = error.response.data.errors;
-      });
-    },
-    showOrganizer: function showOrganizer(organizer) {
-      window.location.href = "/organizer/".concat(organizer.slug);
-    },
-    canUseWebP: function canUseWebP() {
-      var webp = document.createElement('canvas').toDataURL('image/webp').indexOf('data:image/webp') == 0;
-
-      if (webp) {
-        return this.webp = true;
-      }
-
-      ;
+    goBack: function goBack() {
+      window.location.href = '/create-event/edit';
     }
   },
-  mounted: function mounted() {
-    this.canUseWebP();
-  },
   created: function created() {
-    this.loadEvents();
+    this.getDatabase();
   },
   validations: {
-    reviewername: {
-      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
+    name: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
+      maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["maxLength"])(140)
     },
-    url: {
-      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"],
-      url: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["url"]
-    },
-    review: {
-      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"],
-      maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["maxLength"])(120)
+    tagLine: {
+      maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["maxLength"])(140)
     }
   }
 });
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/events/event-edit.vue?vue&type=template&id=60515fd8&":
-/*!********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/events/event-edit.vue?vue&type=template&id=60515fd8& ***!
-  \********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/create/title.vue?vue&type=template&id=25987e60&":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/create/title.vue?vue&type=template&id=25987e60& ***!
+  \***************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -330,738 +215,258 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "event-edit" },
+    { staticClass: "event-create__title container grid" },
     [
-      _vm._l(_vm.organizerEvents, function(organizer, index) {
-        return _c("div", [
-          _c("div", { staticClass: "event-edit__organizer" }, [
-            _c("div", { staticClass: "organizer-card grid" }, [
-              _c(
-                "div",
-                {
-                  staticClass: "organizer-card__image",
-                  style: _vm.organizerStyle(organizer)
-                },
-                [
-                  !organizer.thumbImagePath
-                    ? _c(
-                        "div",
-                        { staticClass: "organizer-card__image-icontext" },
-                        [_c("h2", [_vm._v(_vm._s(organizer.name.charAt(0)))])]
-                      )
-                    : _vm._e()
-                ]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "organizer-card__title" }, [
-                _vm._v(
-                  "\n                        " +
-                    _vm._s(organizer.name) +
-                    "\n                    "
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "organizer-card__nav" }, [
-                _c(
-                  "a",
-                  { attrs: { href: "/organizer/" + organizer.slug + "/edit" } },
-                  [
-                    _c("button", { staticClass: "edit-organizer" }, [
-                      _vm._v("Edit")
-                    ])
-                  ]
-                ),
+      _c("section", { staticClass: "event-create" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _vm.approved
+          ? _c(
+              "div",
+              {
+                staticClass: "field",
+                on: {
+                  mouseover: function($event) {
+                    _vm.showEdit = true
+                  }
+                }
+              },
+              [
+                _c("label", [_vm._v("Title")]),
                 _vm._v(" "),
-                !organizer.in_progress_events.length ||
-                organizer.past_events.length
+                _c("p", { staticClass: "create-titlename" }, [
+                  _vm._v(_vm._s(_vm.name))
+                ]),
+                _vm._v(" "),
+                _vm.showEdit
                   ? _c(
                       "button",
                       {
-                        staticClass: "edit-organizer",
+                        staticClass: "editTitle",
                         on: {
                           click: function($event) {
                             $event.preventDefault()
-                            return _vm.showModal(organizer, "deleteOrg")
+                            return _vm.showModal($event)
                           }
                         }
                       },
-                      [_vm._v("Delete")]
+                      [_vm._v("Edit")]
                     )
-                  : _vm._e(),
+                  : _vm._e()
+              ]
+            )
+          : _c("div", { staticClass: "field" }, [
+              _c("label", [_vm._v("Project name")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.name,
+                    expression: "name"
+                  }
+                ],
+                class: {
+                  active: _vm.activeItem == "name",
+                  error: _vm.$v.name.$error
+                },
+                attrs: { type: "text", placeholder: " " },
+                domProps: { value: _vm.name },
+                on: {
+                  input: [
+                    function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.name = $event.target.value
+                    },
+                    function($event) {
+                      return _vm.$v.name.$touch()
+                    }
+                  ],
+                  click: function($event) {
+                    _vm.activeItem = "name"
+                  },
+                  blur: function($event) {
+                    _vm.activeItem = "null"
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.$v.name.$error
+                ? _c("div", { staticClass: "validation-error" }, [
+                    !_vm.$v.name.required
+                      ? _c("p", { staticClass: "error" }, [
+                          _vm._v("Please add a title.")
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    !_vm.$v.name.maxLength
+                      ? _c("p", { staticClass: "error" }, [
+                          _vm._v("The title is too long.")
+                        ])
+                      : _vm._e()
+                  ])
+                : _vm._e()
+            ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "field" }, [
+          _c("label", [
+            _vm._v(
+              "Project tag line (Stand out from the other events with a great tag line!)"
+            )
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.tagLine,
+                expression: "tagLine"
+              }
+            ],
+            class: {
+              active: _vm.activeItem == "tag",
+              error: _vm.$v.tagLine.$error
+            },
+            attrs: {
+              type: "text",
+              placeholder:
+                "Quick, one sentence line to get the audience hooked!"
+            },
+            domProps: { value: _vm.tagLine },
+            on: {
+              input: [
+                function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.tagLine = $event.target.value
+                },
+                function($event) {
+                  return _vm.$v.tagLine.$touch()
+                }
+              ],
+              click: function($event) {
+                _vm.activeItem = "tag"
+              },
+              blur: function($event) {
+                _vm.activeItem = "null"
+              }
+            }
+          }),
+          _vm._v(" "),
+          _vm.$v.tagLine.$error
+            ? _c("div", { staticClass: "validation-error" }, [
+                !_vm.$v.tagLine.maxLength
+                  ? _c("p", { staticClass: "error" }, [
+                      _vm._v("The tag line is too long.")
+                    ])
+                  : _vm._e()
+              ])
+            : _vm._e()
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "event-create__submit-button" }, [
+          _c(
+            "button",
+            {
+              staticClass: "create",
+              attrs: { disabled: _vm.dis },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.submitName()
+                }
+              }
+            },
+            [_vm._v(" Next ")]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("section"),
+      _vm._v(" "),
+      _c("div", { staticClass: "create-button__in-nav" }, [
+        _c(
+          "button",
+          {
+            staticClass: "create",
+            attrs: { disabled: _vm.dis },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.goBack()
+              }
+            }
+          },
+          [_vm._v(" Back ")]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "create",
+            attrs: { disabled: _vm.dis },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.submitName()
+              }
+            }
+          },
+          [_vm._v(" Next ")]
+        )
+      ]),
+      _vm._v(" "),
+      _vm.modal
+        ? _c(
+            "modal",
+            {
+              on: {
+                close: function($event) {
+                  _vm.modal = false
+                }
+              }
+            },
+            [
+              _c("div", { attrs: { slot: "header" }, slot: "header" }, [
+                _c("div", { staticClass: "circle del" }, [
+                  _c("p", [_vm._v("?")])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { attrs: { slot: "body" }, slot: "body" }, [
+                _c("h3", [_vm._v("Changing the event name?")]),
                 _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    "Editing the event name will require the event to be reapproved."
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { attrs: { slot: "footer" }, slot: "footer" }, [
                 _c(
                   "button",
                   {
-                    staticClass: "preview-organizer",
+                    staticClass: "btn del",
                     on: {
                       click: function($event) {
-                        $event.preventDefault()
-                        return _vm.showOrganizer(organizer)
+                        return _vm.onApply()
                       }
                     }
                   },
-                  [_vm._v("Preview Organizer")]
+                  [_vm._v("Change")]
                 )
               ])
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "listing-details-block" },
-              [
-                _c(
-                  "tabs",
-                  [
-                    _c(
-                      "tab",
-                      {
-                        staticClass: "event-edit-eventlist grid",
-                        attrs: {
-                          title: "Current Events",
-                          active: true,
-                          id: organizer.id
-                        }
-                      },
-                      [
-                        _c("div", { staticClass: "add-new-event-card" }, [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "new-event__button",
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.newEvent(organizer)
-                                }
-                              }
-                            },
-                            [
-                              _c("div", { staticClass: "new-event__center" }, [
-                                _c("div", [
-                                  _c(
-                                    "svg",
-                                    {
-                                      staticClass: "b",
-                                      attrs: {
-                                        height: "32",
-                                        width: "32",
-                                        viewBox: "0 0 24 24",
-                                        "aria-label": "Add an Event",
-                                        role: "img"
-                                      }
-                                    },
-                                    [
-                                      _c("path", {
-                                        attrs: {
-                                          d:
-                                            "M24 12c0-6.627-5.372-12-12-12C5.373 0 0 5.373 0 12s5.373 12 12 12c6.628 0 12-5.373 12-12zm-10.767 3.75a1.25 1.25 0 0 1-2.5 0v-3.948l-1.031 1.031a1.25 1.25 0 0 1-1.768-1.768L12 7l4.066 4.065a1.25 1.25 0 0 1-1.768 1.768l-1.065-1.065v3.982z"
-                                        }
-                                      })
-                                    ]
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("div", [_c("p", [_vm._v("Add New Event")])])
-                              ])
-                            ]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _vm._l(organizer.in_progress_events, function(
-                          event,
-                          index
-                        ) {
-                          return index < 10
-                            ? _c(
-                                "div",
-                                {
-                                  key: event.id,
-                                  staticClass: "edit-event__element"
-                                },
-                                [
-                                  _c(
-                                    "div",
-                                    { staticClass: "edit-event__buttons" },
-                                    [
-                                      _vm.status(event)
-                                        ? _c(
-                                            "a",
-                                            {
-                                              attrs: {
-                                                href: "/events/" + event.slug
-                                              }
-                                            },
-                                            [
-                                              _c(
-                                                "button",
-                                                {
-                                                  staticClass:
-                                                    "edit-event__sub-button"
-                                                },
-                                                [_vm._v("View")]
-                                              )
-                                            ]
-                                          )
-                                        : _vm._e(),
-                                      _vm._v(" "),
-                                      _vm.status(event)
-                                        ? _c(
-                                            "button",
-                                            {
-                                              staticClass:
-                                                "edit-event__sub-button",
-                                              on: {
-                                                click: function($event) {
-                                                  $event.preventDefault()
-                                                  return _vm.showModal(
-                                                    event,
-                                                    "delete"
-                                                  )
-                                                }
-                                              }
-                                            },
-                                            [_vm._v("Delete")]
-                                          )
-                                        : _vm._e(),
-                                      _vm._v(" "),
-                                      false
-                                        ? undefined
-                                        : _vm._e()
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("vue-event-edit-listing-item", {
-                                    attrs: { user: _vm.user, event: event }
-                                  })
-                                ],
-                                1
-                              )
-                            : _vm._e()
-                        }),
-                        _vm._v(" "),
-                        _vm.modal == "delete"
-                          ? _c(
-                              "modal",
-                              {
-                                on: {
-                                  close: function($event) {
-                                    _vm.modal = null
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "div",
-                                  { attrs: { slot: "header" }, slot: "header" },
-                                  [
-                                    _c("div", { staticClass: "circle del" }, [
-                                      _c("p", [_vm._v("X")])
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  { attrs: { slot: "body" }, slot: "body" },
-                                  [
-                                    _c("h3", [_vm._v("Are you sure?")]),
-                                    _vm._v(" "),
-                                    _c("p", [
-                                      _vm._v(
-                                        "You are deleting your " +
-                                          _vm._s(_vm.selectedModal.name) +
-                                          " event."
-                                      )
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  { attrs: { slot: "footer" }, slot: "footer" },
-                                  [
-                                    _c(
-                                      "button",
-                                      {
-                                        staticClass: "btn del",
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.deleteRow()
-                                          }
-                                        }
-                                      },
-                                      [_vm._v("Delete")]
-                                    )
-                                  ]
-                                )
-                              ]
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm.modal == "deleteOrg"
-                          ? _c(
-                              "modal",
-                              {
-                                on: {
-                                  close: function($event) {
-                                    _vm.modal = null
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "div",
-                                  { attrs: { slot: "header" }, slot: "header" },
-                                  [
-                                    _c("div", { staticClass: "circle del" }, [
-                                      _c("p", [_vm._v("X")])
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  { attrs: { slot: "body" }, slot: "body" },
-                                  [
-                                    _c("h3", [_vm._v("Are you sure?")]),
-                                    _vm._v(" "),
-                                    _c("p", [
-                                      _vm._v(
-                                        "You are deleting your " +
-                                          _vm._s(_vm.selectedModal.name) +
-                                          " event."
-                                      )
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  { attrs: { slot: "footer" }, slot: "footer" },
-                                  [
-                                    _c(
-                                      "button",
-                                      {
-                                        staticClass: "btn del",
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.deleteOrg()
-                                          }
-                                        }
-                                      },
-                                      [_vm._v("Delete")]
-                                    )
-                                  ]
-                                )
-                              ]
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm.modal == "addreview"
-                          ? _c(
-                              "modal",
-                              {
-                                on: {
-                                  close: function($event) {
-                                    _vm.modal = null
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "div",
-                                  { attrs: { slot: "header" }, slot: "header" },
-                                  [_c("h3", [_vm._v("Add Review")])]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  { attrs: { slot: "body" }, slot: "body" },
-                                  [
-                                    _c("div", { staticClass: "review" }, [
-                                      _c("div", { staticClass: "field" }, [
-                                        _c("input", {
-                                          directives: [
-                                            {
-                                              name: "model",
-                                              rawName: "v-model",
-                                              value: _vm.reviewername,
-                                              expression: "reviewername"
-                                            }
-                                          ],
-                                          class: {
-                                            active:
-                                              _vm.activeItem == "reviewername",
-                                            error: _vm.$v.reviewername.$error
-                                          },
-                                          attrs: {
-                                            type: "text",
-                                            placeholder: "Reviewer's name"
-                                          },
-                                          domProps: { value: _vm.reviewername },
-                                          on: {
-                                            input: [
-                                              function($event) {
-                                                if ($event.target.composing) {
-                                                  return
-                                                }
-                                                _vm.reviewername =
-                                                  $event.target.value
-                                              },
-                                              function($event) {
-                                                return _vm.$v.reviewername.$touch()
-                                              }
-                                            ],
-                                            click: function($event) {
-                                              _vm.activeItem = "reviewername"
-                                            },
-                                            blur: function($event) {
-                                              _vm.activeItem = "reviewername"
-                                            }
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _vm.$v.reviewername.$error
-                                          ? _c(
-                                              "div",
-                                              {
-                                                staticClass: "validation-error"
-                                              },
-                                              [
-                                                !_vm.$v.reviewername.required
-                                                  ? _c(
-                                                      "p",
-                                                      { staticClass: "error" },
-                                                      [
-                                                        _vm._v(
-                                                          "Please add a title."
-                                                        )
-                                                      ]
-                                                    )
-                                                  : _vm._e()
-                                              ]
-                                            )
-                                          : _vm._e()
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("div", { staticClass: "field" }, [
-                                        _c("input", {
-                                          directives: [
-                                            {
-                                              name: "model",
-                                              rawName: "v-model",
-                                              value: _vm.url,
-                                              expression: "url"
-                                            }
-                                          ],
-                                          class: {
-                                            active: _vm.activeItem == "url",
-                                            error: _vm.$v.url.$error
-                                          },
-                                          attrs: {
-                                            type: "text",
-                                            placeholder: "Link to the review"
-                                          },
-                                          domProps: { value: _vm.url },
-                                          on: {
-                                            input: [
-                                              function($event) {
-                                                if ($event.target.composing) {
-                                                  return
-                                                }
-                                                _vm.url = $event.target.value
-                                              },
-                                              function($event) {
-                                                return _vm.$v.url.$touch()
-                                              }
-                                            ],
-                                            click: function($event) {
-                                              _vm.activeItem = "url"
-                                            },
-                                            blur: function($event) {
-                                              _vm.activeItem = "url"
-                                            }
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _vm.$v.url.$error
-                                          ? _c(
-                                              "div",
-                                              {
-                                                staticClass: "validation-error"
-                                              },
-                                              [
-                                                !_vm.$v.url.required
-                                                  ? _c(
-                                                      "p",
-                                                      { staticClass: "error" },
-                                                      [
-                                                        _vm._v(
-                                                          "Please add a title."
-                                                        )
-                                                      ]
-                                                    )
-                                                  : _vm._e(),
-                                                _vm._v(" "),
-                                                !_vm.$v.url.url
-                                                  ? _c(
-                                                      "p",
-                                                      { staticClass: "error" },
-                                                      [
-                                                        _vm._v(
-                                                          "Must be a url (https://...)"
-                                                        )
-                                                      ]
-                                                    )
-                                                  : _vm._e()
-                                              ]
-                                            )
-                                          : _vm._e()
-                                      ])
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("div", { staticClass: "field" }, [
-                                      _c("textarea", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: _vm.review,
-                                            expression: "review"
-                                          }
-                                        ],
-                                        class: {
-                                          active: _vm.activeItem == "review",
-                                          error: _vm.$v.review.$error
-                                        },
-                                        attrs: {
-                                          type: "textarea",
-                                          rows: "6",
-                                          placeholder:
-                                            "Review snippet (no longer than 120 characters)"
-                                        },
-                                        domProps: { value: _vm.review },
-                                        on: {
-                                          input: [
-                                            function($event) {
-                                              if ($event.target.composing) {
-                                                return
-                                              }
-                                              _vm.review = $event.target.value
-                                            },
-                                            function($event) {
-                                              return _vm.$v.review.$touch()
-                                            }
-                                          ],
-                                          click: function($event) {
-                                            _vm.activeItem = "review"
-                                          },
-                                          blur: function($event) {
-                                            _vm.activeItem = "review"
-                                          }
-                                        }
-                                      }),
-                                      _vm._v(" "),
-                                      _vm.$v.review.$error
-                                        ? _c(
-                                            "div",
-                                            { staticClass: "validation-error" },
-                                            [
-                                              !_vm.$v.review.required
-                                                ? _c(
-                                                    "p",
-                                                    { staticClass: "error" },
-                                                    [
-                                                      _vm._v(
-                                                        "Must include review snippet"
-                                                      )
-                                                    ]
-                                                  )
-                                                : _vm._e(),
-                                              _vm._v(" "),
-                                              !_vm.$v.review.maxLength
-                                                ? _c(
-                                                    "p",
-                                                    { staticClass: "error" },
-                                                    [
-                                                      _vm._v(
-                                                        "The review snippit is too long."
-                                                      )
-                                                    ]
-                                                  )
-                                                : _vm._e()
-                                            ]
-                                          )
-                                        : _vm._e()
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  { attrs: { slot: "footer" }, slot: "footer" },
-                                  [
-                                    _c(
-                                      "button",
-                                      {
-                                        staticClass: "btn del",
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.submitReview()
-                                          }
-                                        }
-                                      },
-                                      [_vm._v("Submit")]
-                                    )
-                                  ]
-                                )
-                              ]
-                            )
-                          : _vm._e()
-                      ],
-                      2
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "tab",
-                      {
-                        staticClass: "event-edit-eventlist grid",
-                        attrs: { title: "Past Events", id: organizer.id + 1 }
-                      },
-                      [
-                        _vm._l(organizer.past_events, function(event, index) {
-                          return index < 4
-                            ? _c(
-                                "div",
-                                {
-                                  key: event.id,
-                                  staticClass: "edit-event__element"
-                                },
-                                [
-                                  _c(
-                                    "div",
-                                    { staticClass: "edit-event__buttons" },
-                                    [
-                                      _vm.status(event)
-                                        ? _c(
-                                            "a",
-                                            {
-                                              attrs: {
-                                                href: "/events/" + event.slug
-                                              }
-                                            },
-                                            [
-                                              _c(
-                                                "button",
-                                                {
-                                                  staticClass:
-                                                    "edit-event__sub-button"
-                                                },
-                                                [_vm._v("View")]
-                                              )
-                                            ]
-                                          )
-                                        : _vm._e(),
-                                      _vm._v(" "),
-                                      _vm.status(event)
-                                        ? _c(
-                                            "button",
-                                            {
-                                              staticClass:
-                                                "edit-event__sub-button",
-                                              on: {
-                                                click: function($event) {
-                                                  $event.preventDefault()
-                                                  return _vm.showModal(
-                                                    event,
-                                                    "delete"
-                                                  )
-                                                }
-                                              }
-                                            },
-                                            [_vm._v("Delete")]
-                                          )
-                                        : _vm._e()
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("vue-event-edit-listing-item", {
-                                    attrs: {
-                                      user: _vm.user,
-                                      loadurl: "/events/" + event.slug,
-                                      event: event
-                                    }
-                                  })
-                                ],
-                                1
-                              )
-                            : _vm._e()
-                        }),
-                        _vm._v(" "),
-                        _vm.modal == "delete"
-                          ? _c(
-                              "modal",
-                              {
-                                on: {
-                                  close: function($event) {
-                                    _vm.modal = null
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "div",
-                                  { attrs: { slot: "header" }, slot: "header" },
-                                  [_vm._v("Ready to Delete?")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  { attrs: { slot: "body" }, slot: "body" },
-                                  [
-                                    _vm._v(
-                                      " Are you sure you want to delete event " +
-                                        _vm._s(_vm.selectedModal.name)
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  { attrs: { slot: "footer" }, slot: "footer" },
-                                  [
-                                    _c(
-                                      "button",
-                                      {
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.deleteRow()
-                                          }
-                                        }
-                                      },
-                                      [_vm._v("Yes")]
-                                    )
-                                  ]
-                                )
-                              ]
-                            )
-                          : _vm._e()
-                      ],
-                      2
-                    )
-                  ],
-                  1
-                )
-              ],
-              1
-            )
-          ])
-        ])
-      }),
-      _vm._v(" "),
-      _vm._m(0)
+            ]
+          )
+        : _vm._e()
     ],
-    2
+    1
   )
 }
 var staticRenderFns = [
@@ -1069,19 +474,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("div", { staticClass: "new-organization" }, [
-        _c("div", { staticClass: "new-organization__title" }, [
-          _c("h3", [_vm._v("Add another organization")]),
-          _vm._v(" "),
-          _c("a", { attrs: { href: "/organizer/create" } }, [
-            _c("button", { staticClass: "new-organization__add" }, [
-              _c("p", [_vm._v("+")])
-            ])
-          ])
-        ])
-      ])
-    ])
+    return _c("div", { staticClass: "title" }, [_c("h2", [_vm._v("Title")])])
   }
 ]
 render._withStripped = true
@@ -1197,17 +590,17 @@ function normalizeComponent (
 
 /***/ }),
 
-/***/ "./resources/js/components/events/event-edit.vue":
-/*!*******************************************************!*\
-  !*** ./resources/js/components/events/event-edit.vue ***!
-  \*******************************************************/
+/***/ "./resources/js/components/create/title.vue":
+/*!**************************************************!*\
+  !*** ./resources/js/components/create/title.vue ***!
+  \**************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _event_edit_vue_vue_type_template_id_60515fd8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./event-edit.vue?vue&type=template&id=60515fd8& */ "./resources/js/components/events/event-edit.vue?vue&type=template&id=60515fd8&");
-/* harmony import */ var _event_edit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./event-edit.vue?vue&type=script&lang=js& */ "./resources/js/components/events/event-edit.vue?vue&type=script&lang=js&");
+/* harmony import */ var _title_vue_vue_type_template_id_25987e60___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./title.vue?vue&type=template&id=25987e60& */ "./resources/js/components/create/title.vue?vue&type=template&id=25987e60&");
+/* harmony import */ var _title_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./title.vue?vue&type=script&lang=js& */ "./resources/js/components/create/title.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -1217,9 +610,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _event_edit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _event_edit_vue_vue_type_template_id_60515fd8___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _event_edit_vue_vue_type_template_id_60515fd8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _title_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _title_vue_vue_type_template_id_25987e60___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _title_vue_vue_type_template_id_25987e60___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -1229,38 +622,38 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/events/event-edit.vue"
+component.options.__file = "resources/js/components/create/title.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/events/event-edit.vue?vue&type=script&lang=js&":
-/*!********************************************************************************!*\
-  !*** ./resources/js/components/events/event-edit.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************/
+/***/ "./resources/js/components/create/title.vue?vue&type=script&lang=js&":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/create/title.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_event_edit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./event-edit.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/events/event-edit.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_event_edit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_title_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./title.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/create/title.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_title_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/events/event-edit.vue?vue&type=template&id=60515fd8&":
-/*!**************************************************************************************!*\
-  !*** ./resources/js/components/events/event-edit.vue?vue&type=template&id=60515fd8& ***!
-  \**************************************************************************************/
+/***/ "./resources/js/components/create/title.vue?vue&type=template&id=25987e60&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/create/title.vue?vue&type=template&id=25987e60& ***!
+  \*********************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_event_edit_vue_vue_type_template_id_60515fd8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./event-edit.vue?vue&type=template&id=60515fd8& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/events/event-edit.vue?vue&type=template&id=60515fd8&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_event_edit_vue_vue_type_template_id_60515fd8___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_title_vue_vue_type_template_id_25987e60___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./title.vue?vue&type=template&id=25987e60& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/create/title.vue?vue&type=template&id=25987e60&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_title_vue_vue_type_template_id_25987e60___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_event_edit_vue_vue_type_template_id_60515fd8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_title_vue_vue_type_template_id_25987e60___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

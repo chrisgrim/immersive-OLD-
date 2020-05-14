@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Conversation extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = ['opener_id', 'receiver_id'];
     /**
     * The relations to eager load on every query. I am adding shows here because I need to filter by dates for the search

@@ -154,6 +154,21 @@ textarea {
     margin-top: 1rem;
 }
 
+button.default-border {
+    color: $default-color;
+    border-radius: 0.4rem;
+    background: #fff;
+    border: 1px solid $default-color;
+    font-size: 1.4rem;
+    font-weight: 600;
+    padding: 1rem 1.5rem;
+    margin: 1.5rem 0rem;
+    &:hover {
+        background:$default-color;
+        color:white;
+    }
+}
+
 
 @media (max-width: 768px) {
     html { font-size: 62.5%; font-family: 'Montserrat', sans-serif; height:100%;} 

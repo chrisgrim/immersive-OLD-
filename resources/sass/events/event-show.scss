@@ -27,6 +27,7 @@ header.event-show {
         font-family: Annie Use Your Telescope,cursive;
         font-weight: 300;
         color: #914669;
+        display: block;
     }
     &__title {
         top: 0;
@@ -39,6 +40,9 @@ header.event-show {
             line-height: 5.2rem;
             font-weight: 400;
         }
+    }
+    &__tag {
+        display: block
     }
 }
 

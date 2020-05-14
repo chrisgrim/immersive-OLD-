@@ -18,6 +18,7 @@ class CreateGenresTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('genre')->unique();
             $table->boolean('admin')->default(0);
+            $table->integer('rank')->default(0);
             $table->timestamps();
         });
         Schema::create('event_genre', function(Blueprint $table) {
@@ -36,5 +37,6 @@ class CreateGenresTable extends Migration
     public function down()
     {
         Schema::dropIfExists('genres');
+        Schema::dropIfExists('event_genre');
     }
 }

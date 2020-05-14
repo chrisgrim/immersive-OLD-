@@ -83,11 +83,18 @@ class ContentAdvisoriesController extends Controller
      */
     public function update(Request $request, ContentAdvisory $contentadvisory)
     {
-        $contentadvisory->update([
-            'advisories' => $request->advisories,
-            'admin' => true,
-            'user_id' => auth()->user()->id
-        ]);
+        if ($request->rank) {
+            return $contentadvisory->update([
+                'rank' => $request->rank,
+                'user_id' => auth()->user()->id
+            ]);
+        }
+        if ($request->advisories) {
+            return $contentadvisory->update([
+                'advisories' => $request->advisories,
+                'user_id' => auth()->user()->id
+            ]);
+        }
     }
 
     /**

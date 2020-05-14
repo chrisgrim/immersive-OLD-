@@ -49,7 +49,7 @@
                     </div>
                 </div>
                 <div class="field">
-                    <label>Your organization website</label>
+                    <label>Your organization website (recommended)</label>
                     <input 
                     type="url" 
                     v-model="organizer.website" 
@@ -62,8 +62,6 @@
                     />
                     <div v-if="$v.organizer.website.$error" class="validation-error">
                         <p class="error" v-if="!$v.organizer.website.url">Must be a Url (Needs http://)</p>
-                        <p class="error" v-if="!$v.organizer.website.required">The Website is required</p>
-                        <p class="error" v-if="!$v.organizer.website.serverFailed">The Website needs to be unique</p>
                         <p class="error" v-if="!$v.organizer.website.notWorking">The Url doesn't seem to be working</p>
                     </div>
                 </div>
@@ -132,6 +130,7 @@
                                             <h4>If you have an organization image <br>click here to Upload</h4>
                                             <p>Please make image at least 400 x 400</p>
                                             <p>Image needs to be under 20 mb</p>
+                                            <p>Please make sure logo is centered</p>
                                         </div>
                                         <p v-if="hasImage">Change Image</p>
                                     </div>
@@ -194,7 +193,7 @@ export default {
             return this.organizer.largeImagePath || this.imageSrc ? true : false;
         },
         backgroundImage() {
-            return `backgroundImage: url('${this.imageSrc ? this.imageSrc : (this.loadorganizer ? '/' + this.loadorganizer.largeImagePath : '')}')`
+            return `backgroundImage: url('${this.imageSrc ? this.imageSrc : (this.loadorganizer ? '/storage/' + this.loadorganizer.largeImagePath : '')}')`
         }
     },
     
@@ -378,9 +377,9 @@ export default {
                
             },
             website: {
-                required,
+                // required,
                 url,
-                serverFailed : function(){ return !this.hasServerError('website'); },
+                // serverFailed : function(){ return !this.hasServerError('website'); },
                 notWorking : function(){ return !this.hasServerError('broken'); },
             },
         },

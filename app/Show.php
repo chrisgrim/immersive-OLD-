@@ -109,6 +109,7 @@ class Show extends Model
             'show_times' => $request->showtimes,
             'price_range' => $pricerange,
             'showtype' => $request->shows ? 's' : ($request->onGoing && $request->always ? 'a' : 'o'),
+            'embargo_date' => $request->embargo_date,
         ]);
     }
 }

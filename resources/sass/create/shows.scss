@@ -22,6 +22,9 @@ section.event-enter-showtimes {
 section.event-enter-showdates {
     
 }
+.calendar .flatpickr-calendar.inline {
+    margin:inherit;
+}
 
 .create-shows__ticket-box {
     box-shadow: -3px 5px 5px 1px hsla(0,0%,91%,.6);

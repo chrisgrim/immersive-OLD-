@@ -17,6 +17,12 @@
             placeholder="Contact Level Name"
             @blur="saveContactLevel(level)"
             />
+            <input 
+            type="text" 
+            v-model="level.rank" 
+            placeholder="Contact Level Rank"
+            @blur="saveRank(level)"
+            />
             <button @click.prevent="showModal(level)" class="delete-circle"><p>X</p></button>
         </div>
         <modal v-if="isEditModalVisible" @close="isEditModalVisible = false">
@@ -136,6 +142,20 @@
             saveContactLevel(level) {
                 let data = {
                     level: level.level
+                };
+                axios.patch(`/contactlevels/${level.id}`, data)
+                .then(response => { 
+                    console.log(response.data)
+                    this.loadContactLevels()
+                })
+                .catch(error => { 
+                    this.serverErrors = error.response.data.errors; 
+                });
+            },
+
+            saveRank(level) {
+                let data = {
+                    rank: level.rank
                 };
                 axios.patch(`/contactlevels/${level.id}`, data)
                 .then(response => { 

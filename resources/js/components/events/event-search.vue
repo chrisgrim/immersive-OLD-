@@ -88,12 +88,25 @@
                                 </div>
                             </div>
                         </div>
-                    </div>    
+                    </div>
+                    <div class="event-filter-item showmap" v-if="!showMap">
+                        <div class="field">
+                            <label> Show Map </label>
+                            <div id="cover">
+                                <input v-model="showMap" type="checkbox" id="checkbox">
+                                <div id="bar"></div>
+                                <div id="knob">
+                                    <p v-if="showMap">Yes</p>
+                                    <p v-else="showMap">No</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
                 </div>           
                 <button v-if="showMap" class="close-map" @click="showMap=false">
                     <svg viewBox="0 0 12 12" role="presentation" aria-hidden="true" focusable="false" style="height: 14px; width: 14px; display: block; fill: currentcolor;"><path d="m11.5 10.5c.3.3.3.8 0 1.1s-.8.3-1.1 0l-4.4-4.5-4.5 4.5c-.3.3-.8.3-1.1 0s-.3-.8 0-1.1l4.5-4.5-4.4-4.5c-.3-.3-.3-.8 0-1.1s.8-.3 1.1 0l4.4 4.5 4.5-4.5c.3-.3.8-.3 1.1 0s .3.8 0 1.1l-4.5 4.5z" fill-rule="evenodd"></path></svg>
                 </button>
-                <div class="event-search-list grid"> 
+                <div class="event-search-list grid" :class="{ maphidden: !showMap}"> 
                     <div v-for="(event, index) in eventList" class="eventlist__element">
                         <search-item :user="user" :event="event"></search-item>
                     </div>
@@ -326,7 +339,13 @@
                     prices.push(pricerange.price) 
                   }) 
                 })
-                let arr = Math.ceil(parseFloat(prices.sort().slice(-1)[0]));
+
+                function compareNumbers(a, b) {
+                  return a - b;
+                }
+
+                let arr = Math.ceil(parseFloat(prices.sort(compareNumbers).slice(-1)[0]));
+                console.log(arr);
 
                 prices.length ? this.price[1] = arr : this.price[1] = 1000;
                 prices.length ? this.options.max = arr : this.options.max = 1000;

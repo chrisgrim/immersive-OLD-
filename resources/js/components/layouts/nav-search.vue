@@ -49,7 +49,9 @@ export default {
     data() {
         return {
             searchBoxInput: [],
-            searchBoxOptions: [],
+            searchBoxOptions: [
+                {name: 'Loading List...'}
+            ],
             isLoading: false,
             search: this.initializeSearchObject(),
             placeholder: new URL(window.location.href).searchParams.get("name") ? new URL(window.location.href).searchParams.get("name") : 'Search by city or event',
@@ -93,7 +95,7 @@ export default {
     },
 
     mounted() {
-    
+        
     }
 };
 </script>

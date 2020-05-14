@@ -19,8 +19,14 @@
                 <h4>{{ event.price_range }}</h4>
             </div>
         </a>
+        <div class="card-inprogress" v-if="event.status == 'd'">
+            <h3><b>In Progress</b></h3>
+        </div>
         <div class="card-inprogress" v-if="event.status == 'r'">
-            <h3><b>Under Review</b></h3>
+            <h3><b>Under Review</b><br>(Locked)</h3>
+        </div>
+        <div class="card-inprogress" v-if="event.status == 'e'">
+            <h3><b>Goes Live <br> {{event.embargo_date | formatDate}} </b></h3>
         </div>
         <div class="card-inprogress" v-if="event.status == 'n'">
             <h3><b>Needs Changes</b></h3>
@@ -29,6 +35,7 @@
 </template>
 
 <script>
+    import moment from 'moment'
     export default {
         props: {
             event: { type:Object },
@@ -95,7 +102,15 @@
         mounted() {
             this.event.status == 'p' ? '' : this.getUrl();
             this.eventStatus();
-        }
+        },
+
+        filters: {
+            formatDate(value) {
+                if (value) {
+                    return moment(String(value)).format('MMM Do, YYYY')
+                }
+            }
+        },
 
     };
 </script>

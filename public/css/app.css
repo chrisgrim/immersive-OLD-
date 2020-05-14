@@ -543,6 +543,10 @@ button.new-organization__add p {
   grid-column-gap: 0;
 }
 
+.event-search__container.maphidden {
+  grid-template-columns: 1fr;
+}
+
 .event-search-filter {
   position: relative;
   display: inline-block;
@@ -576,6 +580,14 @@ button.new-organization__add p {
           user-select: none;
   width: 100%;
   margin-right: 1.5rem;
+}
+
+.event-filter-item.showmap {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 10rem;
+  margin-top: -4.6rem;
 }
 
 button.filter {
@@ -672,6 +684,10 @@ button.close-map {
 .event-search-list {
   width: 100%;
   grid-template-columns: 1fr 1fr;
+}
+
+.event-search-list.maphidden {
+  grid-template-columns: repeat(4, 1fr);
 }
 
 .event-search-map {
@@ -1142,7 +1158,6 @@ button.mobile-map-close {
   position: relative;
   display: block;
   cursor: pointer;
-  background: #f77161;
   font-size: 110px;
   -webkit-transition: width 0.5s ease-in-out;
   transition: width 0.5s ease-in-out;
@@ -1162,13 +1177,13 @@ button.mobile-map-close {
 }
 
 .user-profile-noimage__text {
-  position: absolute;
-  width: 12rem;
+  position: relative;
+  width: 11rem;
   z-index: 10;
-  left: 50%;
-  margin-left: -6rem;
-  margin-top: 0.9rem;
   text-align: center;
+  border-radius: 50%;
+  height: 11rem;
+  padding: 1rem;
 }
 
 .user-profile-noimage__text h2 {
@@ -1188,6 +1203,15 @@ button.mobile-map-close {
   -ms-user-select: none;
   /* Internet Explorer/Edge */
   user-select: none;
+}
+
+.profile-wrapper {
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: absolute;
+  top: 0;
+  z-index: 10;
 }
 
 .user-profile-image__update-text {
@@ -1734,7 +1758,7 @@ img.organizer-info-contact__image {
 }
 
 .organizer-show-contact {
-  padding: 1rem 0 3rem 0;
+  padding: 0 0 3rem 0;
   border-bottom: 1px solid #c3c3c3;
 }
 

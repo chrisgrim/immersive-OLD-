@@ -28,62 +28,8 @@ class SearchController extends Controller
     public function index(Request $request)
     {
 
-        // $searchedevents =  Event::search('a')
-            // ->rule(function($builder) use ($request) {
-            //     return [
-            //         'must' => [
-
-            //             [
-            //                 'range' => [
-            //                     'closingDate' => [
-            //                         'gte' => 'now/d',
-            //                     ],
-            //                 ],
-            //             ],
-
-            //             [
-            //                 'match' => [
-            //                     'status' => 'p'
-            //                 ]
-            //             ]
-
-            //         ],
-            //         'should' => [
-
-            //             [
-            //                 'bool' => [
-            //                     'should' => [
-            //                         'range' => [
-            //                             'shows.date' => [
-            //                                 'gte' => $request->dates[0],
-            //                                 'lte' => $request->dates[1],
-            //                             ]
-            //                         ]
-            //                     ]
-            //                 ]
-            //             ],
-
-            //             [
-            //                 'bool' => [
-            //                     'must' => [
-            //                         'match' => [
-            //                             'showtype' => 'a'
-            //                         ]
-            //                     ]
-            //                 ],
-            //             ],
-
-            //         ],
-            //         'minimum_should_match' => 1,
-            //     ];
-            // })
-            // ->with(['location', 'organizer'])
-            // ->get();
-
-
         $searchedevents = Event::search('*')
             ->where('closingDate', '>=', 'now/d')
-            ->where('status', 'p')
             ->whereGeoDistance('location_latlon', [floatval($request->lng), floatval($request->lat)], '40km')
             ->with(['location', 'organizer'])
             ->get(); 
@@ -103,7 +49,6 @@ class SearchController extends Controller
    
         $events = Event::search('*')
             ->where('closingDate', '>=', 'now/d')
-            ->where('status', 'p')
             ->when($request->category_id, function($query) use ($request) {
                 $query->where('category_id', $request->category_id);
             })

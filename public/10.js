@@ -331,6 +331,7 @@ var render = function() {
             _c(
               "button",
               {
+                staticClass: "default-border",
                 on: {
                   click: function($event) {
                     _vm.isModalVisible = true
@@ -344,9 +345,11 @@ var render = function() {
       _vm._v(" "),
       !_vm.user
         ? _c("div", { staticClass: "contact" }, [
-            _c("button", { on: { click: _vm.onGuest } }, [
-              _vm._v("\n            Contact\n        ")
-            ])
+            _c(
+              "button",
+              { staticClass: "default-border", on: { click: _vm.onGuest } },
+              [_vm._v("\n            Contact\n        ")]
+            )
           ])
         : _vm._e(),
       _vm._v(" "),

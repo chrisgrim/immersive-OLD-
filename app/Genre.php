@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Scopes\RankScope;
 
 class Genre extends Model
 {
@@ -12,8 +13,18 @@ class Genre extends Model
     * @var array
     */
 	protected $fillable = [
-    	'genre','admin', 'user_id'
+    	'genre','admin', 'user_id', 'rank'
     ];
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::addGlobalScope(new RankScope);
+    }
     
     /**
      * Each genre can belong to many Events

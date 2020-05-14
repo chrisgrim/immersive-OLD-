@@ -21,6 +21,7 @@ Route::RESOURCE('regions', 'RegionsController');
 Route::RESOURCE('contactlevels', 'ContactLevelsController');
 Route::RESOURCE('contentadvisories', 'ContentAdvisoriesController');
 Route::RESOURCE('genres', 'GenresController');
+Route::RESOURCE('remotelocations', 'RemoteLocationsController');
 Route::RESOURCE('mobilities', 'MobilityController');
 Route::RESOURCE('staffpicks', 'StaffPicksController');
 Route::RESOURCE('reviewevents', 'ReviewEventsController');
@@ -64,6 +65,7 @@ Route::POST('message/organizer/{organizer}/{user}', 'OrganizerController@message
 Route::RESOURCE('users', 'ProfilesController');
 Route::GET('account-settings', 'ProfilesController@account');
 Route::GET('account-settings/notifications', 'ProfilesController@notifications');
+Route::GET('account-settings/favorited', 'ProfilesController@favorited');
 
 // favorites Button
 Route::GET('myFavorites/{user}', 'FavoritesController@index');

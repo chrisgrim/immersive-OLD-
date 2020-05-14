@@ -1,14 +1,14 @@
 <template>
     <div>
         <nav v-if="!mobileDevice" class="nav" :class="onclass">
-            <div :class="{ fullmap: fullmap }">
+            <div class="nav-grid grid" :class="{ fullmap: fullmap }">
                 <div class="nav-logo" :class="{ active: bar }">
                     <a href="/">
                         <h3>EI</h3>
                     </a>
                 </div>
-                <div class="nav-search" :class="{ fullmap: fullmap }">
-                    <nav-search></nav-search>
+                <div  class="nav-search" :class="{ fullmap: fullmap }">
+                    <nav-search v-if="onclass!='homepage'"></nav-search>
                 </div>
                 <div class="nav-menu" :class="{ active: bar }">
                     <div class="nav-menu-item" v-if="user">
@@ -76,8 +76,13 @@
                     <h3>EI</h3>
                 </a>
             </div>
-            <div class="nav-menu-item mobile">
-                <a class="menu-link" href="/">
+            <div class="nav-menu-item mobile" v-if="user">
+                <a class="menu-link" href="/account-settings/favorited">
+                    <div>Liked</div>
+                </a>
+            </div>
+            <div class="nav-menu-item mobile" v-else>
+                <a class="menu-link" href="/login">
                     <div>Liked</div>
                 </a>
             </div>
@@ -132,7 +137,7 @@
                 return this.onclass=='show' || this.onclass=='message' || this.onclass=='entry' ?  false : true;
             },
             dontShowNav() {
-                return this.onclass == 'show' || this.onclass == 'message' || this.onclass == 'profile' || this.onclass == 'messageshow' || this.onclass == 'entry' ? false : true;
+                return this.onclass == 'show' || this.onclass == 'message' || this.onclass == 'profile' || this.onclass == 'messageshow' || this.onclass == 'entry' || this.onclass == 'homepage' ? false : true;
             },
             dontShowMenu() {
                 return this.onclass == 'show' || this.onclass == 'messageshow' ? false : true;

@@ -25,12 +25,6 @@ class EventDatesRule extends SearchRule
                 'must' => 
                 [
                     [
-                        'match' => 
-                        [
-                            'status' => 'p'
-                        ]
-                    ],
-                    [
                         'range' => 
                         [
                             'closingDate' => 
@@ -76,12 +70,6 @@ class EventDatesRule extends SearchRule
             return [
                 'must' => 
                 [
-                    [
-                        'match' => 
-                        [
-                            'status' => 'p'
-                        ]
-                    ],
                     [
                         'range' => 
                         [
@@ -154,12 +142,6 @@ class EventDatesRule extends SearchRule
             return [
                 'must' => 
                 [
-                    [
-                        'match' => 
-                        [
-                            'status' => 'p'
-                        ]
-                    ],
                     [
                         'range' => 
                         [
@@ -239,12 +221,6 @@ class EventDatesRule extends SearchRule
                 'must' => 
                 [
                     [
-                        'match' => 
-                        [
-                            'status' => 'p'
-                        ]
-                    ],
-                    [
                         'range' => 
                         [
                             'closingDate' => 
@@ -284,12 +260,6 @@ class EventDatesRule extends SearchRule
             return [
                 'must' => 
                 [
-                    [
-                        'match' => 
-                        [
-                            'status' => 'p'
-                        ]
-                    ],
                     [
                         'range' => 
                         [
@@ -378,12 +348,6 @@ class EventDatesRule extends SearchRule
                 'must' => 
                 [
                     [
-                        'match' => 
-                        [
-                            'status' => 'p'
-                        ]
-                    ],
-                    [
                         'range' => 
                         [
                             'closingDate' => 
@@ -437,12 +401,6 @@ class EventDatesRule extends SearchRule
             return [
                 'must' => 
                 [
-                    [
-                        'match' => 
-                        [
-                            'status' => 'p'
-                        ]
-                    ],
                     [
                         'range' => 
                         [
@@ -524,12 +482,6 @@ class EventDatesRule extends SearchRule
             'must' => 
             [
                 [
-                    'match' => 
-                    [
-                        'status' => 'p'
-                    ]
-                ],
-                [
                     'range' => 
                     [
                         'closingDate' => 
@@ -569,13 +521,6 @@ class EventDatesRule extends SearchRule
                     ]
                 ]
             ],
-
         ];
-    
-
-        
-
-
-        
     }
 }

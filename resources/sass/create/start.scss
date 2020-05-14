@@ -7,10 +7,14 @@
 }
 .start-content__nav {
     position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0rem 8rem;
 }
 .start-content {
-    width:70%;
+    width: 100%;
     margin: auto;
+    padding: 0rem 8rem;
 }
 .start-content__text {
     & h2 {

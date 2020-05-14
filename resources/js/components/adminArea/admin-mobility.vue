@@ -17,6 +17,12 @@
             placeholder="Mobilities"
             @blur="saveMobility(mobility)"
             />
+            <input 
+            type="text" 
+            v-model="mobility.rank" 
+            placeholder="Mobilities"
+            @blur="saveRank(mobility)"
+            />
             <button @click.prevent="showModal(mobility)" class="delete-circle"><p>X</p></button>
         </div>
         <modal v-if="isEditModalVisible" @close="isEditModalVisible = false">
@@ -136,6 +142,21 @@
             saveMobility(mobility) {
                 let data = {
                     mobilities: mobility.mobilities
+                };
+                axios.patch(`/mobilities/${mobility.id}`, data)
+                .then(response => { 
+                    console.log(response.data);
+                    this.loadGenres();
+                    this.$v.$reset();
+                })
+                .catch(error => { 
+                    this.serverErrors = error.response.data.errors;
+                });
+            },
+
+            saveRank(mobility) {
+                let data = {
+                    rank: mobility.rank
                 };
                 axios.patch(`/mobilities/${mobility.id}`, data)
                 .then(response => { 

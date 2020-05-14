@@ -25,10 +25,10 @@ class OrganizerUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'website' => ['required',
-                            Rule::unique('organizers')
-                                  ->ignore($this->id)
-                        ],
+            // 'website' => ['required',
+            //                 Rule::unique('organizers')
+            //                       ->ignore($this->id)
+            //             ],
             'name' => ['required',
                             Rule::unique('organizers')
                                   ->ignore($this->id)

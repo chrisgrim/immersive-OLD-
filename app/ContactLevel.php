@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Scopes\RankScope;
 use Illuminate\Database\Eloquent\Model;
 
 class ContactLevel extends Model
@@ -11,9 +12,17 @@ class ContactLevel extends Model
     *
     * @var array
     */
-    protected $fillable = [
-    	'level'
-    ];
+    protected $fillable = [ 'level', 'rank', 'admin', 'user_id'];
+
+     /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::addGlobalScope(new RankScope);
+    }
 
 	/**
 	* Each ContactLevel can belong to many events

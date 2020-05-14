@@ -31,4 +31,15 @@ class ModeratorComment extends Model
     {
         return $this->belongsTo(Event::class);
     }
+
+    /**
+     * This Conversation has many event notices
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+
+    public function conversation()
+    {
+        return $this->belongsTo(Conversation::class);
+    }
 }

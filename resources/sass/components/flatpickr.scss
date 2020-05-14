@@ -1,7 +1,7 @@
-.show .flatpickr-calendar {
+.lockedcalendar .flatpickr-calendar {
     box-shadow: none;
 }
-.show .flatpickr-day {
+.lockedcalendar .flatpickr-day {
     pointer-events: none;
     &.selected:hover {
         background-color:red;

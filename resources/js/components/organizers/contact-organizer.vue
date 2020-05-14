@@ -1,12 +1,12 @@
 <template>
     <div class="organizer-show-contact">
         <div v-if="user && user != loadorganizer.user_id" class="contact">
-            <button @click="isModalVisible=true">
+            <button class="default-border" @click="isModalVisible=true">
                 Contact
             </button>
         </div>
         <div v-if="!user" class="contact">
-            <button @click="onGuest">
+            <button class="default-border" @click="onGuest">
                 Contact
             </button>
         </div>

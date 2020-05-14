@@ -10,6 +10,7 @@ use App\EventImage;
 use App\Message;
 use App\ModeratorComment;
 use App\Conversation;
+use Carbon\Carbon;
 use App\Mail\ModeratorComments;
 use App\Mail\EventApproved;
 use Illuminate\Support\Facades\Storage;
@@ -125,7 +126,7 @@ class AdminAreaController extends Controller
      */
     public function showApproval(Event $event)
     {
-        $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'advisories','showOnGoing','shows');
+        $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'advisories','showOnGoing','shows','remotelocations');
         return view('adminArea.showapproval',compact('event'));
     }
 
@@ -137,18 +138,29 @@ class AdminAreaController extends Controller
      */
     public function success(Event $event)
     {
+        AdminArea::storeAirtable($event);
+
         $event = $event->load('user');
 
         $slug = Event::finalSlug($event);
         
         EventImage::finalizeImage($event, $slug);
 
-        $event->update([
-            'status' => 'p',
-            'slug' => $slug,
-        ]);
+        if ($event->embargo_date && $event->embargo_date > Carbon::now()) {
+            $event->update([
+                'status' => 'e',
+                'slug' => $slug,
+            ]);
+            Message::eventnotification($event, 'Thanks, your event has been approved and will be displayed on your chosen date.', $slug);
+        } else {
+            $event->update([
+                'status' => 'p',
+                'slug' => $slug,
+            ]);
+            Message::eventnotification($event, 'Thanks, your event has been approved!', $slug);
+        }
 
-        Message::eventnotification($event, 'Thanks, your event has been approved!', $slug);
+        
 
         Mail::to($event->user)->send(new EventApproved($event));
 

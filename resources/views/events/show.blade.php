@@ -6,21 +6,23 @@
         "@context":"http://schema.org",
         "@type":"Event",
         @if($event->hasLocation)
-        "location":{"@type":"Place",
-        "address":{"@type":"PostalAddress","addressLocality":"{{$event->location->city}}","addressRegion":"{{$event->location->region}}",
-        "postalCode":"{{$event->location->postal_code}}",
-        "streetAddress":"{{$event->location->street}}"},
+            "location":{"@type":"Place",
+            "address":{"@type":"PostalAddress","addressLocality":"{{$event->location->city}}","addressRegion":"{{$event->location->region}}",
+            "postalCode":"{{$event->location->postal_code}}",
+            "streetAddress":"{{$event->location->street}}"},
         @endif
         "name":"{{$event->name}}"},
         "image":"/storage/{{$event->largeImagePath}}",
         "description":"{{$event->description}}",
         "name":"{{$event->name}}",
         @if($event->shows->isEmpty())
-        "startDate":{{$event->created_at}},
+            "startDate":{{$event->created_at}},
         @else
-        "startDate":"{{$event->shows[0]->date}}",
+            "startDate":"{{$event->shows[0]->date}}",
         @endif
-        "endDate":"{{$event->closingDate}}"}
+        "endDate":"{{$event->closingDate}}",
+        "url":"{{ url('/'). '/events/'.$event->slug }}",
+        "organizer":"{{$event->organizer->name}}"}
     </script>
     
     <title>{{$event->name}}</title>

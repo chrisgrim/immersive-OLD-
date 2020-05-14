@@ -1,24 +1,16 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[22],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/create/shows.vue?vue&type=script&lang=js&":
-/*!***********************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/create/shows.vue?vue&type=script&lang=js& ***!
-  \***********************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/messages/message-show.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/messages/message-show.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var date_fns_format__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! date-fns/format */ "./node_modules/date-fns/format/index.js");
-/* harmony import */ var date_fns_format__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(date_fns_format__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
-/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-flatpickr-component */ "./node_modules/vue-flatpickr-component/dist/vue-flatpickr.min.js");
-/* harmony import */ var vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var flatpickr_dist_flatpickr_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flatpickr/dist/flatpickr.css */ "./node_modules/flatpickr/dist/flatpickr.css");
-/* harmony import */ var flatpickr_dist_flatpickr_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flatpickr_dist_flatpickr_css__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var v_money__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! v-money */ "./node_modules/v-money/dist/v-money.js");
-/* harmony import */ var v_money__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(v_money__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -156,512 +148,373 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: {
-    event: {
-      type: Object
-    }
-  },
-  components: {
-    flatPickr: vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_2___default.a,
-    Money: v_money__WEBPACK_IMPORTED_MODULE_4__["Money"]
-  },
+  props: ['loaduser', 'loadmessages'],
+  components: {},
   computed: {
-    // return this.dates.length > 10 ? this.dates.split(",") : '';
-    dateArray: function dateArray() {
-      if (!Array.isArray(this.dates) && this.dates.includes(",")) {
-        return this.dates.split(",");
-      } else {
-        if (!Array.isArray(this.dates)) {
-          return [this.dates];
-        } else {
-          '';
-        }
-      }
+    conversationType: function conversationType() {
+      return this.conversations.messages.length ? this.conversations.messages : this.conversations.modmessages;
+    },
+    isResponder: function isResponder() {
+      var _this = this;
+
+      return function (message) {
+        return message.user_id !== _this.loaduser.id ? true : false;
+      };
+    },
+    isMessage: function isMessage() {
+      return this.conversations.messages.length ? true : false;
     }
   },
   data: function data() {
     return {
-      eventUrl: "/create-event/".concat(this.event.slug),
-      selectedTab: this.event.showtype !== null ? this.event.showtype : 's',
-      dates: '',
-      config: {
-        minDate: "today",
-        maxDate: new Date().fp_incr(180),
-        mode: "multiple",
-        inline: true,
-        showMonths: 2,
-        dateFormat: 'Y-m-d H:i:s'
-      },
-      configmobile: {
-        minDate: "today",
-        maxDate: new Date().fp_incr(180),
-        mode: "multiple",
-        inline: true,
-        showMonths: 1,
-        dateFormat: 'Y-m-d H:i:s'
-      },
-      week: this.initializeWeekObject(),
-      tickets: [this.initializeTicketObject()],
-      showTimes: '',
-      money: {
-        decimal: '.',
-        thousands: '',
-        prefix: '',
-        suffix: '',
-        precision: 2,
-        masked: false
-      },
-      dis: false,
-      num: false,
+      user: this.loaduser ? this.loaduser : '',
+      conversations: this.loadmessages ? this.loadmessages : '',
+      anon: 'website-files/default-user-icon.jpg',
       activeItem: null,
-      isVisible: false,
-      free: false,
-      placeholders: 'Please provide a brief description of show times...' + '\n' + '\n' + 'Shows begin at 9PM.',
-      placeholdero: 'Please provide a brief description of weekly show times...' + '\n' + '\n' + '10:00PM shows on Monday & Tuesday.' + '\n' + '12:00PM on Wednesday and Thursday.',
-      placeholdera: 'Please provide a brief description of daily times...' + '\n' + '\n' + 'Show begins everyday at 12PM.' + '\n' + 'Enjoy at any time.'
+      message: '',
+      modmessage: '',
+      owner: '',
+      responder: '',
+      dis: false,
+      avatar: this.loaduser.thumbImagePath ? "/storage/".concat(this.loaduser.thumbImagePath) : ''
     };
   },
   methods: {
-    //deletes a ticket row or clears the first one
-    deleteRow: function deleteRow(index) {
-      this.$delete(this.tickets, index);
-    },
-    selectTab: function selectTab(value) {
-      this.selectedTab = value;
-    },
-    onFree: function onFree() {
-      this.free = true;
-      this.isVisible = false;
-    },
-    initializeShowtimeObject: function initializeShowtimeObject() {
-      return {
-        hh: "00",
-        mm: "00",
-        A: "PM"
-      };
-    },
-    initializeWeekObject: function initializeWeekObject() {
-      return {
-        mon: false,
-        tue: false,
-        wed: false,
-        thu: false,
-        fri: false,
-        sat: false,
-        sun: false
-      };
-    },
-    addWeekDay: function addWeekDay(day) {
-      this.week[day] = !this.week[day];
-    },
-    // when user clicks new ticket this creates a new ticket object
-    addTickets: function addTickets() {
-      this.tickets.push(this.initializeTicketObject());
-    },
-    //creates a ticket Object
-    initializeTicketObject: function initializeTicketObject() {
-      return {
-        id: '',
-        name: '',
-        show_id: '',
-        ticket_amount: '',
-        ticket_price: ''
-      };
-    },
-    // If there is data in Database it will load from the database
-    load: function load() {
-      var _this = this;
-
-      axios.get("".concat(this.eventUrl, "/shows/fetch?timestamp=").concat(new Date().getTime())).then(function (response) {
-        console.log(response.data);
-
-        if (response.data.dates) {
-          _this.dates = response.data.dates;
-        }
-
-        if (response.data.week) {
-          _this.week = response.data.week;
-        }
-
-        response.data.tickets ? _this.tickets = response.data.tickets[0].tickets : '';
-        response.data.showTimes ? _this.showTimes = response.data.showTimes : '';
-      });
-    },
-    goBack: function goBack() {
-      window.location.href = "".concat(this.eventUrl, "/category");
-    },
-    checkFree: function checkFree() {
+    sendMessage: function sendMessage() {
       var _this2 = this;
 
-      this.tickets.map(function (value) {
-        if (value.ticket_price == 0) {
-          return _this2.isVisible = true;
-        }
-
-        ;
+      this.dis = true;
+      var data = {
+        message: this.message ? this.message : '',
+        modmessage: this.modmessage ? this.modmessage : ''
+      };
+      axios.post("/conversations/".concat(this.conversations.id), data).then(function (response) {
+        location.reload();
+        console.log(response.data);
+      })["catch"](function (errorResponse) {
+        _this2.validationErrors = errorResponse.response.data.errors;
+        _this2.dis = false;
       });
     },
-    submitAlways: function submitAlways() {
+    getOwner: function getOwner() {
       var _this3 = this;
 
-      this.week = {
-        mon: true,
-        tue: true,
-        wed: true,
-        thu: true,
-        fri: true,
-        sat: true,
-        sun: true
-      };
-      this.$v.$touch();
-
-      if (this.$v.$invalid) {
-        return false;
-      }
-
-      ;
-      this.free ? '' : this.checkFree();
-
-      if (this.isVisible) {
-        return false;
-      }
-
-      ;
-      this.dis = true;
-      var data = {
-        'week': this.week,
-        'showtimes': this.showTimes,
-        'tickets': this.tickets,
-        'onGoing': true,
-        'always': true
-      };
-      axios.post("".concat(this.eventUrl, "/shows"), data).then(function (response) {
-        console.log(response.data);
-        window.location.href = "".concat(_this3.eventUrl, "/description");
-      })["catch"](function (error) {
-        console.log(error.response.data);
-      });
-    },
-    submitOnGoing: function submitOnGoing() {
-      var _this4 = this;
-
-      this.$v.$touch();
-
-      if (this.$v.$invalid) {
-        return false;
-      }
-
-      this.free ? '' : this.checkFree();
-
-      if (this.isVisible) {
-        return false;
-      }
-
-      ;
-      this.dis = true;
-      var data = {
-        'week': this.week,
-        'showtimes': this.showTimes,
-        'tickets': this.tickets,
-        'onGoing': true
-      };
-      axios.post("".concat(this.eventUrl, "/shows"), data).then(function (response) {
-        console.log(response.data);
-        window.location.href = "".concat(_this4.eventUrl, "/description");
-      })["catch"](function (error) {
-        console.log(error.response.data);
-      });
-    },
-    //Submits the users dates and tickets to the database
-    submitDates: function submitDates() {
-      var _this5 = this;
-
-      this.num = true;
-      this.$v.$touch();
-
-      if (this.$v.$invalid) {
-        return false;
-      }
-
-      this.free ? '' : this.checkFree();
-
-      if (this.isVisible) {
-        return false;
-      }
-
-      ;
-      this.dis = true;
-      var data = {
-        'dates': this.dateArray,
-        'showtimes': this.showTimes,
-        'tickets': this.tickets,
-        'shows': true
-      };
-      axios.post("".concat(this.eventUrl, "/shows"), data).then(function (response) {
-        console.log(response.data);
-        window.location.href = "".concat(_this5.eventUrl, "/description");
+      console.log(this.loadmessages);
+      this.loadmessages.users.forEach(function (user) {
+        user.id == _this3.loaduser.id ? _this3.owner = user : '';
+        user.id !== _this3.loaduser.id ? _this3.responder = user : '';
       });
     }
   },
   mounted: function mounted() {
-    var _this6 = this;
-
-    this.load();
-    setTimeout(function () {
-      return _this6.$refs.datePicker.fp.jumpToDate(new Date());
-    }, 100);
+    this.getOwner();
   },
-  validations: {
-    tickets: {
-      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
-      $each: {
-        name: {
-          required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
-          maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["maxLength"])(80)
-        },
-        ticket_price: {
-          required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
-          minValue: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["minValue"])(0.00),
-          maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["maxLength"])(7)
-        }
-      }
-    },
-    showTimes: {
-      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
-      maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["maxLength"])(400)
-    },
-    dates: {
-      ifDates: function ifDates() {
-        return this.selectedTab == 's' ? this.dates.length ? true : false : true;
-      }
-    },
-    week: {
-      ifOngoing: function ifOngoing() {
-        return this.selectedTab == 'o' || this.selectedTab == 'a' ? this.week.mon == 1 || this.week.tue == 1 || this.week.wed == 1 || this.week.thu == 1 || this.week.fri == 1 || this.week.sat == 1 || this.week.sun == 1 ? true : false : true;
+  created: function created() {},
+  destroyed: function destroyed() {},
+  filters: {
+    formatDate: function formatDate(value) {
+      if (value) {
+        return moment__WEBPACK_IMPORTED_MODULE_0___default()(String(value)).format('MMM Do, YYYY');
       }
     }
-  }
+  },
+  validations: {}
 });
 
 /***/ }),
 
-/***/ "./node_modules/v-money/dist/v-money.js":
-/*!**********************************************!*\
-  !*** ./node_modules/v-money/dist/v-money.js ***!
-  \**********************************************/
+/***/ "./node_modules/moment/locale sync recursive ^\\.\\/.*$":
+/*!**************************************************!*\
+  !*** ./node_modules/moment/locale sync ^\.\/.*$ ***!
+  \**************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-(function(e,t){ true?module.exports=t():undefined})(this,function(){return function(e){function t(r){if(n[r])return n[r].exports;var i=n[r]={i:r,l:!1,exports:{}};return e[r].call(i.exports,i,i.exports,t),i.l=!0,i.exports}var n={};return t.m=e,t.c=n,t.i=function(e){return e},t.d=function(e,n,r){t.o(e,n)||Object.defineProperty(e,n,{configurable:!1,enumerable:!0,get:r})},t.n=function(e){var n=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(n,"a",n),n},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p=".",t(t.s=9)}([function(e,t,n){"use strict";t.a={prefix:"",suffix:"",thousands:",",decimal:".",precision:2}},function(e,t,n){"use strict";var r=n(2),i=n(5),u=n(0);t.a=function(e,t){if(t.value){var o=n.i(i.a)(u.a,t.value);if("INPUT"!==e.tagName.toLocaleUpperCase()){var a=e.getElementsByTagName("input");1!==a.length||(e=a[0])}e.oninput=function(){var t=e.value.length-e.selectionEnd;e.value=n.i(r.a)(e.value,o),t=Math.max(t,o.suffix.length),t=e.value.length-t,t=Math.max(t,o.prefix.length+1),n.i(r.b)(e,t),e.dispatchEvent(n.i(r.c)("change"))},e.onfocus=function(){n.i(r.b)(e,e.value.length-o.suffix.length)},e.oninput(),e.dispatchEvent(n.i(r.c)("input"))}}},function(e,t,n){"use strict";function r(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:m.a;"number"==typeof e&&(e=e.toFixed(o(t.precision)));var n=e.indexOf("-")>=0?"-":"",r=u(e),i=c(r,t.precision),a=d(i).split("."),p=a[0],l=a[1];return p=f(p,t.thousands),t.prefix+n+s(p,l,t.decimal)+t.suffix}function i(e,t){var n=e.indexOf("-")>=0?-1:1,r=u(e),i=c(r,t);return parseFloat(i)*n}function u(e){return d(e).replace(/\D+/g,"")||"0"}function o(e){return a(0,e,20)}function a(e,t,n){return Math.max(e,Math.min(t,n))}function c(e,t){var n=Math.pow(10,t);return(parseFloat(e)/n).toFixed(o(t))}function f(e,t){return e.replace(/(\d)(?=(?:\d{3})+\b)/gm,"$1"+t)}function s(e,t,n){return t?e+n+t:e}function d(e){return e?e.toString():""}function p(e,t){var n=function(){e.setSelectionRange(t,t)};e===document.activeElement&&(n(),setTimeout(n,1))}function l(e){var t=document.createEvent("Event");return t.initEvent(e,!0,!0),t}var m=n(0);n.d(t,"a",function(){return r}),n.d(t,"d",function(){return i}),n.d(t,"b",function(){return p}),n.d(t,"c",function(){return l})},function(e,t,n){"use strict";function r(e,t){t&&Object.keys(t).map(function(e){a.a[e]=t[e]}),e.directive("money",o.a),e.component("money",u.a)}Object.defineProperty(t,"__esModule",{value:!0});var i=n(6),u=n.n(i),o=n(1),a=n(0);n.d(t,"Money",function(){return u.a}),n.d(t,"VMoney",function(){return o.a}),n.d(t,"options",function(){return a.a}),n.d(t,"VERSION",function(){return c});var c="0.8.1";t.default=r,"undefined"!=typeof window&&window.Vue&&window.Vue.use(r)},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=n(1),i=n(0),u=n(2);t.default={name:"Money",props:{value:{required:!0,type:[Number,String],default:0},masked:{type:Boolean,default:!1},precision:{type:Number,default:function(){return i.a.precision}},decimal:{type:String,default:function(){return i.a.decimal}},thousands:{type:String,default:function(){return i.a.thousands}},prefix:{type:String,default:function(){return i.a.prefix}},suffix:{type:String,default:function(){return i.a.suffix}}},directives:{money:r.a},data:function(){return{formattedValue:""}},watch:{value:{immediate:!0,handler:function(e,t){var r=n.i(u.a)(e,this.$props);r!==this.formattedValue&&(this.formattedValue=r)}}},methods:{change:function(e){this.$emit("input",this.masked?e.target.value:n.i(u.d)(e.target.value,this.precision))}}}},function(e,t,n){"use strict";t.a=function(e,t){return e=e||{},t=t||{},Object.keys(e).concat(Object.keys(t)).reduce(function(n,r){return n[r]=void 0===t[r]?e[r]:t[r],n},{})}},function(e,t,n){var r=n(7)(n(4),n(8),null,null);e.exports=r.exports},function(e,t){e.exports=function(e,t,n,r){var i,u=e=e||{},o=typeof e.default;"object"!==o&&"function"!==o||(i=e,u=e.default);var a="function"==typeof u?u.options:u;if(t&&(a.render=t.render,a.staticRenderFns=t.staticRenderFns),n&&(a._scopeId=n),r){var c=a.computed||(a.computed={});Object.keys(r).forEach(function(e){var t=r[e];c[e]=function(){return t}})}return{esModule:i,exports:u,options:a}}},function(e,t){e.exports={render:function(){var e=this,t=e.$createElement;return(e._self._c||t)("input",{directives:[{name:"money",rawName:"v-money",value:{precision:e.precision,decimal:e.decimal,thousands:e.thousands,prefix:e.prefix,suffix:e.suffix},expression:"{precision, decimal, thousands, prefix, suffix}"}],staticClass:"v-money",attrs:{type:"tel"},domProps:{value:e.formattedValue},on:{change:e.change}})},staticRenderFns:[]}},function(e,t,n){e.exports=n(3)}])});
+var map = {
+	"./af": "./node_modules/moment/locale/af.js",
+	"./af.js": "./node_modules/moment/locale/af.js",
+	"./ar": "./node_modules/moment/locale/ar.js",
+	"./ar-dz": "./node_modules/moment/locale/ar-dz.js",
+	"./ar-dz.js": "./node_modules/moment/locale/ar-dz.js",
+	"./ar-kw": "./node_modules/moment/locale/ar-kw.js",
+	"./ar-kw.js": "./node_modules/moment/locale/ar-kw.js",
+	"./ar-ly": "./node_modules/moment/locale/ar-ly.js",
+	"./ar-ly.js": "./node_modules/moment/locale/ar-ly.js",
+	"./ar-ma": "./node_modules/moment/locale/ar-ma.js",
+	"./ar-ma.js": "./node_modules/moment/locale/ar-ma.js",
+	"./ar-sa": "./node_modules/moment/locale/ar-sa.js",
+	"./ar-sa.js": "./node_modules/moment/locale/ar-sa.js",
+	"./ar-tn": "./node_modules/moment/locale/ar-tn.js",
+	"./ar-tn.js": "./node_modules/moment/locale/ar-tn.js",
+	"./ar.js": "./node_modules/moment/locale/ar.js",
+	"./az": "./node_modules/moment/locale/az.js",
+	"./az.js": "./node_modules/moment/locale/az.js",
+	"./be": "./node_modules/moment/locale/be.js",
+	"./be.js": "./node_modules/moment/locale/be.js",
+	"./bg": "./node_modules/moment/locale/bg.js",
+	"./bg.js": "./node_modules/moment/locale/bg.js",
+	"./bm": "./node_modules/moment/locale/bm.js",
+	"./bm.js": "./node_modules/moment/locale/bm.js",
+	"./bn": "./node_modules/moment/locale/bn.js",
+	"./bn.js": "./node_modules/moment/locale/bn.js",
+	"./bo": "./node_modules/moment/locale/bo.js",
+	"./bo.js": "./node_modules/moment/locale/bo.js",
+	"./br": "./node_modules/moment/locale/br.js",
+	"./br.js": "./node_modules/moment/locale/br.js",
+	"./bs": "./node_modules/moment/locale/bs.js",
+	"./bs.js": "./node_modules/moment/locale/bs.js",
+	"./ca": "./node_modules/moment/locale/ca.js",
+	"./ca.js": "./node_modules/moment/locale/ca.js",
+	"./cs": "./node_modules/moment/locale/cs.js",
+	"./cs.js": "./node_modules/moment/locale/cs.js",
+	"./cv": "./node_modules/moment/locale/cv.js",
+	"./cv.js": "./node_modules/moment/locale/cv.js",
+	"./cy": "./node_modules/moment/locale/cy.js",
+	"./cy.js": "./node_modules/moment/locale/cy.js",
+	"./da": "./node_modules/moment/locale/da.js",
+	"./da.js": "./node_modules/moment/locale/da.js",
+	"./de": "./node_modules/moment/locale/de.js",
+	"./de-at": "./node_modules/moment/locale/de-at.js",
+	"./de-at.js": "./node_modules/moment/locale/de-at.js",
+	"./de-ch": "./node_modules/moment/locale/de-ch.js",
+	"./de-ch.js": "./node_modules/moment/locale/de-ch.js",
+	"./de.js": "./node_modules/moment/locale/de.js",
+	"./dv": "./node_modules/moment/locale/dv.js",
+	"./dv.js": "./node_modules/moment/locale/dv.js",
+	"./el": "./node_modules/moment/locale/el.js",
+	"./el.js": "./node_modules/moment/locale/el.js",
+	"./en-SG": "./node_modules/moment/locale/en-SG.js",
+	"./en-SG.js": "./node_modules/moment/locale/en-SG.js",
+	"./en-au": "./node_modules/moment/locale/en-au.js",
+	"./en-au.js": "./node_modules/moment/locale/en-au.js",
+	"./en-ca": "./node_modules/moment/locale/en-ca.js",
+	"./en-ca.js": "./node_modules/moment/locale/en-ca.js",
+	"./en-gb": "./node_modules/moment/locale/en-gb.js",
+	"./en-gb.js": "./node_modules/moment/locale/en-gb.js",
+	"./en-ie": "./node_modules/moment/locale/en-ie.js",
+	"./en-ie.js": "./node_modules/moment/locale/en-ie.js",
+	"./en-il": "./node_modules/moment/locale/en-il.js",
+	"./en-il.js": "./node_modules/moment/locale/en-il.js",
+	"./en-nz": "./node_modules/moment/locale/en-nz.js",
+	"./en-nz.js": "./node_modules/moment/locale/en-nz.js",
+	"./eo": "./node_modules/moment/locale/eo.js",
+	"./eo.js": "./node_modules/moment/locale/eo.js",
+	"./es": "./node_modules/moment/locale/es.js",
+	"./es-do": "./node_modules/moment/locale/es-do.js",
+	"./es-do.js": "./node_modules/moment/locale/es-do.js",
+	"./es-us": "./node_modules/moment/locale/es-us.js",
+	"./es-us.js": "./node_modules/moment/locale/es-us.js",
+	"./es.js": "./node_modules/moment/locale/es.js",
+	"./et": "./node_modules/moment/locale/et.js",
+	"./et.js": "./node_modules/moment/locale/et.js",
+	"./eu": "./node_modules/moment/locale/eu.js",
+	"./eu.js": "./node_modules/moment/locale/eu.js",
+	"./fa": "./node_modules/moment/locale/fa.js",
+	"./fa.js": "./node_modules/moment/locale/fa.js",
+	"./fi": "./node_modules/moment/locale/fi.js",
+	"./fi.js": "./node_modules/moment/locale/fi.js",
+	"./fo": "./node_modules/moment/locale/fo.js",
+	"./fo.js": "./node_modules/moment/locale/fo.js",
+	"./fr": "./node_modules/moment/locale/fr.js",
+	"./fr-ca": "./node_modules/moment/locale/fr-ca.js",
+	"./fr-ca.js": "./node_modules/moment/locale/fr-ca.js",
+	"./fr-ch": "./node_modules/moment/locale/fr-ch.js",
+	"./fr-ch.js": "./node_modules/moment/locale/fr-ch.js",
+	"./fr.js": "./node_modules/moment/locale/fr.js",
+	"./fy": "./node_modules/moment/locale/fy.js",
+	"./fy.js": "./node_modules/moment/locale/fy.js",
+	"./ga": "./node_modules/moment/locale/ga.js",
+	"./ga.js": "./node_modules/moment/locale/ga.js",
+	"./gd": "./node_modules/moment/locale/gd.js",
+	"./gd.js": "./node_modules/moment/locale/gd.js",
+	"./gl": "./node_modules/moment/locale/gl.js",
+	"./gl.js": "./node_modules/moment/locale/gl.js",
+	"./gom-latn": "./node_modules/moment/locale/gom-latn.js",
+	"./gom-latn.js": "./node_modules/moment/locale/gom-latn.js",
+	"./gu": "./node_modules/moment/locale/gu.js",
+	"./gu.js": "./node_modules/moment/locale/gu.js",
+	"./he": "./node_modules/moment/locale/he.js",
+	"./he.js": "./node_modules/moment/locale/he.js",
+	"./hi": "./node_modules/moment/locale/hi.js",
+	"./hi.js": "./node_modules/moment/locale/hi.js",
+	"./hr": "./node_modules/moment/locale/hr.js",
+	"./hr.js": "./node_modules/moment/locale/hr.js",
+	"./hu": "./node_modules/moment/locale/hu.js",
+	"./hu.js": "./node_modules/moment/locale/hu.js",
+	"./hy-am": "./node_modules/moment/locale/hy-am.js",
+	"./hy-am.js": "./node_modules/moment/locale/hy-am.js",
+	"./id": "./node_modules/moment/locale/id.js",
+	"./id.js": "./node_modules/moment/locale/id.js",
+	"./is": "./node_modules/moment/locale/is.js",
+	"./is.js": "./node_modules/moment/locale/is.js",
+	"./it": "./node_modules/moment/locale/it.js",
+	"./it-ch": "./node_modules/moment/locale/it-ch.js",
+	"./it-ch.js": "./node_modules/moment/locale/it-ch.js",
+	"./it.js": "./node_modules/moment/locale/it.js",
+	"./ja": "./node_modules/moment/locale/ja.js",
+	"./ja.js": "./node_modules/moment/locale/ja.js",
+	"./jv": "./node_modules/moment/locale/jv.js",
+	"./jv.js": "./node_modules/moment/locale/jv.js",
+	"./ka": "./node_modules/moment/locale/ka.js",
+	"./ka.js": "./node_modules/moment/locale/ka.js",
+	"./kk": "./node_modules/moment/locale/kk.js",
+	"./kk.js": "./node_modules/moment/locale/kk.js",
+	"./km": "./node_modules/moment/locale/km.js",
+	"./km.js": "./node_modules/moment/locale/km.js",
+	"./kn": "./node_modules/moment/locale/kn.js",
+	"./kn.js": "./node_modules/moment/locale/kn.js",
+	"./ko": "./node_modules/moment/locale/ko.js",
+	"./ko.js": "./node_modules/moment/locale/ko.js",
+	"./ku": "./node_modules/moment/locale/ku.js",
+	"./ku.js": "./node_modules/moment/locale/ku.js",
+	"./ky": "./node_modules/moment/locale/ky.js",
+	"./ky.js": "./node_modules/moment/locale/ky.js",
+	"./lb": "./node_modules/moment/locale/lb.js",
+	"./lb.js": "./node_modules/moment/locale/lb.js",
+	"./lo": "./node_modules/moment/locale/lo.js",
+	"./lo.js": "./node_modules/moment/locale/lo.js",
+	"./lt": "./node_modules/moment/locale/lt.js",
+	"./lt.js": "./node_modules/moment/locale/lt.js",
+	"./lv": "./node_modules/moment/locale/lv.js",
+	"./lv.js": "./node_modules/moment/locale/lv.js",
+	"./me": "./node_modules/moment/locale/me.js",
+	"./me.js": "./node_modules/moment/locale/me.js",
+	"./mi": "./node_modules/moment/locale/mi.js",
+	"./mi.js": "./node_modules/moment/locale/mi.js",
+	"./mk": "./node_modules/moment/locale/mk.js",
+	"./mk.js": "./node_modules/moment/locale/mk.js",
+	"./ml": "./node_modules/moment/locale/ml.js",
+	"./ml.js": "./node_modules/moment/locale/ml.js",
+	"./mn": "./node_modules/moment/locale/mn.js",
+	"./mn.js": "./node_modules/moment/locale/mn.js",
+	"./mr": "./node_modules/moment/locale/mr.js",
+	"./mr.js": "./node_modules/moment/locale/mr.js",
+	"./ms": "./node_modules/moment/locale/ms.js",
+	"./ms-my": "./node_modules/moment/locale/ms-my.js",
+	"./ms-my.js": "./node_modules/moment/locale/ms-my.js",
+	"./ms.js": "./node_modules/moment/locale/ms.js",
+	"./mt": "./node_modules/moment/locale/mt.js",
+	"./mt.js": "./node_modules/moment/locale/mt.js",
+	"./my": "./node_modules/moment/locale/my.js",
+	"./my.js": "./node_modules/moment/locale/my.js",
+	"./nb": "./node_modules/moment/locale/nb.js",
+	"./nb.js": "./node_modules/moment/locale/nb.js",
+	"./ne": "./node_modules/moment/locale/ne.js",
+	"./ne.js": "./node_modules/moment/locale/ne.js",
+	"./nl": "./node_modules/moment/locale/nl.js",
+	"./nl-be": "./node_modules/moment/locale/nl-be.js",
+	"./nl-be.js": "./node_modules/moment/locale/nl-be.js",
+	"./nl.js": "./node_modules/moment/locale/nl.js",
+	"./nn": "./node_modules/moment/locale/nn.js",
+	"./nn.js": "./node_modules/moment/locale/nn.js",
+	"./pa-in": "./node_modules/moment/locale/pa-in.js",
+	"./pa-in.js": "./node_modules/moment/locale/pa-in.js",
+	"./pl": "./node_modules/moment/locale/pl.js",
+	"./pl.js": "./node_modules/moment/locale/pl.js",
+	"./pt": "./node_modules/moment/locale/pt.js",
+	"./pt-br": "./node_modules/moment/locale/pt-br.js",
+	"./pt-br.js": "./node_modules/moment/locale/pt-br.js",
+	"./pt.js": "./node_modules/moment/locale/pt.js",
+	"./ro": "./node_modules/moment/locale/ro.js",
+	"./ro.js": "./node_modules/moment/locale/ro.js",
+	"./ru": "./node_modules/moment/locale/ru.js",
+	"./ru.js": "./node_modules/moment/locale/ru.js",
+	"./sd": "./node_modules/moment/locale/sd.js",
+	"./sd.js": "./node_modules/moment/locale/sd.js",
+	"./se": "./node_modules/moment/locale/se.js",
+	"./se.js": "./node_modules/moment/locale/se.js",
+	"./si": "./node_modules/moment/locale/si.js",
+	"./si.js": "./node_modules/moment/locale/si.js",
+	"./sk": "./node_modules/moment/locale/sk.js",
+	"./sk.js": "./node_modules/moment/locale/sk.js",
+	"./sl": "./node_modules/moment/locale/sl.js",
+	"./sl.js": "./node_modules/moment/locale/sl.js",
+	"./sq": "./node_modules/moment/locale/sq.js",
+	"./sq.js": "./node_modules/moment/locale/sq.js",
+	"./sr": "./node_modules/moment/locale/sr.js",
+	"./sr-cyrl": "./node_modules/moment/locale/sr-cyrl.js",
+	"./sr-cyrl.js": "./node_modules/moment/locale/sr-cyrl.js",
+	"./sr.js": "./node_modules/moment/locale/sr.js",
+	"./ss": "./node_modules/moment/locale/ss.js",
+	"./ss.js": "./node_modules/moment/locale/ss.js",
+	"./sv": "./node_modules/moment/locale/sv.js",
+	"./sv.js": "./node_modules/moment/locale/sv.js",
+	"./sw": "./node_modules/moment/locale/sw.js",
+	"./sw.js": "./node_modules/moment/locale/sw.js",
+	"./ta": "./node_modules/moment/locale/ta.js",
+	"./ta.js": "./node_modules/moment/locale/ta.js",
+	"./te": "./node_modules/moment/locale/te.js",
+	"./te.js": "./node_modules/moment/locale/te.js",
+	"./tet": "./node_modules/moment/locale/tet.js",
+	"./tet.js": "./node_modules/moment/locale/tet.js",
+	"./tg": "./node_modules/moment/locale/tg.js",
+	"./tg.js": "./node_modules/moment/locale/tg.js",
+	"./th": "./node_modules/moment/locale/th.js",
+	"./th.js": "./node_modules/moment/locale/th.js",
+	"./tl-ph": "./node_modules/moment/locale/tl-ph.js",
+	"./tl-ph.js": "./node_modules/moment/locale/tl-ph.js",
+	"./tlh": "./node_modules/moment/locale/tlh.js",
+	"./tlh.js": "./node_modules/moment/locale/tlh.js",
+	"./tr": "./node_modules/moment/locale/tr.js",
+	"./tr.js": "./node_modules/moment/locale/tr.js",
+	"./tzl": "./node_modules/moment/locale/tzl.js",
+	"./tzl.js": "./node_modules/moment/locale/tzl.js",
+	"./tzm": "./node_modules/moment/locale/tzm.js",
+	"./tzm-latn": "./node_modules/moment/locale/tzm-latn.js",
+	"./tzm-latn.js": "./node_modules/moment/locale/tzm-latn.js",
+	"./tzm.js": "./node_modules/moment/locale/tzm.js",
+	"./ug-cn": "./node_modules/moment/locale/ug-cn.js",
+	"./ug-cn.js": "./node_modules/moment/locale/ug-cn.js",
+	"./uk": "./node_modules/moment/locale/uk.js",
+	"./uk.js": "./node_modules/moment/locale/uk.js",
+	"./ur": "./node_modules/moment/locale/ur.js",
+	"./ur.js": "./node_modules/moment/locale/ur.js",
+	"./uz": "./node_modules/moment/locale/uz.js",
+	"./uz-latn": "./node_modules/moment/locale/uz-latn.js",
+	"./uz-latn.js": "./node_modules/moment/locale/uz-latn.js",
+	"./uz.js": "./node_modules/moment/locale/uz.js",
+	"./vi": "./node_modules/moment/locale/vi.js",
+	"./vi.js": "./node_modules/moment/locale/vi.js",
+	"./x-pseudo": "./node_modules/moment/locale/x-pseudo.js",
+	"./x-pseudo.js": "./node_modules/moment/locale/x-pseudo.js",
+	"./yo": "./node_modules/moment/locale/yo.js",
+	"./yo.js": "./node_modules/moment/locale/yo.js",
+	"./zh-cn": "./node_modules/moment/locale/zh-cn.js",
+	"./zh-cn.js": "./node_modules/moment/locale/zh-cn.js",
+	"./zh-hk": "./node_modules/moment/locale/zh-hk.js",
+	"./zh-hk.js": "./node_modules/moment/locale/zh-hk.js",
+	"./zh-tw": "./node_modules/moment/locale/zh-tw.js",
+	"./zh-tw.js": "./node_modules/moment/locale/zh-tw.js"
+};
+
+
+function webpackContext(req) {
+	var id = webpackContextResolve(req);
+	return __webpack_require__(id);
+}
+function webpackContextResolve(req) {
+	if(!__webpack_require__.o(map, req)) {
+		var e = new Error("Cannot find module '" + req + "'");
+		e.code = 'MODULE_NOT_FOUND';
+		throw e;
+	}
+	return map[req];
+}
+webpackContext.keys = function webpackContextKeys() {
+	return Object.keys(map);
+};
+webpackContext.resolve = webpackContextResolve;
+module.exports = webpackContext;
+webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/create/shows.vue?vue&type=template&id=07ccd6e4&":
-/*!***************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/create/shows.vue?vue&type=template&id=07ccd6e4& ***!
-  \***************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/messages/message-show.vue?vue&type=template&id=1e8d10ab&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/messages/message-show.vue?vue&type=template&id=1e8d10ab& ***!
+  \************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -673,1878 +526,518 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "event-create__shows" },
-    [
+  return _c("div", [
+    _c("div", { staticClass: "messages-show" }, [
+      _c("nav", { staticClass: "account-notifications_header desktop" }, [
+        _c("div", { staticClass: "account-notifications_breadcrumbs" }, [
+          _c("a", { attrs: { href: "/messages" } }, [_vm._v("Inbox")]),
+          _vm._v(" > \n                "),
+          _vm.isMessage
+            ? _c("span", [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(_vm.responder.name) +
+                    "\n                "
+                )
+              ])
+            : _c("span", [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(_vm.conversations.modmessages[0].event.name) +
+                    "\n                "
+                )
+              ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("nav", { staticClass: "event-show mobile" }, [
+        _c("div", { staticClass: "back" }, [
+          _c("a", { attrs: { href: "/messages" } }, [
+            _c(
+              "svg",
+              {
+                staticStyle: {
+                  display: "block",
+                  fill: "none",
+                  height: "16px",
+                  width: "16px",
+                  stroke: "currentcolor",
+                  "stroke-width": "4",
+                  overflow: "visible"
+                },
+                attrs: {
+                  "aria-label": "Back",
+                  role: "img",
+                  viewBox: "0 0 32 32",
+                  xmlns: "http://www.w3.org/2000/svg"
+                }
+              },
+              [
+                _c("g", { attrs: { fill: "none" } }, [
+                  _c("path", {
+                    attrs: {
+                      d:
+                        "m20 28-11.29289322-11.2928932c-.39052429-.3905243-.39052429-1.0236893 0-1.4142136l11.29289322-11.2928932"
+                    }
+                  })
+                ])
+              ]
+            )
+          ])
+        ])
+      ]),
+      _vm._v(" "),
       _c(
         "div",
-        { staticClass: "listing-details-block" },
+        {
+          staticClass: "messages-show-content grid",
+          class: { single: _vm.isMessage }
+        },
         [
+          !_vm.isMessage
+            ? _c("div", [
+                _c("div", { staticClass: "messages-show-event" }, [
+                  _c("div", { staticClass: "messages-show-event__image" }, [
+                    _c("picture", [
+                      _c("source", {
+                        attrs: {
+                          type: "image/webp",
+                          srcset:
+                            "/storage/" +
+                            _vm.conversations.modmessages[0].event
+                              .thumbImagePath
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("img", {
+                        attrs: {
+                          src:
+                            "/storage/" +
+                            _vm.conversations.modmessages[0].event.thumbImagePath.slice(
+                              0,
+                              -4
+                            ) +
+                            "jpg",
+                          alt: _vm.user.name + "'s account"
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "messages-show-event__title" }, [
+                    _c("h3", [
+                      _vm._v(
+                        _vm._s(_vm.conversations.modmessages[0].event.name)
+                      )
+                    ])
+                  ])
+                ])
+              ])
+            : _vm._e(),
+          _vm._v(" "),
           _c(
-            "tabs",
-            { on: { current: _vm.selectTab } },
+            "div",
             [
-              _c(
-                "tab",
-                {
-                  staticClass: "event-create-tab__section",
-                  attrs: {
-                    id: "s",
-                    title: "Specific Show Dates",
-                    active: _vm.event.showtype == "s"
-                  }
-                },
-                [
+              _c("div", { staticClass: "messages-show__element grid submit" }, [
+                _c("div", { staticClass: "field" }, [
                   _c(
                     "div",
-                    { staticClass: "specific-show-dates container grid" },
+                    { staticClass: "messages-show__element-textarea" },
                     [
-                      _c("section", { staticClass: "event-enter-showtimes" }, [
-                        _c("div", { staticClass: "field" }, [
-                          _c("label", [_vm._v(" Show Times")]),
-                          _vm._v(" "),
-                          _c("textarea", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.showTimes,
-                                expression: "showTimes"
-                              }
-                            ],
-                            staticClass: "create-input area",
-                            class: {
-                              active: _vm.activeItem == "times",
-                              error: _vm.$v.showTimes.$error
-                            },
-                            attrs: {
-                              rows: "8",
-                              placeholder: _vm.placeholders,
-                              required: "",
-                              autofocus: ""
-                            },
-                            domProps: { value: _vm.showTimes },
-                            on: {
-                              click: function($event) {
-                                _vm.activeItem = "times"
-                              },
-                              blur: function($event) {
-                                _vm.activeItem = null
-                              },
-                              input: [
-                                function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.showTimes = $event.target.value
-                                },
-                                _vm.$v.showTimes.$touch
-                              ]
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.message,
+                            expression: "message"
+                          }
+                        ],
+                        class: { active: _vm.activeItem == "description" },
+                        attrs: { type: "text", rows: "4" },
+                        domProps: { value: _vm.message },
+                        on: {
+                          click: function($event) {
+                            _vm.activeItem = "description"
+                          },
+                          blur: function($event) {
+                            _vm.activeItem = null
+                          },
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
                             }
-                          }),
-                          _vm._v(" "),
-                          _vm.$v.showTimes.$error
-                            ? _c("div", { staticClass: "validation-error" }, [
-                                !_vm.$v.showTimes.required
-                                  ? _c("p", { staticClass: "error" }, [
-                                      _vm._v(
-                                        "Please give a brief description of show times"
-                                      )
-                                    ])
-                                  : _vm._e()
-                              ])
-                            : _vm._e()
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "field cost" }, [
-                          _c("label", { staticClass: "area" }, [
-                            _vm._v(" Ticket types and prices ")
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "create-shows__ticket-box" },
-                            _vm._l(_vm.$v.tickets.$each.$iter, function(
-                              v,
-                              index
-                            ) {
-                              return _c(
-                                "div",
-                                { staticClass: "ticket-box__element grid" },
-                                [
-                                  _c("div", { staticClass: "field" }, [
-                                    _c("label", [_vm._v("Ticket Type")]),
-                                    _vm._v(" "),
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: v.name.$model,
-                                          expression: "v.name.$model"
-                                        }
-                                      ],
-                                      staticClass: "create-input",
-                                      class: {
-                                        active: _vm.activeItem == "ticket",
-                                        error: v.name.$error
-                                      },
-                                      attrs: {
-                                        name: "name",
-                                        placeholder: "ex: General, VIP, Student"
-                                      },
-                                      domProps: { value: v.name.$model },
-                                      on: {
-                                        click: function($event) {
-                                          _vm.activeItem = "ticket"
-                                        },
-                                        blur: function($event) {
-                                          _vm.activeItem = null
-                                        },
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.$set(
-                                            v.name,
-                                            "$model",
-                                            $event.target.value
-                                          )
-                                        }
-                                      }
-                                    }),
-                                    _vm._v(" "),
-                                    v.name.$error
-                                      ? _c(
-                                          "div",
-                                          { staticClass: "validation-error" },
-                                          [
-                                            !v.name.required
-                                              ? _c(
-                                                  "p",
-                                                  { staticClass: "error" },
-                                                  [
-                                                    _vm._v(
-                                                      "Must enter a ticket name"
-                                                    )
-                                                  ]
-                                                )
-                                              : _vm._e(),
-                                            _vm._v(" "),
-                                            !v.name.maxLength
-                                              ? _c(
-                                                  "p",
-                                                  { staticClass: "error" },
-                                                  [_vm._v("Name is too Long")]
-                                                )
-                                              : _vm._e()
-                                          ]
-                                        )
-                                      : _vm._e()
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "field" }, [
-                                    _c("label", [_vm._v("Ticket Price")]),
-                                    _vm._v(" "),
-                                    _vm.money.type === "checkbox"
-                                      ? _c(
-                                          "input",
-                                          _vm._b(
-                                            {
-                                              directives: [
-                                                {
-                                                  name: "model",
-                                                  rawName: "v-model",
-                                                  value: v.ticket_price.$model,
-                                                  expression:
-                                                    "v.ticket_price.$model"
-                                                },
-                                                {
-                                                  name: "money",
-                                                  rawName: "v-money",
-                                                  value: _vm.money,
-                                                  expression: "money"
-                                                }
-                                              ],
-                                              class: {
-                                                active:
-                                                  _vm.activeItem == "price",
-                                                error:
-                                                  v.ticket_price.$error &&
-                                                  _vm.num
-                                              },
-                                              staticStyle: {
-                                                "text-align": "right"
-                                              },
-                                              attrs: {
-                                                placeholder: "$0.00",
-                                                type: "checkbox"
-                                              },
-                                              domProps: {
-                                                checked: Array.isArray(
-                                                  v.ticket_price.$model
-                                                )
-                                                  ? _vm._i(
-                                                      v.ticket_price.$model,
-                                                      null
-                                                    ) > -1
-                                                  : v.ticket_price.$model
-                                              },
-                                              on: {
-                                                click: function($event) {
-                                                  _vm.activeItem = "price"
-                                                },
-                                                blur: function($event) {
-                                                  _vm.activeItem = null
-                                                },
-                                                keydown: function($event) {
-                                                  $event.key === "-"
-                                                    ? $event.preventDefault()
-                                                    : null
-                                                },
-                                                change: function($event) {
-                                                  var $$a =
-                                                      v.ticket_price.$model,
-                                                    $$el = $event.target,
-                                                    $$c = $$el.checked
-                                                      ? true
-                                                      : false
-                                                  if (Array.isArray($$a)) {
-                                                    var $$v = null,
-                                                      $$i = _vm._i($$a, $$v)
-                                                    if ($$el.checked) {
-                                                      $$i < 0 &&
-                                                        _vm.$set(
-                                                          v.ticket_price,
-                                                          "$model",
-                                                          $$a.concat([$$v])
-                                                        )
-                                                    } else {
-                                                      $$i > -1 &&
-                                                        _vm.$set(
-                                                          v.ticket_price,
-                                                          "$model",
-                                                          $$a
-                                                            .slice(0, $$i)
-                                                            .concat(
-                                                              $$a.slice($$i + 1)
-                                                            )
-                                                        )
-                                                    }
-                                                  } else {
-                                                    _vm.$set(
-                                                      v.ticket_price,
-                                                      "$model",
-                                                      $$c
-                                                    )
-                                                  }
-                                                }
-                                              }
-                                            },
-                                            "input",
-                                            _vm.money,
-                                            false
-                                          )
-                                        )
-                                      : _vm.money.type === "radio"
-                                      ? _c(
-                                          "input",
-                                          _vm._b(
-                                            {
-                                              directives: [
-                                                {
-                                                  name: "model",
-                                                  rawName: "v-model",
-                                                  value: v.ticket_price.$model,
-                                                  expression:
-                                                    "v.ticket_price.$model"
-                                                },
-                                                {
-                                                  name: "money",
-                                                  rawName: "v-money",
-                                                  value: _vm.money,
-                                                  expression: "money"
-                                                }
-                                              ],
-                                              class: {
-                                                active:
-                                                  _vm.activeItem == "price",
-                                                error:
-                                                  v.ticket_price.$error &&
-                                                  _vm.num
-                                              },
-                                              staticStyle: {
-                                                "text-align": "right"
-                                              },
-                                              attrs: {
-                                                placeholder: "$0.00",
-                                                type: "radio"
-                                              },
-                                              domProps: {
-                                                checked: _vm._q(
-                                                  v.ticket_price.$model,
-                                                  null
-                                                )
-                                              },
-                                              on: {
-                                                click: function($event) {
-                                                  _vm.activeItem = "price"
-                                                },
-                                                blur: function($event) {
-                                                  _vm.activeItem = null
-                                                },
-                                                keydown: function($event) {
-                                                  $event.key === "-"
-                                                    ? $event.preventDefault()
-                                                    : null
-                                                },
-                                                change: function($event) {
-                                                  return _vm.$set(
-                                                    v.ticket_price,
-                                                    "$model",
-                                                    null
-                                                  )
-                                                }
-                                              }
-                                            },
-                                            "input",
-                                            _vm.money,
-                                            false
-                                          )
-                                        )
-                                      : _c(
-                                          "input",
-                                          _vm._b(
-                                            {
-                                              directives: [
-                                                {
-                                                  name: "model",
-                                                  rawName: "v-model",
-                                                  value: v.ticket_price.$model,
-                                                  expression:
-                                                    "v.ticket_price.$model"
-                                                },
-                                                {
-                                                  name: "money",
-                                                  rawName: "v-money",
-                                                  value: _vm.money,
-                                                  expression: "money"
-                                                }
-                                              ],
-                                              class: {
-                                                active:
-                                                  _vm.activeItem == "price",
-                                                error:
-                                                  v.ticket_price.$error &&
-                                                  _vm.num
-                                              },
-                                              staticStyle: {
-                                                "text-align": "right"
-                                              },
-                                              attrs: {
-                                                placeholder: "$0.00",
-                                                type: _vm.money.type
-                                              },
-                                              domProps: {
-                                                value: v.ticket_price.$model
-                                              },
-                                              on: {
-                                                click: function($event) {
-                                                  _vm.activeItem = "price"
-                                                },
-                                                blur: function($event) {
-                                                  _vm.activeItem = null
-                                                },
-                                                keydown: function($event) {
-                                                  $event.key === "-"
-                                                    ? $event.preventDefault()
-                                                    : null
-                                                },
-                                                input: function($event) {
-                                                  if ($event.target.composing) {
-                                                    return
-                                                  }
-                                                  _vm.$set(
-                                                    v.ticket_price,
-                                                    "$model",
-                                                    $event.target.value
-                                                  )
-                                                }
-                                              }
-                                            },
-                                            "input",
-                                            _vm.money,
-                                            false
-                                          )
-                                        ),
-                                    _vm._v(" "),
-                                    v.ticket_price.$error
-                                      ? _c(
-                                          "div",
-                                          { staticClass: "validation-error" },
-                                          [
-                                            !v.ticket_price.minValue
-                                              ? _c(
-                                                  "p",
-                                                  {
-                                                    directives: [
-                                                      {
-                                                        name: "show",
-                                                        rawName: "v-show",
-                                                        value: _vm.num,
-                                                        expression: "num"
-                                                      }
-                                                    ],
-                                                    staticClass: "error"
-                                                  },
-                                                  [
-                                                    _vm._v(
-                                                      "Please enter an amount"
-                                                    )
-                                                  ]
-                                                )
-                                              : _vm._e(),
-                                            _vm._v(" "),
-                                            !v.ticket_price.maxLength
-                                              ? _c(
-                                                  "p",
-                                                  { staticClass: "error" },
-                                                  [
-                                                    _vm._v(
-                                                      "Please enter an amount under $10,000"
-                                                    )
-                                                  ]
-                                                )
-                                              : _vm._e(),
-                                            _vm._v(" "),
-                                            !v.ticket_price.required
-                                              ? _c(
-                                                  "p",
-                                                  { staticClass: "error" },
-                                                  [
-                                                    _vm._v(
-                                                      "Please enter a price"
-                                                    )
-                                                  ]
-                                                )
-                                              : _vm._e()
-                                          ]
-                                        )
-                                      : _vm._e(),
-                                    _vm._v(" "),
-                                    _vm.tickets.length > 1
-                                      ? _c(
-                                          "button",
-                                          {
-                                            staticClass: "delete-circle",
-                                            on: {
-                                              click: function($event) {
-                                                $event.preventDefault()
-                                                return _vm.deleteRow(index)
-                                              }
-                                            }
-                                          },
-                                          [_vm._v("X")]
-                                        )
-                                      : _vm._e()
-                                  ])
-                                ]
-                              )
-                            }),
-                            0
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass: "ticket-box__add-button",
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.addTickets($event)
-                                }
+                            _vm.message = $event.target.value
+                          }
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "messages-show__submit-bottom" }, [
+                    _c(
+                      "button",
+                      {
+                        class: { bspin: _vm.dis },
+                        attrs: { disabled: _vm.dis },
+                        on: { click: _vm.sendMessage }
+                      },
+                      [_vm._v("Send message")]
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "message-index__image",
+                    style: "background:" + _vm.owner.hexColor
+                  },
+                  [
+                    _vm.owner.largeImagePath
+                      ? _c("label", { staticClass: "profile-image" }, [
+                          _c("picture", [
+                            _c("source", {
+                              attrs: {
+                                type: "image/webp",
+                                srcset: "/storage/" + _vm.owner.thumbImagePath
                               }
-                            },
-                            [_c("button", [_vm._v("+ Ticket Types")])]
-                          )
+                            }),
+                            _vm._v(" "),
+                            _c("img", {
+                              attrs: {
+                                src:
+                                  "/storage/" +
+                                  _vm.owner.thumbImagePath.slice(0, -4) +
+                                  "jpg",
+                                alt: _vm.owner.name + "'s account"
+                              }
+                            })
+                          ])
                         ])
-                      ]),
-                      _vm._v(" "),
-                      _c("section", { staticClass: "event-enter-showdates" }, [
-                        _c("div", { staticClass: "field" }, [
-                          _c("label", [_vm._v(" Select all show dates")]),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "calendar desktop" },
-                            [
-                              _c("flat-pickr", {
-                                ref: "datePicker",
-                                staticClass: "form-control",
-                                attrs: {
-                                  config: _vm.config,
-                                  placeholder: "Select date",
-                                  name: "dates"
-                                },
-                                model: {
-                                  value: _vm.dates,
-                                  callback: function($$v) {
-                                    _vm.dates = $$v
-                                  },
-                                  expression: "dates"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "calendar mobile" },
-                            [
-                              _c("flat-pickr", {
-                                ref: "datePicker",
-                                staticClass: "form-control",
-                                attrs: {
-                                  config: _vm.configmobile,
-                                  placeholder: "Select date",
-                                  name: "dates"
-                                },
-                                model: {
-                                  value: _vm.dates,
-                                  callback: function($$v) {
-                                    _vm.dates = $$v
-                                  },
-                                  expression: "dates"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _vm.$v.dates.$error
-                            ? _c("div", { staticClass: "validation-error" }, [
-                                !_vm.$v.dates.required
-                                  ? _c("p", { staticClass: "error" }, [
-                                      _vm._v("Please add at least 1 show date")
-                                    ])
-                                  : _vm._e()
-                              ])
-                            : _vm._e()
-                        ]),
-                        _vm._v(" "),
+                      : _vm.owner.gravatar
+                      ? _c("div", { staticClass: "profile-image" }, [
+                          _c("img", {
+                            attrs: {
+                              src: _vm.owner.gravatar,
+                              alt: _vm.owner.name + "'s account"
+                            }
+                          })
+                        ])
+                      : _c(
+                          "div",
+                          { staticClass: "message-index__user-noimage" },
+                          [
+                            _c("h2", [
+                              _vm._v(
+                                _vm._s(
+                                  _vm.owner ? _vm.owner.name.charAt(0) : ""
+                                )
+                              )
+                            ])
+                          ]
+                        )
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.conversationType, function(message) {
+                return message.user_id == _vm.loaduser.id
+                  ? _c("div", { staticClass: "messages-show__element grid" }, [
+                      _c("div", { staticClass: "field" }, [
                         _c(
                           "div",
-                          { staticClass: "event-create__submit-button" },
+                          { staticClass: "messages-show__element-textarea" },
                           [
+                            _c("div", [
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(
+                                    message.message
+                                      ? message.message
+                                      : message.comments
+                                  ) +
+                                  "\n                            "
+                              )
+                            ]),
+                            _vm._v(" "),
                             _c(
-                              "button",
-                              {
-                                staticClass: "create",
-                                attrs: { disabled: _vm.dis },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.submitDates()
-                                  }
-                                }
-                              },
-                              [_vm._v(" Next ")]
+                              "div",
+                              { staticClass: "messages-show__element-date" },
+                              [
+                                _vm._v(
+                                  "\n                                " +
+                                    _vm._s(
+                                      _vm._f("formatDate")(message.created_at)
+                                    ) +
+                                    "\n                            "
+                                )
+                              ]
                             )
                           ]
                         )
-                      ])
-                    ]
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "tab",
-                {
-                  staticClass: "event-create-tab__section",
-                  attrs: {
-                    id: "o",
-                    title: "On-Going Shows",
-                    active: _vm.event.showtype == "o"
-                  }
-                },
-                [
-                  _c(
-                    "div",
-                    { staticClass: "ongoing-show-dates container grid" },
-                    [
-                      _c("section", { staticClass: "event-enter-showtimes" }, [
-                        _c("div", { staticClass: "field" }, [
-                          _c("label", [_vm._v(" Show Times")]),
-                          _vm._v(" "),
-                          _c("textarea", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.showTimes,
-                                expression: "showTimes"
-                              }
-                            ],
-                            staticClass: "create-input area",
-                            class: {
-                              active: _vm.activeItem == "times",
-                              error: _vm.$v.showTimes.$error
-                            },
-                            attrs: {
-                              rows: "8",
-                              placeholder: _vm.placeholdero,
-                              required: "",
-                              autofocus: ""
-                            },
-                            domProps: { value: _vm.showTimes },
-                            on: {
-                              click: function($event) {
-                                _vm.activeItem = "times"
-                              },
-                              blur: function($event) {
-                                _vm.activeItem = null
-                              },
-                              input: [
-                                function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.showTimes = $event.target.value
-                                },
-                                _vm.$v.showTimes.$touch
-                              ]
-                            }
-                          }),
-                          _vm._v(" "),
-                          _vm.$v.showTimes.$error
-                            ? _c("div", { staticClass: "validation-error" }, [
-                                !_vm.$v.showTimes.required
-                                  ? _c("p", { staticClass: "error" }, [
-                                      _vm._v(
-                                        "Please give a brief description of show times"
-                                      )
-                                    ])
-                                  : _vm._e()
-                              ])
-                            : _vm._e()
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "field cost" }, [
-                          _c("label", { staticClass: "area" }, [
-                            _vm._v(" Ticket types and prices ")
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "create-shows__ticket-box" },
-                            _vm._l(_vm.$v.tickets.$each.$iter, function(
-                              v,
-                              index
-                            ) {
-                              return _c(
-                                "div",
-                                { staticClass: "ticket-box__element grid" },
-                                [
-                                  _c("div", { staticClass: "field" }, [
-                                    _c("label", [_vm._v("Ticket Type")]),
-                                    _vm._v(" "),
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: v.name.$model,
-                                          expression: "v.name.$model"
-                                        }
-                                      ],
-                                      staticClass: "create-input",
-                                      class: {
-                                        active: _vm.activeItem == "ticket",
-                                        error: v.name.$error
-                                      },
-                                      attrs: {
-                                        name: "name",
-                                        placeholder: "ex: General, VIP, Student"
-                                      },
-                                      domProps: { value: v.name.$model },
-                                      on: {
-                                        click: function($event) {
-                                          _vm.activeItem = "ticket"
-                                        },
-                                        blur: function($event) {
-                                          _vm.activeItem = null
-                                        },
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.$set(
-                                            v.name,
-                                            "$model",
-                                            $event.target.value
-                                          )
-                                        }
-                                      }
-                                    }),
-                                    _vm._v(" "),
-                                    v.name.$error
-                                      ? _c(
-                                          "div",
-                                          { staticClass: "validation-error" },
-                                          [
-                                            !v.name.required
-                                              ? _c(
-                                                  "p",
-                                                  { staticClass: "error" },
-                                                  [
-                                                    _vm._v(
-                                                      "Must enter a ticket name"
-                                                    )
-                                                  ]
-                                                )
-                                              : _vm._e(),
-                                            _vm._v(" "),
-                                            !v.name.maxLength
-                                              ? _c(
-                                                  "p",
-                                                  { staticClass: "error" },
-                                                  [_vm._v("Name is too Long")]
-                                                )
-                                              : _vm._e()
-                                          ]
-                                        )
-                                      : _vm._e()
-                                  ]),
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "message-index__image",
+                          style: "background:" + _vm.owner.hexColor
+                        },
+                        [
+                          _vm.owner.largeImagePath
+                            ? _c("label", { staticClass: "profile-image" }, [
+                                _c("picture", [
+                                  _c("source", {
+                                    attrs: {
+                                      type: "image/webp",
+                                      srcset:
+                                        "/storage/" + _vm.owner.thumbImagePath
+                                    }
+                                  }),
                                   _vm._v(" "),
-                                  _c("div", { staticClass: "field" }, [
-                                    _c("label", [_vm._v("Ticket Price")]),
-                                    _vm._v(" "),
-                                    _vm.money.type === "checkbox"
-                                      ? _c(
-                                          "input",
-                                          _vm._b(
-                                            {
-                                              directives: [
-                                                {
-                                                  name: "model",
-                                                  rawName: "v-model",
-                                                  value: v.ticket_price.$model,
-                                                  expression:
-                                                    "v.ticket_price.$model"
-                                                },
-                                                {
-                                                  name: "money",
-                                                  rawName: "v-money",
-                                                  value: _vm.money,
-                                                  expression: "money"
-                                                }
-                                              ],
-                                              class: {
-                                                active:
-                                                  _vm.activeItem == "price",
-                                                error:
-                                                  v.ticket_price.$error &&
-                                                  _vm.num
-                                              },
-                                              staticStyle: {
-                                                "text-align": "right"
-                                              },
-                                              attrs: {
-                                                placeholder: "$0.00",
-                                                type: "checkbox"
-                                              },
-                                              domProps: {
-                                                checked: Array.isArray(
-                                                  v.ticket_price.$model
-                                                )
-                                                  ? _vm._i(
-                                                      v.ticket_price.$model,
-                                                      null
-                                                    ) > -1
-                                                  : v.ticket_price.$model
-                                              },
-                                              on: {
-                                                click: function($event) {
-                                                  _vm.activeItem = "price"
-                                                },
-                                                blur: function($event) {
-                                                  _vm.activeItem = null
-                                                },
-                                                keydown: function($event) {
-                                                  $event.key === "-"
-                                                    ? $event.preventDefault()
-                                                    : null
-                                                },
-                                                change: function($event) {
-                                                  var $$a =
-                                                      v.ticket_price.$model,
-                                                    $$el = $event.target,
-                                                    $$c = $$el.checked
-                                                      ? true
-                                                      : false
-                                                  if (Array.isArray($$a)) {
-                                                    var $$v = null,
-                                                      $$i = _vm._i($$a, $$v)
-                                                    if ($$el.checked) {
-                                                      $$i < 0 &&
-                                                        _vm.$set(
-                                                          v.ticket_price,
-                                                          "$model",
-                                                          $$a.concat([$$v])
-                                                        )
-                                                    } else {
-                                                      $$i > -1 &&
-                                                        _vm.$set(
-                                                          v.ticket_price,
-                                                          "$model",
-                                                          $$a
-                                                            .slice(0, $$i)
-                                                            .concat(
-                                                              $$a.slice($$i + 1)
-                                                            )
-                                                        )
-                                                    }
-                                                  } else {
-                                                    _vm.$set(
-                                                      v.ticket_price,
-                                                      "$model",
-                                                      $$c
-                                                    )
-                                                  }
-                                                }
-                                              }
-                                            },
-                                            "input",
-                                            _vm.money,
-                                            false
-                                          )
-                                        )
-                                      : _vm.money.type === "radio"
-                                      ? _c(
-                                          "input",
-                                          _vm._b(
-                                            {
-                                              directives: [
-                                                {
-                                                  name: "model",
-                                                  rawName: "v-model",
-                                                  value: v.ticket_price.$model,
-                                                  expression:
-                                                    "v.ticket_price.$model"
-                                                },
-                                                {
-                                                  name: "money",
-                                                  rawName: "v-money",
-                                                  value: _vm.money,
-                                                  expression: "money"
-                                                }
-                                              ],
-                                              class: {
-                                                active:
-                                                  _vm.activeItem == "price",
-                                                error:
-                                                  v.ticket_price.$error &&
-                                                  _vm.num
-                                              },
-                                              staticStyle: {
-                                                "text-align": "right"
-                                              },
-                                              attrs: {
-                                                placeholder: "$0.00",
-                                                type: "radio"
-                                              },
-                                              domProps: {
-                                                checked: _vm._q(
-                                                  v.ticket_price.$model,
-                                                  null
-                                                )
-                                              },
-                                              on: {
-                                                click: function($event) {
-                                                  _vm.activeItem = "price"
-                                                },
-                                                blur: function($event) {
-                                                  _vm.activeItem = null
-                                                },
-                                                keydown: function($event) {
-                                                  $event.key === "-"
-                                                    ? $event.preventDefault()
-                                                    : null
-                                                },
-                                                change: function($event) {
-                                                  return _vm.$set(
-                                                    v.ticket_price,
-                                                    "$model",
-                                                    null
-                                                  )
-                                                }
-                                              }
-                                            },
-                                            "input",
-                                            _vm.money,
-                                            false
-                                          )
-                                        )
-                                      : _c(
-                                          "input",
-                                          _vm._b(
-                                            {
-                                              directives: [
-                                                {
-                                                  name: "model",
-                                                  rawName: "v-model",
-                                                  value: v.ticket_price.$model,
-                                                  expression:
-                                                    "v.ticket_price.$model"
-                                                },
-                                                {
-                                                  name: "money",
-                                                  rawName: "v-money",
-                                                  value: _vm.money,
-                                                  expression: "money"
-                                                }
-                                              ],
-                                              class: {
-                                                active:
-                                                  _vm.activeItem == "price",
-                                                error:
-                                                  v.ticket_price.$error &&
-                                                  _vm.num
-                                              },
-                                              staticStyle: {
-                                                "text-align": "right"
-                                              },
-                                              attrs: {
-                                                placeholder: "$0.00",
-                                                type: _vm.money.type
-                                              },
-                                              domProps: {
-                                                value: v.ticket_price.$model
-                                              },
-                                              on: {
-                                                click: function($event) {
-                                                  _vm.activeItem = "price"
-                                                },
-                                                blur: function($event) {
-                                                  _vm.activeItem = null
-                                                },
-                                                keydown: function($event) {
-                                                  $event.key === "-"
-                                                    ? $event.preventDefault()
-                                                    : null
-                                                },
-                                                input: function($event) {
-                                                  if ($event.target.composing) {
-                                                    return
-                                                  }
-                                                  _vm.$set(
-                                                    v.ticket_price,
-                                                    "$model",
-                                                    $event.target.value
-                                                  )
-                                                }
-                                              }
-                                            },
-                                            "input",
-                                            _vm.money,
-                                            false
-                                          )
-                                        ),
-                                    _vm._v(" "),
-                                    v.ticket_price.$error
-                                      ? _c(
-                                          "div",
-                                          { staticClass: "validation-error" },
-                                          [
-                                            !v.ticket_price.minValue
-                                              ? _c(
-                                                  "p",
-                                                  {
-                                                    directives: [
-                                                      {
-                                                        name: "show",
-                                                        rawName: "v-show",
-                                                        value: _vm.num,
-                                                        expression: "num"
-                                                      }
-                                                    ],
-                                                    staticClass: "error"
-                                                  },
-                                                  [
-                                                    _vm._v(
-                                                      "Please enter an amount"
-                                                    )
-                                                  ]
-                                                )
-                                              : _vm._e(),
-                                            _vm._v(" "),
-                                            !v.ticket_price.maxLength
-                                              ? _c(
-                                                  "p",
-                                                  { staticClass: "error" },
-                                                  [
-                                                    _vm._v(
-                                                      "Please enter an amount under $10,000"
-                                                    )
-                                                  ]
-                                                )
-                                              : _vm._e(),
-                                            _vm._v(" "),
-                                            !v.ticket_price.required
-                                              ? _c(
-                                                  "p",
-                                                  { staticClass: "error" },
-                                                  [
-                                                    _vm._v(
-                                                      "Please enter a price"
-                                                    )
-                                                  ]
-                                                )
-                                              : _vm._e()
-                                          ]
-                                        )
-                                      : _vm._e(),
-                                    _vm._v(" "),
-                                    _vm.tickets.length > 1
-                                      ? _c(
-                                          "button",
-                                          {
-                                            staticClass: "delete-circle",
-                                            on: {
-                                              click: function($event) {
-                                                $event.preventDefault()
-                                                return _vm.deleteRow(index)
-                                              }
-                                            }
-                                          },
-                                          [_vm._v("X")]
-                                        )
-                                      : _vm._e()
+                                  _c("img", {
+                                    attrs: {
+                                      src:
+                                        "/storage/" +
+                                        _vm.owner.thumbImagePath.slice(0, -4) +
+                                        "jpg",
+                                      alt: _vm.owner.name + "'s account"
+                                    }
+                                  })
+                                ])
+                              ])
+                            : _vm.owner.gravatar
+                            ? _c("div", { staticClass: "profile-image" }, [
+                                _c("img", {
+                                  attrs: {
+                                    src: _vm.owner.gravatar,
+                                    alt: _vm.owner.name + "'s account"
+                                  }
+                                })
+                              ])
+                            : _c(
+                                "div",
+                                { staticClass: "message-index__user-noimage" },
+                                [
+                                  _c("h2", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.owner
+                                          ? _vm.owner.name.charAt(0)
+                                          : ""
+                                      )
+                                    )
                                   ])
                                 ]
                               )
-                            }),
-                            0
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass: "ticket-box__add-button",
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.addTickets($event)
-                                }
-                              }
-                            },
-                            [_c("button", [_vm._v("+ Ticket Types")])]
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("section", { staticClass: "event-enter-showdates" }, [
-                        _c("div", { staticClass: "field" }, [
-                          _c("label", [_vm._v(" Select show days")]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "week-calendar grid" }, [
-                            _c(
-                              "div",
-                              {
-                                staticClass: "week-calendar__day",
-                                class: { active: _vm.week.mon },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.addWeekDay("mon")
-                                  }
-                                }
-                              },
-                              [_c("h4", [_vm._v("Mon")])]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "week-calendar__day",
-                                class: { active: _vm.week.tue },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.addWeekDay("tue")
-                                  }
-                                }
-                              },
-                              [_c("h4", [_vm._v("Tue")])]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "week-calendar__day",
-                                class: { active: _vm.week.wed },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.addWeekDay("wed")
-                                  }
-                                }
-                              },
-                              [_c("h4", [_vm._v("Wed")])]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "week-calendar__day",
-                                class: { active: _vm.week.thu },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.addWeekDay("thu")
-                                  }
-                                }
-                              },
-                              [_c("h4", [_vm._v("Thu")])]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "week-calendar__day",
-                                class: { active: _vm.week.fri },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.addWeekDay("fri")
-                                  }
-                                }
-                              },
-                              [_c("h4", [_vm._v("Fri")])]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "week-calendar__day",
-                                class: { active: _vm.week.sat },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.addWeekDay("sat")
-                                  }
-                                }
-                              },
-                              [_c("h4", [_vm._v("Sat")])]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "week-calendar__day",
-                                class: { active: _vm.week.sun },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.addWeekDay("sun")
-                                  }
-                                }
-                              },
-                              [_c("h4", [_vm._v("Sun")])]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _vm.$v.week.$error
-                            ? _c("div", { staticClass: "validation-error" }, [
-                                !_vm.$v.week.ifOngoing
-                                  ? _c("p", { staticClass: "error" }, [
-                                      _vm._v("Please select at least one day")
-                                    ])
-                                  : _vm._e()
-                              ])
-                            : _vm._e()
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "event-create__submit-button" },
-                          [
-                            _c(
-                              "button",
-                              {
-                                staticClass: "create",
-                                attrs: { disabled: _vm.dis },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.submitOnGoing()
-                                  }
-                                }
-                              },
-                              [_vm._v(" Next ")]
-                            )
-                          ]
-                        )
-                      ])
-                    ]
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "tab",
-                {
-                  staticClass: "event-create-tab__section",
-                  attrs: {
-                    id: "a",
-                    title: "All Times",
-                    active: _vm.event.showtype == "a"
-                  }
-                },
-                [
-                  _c(
-                    "div",
-                    { staticClass: "everyday-show-dates container grid" },
-                    [
-                      _c("section", { staticClass: "event-enter-showtimes" }, [
-                        _c("div", { staticClass: "field" }, [
-                          _c("label", [_vm._v(" Show Times")]),
-                          _vm._v(" "),
-                          _c("textarea", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.showTimes,
-                                expression: "showTimes"
-                              }
-                            ],
-                            staticClass: "create-input area",
-                            class: {
-                              active: _vm.activeItem == "times",
-                              error: _vm.$v.showTimes.$error
-                            },
-                            attrs: {
-                              rows: "8",
-                              placeholder: _vm.placeholdera,
-                              required: "",
-                              autofocus: ""
-                            },
-                            domProps: { value: _vm.showTimes },
-                            on: {
-                              click: function($event) {
-                                _vm.activeItem = "times"
-                              },
-                              blur: function($event) {
-                                _vm.activeItem = null
-                              },
-                              input: [
-                                function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.showTimes = $event.target.value
-                                },
-                                _vm.$v.showTimes.$touch
-                              ]
-                            }
-                          }),
-                          _vm._v(" "),
-                          _vm.$v.showTimes.$error
-                            ? _c("div", { staticClass: "validation-error" }, [
-                                !_vm.$v.showTimes.required
-                                  ? _c("p", { staticClass: "error" }, [
-                                      _vm._v(
-                                        "Please give a brief description of show times"
-                                      )
-                                    ])
-                                  : _vm._e()
-                              ])
-                            : _vm._e()
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("section", { staticClass: "event-enter-showdates" }, [
-                        _c("div", { staticClass: "field cost" }, [
-                          _c("label", { staticClass: "area" }, [
-                            _vm._v(" Ticket types and prices ")
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "create-shows__ticket-box" },
-                            _vm._l(_vm.$v.tickets.$each.$iter, function(
-                              v,
-                              index
-                            ) {
-                              return _c(
-                                "div",
-                                { staticClass: "ticket-box__element grid" },
-                                [
-                                  _c("div", { staticClass: "field" }, [
-                                    _c("label", [_vm._v("Ticket Type")]),
-                                    _vm._v(" "),
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: v.name.$model,
-                                          expression: "v.name.$model"
-                                        }
-                                      ],
-                                      staticClass: "create-input",
-                                      class: {
-                                        active: _vm.activeItem == "ticket",
-                                        error: v.name.$error
-                                      },
-                                      attrs: {
-                                        name: "name",
-                                        placeholder: "ex: General, VIP, Student"
-                                      },
-                                      domProps: { value: v.name.$model },
-                                      on: {
-                                        click: function($event) {
-                                          _vm.activeItem = "ticket"
-                                        },
-                                        blur: function($event) {
-                                          _vm.activeItem = null
-                                        },
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.$set(
-                                            v.name,
-                                            "$model",
-                                            $event.target.value
-                                          )
-                                        }
-                                      }
-                                    }),
-                                    _vm._v(" "),
-                                    v.name.$error
-                                      ? _c(
-                                          "div",
-                                          { staticClass: "validation-error" },
-                                          [
-                                            !v.name.required
-                                              ? _c(
-                                                  "p",
-                                                  { staticClass: "error" },
-                                                  [
-                                                    _vm._v(
-                                                      "Must enter a ticket name"
-                                                    )
-                                                  ]
-                                                )
-                                              : _vm._e(),
-                                            _vm._v(" "),
-                                            !v.name.maxLength
-                                              ? _c(
-                                                  "p",
-                                                  { staticClass: "error" },
-                                                  [_vm._v("Name is too Long")]
-                                                )
-                                              : _vm._e()
-                                          ]
-                                        )
-                                      : _vm._e()
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "field" }, [
-                                    _c("label", [_vm._v("Ticket Price")]),
-                                    _vm._v(" "),
-                                    _vm.money.type === "checkbox"
-                                      ? _c(
-                                          "input",
-                                          _vm._b(
-                                            {
-                                              directives: [
-                                                {
-                                                  name: "model",
-                                                  rawName: "v-model",
-                                                  value: v.ticket_price.$model,
-                                                  expression:
-                                                    "v.ticket_price.$model"
-                                                },
-                                                {
-                                                  name: "money",
-                                                  rawName: "v-money",
-                                                  value: _vm.money,
-                                                  expression: "money"
-                                                }
-                                              ],
-                                              class: {
-                                                active:
-                                                  _vm.activeItem == "price",
-                                                error:
-                                                  v.ticket_price.$error &&
-                                                  _vm.num
-                                              },
-                                              staticStyle: {
-                                                "text-align": "right"
-                                              },
-                                              attrs: {
-                                                placeholder: "$0.00",
-                                                type: "checkbox"
-                                              },
-                                              domProps: {
-                                                checked: Array.isArray(
-                                                  v.ticket_price.$model
-                                                )
-                                                  ? _vm._i(
-                                                      v.ticket_price.$model,
-                                                      null
-                                                    ) > -1
-                                                  : v.ticket_price.$model
-                                              },
-                                              on: {
-                                                click: function($event) {
-                                                  _vm.activeItem = "price"
-                                                },
-                                                blur: function($event) {
-                                                  _vm.activeItem = null
-                                                },
-                                                keydown: function($event) {
-                                                  $event.key === "-"
-                                                    ? $event.preventDefault()
-                                                    : null
-                                                },
-                                                change: function($event) {
-                                                  var $$a =
-                                                      v.ticket_price.$model,
-                                                    $$el = $event.target,
-                                                    $$c = $$el.checked
-                                                      ? true
-                                                      : false
-                                                  if (Array.isArray($$a)) {
-                                                    var $$v = null,
-                                                      $$i = _vm._i($$a, $$v)
-                                                    if ($$el.checked) {
-                                                      $$i < 0 &&
-                                                        _vm.$set(
-                                                          v.ticket_price,
-                                                          "$model",
-                                                          $$a.concat([$$v])
-                                                        )
-                                                    } else {
-                                                      $$i > -1 &&
-                                                        _vm.$set(
-                                                          v.ticket_price,
-                                                          "$model",
-                                                          $$a
-                                                            .slice(0, $$i)
-                                                            .concat(
-                                                              $$a.slice($$i + 1)
-                                                            )
-                                                        )
-                                                    }
-                                                  } else {
-                                                    _vm.$set(
-                                                      v.ticket_price,
-                                                      "$model",
-                                                      $$c
-                                                    )
-                                                  }
-                                                }
-                                              }
-                                            },
-                                            "input",
-                                            _vm.money,
-                                            false
-                                          )
-                                        )
-                                      : _vm.money.type === "radio"
-                                      ? _c(
-                                          "input",
-                                          _vm._b(
-                                            {
-                                              directives: [
-                                                {
-                                                  name: "model",
-                                                  rawName: "v-model",
-                                                  value: v.ticket_price.$model,
-                                                  expression:
-                                                    "v.ticket_price.$model"
-                                                },
-                                                {
-                                                  name: "money",
-                                                  rawName: "v-money",
-                                                  value: _vm.money,
-                                                  expression: "money"
-                                                }
-                                              ],
-                                              class: {
-                                                active:
-                                                  _vm.activeItem == "price",
-                                                error:
-                                                  v.ticket_price.$error &&
-                                                  _vm.num
-                                              },
-                                              staticStyle: {
-                                                "text-align": "right"
-                                              },
-                                              attrs: {
-                                                placeholder: "$0.00",
-                                                type: "radio"
-                                              },
-                                              domProps: {
-                                                checked: _vm._q(
-                                                  v.ticket_price.$model,
-                                                  null
-                                                )
-                                              },
-                                              on: {
-                                                click: function($event) {
-                                                  _vm.activeItem = "price"
-                                                },
-                                                blur: function($event) {
-                                                  _vm.activeItem = null
-                                                },
-                                                keydown: function($event) {
-                                                  $event.key === "-"
-                                                    ? $event.preventDefault()
-                                                    : null
-                                                },
-                                                change: function($event) {
-                                                  return _vm.$set(
-                                                    v.ticket_price,
-                                                    "$model",
-                                                    null
-                                                  )
-                                                }
-                                              }
-                                            },
-                                            "input",
-                                            _vm.money,
-                                            false
-                                          )
-                                        )
-                                      : _c(
-                                          "input",
-                                          _vm._b(
-                                            {
-                                              directives: [
-                                                {
-                                                  name: "model",
-                                                  rawName: "v-model",
-                                                  value: v.ticket_price.$model,
-                                                  expression:
-                                                    "v.ticket_price.$model"
-                                                },
-                                                {
-                                                  name: "money",
-                                                  rawName: "v-money",
-                                                  value: _vm.money,
-                                                  expression: "money"
-                                                }
-                                              ],
-                                              class: {
-                                                active:
-                                                  _vm.activeItem == "price",
-                                                error:
-                                                  v.ticket_price.$error &&
-                                                  _vm.num
-                                              },
-                                              staticStyle: {
-                                                "text-align": "right"
-                                              },
-                                              attrs: {
-                                                placeholder: "$0.00",
-                                                type: _vm.money.type
-                                              },
-                                              domProps: {
-                                                value: v.ticket_price.$model
-                                              },
-                                              on: {
-                                                click: function($event) {
-                                                  _vm.activeItem = "price"
-                                                },
-                                                blur: function($event) {
-                                                  _vm.activeItem = null
-                                                },
-                                                keydown: function($event) {
-                                                  $event.key === "-"
-                                                    ? $event.preventDefault()
-                                                    : null
-                                                },
-                                                input: function($event) {
-                                                  if ($event.target.composing) {
-                                                    return
-                                                  }
-                                                  _vm.$set(
-                                                    v.ticket_price,
-                                                    "$model",
-                                                    $event.target.value
-                                                  )
-                                                }
-                                              }
-                                            },
-                                            "input",
-                                            _vm.money,
-                                            false
-                                          )
-                                        ),
-                                    _vm._v(" "),
-                                    v.ticket_price.$error
-                                      ? _c(
-                                          "div",
-                                          { staticClass: "validation-error" },
-                                          [
-                                            !v.ticket_price.minValue
-                                              ? _c(
-                                                  "p",
-                                                  {
-                                                    directives: [
-                                                      {
-                                                        name: "show",
-                                                        rawName: "v-show",
-                                                        value: _vm.num,
-                                                        expression: "num"
-                                                      }
-                                                    ],
-                                                    staticClass: "error"
-                                                  },
-                                                  [
-                                                    _vm._v(
-                                                      "Please enter an amount"
-                                                    )
-                                                  ]
-                                                )
-                                              : _vm._e(),
-                                            _vm._v(" "),
-                                            !v.ticket_price.maxLength
-                                              ? _c(
-                                                  "p",
-                                                  { staticClass: "error" },
-                                                  [
-                                                    _vm._v(
-                                                      "Please enter an amount under $10,000"
-                                                    )
-                                                  ]
-                                                )
-                                              : _vm._e(),
-                                            _vm._v(" "),
-                                            !v.ticket_price.required
-                                              ? _c(
-                                                  "p",
-                                                  { staticClass: "error" },
-                                                  [
-                                                    _vm._v(
-                                                      "Please enter a price"
-                                                    )
-                                                  ]
-                                                )
-                                              : _vm._e()
-                                          ]
-                                        )
-                                      : _vm._e(),
-                                    _vm._v(" "),
-                                    _vm.tickets.length > 1
-                                      ? _c(
-                                          "button",
-                                          {
-                                            staticClass: "delete-circle",
-                                            on: {
-                                              click: function($event) {
-                                                $event.preventDefault()
-                                                return _vm.deleteRow(index)
-                                              }
-                                            }
-                                          },
-                                          [_vm._v("X")]
-                                        )
-                                      : _vm._e()
-                                  ])
-                                ]
-                              )
-                            }),
-                            0
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass: "ticket-box__add-button",
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.addTickets($event)
-                                }
-                              }
-                            },
-                            [_c("button", [_vm._v("+ Ticket Types")])]
-                          )
-                        ]),
-                        _vm._v(" "),
+                        ]
+                      )
+                    ])
+                  : _c(
+                      "div",
+                      {
+                        staticClass: "messages-show__element grid",
+                        class: { inv: _vm.isResponder(message) }
+                      },
+                      [
                         _c(
                           "div",
                           {
-                            staticClass: "event-create__submit-button",
-                            staticStyle: { "margin-top": "6rem" }
+                            staticClass: "message-index__image",
+                            style: "background:" + _vm.responder.hexColor
                           },
                           [
-                            _c(
-                              "button",
-                              {
-                                staticClass: "create",
-                                attrs: { disabled: _vm.dis },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.submitAlways()
-                                  }
-                                }
-                              },
-                              [_vm._v(" Next ")]
-                            )
+                            _vm.responder.largeImagePath
+                              ? _c("label", { staticClass: "profile-image" }, [
+                                  _c("picture", [
+                                    _c("source", {
+                                      attrs: {
+                                        type: "image/webp",
+                                        srcset:
+                                          "/storage/" +
+                                          _vm.responder.thumbImagePath
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("img", {
+                                      attrs: {
+                                        src:
+                                          "/storage/" +
+                                          _vm.responder.thumbImagePath.slice(
+                                            0,
+                                            -4
+                                          ) +
+                                          "jpg",
+                                        alt: _vm.responder.name + "'s account"
+                                      }
+                                    })
+                                  ])
+                                ])
+                              : _vm.responder.gravatar
+                              ? _c("div", { staticClass: "profile-image" }, [
+                                  _c("img", {
+                                    attrs: {
+                                      src: _vm.responder.gravatar,
+                                      alt: _vm.responder.name + "'s account"
+                                    }
+                                  })
+                                ])
+                              : _c(
+                                  "div",
+                                  {
+                                    staticClass: "message-index__user-noimage"
+                                  },
+                                  [
+                                    _c("h2", [
+                                      _vm._v(
+                                        _vm._s(
+                                          _vm.responder
+                                            ? _vm.responder.name.charAt(0)
+                                            : ""
+                                        )
+                                      )
+                                    ])
+                                  ]
+                                )
                           ]
-                        )
-                      ])
-                    ]
-                  )
-                ]
-              )
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "field" }, [
+                          _c(
+                            "div",
+                            { staticClass: "messages-show__element-textarea" },
+                            [
+                              _c("div", [
+                                _vm._v(
+                                  "\n                                " +
+                                    _vm._s(message.message) +
+                                    "\n                            "
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "messages-show__element-date" },
+                                [
+                                  _vm._v(
+                                    "\n                                " +
+                                      _vm._s(
+                                        _vm._f("formatDate")(message.created_at)
+                                      ) +
+                                      "\n                            "
+                                  )
+                                ]
+                              )
+                            ]
+                          )
+                        ])
+                      ]
+                    )
+              })
             ],
-            1
+            2
           )
+        ]
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "message-bar-mobile" }, [
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.message,
+            expression: "message"
+          }
         ],
-        1
-      ),
+        staticClass: "message-bar__input",
+        class: { active: _vm.activeItem == "description" },
+        attrs: { type: "text", placeholder: "Write message here" },
+        domProps: { value: _vm.message },
+        on: {
+          click: function($event) {
+            _vm.activeItem = "description"
+          },
+          keyup: function($event) {
+            if (
+              !$event.type.indexOf("key") &&
+              _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+            ) {
+              return null
+            }
+            return _vm.sendMessage($event)
+          },
+          blur: function($event) {
+            _vm.activeItem = null
+          },
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.message = $event.target.value
+          }
+        }
+      }),
       _vm._v(" "),
-      _vm.isVisible
-        ? _c(
-            "modal",
+      _c(
+        "button",
+        {
+          staticClass: "message-bar__submit",
+          attrs: { disabled: _vm.dis },
+          on: { click: _vm.sendMessage }
+        },
+        [
+          _c(
+            "svg",
             {
-              on: {
-                close: function($event) {
-                  _vm.isVisible = false
-                }
+              staticClass: "svgbutton",
+              class: { disabled: _vm.dis },
+              staticStyle: { height: "24px", width: "24px", display: "block" },
+              attrs: {
+                role: "presentation",
+                "aria-hidden": "true",
+                focusable: "false",
+                width: "24",
+                height: "24",
+                viewBox: "0 0 24 24",
+                fill: "none",
+                xmlns: "http://www.w3.org/2000/svg"
               }
             },
             [
-              _c("div", { attrs: { slot: "header" }, slot: "header" }, [
-                _c("div", { staticClass: "circle del" }, [
-                  _c("p", [_vm._v("?")])
-                ])
+              _c("circle", { attrs: { cx: "12", cy: "12", r: "12" } }),
+              _c("g", { attrs: { "clip-path": "url(#clipeSendIcon33)" } }, [
+                _c("path", {
+                  attrs: {
+                    transform: "scale(1)",
+                    "fill-rule": "evenodd",
+                    "clip-rule": "evenodd",
+                    d:
+                      "M11.2929 6.29289C11.6834 5.90237 12.3166 5.90237 12.7071 6.29289L16.7071 10.2929C17.0976 10.6834 17.0976 11.3166 16.7071 11.7071C16.3166 12.0976 15.6834 12.0976 15.2929 11.7071L13 9.41421V17C13 17.5523 12.5523 18 12 18C11.4477 18 11 17.5523 11 17V9.41421L8.70711 11.7071C8.31658 12.0976 7.68342 12.0976 7.29289 11.7071C6.90237 11.3166 6.90237 10.6834 7.29289 10.2929L11.2929 6.29289Z",
+                    fill: "white"
+                  }
+                })
               ]),
-              _vm._v(" "),
-              _c("div", { attrs: { slot: "body" }, slot: "body" }, [
-                _c("h3", [
-                  _vm._v(
-                    "You are submitting a free ticket price or forgot to add a price"
-                  )
-                ]),
-                _vm._v(" "),
-                _c("p", [
-                  _vm._v("We just want to double check this is correct.")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { attrs: { slot: "footer" }, slot: "footer" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn del",
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        return _vm.onFree()
-                      }
+              _c("defs", [
+                _c("clipPath", { attrs: { id: "clipeSendIcon33" } }, [
+                  _c("rect", {
+                    attrs: {
+                      width: "12",
+                      height: "12",
+                      fill: "white",
+                      transform: "translate(6 6)"
                     }
-                  },
-                  [_vm._v("It is")]
-                )
+                  })
+                ])
               ])
             ]
           )
-        : _vm._e(),
-      _vm._v(" "),
-      _c("div", { staticClass: "create-button__in-nav" }, [
-        _c(
-          "button",
-          {
-            staticClass: "create",
-            attrs: { disabled: _vm.dis },
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                return _vm.goBack()
-              }
-            }
-          },
-          [_vm._v(" Back ")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.selectedTab == "s",
-                expression: "selectedTab == 's'"
-              }
-            ],
-            staticClass: "create",
-            attrs: { disabled: _vm.dis },
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                return _vm.submitDates()
-              }
-            }
-          },
-          [_vm._v(" Next ")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.selectedTab == "o",
-                expression: "selectedTab == 'o'"
-              }
-            ],
-            staticClass: "create",
-            attrs: { disabled: _vm.dis },
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                return _vm.submitOnGoing()
-              }
-            }
-          },
-          [_vm._v(" Next ")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.selectedTab == "a",
-                expression: "selectedTab == 'a'"
-              }
-            ],
-            staticClass: "create",
-            attrs: { disabled: _vm.dis },
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                return _vm.submitAlways()
-              }
-            }
-          },
-          [_vm._v(" Next ")]
-        )
-      ])
-    ],
-    1
-  )
+        ]
+      )
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -2660,17 +1153,50 @@ function normalizeComponent (
 
 /***/ }),
 
-/***/ "./resources/js/components/create/shows.vue":
-/*!**************************************************!*\
-  !*** ./resources/js/components/create/shows.vue ***!
-  \**************************************************/
+/***/ "./node_modules/webpack/buildin/module.js":
+/*!***********************************!*\
+  !*** (webpack)/buildin/module.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = function(module) {
+	if (!module.webpackPolyfill) {
+		module.deprecate = function() {};
+		module.paths = [];
+		// module.parent = undefined by default
+		if (!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function() {
+				return module.i;
+			}
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
+
+
+/***/ }),
+
+/***/ "./resources/js/components/messages/message-show.vue":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/messages/message-show.vue ***!
+  \***********************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _shows_vue_vue_type_template_id_07ccd6e4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./shows.vue?vue&type=template&id=07ccd6e4& */ "./resources/js/components/create/shows.vue?vue&type=template&id=07ccd6e4&");
-/* harmony import */ var _shows_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./shows.vue?vue&type=script&lang=js& */ "./resources/js/components/create/shows.vue?vue&type=script&lang=js&");
+/* harmony import */ var _message_show_vue_vue_type_template_id_1e8d10ab___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./message-show.vue?vue&type=template&id=1e8d10ab& */ "./resources/js/components/messages/message-show.vue?vue&type=template&id=1e8d10ab&");
+/* harmony import */ var _message_show_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./message-show.vue?vue&type=script&lang=js& */ "./resources/js/components/messages/message-show.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -2680,9 +1206,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _shows_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _shows_vue_vue_type_template_id_07ccd6e4___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _shows_vue_vue_type_template_id_07ccd6e4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _message_show_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _message_show_vue_vue_type_template_id_1e8d10ab___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _message_show_vue_vue_type_template_id_1e8d10ab___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -2692,38 +1218,38 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/create/shows.vue"
+component.options.__file = "resources/js/components/messages/message-show.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/create/shows.vue?vue&type=script&lang=js&":
-/*!***************************************************************************!*\
-  !*** ./resources/js/components/create/shows.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************/
+/***/ "./resources/js/components/messages/message-show.vue?vue&type=script&lang=js&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/messages/message-show.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_shows_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./shows.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/create/shows.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_shows_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_message_show_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./message-show.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/messages/message-show.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_message_show_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/create/shows.vue?vue&type=template&id=07ccd6e4&":
-/*!*********************************************************************************!*\
-  !*** ./resources/js/components/create/shows.vue?vue&type=template&id=07ccd6e4& ***!
-  \*********************************************************************************/
+/***/ "./resources/js/components/messages/message-show.vue?vue&type=template&id=1e8d10ab&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/messages/message-show.vue?vue&type=template&id=1e8d10ab& ***!
+  \******************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_shows_vue_vue_type_template_id_07ccd6e4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./shows.vue?vue&type=template&id=07ccd6e4& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/create/shows.vue?vue&type=template&id=07ccd6e4&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_shows_vue_vue_type_template_id_07ccd6e4___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_message_show_vue_vue_type_template_id_1e8d10ab___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./message-show.vue?vue&type=template&id=1e8d10ab& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/messages/message-show.vue?vue&type=template&id=1e8d10ab&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_message_show_vue_vue_type_template_id_1e8d10ab___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_shows_vue_vue_type_template_id_07ccd6e4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_message_show_vue_vue_type_template_id_1e8d10ab___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

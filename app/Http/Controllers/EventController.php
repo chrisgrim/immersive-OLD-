@@ -32,7 +32,7 @@ class EventController extends Controller
     {
         $events = Event::where('closingDate', '>=', Carbon::yesterday()->endOfDay())
             ->where('status', 'p')
-            ->where('hasLocation', 1)
+            // ->where('hasLocation', 1)
             ->orderBy('updated_at', 'desc')
             ->limit(4)
             ->with('organizer')
@@ -61,6 +61,9 @@ class EventController extends Controller
      */
     public function create()
     {
+        if (auth()->user()->hasCreatedOrganizers) {
+            return view('events.edit');
+        }
         return view('create.initial');
     }
 
@@ -192,7 +195,7 @@ class EventController extends Controller
     public function review(Event $event)
     {
         $this->authorize('finalize', $event);
-        $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'advisories', 'showOnGoing');
+        $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'advisories', 'showOnGoing', 'remotelocations');
         return view('create.review', compact('event'));
     }
 

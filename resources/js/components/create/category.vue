@@ -36,10 +36,14 @@
                 <button :disabled="dis" @click.prevent="submitCategory()" class="create"> Next </button>
             </div>
         </section>
-        <section class="event-show-category" 
-        v-if="selectedCategory" 
-        :style="`height:calc(${this.height}px - 8rem);background: url(/storage/${selectedCategory.largeImagePath})`"></section>
-        <section v-else class="image"></section>
+
+        <section v-if="selectedCategory"  class="event-show-category__image" :style="`height:calc(${this.height}px - 8rem);`">
+            <picture>       
+                <source type="image/webp" :srcset="`/storage/${selectedCategory.largeImagePath}`"> 
+                <img :src="`/storage/${selectedCategory.largeImagePath.slice(0, -4)}jpg}`">
+            </picture>
+        </section>
+       
 
         <div class="create-button__in-nav">
             <button :disabled="dis" class="create" @click.prevent="goBack()"> Back </button>

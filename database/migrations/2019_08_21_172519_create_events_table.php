@@ -30,11 +30,13 @@ class CreateEventsTable extends Migration
             $table->string('thumbImagePath')->nullable();
             $table->json('location_latlon')->nullable();
             $table->dateTime('closingDate')->nullable();
+            $table->dateTime('embargo_date')->nullable();
             $table->string('price_range')->nullable();
             $table->char('status', 1)->default('d');
             $table->char('showtype', 1)->nullable();
             $table->boolean('hasLocation')->default(1);
             $table->timestamps();
+            $table->softDeletes();
             $table->index(['status','closingDate', 'updated_at']);
         });
     }

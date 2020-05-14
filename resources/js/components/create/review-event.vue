@@ -5,7 +5,7 @@
                 <div class="content">   
                     <span class="header-left__cat">{{event.category ? event.category.name : ''}}</span>
                     <span class="header-left__title"><h1>{{event.name}}</h1></span>
-                    <i>{{event.tag_line}}</i>
+                    <span class="header-left__tag"><i>{{event.tag_line}}</i></span>
                     <div v-if="event.staffpick">
                         EI Pick of the week!
                     </div>
@@ -115,16 +115,14 @@
                         </a>
                         <div class="review">
                             <a rel="noreferrer" target="_blank" :href="review.url">
-                                
-                                    <i 
-                                    style="white-space: pre-line;" 
-                                    v-if="showMore !== 'review'" 
-                                    class="text">{{review.review.substring(0,300)}}<span 
-                                        class="show-text" 
-                                        v-if="review.review.length >= 200">... Read More
-                                        </span>
-                                    </i>
-                                
+                                <i 
+                                style="white-space: pre-line;" 
+                                v-if="showMore !== 'review'" 
+                                class="text">{{review.review.substring(0,300)}}<span 
+                                    class="show-text" 
+                                    v-if="review.review.length >= 200">... Read More
+                                    </span>
+                                </i>
                             </a>
                         </div>
                     </div>
@@ -135,7 +133,7 @@
             <div class="event-title">
                 <h2>Show Dates</h2>
             </div>
-            <div class="right desktop">
+            <div class="right lockedcalendar desktop">
                 <flat-pickr
                     v-model="dates"
                     :config="config"                                                  
@@ -148,7 +146,7 @@
                     <p style="white-space: pre-wrap;">{{event.show_times}}</p>
                 </div>
             </div>
-            <div class="right mobile">
+            <div class="right lockedcalendar mobile">
                 <flat-pickr
                     v-model="dates"
                     :config="configMob"                                  

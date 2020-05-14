@@ -15,6 +15,7 @@ class CreateConversationsTable extends Migration
     {
         Schema::create('conversations', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->softDeletes();
             $table->timestamps(); 
         });
         Schema::create('conversation_user', function(Blueprint $table) {

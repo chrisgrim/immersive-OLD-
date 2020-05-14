@@ -61,11 +61,18 @@ class MobilityController extends Controller
      */
     public function update(Request $request, MobilityAdvisory $mobility)
     {
-        $mobility->update([
-            'mobilities' => $request->mobilities,
-            'admin' => true,
-            'user_id' => auth()->user()->id
-        ]);
+        if ($request->rank) {
+            return $mobility->update([
+                'rank' => $request->rank,
+                'user_id' => auth()->user()->id
+            ]);
+        }
+        if ($request->mobilities) {
+             $mobility->update([
+                'mobilities' => $request->mobilities,
+                'user_id' => auth()->user()->id
+            ]);
+        }
     }
 
     /**

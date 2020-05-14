@@ -1,29 +1,37 @@
 <template>
-    <div class="container">
+    <div class="event-index-container">
         <div class="event-index">
+            <header class="padded">
+                <div class="header-title">
+                    <h3>Discover Immersive Everything!</h3>
+                </div>
+                <div class="index-nav-search">
+                    <nav-search></nav-search>
+                </div>
+            </header>
 
-            <div class="staffpicks" v-if="staffpicks.length">
-                <h2>Check out our Staff Picks of the week</h2>
-                <div class="event-index-eventlist grid">
-                    <div v-for="(pick, index) in staffpicks" class="eventlist__element">
-                        <event-listing-item :user="user" :event="pick.event"></event-listing-item>
+
+            <section>
+                <div class="index-nopro">
+                    <div class="nopro-content" style="background: center / cover no-repeat url('/storage/website-files/nopro-back.jpg')">
+                        <h3>Check out the latest reviews on</h3>
+                        <h2>No Proscenium</h2>
+                        <a rel="noreferrer" target="_blank" href="https://noproscenium.com/">
+                            <button class="nopro-button">
+                                Check it out
+                            </button>
+                        </a>
                     </div>
                 </div>
-            </div>
-            
-            <h2>Our Latest Immersive Events</h2>
-            <div class="event-index-eventlist grid">
-                <div v-for="(event, index) in events" class="eventlist__element">
-                    <event-listing-item :event="event"></event-listing-item>
-                </div>
-            </div>
+            </section>
 
-            <h2>Our Latest Remote Events</h2>
-            <div class="event-index-eventlist grid">
-                <div v-for="(event, index) in remote" class="eventlist__element">
-                    <event-listing-item :event="event"></event-listing-item>
+            <section class="padded events">
+                <div class="event-index-eventlist grid">
+                    <div v-for="(event, index) in events" class="eventlist__element">
+                        <event-listing-item :event="event"></event-listing-item>
+                    </div>
                 </div>
-            </div>
+            </section>
 
         </div>
     </div>

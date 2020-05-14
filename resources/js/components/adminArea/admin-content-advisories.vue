@@ -17,6 +17,12 @@
             placeholder="Content Advisories"
             @blur="saveContentAdvisory(advisory)"
             />
+            <input 
+            type="text" 
+            v-model="advisory.rank" 
+            placeholder="Content Advisories"
+            @blur="saveRank(advisory)"
+            />
             <button @click.prevent="showModal(advisory)" class="delete-circle"><p>X</p></button>
         </div>
         <modal v-if="isEditModalVisible" @close="isEditModalVisible = false">
@@ -136,6 +142,19 @@
             saveContentAdvisory(advisory) {
                 let data = {
                     advisories: advisory.advisories
+                };
+                axios.patch(`/contentadvisories/${advisory.id}`, data)
+                .then(response => { 
+                    console.log(response.data)
+                    this.loadContentAdvisories()
+                })
+                .catch(error => { 
+                    this.serverErrors = error.response.data.errors; 
+                });
+            },
+            saveRank(advisory) {
+                let data = {
+                    rank: advisory.rank
                 };
                 axios.patch(`/contentadvisories/${advisory.id}`, data)
                 .then(response => { 

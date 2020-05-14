@@ -127,7 +127,7 @@ export default {
         },
 
         readySubmit() {
-            this.event.status !== 'p' &&
+            (this.event.status !== 'p' || this.event.status !== 'e' )&&
             this.event.organizer_id && 
             this.event.name && 
             (this.event.location_latlon || !this.event.hasLocation) && 

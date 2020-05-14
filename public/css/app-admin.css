@@ -51,10 +51,13 @@ textarea {
   pointer-events: none;
 }
 
-#bodyArea .approve {
-  margin-top: -7rem;
-  background: white;
-}
+/*
+#bodyArea {
+    & .approve {
+    margin-top:-7rem;
+    background: white;
+    }
+}*/
 
 .approvebar {
   width: 100%;
@@ -117,7 +120,11 @@ textarea {
   display: inline;
 }
 
-#header .nav.a {
+/*------------------------------------*\
+  #Admin- Nav 
+\*------------------------------------*/
+
+.admin-nav {
   position: fixed;
   width: 20%;
   background: white;
@@ -127,7 +134,7 @@ textarea {
   padding: 2.5rem;
 }
 
-#header .nav.a button.home {
+button.admin-home-icon {
   border: solid #008489 1px;
   border-radius: 0.3rem;
   padding: 0.9rem 2rem;
@@ -137,29 +144,40 @@ textarea {
   color: white;
 }
 
-#header .nav.a .logo {
-  float: none;
+.admin-nav-title {
   display: block;
 }
 
-#header .nav.a .title {
-  display: block;
-}
-
-#header .nav.a .title h3 {
+.admin-nav-title h3 {
   font-size: 1.7rem;
   margin: 0;
 }
 
-#header .menu {
-  height: 100vh;
-}
-
-#header .menu a {
+.admin-menu a {
   margin: 1rem 1rem;
   font-size: 1.5rem;
   color: #767676;
   font-weight: 400;
+}
+
+.admin-menu__item {
+  position: relative;
+}
+
+.admin-menu__notification {
+  position: absolute;
+  background: red;
+  right: 0;
+  padding: 0.5rem 1.5rem;
+  border-radius: 100%;
+  margin-top: -0.6rem;
+}
+
+.admin-menu__notification p {
+  margin: 0;
+  text-align: center;
+  font-size: 1.2rem;
+  color: white;
 }
 
 .checklist-section {
@@ -186,6 +204,10 @@ textarea {
   text-align: center;
   font-size: 1.2rem;
 }
+
+/*------------------------------------*\
+  #Admin- Layout Page
+\*------------------------------------*/
 
 #admin {
   width: 80%;

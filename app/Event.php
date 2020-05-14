@@ -2,14 +2,17 @@
 
 namespace App;
 
+use App\Conversation;
+use App\Genre;
 use ScoutElastic\Searchable;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Model;
 use Intervention\Image\ImageManagerStatic as Image;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Event extends Model
 {
-    use Searchable, Favoritable;
+    use Searchable, Favoritable, SoftDeletes;
 
     protected $indexConfigurator = EventIndexConfigurator::class;
 
@@ -26,7 +29,7 @@ class Event extends Model
     * @var array
     */
 	protected $fillable = [
-    	'slug', 'user_id', 'category_id','organizer_id','description','name','largeImagePath','thumbImagePath','advisories_id', 'organizer_id', 'location_latlon', 'closingDate','websiteUrl','ticketUrl','show_times','price_range', 'status','tag_line', 'hasLocation', 'showtype'
+    	'slug', 'user_id', 'category_id','organizer_id','description','name','largeImagePath','thumbImagePath','advisories_id', 'organizer_id', 'location_latlon', 'closingDate','websiteUrl','ticketUrl','show_times','price_range', 'status','tag_line', 'hasLocation', 'showtype', 'embargo_date'
 
     ];
 
@@ -45,7 +48,7 @@ class Event extends Model
     protected $appends = ['isFavorited'];
 
     /**
-    * Should be searchable
+    * What events should be searchable for scout elastic search
     *
     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
     */
@@ -54,12 +57,36 @@ class Event extends Model
         return $this->isPublished();
     }
 
-    public function scopeABC($query) {
-        return $query->where('showtype', 'f');
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'closingDate' => $this->closingDate,
+            'priceranges' => $this->pricerangesSelect,
+            'category_id' => $this->category_id,
+            'location_latlon' => $this->location_latlon,
+            'shows' => $this->showsSelect
+        ];
+    }
+
+    public function showsSelect()
+    {
+        return $this->hasMany(Show::class)->select('date');
+    }
+
+    public function pricerangesSelect()
+    {
+        return $this->hasMany(PriceRange::class)->select('price');
     }
 
     /**
-    * Determines which events are published
+    * Determines which events are published for Laravel Scout
     *
     * @return bool
     */
@@ -199,6 +226,16 @@ class Event extends Model
     }
 
     /**
+     * Each event can belong to many remote types
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+     */
+    public function remotelocations() 
+    {
+        return $this->belongsToMany(RemoteLocation::class);
+    }
+
+    /**
      * Each event can belong to many regions
      *
      * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
@@ -272,9 +309,10 @@ class Event extends Model
     */
     public function deleteEvent($event) 
     {
-        if ($event->largeImagePath) {
-            Storage::deleteDirectory('public/event-images/' . pathinfo($event->largeImagePath, PATHINFO_FILENAME));
-        };
+        // if ($event->largeImagePath) {
+        //     Storage::deleteDirectory('public/event-images/' . pathinfo($event->largeImagePath, PATHINFO_FILENAME));
+        // };
+        Conversation::find($event->moderatorcomments()->first()->conversation_id)->delete();
         $event->delete();
     }
 
@@ -333,16 +371,17 @@ class Event extends Model
         // } else { return abort(404, "broken");}
 
         $event->update($request->except(['genre']));
+
         if ($request->has('genre')) {
             foreach ($request['genre'] as $genre) {
                 Genre::firstOrCreate([
-                    'genre' => $genre
+                    'genre' => strtolower($genre)
                 ],
                 [
                     'user_id' => auth()->user()->id,
                 ]);
             };
-            $newSync = Genre::all()->whereIn('genre', $request['genre']);
+            $newSync = Genre::all()->whereIn('genre', array_map('strtolower', $request['genre']));
             $event->genres()->sync($newSync);
         };
     }
@@ -384,121 +423,32 @@ class Event extends Model
                     'price' => [
                         'type' => 'integer',
                     ],
-                    'event_id' => [
-                        'type' => 'integer',
-                    ],
-                    'created_at' => [
-                        'type' => 'text',
-                        'index' => false
-                    ],
-                    'updated_at' => [
-                        'type' => 'text',
-                        'index' => false
-                    ],
+                    // 'event_id' => [
+                    //     'type' => 'integer',
+                    // ],
+                    // 'created_at' => [
+                    //     'type' => 'text',
+                    //     'index' => false
+                    // ],
+                    // 'updated_at' => [
+                    //     'type' => 'text',
+                    //     'index' => false
+                    // ],
                 ]
             ],
-            'advisories' => [
-                'properties' => [
-                    'sexualViolence' => [
-                        'type' => 'text',
-                        'index' => false
-                    ],
-                    'wheelchairReady' => [
-                        'type' => 'text',
-                        'index' => false
-                    ],
-                    'created_at' => [
-                        'type' => 'text',
-                        'index' => false
-                    ],
-                    'updated_at' => [
-                        'type' => 'text',
-                        'index' => false
-                    ],
-                ]
-            ],
-            'location' => [
-                'properties' => [
-                    'hiddenLocationToggle' => [
-                        'type' => 'text',
-                        'index' => false
-                    ],
-                    'created_at' => [
-                        'type' => 'text',
-                        'index' => false
-                    ],
-                    'updated_at' => [
-                        'type' => 'text',
-                        'index' => false
-                    ],
-                ]
-            ],
-            'slug' => [
-                'type' => 'text',
-                'index' => false
-            ],
-            'description' => [
-                'type' => 'text',
-                'analyzer' => 'english'
-            ],
-            'thumbImagePath' => [
-                'type' => 'text',
-                'index' => false
-            ],
-            'largeImagePath' => [
-                'type' => 'text',
-                'index' => false
-            ],
-            'user_id' => [
-                'type' => 'integer',
-            ],
+           
+            
+            // 'description' => [
+            //     'type' => 'text',
+            //     'analyzer' => 'english'
+            // ],
+           
             'category_id' => [
                 'type' => 'integer',
-            ],
-            'dates_id' => [
-                'type' => 'integer',
-                'index' => false
-            ],
-            'information_id' => [
-                'type' => 'integer',
-                'index' => false
-            ],
-            'advisories_id' => [
-                'type' => 'integer',
-                'index' => false
             ],
             'organizer_id' => [
                 'type' => 'integer',
             ],
-            'status' => [
-                'type' => 'text',
-            ],
-            'showtype' => [
-                'type' => 'text',
-            ],
-            'hasLocation' => [
-                'type' => 'boolean',
-            ],
-            'overallRating' => [
-                'type' => 'integer',
-                'index' => false
-            ],
-            'created_at' => [
-                'type' => 'text',
-                'index' => false
-            ],
-            'show_price' => [
-                'type' => 'text',
-                'index' => false
-            ],
-            'price_range' => [
-                'type' => 'text',
-                'index' => false,
-            ],
-            // 'updated_at' => [
-            //     'type' => 'text',
-            //     'index' => false
-            // ],
             'location_latlon' => [
                 'type' => 'geo_point'                
             ],

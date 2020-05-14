@@ -83,11 +83,18 @@ class GenresController extends Controller
      */
     public function update(Request $request, Genre $genre)
     {
-        $genre->update([
-            'genre' => $request->genre,
-            'admin' => true,
-            'user_id' => auth()->user()->id
-        ]);
+        if ($request->rank) {
+            return $genre->update([
+                'rank' => $request->rank,
+                'user_id' => auth()->user()->id
+            ]);
+        }
+        if ($request->genre) {
+            $genre->update([
+                'genre' => $request->genre,
+                'user_id' => auth()->user()->id,
+            ]);
+        }
     }
 
     /**

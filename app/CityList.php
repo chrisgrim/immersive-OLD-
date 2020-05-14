@@ -17,13 +17,25 @@ class CityList extends Model
         //
     ];
 
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        return [
+            "id" => $this->id,
+            "name" => $this->name ,
+            "population" => $this->population,
+            // "latitude" => $this->latitude,
+            // "longitude" => $this->longitude,
+        ];
+    }
+
     protected $mapping = [
     	'properties' => [
     		'id' => [
-                'type' => 'integer',
-                'index' => false
-            ],
-            'geoNameId' => [
                 'type' => 'integer',
                 'index' => false
             ],
@@ -33,14 +45,14 @@ class CityList extends Model
             'population' => [
                 'type' => 'integer',
             ],
-            'latitude' => [
-                'type' => 'integer',
-                'index' => false
-            ],
-            'longitude' => [
-                'type' => 'integer',
-                'index' => false
-            ],
+            // 'latitude' => [
+            //     'type' => 'integer',
+            //     'index' => false
+            // ],
+            // 'longitude' => [
+            //     'type' => 'integer',
+            //     'index' => false
+            // ],
     	]
     ];
 

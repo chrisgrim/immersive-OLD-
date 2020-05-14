@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use App\Scopes\RankScope;
 use Intervention\Image\ImageManagerStatic as Image;
 
 class Category extends Model
@@ -14,8 +15,7 @@ class Category extends Model
     * @var array
     */
     protected $fillable = [
-    	'name', 'slug','description','largeImagePath', 'thumbImagePath'
-    ];
+    	'name', 'slug','description','largeImagePath', 'thumbImagePath', 'rank' ];
 
     /**
      * The accessors to append to the model's array form.
@@ -23,6 +23,16 @@ class Category extends Model
      * @var array
      */
     protected $appends = ['hasEvent'];
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::addGlobalScope(new RankScope);
+    }
     
     /**
     * Each Category has many events
@@ -65,6 +75,10 @@ class Category extends Model
             $category->updateName($category, $request);
             return '';
         }
+        if($request->rank) {
+            $category->update(['rank' => $request->rank]);
+            return '';
+        }
         if($request->description) {
             $category->update(['description' => $request->description]);
             return '';
@@ -95,7 +109,7 @@ class Category extends Model
         ini_set('memory_limit','512M');
         if ($request->imagePath) {
             if ($category->largeImagePath) {
-                Storage::deleteDirectory('public/category-images/' . pathinfo($category->imagePath, PATHINFO_FILENAME));
+                Storage::deleteDirectory('public/category-images/' . pathinfo($category->largeImagePath, PATHINFO_FILENAME));
             };
 
             $title = str_slug($category->name);

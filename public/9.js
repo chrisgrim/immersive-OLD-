@@ -194,7 +194,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 
 
@@ -219,7 +218,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return this.organizer.largeImagePath || this.imageSrc ? true : false;
     },
     backgroundImage: function backgroundImage() {
-      return "backgroundImage: url('".concat(this.imageSrc ? this.imageSrc : this.loadorganizer ? '/' + this.loadorganizer.largeImagePath : '', "')");
+      return "backgroundImage: url('".concat(this.imageSrc ? this.imageSrc : this.loadorganizer ? '/storage/' + this.loadorganizer.largeImagePath : '', "')");
     }
   },
   data: function data() {
@@ -389,11 +388,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       },
       website: {
-        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_4__["required"],
+        // required,
         url: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_4__["url"],
-        serverFailed: function serverFailed() {
-          return !this.hasServerError('website');
-        },
+        // serverFailed : function(){ return !this.hasServerError('website'); },
         notWorking: function notWorking() {
           return !this.hasServerError('broken');
         }
@@ -672,7 +669,9 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "field" }, [
-                _c("label", [_vm._v("Your organization website")]),
+                _c("label", [
+                  _vm._v("Your organization website (recommended)")
+                ]),
                 _vm._v(" "),
                 _c("input", {
                   directives: [
@@ -713,18 +712,6 @@ var render = function() {
                       !_vm.$v.organizer.website.url
                         ? _c("p", { staticClass: "error" }, [
                             _vm._v("Must be a Url (Needs http://)")
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      !_vm.$v.organizer.website.required
-                        ? _c("p", { staticClass: "error" }, [
-                            _vm._v("The Website is required")
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      !_vm.$v.organizer.website.serverFailed
-                        ? _c("p", { staticClass: "error" }, [
-                            _vm._v("The Website needs to be unique")
                           ])
                         : _vm._e(),
                       _vm._v(" "),
@@ -949,6 +936,12 @@ var render = function() {
                                       _vm._v(" "),
                                       _c("p", [
                                         _vm._v("Image needs to be under 20 mb")
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("p", [
+                                        _vm._v(
+                                          "Please make sure logo is centered"
+                                        )
                                       ])
                                     ])
                                   : _vm._e(),

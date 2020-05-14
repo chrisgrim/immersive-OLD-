@@ -27,7 +27,7 @@
 
                 <label
                 v-else-if="user.gravatar"
-                class="wrapper"
+                class="user-profile-image__wrapper"
                 :class="{ imageloaded: avatar, imageloading: onUpClass }"
                 :style="`background:url('${user.gravatar}')center no-repeat;background-size: cover;`">
                 <image-upload @loaded="onImageUpload"></image-upload>
@@ -40,13 +40,12 @@
 
                 </label>
                 <div v-else class="user-profile-image">
-                    <div class="user-profile-noimage__text">
+                    <div class="user-profile-noimage__text" :style="`background:${user.hexColor}`">
                         <h2>{{loaduser.name.charAt(0)}}</h2>
                     </div>
                     <label 
-                    class="wrapper"
-                    :class="{ imageloaded: avatar, imageloading: onUpClass }"
-                    :style="`background:${user.hexColor}`">
+                    class="profile-wrapper"
+                    :class="{ imageloaded: avatar, imageloading: onUpClass }">
                     <image-upload @loaded="onImageUpload"></image-upload>
                     <CubeSpinner :loading="isLoading"></CubeSpinner>
                     <span class="user-profile-image__update-text">
@@ -122,7 +121,7 @@
                             </div>
                         </div>
                         <div class="">
-                            <button @click.prevent="submitUser()" class="save"> Save </button>
+                            <button :disabled="dis" @click.prevent="submitUser()" class="save"> Save </button>
                             <button @click.prevent="onUserEdit=false" class="cancel"> Cancel </button>
                         </div>
                     </div>
@@ -149,16 +148,6 @@
                 <div class="profile-user-info" v-if="location.latitude">
                     <div>
                         Lives near <span style="font-weight:600;color:#616161">{{locationPlaceholder}}</span> 
-                    </div>
-                </div>
-            </div>
-            <div class="profile-user-favorites" v-if="onSelf">
-                <div>
-                    <h3>Your Favorited Events</h3>
-                </div>
-                <div id="grid">
-                    <div v-for="event in events">
-                        <event-listing-item :user="auth" :event="event"></event-listing-item>
                     </div>
                 </div>
             </div>
@@ -197,10 +186,6 @@
                     return ' the ' + this.location.country
                 }
             },
-
-            visible() {
-                return this.webp ? 'is webp able' : 'is not webp able';
-            }
         },
 
         data() {
@@ -312,7 +297,7 @@
             submitUser() {
                 this.$v.$touch(); 
                 if (this.$v.$invalid) { return false };
-
+                this.dis = true;
                 let data = {
                     name: this.user.name,
                     location:this.location,
@@ -323,9 +308,11 @@
                 .then(response => {
                     console.log(response.data);
                     this.onUserEdit = false;
+                    this.dis = false
                 })
                 .catch(errorResponse => { 
-                    this.validationErrors = errorResponse.response.data.errors 
+                    this.validationErrors = errorResponse.response.data.errors;
+                    this.dis = false
                 });
             },
             // Gets data from Google Maps and inputs into Vue forms correctly

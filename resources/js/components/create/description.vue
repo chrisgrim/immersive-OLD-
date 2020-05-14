@@ -20,29 +20,6 @@
                     <p class="error" v-if="!$v.description.required">Must provide a description</p>
                 </div>
             </div>
-            <div class="field"> 
-                <label>Event genres</label>
-                <multiselect 
-                v-model="genreName"
-                tag-placeholder="Add this as new tag" 
-                placeholder="Type here to create your own" 
-                label="genre"
-                :close-on-select="true"
-                track-by="id" 
-                :options="options" 
-                :multiple="true" 
-                :taggable="true" 
-                tag-position="bottom"
-                :class="{ active: activeItem == 'genre','error': $v.genreName.$error }"
-                @tag="addTag"
-                @input="$v.genreName.$touch"
-                @click="activeItem = 'genre'"
-                @blur="activeItem = null"
-                ></multiselect>
-                <div v-if="$v.genreName.$error" class="validation-error">
-                    <p class="error" v-if="!$v.genreName.required">Must select at least one Genre</p>
-                </div>
-            </div>
             <div class="field">
                 <label>Event website</label>
                 <input 
@@ -80,7 +57,34 @@
             </div>
         </section>
 
-        <section></section>
+        <section>
+            <div class="tag-title">
+                <h3>Event Tags</h3>
+            </div>
+            <div class="field">
+                <label>Type in or select all show tags. We use these to help people find your event!</label>
+                <multiselect 
+                v-model="genreName"
+                tag-placeholder="Add this as new tag" 
+                placeholder="Type here to create your own" 
+                label="genre"
+                :close-on-select="true"
+                track-by="id" 
+                :options="options" 
+                :multiple="true" 
+                :taggable="true" 
+                tag-position="bottom"
+                :class="{ active: activeItem == 'genre','error': $v.genreName.$error }"
+                @tag="addTag"
+                @input="$v.genreName.$touch"
+                @click="activeItem = 'genre'"
+                @blur="activeItem = null"
+                ></multiselect>
+                <div v-if="$v.genreName.$error" class="validation-error">
+                    <p class="error" v-if="!$v.genreName.required">Must select at least one Tag</p>
+                </div>
+            </div>
+        </section>
 
         <div class="create-button__in-nav">
                     <button :disabled="dis" class="create" @click.prevent="goBack()"> Back </button>
@@ -139,6 +143,7 @@
                     window.location.href = `${this.eventUrl}/advisories`; 
                 })
                 .catch(errors => {
+                    console.log(errors.response.data.errors);
                     errors.response.data.message.length ? this.serverErrors = {broken: 'Url is broken'} : '';
                     errors.response.data.errors ? this.serverErrors = errors.response.data.errors : '';
                     this.dis = false;

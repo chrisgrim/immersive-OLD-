@@ -18,6 +18,7 @@ class CreateMobilityAdvisoriesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('mobilities')->unique();
             $table->boolean('admin')->default(0);
+            $table->integer('rank')->default(0);
             $table->timestamps();
         });
         Schema::create('event_mobility_advisory', function(Blueprint $table) {

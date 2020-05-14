@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Location;
 use App\Event;
 use App\Region;
+use App\RemoteLocation;
 use Illuminate\Http\Request;
 use App\Http\Requests\LocationStoreRequest;
+
 
 class LocationController extends Controller
 {
@@ -38,9 +40,14 @@ class LocationController extends Controller
      */
     public function fetch(Event $event)
     {
-        return response()->json(array(
+        return $data = [
             'location' => $event->location()->first(),
-        ));
+            'pivots' => $event->remotelocations()->get(),
+            'remoteLocations' => RemoteLocation::where('admin', true)->orWhere('user_id', auth()->user()->id)->get()
+        ];
+        // return response()->json(array(
+        //     'location' => $event->location()->first(),
+        // ));
     }
 
     /**
@@ -52,6 +59,19 @@ class LocationController extends Controller
     public function store(LocationStoreRequest $request, Event $event)
     {
         if($request->noLocation) {
+            if ($request->has('remoteLocation')) {
+                foreach ($request['remoteLocation'] as $loc) {
+                    RemoteLocation::firstOrCreate([
+                        'location' => strtolower($loc)
+                    ],
+                    [
+                        'user_id' => auth()->user()->id,
+                    ]);
+                };
+                $newSync = RemoteLocation::all()->whereIn('location',  array_map('strtolower', $request['remoteLocation']));
+                $event->remotelocations()->sync($newSync);
+            };
+
             return $event->update([
                 'hasLocation' => false,
                 'location_latlon' => null,

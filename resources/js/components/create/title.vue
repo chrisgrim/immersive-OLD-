@@ -10,7 +10,7 @@
                 <button class="editTitle" v-if="showEdit" @click.prevent="showModal">Edit</button>
             </div>
             <div v-else="approved" class="field">
-                <label>Stand out from the other events with a great title</label>
+                <label>Project name</label>
                 <input
                 type="text" 
                 v-model="name" 
@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="field">
-                <label>Event tag line</label>
+                <label>Project tag line (Stand out from the other events with a great tag line!)</label>
                 <input 
                 type="text" 
                 v-model="tagLine"
@@ -79,14 +79,19 @@
 			event: { type:Object },
 		},
 
+        computed: {
+            
+        },
+
 		data() {
 			return {
+                title: this.initializeTitleObject(),
 				name: '',
 				eventUrl: `/create-event/${this.event.slug}`,
                 tagLine: '',
                 activeItem: null,
                 dis:false,
-                approved: this.event.status == 'p' ? true : false,
+                approved: this.event.status == 'p' || this.event.status == 'e' ? true : false,
                 showEdit: false,
                 modal: false,
                 reapply: '',
@@ -94,6 +99,14 @@
 		},
 
 		methods: {
+
+            initializeTitleObject() {
+                return {
+                    name: '',
+                    tagLine: '',
+                    reSubmitEvent: '',
+                }
+            },
 
 	        //On click Sets class to green to remove error
 	        //clears out all server errors
@@ -103,7 +116,7 @@
 	        },
 
 	        //check if validation rules have been followed and returns false if not. Then I submit the new name and slug. I then get the response data and pass it to the new window load.
-			async submitName() {
+			submitName() {
 				this.$v.$touch(); 
 				if (this.$v.$invalid) { return false }
 				this.dis = true;
@@ -149,12 +162,14 @@
         },
 
 		validations: {
-			name: {
-				required,
-                maxLength: maxLength(140)
-			},
-            tagLine: {
-                maxLength: maxLength(140)
+            title: {
+                name: {
+                    required,
+                    maxLength: maxLength(140)
+                },
+                tagLine: {
+                    maxLength: maxLength(140)
+                }
             }
 		},
     };
