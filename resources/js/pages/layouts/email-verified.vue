@@ -54,10 +54,12 @@
                 let panel =  this.$refs.panel;
                 if (!panel || panel.contains(event.target)) return console.log('one');;
                 this.visible = false;
+                this.$emit('close');
             },
 
             hide() {
                 this.visible = false;
+                this.$emit('close');
             }
         },
 

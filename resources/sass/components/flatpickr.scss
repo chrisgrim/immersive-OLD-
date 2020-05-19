@@ -7,6 +7,16 @@
         background-color:red;
     }
 }
+.lockedcalendar .flatpickr-calendar.inline {
+    margin: inherit;
+    margin-left: -1.4rem;
+}
+
+@media (max-width: 768px) {
+    .lockedcalendar .flatpickr-calendar.inline {
+        margin: auto;
+    }
+}
 
 .flatpickr-calendar.inline {
     margin: auto;

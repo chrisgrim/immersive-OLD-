@@ -1,41 +1,50 @@
 <template>
     <div class="user-profile grid">
         <section class="user-profile-image">
-            <div v-if="!onSelf || !user.email_verified_at">
-                <div v-if="avatar" class="image non" :style="`background:url('/storage/${avatar}')`">
+
+            <!-- Non Editable User Image --> 
+            <div v-if="!canEditPage">
+                <div v-if="avatar">
+                    <picture>
+                        <source type="image/webp" :srcset="`/storage/${avatar}`"> 
+                        <img class="user-profile-image" :src="`/storage/${avatar.slice(0, -4)}jpg`" :alt="`${loaduser.name}`">
+                    </picture>
                 </div>
-                <div v-else-if="user.gravatar" class="image non" :style="`background:url('${user.gravatar}')center no-repeat;background-size: cover;`"></div>
-                <div v-else class="image non" :style="`background:${user.hexColor}`">
+                <div v-else-if="user.gravatar">
+                    <picture>
+                        <img class="user-profile-image" :src="user.gravatar" :alt="`${loaduser.name}`">
+                    </picture>
+                </div>
+                <div v-else class="user-profile-noimage__text" :style="`background:${user.hexColor}`">
                     <h2>{{loaduser.name.charAt(0)}}</h2>
                 </div>
             </div>
+            
+             <!-- Editable User Image --> 
             <div v-else class="user-profile-image">  
-
                 <label 
                 v-if="avatar"
                 class="user-profile-image__wrapper"
-                :class="{ imageloaded: avatar, imageloading: onUpClass }"
+                :class="{ imageloaded: avatar, imageloading: uploading }"
                 :style="`background:url('/storage/${avatar}')`">
                 <image-upload @loaded="onImageUpload"></image-upload>
-                <CubeSpinner :loading="isLoading"></CubeSpinner>
+                <CubeSpinner :loading="loading"></CubeSpinner>
                 <span class="user-profile-image__update-text">
-                    <p v-if="onUpClass">Loading</p>
-                    <p v-else="onUpClass">Update</p>
-                    <p class="error" v-if="validationErrors.wrong" v-text="validationErrors.wrong"></p>
+                    <p v-if="uploading">Loading</p>
+                    <p v-else="uploading">Update</p>
                 </span>
                 </label>
 
                 <label
                 v-else-if="user.gravatar"
                 class="user-profile-image__wrapper"
-                :class="{ imageloaded: avatar, imageloading: onUpClass }"
+                :class="{ imageloaded: avatar, imageloading: uploading }"
                 :style="`background:url('${user.gravatar}')center no-repeat;background-size: cover;`">
                 <image-upload @loaded="onImageUpload"></image-upload>
-                <CubeSpinner :loading="isLoading"></CubeSpinner>
+                <CubeSpinner :loading="loading"></CubeSpinner>
                 <span class="user-profile-image__update-text">
-                    <p v-if="onUpClass">Loading</p>
-                    <p v-else="onUpClass">Update</p>
-                    <p class="error" v-if="validationErrors.wrong" v-text="validationErrors.wrong"></p>
+                    <p v-if="uploading">Loading</p>
+                    <p v-else="uploading">Update</p>
                 </span>
 
                 </label>
@@ -45,34 +54,29 @@
                     </div>
                     <label 
                     class="profile-wrapper"
-                    :class="{ imageloaded: avatar, imageloading: onUpClass }">
+                    :class="{ imageloaded: avatar, imageloading: uploading }">
                     <image-upload @loaded="onImageUpload"></image-upload>
-                    <CubeSpinner :loading="isLoading"></CubeSpinner>
+                    <CubeSpinner :loading="loading"></CubeSpinner>
                     <span class="user-profile-image__update-text">
-                        <p v-if="onUpClass">Loading</p>
-                        <p v-else="onUpClass">Update</p>
-                        <p class="error" v-if="validationErrors.wrong" v-text="validationErrors.wrong"></p>
+                        <p v-if="uploading">Loading</p>
+                        <p v-else="uploading">Update</p>
                     </span>
                     </label>
                 </div>
 
-                <input 
-                type="hidden" 
-                name="profileImagePath"
-                v-model="avatar"
-                @input="$v.avatar.$touch()"
-                />
 
-                <div v-if="$v.avatar.$error" class="validation-error">
-                    <p class="error" v-if="!$v.avatar.fileSize">Image size is over 20MB</p>
-                    <p class="error" v-if="!$v.finalImage.fileType">Needs to be a Jpg, Png or Gif</p>
-                    <p class="error" v-if="!$v.finalImage.imageRatio">Needs to be at least 400 x 400</p>
-                    <p class="error" v-if="!$v.finalImage.auth">you don't have permission to edit</p>
+                <div v-if="$v.imageFile.$error" class="validation-error">
+                    <p class="error" v-if="!$v.imageFile.fileSize">Image size is over 20MB</p>
+                    <p class="error" v-if="!$v.imageFile.fileType">Needs to be a Jpg, Png or Gif</p>
+                    <p class="error" v-if="!$v.imageFile.imageRatio">Needs to be at least 400 x 400</p>
+                    <p class="error" v-if="!$v.imageFile.auth">you don't have permission to edit</p>
                 </div>
             </div>
         </section>
+
+         <!-- User information Section --> 
         <section class="user-enter-profile">
-            <div v-show="onUserEdit">
+            <div v-show="onEditUser">
                 <div class="field">
                     <div class="text">
                         <div class="field">
@@ -80,9 +84,9 @@
                             <input 
                             type="text" 
                             v-model="user.name"
-                            :class="{ active: activeItem == 'user','error': $v.user.name.$error }"
-                            @click="activeItem = 'website'"
-                            @blur="activeItem = null"
+                            :class="{ active: active == 'user','error': $v.user.name.$error }"
+                            @click="active = 'website'"
+                            @blur="active = null"
                             @input="$v.user.name.$touch"
                             />
                             <div v-if="$v.user.name.$error" class="validation-error">
@@ -96,11 +100,11 @@
                             <input 
                             ref="autocomplete" 
                             :placeholder="locationPlaceholder ? locationPlaceholder : 'Choose your location'"
-                            :class="{ active: activeItem == 'location'}"
+                            :class="{ active: active == 'location'}"
                             autocomplete="false"
                             onfocus="value = ''" 
-                            @click="activeItem = 'location'"
-                            @blur="activeItem = null"
+                            @click="active = 'location'"
+                            @blur="active = null"
                             type="text"
                             />
                         </div>
@@ -109,9 +113,9 @@
                             <input 
                             type="email" 
                             v-model="user.email"
-                            :class="{ active: activeItem == 'email','error': $v.user.email.$error }"
-                            @click="activeItem = 'email'"
-                            @blur="activeItem = null"
+                            :class="{ active: active == 'email','error': $v.user.email.$error }"
+                            @click="active = 'email'"
+                            @blur="active = null"
                             @input="$v.user.email.$touch"
                             />
                             <div v-if="$v.user.email.$error" class="validation-error">
@@ -121,13 +125,13 @@
                             </div>
                         </div>
                         <div class="">
-                            <button :disabled="dis" @click.prevent="submitUser()" class="save"> Save </button>
-                            <button @click.prevent="onUserEdit=false" class="cancel"> Cancel </button>
+                            <button :disabled="disabled" @click.prevent="onSubmit()" class="save"> Save </button>
+                            <button @click.prevent="onEditUser=false" class="cancel"> Cancel </button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div v-show="!onUserEdit">
+            <div v-show="!onEditUser">
                 <div class="profile-user-name">
                     <h1>{{user.name}}</h1>
                 </div>
@@ -135,13 +139,13 @@
                     <div class="profile-user-info">
                         Member since {{user.created_at | formatDate }}
                     </div>
-                    <div v-if="onSelf && user.email_verified_at" class="profile-user-edit" @click="userEdit">
+                    <div v-if="canEditPage" class="profile-user-edit" @click="onEditUser = true">
                         Edit profile
                     </div>
-                    <button :disabled="dis" @click.prevent="resend" class="ver" v-if="onSelf && !user.email_verified_at && !onSent">
+                    <button :disabled="disabled" @click.prevent="resend" class="verify-email" v-if="userOwnsPage && !user.email_verified_at && !onSent">
                         Please verify your account.
                     </button>
-                    <div class="ver a" v-if="onSelf && !user.email_verified_at && onSent">
+                    <div class="ver a" v-if="userOwnsPage && !user.email_verified_at && onSent">
                         Please check your email.
                     </div>
                 </div>
@@ -160,19 +164,20 @@
 <script>
     import _ from 'lodash';
     import ImageUpload from '../layouts/image-upload.vue'
-    import Multiselect from 'vue-multiselect'
     import { required, maxLength, email } from 'vuelidate/lib/validators'
     import CubeSpinner  from '../layouts/loading.vue'
     import moment from 'moment'
+    import profileLocationMixin from './components/profile-location-mixin'
+    import formValidationMixin from '../../mixins/form-validation-mixin'
 
 
     export default {
 
-        props: ['loaduser', 'events', 'loc', 'auth'],
+        props: ['loaduser', 'events', 'auth'],
 
-        components: {
-            Multiselect, ImageUpload, CubeSpinner
-        },
+        mixins: [profileLocationMixin, formValidationMixin],
+
+        components: { ImageUpload, CubeSpinner },
 
         computed: {
             locationPlaceholder() {
@@ -186,42 +191,60 @@
                     return ' the ' + this.location.country
                 }
             },
+
+            userOwnsPage() {
+                return parseFloat(this.auth) == this.loaduser.id ? true : false
+            },
+
+            canEditPage() {
+                return this.userOwnsPage && this.user.email_verified_at
+            },
+
+            submitObject() {
+                return {
+                    name: this.user.name,
+                    location:this.location,
+                    email: this.user.email,
+                }
+            },
+
+            endPoint() {
+                return `/users/${this.user.id}`;
+            }
         },
 
         data() {
             return {
                 user: this.loaduser,
-                avatar: '',
-                location: this.loc[0] ? this.loc[0] : {},
-                gettingLocation: false,
-                errorStr:'',
-                finalImage: '',
-                onSelf: parseFloat(this.auth) == this.loaduser.id ? true : false,
-                activeItem: null,
-                isLoading: false,
-                onUserEdit: false,
-                onUpClass: false,
-                validationErrors: '',
+                avatar: this.loaduser.thumbImagePath ? this.loaduser.thumbImagePath : '',
+                location: this.loaduser.location ?  this.loaduser.location : this.initializeLocationObject(),
+                imageFile: '',
+                active: null,
+                loading: false,
+                serverErrors: [],
+                onEditUser: false,
+                uploading: false,
                 onSent: false,
-                dis: false,
+                disabled: false,
                 webp: '',
+                formData: new FormData(),
             }
         },
 
         methods: {
 
-            userEdit() {
-                this.onUserEdit=true;
-                this.validationErrors = '';
-            },
-
-            canUseWebP() {
-                let webp = (document.createElement('canvas').toDataURL('image/webp').indexOf('data:image/webp') == 0);
-                if (this.loaduser.thumbImagePath && webp) {
-                    return this.avatar = this.loaduser.thumbImagePath
-                };
-                if (this.loaduser.thumbImagePath) {
-                    return this.avatar = `${this.loaduser.thumbImagePath.slice(0, -4)}jpg`
+            initializeLocationObject() {
+                return {
+                    street:  '',
+                    city:  '',
+                    region: '',
+                    country: '',
+                    postal_code: '',
+                    hiddenLocation: '',
+                    hiddenLocationToggle: 0,
+                    latitude: '',
+                    longitude: '',
+                    home: '',
                 }
             },
 
@@ -238,11 +261,11 @@
             },
 
             resend() {
-                this.dis = true;
+                this.disabled = true;
                 axios.post(`/email/resend`)
                 .then(response => {
                     this.onSent = true;
-                    this.dis = false;
+                    this.disabled = false;
                     console.log(response.data)
                 })
                 .catch(errorResponse => { 
@@ -251,115 +274,51 @@
             },
 
             onImageUpload(image) {
-
-                this.finalImage = image.file;
-                this.finalImage.width = image.width;
-                this.finalImage.height = image.height;
-                this.validationErrors = '';
+                this.imageFile = image;
                 this.$v.$touch(); 
                 if (this.$v.$invalid) { return false };
-                // this.imageSrc = image.src;
-                this.onUpClass = true;
-                // this.avatar = image.src;
-                this.addImage(image);
+                this.onAddImage();
             },
 
-            setPlace() {
-                let place = this.autocomplete.getPlace();
-                this.center = L.latLng(place.geometry.location.lat(), place.geometry.location.lng());
-                this.getAddressObject(place.address_components, place.geometry.location.lat(), place.geometry.location.lng());
-            },
-
-            addImage(image) {
-
-                this.isLoading = true;
-                this.dis = true;
-
-                let data = new FormData();
-                data.append('image', this.finalImage);
-                data.append('_method', 'PATCH');
-
-                axios.post(`/users/${this.user.id}`, data)
+            onAddImage() {
+                this.onToggle();
+                this.formData.append('image', this.imageFile.file);
+                this.formData.append('_method', 'PATCH');
+                axios.post(this.endPoint, this.formData)
                 .then(response => {
                     location.reload();
                 })
-                .catch(errorResponse => { 
-                    console.log(errorResponse.data)
-                    console.log('failed');
-                    errorResponse.data ? this.validationErrors = errorResponse.response.data.errors : this.validationErrors = {wrong: 'sorry! something has gone wrong'}; 
-                    this.avatar = '/storage/website-files/default-user-icon.jpg';
-                    this.isLoading = false;
-                    this.onUpClass = false;
-                    this.dis = false; 
-                });
+                .catch(err => {  console.log(err); });
             },
 
-            submitUser() {
-                this.$v.$touch(); 
-                if (this.$v.$invalid) { return false };
-                this.dis = true;
-                let data = {
-                    name: this.user.name,
-                    location:this.location,
-                    email: this.user.email,
-                };
-
-                axios.patch(`/users/${this.user.id}`, data)
-                .then(response => {
-                    console.log(response.data);
-                    this.onUserEdit = false;
-                    this.dis = false
+            onSubmit() {
+                if (this.checkVuelidate()) { return false };
+                axios.patch(this.endPoint, this.submitObject)
+                .then(res => {
+                    this.onEditUser = false;
+                    this.disabled = false
                 })
-                .catch(errorResponse => { 
-                    this.validationErrors = errorResponse.response.data.errors;
-                    this.dis = false
+                .catch(err => {
+                    this.onErrors(err);
                 });
             },
-            // Gets data from Google Maps and inputs into Vue forms correctly
-            getAddressObject(address_components, geometryLat, geometryLgn) {
-                var ShouldBeComponent = {
-                    home: ["street_number"],
-                    postal_code: ["postal_code"],
-                    street: ["street_address", "route"],
-                    region: [
-                        "administrative_area_level_1",
-                        "administrative_area_level_2",
-                        "administrative_area_level_3",
-                        "administrative_area_level_4",
-                        "administrative_area_level_5"
-                    ],
-                    city: [
-                        "locality",
-                        "sublocality",
-                        "sublocality_level_1",
-                        "sublocality_level_2",
-                        "sublocality_level_3",
-                        "sublocality_level_4"
-                    ],
-                    country: ["country"]
-                };
-                this.location = {
-                    home: "",
-                    postal_code: "",
-                    street: "",
-                    region: "",
-                    city: "",
-                    country: "",
-                    latitude: geometryLat,
-                    longitude: geometryLgn
-                };
-                address_components.forEach(component => {
-                    for (var shouldBe in ShouldBeComponent) {
-                        if (ShouldBeComponent[shouldBe].indexOf(component.types[0]) !== -1) {
-                            if (shouldBe === "country") {
-                                this.location[shouldBe] = component.short_name;
-                            } else {
-                                this.location[shouldBe] = component.long_name;
-                            }
-                        }
-                    }
-                });
+
+            onToggle() {
+                this.uploading = true;
+                this.loading = true;
+                this.disabled = true;
             },
+
+            canUseWebP() {
+                let webp = (document.createElement('canvas').toDataURL('image/webp').indexOf('data:image/webp') == 0);
+                if (this.loaduser.thumbImagePath && webp) {
+                    return this.avatar = this.loaduser.thumbImagePath
+                };
+                if (this.loaduser.thumbImagePath) {
+                    return this.avatar = `${this.loaduser.thumbImagePath.slice(0, -4)}jpg`
+                }
+            },
+            
         },
 
         mounted() {
@@ -381,15 +340,15 @@
         },
 
         validations: {
-            avatar: {
+            imageFile: {
                 fileSize() { 
-                    return this.finalImage ? this.finalImage.size < 20971520 : true 
+                    return this.imageFile ? this.imageFile.file.size < 20971520 : true 
                 },
                 fileType() {
-                    return this.finalImage ? ['image/jpeg','image/png','image/gif'].includes(this.finalImage.type) : true
+                    return this.imageFile ? ['image/jpeg','image/png','image/gif'].includes(this.imageFile.file.type) : true
                 },
                 imageRatio() {
-                    return this.finalImage ? this.finalImage.width > 500 && this.finalImage.height > 500 : true 
+                    return this.imageFile ? this.imageFile.width > 500 && this.imageFile.height > 500 : true 
                 },
                 auth() {
                     return this.auth ? this.auth !== this.user.id : true

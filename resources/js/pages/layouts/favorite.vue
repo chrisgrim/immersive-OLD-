@@ -1,6 +1,6 @@
 <template>
 	<div class="fav">
-        <div v-if="user && this.$cookies.isKey('news') ? true : false" :class="inputclass">
+        <div :class="inputclass">
             <div :class="isApproved">
                 <a href="#" @click.prevent="toggle()">
                     <svg viewBox="0 0 38 38" :class="classes">
@@ -9,24 +9,8 @@
                 </a>
             </div>
         </div>
-        <div v-else-if="user ? true : false" :class="inputclass">
-            <div :class="isApproved">
-                <a href="#" @click.prevent="isModalVisible=true">
-                    <svg viewBox="0 0 38 38" :class="classes">
-                        <path d="m23.99 2.75c-.3 0-.6.02-.9.05-1.14.13-2.29.51-3.41 1.14-1.23.68-2.41 1.62-3.69 2.94-1.28-1.32-2.46-2.25-3.69-2.94-1.12-.62-2.27-1-3.41-1.14a7.96 7.96 0 0 0 -.9-.05c-1.88 0-7.26 1.54-7.26 8.38 0 7.86 12.24 16.33 14.69 17.95a1 1 0 0 0 1.11 0c2.45-1.62 14.69-10.09 14.69-17.95 0-6.84-5.37-8.38-7.26-8.38"></path>
-                    </svg>
-                </a>
-            </div>
-        </div>
-        <div v-else :class="inputclass">
-            <a href="#" @click.prevent="login = true;">
-                <svg viewBox="0 0 38 38" :class="classes">
-                    <path d="m23.99 2.75c-.3 0-.6.02-.9.05-1.14.13-2.29.51-3.41 1.14-1.23.68-2.41 1.62-3.69 2.94-1.28-1.32-2.46-2.25-3.69-2.94-1.12-.62-2.27-1-3.41-1.14a7.96 7.96 0 0 0 -.9-.05c-1.88 0-7.26 1.54-7.26 8.38 0 7.86 12.24 16.33 14.69 17.95a1 1 0 0 0 1.11 0c2.45-1.62 14.69-10.09 14.69-17.95 0-6.84-5.37-8.38-7.26-8.38"></path>
-                </svg>
-            </a>
-        </div>
         <login-pop v-if="login" :visible="login" @close="login=false"></login-pop>
-        <modal :modalclass="modalwidth" v-if="isModalVisible" @close="isModalVisible=false">
+        <modal :modalclass="modalwidth" v-if="modal" @close="modal=false">
             <div slot="header">
             </div>
             <div slot="body"> 
@@ -48,6 +32,12 @@
                 <button  class="btn sub" @click="updateNewsletter">Done</button>
             </div>
         </modal>
+         <vue-email-verify
+        v-if="isVerifyVisible"
+        @close="isVerifyVisible = false"
+        :user="user" 
+        message="verify">
+        </vue-email-verify>
 	</div>
 </template>
 
@@ -55,38 +45,46 @@
 	export default {
 		props: ['event', 'inputclass'],
 
-		data() {
-			return {
-				isFavorited: this.event.isFavorited,
-                isModalVisible: false,
-                login: false,
-                modalwidth:'newsletter',
-                newsletter: true,
-			}
-		},
+        computed: {
+            classes() {
+                return ['fa', this.isFavorited ? 'hearted' : 'unhearted'];
+            },
 
-		computed: {
-			classes() {
-				return ['fa', this.isFavorited ? 'hearted' : 'unhearted'];
-			},
+            endpoint() {
+                return '/favorite/' + this.event.slug + '/favorites';
+            },
 
-			endpoint() {
-				return '/favorite/' + this.event.slug + '/favorites';
-			},
             isApproved() {
                 return this.event.status !== 'p' ? 'dis' : '';
             },
-            user() {
-                return this.$store.state.user ? this.$store.state.user : ''
-            },
-            cookies() {
-                return this.$cookies.isKey('news')
-            }
+        },
+
+		data() {
+			return {
+                user: this.$store.state.user ? this.$store.state.user : '',
+				isFavorited: this.event.isFavorited,
+                modal: false,
+                login: false,
+                isVerifyVisible: false,
+                modalwidth:'newsletter',
+                newsletter: true,
+                canFavorite: this.$store.state.user && this.$store.state.user.email_verified_at ? true : false,
+                hasCookie: this.$cookies.isKey('news'),
+			}
 		},
 
 		methods: {
 			toggle() {
-				return this.isFavorited ? this.destroy() : this.create();
+                if (this.canFavorite && this.hasCookie) {
+                    return this.isFavorited ? this.destroy() : this.create();
+                }
+                if (this.canFavorite) {
+                    return this.modal = true;
+                }
+                if (this.user) {
+                    return this.isVerifyVisible = true;
+                }
+                return this.login = true;
 			},
 
             updateNewsletter() {
@@ -126,8 +124,8 @@
 		},
 
         watch: {
-            isModalVisible() {
-                return this.isModalVisible ? this.toggleBodyClass('addClass', 'noscroll') : this.toggleBodyClass('removeClass', 'noscroll');
+            modal() {
+                return this.modal ? this.toggleBodyClass('addClass', 'noscroll') : this.toggleBodyClass('removeClass', 'noscroll');
             },
             login() {
                 return this.login ? this.toggleBodyClass('addClass', 'noscroll') : this.toggleBodyClass('removeClass', 'noscroll');

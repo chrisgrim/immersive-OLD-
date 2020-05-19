@@ -29,8 +29,8 @@ class ProfilesController extends Controller
     public function show(User $user)
     {
         $events = $user->favouritedEvents()->get()->load('organizer');
-        $loc = $user->location()->get();
-        return view('profiles.index', compact('user', 'events', 'loc'));
+        $user->load('location');
+        return view('profiles.index', compact('user', 'events'));
     }
 
     public function account()

@@ -22,6 +22,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var flatpickr_dist_flatpickr_css__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(flatpickr_dist_flatpickr_css__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var v_money__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! v-money */ "./node_modules/v-money/dist/v-money.js");
 /* harmony import */ var v_money__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(v_money__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vue-multiselect */ "./node_modules/vue-multiselect/dist/vue-multiselect.min.js");
+/* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(vue_multiselect__WEBPACK_IMPORTED_MODULE_7__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -422,6 +426,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -434,7 +457,8 @@ __webpack_require__.r(__webpack_exports__);
   mixins: [_mixins_form_validation_mixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
   components: {
     flatPickr: vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_4___default.a,
-    Money: v_money__WEBPACK_IMPORTED_MODULE_6__["Money"]
+    Money: v_money__WEBPACK_IMPORTED_MODULE_6__["Money"],
+    Multiselect: vue_multiselect__WEBPACK_IMPORTED_MODULE_7___default.a
   },
   computed: {
     endpoint: function endpoint() {
@@ -456,27 +480,29 @@ __webpack_require__.r(__webpack_exports__);
         'dates': Array.isArray(this.dates) ? this.dates : this.dateArray,
         'showtimes': this.showTimes,
         'tickets': this.tickets,
-        'shows': this.selectedTab == 's' ? true : false,
+        'shows': this.showType == 'Specific Dates' ? true : false,
         'embargo_date': this.showEmbargoDate ? this.embargoDate : null,
-        'week': this.week && this.selectedTab == 'a' ? lodash__WEBPACK_IMPORTED_MODULE_2___default.a.mapValues(this.week, function () {
+        'week': this.week && this.showType == 'Anytime' ? lodash__WEBPACK_IMPORTED_MODULE_2___default.a.mapValues(this.week, function () {
           return true;
         }) : this.week,
-        'onGoing': this.selectedTab == 'o' ? true : false,
-        'always': this.selectedTab == 'a' ? true : false
+        'onGoing': this.showType == 'Ongoing' ? true : false,
+        'always': this.showType == 'Anytime' ? true : false
       };
     }
   },
   data: function data() {
-    return {
+    var _ref;
+
+    return _ref = {
       eventUrl: "/create-event/".concat(this.event.slug),
-      selectedTab: this.event.showtype ? this.event.showtype : 's',
+      showType: this.event.showtype ? this.event.showtype : 's',
       dates: this.event.shows ? this.event.shows.map(function (a) {
         return a.date;
       }) : '',
       embargoDate: this.event.embargo_date ? this.event.embargo_date : '',
       showEmbargoDate: this.event.embargo_date ? true : false,
       calendarConfig: this.initializeCalendarObject(),
-      mobileCalendarConfig: this.initializeCalendarObject(),
+      mobileCalendarConfig: this.initializeMobileCalendarObject(),
       embargoCalendarConfig: this.initializeCalendarObject(),
       week: this.event.show_on_going ? this.event.show_on_going : this.initializeWeekObject(),
       tickets: this.event.shows.length ? this.event.shows[0].tickets : [this.initializeTicketObject()],
@@ -489,7 +515,7 @@ __webpack_require__.r(__webpack_exports__);
       placeholders: 'Please provide a brief description of show times. For example:' + '\n' + '\n' + '“Doors at 7, Show at 8.”' + '\n' + '“Two shows an hour from 8-10.”',
       placeholdero: 'Please provide a brief description of weekly show times. For example:' + '\n' + '\n' + '10:00PM shows on Monday & Tuesday.' + '\n' + '12:00PM on Wednesday and Thursday.',
       placeholdera: 'Please provide a brief description of daily times. For example:' + '\n' + '\n' + 'Show begins everyday at 12PM.' + '\n' + 'Enjoy at any time.'
-    };
+    }, _defineProperty(_ref, "showType", ''), _defineProperty(_ref, "showTypeOptions", ['Specific Dates', 'Ongoing', 'Anytime']), _ref;
   },
   methods: {
     initializeCalendarObject: function initializeCalendarObject() {
@@ -499,6 +525,16 @@ __webpack_require__.r(__webpack_exports__);
         mode: "multiple",
         inline: true,
         showMonths: 2,
+        dateFormat: 'Y-m-d H:i:s'
+      };
+    },
+    initializeMobileCalendarObject: function initializeMobileCalendarObject() {
+      return {
+        minDate: "today",
+        maxDate: new Date().fp_incr(180),
+        mode: "multiple",
+        inline: true,
+        showMonths: 1,
         dateFormat: 'Y-m-d H:i:s'
       };
     },
@@ -542,9 +578,6 @@ __webpack_require__.r(__webpack_exports__);
     deleteRow: function deleteRow(index) {
       this.$delete(this.tickets, index);
     },
-    selectTab: function selectTab(value) {
-      this.selectedTab = value;
-    },
     addWeekDay: function addWeekDay(day) {
       this.week[day] = !this.week[day];
     },
@@ -552,16 +585,41 @@ __webpack_require__.r(__webpack_exports__);
       this.tickets.push(this.initializeTicketObject());
     },
     onLoad: function onLoad() {
-      this.mobileCalendarConfig.showMonths = 1;
+      var _this = this;
+
       this.embargoCalendarConfig.showMonths = 1;
       this.embargoCalendarConfig.mode = 'single';
+
+      if (this.event.showtype == 'a') {
+        return this.showType = 'Anytime';
+      }
+
+      ;
+
+      if (this.event.showtype == 'o') {
+        return this.showType = 'Ongoing';
+      }
+
+      ;
+
+      if (this.event.showtype == 's') {
+        return this.showType = 'Specific Dates';
+      }
+
+      ;
+      axios.get(this.onFetch('shows')).then(function (res) {
+        res.data.dates ? _this.dates = res.data.dates : '';
+        res.data.week ? _this.week = res.data.week : '';
+        res.data.tickets ? _this.tickets = res.data.tickets[0].tickets : '';
+        res.data.showTimes ? _this.showTimes = res.data.showTimes : '';
+      });
     },
     checkFreeTicket: function checkFreeTicket() {
-      var _this = this;
+      var _this2 = this;
 
       this.tickets.map(function (value) {
         if (value.ticket_price == 0) {
-          return _this.modal = true;
+          return _this2.modal = true;
         }
 
         ;
@@ -577,7 +635,7 @@ __webpack_require__.r(__webpack_exports__);
       this.disabled = false;
     },
     onSubmit: function onSubmit() {
-      var _this2 = this;
+      var _this3 = this;
 
       if (this.checkVuelidate()) {
         return false;
@@ -594,18 +652,18 @@ __webpack_require__.r(__webpack_exports__);
       axios.post(this.endpoint, this.submitObject).then(function (res) {
         console.log(res.data);
 
-        _this2.onForward('description');
+        _this3.onForward('description');
       })["catch"](function (err) {
-        _this2.onErrors(err);
+        _this3.onErrors(err);
       });
     }
   },
   mounted: function mounted() {
-    var _this3 = this;
+    var _this4 = this;
 
     this.onLoad();
     setTimeout(function () {
-      return _this3.$refs.datePicker.fp.jumpToDate(new Date());
+      return _this4.$refs.datePicker.fp.jumpToDate(new Date());
     }, 100);
   },
   validations: {
@@ -629,12 +687,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     dates: {
       ifDates: function ifDates() {
-        return this.selectedTab == 's' ? this.dates.length ? true : false : true;
+        return this.showType == 'Specific Dates' ? this.dates.length ? true : false : true;
       }
     },
     week: {
       ifOngoing: function ifOngoing() {
-        return this.selectedTab == 'o' ? this.week.mon == 1 || this.week.tue == 1 || this.week.wed == 1 || this.week.thu == 1 || this.week.fri == 1 || this.week.sat == 1 || this.week.sun == 1 ? true : false : true;
+        return this.showType == 'Ongoing' ? this.week.mon == 1 || this.week.tue == 1 || this.week.wed == 1 || this.week.thu == 1 || this.week.fri == 1 || this.week.sat == 1 || this.week.sun == 1 ? true : false : true;
       }
     }
   }
@@ -672,1948 +730,1809 @@ var render = function() {
     "div",
     { staticClass: "event-create__shows" },
     [
-      _c(
-        "div",
-        { staticClass: "listing-details-block" },
-        [
+      _c("section", {}, [
+        _c("div", { staticClass: "listing-details-block" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "show-type-selection" }, [
+            _c(
+              "div",
+              { staticClass: "field" },
+              [
+                _c("label", { staticClass: "area" }, [
+                  _vm._v("Select your show type")
+                ]),
+                _vm._v(" "),
+                _c("multiselect", {
+                  class: { active: _vm.active == "type" },
+                  attrs: {
+                    "show-labels": false,
+                    options: _vm.showTypeOptions,
+                    placeholder: "Show Type",
+                    "open-direction": "bottom",
+                    allowEmpty: false
+                  },
+                  on: {
+                    click: function($event) {
+                      _vm.active = "type"
+                    },
+                    blur: function($event) {
+                      _vm.active = null
+                    }
+                  },
+                  model: {
+                    value: _vm.showType,
+                    callback: function($$v) {
+                      _vm.showType = $$v
+                    },
+                    expression: "showType"
+                  }
+                })
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
           _c(
-            "tabs",
-            { on: { current: _vm.selectTab } },
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.showType == "Specific Dates",
+                  expression: "showType == 'Specific Dates'"
+                }
+              ],
+              staticClass: "specific-show-dates container grid"
+            },
             [
-              _c(
-                "tab",
-                {
-                  staticClass: "event-create-tab__section",
-                  attrs: {
-                    id: "s",
-                    title: "Specific Show Dates",
-                    active: _vm.event.showtype == "s"
-                  }
-                },
-                [
-                  _c(
-                    "div",
-                    { staticClass: "specific-show-dates container grid" },
-                    [
-                      _c("section", { staticClass: "event-enter-showtimes" }, [
-                        _c("div", { staticClass: "field" }, [
-                          _c("label", [_vm._v(" Show Times")]),
-                          _vm._v(" "),
-                          _c("textarea", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.showTimes,
-                                expression: "showTimes"
-                              }
-                            ],
-                            staticClass: "create-input area",
-                            class: {
-                              active: _vm.active == "times",
-                              error: _vm.$v.showTimes.$error
-                            },
-                            attrs: {
-                              rows: "8",
-                              placeholder: _vm.placeholders,
-                              required: "",
-                              autofocus: ""
-                            },
-                            domProps: { value: _vm.showTimes },
-                            on: {
-                              click: function($event) {
-                                _vm.active = "times"
-                              },
-                              blur: function($event) {
-                                _vm.active = null
-                              },
-                              input: [
-                                function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.showTimes = $event.target.value
-                                },
-                                _vm.$v.showTimes.$touch
-                              ]
-                            }
-                          }),
-                          _vm._v(" "),
-                          _vm.$v.showTimes.$error
-                            ? _c("div", { staticClass: "validation-error" }, [
-                                !_vm.$v.showTimes.required
-                                  ? _c("p", { staticClass: "error" }, [
-                                      _vm._v(
-                                        "Please give a brief description of show times"
-                                      )
-                                    ])
-                                  : _vm._e()
-                              ])
-                            : _vm._e()
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "field cost" }, [
-                          _c("label", { staticClass: "area" }, [
-                            _vm._v(" Ticket types and prices ")
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "create-shows__ticket-box" },
-                            _vm._l(_vm.$v.tickets.$each.$iter, function(
-                              v,
-                              index
-                            ) {
-                              return _c(
-                                "div",
-                                { staticClass: "ticket-box__element grid" },
-                                [
-                                  _c("div", { staticClass: "field" }, [
-                                    _c("label", [_vm._v("Ticket Type")]),
-                                    _vm._v(" "),
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: v.name.$model,
-                                          expression: "v.name.$model"
-                                        }
-                                      ],
-                                      staticClass: "create-input",
-                                      class: {
-                                        active: _vm.active == "ticket",
-                                        error: v.name.$error
-                                      },
-                                      attrs: {
-                                        name: "name",
-                                        placeholder: "ex: General, VIP, Student"
-                                      },
-                                      domProps: { value: v.name.$model },
-                                      on: {
-                                        click: function($event) {
-                                          _vm.active = "ticket"
-                                        },
-                                        blur: function($event) {
-                                          _vm.active = null
-                                        },
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.$set(
-                                            v.name,
-                                            "$model",
-                                            $event.target.value
-                                          )
-                                        }
-                                      }
-                                    }),
-                                    _vm._v(" "),
-                                    v.name.$error
-                                      ? _c(
-                                          "div",
-                                          { staticClass: "validation-error" },
-                                          [
-                                            !v.name.required
-                                              ? _c(
-                                                  "p",
-                                                  { staticClass: "error" },
-                                                  [
-                                                    _vm._v(
-                                                      "Must enter a ticket name"
-                                                    )
-                                                  ]
-                                                )
-                                              : _vm._e(),
-                                            _vm._v(" "),
-                                            !v.name.maxLength
-                                              ? _c(
-                                                  "p",
-                                                  { staticClass: "error" },
-                                                  [_vm._v("Name is too Long")]
-                                                )
-                                              : _vm._e()
-                                          ]
-                                        )
-                                      : _vm._e()
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "field" }, [
-                                    _c("label", [_vm._v("Ticket Price")]),
-                                    _vm._v(" "),
-                                    _vm.money.type === "checkbox"
-                                      ? _c(
-                                          "input",
-                                          _vm._b(
-                                            {
-                                              directives: [
-                                                {
-                                                  name: "model",
-                                                  rawName: "v-model",
-                                                  value: v.ticket_price.$model,
-                                                  expression:
-                                                    "v.ticket_price.$model"
-                                                },
-                                                {
-                                                  name: "money",
-                                                  rawName: "v-money",
-                                                  value: _vm.money,
-                                                  expression: "money"
-                                                }
-                                              ],
-                                              class: {
-                                                active: _vm.active == "price",
-                                                error: v.ticket_price.$error
-                                              },
-                                              staticStyle: {
-                                                "text-align": "right"
-                                              },
-                                              attrs: {
-                                                placeholder: "$0.00",
-                                                type: "checkbox"
-                                              },
-                                              domProps: {
-                                                checked: Array.isArray(
-                                                  v.ticket_price.$model
-                                                )
-                                                  ? _vm._i(
-                                                      v.ticket_price.$model,
-                                                      null
-                                                    ) > -1
-                                                  : v.ticket_price.$model
-                                              },
-                                              on: {
-                                                click: function($event) {
-                                                  _vm.active = "price"
-                                                },
-                                                blur: function($event) {
-                                                  _vm.active = null
-                                                },
-                                                keydown: function($event) {
-                                                  $event.key === "-"
-                                                    ? $event.preventDefault()
-                                                    : null
-                                                },
-                                                change: function($event) {
-                                                  var $$a =
-                                                      v.ticket_price.$model,
-                                                    $$el = $event.target,
-                                                    $$c = $$el.checked
-                                                      ? true
-                                                      : false
-                                                  if (Array.isArray($$a)) {
-                                                    var $$v = null,
-                                                      $$i = _vm._i($$a, $$v)
-                                                    if ($$el.checked) {
-                                                      $$i < 0 &&
-                                                        _vm.$set(
-                                                          v.ticket_price,
-                                                          "$model",
-                                                          $$a.concat([$$v])
-                                                        )
-                                                    } else {
-                                                      $$i > -1 &&
-                                                        _vm.$set(
-                                                          v.ticket_price,
-                                                          "$model",
-                                                          $$a
-                                                            .slice(0, $$i)
-                                                            .concat(
-                                                              $$a.slice($$i + 1)
-                                                            )
-                                                        )
-                                                    }
-                                                  } else {
-                                                    _vm.$set(
-                                                      v.ticket_price,
-                                                      "$model",
-                                                      $$c
-                                                    )
-                                                  }
-                                                }
-                                              }
-                                            },
-                                            "input",
-                                            _vm.money,
-                                            false
-                                          )
-                                        )
-                                      : _vm.money.type === "radio"
-                                      ? _c(
-                                          "input",
-                                          _vm._b(
-                                            {
-                                              directives: [
-                                                {
-                                                  name: "model",
-                                                  rawName: "v-model",
-                                                  value: v.ticket_price.$model,
-                                                  expression:
-                                                    "v.ticket_price.$model"
-                                                },
-                                                {
-                                                  name: "money",
-                                                  rawName: "v-money",
-                                                  value: _vm.money,
-                                                  expression: "money"
-                                                }
-                                              ],
-                                              class: {
-                                                active: _vm.active == "price",
-                                                error: v.ticket_price.$error
-                                              },
-                                              staticStyle: {
-                                                "text-align": "right"
-                                              },
-                                              attrs: {
-                                                placeholder: "$0.00",
-                                                type: "radio"
-                                              },
-                                              domProps: {
-                                                checked: _vm._q(
-                                                  v.ticket_price.$model,
-                                                  null
-                                                )
-                                              },
-                                              on: {
-                                                click: function($event) {
-                                                  _vm.active = "price"
-                                                },
-                                                blur: function($event) {
-                                                  _vm.active = null
-                                                },
-                                                keydown: function($event) {
-                                                  $event.key === "-"
-                                                    ? $event.preventDefault()
-                                                    : null
-                                                },
-                                                change: function($event) {
-                                                  return _vm.$set(
-                                                    v.ticket_price,
-                                                    "$model",
-                                                    null
-                                                  )
-                                                }
-                                              }
-                                            },
-                                            "input",
-                                            _vm.money,
-                                            false
-                                          )
-                                        )
-                                      : _c(
-                                          "input",
-                                          _vm._b(
-                                            {
-                                              directives: [
-                                                {
-                                                  name: "model",
-                                                  rawName: "v-model",
-                                                  value: v.ticket_price.$model,
-                                                  expression:
-                                                    "v.ticket_price.$model"
-                                                },
-                                                {
-                                                  name: "money",
-                                                  rawName: "v-money",
-                                                  value: _vm.money,
-                                                  expression: "money"
-                                                }
-                                              ],
-                                              class: {
-                                                active: _vm.active == "price",
-                                                error: v.ticket_price.$error
-                                              },
-                                              staticStyle: {
-                                                "text-align": "right"
-                                              },
-                                              attrs: {
-                                                placeholder: "$0.00",
-                                                type: _vm.money.type
-                                              },
-                                              domProps: {
-                                                value: v.ticket_price.$model
-                                              },
-                                              on: {
-                                                click: function($event) {
-                                                  _vm.active = "price"
-                                                },
-                                                blur: function($event) {
-                                                  _vm.active = null
-                                                },
-                                                keydown: function($event) {
-                                                  $event.key === "-"
-                                                    ? $event.preventDefault()
-                                                    : null
-                                                },
-                                                input: function($event) {
-                                                  if ($event.target.composing) {
-                                                    return
-                                                  }
-                                                  _vm.$set(
-                                                    v.ticket_price,
-                                                    "$model",
-                                                    $event.target.value
-                                                  )
-                                                }
-                                              }
-                                            },
-                                            "input",
-                                            _vm.money,
-                                            false
-                                          )
-                                        ),
-                                    _vm._v(" "),
-                                    v.ticket_price.$error
-                                      ? _c(
-                                          "div",
-                                          { staticClass: "validation-error" },
-                                          [
-                                            !v.ticket_price.minValue
-                                              ? _c(
-                                                  "p",
-                                                  { staticClass: "error" },
-                                                  [
-                                                    _vm._v(
-                                                      "Please enter an amount"
-                                                    )
-                                                  ]
-                                                )
-                                              : _vm._e(),
-                                            _vm._v(" "),
-                                            !v.ticket_price.maxLength
-                                              ? _c(
-                                                  "p",
-                                                  { staticClass: "error" },
-                                                  [
-                                                    _vm._v(
-                                                      "Please enter an amount under $10,000"
-                                                    )
-                                                  ]
-                                                )
-                                              : _vm._e(),
-                                            _vm._v(" "),
-                                            !v.ticket_price.required
-                                              ? _c(
-                                                  "p",
-                                                  { staticClass: "error" },
-                                                  [
-                                                    _vm._v(
-                                                      "Please enter a price"
-                                                    )
-                                                  ]
-                                                )
-                                              : _vm._e()
-                                          ]
-                                        )
-                                      : _vm._e(),
-                                    _vm._v(" "),
-                                    _vm.tickets.length > 1
-                                      ? _c(
-                                          "button",
-                                          {
-                                            staticClass: "delete-circle",
-                                            on: {
-                                              click: function($event) {
-                                                $event.preventDefault()
-                                                return _vm.deleteRow(index)
-                                              }
-                                            }
-                                          },
-                                          [_vm._v("X")]
-                                        )
-                                      : _vm._e()
-                                  ])
-                                ]
-                              )
-                            }),
-                            0
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass: "ticket-box__add-button",
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.addTickets($event)
-                                }
-                              }
-                            },
-                            [_c("button", [_vm._v("+ Ticket Types")])]
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("section", { staticClass: "event-enter-showdates" }, [
-                        _c("div", { staticClass: "field" }, [
-                          _c("label", [_vm._v(" Select all show dates")]),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "calendar desktop" },
-                            [
-                              _c("flat-pickr", {
-                                ref: "datePicker",
-                                staticClass: "form-control",
-                                attrs: {
-                                  config: _vm.calendarConfig,
-                                  placeholder: "Select date",
-                                  name: "dates"
-                                },
-                                model: {
-                                  value: _vm.dates,
-                                  callback: function($$v) {
-                                    _vm.dates = $$v
-                                  },
-                                  expression: "dates"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "calendar mobile" },
-                            [
-                              _c("flat-pickr", {
-                                ref: "datePicker",
-                                staticClass: "form-control",
-                                attrs: {
-                                  config: _vm.mobileCalendarConfig,
-                                  placeholder: "Select date",
-                                  name: "dates"
-                                },
-                                model: {
-                                  value: _vm.dates,
-                                  callback: function($$v) {
-                                    _vm.dates = $$v
-                                  },
-                                  expression: "dates"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _vm.$v.dates.$error
-                            ? _c("div", { staticClass: "validation-error" }, [
-                                !_vm.$v.dates.required
-                                  ? _c("p", { staticClass: "error" }, [
-                                      _vm._v("Please add at least 1 show date")
-                                    ])
-                                  : _vm._e()
-                              ])
-                            : _vm._e()
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "field" }, [
-                          _c("label", [
-                            _vm._v(
-                              " Does the event have a specific embargo date? (date you would like it to appear on EI) "
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { attrs: { id: "cover" } }, [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.showEmbargoDate,
-                                  expression: "showEmbargoDate"
-                                }
-                              ],
-                              attrs: { type: "checkbox", id: "checkbox" },
-                              domProps: {
-                                checked: Array.isArray(_vm.showEmbargoDate)
-                                  ? _vm._i(_vm.showEmbargoDate, null) > -1
-                                  : _vm.showEmbargoDate
-                              },
-                              on: {
-                                change: function($event) {
-                                  var $$a = _vm.showEmbargoDate,
-                                    $$el = $event.target,
-                                    $$c = $$el.checked ? true : false
-                                  if (Array.isArray($$a)) {
-                                    var $$v = null,
-                                      $$i = _vm._i($$a, $$v)
-                                    if ($$el.checked) {
-                                      $$i < 0 &&
-                                        (_vm.showEmbargoDate = $$a.concat([
-                                          $$v
-                                        ]))
-                                    } else {
-                                      $$i > -1 &&
-                                        (_vm.showEmbargoDate = $$a
-                                          .slice(0, $$i)
-                                          .concat($$a.slice($$i + 1)))
-                                    }
-                                  } else {
-                                    _vm.showEmbargoDate = $$c
-                                  }
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("div", { attrs: { id: "bar" } }),
-                            _vm._v(" "),
-                            _c("div", { attrs: { id: "knob" } }, [
-                              _vm.showEmbargoDate
-                                ? _c("p", [_vm._v("Yes")])
-                                : _c("p", [_vm._v("No")])
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _vm.showEmbargoDate
-                            ? _c("div", [
-                                _c(
-                                  "div",
-                                  { staticClass: "calendar" },
-                                  [
-                                    _c("flat-pickr", {
-                                      ref: "datePicker",
-                                      staticClass: "form-control",
-                                      attrs: {
-                                        config: _vm.embargoCalendarConfig,
-                                        placeholder: "Select date",
-                                        name: "dates"
-                                      },
-                                      model: {
-                                        value: _vm.embargoDate,
-                                        callback: function($$v) {
-                                          _vm.embargoDate = $$v
-                                        },
-                                        expression: "embargoDate"
-                                      }
-                                    })
-                                  ],
-                                  1
-                                )
-                              ])
-                            : _vm._e()
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "event-create__submit-button" },
-                          [
-                            _c(
-                              "button",
-                              {
-                                staticClass: "create",
-                                attrs: { disabled: _vm.disabled },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.onSubmit()
-                                  }
-                                }
-                              },
-                              [_vm._v(" Next ")]
-                            )
-                          ]
-                        )
-                      ])
-                    ]
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "tab",
-                {
-                  staticClass: "event-create-tab__section",
-                  attrs: {
-                    id: "o",
-                    title: "On-Going Shows",
-                    active: _vm.event.showtype == "o"
-                  }
-                },
-                [
-                  _c(
-                    "div",
-                    { staticClass: "ongoing-show-dates container grid" },
-                    [
-                      _c("section", { staticClass: "event-enter-showtimes" }, [
-                        _c("div", { staticClass: "field" }, [
-                          _c("label", [_vm._v(" Show Times")]),
-                          _vm._v(" "),
-                          _c("textarea", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.showTimes,
-                                expression: "showTimes"
-                              }
-                            ],
-                            staticClass: "create-input area",
-                            class: {
-                              active: _vm.active == "times",
-                              error: _vm.$v.showTimes.$error
-                            },
-                            attrs: {
-                              rows: "8",
-                              placeholder: _vm.placeholdero,
-                              required: "",
-                              autofocus: ""
-                            },
-                            domProps: { value: _vm.showTimes },
-                            on: {
-                              click: function($event) {
-                                _vm.active = "times"
-                              },
-                              blur: function($event) {
-                                _vm.active = null
-                              },
-                              input: [
-                                function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.showTimes = $event.target.value
-                                },
-                                _vm.$v.showTimes.$touch
-                              ]
-                            }
-                          }),
-                          _vm._v(" "),
-                          _vm.$v.showTimes.$error
-                            ? _c("div", { staticClass: "validation-error" }, [
-                                !_vm.$v.showTimes.required
-                                  ? _c("p", { staticClass: "error" }, [
-                                      _vm._v(
-                                        "Please give a brief description of show times"
-                                      )
-                                    ])
-                                  : _vm._e()
-                              ])
-                            : _vm._e()
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "field cost" }, [
-                          _c("label", { staticClass: "area" }, [
-                            _vm._v(" Ticket types and prices ")
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "create-shows__ticket-box" },
-                            _vm._l(_vm.$v.tickets.$each.$iter, function(
-                              v,
-                              index
-                            ) {
-                              return _c(
-                                "div",
-                                { staticClass: "ticket-box__element grid" },
-                                [
-                                  _c("div", { staticClass: "field" }, [
-                                    _c("label", [_vm._v("Ticket Type")]),
-                                    _vm._v(" "),
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: v.name.$model,
-                                          expression: "v.name.$model"
-                                        }
-                                      ],
-                                      staticClass: "create-input",
-                                      class: {
-                                        active: _vm.active == "ticket",
-                                        error: v.name.$error
-                                      },
-                                      attrs: {
-                                        name: "name",
-                                        placeholder: "ex: General, VIP, Student"
-                                      },
-                                      domProps: { value: v.name.$model },
-                                      on: {
-                                        click: function($event) {
-                                          _vm.active = "ticket"
-                                        },
-                                        blur: function($event) {
-                                          _vm.active = null
-                                        },
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.$set(
-                                            v.name,
-                                            "$model",
-                                            $event.target.value
-                                          )
-                                        }
-                                      }
-                                    }),
-                                    _vm._v(" "),
-                                    v.name.$error
-                                      ? _c(
-                                          "div",
-                                          { staticClass: "validation-error" },
-                                          [
-                                            !v.name.required
-                                              ? _c(
-                                                  "p",
-                                                  { staticClass: "error" },
-                                                  [
-                                                    _vm._v(
-                                                      "Must enter a ticket name"
-                                                    )
-                                                  ]
-                                                )
-                                              : _vm._e(),
-                                            _vm._v(" "),
-                                            !v.name.maxLength
-                                              ? _c(
-                                                  "p",
-                                                  { staticClass: "error" },
-                                                  [_vm._v("Name is too Long")]
-                                                )
-                                              : _vm._e()
-                                          ]
-                                        )
-                                      : _vm._e()
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "field" }, [
-                                    _c("label", [_vm._v("Ticket Price")]),
-                                    _vm._v(" "),
-                                    _vm.money.type === "checkbox"
-                                      ? _c(
-                                          "input",
-                                          _vm._b(
-                                            {
-                                              directives: [
-                                                {
-                                                  name: "model",
-                                                  rawName: "v-model",
-                                                  value: v.ticket_price.$model,
-                                                  expression:
-                                                    "v.ticket_price.$model"
-                                                },
-                                                {
-                                                  name: "money",
-                                                  rawName: "v-money",
-                                                  value: _vm.money,
-                                                  expression: "money"
-                                                }
-                                              ],
-                                              class: {
-                                                active: _vm.active == "price",
-                                                error: v.ticket_price.$error
-                                              },
-                                              staticStyle: {
-                                                "text-align": "right"
-                                              },
-                                              attrs: {
-                                                placeholder: "$0.00",
-                                                type: "checkbox"
-                                              },
-                                              domProps: {
-                                                checked: Array.isArray(
-                                                  v.ticket_price.$model
-                                                )
-                                                  ? _vm._i(
-                                                      v.ticket_price.$model,
-                                                      null
-                                                    ) > -1
-                                                  : v.ticket_price.$model
-                                              },
-                                              on: {
-                                                click: function($event) {
-                                                  _vm.active = "price"
-                                                },
-                                                blur: function($event) {
-                                                  _vm.active = null
-                                                },
-                                                keydown: function($event) {
-                                                  $event.key === "-"
-                                                    ? $event.preventDefault()
-                                                    : null
-                                                },
-                                                change: function($event) {
-                                                  var $$a =
-                                                      v.ticket_price.$model,
-                                                    $$el = $event.target,
-                                                    $$c = $$el.checked
-                                                      ? true
-                                                      : false
-                                                  if (Array.isArray($$a)) {
-                                                    var $$v = null,
-                                                      $$i = _vm._i($$a, $$v)
-                                                    if ($$el.checked) {
-                                                      $$i < 0 &&
-                                                        _vm.$set(
-                                                          v.ticket_price,
-                                                          "$model",
-                                                          $$a.concat([$$v])
-                                                        )
-                                                    } else {
-                                                      $$i > -1 &&
-                                                        _vm.$set(
-                                                          v.ticket_price,
-                                                          "$model",
-                                                          $$a
-                                                            .slice(0, $$i)
-                                                            .concat(
-                                                              $$a.slice($$i + 1)
-                                                            )
-                                                        )
-                                                    }
-                                                  } else {
-                                                    _vm.$set(
-                                                      v.ticket_price,
-                                                      "$model",
-                                                      $$c
-                                                    )
-                                                  }
-                                                }
-                                              }
-                                            },
-                                            "input",
-                                            _vm.money,
-                                            false
-                                          )
-                                        )
-                                      : _vm.money.type === "radio"
-                                      ? _c(
-                                          "input",
-                                          _vm._b(
-                                            {
-                                              directives: [
-                                                {
-                                                  name: "model",
-                                                  rawName: "v-model",
-                                                  value: v.ticket_price.$model,
-                                                  expression:
-                                                    "v.ticket_price.$model"
-                                                },
-                                                {
-                                                  name: "money",
-                                                  rawName: "v-money",
-                                                  value: _vm.money,
-                                                  expression: "money"
-                                                }
-                                              ],
-                                              class: {
-                                                active: _vm.active == "price",
-                                                error: v.ticket_price.$error
-                                              },
-                                              staticStyle: {
-                                                "text-align": "right"
-                                              },
-                                              attrs: {
-                                                placeholder: "$0.00",
-                                                type: "radio"
-                                              },
-                                              domProps: {
-                                                checked: _vm._q(
-                                                  v.ticket_price.$model,
-                                                  null
-                                                )
-                                              },
-                                              on: {
-                                                click: function($event) {
-                                                  _vm.active = "price"
-                                                },
-                                                blur: function($event) {
-                                                  _vm.active = null
-                                                },
-                                                keydown: function($event) {
-                                                  $event.key === "-"
-                                                    ? $event.preventDefault()
-                                                    : null
-                                                },
-                                                change: function($event) {
-                                                  return _vm.$set(
-                                                    v.ticket_price,
-                                                    "$model",
-                                                    null
-                                                  )
-                                                }
-                                              }
-                                            },
-                                            "input",
-                                            _vm.money,
-                                            false
-                                          )
-                                        )
-                                      : _c(
-                                          "input",
-                                          _vm._b(
-                                            {
-                                              directives: [
-                                                {
-                                                  name: "model",
-                                                  rawName: "v-model",
-                                                  value: v.ticket_price.$model,
-                                                  expression:
-                                                    "v.ticket_price.$model"
-                                                },
-                                                {
-                                                  name: "money",
-                                                  rawName: "v-money",
-                                                  value: _vm.money,
-                                                  expression: "money"
-                                                }
-                                              ],
-                                              class: {
-                                                active: _vm.active == "price",
-                                                error: v.ticket_price.$error
-                                              },
-                                              staticStyle: {
-                                                "text-align": "right"
-                                              },
-                                              attrs: {
-                                                placeholder: "$0.00",
-                                                type: _vm.money.type
-                                              },
-                                              domProps: {
-                                                value: v.ticket_price.$model
-                                              },
-                                              on: {
-                                                click: function($event) {
-                                                  _vm.active = "price"
-                                                },
-                                                blur: function($event) {
-                                                  _vm.active = null
-                                                },
-                                                keydown: function($event) {
-                                                  $event.key === "-"
-                                                    ? $event.preventDefault()
-                                                    : null
-                                                },
-                                                input: function($event) {
-                                                  if ($event.target.composing) {
-                                                    return
-                                                  }
-                                                  _vm.$set(
-                                                    v.ticket_price,
-                                                    "$model",
-                                                    $event.target.value
-                                                  )
-                                                }
-                                              }
-                                            },
-                                            "input",
-                                            _vm.money,
-                                            false
-                                          )
-                                        ),
-                                    _vm._v(" "),
-                                    v.ticket_price.$error
-                                      ? _c(
-                                          "div",
-                                          { staticClass: "validation-error" },
-                                          [
-                                            !v.ticket_price.minValue
-                                              ? _c(
-                                                  "p",
-                                                  { staticClass: "error" },
-                                                  [
-                                                    _vm._v(
-                                                      "Please enter an amount"
-                                                    )
-                                                  ]
-                                                )
-                                              : _vm._e(),
-                                            _vm._v(" "),
-                                            !v.ticket_price.maxLength
-                                              ? _c(
-                                                  "p",
-                                                  { staticClass: "error" },
-                                                  [
-                                                    _vm._v(
-                                                      "Please enter an amount under $10,000"
-                                                    )
-                                                  ]
-                                                )
-                                              : _vm._e(),
-                                            _vm._v(" "),
-                                            !v.ticket_price.required
-                                              ? _c(
-                                                  "p",
-                                                  { staticClass: "error" },
-                                                  [
-                                                    _vm._v(
-                                                      "Please enter a price"
-                                                    )
-                                                  ]
-                                                )
-                                              : _vm._e()
-                                          ]
-                                        )
-                                      : _vm._e(),
-                                    _vm._v(" "),
-                                    _vm.tickets.length > 1
-                                      ? _c(
-                                          "button",
-                                          {
-                                            staticClass: "delete-circle",
-                                            on: {
-                                              click: function($event) {
-                                                $event.preventDefault()
-                                                return _vm.deleteRow(index)
-                                              }
-                                            }
-                                          },
-                                          [_vm._v("X")]
-                                        )
-                                      : _vm._e()
-                                  ])
-                                ]
-                              )
-                            }),
-                            0
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass: "ticket-box__add-button",
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.addTickets($event)
-                                }
-                              }
-                            },
-                            [_c("button", [_vm._v("+ Ticket Types")])]
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("section", { staticClass: "event-enter-showdates" }, [
-                        _c("div", { staticClass: "field" }, [
-                          _c("label", [_vm._v(" Select show days")]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "week-calendar grid" }, [
-                            _c(
-                              "div",
-                              {
-                                staticClass: "week-calendar__day",
-                                class: { active: _vm.week.mon },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.addWeekDay("mon")
-                                  }
-                                }
-                              },
-                              [_c("h4", [_vm._v("Mon")])]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "week-calendar__day",
-                                class: { active: _vm.week.tue },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.addWeekDay("tue")
-                                  }
-                                }
-                              },
-                              [_c("h4", [_vm._v("Tue")])]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "week-calendar__day",
-                                class: { active: _vm.week.wed },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.addWeekDay("wed")
-                                  }
-                                }
-                              },
-                              [_c("h4", [_vm._v("Wed")])]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "week-calendar__day",
-                                class: { active: _vm.week.thu },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.addWeekDay("thu")
-                                  }
-                                }
-                              },
-                              [_c("h4", [_vm._v("Thu")])]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "week-calendar__day",
-                                class: { active: _vm.week.fri },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.addWeekDay("fri")
-                                  }
-                                }
-                              },
-                              [_c("h4", [_vm._v("Fri")])]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "week-calendar__day",
-                                class: { active: _vm.week.sat },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.addWeekDay("sat")
-                                  }
-                                }
-                              },
-                              [_c("h4", [_vm._v("Sat")])]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "week-calendar__day",
-                                class: { active: _vm.week.sun },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.addWeekDay("sun")
-                                  }
-                                }
-                              },
-                              [_c("h4", [_vm._v("Sun")])]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _vm.$v.week.$error
-                            ? _c("div", { staticClass: "validation-error" }, [
-                                !_vm.$v.week.ifOngoing
-                                  ? _c("p", { staticClass: "error" }, [
-                                      _vm._v("Please select at least one day")
-                                    ])
-                                  : _vm._e()
-                              ])
-                            : _vm._e()
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "field" }, [
-                          _c("label", [
-                            _vm._v(
-                              " Does the event have a specific embargo date? (date you would like it to appear on EI) "
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { attrs: { id: "cover" } }, [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.showEmbargoDate,
-                                  expression: "showEmbargoDate"
-                                }
-                              ],
-                              attrs: { type: "checkbox", id: "checkbox" },
-                              domProps: {
-                                checked: Array.isArray(_vm.showEmbargoDate)
-                                  ? _vm._i(_vm.showEmbargoDate, null) > -1
-                                  : _vm.showEmbargoDate
-                              },
-                              on: {
-                                change: function($event) {
-                                  var $$a = _vm.showEmbargoDate,
-                                    $$el = $event.target,
-                                    $$c = $$el.checked ? true : false
-                                  if (Array.isArray($$a)) {
-                                    var $$v = null,
-                                      $$i = _vm._i($$a, $$v)
-                                    if ($$el.checked) {
-                                      $$i < 0 &&
-                                        (_vm.showEmbargoDate = $$a.concat([
-                                          $$v
-                                        ]))
-                                    } else {
-                                      $$i > -1 &&
-                                        (_vm.showEmbargoDate = $$a
-                                          .slice(0, $$i)
-                                          .concat($$a.slice($$i + 1)))
-                                    }
-                                  } else {
-                                    _vm.showEmbargoDate = $$c
-                                  }
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("div", { attrs: { id: "bar" } }),
-                            _vm._v(" "),
-                            _c("div", { attrs: { id: "knob" } }, [
-                              _vm.showEmbargoDate
-                                ? _c("p", [_vm._v("Yes")])
-                                : _c("p", [_vm._v("No")])
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _vm.showEmbargoDate
-                            ? _c("div", [
-                                _c(
-                                  "div",
-                                  { staticClass: "calendar" },
-                                  [
-                                    _c("flat-pickr", {
-                                      ref: "datePicker",
-                                      staticClass: "form-control",
-                                      attrs: {
-                                        config: _vm.embargoCalendarConfig,
-                                        placeholder: "Select date",
-                                        name: "dates"
-                                      },
-                                      model: {
-                                        value: _vm.embargoDate,
-                                        callback: function($$v) {
-                                          _vm.embargoDate = $$v
-                                        },
-                                        expression: "embargoDate"
-                                      }
-                                    })
-                                  ],
-                                  1
-                                )
-                              ])
-                            : _vm._e()
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "event-create__submit-button" },
-                          [
-                            _c(
-                              "button",
-                              {
-                                staticClass: "create",
-                                attrs: { disabled: _vm.disabled },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.onSubmit()
-                                  }
-                                }
-                              },
-                              [_vm._v(" Next ")]
-                            )
-                          ]
-                        )
-                      ])
-                    ]
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "tab",
-                {
-                  staticClass: "event-create-tab__section",
-                  attrs: {
-                    id: "a",
-                    title: "All Times",
-                    active: _vm.event.showtype == "a"
-                  }
-                },
-                [
-                  _c(
-                    "div",
-                    { staticClass: "everyday-show-dates container grid" },
-                    [
-                      _c("section", { staticClass: "event-enter-showtimes" }, [
-                        _c("div", { staticClass: "field" }, [
-                          _c("label", [_vm._v(" Show Times")]),
-                          _vm._v(" "),
-                          _c("textarea", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.showTimes,
-                                expression: "showTimes"
-                              }
-                            ],
-                            staticClass: "create-input area",
-                            class: {
-                              active: _vm.active == "times",
-                              error: _vm.$v.showTimes.$error
-                            },
-                            attrs: {
-                              rows: "8",
-                              placeholder: _vm.placeholdera,
-                              required: "",
-                              autofocus: ""
-                            },
-                            domProps: { value: _vm.showTimes },
-                            on: {
-                              click: function($event) {
-                                _vm.active = "times"
-                              },
-                              blur: function($event) {
-                                _vm.active = null
-                              },
-                              input: [
-                                function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.showTimes = $event.target.value
-                                },
-                                _vm.$v.showTimes.$touch
-                              ]
-                            }
-                          }),
-                          _vm._v(" "),
-                          _vm.$v.showTimes.$error
-                            ? _c("div", { staticClass: "validation-error" }, [
-                                !_vm.$v.showTimes.required
-                                  ? _c("p", { staticClass: "error" }, [
-                                      _vm._v(
-                                        "Please give a brief description of show times"
-                                      )
-                                    ])
-                                  : _vm._e()
-                              ])
-                            : _vm._e()
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("section", { staticClass: "event-enter-showdates" }, [
-                        _c("div", { staticClass: "field cost" }, [
-                          _c("label", { staticClass: "area" }, [
-                            _vm._v(" Ticket types and prices ")
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "create-shows__ticket-box" },
-                            _vm._l(_vm.$v.tickets.$each.$iter, function(
-                              v,
-                              index
-                            ) {
-                              return _c(
-                                "div",
-                                { staticClass: "ticket-box__element grid" },
-                                [
-                                  _c("div", { staticClass: "field" }, [
-                                    _c("label", [_vm._v("Ticket Type")]),
-                                    _vm._v(" "),
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: v.name.$model,
-                                          expression: "v.name.$model"
-                                        }
-                                      ],
-                                      staticClass: "create-input",
-                                      class: {
-                                        active: _vm.active == "ticket",
-                                        error: v.name.$error
-                                      },
-                                      attrs: {
-                                        name: "name",
-                                        placeholder: "ex: General, VIP, Student"
-                                      },
-                                      domProps: { value: v.name.$model },
-                                      on: {
-                                        click: function($event) {
-                                          _vm.active = "ticket"
-                                        },
-                                        blur: function($event) {
-                                          _vm.active = null
-                                        },
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.$set(
-                                            v.name,
-                                            "$model",
-                                            $event.target.value
-                                          )
-                                        }
-                                      }
-                                    }),
-                                    _vm._v(" "),
-                                    v.name.$error
-                                      ? _c(
-                                          "div",
-                                          { staticClass: "validation-error" },
-                                          [
-                                            !v.name.required
-                                              ? _c(
-                                                  "p",
-                                                  { staticClass: "error" },
-                                                  [
-                                                    _vm._v(
-                                                      "Must enter a ticket name"
-                                                    )
-                                                  ]
-                                                )
-                                              : _vm._e(),
-                                            _vm._v(" "),
-                                            !v.name.maxLength
-                                              ? _c(
-                                                  "p",
-                                                  { staticClass: "error" },
-                                                  [_vm._v("Name is too Long")]
-                                                )
-                                              : _vm._e()
-                                          ]
-                                        )
-                                      : _vm._e()
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "field" }, [
-                                    _c("label", [_vm._v("Ticket Price")]),
-                                    _vm._v(" "),
-                                    _vm.money.type === "checkbox"
-                                      ? _c(
-                                          "input",
-                                          _vm._b(
-                                            {
-                                              directives: [
-                                                {
-                                                  name: "model",
-                                                  rawName: "v-model",
-                                                  value: v.ticket_price.$model,
-                                                  expression:
-                                                    "v.ticket_price.$model"
-                                                },
-                                                {
-                                                  name: "money",
-                                                  rawName: "v-money",
-                                                  value: _vm.money,
-                                                  expression: "money"
-                                                }
-                                              ],
-                                              class: {
-                                                active: _vm.active == "price",
-                                                error: v.ticket_price.$error
-                                              },
-                                              staticStyle: {
-                                                "text-align": "right"
-                                              },
-                                              attrs: {
-                                                placeholder: "$0.00",
-                                                type: "checkbox"
-                                              },
-                                              domProps: {
-                                                checked: Array.isArray(
-                                                  v.ticket_price.$model
-                                                )
-                                                  ? _vm._i(
-                                                      v.ticket_price.$model,
-                                                      null
-                                                    ) > -1
-                                                  : v.ticket_price.$model
-                                              },
-                                              on: {
-                                                click: function($event) {
-                                                  _vm.active = "price"
-                                                },
-                                                blur: function($event) {
-                                                  _vm.active = null
-                                                },
-                                                keydown: function($event) {
-                                                  $event.key === "-"
-                                                    ? $event.preventDefault()
-                                                    : null
-                                                },
-                                                change: function($event) {
-                                                  var $$a =
-                                                      v.ticket_price.$model,
-                                                    $$el = $event.target,
-                                                    $$c = $$el.checked
-                                                      ? true
-                                                      : false
-                                                  if (Array.isArray($$a)) {
-                                                    var $$v = null,
-                                                      $$i = _vm._i($$a, $$v)
-                                                    if ($$el.checked) {
-                                                      $$i < 0 &&
-                                                        _vm.$set(
-                                                          v.ticket_price,
-                                                          "$model",
-                                                          $$a.concat([$$v])
-                                                        )
-                                                    } else {
-                                                      $$i > -1 &&
-                                                        _vm.$set(
-                                                          v.ticket_price,
-                                                          "$model",
-                                                          $$a
-                                                            .slice(0, $$i)
-                                                            .concat(
-                                                              $$a.slice($$i + 1)
-                                                            )
-                                                        )
-                                                    }
-                                                  } else {
-                                                    _vm.$set(
-                                                      v.ticket_price,
-                                                      "$model",
-                                                      $$c
-                                                    )
-                                                  }
-                                                }
-                                              }
-                                            },
-                                            "input",
-                                            _vm.money,
-                                            false
-                                          )
-                                        )
-                                      : _vm.money.type === "radio"
-                                      ? _c(
-                                          "input",
-                                          _vm._b(
-                                            {
-                                              directives: [
-                                                {
-                                                  name: "model",
-                                                  rawName: "v-model",
-                                                  value: v.ticket_price.$model,
-                                                  expression:
-                                                    "v.ticket_price.$model"
-                                                },
-                                                {
-                                                  name: "money",
-                                                  rawName: "v-money",
-                                                  value: _vm.money,
-                                                  expression: "money"
-                                                }
-                                              ],
-                                              class: {
-                                                active: _vm.active == "price",
-                                                error: v.ticket_price.$error
-                                              },
-                                              staticStyle: {
-                                                "text-align": "right"
-                                              },
-                                              attrs: {
-                                                placeholder: "$0.00",
-                                                type: "radio"
-                                              },
-                                              domProps: {
-                                                checked: _vm._q(
-                                                  v.ticket_price.$model,
-                                                  null
-                                                )
-                                              },
-                                              on: {
-                                                click: function($event) {
-                                                  _vm.active = "price"
-                                                },
-                                                blur: function($event) {
-                                                  _vm.active = null
-                                                },
-                                                keydown: function($event) {
-                                                  $event.key === "-"
-                                                    ? $event.preventDefault()
-                                                    : null
-                                                },
-                                                change: function($event) {
-                                                  return _vm.$set(
-                                                    v.ticket_price,
-                                                    "$model",
-                                                    null
-                                                  )
-                                                }
-                                              }
-                                            },
-                                            "input",
-                                            _vm.money,
-                                            false
-                                          )
-                                        )
-                                      : _c(
-                                          "input",
-                                          _vm._b(
-                                            {
-                                              directives: [
-                                                {
-                                                  name: "model",
-                                                  rawName: "v-model",
-                                                  value: v.ticket_price.$model,
-                                                  expression:
-                                                    "v.ticket_price.$model"
-                                                },
-                                                {
-                                                  name: "money",
-                                                  rawName: "v-money",
-                                                  value: _vm.money,
-                                                  expression: "money"
-                                                }
-                                              ],
-                                              class: {
-                                                active: _vm.active == "price",
-                                                error: v.ticket_price.$error
-                                              },
-                                              staticStyle: {
-                                                "text-align": "right"
-                                              },
-                                              attrs: {
-                                                placeholder: "$0.00",
-                                                type: _vm.money.type
-                                              },
-                                              domProps: {
-                                                value: v.ticket_price.$model
-                                              },
-                                              on: {
-                                                click: function($event) {
-                                                  _vm.active = "price"
-                                                },
-                                                blur: function($event) {
-                                                  _vm.active = null
-                                                },
-                                                keydown: function($event) {
-                                                  $event.key === "-"
-                                                    ? $event.preventDefault()
-                                                    : null
-                                                },
-                                                input: function($event) {
-                                                  if ($event.target.composing) {
-                                                    return
-                                                  }
-                                                  _vm.$set(
-                                                    v.ticket_price,
-                                                    "$model",
-                                                    $event.target.value
-                                                  )
-                                                }
-                                              }
-                                            },
-                                            "input",
-                                            _vm.money,
-                                            false
-                                          )
-                                        ),
-                                    _vm._v(" "),
-                                    v.ticket_price.$error
-                                      ? _c(
-                                          "div",
-                                          { staticClass: "validation-error" },
-                                          [
-                                            !v.ticket_price.minValue
-                                              ? _c(
-                                                  "p",
-                                                  { staticClass: "error" },
-                                                  [
-                                                    _vm._v(
-                                                      "Please enter an amount"
-                                                    )
-                                                  ]
-                                                )
-                                              : _vm._e(),
-                                            _vm._v(" "),
-                                            !v.ticket_price.maxLength
-                                              ? _c(
-                                                  "p",
-                                                  { staticClass: "error" },
-                                                  [
-                                                    _vm._v(
-                                                      "Please enter an amount under $10,000"
-                                                    )
-                                                  ]
-                                                )
-                                              : _vm._e(),
-                                            _vm._v(" "),
-                                            !v.ticket_price.required
-                                              ? _c(
-                                                  "p",
-                                                  { staticClass: "error" },
-                                                  [
-                                                    _vm._v(
-                                                      "Please enter a price"
-                                                    )
-                                                  ]
-                                                )
-                                              : _vm._e()
-                                          ]
-                                        )
-                                      : _vm._e(),
-                                    _vm._v(" "),
-                                    _vm.tickets.length > 1
-                                      ? _c(
-                                          "button",
-                                          {
-                                            staticClass: "delete-circle",
-                                            on: {
-                                              click: function($event) {
-                                                $event.preventDefault()
-                                                return _vm.deleteRow(index)
-                                              }
-                                            }
-                                          },
-                                          [_vm._v("X")]
-                                        )
-                                      : _vm._e()
-                                  ])
-                                ]
-                              )
-                            }),
-                            0
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass: "ticket-box__add-button",
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.addTickets($event)
-                                }
-                              }
-                            },
-                            [_c("button", [_vm._v("+ Ticket Types")])]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass: "field",
-                            staticStyle: { "margin-top": "6rem" }
-                          },
-                          [
-                            _c("label", [
+              _c("section", { staticClass: "event-enter-showtimes" }, [
+                _c("div", { staticClass: "field" }, [
+                  _c("label", [_vm._v(" Show Times")]),
+                  _vm._v(" "),
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.showTimes,
+                        expression: "showTimes"
+                      }
+                    ],
+                    staticClass: "create-input area",
+                    class: {
+                      active: _vm.active == "times",
+                      error: _vm.$v.showTimes.$error
+                    },
+                    attrs: {
+                      rows: "8",
+                      placeholder: _vm.placeholders,
+                      required: "",
+                      autofocus: ""
+                    },
+                    domProps: { value: _vm.showTimes },
+                    on: {
+                      click: function($event) {
+                        _vm.active = "times"
+                      },
+                      blur: function($event) {
+                        _vm.active = null
+                      },
+                      input: [
+                        function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.showTimes = $event.target.value
+                        },
+                        _vm.$v.showTimes.$touch
+                      ]
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.$v.showTimes.$error
+                    ? _c("div", { staticClass: "validation-error" }, [
+                        !_vm.$v.showTimes.required
+                          ? _c("p", { staticClass: "error" }, [
                               _vm._v(
-                                " Does the event have a specific embargo date? (date you would like it to appear on EI) "
+                                "Please give a brief description of show times"
                               )
-                            ]),
+                            ])
+                          : _vm._e()
+                      ])
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "field cost" }, [
+                  _c("label", { staticClass: "area" }, [
+                    _vm._v(" Ticket types and prices ")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "create-shows__ticket-box" },
+                    _vm._l(_vm.$v.tickets.$each.$iter, function(v, index) {
+                      return _c(
+                        "div",
+                        { staticClass: "ticket-box__element grid" },
+                        [
+                          _c("div", { staticClass: "field" }, [
+                            _c("label", [_vm._v("Ticket Type")]),
                             _vm._v(" "),
-                            _c("div", { attrs: { id: "cover" } }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.showEmbargoDate,
-                                    expression: "showEmbargoDate"
-                                  }
-                                ],
-                                attrs: { type: "checkbox", id: "checkbox" },
-                                domProps: {
-                                  checked: Array.isArray(_vm.showEmbargoDate)
-                                    ? _vm._i(_vm.showEmbargoDate, null) > -1
-                                    : _vm.showEmbargoDate
-                                },
-                                on: {
-                                  change: function($event) {
-                                    var $$a = _vm.showEmbargoDate,
-                                      $$el = $event.target,
-                                      $$c = $$el.checked ? true : false
-                                    if (Array.isArray($$a)) {
-                                      var $$v = null,
-                                        $$i = _vm._i($$a, $$v)
-                                      if ($$el.checked) {
-                                        $$i < 0 &&
-                                          (_vm.showEmbargoDate = $$a.concat([
-                                            $$v
-                                          ]))
-                                      } else {
-                                        $$i > -1 &&
-                                          (_vm.showEmbargoDate = $$a
-                                            .slice(0, $$i)
-                                            .concat($$a.slice($$i + 1)))
-                                      }
-                                    } else {
-                                      _vm.showEmbargoDate = $$c
-                                    }
-                                  }
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: v.name.$model,
+                                  expression: "v.name.$model"
                                 }
-                              }),
-                              _vm._v(" "),
-                              _c("div", { attrs: { id: "bar" } }),
-                              _vm._v(" "),
-                              _c("div", { attrs: { id: "knob" } }, [
-                                _vm.showEmbargoDate
-                                  ? _c("p", [_vm._v("Yes")])
-                                  : _c("p", [_vm._v("No")])
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _vm.showEmbargoDate
-                              ? _c("div", [
-                                  _c(
-                                    "div",
-                                    { staticClass: "calendar" },
-                                    [
-                                      _c("flat-pickr", {
-                                        ref: "datePicker",
-                                        staticClass: "form-control",
-                                        attrs: {
-                                          config: _vm.embargoCalendarConfig,
-                                          placeholder: "Select date",
-                                          name: "dates"
-                                        },
-                                        model: {
-                                          value: _vm.embargoDate,
-                                          callback: function($$v) {
-                                            _vm.embargoDate = $$v
-                                          },
-                                          expression: "embargoDate"
-                                        }
-                                      })
-                                    ],
-                                    1
+                              ],
+                              staticClass: "create-input",
+                              class: {
+                                active: _vm.active == "ticket",
+                                error: v.name.$error
+                              },
+                              attrs: {
+                                name: "name",
+                                placeholder: "ex: General, VIP, Student"
+                              },
+                              domProps: { value: v.name.$model },
+                              on: {
+                                click: function($event) {
+                                  _vm.active = "ticket"
+                                },
+                                blur: function($event) {
+                                  _vm.active = null
+                                },
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    v.name,
+                                    "$model",
+                                    $event.target.value
                                   )
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            v.name.$error
+                              ? _c("div", { staticClass: "validation-error" }, [
+                                  !v.name.required
+                                    ? _c("p", { staticClass: "error" }, [
+                                        _vm._v("Must enter a ticket name")
+                                      ])
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  !v.name.maxLength
+                                    ? _c("p", { staticClass: "error" }, [
+                                        _vm._v("Name is too Long")
+                                      ])
+                                    : _vm._e()
                                 ])
                               : _vm._e()
-                          ]
-                        ),
-                        _vm._v(" "),
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "field" }, [
+                            _c("label", [_vm._v("Ticket Price")]),
+                            _vm._v(" "),
+                            _vm.money.type === "checkbox"
+                              ? _c(
+                                  "input",
+                                  _vm._b(
+                                    {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: v.ticket_price.$model,
+                                          expression: "v.ticket_price.$model"
+                                        },
+                                        {
+                                          name: "money",
+                                          rawName: "v-money",
+                                          value: _vm.money,
+                                          expression: "money"
+                                        }
+                                      ],
+                                      class: {
+                                        active: _vm.active == "price",
+                                        error: v.ticket_price.$error
+                                      },
+                                      staticStyle: { "text-align": "right" },
+                                      attrs: {
+                                        placeholder: "$0.00",
+                                        type: "checkbox"
+                                      },
+                                      domProps: {
+                                        checked: Array.isArray(
+                                          v.ticket_price.$model
+                                        )
+                                          ? _vm._i(
+                                              v.ticket_price.$model,
+                                              null
+                                            ) > -1
+                                          : v.ticket_price.$model
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          _vm.active = "price"
+                                        },
+                                        blur: function($event) {
+                                          _vm.active = null
+                                        },
+                                        keydown: function($event) {
+                                          $event.key === "-"
+                                            ? $event.preventDefault()
+                                            : null
+                                        },
+                                        change: function($event) {
+                                          var $$a = v.ticket_price.$model,
+                                            $$el = $event.target,
+                                            $$c = $$el.checked ? true : false
+                                          if (Array.isArray($$a)) {
+                                            var $$v = null,
+                                              $$i = _vm._i($$a, $$v)
+                                            if ($$el.checked) {
+                                              $$i < 0 &&
+                                                _vm.$set(
+                                                  v.ticket_price,
+                                                  "$model",
+                                                  $$a.concat([$$v])
+                                                )
+                                            } else {
+                                              $$i > -1 &&
+                                                _vm.$set(
+                                                  v.ticket_price,
+                                                  "$model",
+                                                  $$a
+                                                    .slice(0, $$i)
+                                                    .concat($$a.slice($$i + 1))
+                                                )
+                                            }
+                                          } else {
+                                            _vm.$set(
+                                              v.ticket_price,
+                                              "$model",
+                                              $$c
+                                            )
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "input",
+                                    _vm.money,
+                                    false
+                                  )
+                                )
+                              : _vm.money.type === "radio"
+                              ? _c(
+                                  "input",
+                                  _vm._b(
+                                    {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: v.ticket_price.$model,
+                                          expression: "v.ticket_price.$model"
+                                        },
+                                        {
+                                          name: "money",
+                                          rawName: "v-money",
+                                          value: _vm.money,
+                                          expression: "money"
+                                        }
+                                      ],
+                                      class: {
+                                        active: _vm.active == "price",
+                                        error: v.ticket_price.$error
+                                      },
+                                      staticStyle: { "text-align": "right" },
+                                      attrs: {
+                                        placeholder: "$0.00",
+                                        type: "radio"
+                                      },
+                                      domProps: {
+                                        checked: _vm._q(
+                                          v.ticket_price.$model,
+                                          null
+                                        )
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          _vm.active = "price"
+                                        },
+                                        blur: function($event) {
+                                          _vm.active = null
+                                        },
+                                        keydown: function($event) {
+                                          $event.key === "-"
+                                            ? $event.preventDefault()
+                                            : null
+                                        },
+                                        change: function($event) {
+                                          return _vm.$set(
+                                            v.ticket_price,
+                                            "$model",
+                                            null
+                                          )
+                                        }
+                                      }
+                                    },
+                                    "input",
+                                    _vm.money,
+                                    false
+                                  )
+                                )
+                              : _c(
+                                  "input",
+                                  _vm._b(
+                                    {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: v.ticket_price.$model,
+                                          expression: "v.ticket_price.$model"
+                                        },
+                                        {
+                                          name: "money",
+                                          rawName: "v-money",
+                                          value: _vm.money,
+                                          expression: "money"
+                                        }
+                                      ],
+                                      class: {
+                                        active: _vm.active == "price",
+                                        error: v.ticket_price.$error
+                                      },
+                                      staticStyle: { "text-align": "right" },
+                                      attrs: {
+                                        placeholder: "$0.00",
+                                        type: _vm.money.type
+                                      },
+                                      domProps: {
+                                        value: v.ticket_price.$model
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          _vm.active = "price"
+                                        },
+                                        blur: function($event) {
+                                          _vm.active = null
+                                        },
+                                        keydown: function($event) {
+                                          $event.key === "-"
+                                            ? $event.preventDefault()
+                                            : null
+                                        },
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.$set(
+                                            v.ticket_price,
+                                            "$model",
+                                            $event.target.value
+                                          )
+                                        }
+                                      }
+                                    },
+                                    "input",
+                                    _vm.money,
+                                    false
+                                  )
+                                ),
+                            _vm._v(" "),
+                            v.ticket_price.$error
+                              ? _c("div", { staticClass: "validation-error" }, [
+                                  !v.ticket_price.minValue
+                                    ? _c("p", { staticClass: "error" }, [
+                                        _vm._v("Please enter an amount")
+                                      ])
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  !v.ticket_price.maxLength
+                                    ? _c("p", { staticClass: "error" }, [
+                                        _vm._v(
+                                          "Please enter an amount under $10,000"
+                                        )
+                                      ])
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  !v.ticket_price.required
+                                    ? _c("p", { staticClass: "error" }, [
+                                        _vm._v("Please enter a price")
+                                      ])
+                                    : _vm._e()
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.tickets.length > 1
+                              ? _c(
+                                  "button",
+                                  {
+                                    staticClass: "delete-circle",
+                                    on: {
+                                      click: function($event) {
+                                        $event.preventDefault()
+                                        return _vm.deleteRow(index)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("X")]
+                                )
+                              : _vm._e()
+                          ])
+                        ]
+                      )
+                    }),
+                    0
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "ticket-box__add-button",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.addTickets($event)
+                        }
+                      }
+                    },
+                    [_c("button", [_vm._v("+ Ticket Types")])]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("section", { staticClass: "event-enter-showdates" }, [
+                _c("div", { staticClass: "field" }, [
+                  _c("label", [_vm._v(" Select all show dates")]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "calendar desktop" },
+                    [
+                      _c("flat-pickr", {
+                        ref: "datePicker",
+                        staticClass: "form-control",
+                        attrs: {
+                          config: _vm.calendarConfig,
+                          placeholder: "Select date",
+                          name: "dates"
+                        },
+                        model: {
+                          value: _vm.dates,
+                          callback: function($$v) {
+                            _vm.dates = $$v
+                          },
+                          expression: "dates"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "calendar mobile" },
+                    [
+                      _c("flat-pickr", {
+                        ref: "datePicker",
+                        staticClass: "form-control",
+                        attrs: {
+                          config: _vm.mobileCalendarConfig,
+                          placeholder: "Select date",
+                          name: "dates"
+                        },
+                        model: {
+                          value: _vm.dates,
+                          callback: function($$v) {
+                            _vm.dates = $$v
+                          },
+                          expression: "dates"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _vm.$v.dates.$error
+                    ? _c("div", { staticClass: "validation-error" }, [
+                        !_vm.$v.dates.required
+                          ? _c("p", { staticClass: "error" }, [
+                              _vm._v("Please add at least 1 show date")
+                            ])
+                          : _vm._e()
+                      ])
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "field" }, [
+                  _c("label", [
+                    _vm._v(
+                      " Does the event have a specific embargo date? (date you would like it to appear on EI) "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { attrs: { id: "cover" } }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.showEmbargoDate,
+                          expression: "showEmbargoDate"
+                        }
+                      ],
+                      attrs: { type: "checkbox", id: "checkbox" },
+                      domProps: {
+                        checked: Array.isArray(_vm.showEmbargoDate)
+                          ? _vm._i(_vm.showEmbargoDate, null) > -1
+                          : _vm.showEmbargoDate
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$a = _vm.showEmbargoDate,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = null,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 &&
+                                (_vm.showEmbargoDate = $$a.concat([$$v]))
+                            } else {
+                              $$i > -1 &&
+                                (_vm.showEmbargoDate = $$a
+                                  .slice(0, $$i)
+                                  .concat($$a.slice($$i + 1)))
+                            }
+                          } else {
+                            _vm.showEmbargoDate = $$c
+                          }
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("div", { attrs: { id: "bar" } }),
+                    _vm._v(" "),
+                    _c("div", { attrs: { id: "knob" } }, [
+                      _vm.showEmbargoDate
+                        ? _c("p", [_vm._v("Yes")])
+                        : _c("p", [_vm._v("No")])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _vm.showEmbargoDate
+                    ? _c("div", [
                         _c(
                           "div",
-                          {
-                            staticClass: "event-create__submit-button",
-                            staticStyle: { "margin-top": "6rem" }
-                          },
+                          { staticClass: "calendar" },
                           [
-                            _c(
-                              "button",
-                              {
-                                staticClass: "create",
-                                attrs: { disabled: _vm.disabled },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.onSubmit()
-                                  }
-                                }
+                            _c("flat-pickr", {
+                              ref: "datePicker",
+                              staticClass: "form-control",
+                              attrs: {
+                                config: _vm.embargoCalendarConfig,
+                                placeholder: "Select date",
+                                name: "dates"
                               },
-                              [_vm._v(" Next ")]
-                            )
-                          ]
+                              model: {
+                                value: _vm.embargoDate,
+                                callback: function($$v) {
+                                  _vm.embargoDate = $$v
+                                },
+                                expression: "embargoDate"
+                              }
+                            })
+                          ],
+                          1
                         )
                       ])
-                    ]
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "event-create__submit-button" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "create",
+                      attrs: { disabled: _vm.disabled },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.onSubmit()
+                        }
+                      }
+                    },
+                    [_vm._v(" Next ")]
                   )
-                ]
-              )
-            ],
-            1
+                ])
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.showType == "Ongoing",
+                  expression: "showType == 'Ongoing'"
+                }
+              ],
+              staticClass: "ongoing-show-dates container grid"
+            },
+            [
+              _c("section", { staticClass: "event-enter-showtimes" }, [
+                _c("div", { staticClass: "field" }, [
+                  _c("label", [_vm._v(" Show Times")]),
+                  _vm._v(" "),
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.showTimes,
+                        expression: "showTimes"
+                      }
+                    ],
+                    staticClass: "create-input area",
+                    class: {
+                      active: _vm.active == "times",
+                      error: _vm.$v.showTimes.$error
+                    },
+                    attrs: {
+                      rows: "8",
+                      placeholder: _vm.placeholdero,
+                      required: "",
+                      autofocus: ""
+                    },
+                    domProps: { value: _vm.showTimes },
+                    on: {
+                      click: function($event) {
+                        _vm.active = "times"
+                      },
+                      blur: function($event) {
+                        _vm.active = null
+                      },
+                      input: [
+                        function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.showTimes = $event.target.value
+                        },
+                        _vm.$v.showTimes.$touch
+                      ]
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.$v.showTimes.$error
+                    ? _c("div", { staticClass: "validation-error" }, [
+                        !_vm.$v.showTimes.required
+                          ? _c("p", { staticClass: "error" }, [
+                              _vm._v(
+                                "Please give a brief description of show times"
+                              )
+                            ])
+                          : _vm._e()
+                      ])
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "field cost" }, [
+                  _c("label", { staticClass: "area" }, [
+                    _vm._v(" Ticket types and prices ")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "create-shows__ticket-box" },
+                    _vm._l(_vm.$v.tickets.$each.$iter, function(v, index) {
+                      return _c(
+                        "div",
+                        { staticClass: "ticket-box__element grid" },
+                        [
+                          _c("div", { staticClass: "field" }, [
+                            _c("label", [_vm._v("Ticket Type")]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: v.name.$model,
+                                  expression: "v.name.$model"
+                                }
+                              ],
+                              staticClass: "create-input",
+                              class: {
+                                active: _vm.active == "ticket",
+                                error: v.name.$error
+                              },
+                              attrs: {
+                                name: "name",
+                                placeholder: "ex: General, VIP, Student"
+                              },
+                              domProps: { value: v.name.$model },
+                              on: {
+                                click: function($event) {
+                                  _vm.active = "ticket"
+                                },
+                                blur: function($event) {
+                                  _vm.active = null
+                                },
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    v.name,
+                                    "$model",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            v.name.$error
+                              ? _c("div", { staticClass: "validation-error" }, [
+                                  !v.name.required
+                                    ? _c("p", { staticClass: "error" }, [
+                                        _vm._v("Must enter a ticket name")
+                                      ])
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  !v.name.maxLength
+                                    ? _c("p", { staticClass: "error" }, [
+                                        _vm._v("Name is too Long")
+                                      ])
+                                    : _vm._e()
+                                ])
+                              : _vm._e()
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "field" }, [
+                            _c("label", [_vm._v("Ticket Price")]),
+                            _vm._v(" "),
+                            _vm.money.type === "checkbox"
+                              ? _c(
+                                  "input",
+                                  _vm._b(
+                                    {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: v.ticket_price.$model,
+                                          expression: "v.ticket_price.$model"
+                                        },
+                                        {
+                                          name: "money",
+                                          rawName: "v-money",
+                                          value: _vm.money,
+                                          expression: "money"
+                                        }
+                                      ],
+                                      class: {
+                                        active: _vm.active == "price",
+                                        error: v.ticket_price.$error
+                                      },
+                                      staticStyle: { "text-align": "right" },
+                                      attrs: {
+                                        placeholder: "$0.00",
+                                        type: "checkbox"
+                                      },
+                                      domProps: {
+                                        checked: Array.isArray(
+                                          v.ticket_price.$model
+                                        )
+                                          ? _vm._i(
+                                              v.ticket_price.$model,
+                                              null
+                                            ) > -1
+                                          : v.ticket_price.$model
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          _vm.active = "price"
+                                        },
+                                        blur: function($event) {
+                                          _vm.active = null
+                                        },
+                                        keydown: function($event) {
+                                          $event.key === "-"
+                                            ? $event.preventDefault()
+                                            : null
+                                        },
+                                        change: function($event) {
+                                          var $$a = v.ticket_price.$model,
+                                            $$el = $event.target,
+                                            $$c = $$el.checked ? true : false
+                                          if (Array.isArray($$a)) {
+                                            var $$v = null,
+                                              $$i = _vm._i($$a, $$v)
+                                            if ($$el.checked) {
+                                              $$i < 0 &&
+                                                _vm.$set(
+                                                  v.ticket_price,
+                                                  "$model",
+                                                  $$a.concat([$$v])
+                                                )
+                                            } else {
+                                              $$i > -1 &&
+                                                _vm.$set(
+                                                  v.ticket_price,
+                                                  "$model",
+                                                  $$a
+                                                    .slice(0, $$i)
+                                                    .concat($$a.slice($$i + 1))
+                                                )
+                                            }
+                                          } else {
+                                            _vm.$set(
+                                              v.ticket_price,
+                                              "$model",
+                                              $$c
+                                            )
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "input",
+                                    _vm.money,
+                                    false
+                                  )
+                                )
+                              : _vm.money.type === "radio"
+                              ? _c(
+                                  "input",
+                                  _vm._b(
+                                    {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: v.ticket_price.$model,
+                                          expression: "v.ticket_price.$model"
+                                        },
+                                        {
+                                          name: "money",
+                                          rawName: "v-money",
+                                          value: _vm.money,
+                                          expression: "money"
+                                        }
+                                      ],
+                                      class: {
+                                        active: _vm.active == "price",
+                                        error: v.ticket_price.$error
+                                      },
+                                      staticStyle: { "text-align": "right" },
+                                      attrs: {
+                                        placeholder: "$0.00",
+                                        type: "radio"
+                                      },
+                                      domProps: {
+                                        checked: _vm._q(
+                                          v.ticket_price.$model,
+                                          null
+                                        )
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          _vm.active = "price"
+                                        },
+                                        blur: function($event) {
+                                          _vm.active = null
+                                        },
+                                        keydown: function($event) {
+                                          $event.key === "-"
+                                            ? $event.preventDefault()
+                                            : null
+                                        },
+                                        change: function($event) {
+                                          return _vm.$set(
+                                            v.ticket_price,
+                                            "$model",
+                                            null
+                                          )
+                                        }
+                                      }
+                                    },
+                                    "input",
+                                    _vm.money,
+                                    false
+                                  )
+                                )
+                              : _c(
+                                  "input",
+                                  _vm._b(
+                                    {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: v.ticket_price.$model,
+                                          expression: "v.ticket_price.$model"
+                                        },
+                                        {
+                                          name: "money",
+                                          rawName: "v-money",
+                                          value: _vm.money,
+                                          expression: "money"
+                                        }
+                                      ],
+                                      class: {
+                                        active: _vm.active == "price",
+                                        error: v.ticket_price.$error
+                                      },
+                                      staticStyle: { "text-align": "right" },
+                                      attrs: {
+                                        placeholder: "$0.00",
+                                        type: _vm.money.type
+                                      },
+                                      domProps: {
+                                        value: v.ticket_price.$model
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          _vm.active = "price"
+                                        },
+                                        blur: function($event) {
+                                          _vm.active = null
+                                        },
+                                        keydown: function($event) {
+                                          $event.key === "-"
+                                            ? $event.preventDefault()
+                                            : null
+                                        },
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.$set(
+                                            v.ticket_price,
+                                            "$model",
+                                            $event.target.value
+                                          )
+                                        }
+                                      }
+                                    },
+                                    "input",
+                                    _vm.money,
+                                    false
+                                  )
+                                ),
+                            _vm._v(" "),
+                            v.ticket_price.$error
+                              ? _c("div", { staticClass: "validation-error" }, [
+                                  !v.ticket_price.minValue
+                                    ? _c("p", { staticClass: "error" }, [
+                                        _vm._v("Please enter an amount")
+                                      ])
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  !v.ticket_price.maxLength
+                                    ? _c("p", { staticClass: "error" }, [
+                                        _vm._v(
+                                          "Please enter an amount under $10,000"
+                                        )
+                                      ])
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  !v.ticket_price.required
+                                    ? _c("p", { staticClass: "error" }, [
+                                        _vm._v("Please enter a price")
+                                      ])
+                                    : _vm._e()
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.tickets.length > 1
+                              ? _c(
+                                  "button",
+                                  {
+                                    staticClass: "delete-circle",
+                                    on: {
+                                      click: function($event) {
+                                        $event.preventDefault()
+                                        return _vm.deleteRow(index)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("X")]
+                                )
+                              : _vm._e()
+                          ])
+                        ]
+                      )
+                    }),
+                    0
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "ticket-box__add-button",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.addTickets($event)
+                        }
+                      }
+                    },
+                    [_c("button", [_vm._v("+ Ticket Types")])]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("section", { staticClass: "event-enter-showdates" }, [
+                _c("div", { staticClass: "field" }, [
+                  _c("label", [_vm._v(" Select show days")]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "week-calendar grid" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "week-calendar__day",
+                        class: { active: _vm.week.mon },
+                        on: {
+                          click: function($event) {
+                            return _vm.addWeekDay("mon")
+                          }
+                        }
+                      },
+                      [_c("h4", [_vm._v("Mon")])]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "week-calendar__day",
+                        class: { active: _vm.week.tue },
+                        on: {
+                          click: function($event) {
+                            return _vm.addWeekDay("tue")
+                          }
+                        }
+                      },
+                      [_c("h4", [_vm._v("Tue")])]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "week-calendar__day",
+                        class: { active: _vm.week.wed },
+                        on: {
+                          click: function($event) {
+                            return _vm.addWeekDay("wed")
+                          }
+                        }
+                      },
+                      [_c("h4", [_vm._v("Wed")])]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "week-calendar__day",
+                        class: { active: _vm.week.thu },
+                        on: {
+                          click: function($event) {
+                            return _vm.addWeekDay("thu")
+                          }
+                        }
+                      },
+                      [_c("h4", [_vm._v("Thu")])]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "week-calendar__day",
+                        class: { active: _vm.week.fri },
+                        on: {
+                          click: function($event) {
+                            return _vm.addWeekDay("fri")
+                          }
+                        }
+                      },
+                      [_c("h4", [_vm._v("Fri")])]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "week-calendar__day",
+                        class: { active: _vm.week.sat },
+                        on: {
+                          click: function($event) {
+                            return _vm.addWeekDay("sat")
+                          }
+                        }
+                      },
+                      [_c("h4", [_vm._v("Sat")])]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "week-calendar__day",
+                        class: { active: _vm.week.sun },
+                        on: {
+                          click: function($event) {
+                            return _vm.addWeekDay("sun")
+                          }
+                        }
+                      },
+                      [_c("h4", [_vm._v("Sun")])]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _vm.$v.week.$error
+                    ? _c("div", { staticClass: "validation-error" }, [
+                        !_vm.$v.week.ifOngoing
+                          ? _c("p", { staticClass: "error" }, [
+                              _vm._v("Please select at least one day")
+                            ])
+                          : _vm._e()
+                      ])
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "field" }, [
+                  _c("label", [
+                    _vm._v(
+                      " Does the event have a specific embargo date? (date you would like it to appear on EI) "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { attrs: { id: "cover" } }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.showEmbargoDate,
+                          expression: "showEmbargoDate"
+                        }
+                      ],
+                      attrs: { type: "checkbox", id: "checkbox" },
+                      domProps: {
+                        checked: Array.isArray(_vm.showEmbargoDate)
+                          ? _vm._i(_vm.showEmbargoDate, null) > -1
+                          : _vm.showEmbargoDate
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$a = _vm.showEmbargoDate,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = null,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 &&
+                                (_vm.showEmbargoDate = $$a.concat([$$v]))
+                            } else {
+                              $$i > -1 &&
+                                (_vm.showEmbargoDate = $$a
+                                  .slice(0, $$i)
+                                  .concat($$a.slice($$i + 1)))
+                            }
+                          } else {
+                            _vm.showEmbargoDate = $$c
+                          }
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("div", { attrs: { id: "bar" } }),
+                    _vm._v(" "),
+                    _c("div", { attrs: { id: "knob" } }, [
+                      _vm.showEmbargoDate
+                        ? _c("p", [_vm._v("Yes")])
+                        : _c("p", [_vm._v("No")])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _vm.showEmbargoDate
+                    ? _c("div", [
+                        _c(
+                          "div",
+                          { staticClass: "calendar" },
+                          [
+                            _c("flat-pickr", {
+                              ref: "datePicker",
+                              staticClass: "form-control",
+                              attrs: {
+                                config: _vm.embargoCalendarConfig,
+                                placeholder: "Select date",
+                                name: "dates"
+                              },
+                              model: {
+                                value: _vm.embargoDate,
+                                callback: function($$v) {
+                                  _vm.embargoDate = $$v
+                                },
+                                expression: "embargoDate"
+                              }
+                            })
+                          ],
+                          1
+                        )
+                      ])
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "event-create__submit-button" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "create",
+                      attrs: { disabled: _vm.disabled },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.onSubmit()
+                        }
+                      }
+                    },
+                    [_vm._v(" Next ")]
+                  )
+                ])
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.showType == "Anytime",
+                  expression: "showType == 'Anytime'"
+                }
+              ],
+              staticClass: "everyday-show-dates container grid"
+            },
+            [
+              _c("section", { staticClass: "event-enter-showtimes" }, [
+                _c("div", { staticClass: "field" }, [
+                  _c("label", [_vm._v(" Show Times")]),
+                  _vm._v(" "),
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.showTimes,
+                        expression: "showTimes"
+                      }
+                    ],
+                    staticClass: "create-input area",
+                    class: {
+                      active: _vm.active == "times",
+                      error: _vm.$v.showTimes.$error
+                    },
+                    attrs: {
+                      rows: "8",
+                      placeholder: _vm.placeholdera,
+                      required: "",
+                      autofocus: ""
+                    },
+                    domProps: { value: _vm.showTimes },
+                    on: {
+                      click: function($event) {
+                        _vm.active = "times"
+                      },
+                      blur: function($event) {
+                        _vm.active = null
+                      },
+                      input: [
+                        function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.showTimes = $event.target.value
+                        },
+                        _vm.$v.showTimes.$touch
+                      ]
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.$v.showTimes.$error
+                    ? _c("div", { staticClass: "validation-error" }, [
+                        !_vm.$v.showTimes.required
+                          ? _c("p", { staticClass: "error" }, [
+                              _vm._v(
+                                "Please give a brief description of show times"
+                              )
+                            ])
+                          : _vm._e()
+                      ])
+                    : _vm._e()
+                ])
+              ]),
+              _vm._v(" "),
+              _c("section", { staticClass: "event-enter-showdates" }, [
+                _c("div", { staticClass: "field cost" }, [
+                  _c("label", { staticClass: "area" }, [
+                    _vm._v(" Ticket types and prices ")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "create-shows__ticket-box" },
+                    _vm._l(_vm.$v.tickets.$each.$iter, function(v, index) {
+                      return _c(
+                        "div",
+                        { staticClass: "ticket-box__element grid" },
+                        [
+                          _c("div", { staticClass: "field" }, [
+                            _c("label", [_vm._v("Ticket Type")]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: v.name.$model,
+                                  expression: "v.name.$model"
+                                }
+                              ],
+                              staticClass: "create-input",
+                              class: {
+                                active: _vm.active == "ticket",
+                                error: v.name.$error
+                              },
+                              attrs: {
+                                name: "name",
+                                placeholder: "ex: General, VIP, Student"
+                              },
+                              domProps: { value: v.name.$model },
+                              on: {
+                                click: function($event) {
+                                  _vm.active = "ticket"
+                                },
+                                blur: function($event) {
+                                  _vm.active = null
+                                },
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    v.name,
+                                    "$model",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            v.name.$error
+                              ? _c("div", { staticClass: "validation-error" }, [
+                                  !v.name.required
+                                    ? _c("p", { staticClass: "error" }, [
+                                        _vm._v("Must enter a ticket name")
+                                      ])
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  !v.name.maxLength
+                                    ? _c("p", { staticClass: "error" }, [
+                                        _vm._v("Name is too Long")
+                                      ])
+                                    : _vm._e()
+                                ])
+                              : _vm._e()
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "field" }, [
+                            _c("label", [_vm._v("Ticket Price")]),
+                            _vm._v(" "),
+                            _vm.money.type === "checkbox"
+                              ? _c(
+                                  "input",
+                                  _vm._b(
+                                    {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: v.ticket_price.$model,
+                                          expression: "v.ticket_price.$model"
+                                        },
+                                        {
+                                          name: "money",
+                                          rawName: "v-money",
+                                          value: _vm.money,
+                                          expression: "money"
+                                        }
+                                      ],
+                                      class: {
+                                        active: _vm.active == "price",
+                                        error: v.ticket_price.$error
+                                      },
+                                      staticStyle: { "text-align": "right" },
+                                      attrs: {
+                                        placeholder: "$0.00",
+                                        type: "checkbox"
+                                      },
+                                      domProps: {
+                                        checked: Array.isArray(
+                                          v.ticket_price.$model
+                                        )
+                                          ? _vm._i(
+                                              v.ticket_price.$model,
+                                              null
+                                            ) > -1
+                                          : v.ticket_price.$model
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          _vm.active = "price"
+                                        },
+                                        blur: function($event) {
+                                          _vm.active = null
+                                        },
+                                        keydown: function($event) {
+                                          $event.key === "-"
+                                            ? $event.preventDefault()
+                                            : null
+                                        },
+                                        change: function($event) {
+                                          var $$a = v.ticket_price.$model,
+                                            $$el = $event.target,
+                                            $$c = $$el.checked ? true : false
+                                          if (Array.isArray($$a)) {
+                                            var $$v = null,
+                                              $$i = _vm._i($$a, $$v)
+                                            if ($$el.checked) {
+                                              $$i < 0 &&
+                                                _vm.$set(
+                                                  v.ticket_price,
+                                                  "$model",
+                                                  $$a.concat([$$v])
+                                                )
+                                            } else {
+                                              $$i > -1 &&
+                                                _vm.$set(
+                                                  v.ticket_price,
+                                                  "$model",
+                                                  $$a
+                                                    .slice(0, $$i)
+                                                    .concat($$a.slice($$i + 1))
+                                                )
+                                            }
+                                          } else {
+                                            _vm.$set(
+                                              v.ticket_price,
+                                              "$model",
+                                              $$c
+                                            )
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "input",
+                                    _vm.money,
+                                    false
+                                  )
+                                )
+                              : _vm.money.type === "radio"
+                              ? _c(
+                                  "input",
+                                  _vm._b(
+                                    {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: v.ticket_price.$model,
+                                          expression: "v.ticket_price.$model"
+                                        },
+                                        {
+                                          name: "money",
+                                          rawName: "v-money",
+                                          value: _vm.money,
+                                          expression: "money"
+                                        }
+                                      ],
+                                      class: {
+                                        active: _vm.active == "price",
+                                        error: v.ticket_price.$error
+                                      },
+                                      staticStyle: { "text-align": "right" },
+                                      attrs: {
+                                        placeholder: "$0.00",
+                                        type: "radio"
+                                      },
+                                      domProps: {
+                                        checked: _vm._q(
+                                          v.ticket_price.$model,
+                                          null
+                                        )
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          _vm.active = "price"
+                                        },
+                                        blur: function($event) {
+                                          _vm.active = null
+                                        },
+                                        keydown: function($event) {
+                                          $event.key === "-"
+                                            ? $event.preventDefault()
+                                            : null
+                                        },
+                                        change: function($event) {
+                                          return _vm.$set(
+                                            v.ticket_price,
+                                            "$model",
+                                            null
+                                          )
+                                        }
+                                      }
+                                    },
+                                    "input",
+                                    _vm.money,
+                                    false
+                                  )
+                                )
+                              : _c(
+                                  "input",
+                                  _vm._b(
+                                    {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: v.ticket_price.$model,
+                                          expression: "v.ticket_price.$model"
+                                        },
+                                        {
+                                          name: "money",
+                                          rawName: "v-money",
+                                          value: _vm.money,
+                                          expression: "money"
+                                        }
+                                      ],
+                                      class: {
+                                        active: _vm.active == "price",
+                                        error: v.ticket_price.$error
+                                      },
+                                      staticStyle: { "text-align": "right" },
+                                      attrs: {
+                                        placeholder: "$0.00",
+                                        type: _vm.money.type
+                                      },
+                                      domProps: {
+                                        value: v.ticket_price.$model
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          _vm.active = "price"
+                                        },
+                                        blur: function($event) {
+                                          _vm.active = null
+                                        },
+                                        keydown: function($event) {
+                                          $event.key === "-"
+                                            ? $event.preventDefault()
+                                            : null
+                                        },
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.$set(
+                                            v.ticket_price,
+                                            "$model",
+                                            $event.target.value
+                                          )
+                                        }
+                                      }
+                                    },
+                                    "input",
+                                    _vm.money,
+                                    false
+                                  )
+                                ),
+                            _vm._v(" "),
+                            v.ticket_price.$error
+                              ? _c("div", { staticClass: "validation-error" }, [
+                                  !v.ticket_price.minValue
+                                    ? _c("p", { staticClass: "error" }, [
+                                        _vm._v("Please enter an amount")
+                                      ])
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  !v.ticket_price.maxLength
+                                    ? _c("p", { staticClass: "error" }, [
+                                        _vm._v(
+                                          "Please enter an amount under $10,000"
+                                        )
+                                      ])
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  !v.ticket_price.required
+                                    ? _c("p", { staticClass: "error" }, [
+                                        _vm._v("Please enter a price")
+                                      ])
+                                    : _vm._e()
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.tickets.length > 1
+                              ? _c(
+                                  "button",
+                                  {
+                                    staticClass: "delete-circle",
+                                    on: {
+                                      click: function($event) {
+                                        $event.preventDefault()
+                                        return _vm.deleteRow(index)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("X")]
+                                )
+                              : _vm._e()
+                          ])
+                        ]
+                      )
+                    }),
+                    0
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "ticket-box__add-button",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.addTickets($event)
+                        }
+                      }
+                    },
+                    [_c("button", [_vm._v("+ Ticket Types")])]
+                  )
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "field",
+                    staticStyle: { "margin-top": "6rem" }
+                  },
+                  [
+                    _c("label", [
+                      _vm._v(
+                        " Does the event have a specific embargo date? (date you would like it to appear on EI) "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { attrs: { id: "cover" } }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.showEmbargoDate,
+                            expression: "showEmbargoDate"
+                          }
+                        ],
+                        attrs: { type: "checkbox", id: "checkbox" },
+                        domProps: {
+                          checked: Array.isArray(_vm.showEmbargoDate)
+                            ? _vm._i(_vm.showEmbargoDate, null) > -1
+                            : _vm.showEmbargoDate
+                        },
+                        on: {
+                          change: function($event) {
+                            var $$a = _vm.showEmbargoDate,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = null,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 &&
+                                  (_vm.showEmbargoDate = $$a.concat([$$v]))
+                              } else {
+                                $$i > -1 &&
+                                  (_vm.showEmbargoDate = $$a
+                                    .slice(0, $$i)
+                                    .concat($$a.slice($$i + 1)))
+                              }
+                            } else {
+                              _vm.showEmbargoDate = $$c
+                            }
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("div", { attrs: { id: "bar" } }),
+                      _vm._v(" "),
+                      _c("div", { attrs: { id: "knob" } }, [
+                        _vm.showEmbargoDate
+                          ? _c("p", [_vm._v("Yes")])
+                          : _c("p", [_vm._v("No")])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _vm.showEmbargoDate
+                      ? _c("div", [
+                          _c(
+                            "div",
+                            { staticClass: "calendar" },
+                            [
+                              _c("flat-pickr", {
+                                ref: "datePicker",
+                                staticClass: "form-control",
+                                attrs: {
+                                  config: _vm.embargoCalendarConfig,
+                                  placeholder: "Select date",
+                                  name: "dates"
+                                },
+                                model: {
+                                  value: _vm.embargoDate,
+                                  callback: function($$v) {
+                                    _vm.embargoDate = $$v
+                                  },
+                                  expression: "embargoDate"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ])
+                      : _vm._e()
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "event-create__submit-button",
+                    staticStyle: { "margin-top": "6rem" }
+                  },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "create",
+                        attrs: { disabled: _vm.disabled },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.onSubmit()
+                          }
+                        }
+                      },
+                      [_vm._v(" Next ")]
+                    )
+                  ]
+                )
+              ])
+            ]
           )
-        ],
-        1
-      ),
+        ])
+      ]),
       _vm._v(" "),
       _vm.modal
         ? _c("modal", { on: { close: _vm.noFreeTicket } }, [
@@ -2684,116 +2603,16 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "title" }, [_c("h2", [_vm._v("Shows")])])
+  }
+]
 render._withStripped = true
 
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js":
-/*!********************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/runtime/componentNormalizer.js ***!
-  \********************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalizeComponent; });
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-function normalizeComponent (
-  scriptExports,
-  render,
-  staticRenderFns,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier, /* server only */
-  shadowMode /* vue-cli only */
-) {
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (render) {
-    options.render = render
-    options.staticRenderFns = staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = 'data-v-' + scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = shadowMode
-      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
-      : injectStyles
-  }
-
-  if (hook) {
-    if (options.functional) {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functioal component in vue file
-      var originalRender = options.render
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return originalRender(h, context)
-      }
-    } else {
-      // inject component registration as beforeCreate hook
-      var existing = options.beforeCreate
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    }
-  }
-
-  return {
-    exports: scriptExports,
-    options: options
-  }
-}
 
 
 /***/ }),
@@ -2823,6 +2642,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     onBack: function onBack(value) {
       return window.location.href = "/create-event/".concat(this.event.slug, "/").concat(value);
+    },
+    onFetch: function onFetch(value) {
+      return "/create-event/".concat(this.event.slug, "/").concat(value, "/fetch?timestamp=").concat(new Date().getTime());
     },
     onForward: function onForward(value) {
       return window.location.href = "/create-event/".concat(this.event.slug, "/").concat(value);

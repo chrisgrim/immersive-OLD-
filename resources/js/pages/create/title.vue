@@ -125,7 +125,19 @@
                 this.approved = false;
                 this.modal = false;
             },
+
+            onLoad() {
+                axios.get(this.onFetch('title'))
+                .then(res => {
+                    res.data.name ? this.title.name = res.data.name : '';
+                    res.data.tag_line ? this.title.tagLine = res.data.tag_line : '';
+                });
+            },
 		},
+
+        created() {
+            this.onLoad();
+        },
 
 
 		validations: {

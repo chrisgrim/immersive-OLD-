@@ -357,26 +357,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: {
-    loadevent: {
-      type: Object
-    },
-    user: {
-      type: String
-    }
-  },
+  props: ['loadevent', 'user'],
   components: {
     LMap: vue2_leaflet__WEBPACK_IMPORTED_MODULE_0__["LMap"],
     LTileLayer: vue2_leaflet__WEBPACK_IMPORTED_MODULE_0__["LTileLayer"],
     LMarker: vue2_leaflet__WEBPACK_IMPORTED_MODULE_0__["LMarker"],
     flatPickr: vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_3___default.a,
     ContactOrganizer: _organizers_contact_organizer_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    LPopup: vue2_leaflet__WEBPACK_IMPORTED_MODULE_0__["LPopup"]
+    LPopup: vue2_leaflet__WEBPACK_IMPORTED_MODULE_0__["LPopup"],
+    LIcon: vue2_leaflet__WEBPACK_IMPORTED_MODULE_0__["LIcon"]
   },
   computed: {
     dateArray: function dateArray() {
@@ -389,6 +397,9 @@ __webpack_require__.r(__webpack_exports__);
           '';
         }
       }
+    },
+    locationPlaceholder: function locationPlaceholder() {
+      return this.event.location.postal_code || this.event.location.city ? (this.event.location.home ? this.event.location.home + ' ' : '') + (this.event.location.street ? this.event.location.street + ' | ' : '') + (this.event.location.city ? this.event.location.city + ' | ' : '') + (this.event.location.region ? this.event.location.region + ' | ' : '') + (this.event.location.country ? this.event.location.country : '') : '';
     }
   },
   data: function data() {
@@ -507,6 +518,76 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "content" }, [
+    _c("nav", { staticClass: "event-show mobile" }, [
+      _c("div", { staticClass: "back" }, [
+        _vm.searchUrl
+          ? _c("a", { attrs: { href: _vm.searchUrl } }, [
+              _c(
+                "svg",
+                {
+                  staticStyle: {
+                    display: "block",
+                    fill: "none",
+                    height: "16px",
+                    width: "16px",
+                    stroke: "currentcolor",
+                    "stroke-width": "4",
+                    overflow: "visible"
+                  },
+                  attrs: {
+                    "aria-label": "Back",
+                    role: "img",
+                    viewBox: "0 0 32 32",
+                    xmlns: "http://www.w3.org/2000/svg"
+                  }
+                },
+                [
+                  _c("g", { attrs: { fill: "none" } }, [
+                    _c("path", {
+                      attrs: {
+                        d:
+                          "m20 28-11.29289322-11.2928932c-.39052429-.3905243-.39052429-1.0236893 0-1.4142136l11.29289322-11.2928932"
+                      }
+                    })
+                  ])
+                ]
+              )
+            ])
+          : _c("a", { attrs: { href: "/" } }, [
+              _c(
+                "svg",
+                {
+                  staticStyle: {
+                    display: "block",
+                    fill: "none",
+                    height: "16px",
+                    width: "16px",
+                    stroke: "currentcolor",
+                    "stroke-width": "4",
+                    overflow: "visible"
+                  },
+                  attrs: {
+                    "aria-label": "Back",
+                    role: "img",
+                    viewBox: "0 0 32 32",
+                    xmlns: "http://www.w3.org/2000/svg"
+                  }
+                },
+                [
+                  _c("g", { attrs: { fill: "none" } }, [
+                    _c("path", {
+                      attrs: {
+                        d:
+                          "m20 28-11.29289322-11.2928932c-.39052429-.3905243-.39052429-1.0236893 0-1.4142136l11.29289322-11.2928932"
+                      }
+                    })
+                  ])
+                ]
+              )
+            ])
+      ])
+    ]),
+    _vm._v(" "),
     _c("header", { staticClass: "event-show grid" }, [
       _c("div", { staticClass: "header-left" }, [
         _c("div", { staticClass: "content" }, [
@@ -820,7 +901,7 @@ var render = function() {
                                 review.review.length >= 200
                                   ? _c("span", { staticClass: "show-text" }, [
                                       _vm._v(
-                                        "... Read More\n                                "
+                                        "... Read More\n                                    "
                                       )
                                     ])
                                   : _vm._e()
@@ -864,6 +945,8 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("div", { staticClass: "event-show-showtimes" }, [
+                _c("p", [_vm._v("Show Details:")]),
+                _vm._v(" "),
                 _c("p", { staticStyle: { "white-space": "pre-wrap" } }, [
                   _vm._v(_vm._s(_vm.event.show_times))
                 ])
@@ -894,6 +977,8 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("div", { staticClass: "event-show-showtimes" }, [
+                _c("p", [_vm._v("Show Details:")]),
+                _vm._v(" "),
                 _c("p", { staticStyle: { "white-space": "pre-wrap" } }, [
                   _vm._v(_vm._s(_vm.event.show_times))
                 ])
@@ -1049,57 +1134,74 @@ var render = function() {
     _c("section", { staticClass: "grid event-show two-panel" }, [
       _vm._m(7),
       _vm._v(" "),
-      _c("div", { staticClass: "right" }, [
-        _c("a", { attrs: { href: "/organizer/" + _vm.event.organizer.slug } }, [
-          _c("div", { staticClass: "event-show-organizer-image" }, [
-            _c(
-              "div",
-              {
-                staticClass: "img",
-                style: _vm.event.organizer.thumbImagePath
-                  ? _vm.organizerImage
-                  : "background:" + _vm.event.organizer.hexColor
-              },
-              [
-                !_vm.event.organizer.thumbImagePath
-                  ? _c(
-                      "div",
-                      { staticClass: "organizer-icon-text event-show" },
-                      [
-                        _c("span", [
-                          _vm._v(_vm._s(_vm.event.organizer.name.charAt(0)))
-                        ])
-                      ]
-                    )
-                  : _vm._e()
-              ]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("a", { attrs: { href: "/organizer/" + _vm.event.organizer.slug } }, [
-          _c("div", { staticClass: "name" }, [
-            _c("h3", [_vm._v(_vm._s(_vm.event.organizer.name))])
-          ])
-        ]),
-        _vm._v(" "),
-        _vm.event.organizer.description
-          ? _c(
-              "div",
-              {
-                staticClass: "description",
-                staticStyle: { "white-space": "pre-line" }
-              },
-              [
-                _vm._v(
-                  "\n                " +
-                    _vm._s(_vm.event.organizer.description) +
-                    "\n            "
+      _c(
+        "div",
+        { staticClass: "right" },
+        [
+          _c(
+            "a",
+            { attrs: { href: "/organizer/" + _vm.event.organizer.slug } },
+            [
+              _c("div", { staticClass: "event-show-organizer-image" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "img",
+                    style: _vm.event.organizer.thumbImagePath
+                      ? _vm.organizerImage
+                      : "background:" + _vm.event.organizer.hexColor
+                  },
+                  [
+                    !_vm.event.organizer.thumbImagePath
+                      ? _c(
+                          "div",
+                          { staticClass: "organizer-icon-text event-show" },
+                          [
+                            _c("span", [
+                              _vm._v(_vm._s(_vm.event.organizer.name.charAt(0)))
+                            ])
+                          ]
+                        )
+                      : _vm._e()
+                  ]
                 )
-              ]
-            )
-          : _vm._e()
-      ])
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "a",
+            { attrs: { href: "/organizer/" + _vm.event.organizer.slug } },
+            [
+              _c("div", { staticClass: "name" }, [
+                _c("h3", [_vm._v(_vm._s(_vm.event.organizer.name))])
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _vm.event.organizer.description
+            ? _c(
+                "div",
+                {
+                  staticClass: "description",
+                  staticStyle: { "white-space": "pre-line" }
+                },
+                [
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(_vm.event.organizer.description) +
+                      "\n            "
+                  )
+                ]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _c("ContactOrganizer", {
+            attrs: { user: _vm.user, loadorganizer: _vm.event.organizer }
+          })
+        ],
+        1
+      )
     ]),
     _vm._v(" "),
     _vm.bar && _vm.event.location.latitude
@@ -1126,7 +1228,7 @@ var render = function() {
                       _c("p", [
                         _vm._v(
                           _vm._s(_vm.event.location.city) +
-                            " " +
+                            ", " +
                             _vm._s(_vm.event.location.region)
                         )
                       ]),
@@ -1157,19 +1259,7 @@ var render = function() {
                           _vm.event.location.region
                       }
                     },
-                    [
-                      _c("p", [
-                        _vm._v(
-                          _vm._s(_vm.event.location.home) +
-                            " " +
-                            _vm._s(_vm.event.location.street) +
-                            ", " +
-                            _vm._s(_vm.event.location.city) +
-                            ",  " +
-                            _vm._s(_vm.event.location.region)
-                        )
-                      ])
-                    ]
+                    [_c("p", [_vm._v(_vm._s(_vm.locationPlaceholder))])]
                   )
                 ]),
             _vm._v(" "),
@@ -1282,6 +1372,23 @@ var render = function() {
                               "l-marker",
                               { attrs: { "lat-lng": _vm.center } },
                               [
+                                _c(
+                                  "l-icon",
+                                  { attrs: { "class-name": "icons" } },
+                                  [
+                                    _c("p", [
+                                      _vm._v(
+                                        _vm._s(
+                                          _vm.event.organizer.name.slice(0, 20)
+                                        )
+                                      ),
+                                      _vm.event.organizer.name.length > 20
+                                        ? _c("span", [_vm._v("...")])
+                                        : _vm._e()
+                                    ])
+                                  ]
+                                ),
+                                _vm._v(" "),
                                 _c("l-popup", [
                                   _c("div", { staticClass: "show-pop" }, [
                                     _c(

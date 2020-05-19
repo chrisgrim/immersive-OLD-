@@ -123,6 +123,20 @@
                 <h2>Mobility Advisories</h2>
             </div>
             <div class="field">
+                <label> Is the Event Wheel Chair Accessible? </label>
+                <div id="cover">
+                    <input v-model="advisories.wheelchairReady" type="checkbox" id="checkbox">
+                    <div id="bar"></div>
+                    <div id="knob">
+                        <p v-if="advisories.wheelchairReady">Yes</p>
+                        <p v-else="advisories.wheelchairReady">No</p>
+                    </div>
+                </div>
+                <div v-if="$v.advisories.wheelchairReady.$error" class="validation-error">
+                    <p class="error" v-if="!$v.advisories.wheelchairReady.required">Must select if the event is wheelchair accessible </p>
+                </div>
+            </div>
+            <div class="field">
                 <label class="area">Select any mobility restrictions</label>
                 <multiselect 
                 v-model="mobilityAdvisories" 
@@ -146,20 +160,6 @@
                     <p class="error" v-if="!$v.mobilityAdvisories.required">Must enter a mobility advisory </p>
                 </div>
             </div>
-            <div class="field">
-                <label> Is the Event Wheel Chair Accessible? </label>
-                <div id="cover">
-                    <input v-model="advisories.wheelchairReady" type="checkbox" id="checkbox">
-                    <div id="bar"></div>
-                    <div id="knob">
-                        <p v-if="advisories.wheelchairReady">Yes</p>
-                        <p v-else="advisories.wheelchairReady">No</p>
-                    </div>
-                </div>
-                <div v-if="$v.advisories.wheelchairReady.$error" class="validation-error">
-                    <p class="error" v-if="!$v.advisories.wheelchairReady.required">Must select if the event is wheelchair accessible </p>
-                </div>
-            </div>
             <div class="event-create__submit-button">
                 <button :disabled="disabled" @click.prevent="onSubmit()" class="create"> Next </button>
             </div>
@@ -257,7 +257,29 @@
                     this.onErrors(err);
                 });
 			},
+
+            updateAdvisoryFields(input) {
+                if ((input !== null) && (typeof input === "object") && (input.id !== null)) {
+                    this.advisories = _.pick(input, _.intersection( _.keys(this.advisories), _.keys(input) ));
+                }
+                this.advisories.wheelchairReady ? '' : this.advisories.wheelchairReady = false;
+                this.advisories.sexualViolence ? '' : this.advisories.sexualViolence = false;
+            },
+
+            onLoad() {
+                axios.get(this.onFetch('advisories'))
+                .then(res => {
+                    this.updateAdvisoryFields(res.data.advisories);
+                    res.data.contactPivots ? this.contactAdvisories = res.data.contactPivots : '';
+                    res.data.contentPivots ? this.contentAdvisories = res.data.contentPivots : '';
+                    res.data.mobilityPivots ? this.mobilityAdvisories = res.data.mobilityPivots : '';
+                });
+            },
 		},
+
+        created() {
+            this.onLoad();
+        },
 
 
         validations: {

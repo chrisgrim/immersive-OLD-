@@ -86,7 +86,7 @@ class Show extends Model
             $lastDate = $event->shows()->orderBy('date', 'DESC')->first()->date;
         }
         if ($request->onGoing) {
-            $lastDate = $event->showOnGoing()->first()->date;
+            $lastDate = $event->shows()->orderBy('date', 'DESC')->first()->date;
         }
         if ($request->always) {
             $lastDate = Carbon::now()->addMonths(6)->format('Y-m-d H:i:s');

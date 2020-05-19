@@ -161,6 +161,7 @@
                     name="dates">
                 </flat-pickr>
                 <div class="event-show-showtimes">
+                    <p>Show Details:</p>
                     <p style="white-space: pre-wrap;">{{event.show_times}}</p>
                 </div>
             </div>
@@ -174,6 +175,7 @@
                     name="dates">
                 </flat-pickr>
                 <div class="event-show-showtimes">
+                    <p>Show Details:</p>
                     <p style="white-space: pre-wrap;">{{event.show_times}}</p>
                 </div>
             </div>
@@ -308,14 +310,14 @@
 				</div>
 				<div class="text" v-if="event.location.hiddenLocationToggle">
                     <a rel="noreferrer" target="_blank" :href="`http://maps.google.com/maps?q=${event.location.city},+${event.location.region}`">
-						<p>{{event.location.city}} {{event.location.region}}</p>
+						<p>{{event.location.city}}, {{event.location.region}}</p>
                         <br>
                         <p>{{event.location.hiddenLocation}}</p>
                     </a>
 				</div>
                 <div class="text" v-else="event.location.hiddenLocationToggle">
                     <a rel="noreferrer" target="_blank" :href="`http://maps.google.com/maps?q=${event.location.home}+${event.location.street},+${event.location.city},+${event.location.region}`">
-                        <p>{{event.location.home}} {{event.location.street}}, {{event.location.city}},  {{event.location.region}}</p>  
+                        <p>{{locationPlaceholder}}</p>  
                     </a>
                 </div>
 				<div class="location-map">
@@ -406,6 +408,15 @@
                     }
                 }
             },
+
+            locationPlaceholder() {
+                return this.event.location.postal_code || this.event.location.city ? (this.event.location.home ? this.event.location.home + ' ' : '') 
+                + (this.event.location.street ? this.event.location.street + ' | ' : '') 
+                + (this.event.location.city ? this.event.location.city + ' | ' : '') 
+                + (this.event.location.region ? this.event.location.region + ' | ' : '') 
+                + (this.event.location.country ? this.event.location.country : '') 
+                : '';
+            },
         },
 
 		data() {
@@ -443,6 +454,7 @@
                     dateFormat: 'Y-m-d H:i:s',    
                 },
                 searchUrl: '',
+
 			}
 		},
 

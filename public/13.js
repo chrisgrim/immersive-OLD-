@@ -1,18 +1,26 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[13],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/create/image.vue?vue&type=script&lang=js&":
-/*!******************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/create/image.vue?vue&type=script&lang=js& ***!
-  \******************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/create/location-google.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/create/location-google.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _mixins_form_validation_mixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/form-validation-mixin */ "./resources/js/mixins/form-validation-mixin.js");
-/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
-/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _layouts_loading_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../layouts/loading.vue */ "./resources/js/pages/layouts/loading.vue");
+/* harmony import */ var _layouts_loading_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../layouts/loading.vue */ "./resources/js/pages/layouts/loading.vue");
+/* harmony import */ var _components_google_location_mixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/google-location-mixin */ "./resources/js/pages/create/components/google-location-mixin.js");
+/* harmony import */ var _mixins_form_validation_mixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../mixins/form-validation-mixin */ "./resources/js/mixins/form-validation-mixin.js");
+/* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-multiselect */ "./node_modules/vue-multiselect/dist/vue-multiselect.min.js");
+/* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_multiselect__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var vue2_leaflet__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue2-leaflet */ "./node_modules/vue2-leaflet/dist/vue2-leaflet.es.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_6__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 //
 //
 //
@@ -57,84 +65,246 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mixins: [_mixins_form_validation_mixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  props: ['event', 'remote'],
+  mixins: [_components_google_location_mixin__WEBPACK_IMPORTED_MODULE_1__["default"], _mixins_form_validation_mixin__WEBPACK_IMPORTED_MODULE_2__["default"]],
   components: {
-    CubeSpinner: _layouts_loading_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+    Multiselect: vue_multiselect__WEBPACK_IMPORTED_MODULE_3___default.a,
+    LMap: vue2_leaflet__WEBPACK_IMPORTED_MODULE_5__["LMap"],
+    LTileLayer: vue2_leaflet__WEBPACK_IMPORTED_MODULE_5__["LTileLayer"],
+    LMarker: vue2_leaflet__WEBPACK_IMPORTED_MODULE_5__["LMarker"],
+    CubeSpinner: _layouts_loading_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  props: ['event'],
   computed: {
-    hasImage: function hasImage() {
-      return this.image || this.imageFile.src ? true : false;
+    locationPlaceholder: function locationPlaceholder() {
+      return this.location.postal_code || this.location.city ? (this.location.home ? this.location.home + ' ' : '') + (this.location.street ? this.location.street + ', ' : '') + (this.location.city ? this.location.city + ', ' : '') + (this.location.country ? this.location.country : '') : 'Enter full address ';
     },
-    displayImage: function displayImage() {
-      return "backgroundImage: url('".concat(this.imageFile.src && !this.$v.imageFile.$error ? this.imageFile.src : this.image, "')");
+    remoteLocationArray: function remoteLocationArray() {
+      var data;
+      return data = {
+        remote: this.remoteLocations.map(function (a) {
+          return a.location;
+        })
+      };
     },
     endpoint: function endpoint() {
-      return "/create-event/".concat(this.event.slug, "/images");
+      return "/create-event/".concat(this.event.slug, "/location");
+    },
+    corsEndpoint: function corsEndpoint() {
+      return "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/geocode/json?address=".concat(this.location.postal_code ? this.location.postal_code : this.location.city, "&key=AIzaSyBxpUKfSJMC4_3xwLU73AmH-jszjexoriw");
     }
   },
   data: function data() {
     return {
-      image: this.event.largeImagePath ? "/storage/".concat(this.event.largeImagePath) : '',
-      loading: false,
+      location: this.initializeLocationObject(),
+      map: this.initializeMapObject(),
+      active: null,
       disabled: false,
-      readyToSubmit: false,
-      imageFile: '',
-      formData: new FormData(),
-      disableUntilUploaded: this.event.largeImagePath ? false : true
+      pageHeight: 0,
+      hasLocation: this.event.hasLocation,
+      remoteLocationOptions: this.remote ? this.remote : '',
+      remoteLocations: this.event.remotelocations ? this.event.remotelocations : '',
+      serverErrors: [],
+      loading: false
     };
   },
   methods: {
-    onImageUpload: function onImageUpload(image) {
-      this.imageFile = image;
-      this.$v.$touch();
-
-      if (this.$v.$invalid) {
+    initializeLocationObject: function initializeLocationObject() {
+      return {
+        street: '',
+        city: '',
+        region: '',
+        country: '',
+        postal_code: '',
+        hiddenLocation: '',
+        hiddenLocationToggle: 0,
+        latitude: '',
+        longitude: '',
+        home: ''
+      };
+    },
+    initializeMapObject: function initializeMapObject() {
+      return {
+        zoom: 14,
+        center: '',
+        url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+        allowZoom: false
+      };
+    },
+    onSubmit: function onSubmit() {
+      if (this.checkVuelidate()) {
         return false;
       }
 
       ;
-      this.onSubmit();
+      return this.location.hiddenLocationToggle && this.hasLocation ? this.onCorsSubmit() : this.onNormalSubmit();
     },
-    onSubmit: function onSubmit() {
+    onNormalSubmit: function onNormalSubmit() {
       var _this = this;
 
-      this.onToggle();
-      this.formData.append('image', this.imageFile.file);
-      console.log(this.imageFile.file);
-      axios.post(this.endpoint, this.formData).then(function (res) {
-        _this.onToggle();
+      axios.patch(this.endpoint, this.hasLocation ? this.location : this.remoteLocationArray).then(function (res) {
+        // console.log(res.data);    
+        _this.onForward('category');
       })["catch"](function (err) {
         _this.onErrors(err);
       });
     },
-    onToggle: function onToggle() {
-      this.loading = !this.loading;
-      this.disabled = !this.disabled;
-      this.disableUntilUploaded = !this.disableUntilUploaded;
+    onCorsSubmit: function onCorsSubmit() {
+      var _this2 = this;
+
+      this.loading = true;
+      axios.get(this.corsEndpoint).then(function (res) {
+        _this2.location.latitude = res.data.results[0].geometry.location.lat;
+        _this2.location.longitude = res.data.results[0].geometry.location.lng;
+      }).then(function (res) {
+        axios.patch(_this2.endpoint, _this2.location);
+
+        _this2.onForward('category');
+      })["catch"](function (err) {
+        _this2.onErrors(err);
+      });
     },
-    checkSubmissionStatus: function checkSubmissionStatus() {
-      this.event.status !== 'p' && this.event.status !== 'e' && this.event.organizer_id && this.event.name && (this.event.location_latlon || !this.event.hasLocation) && this.event.category_id && this.event.show_times && this.event.description && this.event.advisories_id ? this.readyToSubmit = true : false;
+    updateEventFields: function updateEventFields(input) {
+      if (input !== null && _typeof(input) === "object" && input.id !== null) {
+        this.location = lodash__WEBPACK_IMPORTED_MODULE_6___default.a.pick(input, lodash__WEBPACK_IMPORTED_MODULE_6___default.a.intersection(lodash__WEBPACK_IMPORTED_MODULE_6___default.a.keys(this.location), lodash__WEBPACK_IMPORTED_MODULE_6___default.a.keys(input)));
+      }
+
+      ;
+      this.location.latitude ? this.map.center = L.latLng(this.location.latitude, this.location.longitude) : '';
+    },
+    handleResize: function handleResize() {
+      this.pageHeight = "height:calc(".concat(window.innerHeight, "px - 8rem)");
+    },
+    addTag: function addTag(newTag) {
+      var tag = {
+        location: newTag,
+        id: newTag.substring(0, 0) + Math.floor(Math.random() * 10000000)
+      };
+      this.remoteLocationOptions.push(tag);
+      this.remoteLocations.push(tag);
+    },
+    onLoad: function onLoad() {
+      var _this3 = this;
+
+      axios.get(this.onFetch('location')).then(function (res) {
+        _this3.updateEventFields(res.data.location);
+      });
     }
   },
   created: function created() {
-    this.checkSubmissionStatus();
+    this.onLoad();
+    window.addEventListener('resize', this.handleResize);
+    this.handleResize();
+  },
+  mounted: function mounted() {
+    this.autocomplete = new google.maps.places.Autocomplete(this.$refs.autocomplete, {
+      types: ['geocode']
+    });
+    this.autocomplete.addListener('place_changed', this.setPlace);
+    this.updateEventFields(this.event.location);
+  },
+  destroyed: function destroyed() {
+    window.removeEventListener('resize', this.handleResize);
   },
   validations: {
-    imageFile: {
-      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
-      fileSize: function fileSize() {
-        return this.imageFile ? this.imageFile.file.size < 20971520 : true;
+    location: {
+      latitude: {
+        ifLocation: function ifLocation() {
+          return this.hasLocation ? this.location.latitude ? true : false : true;
+        }
       },
-      fileType: function fileType() {
-        return this.imageFile ? ['image/jpeg', 'image/png', 'image/gif'].includes(this.imageFile.file.type) : true;
-      },
-      imageRatio: function imageRatio() {
-        return this.imageFile ? this.imageFile.width > 800 && this.imageFile.height > 400 : true;
+      city: {
+        ifLocation: function ifLocation() {
+          return this.hasLocation ? this.location.city ? true : false : true;
+        }
+      }
+    },
+    remoteLocations: {
+      ifNoLocation: function ifNoLocation() {
+        return !this.hasLocation ? this.remoteLocations.length ? true : false : true;
       }
     }
   }
@@ -189,10 +359,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/create/image.vue?vue&type=template&id=b39b771e&":
-/*!**********************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/create/image.vue?vue&type=template&id=b39b771e& ***!
-  \**********************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/create/location-google.vue?vue&type=template&id=7b1acde7&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/create/location-google.vue?vue&type=template&id=7b1acde7& ***!
+  \********************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -204,112 +374,452 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "event-create__image container" }, [
-    _c("section", { staticClass: "field" }, [
-      _c("h2", { staticStyle: { "text-align": "center" } }, [
-        _vm._v("Upload Image")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "event-create-image" }, [
-        _c("div", { staticClass: "image-loader" }, [
-          _c(
-            "label",
-            { staticClass: "image-loader__label", style: _vm.displayImage },
-            [
-              _c(
-                "div",
+  return _c("div", { staticClass: "event-create__location container grid" }, [
+    _c(
+      "section",
+      { staticClass: "event-enter-location" },
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "field" }, [
+          _c("label", [_vm._v(" Does your event have a physical location? ")]),
+          _vm._v(" "),
+          _c("div", { attrs: { id: "cover" } }, [
+            _c("input", {
+              directives: [
                 {
-                  staticClass: "image-loader__label-body",
-                  class: { over: _vm.hasImage, load: _vm.loading }
-                },
-                [
-                  _c("div", { staticClass: "box" }, [
-                    _c("div", { staticClass: "in" }, [
-                      !_vm.loading
-                        ? _c("div", [
-                            _c(
-                              "svg",
-                              {
-                                staticClass: "b",
-                                attrs: {
-                                  height: "32",
-                                  width: "32",
-                                  viewBox: "0 0 24 24",
-                                  "aria-label": "Add an image or video",
-                                  role: "img"
-                                }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    d:
-                                      "M24 12c0-6.627-5.372-12-12-12C5.373 0 0 5.373 0 12s5.373 12 12 12c6.628 0 12-5.373 12-12zm-10.767 3.75a1.25 1.25 0 0 1-2.5 0v-3.948l-1.031 1.031a1.25 1.25 0 0 1-1.768-1.768L12 7l4.066 4.065a1.25 1.25 0 0 1-1.768 1.768l-1.065-1.065v3.982z"
-                                  }
-                                })
-                              ]
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.hasLocation,
+                  expression: "hasLocation"
+                }
+              ],
+              attrs: { type: "checkbox", id: "checkbox" },
+              domProps: {
+                checked: Array.isArray(_vm.hasLocation)
+                  ? _vm._i(_vm.hasLocation, null) > -1
+                  : _vm.hasLocation
+              },
+              on: {
+                change: function($event) {
+                  var $$a = _vm.hasLocation,
+                    $$el = $event.target,
+                    $$c = $$el.checked ? true : false
+                  if (Array.isArray($$a)) {
+                    var $$v = null,
+                      $$i = _vm._i($$a, $$v)
+                    if ($$el.checked) {
+                      $$i < 0 && (_vm.hasLocation = $$a.concat([$$v]))
+                    } else {
+                      $$i > -1 &&
+                        (_vm.hasLocation = $$a
+                          .slice(0, $$i)
+                          .concat($$a.slice($$i + 1)))
+                    }
+                  } else {
+                    _vm.hasLocation = $$c
+                  }
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("div", { attrs: { id: "bar" } }),
+            _vm._v(" "),
+            _c("div", { attrs: { id: "knob" } }, [
+              _vm.hasLocation
+                ? _c("p", [_vm._v("Yes")])
+                : _c("p", [_vm._v("No")])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.hasLocation,
+                expression: "hasLocation"
+              }
+            ]
+          },
+          [
+            _c("div", { staticClass: "field" }, [
+              _c("label", [_vm._v(" Is your location hidden? ")]),
+              _vm._v(" "),
+              _c("div", { attrs: { id: "cover" } }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.location.hiddenLocationToggle,
+                      expression: "location.hiddenLocationToggle"
+                    }
+                  ],
+                  attrs: { type: "checkbox", id: "checkbox" },
+                  domProps: {
+                    checked: Array.isArray(_vm.location.hiddenLocationToggle)
+                      ? _vm._i(_vm.location.hiddenLocationToggle, null) > -1
+                      : _vm.location.hiddenLocationToggle
+                  },
+                  on: {
+                    change: function($event) {
+                      var $$a = _vm.location.hiddenLocationToggle,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = null,
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 &&
+                            _vm.$set(
+                              _vm.location,
+                              "hiddenLocationToggle",
+                              $$a.concat([$$v])
                             )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _c("div", [
-                        !_vm.hasImage
-                          ? _c("p", [
-                              _vm._v("Click here to upload image"),
-                              _c("br"),
-                              _vm._v(
-                                "Must be at least 1280 x 800 and under 20mb"
-                              )
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm.hasImage
-                          ? _c("p", [_vm._v("Change Image")])
-                          : _vm._e()
-                      ])
-                    ])
+                        } else {
+                          $$i > -1 &&
+                            _vm.$set(
+                              _vm.location,
+                              "hiddenLocationToggle",
+                              $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                            )
+                        }
+                      } else {
+                        _vm.$set(_vm.location, "hiddenLocationToggle", $$c)
+                      }
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("div", { attrs: { id: "bar" } }),
+                _vm._v(" "),
+                _c("div", { attrs: { id: "knob" } }, [
+                  _vm.location.hiddenLocationToggle
+                    ? _c("p", [_vm._v("Yes")])
+                    : _c("p", [_vm._v("No")])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _vm.location.hiddenLocationToggle
+              ? _c("div", { staticClass: "field" }, [
+                  _c("label", [
+                    _vm._v(
+                      " We still need your address so that users searching for this event can see the general area. They will not see the specific street address. "
+                    )
                   ]),
                   _vm._v(" "),
-                  _c("image-upload", { on: { loaded: _vm.onImageUpload } }),
+                  _c("label", [
+                    _vm._v(
+                      " Please enter how participants will be notified of the location. (Required) "
+                    )
+                  ]),
                   _vm._v(" "),
-                  _c("CubeSpinner", { attrs: { loading: _vm.loading } })
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model.trim",
+                        value: _vm.location.hiddenLocation,
+                        expression: "location.hiddenLocation",
+                        modifiers: { trim: true }
+                      }
+                    ],
+                    class: { active: _vm.active == "hidden" },
+                    attrs: {
+                      rows: "4",
+                      required: "",
+                      autofocus: "",
+                      placeholder:
+                        "...the night before you will receieve an email containing the location..."
+                    },
+                    domProps: { value: _vm.location.hiddenLocation },
+                    on: {
+                      click: function($event) {
+                        _vm.active = "hidden"
+                      },
+                      blur: [
+                        function($event) {
+                          _vm.active = null
+                        },
+                        function($event) {
+                          return _vm.$forceUpdate()
+                        }
+                      ],
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.location,
+                          "hiddenLocation",
+                          $event.target.value.trim()
+                        )
+                      }
+                    }
+                  })
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _c("div", { staticClass: "field" }, [
+              _c("label", [_vm._v(" Event Location ")]),
+              _vm._v(" "),
+              _c("input", {
+                ref: "autocomplete",
+                class: {
+                  active: _vm.active == "location",
+                  error: _vm.$v.location.latitude.$error
+                },
+                attrs: {
+                  placeholder: _vm.locationPlaceholder,
+                  autocomplete: "false",
+                  onfocus: "value = ''",
+                  type: "text"
+                },
+                on: {
+                  click: function($event) {
+                    _vm.active = "location"
+                  },
+                  blur: function($event) {
+                    _vm.active = null
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.$v.location.$error
+                ? _c("div", { staticClass: "validation-error" }, [
+                    !_vm.$v.location.latitude.ifLocation
+                      ? _c("p", { staticClass: "error" }, [
+                          _vm._v("Please select from the list of locations")
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    !_vm.$v.location.city.ifLocation
+                      ? _c("p", { staticClass: "error" }, [
+                          _vm._v("Please include at least the city")
+                        ])
+                      : _vm._e()
+                  ])
+                : _vm._e()
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: !_vm.hasLocation,
+                expression: "!hasLocation"
+              }
+            ]
+          },
+          [
+            _c(
+              "div",
+              { staticClass: "field" },
+              [
+                _c("label", [
+                  _vm._v(" What mediums will your remote event be using? ")
+                ]),
+                _vm._v(" "),
+                _c("multiselect", {
+                  class: {
+                    active: _vm.active == "remote",
+                    error: _vm.$v.remoteLocations.$error
+                  },
+                  attrs: {
+                    "tag-placeholder": "Add this as new tag",
+                    placeholder: "Type here to create your own",
+                    label: "location",
+                    "close-on-select": true,
+                    "track-by": "id",
+                    options: _vm.remoteLocationOptions,
+                    multiple: true,
+                    taggable: true,
+                    "tag-position": "bottom"
+                  },
+                  on: {
+                    tag: _vm.addTag,
+                    click: function($event) {
+                      _vm.active = "remote"
+                    },
+                    blur: function($event) {
+                      _vm.active = null
+                    }
+                  },
+                  model: {
+                    value: _vm.remoteLocations,
+                    callback: function($$v) {
+                      _vm.remoteLocations = $$v
+                    },
+                    expression: "remoteLocations"
+                  }
+                }),
+                _vm._v(" "),
+                _vm.$v.remoteLocations.$error
+                  ? _c("div", { staticClass: "validation-error" }, [
+                      !_vm.$v.remoteLocations.ifNoLocation
+                        ? _c("p", { staticClass: "error" }, [
+                            _vm._v("Please choose at least one Mobile Location")
+                          ])
+                        : _vm._e()
+                    ])
+                  : _vm._e()
+              ],
+              1
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "event-create__submit-button" }, [
+          _c(
+            "button",
+            {
+              staticClass: "create",
+              attrs: { disabled: _vm.disabled },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.onSubmit()
+                }
+              }
+            },
+            [_vm._v(" Next ")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("CubeSpinner", { attrs: { loading: _vm.loading } })
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "section",
+      { staticClass: "event-show-location", style: _vm.pageHeight },
+      [
+        _vm.map.center && _vm.hasLocation
+          ? _c("div", { staticClass: "map" }, [
+              _c("div", { staticClass: "zoom" }, [
+                _c("div", { staticClass: "in" }, [
+                  _c(
+                    "button",
+                    {
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.map.zoom += 1
+                        }
+                      }
+                    },
+                    [
+                      _c(
+                        "svg",
+                        {
+                          attrs: {
+                            viewBox: "0 0 16 16",
+                            height: "16",
+                            width: "16",
+                            fill: "currentColor"
+                          }
+                        },
+                        [
+                          _c("path", {
+                            attrs: {
+                              "fill-rule": "evenodd",
+                              "clip-rule": "evenodd",
+                              d: "M7 1a1 1 0 0 1 2 0v14a1 1 0 1 1-2 0V1z"
+                            }
+                          }),
+                          _c("path", {
+                            attrs: {
+                              "fill-rule": "evenodd",
+                              "clip-rule": "evenodd",
+                              d:
+                                "M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"
+                            }
+                          })
+                        ]
+                      )
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "out" }, [
+                  _c(
+                    "button",
+                    {
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.map.zoom -= 1
+                        }
+                      }
+                    },
+                    [
+                      _c(
+                        "svg",
+                        {
+                          attrs: {
+                            viewBox: "0 0 16 16",
+                            height: "16",
+                            width: "16",
+                            fill: "currentColor"
+                          }
+                        },
+                        [
+                          _c("path", {
+                            attrs: {
+                              "fill-rule": "evenodd",
+                              "clip-rule": "evenodd",
+                              d:
+                                "M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"
+                            }
+                          })
+                        ]
+                      )
+                    ]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticStyle: { width: "100%" }, style: _vm.pageHeight },
+                [
+                  _c(
+                    "l-map",
+                    {
+                      attrs: {
+                        zoom: _vm.map.zoom,
+                        center: _vm.map.center,
+                        options: {
+                          scrollWheelZoom: _vm.map.allowZoom,
+                          zoomControl: _vm.map.allowZoom
+                        }
+                      }
+                    },
+                    [
+                      _c("l-tile-layer", { attrs: { url: _vm.map.url } }),
+                      _vm._v(" "),
+                      _c("l-marker", { attrs: { "lat-lng": _vm.map.center } })
+                    ],
+                    1
+                  )
                 ],
                 1
               )
-            ]
-          ),
-          _vm._v(" "),
-          _c("div", [
-            _vm.$v.imageFile.$error
-              ? _c("div", { staticClass: "validation-error" }, [
-                  !_vm.$v.imageFile.required
-                    ? _c("p", { staticClass: "error" }, [
-                        _vm._v("The image is required")
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  !_vm.$v.imageFile.fileSize
-                    ? _c("p", { staticClass: "error" }, [
-                        _vm._v("The image file size is too large")
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  !_vm.$v.imageFile.fileType
-                    ? _c("p", { staticClass: "error" }, [
-                        _vm._v("The image needs to be a JPG, PNG or GIF")
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  !_vm.$v.imageFile.imageRatio
-                    ? _c("p", { staticClass: "error" }, [
-                        _vm._v("The image needs to be at least 800 x 400")
-                      ])
-                    : _vm._e()
-                ])
-              : _vm._e()
-          ])
-        ])
-      ])
-    ]),
+            ])
+          : _vm._e()
+      ]
+    ),
     _vm._v(" "),
     _c("div", { staticClass: "create-button__in-nav" }, [
       _c(
@@ -320,33 +830,38 @@ var render = function() {
           on: {
             click: function($event) {
               $event.preventDefault()
-              return _vm.onBack("advisories")
+              return _vm.onBack("title")
             }
           }
         },
         [_vm._v(" Back ")]
       ),
       _vm._v(" "),
-      _vm.readyToSubmit
-        ? _c(
-            "button",
-            {
-              staticClass: "create",
-              attrs: { disabled: _vm.disableUntilUploaded },
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  return _vm.onForward("review")
-                }
-              }
-            },
-            [_vm._v(" Final Review ")]
-          )
-        : _vm._e()
+      _c(
+        "button",
+        {
+          staticClass: "create",
+          attrs: { disabled: _vm.disabled },
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              return _vm.onSubmit()
+            }
+          }
+        },
+        [_vm._v(" Next ")]
+      )
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "title" }, [_c("h2", [_vm._v("Location")])])
+  }
+]
 render._withStripped = true
 
 
@@ -425,113 +940,6 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js":
-/*!********************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/runtime/componentNormalizer.js ***!
-  \********************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalizeComponent; });
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-function normalizeComponent (
-  scriptExports,
-  render,
-  staticRenderFns,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier, /* server only */
-  shadowMode /* vue-cli only */
-) {
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (render) {
-    options.render = render
-    options.staticRenderFns = staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = 'data-v-' + scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = shadowMode
-      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
-      : injectStyles
-  }
-
-  if (hook) {
-    if (options.functional) {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functioal component in vue file
-      var originalRender = options.render
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return originalRender(h, context)
-      }
-    } else {
-      // inject component registration as beforeCreate hook
-      var existing = options.beforeCreate
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    }
-  }
-
-  return {
-    exports: scriptExports,
-    options: options
-  }
-}
-
-
-/***/ }),
-
 /***/ "./resources/js/mixins/form-validation-mixin.js":
 /*!******************************************************!*\
   !*** ./resources/js/mixins/form-validation-mixin.js ***!
@@ -558,6 +966,9 @@ __webpack_require__.r(__webpack_exports__);
     onBack: function onBack(value) {
       return window.location.href = "/create-event/".concat(this.event.slug, "/").concat(value);
     },
+    onFetch: function onFetch(value) {
+      return "/create-event/".concat(this.event.slug, "/").concat(value, "/fetch?timestamp=").concat(new Date().getTime());
+    },
     onForward: function onForward(value) {
       return window.location.href = "/create-event/".concat(this.event.slug, "/").concat(value);
     },
@@ -572,17 +983,81 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/pages/create/image.vue":
-/*!*********************************************!*\
-  !*** ./resources/js/pages/create/image.vue ***!
-  \*********************************************/
+/***/ "./resources/js/pages/create/components/google-location-mixin.js":
+/*!***********************************************************************!*\
+  !*** ./resources/js/pages/create/components/google-location-mixin.js ***!
+  \***********************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _image_vue_vue_type_template_id_b39b771e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./image.vue?vue&type=template&id=b39b771e& */ "./resources/js/pages/create/image.vue?vue&type=template&id=b39b771e&");
-/* harmony import */ var _image_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./image.vue?vue&type=script&lang=js& */ "./resources/js/pages/create/image.vue?vue&type=script&lang=js&");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    setPlace: function setPlace() {
+      var place = this.autocomplete.getPlace();
+      this.map.center = L.latLng(place.geometry.location.lat(), place.geometry.location.lng());
+      this.updateLats(place);
+      this.getAddressObject(place.address_components);
+    },
+    updateLats: function updateLats(e) {
+      this.location.latitude = e.geometry.location.lat();
+      this.location.longitude = e.geometry.location.lng();
+    },
+    getAddressObject: function getAddressObject(address_components) {
+      var ShouldBeComponent = {
+        home: ["street_number"],
+        postal_code: ["postal_code"],
+        street: ["street_address", "route"],
+        region: ["administrative_area_level_1", "administrative_area_level_2", "administrative_area_level_3", "administrative_area_level_4", "administrative_area_level_5"],
+        city: ["locality", "sublocality", "sublocality_level_1", "sublocality_level_2", "sublocality_level_3", "sublocality_level_4"],
+        country: ["country"]
+      };
+      var address = {
+        home: "",
+        postal_code: "",
+        street: "",
+        region: "",
+        city: "",
+        country: ""
+      };
+      address_components.forEach(function (component) {
+        for (var shouldBe in ShouldBeComponent) {
+          if (ShouldBeComponent[shouldBe].indexOf(component.types[0]) !== -1) {
+            if (shouldBe === "country") {
+              address[shouldBe] = component.short_name;
+            } else {
+              address[shouldBe] = component.long_name;
+            }
+          }
+        }
+      });
+      this.updateLocationFields(address);
+    },
+    //after google fields search this inputs data into vue fields
+    updateLocationFields: function updateLocationFields(input) {
+      if (input !== null && _typeof(input) === "object" && input.id !== null) {
+        this.location = _.extend(this.location, input);
+      }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/pages/create/location-google.vue":
+/*!*******************************************************!*\
+  !*** ./resources/js/pages/create/location-google.vue ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _location_google_vue_vue_type_template_id_7b1acde7___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./location-google.vue?vue&type=template&id=7b1acde7& */ "./resources/js/pages/create/location-google.vue?vue&type=template&id=7b1acde7&");
+/* harmony import */ var _location_google_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./location-google.vue?vue&type=script&lang=js& */ "./resources/js/pages/create/location-google.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -592,9 +1067,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _image_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _image_vue_vue_type_template_id_b39b771e___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _image_vue_vue_type_template_id_b39b771e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _location_google_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _location_google_vue_vue_type_template_id_7b1acde7___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _location_google_vue_vue_type_template_id_7b1acde7___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -604,38 +1079,38 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/pages/create/image.vue"
+component.options.__file = "resources/js/pages/create/location-google.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/pages/create/image.vue?vue&type=script&lang=js&":
-/*!**********************************************************************!*\
-  !*** ./resources/js/pages/create/image.vue?vue&type=script&lang=js& ***!
-  \**********************************************************************/
+/***/ "./resources/js/pages/create/location-google.vue?vue&type=script&lang=js&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/pages/create/location-google.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_image_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./image.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/create/image.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_image_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_location_google_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./location-google.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/create/location-google.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_location_google_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/pages/create/image.vue?vue&type=template&id=b39b771e&":
-/*!****************************************************************************!*\
-  !*** ./resources/js/pages/create/image.vue?vue&type=template&id=b39b771e& ***!
-  \****************************************************************************/
+/***/ "./resources/js/pages/create/location-google.vue?vue&type=template&id=7b1acde7&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/pages/create/location-google.vue?vue&type=template&id=7b1acde7& ***!
+  \**************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_image_vue_vue_type_template_id_b39b771e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./image.vue?vue&type=template&id=b39b771e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/create/image.vue?vue&type=template&id=b39b771e&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_image_vue_vue_type_template_id_b39b771e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_location_google_vue_vue_type_template_id_7b1acde7___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./location-google.vue?vue&type=template&id=7b1acde7& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/create/location-google.vue?vue&type=template&id=7b1acde7&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_location_google_vue_vue_type_template_id_7b1acde7___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_image_vue_vue_type_template_id_b39b771e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_location_google_vue_vue_type_template_id_7b1acde7___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

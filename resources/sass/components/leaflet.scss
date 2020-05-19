@@ -2,10 +2,11 @@
     opacity: 0;
 }
 .leaflet-marker-icon.icons {
-    width: 20rem !important;
-    margin-left: -10rem !important;
-    height: 3rem !important;
+    height: 100% !important;
+    width: 100% !important;
     text-align: center;
+    margin-left: -2.5rem !important;
+    position: relative;
     & p {
         overflow-wrap: break-word;
         font-size: 14px;
@@ -17,7 +18,7 @@
         border-radius: 5rem;
         border: 2px solid black;
         display: inline-block;
-        padding: .5rem 1rem 1rem 1rem;
+        padding: .5rem 1rem;
     }
 }
 div.leaflet-popup {

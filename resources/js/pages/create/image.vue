@@ -101,6 +101,7 @@
                 console.log(this.imageFile.file);
                 axios.post(this.endpoint, this.formData)
                 .then(res => {
+                    this.disableUntilUploaded = false;
                     this.onToggle();
                 })
                 .catch(err => { this.onErrors(err) });
@@ -109,7 +110,6 @@
             onToggle() {
                 this.loading = !this.loading;
                 this.disabled = !this.disabled;
-                this.disableUntilUploaded = !this.disableUntilUploaded;
             },
 
             checkSubmissionStatus() {

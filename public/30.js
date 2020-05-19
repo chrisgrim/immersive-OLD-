@@ -84,7 +84,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      selectedCategory: this.event.category ? this.event.category : '',
+      selectedCategory: '',
       categoryOptions: this.categories,
       active: null,
       pageHeight: 0,
@@ -110,11 +110,19 @@ __webpack_require__.r(__webpack_exports__);
     },
     handleResize: function handleResize() {
       this.pageHeight = "height:calc(".concat(window.innerHeight, "px - 8rem)");
+    },
+    onLoad: function onLoad() {
+      var _this2 = this;
+
+      axios.get(this.onFetch('category')).then(function (res) {
+        _this2.selectedCategory = res.data;
+      });
     }
   },
   created: function created() {
     window.addEventListener('resize', this.handleResize);
     this.handleResize();
+    this.onLoad();
   },
   destroyed: function destroyed() {
     window.removeEventListener('resize', this.handleResize);
@@ -365,6 +373,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     onBack: function onBack(value) {
       return window.location.href = "/create-event/".concat(this.event.slug, "/").concat(value);
+    },
+    onFetch: function onFetch(value) {
+      return "/create-event/".concat(this.event.slug, "/").concat(value, "/fetch?timestamp=").concat(new Date().getTime());
     },
     onForward: function onForward(value) {
       return window.location.href = "/create-event/".concat(this.event.slug, "/").concat(value);

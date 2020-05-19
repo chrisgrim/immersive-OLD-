@@ -53,8 +53,9 @@
                     @blur="active = null"
                     type="text"
                     />
-                    <div v-if="$v.location.latitude.$error" class="validation-error">
+                    <div v-if="$v.location.$error" class="validation-error">
                         <p class="error" v-if="!$v.location.latitude.ifLocation">Please select from the list of locations</p>
+                        <p class="error" v-if="!$v.location.city.ifLocation">Please include at least the city</p>
                     </div>
                 </div>   
             </div>
@@ -158,7 +159,7 @@
 
 		data() {
 			return {
-				location: this.initializeEventObject(),
+				location: this.initializeLocationObject(),
                 map: this.initializeMapObject(),
                 active: null,
                 disabled: false,
@@ -172,7 +173,7 @@
 		},
 
 		methods: {
-			initializeEventObject() {
+			initializeLocationObject() {
 				return {
 					street:  '',
 	                city:  '',
@@ -250,9 +251,17 @@
                 this.remoteLocationOptions.push(tag)
                 this.remoteLocations.push(tag)
             },
+
+            onLoad() {
+                axios.get(this.onFetch('location'))
+                .then(res => {
+                    this.updateEventFields(res.data.location);
+                });
+            },
 		},
 	
         created() {
+            this.onLoad();
             window.addEventListener('resize', this.handleResize)
             this.handleResize();
         },
@@ -277,6 +286,11 @@
                         return this.hasLocation ? this.location.latitude ? true : false : true
                     },
 			 	},
+                city: {
+                    ifLocation() { 
+                        return this.hasLocation ? this.location.city ? true : false : true
+                    },
+                }
 			},
             remoteLocations: {
                 ifNoLocation() {

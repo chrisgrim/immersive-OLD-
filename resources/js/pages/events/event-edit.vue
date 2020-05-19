@@ -37,6 +37,7 @@
                         <div v-for="(event, index) in organizer.in_progress_events" :key="event.id" v-if="index < 10" class="edit-event__element">
                             <div class="edit-event__buttons">
                                 <a v-if="canView(event)" :href="`/events/${event.slug}`"><button class="edit-event__sub-button">View</button></a>
+                                <a v-if="status(event)" :href="`/create-event/${event.slug}/title`"><button class="edit-event__sub-button">Edit</button></a>
                                 <button v-if="status(event)" @click.prevent="showModal(event, 'delete')" class="edit-event__sub-button">Delete</button>
                                 <button v-if="false" @click.prevent="showModal(event, 'addreview')" class="edit-event__sub-button">Add Review</button>
                             </div>

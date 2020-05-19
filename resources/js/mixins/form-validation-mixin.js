@@ -19,6 +19,10 @@ export default {
         onBack(value) {
             return window.location.href = `/create-event/${this.event.slug}/${value}`;
         },
+
+        onFetch(value) {
+            return `/create-event/${this.event.slug}/${value}/fetch?timestamp=${new Date().getTime()}`
+        },
             
         onForward(value) {
             return window.location.href = `/create-event/${this.event.slug}/${value}`;

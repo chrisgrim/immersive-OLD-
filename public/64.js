@@ -59,20 +59,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['event', 'user'],
@@ -256,242 +242,49 @@ var render = function() {
     _vm.showBar
       ? _c(
           "div",
-          {
-            staticClass: "create-navbar",
-            class: { over: _vm.hover },
-            on: {
-              mouseover: function($event) {
-                _vm.hover = "show"
-              },
-              mouseleave: function($event) {
-                _vm.hover = null
-              }
-            }
-          },
+          { staticClass: "create-navbar", class: { over: _vm.hover } },
           [
-            _c(
-              "div",
-              {
-                staticClass: "create-navbar__page",
-                class: { fill: _vm.onTitle },
-                staticStyle: {
-                  width: "14.4%",
-                  left: "0%",
-                  "padding-top": "1rem"
-                }
-              },
-              [
-                _c(
-                  "a",
-                  {
-                    attrs: {
-                      href: "/create-event/" + this.event.slug + "/title"
-                    }
-                  },
-                  [
-                    _vm.hover == "show"
-                      ? _c("div", { staticClass: "create-navbar__hover" }, [
-                          _c("span", [_vm._v("Event Name")])
-                        ])
-                      : _vm._e()
-                  ]
-                )
-              ]
-            ),
+            _c("div", {
+              staticClass: "create-navbar__page",
+              class: { fill: _vm.onTitle },
+              staticStyle: { width: "14.4%", left: "0%", "padding-top": "1rem" }
+            }),
             _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "create-navbar__page",
-                class: { fill: _vm.onLocation },
-                staticStyle: {
-                  width: "14.4%",
-                  left: "0%",
-                  "padding-top": "1rem"
-                }
-              },
-              [
-                _vm.event.name
-                  ? _c(
-                      "a",
-                      {
-                        attrs: {
-                          href: "/create-event/" + this.event.slug + "/location"
-                        }
-                      },
-                      [
-                        _vm.hover == "show"
-                          ? _c("div", { staticClass: "create-navbar__hover" }, [
-                              _c("span", [_vm._v("Event Location")])
-                            ])
-                          : _vm._e()
-                      ]
-                    )
-                  : _vm._e()
-              ]
-            ),
+            _c("div", {
+              staticClass: "create-navbar__page",
+              class: { fill: _vm.onLocation },
+              staticStyle: { width: "14.4%", left: "0%", "padding-top": "1rem" }
+            }),
             _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "create-navbar__page",
-                class: { fill: _vm.onCategory },
-                staticStyle: {
-                  width: "14.4%",
-                  left: "0%",
-                  "padding-top": "1rem"
-                }
-              },
-              [
-                _vm.event.location_latlon || _vm.event.hasLocation == false
-                  ? _c(
-                      "a",
-                      {
-                        attrs: {
-                          href: "/create-event/" + this.event.slug + "/category"
-                        }
-                      },
-                      [
-                        _vm.hover == "show"
-                          ? _c("div", { staticClass: "create-navbar__hover" }, [
-                              _c("span", [_vm._v("Event Category")])
-                            ])
-                          : _vm._e()
-                      ]
-                    )
-                  : _vm._e()
-              ]
-            ),
+            _c("div", {
+              staticClass: "create-navbar__page",
+              class: { fill: _vm.onCategory },
+              staticStyle: { width: "14.4%", left: "0%", "padding-top": "1rem" }
+            }),
             _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "create-navbar__page",
-                class: { fill: _vm.onShows },
-                staticStyle: {
-                  width: "14.4%",
-                  left: "0%",
-                  "padding-top": "1rem"
-                }
-              },
-              [
-                _vm.event.category_id
-                  ? _c(
-                      "a",
-                      {
-                        attrs: {
-                          href: "/create-event/" + this.event.slug + "/shows"
-                        }
-                      },
-                      [
-                        _vm.hover == "show"
-                          ? _c("div", { staticClass: "create-navbar__hover" }, [
-                              _c("span", [_vm._v("Event Shows")])
-                            ])
-                          : _vm._e()
-                      ]
-                    )
-                  : _vm._e()
-              ]
-            ),
+            _c("div", {
+              staticClass: "create-navbar__page",
+              class: { fill: _vm.onShows },
+              staticStyle: { width: "14.4%", left: "0%", "padding-top": "1rem" }
+            }),
             _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "create-navbar__page",
-                class: { fill: _vm.onDescription },
-                staticStyle: {
-                  width: "14.4%",
-                  left: "0%",
-                  "padding-top": "1rem"
-                }
-              },
-              [
-                _vm.event.show_times
-                  ? _c(
-                      "a",
-                      {
-                        attrs: {
-                          href:
-                            "/create-event/" + this.event.slug + "/description"
-                        }
-                      },
-                      [
-                        _vm.hover == "show"
-                          ? _c("div", { staticClass: "create-navbar__hover" }, [
-                              _c("span", [_vm._v("Event Description")])
-                            ])
-                          : _vm._e()
-                      ]
-                    )
-                  : _vm._e()
-              ]
-            ),
+            _c("div", {
+              staticClass: "create-navbar__page",
+              class: { fill: _vm.onDescription },
+              staticStyle: { width: "14.4%", left: "0%", "padding-top": "1rem" }
+            }),
             _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "create-navbar__page",
-                class: { fill: _vm.onAdvisories },
-                staticStyle: {
-                  width: "14.4%",
-                  left: "0%",
-                  "padding-top": "1rem"
-                }
-              },
-              [
-                _vm.event.description
-                  ? _c(
-                      "a",
-                      {
-                        attrs: {
-                          href:
-                            "/create-event/" + this.event.slug + "/advisories"
-                        }
-                      },
-                      [
-                        _vm.hover == "show"
-                          ? _c("div", { staticClass: "create-navbar__hover" }, [
-                              _c("span", [_vm._v("Event Advisories")])
-                            ])
-                          : _vm._e()
-                      ]
-                    )
-                  : _vm._e()
-              ]
-            ),
+            _c("div", {
+              staticClass: "create-navbar__page",
+              class: { fill: _vm.onAdvisories },
+              staticStyle: { width: "14.4%", left: "0%", "padding-top": "1rem" }
+            }),
             _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "create-navbar__page",
-                class: { fill: _vm.onImage },
-                staticStyle: {
-                  width: "14.4%",
-                  left: "0%",
-                  "padding-top": "1rem"
-                }
-              },
-              [
-                _vm.event.advisories_id
-                  ? _c(
-                      "a",
-                      {
-                        attrs: {
-                          href: "/create-event/" + this.event.slug + "/images"
-                        }
-                      },
-                      [
-                        _vm.hover == "show"
-                          ? _c("div", { staticClass: "create-navbar__hover" }, [
-                              _c("span", [_vm._v("Event Image")])
-                            ])
-                          : _vm._e()
-                      ]
-                    )
-                  : _vm._e()
-              ]
-            )
+            _c("div", {
+              staticClass: "create-navbar__page",
+              class: { fill: _vm.onImage },
+              staticStyle: { width: "14.4%", left: "0%", "padding-top": "1rem" }
+            })
           ]
         )
       : _vm._e()

@@ -16,6 +16,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 //
 //
 //
@@ -275,7 +277,29 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (err) {
         _this.onErrors(err);
       });
+    },
+    updateAdvisoryFields: function updateAdvisoryFields(input) {
+      if (input !== null && _typeof(input) === "object" && input.id !== null) {
+        this.advisories = lodash__WEBPACK_IMPORTED_MODULE_2___default.a.pick(input, lodash__WEBPACK_IMPORTED_MODULE_2___default.a.intersection(lodash__WEBPACK_IMPORTED_MODULE_2___default.a.keys(this.advisories), lodash__WEBPACK_IMPORTED_MODULE_2___default.a.keys(input)));
+      }
+
+      this.advisories.wheelchairReady ? '' : this.advisories.wheelchairReady = false;
+      this.advisories.sexualViolence ? '' : this.advisories.sexualViolence = false;
+    },
+    onLoad: function onLoad() {
+      var _this2 = this;
+
+      axios.get(this.onFetch('advisories')).then(function (res) {
+        _this2.updateAdvisoryFields(res.data.advisories);
+
+        res.data.contactPivots ? _this2.contactAdvisories = res.data.contactPivots : '';
+        res.data.contentPivots ? _this2.contentAdvisories = res.data.contentPivots : '';
+        res.data.mobilityPivots ? _this2.mobilityAdvisories = res.data.mobilityPivots : '';
+      });
     }
+  },
+  created: function created() {
+    this.onLoad();
   },
   validations: {
     contactAdvisories: {
@@ -669,63 +693,6 @@ var render = function() {
     _c("section", { staticClass: "event-create" }, [
       _vm._m(2),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "field" },
-        [
-          _c("label", { staticClass: "area" }, [
-            _vm._v("Select any mobility restrictions")
-          ]),
-          _vm._v(" "),
-          _c("multiselect", {
-            class: {
-              active: _vm.active == "mobility",
-              error: _vm.$v.mobilityAdvisories.$error
-            },
-            attrs: {
-              options: _vm.mobilityAdvisoryOptions,
-              multiple: true,
-              "show-labels": false,
-              "tag-placeholder": "Add this as new tag",
-              taggable: true,
-              "tag-position": "bottom",
-              placeholder: "Type here to create your own",
-              "open-direction": "bottom",
-              label: "mobilities",
-              "track-by": "id"
-            },
-            on: {
-              tag: _vm.addMobilityTag,
-              click: function($event) {
-                _vm.active = "mobility"
-              },
-              blur: function($event) {
-                _vm.active = null
-              },
-              input: _vm.$v.mobilityAdvisories.$touch
-            },
-            model: {
-              value: _vm.mobilityAdvisories,
-              callback: function($$v) {
-                _vm.mobilityAdvisories = $$v
-              },
-              expression: "mobilityAdvisories"
-            }
-          }),
-          _vm._v(" "),
-          _vm.$v.mobilityAdvisories.$error
-            ? _c("div", { staticClass: "validation-error" }, [
-                !_vm.$v.mobilityAdvisories.required
-                  ? _c("p", { staticClass: "error" }, [
-                      _vm._v("Must enter a mobility advisory ")
-                    ])
-                  : _vm._e()
-              ])
-            : _vm._e()
-        ],
-        1
-      ),
-      _vm._v(" "),
       _c("div", { staticClass: "field" }, [
         _c("label", [_vm._v(" Is the Event Wheel Chair Accessible? ")]),
         _vm._v(" "),
@@ -794,6 +761,63 @@ var render = function() {
             ])
           : _vm._e()
       ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "field" },
+        [
+          _c("label", { staticClass: "area" }, [
+            _vm._v("Select any mobility restrictions")
+          ]),
+          _vm._v(" "),
+          _c("multiselect", {
+            class: {
+              active: _vm.active == "mobility",
+              error: _vm.$v.mobilityAdvisories.$error
+            },
+            attrs: {
+              options: _vm.mobilityAdvisoryOptions,
+              multiple: true,
+              "show-labels": false,
+              "tag-placeholder": "Add this as new tag",
+              taggable: true,
+              "tag-position": "bottom",
+              placeholder: "Type here to create your own",
+              "open-direction": "bottom",
+              label: "mobilities",
+              "track-by": "id"
+            },
+            on: {
+              tag: _vm.addMobilityTag,
+              click: function($event) {
+                _vm.active = "mobility"
+              },
+              blur: function($event) {
+                _vm.active = null
+              },
+              input: _vm.$v.mobilityAdvisories.$touch
+            },
+            model: {
+              value: _vm.mobilityAdvisories,
+              callback: function($$v) {
+                _vm.mobilityAdvisories = $$v
+              },
+              expression: "mobilityAdvisories"
+            }
+          }),
+          _vm._v(" "),
+          _vm.$v.mobilityAdvisories.$error
+            ? _c("div", { staticClass: "validation-error" }, [
+                !_vm.$v.mobilityAdvisories.required
+                  ? _c("p", { staticClass: "error" }, [
+                      _vm._v("Must enter a mobility advisory ")
+                    ])
+                  : _vm._e()
+              ])
+            : _vm._e()
+        ],
+        1
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "event-create__submit-button" }, [
         _c(
@@ -903,6 +927,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     onBack: function onBack(value) {
       return window.location.href = "/create-event/".concat(this.event.slug, "/").concat(value);
+    },
+    onFetch: function onFetch(value) {
+      return "/create-event/".concat(this.event.slug, "/").concat(value, "/fetch?timestamp=").concat(new Date().getTime());
     },
     onForward: function onForward(value) {
       return window.location.href = "/create-event/".concat(this.event.slug, "/").concat(value);

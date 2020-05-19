@@ -52,27 +52,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['event', 'inputclass'],
-  data: function data() {
-    return {
-      isFavorited: this.event.isFavorited,
-      isModalVisible: false,
-      login: false,
-      modalwidth: 'newsletter',
-      newsletter: true
-    };
-  },
   computed: {
     classes: function classes() {
       return ['fa', this.isFavorited ? 'hearted' : 'unhearted'];
@@ -82,17 +63,36 @@ __webpack_require__.r(__webpack_exports__);
     },
     isApproved: function isApproved() {
       return this.event.status !== 'p' ? 'dis' : '';
-    },
-    user: function user() {
-      return this.$store.state.user ? this.$store.state.user : '';
-    },
-    cookies: function cookies() {
-      return this.$cookies.isKey('news');
     }
+  },
+  data: function data() {
+    return {
+      user: this.$store.state.user ? this.$store.state.user : '',
+      isFavorited: this.event.isFavorited,
+      modal: false,
+      login: false,
+      isVerifyVisible: false,
+      modalwidth: 'newsletter',
+      newsletter: true,
+      canFavorite: this.$store.state.user && this.$store.state.user.email_verified_at ? true : false,
+      hasCookie: this.$cookies.isKey('news')
+    };
   },
   methods: {
     toggle: function toggle() {
-      return this.isFavorited ? this.destroy() : this.create();
+      if (this.canFavorite && this.hasCookie) {
+        return this.isFavorited ? this.destroy() : this.create();
+      }
+
+      if (this.canFavorite) {
+        return this.modal = true;
+      }
+
+      if (this.user) {
+        return this.isVerifyVisible = true;
+      }
+
+      return this.login = true;
     },
     updateNewsletter: function updateNewsletter() {
       var _this = this;
@@ -129,8 +129,8 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   watch: {
-    isModalVisible: function isModalVisible() {
-      return this.isModalVisible ? this.toggleBodyClass('addClass', 'noscroll') : this.toggleBodyClass('removeClass', 'noscroll');
+    modal: function modal() {
+      return this.modal ? this.toggleBodyClass('addClass', 'noscroll') : this.toggleBodyClass('removeClass', 'noscroll');
     },
     login: function login() {
       return this.login ? this.toggleBodyClass('addClass', 'noscroll') : this.toggleBodyClass('removeClass', 'noscroll');
@@ -159,100 +159,36 @@ var render = function() {
     "div",
     { staticClass: "fav" },
     [
-      (_vm.user && this.$cookies.isKey("news")
-      ? true
-      : false)
-        ? _c("div", { class: _vm.inputclass }, [
-            _c("div", { class: _vm.isApproved }, [
-              _c(
-                "a",
-                {
-                  attrs: { href: "#" },
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.toggle()
-                    }
-                  }
-                },
-                [
-                  _c(
-                    "svg",
-                    { class: _vm.classes, attrs: { viewBox: "0 0 38 38" } },
-                    [
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "m23.99 2.75c-.3 0-.6.02-.9.05-1.14.13-2.29.51-3.41 1.14-1.23.68-2.41 1.62-3.69 2.94-1.28-1.32-2.46-2.25-3.69-2.94-1.12-.62-2.27-1-3.41-1.14a7.96 7.96 0 0 0 -.9-.05c-1.88 0-7.26 1.54-7.26 8.38 0 7.86 12.24 16.33 14.69 17.95a1 1 0 0 0 1.11 0c2.45-1.62 14.69-10.09 14.69-17.95 0-6.84-5.37-8.38-7.26-8.38"
-                        }
-                      })
-                    ]
-                  )
-                ]
-              )
-            ])
-          ])
-        : (_vm.user
-          ? true
-          : false)
-        ? _c("div", { class: _vm.inputclass }, [
-            _c("div", { class: _vm.isApproved }, [
-              _c(
-                "a",
-                {
-                  attrs: { href: "#" },
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      _vm.isModalVisible = true
-                    }
-                  }
-                },
-                [
-                  _c(
-                    "svg",
-                    { class: _vm.classes, attrs: { viewBox: "0 0 38 38" } },
-                    [
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "m23.99 2.75c-.3 0-.6.02-.9.05-1.14.13-2.29.51-3.41 1.14-1.23.68-2.41 1.62-3.69 2.94-1.28-1.32-2.46-2.25-3.69-2.94-1.12-.62-2.27-1-3.41-1.14a7.96 7.96 0 0 0 -.9-.05c-1.88 0-7.26 1.54-7.26 8.38 0 7.86 12.24 16.33 14.69 17.95a1 1 0 0 0 1.11 0c2.45-1.62 14.69-10.09 14.69-17.95 0-6.84-5.37-8.38-7.26-8.38"
-                        }
-                      })
-                    ]
-                  )
-                ]
-              )
-            ])
-          ])
-        : _c("div", { class: _vm.inputclass }, [
-            _c(
-              "a",
-              {
-                attrs: { href: "#" },
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    _vm.login = true
-                  }
+      _c("div", { class: _vm.inputclass }, [
+        _c("div", { class: _vm.isApproved }, [
+          _c(
+            "a",
+            {
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.toggle()
                 }
-              },
-              [
-                _c(
-                  "svg",
-                  { class: _vm.classes, attrs: { viewBox: "0 0 38 38" } },
-                  [
-                    _c("path", {
-                      attrs: {
-                        d:
-                          "m23.99 2.75c-.3 0-.6.02-.9.05-1.14.13-2.29.51-3.41 1.14-1.23.68-2.41 1.62-3.69 2.94-1.28-1.32-2.46-2.25-3.69-2.94-1.12-.62-2.27-1-3.41-1.14a7.96 7.96 0 0 0 -.9-.05c-1.88 0-7.26 1.54-7.26 8.38 0 7.86 12.24 16.33 14.69 17.95a1 1 0 0 0 1.11 0c2.45-1.62 14.69-10.09 14.69-17.95 0-6.84-5.37-8.38-7.26-8.38"
-                      }
-                    })
-                  ]
-                )
-              ]
-            )
-          ]),
+              }
+            },
+            [
+              _c(
+                "svg",
+                { class: _vm.classes, attrs: { viewBox: "0 0 38 38" } },
+                [
+                  _c("path", {
+                    attrs: {
+                      d:
+                        "m23.99 2.75c-.3 0-.6.02-.9.05-1.14.13-2.29.51-3.41 1.14-1.23.68-2.41 1.62-3.69 2.94-1.28-1.32-2.46-2.25-3.69-2.94-1.12-.62-2.27-1-3.41-1.14a7.96 7.96 0 0 0 -.9-.05c-1.88 0-7.26 1.54-7.26 8.38 0 7.86 12.24 16.33 14.69 17.95a1 1 0 0 0 1.11 0c2.45-1.62 14.69-10.09 14.69-17.95 0-6.84-5.37-8.38-7.26-8.38"
+                    }
+                  })
+                ]
+              )
+            ]
+          )
+        ])
+      ]),
       _vm._v(" "),
       _vm.login
         ? _c("login-pop", {
@@ -265,14 +201,14 @@ var render = function() {
           })
         : _vm._e(),
       _vm._v(" "),
-      _vm.isModalVisible
+      _vm.modal
         ? _c(
             "modal",
             {
               attrs: { modalclass: _vm.modalwidth },
               on: {
                 close: function($event) {
-                  _vm.isModalVisible = false
+                  _vm.modal = false
                 }
               }
             },
@@ -353,6 +289,17 @@ var render = function() {
               ])
             ]
           )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.isVerifyVisible
+        ? _c("vue-email-verify", {
+            attrs: { user: _vm.user, message: "verify" },
+            on: {
+              close: function($event) {
+                _vm.isVerifyVisible = false
+              }
+            }
+          })
         : _vm._e()
     ],
     1

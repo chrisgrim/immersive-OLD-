@@ -4,11 +4,16 @@
 
 
 .event-create__shows {
-    margin-top: 1rem;
+    width:100%;
+    padding: 4rem 8rem 4rem 8rem;
 }
 .specific-show-dates, .ongoing-show-dates, .everyday-show-dates {
     width: 100% !important;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr minmax(680px, 1fr);
+}
+
+.show-type-selection {
+    width: 40rem;
 }
 
 .event-create-tab__section {
@@ -17,10 +22,9 @@
     min-height: 320px;
 }
 section.event-enter-showtimes {
-    margin-left: 9rem;
 }
 section.event-enter-showdates {
-    
+
 }
 .calendar .flatpickr-calendar.inline {
     margin:inherit;
@@ -110,8 +114,14 @@ button.delete-circle {
 }
 
 .flatpickr-calendar.inline {
-        margin:0;
-    }
+    margin:0;
+}
+.calendar .flatpickr-calendar.inline {
+    width: 602px !important;
+}
+.calendar .flatpickr-days {
+    width: 602px !important;
+}
 
 @media (max-width: 768px) {
     section.event-enter-showtimes {

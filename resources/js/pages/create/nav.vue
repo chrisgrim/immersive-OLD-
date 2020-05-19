@@ -20,41 +20,27 @@
                 <p :class="{ 'review-nav-text' : onReview }" v-if="url == `/create-event/${this.event.slug}/review`">Review: One last chance to make sure everything looks good</p>
             </div>
         </div>
-        <div  @mouseover="hover = 'show'" @mouseleave="hover = null" v-if="showBar" class="create-navbar" :class="{over:hover}">
+        <div v-if="showBar" class="create-navbar" :class="{over:hover}">
             <div class="create-navbar__page" style="width: 14.4%; left: 0%;padding-top:1rem;" :class="{ fill: onTitle }">
-                <a :href="`/create-event/${this.event.slug}/title`">
-                    <div class="create-navbar__hover" v-if="hover=='show'"><span>Event Name</span></div>
-                </a>
+                
             </div>
             <div  class="create-navbar__page" style="width: 14.4%; left: 0%;padding-top:1rem;" :class="{ fill: onLocation }">
-                <a v-if="event.name" :href="`/create-event/${this.event.slug}/location`">
-                    <div class="create-navbar__hover" v-if="hover=='show'"><span>Event Location</span></div>
-                </a>
+                
             </div>
             <div  class="create-navbar__page" style="width: 14.4%; left: 0%;padding-top:1rem;" :class="{ fill: onCategory }">
-                <a v-if="event.location_latlon || event.hasLocation == false" :href="`/create-event/${this.event.slug}/category`">
-                    <div class="create-navbar__hover" v-if="hover=='show'"><span>Event Category</span></div>
-                </a>
+               
             </div>
             <div class="create-navbar__page" style="width: 14.4%; left: 0%;padding-top:1rem;" :class="{ fill: onShows }">
-                <a v-if="event.category_id" :href="`/create-event/${this.event.slug}/shows`">
-                    <div class="create-navbar__hover" v-if="hover=='show'"><span>Event Shows</span></div>
-                </a>
+                
             </div>
             <div class="create-navbar__page" style="width: 14.4%; left: 0%;padding-top:1rem;" :class="{ fill: onDescription }">
-                <a  v-if="event.show_times" :href="`/create-event/${this.event.slug}/description`">
-                    <div class="create-navbar__hover" v-if="hover=='show'"><span>Event Description</span></div>
-                </a>
+                
             </div>
             <div class="create-navbar__page" style="width: 14.4%; left: 0%;padding-top:1rem;" :class="{ fill: onAdvisories }">
-                <a v-if="event.description" :href="`/create-event/${this.event.slug}/advisories`">
-                    <div class="create-navbar__hover" v-if="hover=='show'"><span>Event Advisories</span></div>
-                </a>
+               
             </div>
             <div class="create-navbar__page" style="width: 14.4%; left: 0%;padding-top:1rem;" :class="{ fill: onImage }">
-                <a v-if="event.advisories_id" :href="`/create-event/${this.event.slug}/images`">
-                    <div class="create-navbar__hover" v-if="hover=='show'"><span>Event Image</span></div>
-                </a>
+               
             </div>
         </div>
     </nav>

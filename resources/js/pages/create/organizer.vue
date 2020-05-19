@@ -27,8 +27,8 @@
                     v-model="organizer.name"
                     />
                     <div v-if="$v.organizer.name.$error" class="validation-error">
-                        <p class="error" v-if="!$v.organizer.name.required">The Name is required</p>
-                        <p class="error" v-if="!$v.organizer.name.serverFailed">The Name needs to be unique</p>
+                        <p class="error" v-if="!$v.organizer.name.required">The name is required</p>
+                        <p class="error" v-if="!$v.organizer.name.serverFailed">The name needs to be unique</p>
                     </div>
                 </div>
                 <div class="field">
@@ -45,7 +45,7 @@
                     rows="8">
                     </textarea>
                     <div v-if="$v.organizer.description.$error" class="validation-error">
-                        <p class="error" v-if="!$v.organizer.description.required">The Description is required</p>
+                        <p class="error" v-if="!$v.organizer.description.required">The description is required</p>
                     </div>
                 </div>
                 <div class="field">
@@ -61,8 +61,8 @@
                     placeholder=" "
                     />
                     <div v-if="$v.organizer.website.$error" class="validation-error">
-                        <p class="error" v-if="!$v.organizer.website.url">Must be a Url (Needs http://)</p>
-                        <p class="error" v-if="!$v.organizer.website.notWorking">The Url doesn't seem to be working</p>
+                        <p class="error" v-if="!$v.organizer.website.url">Must be a url (Needs http://)</p>
+                        <p class="error" v-if="!$v.organizer.website.notWorking">The url doesn't seem to be working</p>
                     </div>
                 </div>
                 <div class="field">
@@ -122,15 +122,13 @@
                         <div class="add-organzation-image__card" :class="{ over: hasImage, load: isLoading }">
                             <div class="add-organzation-image__dotted">
                                 <div class="add-organzation-image__text">
-                                    <div v-if="!isLoading">
-                                        <svg class="b" height="32" width="32" viewBox="0 0 24 24" aria-label="Add an image or video" role="img"><path d="M24 12c0-6.627-5.372-12-12-12C5.373 0 0 5.373 0 12s5.373 12 12 12c6.628 0 12-5.373 12-12zm-10.767 3.75a1.25 1.25 0 0 1-2.5 0v-3.948l-1.031 1.031a1.25 1.25 0 0 1-1.768-1.768L12 7l4.066 4.065a1.25 1.25 0 0 1-1.768 1.768l-1.065-1.065v3.982z"></path></svg>
-                                    </div>
+                                    
                                      <div>
                                         <div v-if="!hasImage">
-                                            <h4>If you have an organization image <br>click here to Upload</h4>
-                                            <p>Please make image at least 400 x 400</p>
-                                            <p>Image needs to be under 20 mb</p>
-                                            <p>Please make sure logo is centered</p>
+                                            <h4>Click to upload organization image (optional)</h4>
+                                            <div v-if="!isLoading">
+                                                <svg class="b" height="32" width="32" viewBox="0 0 24 24" aria-label="Add an image or video" role="img"><path d="M24 12c0-6.627-5.372-12-12-12C5.373 0 0 5.373 0 12s5.373 12 12 12c6.628 0 12-5.373 12-12zm-10.767 3.75a1.25 1.25 0 0 1-2.5 0v-3.948l-1.031 1.031a1.25 1.25 0 0 1-1.768-1.768L12 7l4.066 4.065a1.25 1.25 0 0 1-1.768 1.768l-1.065-1.065v3.982z"></path></svg>
+                                            </div>
                                         </div>
                                         <p v-if="hasImage">Change Image</p>
                                     </div>
@@ -165,9 +163,8 @@
             </div>
         </modal>
         <div class="create-button__in-nav">
-            <button :disabled="disabled" class="create" @click.prevent="onSubmit"> Save Organizer </button>
             <button v-if="this.loadorganizer" class="create" @click.prevent="goBack"> Back </button>
-            
+            <button :disabled="disabled" class="create" @click.prevent="onSubmit"> Save Organizer </button>
         </div>
     </div>
 </div>
@@ -262,7 +259,7 @@ export default {
             this.appendData()
             axios.post(this.endPoint, this.formData)
             .then(res => { 
-                this.loadorganizer ? location.reload() : this.onFinishOrganizer('/create-event/edit');
+                this.onFinishOrganizer('/create-event/edit');
             })
             .catch(err => {
                 this.onErrors(err);
@@ -273,7 +270,9 @@ export default {
             this.imageFile ? this.isLoading = true : '';
             this.formData.append('slug', this.slugify(this.organizer.name));
             for (var field in this.organizer) {
-                this.formData.append(field, this.organizer[field]);
+                if (this.organizer[field] !== null) {
+                    this.formData.append(field, this.organizer[field]);
+                } 
             }
         },
 

@@ -65,11 +65,12 @@ nav.create {
 }
 
 .create-menu {
-  grid-template-columns: 12rem 1fr;
+  grid-template-columns: 8rem 1fr;
   position: relative;
   height: 100%;
   -webkit-box-align: center;
           align-items: center;
+  grid-gap: 0 !important;
 }
 
 .create-menu.review {
@@ -323,8 +324,8 @@ button.event-start-button {
 }
 
 .add-organzation-image_loader {
-  width: 48rem;
-  height: 48rem;
+  width: 400px;
+  height: 400px;
   background-color: #fff;
   border-radius: 1rem;
   margin: auto;
@@ -338,6 +339,7 @@ button.event-start-button {
   display: inline-block;
   background-size: cover;
   background-repeat: no-repeat;
+  background-position: center;
   border-radius: 0.5rem;
   border: 1px solid #d2d2d2;
   border-radius: 50%;
@@ -375,6 +377,10 @@ button.event-start-button {
   top: 50%;
   margin: -3.5rem auto auto;
   width: 100%;
+}
+
+.add-organzation-image__text h4 {
+  margin-bottom: 2rem;
 }
 
 @media (max-width: 768px) {
@@ -714,8 +720,8 @@ label.imgclick {
 \*------------------------------------*/
 
 .event-create__title {
-  padding-top: 5rem;
-  width: 90%;
+  width: 100% !important;
+  padding: 4rem 8rem 4rem 8rem;
   grid-template-columns: 1fr 1fr;
 }
 
@@ -736,8 +742,8 @@ button.editTitle {
 }
 
 .event-enter-location {
-  width: 70%;
-  margin: 4rem auto;
+  width: 100%;
+  padding: 4rem 8rem 4rem 8rem;
 }
 
 .event-show-location {
@@ -755,8 +761,8 @@ button.editTitle {
 }
 
 .event-enter-category {
-  width: 70%;
-  margin: 4rem auto;
+  width: 100%;
+  padding: 4rem 8rem 4rem 8rem;
 }
 
 .event-enter-category .title {
@@ -785,24 +791,25 @@ button.editTitle {
 \*------------------------------------*/
 
 .event-create__shows {
-  margin-top: 1rem;
+  width: 100%;
+  padding: 4rem 8rem 4rem 8rem;
 }
 
 .specific-show-dates,
 .ongoing-show-dates,
 .everyday-show-dates {
   width: 100% !important;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr minmax(680px, 1fr);
+}
+
+.show-type-selection {
+  width: 40rem;
 }
 
 .event-create-tab__section {
   margin: 5rem auto;
   width: 90%;
   min-height: 320px;
-}
-
-section.event-enter-showtimes {
-  margin-left: 9rem;
 }
 
 .calendar .flatpickr-calendar.inline {
@@ -911,6 +918,14 @@ button.delete-circle {
   margin: 0;
 }
 
+.calendar .flatpickr-calendar.inline {
+  width: 602px !important;
+}
+
+.calendar .flatpickr-days {
+  width: 602px !important;
+}
+
 @media (max-width: 768px) {
   section.event-enter-showtimes {
     margin: 0;
@@ -931,8 +946,8 @@ button.delete-circle {
 \*------------------------------------*/
 
 .event-create__description {
-  padding: 5rem 0rem 10rem 0rem;
-  width: 90%;
+  padding: 4rem 8rem 4rem 8rem;
+  width: 100% !important;
   grid-template-columns: 1fr 1fr;
 }
 
@@ -945,8 +960,8 @@ button.delete-circle {
 \*------------------------------------*/
 
 .event-create__advisories {
-  padding: 5rem 0 10rem 0;
-  width: 90%;
+  padding: 4rem 8rem 4rem 8rem;
+  width: 100% !important;
   grid-template-columns: 1fr 1fr 1fr;
 }
 

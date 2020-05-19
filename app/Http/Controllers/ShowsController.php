@@ -40,8 +40,6 @@ class ShowsController extends Controller
      */
     public function store(Request $request, Event $event)
     {
-
-
         if($request->onGoing) {
             ShowOnGoing::saveNewShowOnGoing($request, $event);
             $dates=[];

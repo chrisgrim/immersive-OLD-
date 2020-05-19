@@ -175,6 +175,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -503,6 +504,30 @@ var render = function() {
                                                     "edit-event__sub-button"
                                                 },
                                                 [_vm._v("View")]
+                                              )
+                                            ]
+                                          )
+                                        : _vm._e(),
+                                      _vm._v(" "),
+                                      _vm.status(event)
+                                        ? _c(
+                                            "a",
+                                            {
+                                              attrs: {
+                                                href:
+                                                  "/create-event/" +
+                                                  event.slug +
+                                                  "/title"
+                                              }
+                                            },
+                                            [
+                                              _c(
+                                                "button",
+                                                {
+                                                  staticClass:
+                                                    "edit-event__sub-button"
+                                                },
+                                                [_vm._v("Edit")]
                                               )
                                             ]
                                           )

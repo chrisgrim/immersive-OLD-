@@ -308,8 +308,8 @@ section .event-title {
 }
 
 .event-show-showtimes {
-  width: 560px;
-  margin: 4rem auto auto;
+  width: 100%;
+  margin: 4rem 0;
 }
 
 .show-heart-location {
@@ -1074,6 +1074,7 @@ ul.sub-dropdown {
   -webkit-transition: max-height 0.2s ease-in;
   transition: max-height 0.2s ease-in;
   margin-top: 1.5rem;
+  font-size: 1.4rem;
 }
 
 ul.sub-dropdown li a {
@@ -2381,6 +2382,17 @@ fieldset[disabled] .multiselect {
   background-color: red;
 }
 
+.lockedcalendar .flatpickr-calendar.inline {
+  margin: inherit;
+  margin-left: -1.4rem;
+}
+
+@media (max-width: 768px) {
+  .lockedcalendar .flatpickr-calendar.inline {
+    margin: auto;
+  }
+}
+
 .flatpickr-calendar.inline {
   margin: auto;
 }
@@ -3236,10 +3248,11 @@ span.flatpickr-weekday {
 }
 
 .leaflet-marker-icon.icons {
-  width: 20rem !important;
-  margin-left: -10rem !important;
-  height: 3rem !important;
+  height: 100% !important;
+  width: 100% !important;
   text-align: center;
+  margin-left: -2.5rem !important;
+  position: relative;
 }
 
 .leaflet-marker-icon.icons p {
@@ -3253,7 +3266,7 @@ span.flatpickr-weekday {
   border-radius: 5rem;
   border: 2px solid black;
   display: inline-block;
-  padding: 0.5rem 1rem 1rem 1rem;
+  padding: 0.5rem 1rem;
 }
 
 div.leaflet-popup-content {
@@ -3432,6 +3445,7 @@ a.leaflet-popup-close-button {
   color: black;
   padding: 0rem 3rem;
   margin: 0;
+  margin-top: -0.3rem;
 }
 
 .nav-search .multiselect__single {
@@ -3473,6 +3487,7 @@ a.leaflet-popup-close-button {
   color: black;
   padding: 1rem 3rem;
   margin: 0;
+  margin-top: -0.1rem;
 }
 
 .index-nav-search .multiselect__single {

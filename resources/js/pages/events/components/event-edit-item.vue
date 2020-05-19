@@ -8,9 +8,6 @@
                 </picture>
             </div>
             <div class="card-without-image" v-else>
-                <div class="card-without-image_name">
-                    <h4>{{event.name ? event.name : 'New Event'}}</h4>
-                </div>
             </div>
             <div class="card-title">
                 <h3>{{ event.name ? event.name : 'New Event'}}</h3>
@@ -18,18 +15,18 @@
             <div class="card-price">
                 <h4>{{ event.price_range }}</h4>
             </div>
+             <div class="card-inprogress" v-if="event.status == 'd'">
+                <h3><b>In Progress</b></h3>
+            </div>
+            <div class="card-inprogress" v-if="event.status == 'n'">
+                <h3><b>Needs Changes</b></h3>
+            </div>
+             <div class="card-inprogress" v-if="event.status == 'e'">
+                <h3><b>Goes Live <br> {{event.embargo_date | formatDate}} </b></h3>
+            </div>
         </a>
-        <div class="card-inprogress" v-if="event.status == 'd'">
-            <h3><b>In Progress</b></h3>
-        </div>
         <div class="card-inprogress" v-if="event.status == 'r'">
             <h3><b>Under Review</b><br>(Locked)</h3>
-        </div>
-        <div class="card-inprogress" v-if="event.status == 'e'">
-            <h3><b>Goes Live <br> {{event.embargo_date | formatDate}} </b></h3>
-        </div>
-        <div class="card-inprogress" v-if="event.status == 'n'">
-            <h3><b>Needs Changes</b></h3>
         </div>
     </div>
 </template>

@@ -175,7 +175,22 @@ __webpack_require__.r(__webpack_exports__);
       };
       this.tagOptions.push(tag);
       this.tagName.push(tag);
+    },
+    onLoad: function onLoad() {
+      var _this2 = this;
+
+      axios.get(this.onFetch('description')).then(function (res) {
+        res.data.event ? _this2.group.description = res.data.event.description : '';
+        res.data.event ? _this2.group.websiteUrl = res.data.event.websiteUrl : '';
+        res.data.event ? _this2.group.ticketUrl = res.data.event.ticketUrl : '';
+        res.data.genres ? _this2.group.genre = res.data.genres.map(function (a) {
+          return a.genre;
+        }) : '';
+      });
     }
+  },
+  created: function created() {
+    this.onLoad();
   },
   watch: {
     tagName: function tagName() {
@@ -289,7 +304,7 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "field" }, [
-          _c("label", [_vm._v("Event website")]),
+          _c("label", [_vm._v("Event website (optional)")]),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -306,7 +321,7 @@ var render = function() {
             },
             attrs: {
               type: "text",
-              placeholder: "Leave blank if using Organizer Website Url"
+              placeholder: "Leave blank if using organizer website url"
             },
             domProps: { value: _vm.group.websiteUrl },
             on: {
@@ -346,7 +361,7 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "field" }, [
-          _c("label", [_vm._v("Ticket website")]),
+          _c("label", [_vm._v("Ticket website (optional)")]),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -363,7 +378,7 @@ var render = function() {
             },
             attrs: {
               type: "text",
-              placeholder: "Leave blank if using Organizer Website Url"
+              placeholder: "Leave blank if using organizer website url"
             },
             domProps: { value: _vm.group.ticketUrl },
             on: {
@@ -400,23 +415,6 @@ var render = function() {
                   : _vm._e()
               ])
             : _vm._e()
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "event-create__submit-button" }, [
-          _c(
-            "button",
-            {
-              staticClass: "create",
-              attrs: { disabled: _vm.disabled },
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  return _vm.onSubmit()
-                }
-              }
-            },
-            [_vm._v(" Next ")]
-          )
         ])
       ]),
       _vm._v(" "),
@@ -479,7 +477,24 @@ var render = function() {
               : _vm._e()
           ],
           1
-        )
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "event-create__submit-button" }, [
+          _c(
+            "button",
+            {
+              staticClass: "create",
+              attrs: { disabled: _vm.disabled },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.onSubmit()
+                }
+              }
+            },
+            [_vm._v(" Next ")]
+          )
+        ])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "create-button__in-nav" }, [
@@ -565,6 +580,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     onBack: function onBack(value) {
       return window.location.href = "/create-event/".concat(this.event.slug, "/").concat(value);
+    },
+    onFetch: function onFetch(value) {
+      return "/create-event/".concat(this.event.slug, "/").concat(value, "/fetch?timestamp=").concat(new Date().getTime());
     },
     onForward: function onForward(value) {
       return window.location.href = "/create-event/".concat(this.event.slug, "/").concat(value);

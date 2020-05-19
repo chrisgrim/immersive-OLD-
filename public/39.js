@@ -390,6 +390,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -416,6 +418,9 @@ __webpack_require__.r(__webpack_exports__);
           '';
         }
       }
+    },
+    locationPlaceholder: function locationPlaceholder() {
+      return this.event.location.postal_code || this.event.location.city ? (this.event.location.home ? this.event.location.home + ' ' : '') + (this.event.location.street ? this.event.location.street + ' | ' : '') + (this.event.location.city ? this.event.location.city + ' | ' : '') + (this.event.location.region ? this.event.location.region + ' | ' : '') + (this.event.location.country ? this.event.location.country : '') : '';
     }
   },
   data: function data() {
@@ -990,6 +995,8 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("div", { staticClass: "event-show-showtimes" }, [
+                _c("p", [_vm._v("Show Details:")]),
+                _vm._v(" "),
                 _c("p", { staticStyle: { "white-space": "pre-wrap" } }, [
                   _vm._v(_vm._s(_vm.event.show_times))
                 ])
@@ -1020,6 +1027,8 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("div", { staticClass: "event-show-showtimes" }, [
+                _c("p", [_vm._v("Show Details:")]),
+                _vm._v(" "),
                 _c("p", { staticStyle: { "white-space": "pre-wrap" } }, [
                   _vm._v(_vm._s(_vm.event.show_times))
                 ])
@@ -1269,7 +1278,7 @@ var render = function() {
                       _c("p", [
                         _vm._v(
                           _vm._s(_vm.event.location.city) +
-                            " " +
+                            ", " +
                             _vm._s(_vm.event.location.region)
                         )
                       ]),
@@ -1300,19 +1309,7 @@ var render = function() {
                           _vm.event.location.region
                       }
                     },
-                    [
-                      _c("p", [
-                        _vm._v(
-                          _vm._s(_vm.event.location.home) +
-                            " " +
-                            _vm._s(_vm.event.location.street) +
-                            ", " +
-                            _vm._s(_vm.event.location.city) +
-                            ",  " +
-                            _vm._s(_vm.event.location.region)
-                        )
-                      ])
-                    ]
+                    [_c("p", [_vm._v(_vm._s(_vm.locationPlaceholder))])]
                   )
                 ]),
             _vm._v(" "),

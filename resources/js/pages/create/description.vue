@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div class="field">
-                <label>Event website</label>
+                <label>Event website (optional)</label>
                 <input 
                 type="text" 
                 v-model="group.websiteUrl"
@@ -29,7 +29,7 @@
                 @click="onToggle('website')"
                 @blur="active = null"
                 @input="$v.group.websiteUrl.$touch"
-                placeholder="Leave blank if using Organizer Website Url"
+                placeholder="Leave blank if using organizer website url"
                 />
                 <div v-if="$v.group.websiteUrl.$error" class="validation-error">
                     <p class="error" v-if="!$v.group.websiteUrl.url">Must be a url (https://...)</p>
@@ -37,7 +37,7 @@
                 </div>
             </div>
             <div class="field">   
-                <label>Ticket website</label>
+                <label>Ticket website (optional)</label>
                 <input 
                 type="text" 
                 v-model="group.ticketUrl"
@@ -45,16 +45,13 @@
                 @click="onToggle('ticket')"
                 @blur="active = null"
                 @input="$v.group.ticketUrl.$touch"
-                placeholder="Leave blank if using Organizer Website Url"
+                placeholder="Leave blank if using organizer website url"
                 />
                 <div v-if="$v.group.ticketUrl.$error" class="validation-error">
                     <p class="error" v-if="!$v.group.ticketUrl.url"> Must be a url (https://...)</p>
                     <p class="error" v-if="!$v.group.ticketUrl.ticketNotWorking">One of your urls isn't working</p>
                 </div>
             </div>
-            <div class="event-create__submit-button">
-                <button :disabled="disabled" @click.prevent="onSubmit()" class="create"> Next </button>
-            </div>
         </section>
 
         <section>
@@ -83,6 +80,9 @@
                 <div v-if="$v.tagName.$error" class="validation-error">
                     <p class="error" v-if="!$v.tagName.required">Must select at least one Tag</p>
                 </div>
+            </div>
+            <div class="event-create__submit-button">
+                <button :disabled="disabled" @click.prevent="onSubmit()" class="create"> Next </button>
             </div>
         </section>
 
@@ -159,8 +159,21 @@
                 this.tagName.push(tag)
             },
 
+            onLoad() {
+                axios.get(this.onFetch('description'))
+                .then(res => {
+                    res.data.event ? this.group.description = res.data.event.description : '';
+                    res.data.event ? this.group.websiteUrl = res.data.event.websiteUrl : '';
+                    res.data.event ? this.group.ticketUrl = res.data.event.ticketUrl : '';
+                    res.data.genres ? this.group.genre = res.data.genres.map(a => a.genre) : '';
+                });
+            },
+
 		},
 
+        created() {
+            this.onLoad();
+        },
 
         watch: {
             tagName(){

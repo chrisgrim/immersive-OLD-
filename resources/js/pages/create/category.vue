@@ -69,11 +69,12 @@
             endpoint() {
                 return `/create-event/${this.event.slug}/category`
             },
+
         },
 
 		data() {
 			return {
-				selectedCategory: this.event.category ? this.event.category : '',
+				selectedCategory: '',
 				categoryOptions: this.categories,
 				active: null,
                 pageHeight: 0,
@@ -99,11 +100,19 @@
             handleResize() {
                 this.pageHeight = `height:calc(${window.innerHeight}px - 8rem)`;
             },
+
+            onLoad() {
+                axios.get(this.onFetch('category'))
+                .then(res => {
+                    this.selectedCategory = res.data;
+                });
+            },
 		},
 
         created() {
             window.addEventListener('resize', this.handleResize)
             this.handleResize();
+            this.onLoad();
         },
 
         destroyed() {

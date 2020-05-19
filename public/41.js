@@ -59,9 +59,11 @@ __webpack_require__.r(__webpack_exports__);
       if (!panel || panel.contains(event.target)) return console.log('one');
       ;
       this.visible = false;
+      this.$emit('close');
     },
     hide: function hide() {
       this.visible = false;
+      this.$emit('close');
     }
   },
   mounted: function mounted() {

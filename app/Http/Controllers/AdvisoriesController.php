@@ -51,4 +51,20 @@ class AdvisoriesController extends Controller
         ContentAdvisory::saveAdvisories($event, $request);
         $event->update(['advisories_id' => $event->advisories->id]);
     }
+
+    /**
+     * Show the form for creating a new resource. Here I load all of the details of the advisories
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function fetch(Event $event)
+    {
+        return response()->json(array(
+            'advisories' => $event->advisories()->first(),
+            'contactPivots' => $event->contactlevels()->get(),
+            'contentPivots' => $event->contentadvisories()->get(),
+            'mobilityPivots' => $event->mobilityadvisories()->get(),
+        ));
+
+    }
 }

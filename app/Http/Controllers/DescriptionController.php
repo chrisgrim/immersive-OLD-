@@ -38,8 +38,7 @@ class DescriptionController extends Controller
     {
         return response()->json(array(
             'event' => $event,
-            'pivots' => $event->genres()->get(),
-            'genres' => Genre::where('admin', true)->orWhere('user_id', auth()->user()->id)->get()
+            'genres' => $event->genres()->get(),
         ));
     }
 

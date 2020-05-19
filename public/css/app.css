@@ -1136,6 +1136,7 @@ button.mobile-map-close {
   width: 11rem;
   height: 11rem;
   position: relative;
+  border-radius: 50%;
 }
 
 .user-profile-image input {
@@ -1242,6 +1243,13 @@ button.mobile-map-close {
   margin: 4rem 0rem;
   border-top: 1px solid #bbbbbb;
   padding: 2rem 0rem;
+}
+
+button.verify-email {
+  color: #008489;
+  border: 1px solid #e6e6e6;
+  padding: 0.5rem;
+  margin-left: 1rem;
 }
 
 @media (max-width: 768px) {

@@ -1,5 +1,15 @@
 <template>
     <div class="content">
+        <nav class="event-show mobile">
+            <div class="back">
+                <a v-if="searchUrl" :href="searchUrl">
+                    <svg aria-label="Back" role="img" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 4; overflow: visible;"><g fill="none"><path d="m20 28-11.29289322-11.2928932c-.39052429-.3905243-.39052429-1.0236893 0-1.4142136l11.29289322-11.2928932"></path></g></svg>
+                </a>
+                <a v-else href="/">
+                    <svg aria-label="Back" role="img" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 4; overflow: visible;"><g fill="none"><path d="m20 28-11.29289322-11.2928932c-.39052429-.3905243-.39052429-1.0236893 0-1.4142136l11.29289322-11.2928932"></path></g></svg>
+                </a>
+            </div>
+        </nav>
         <header class="event-show grid">
             <div class="header-left">
                 <div class="content">   
@@ -115,14 +125,16 @@
                         </a>
                         <div class="review">
                             <a rel="noreferrer" target="_blank" :href="review.url">
-                                <i 
-                                style="white-space: pre-line;" 
-                                v-if="showMore !== 'review'" 
-                                class="text">{{review.review.substring(0,300)}}<span 
-                                    class="show-text" 
-                                    v-if="review.review.length >= 200">... Read More
-                                    </span>
-                                </i>
+                                
+                                    <i 
+                                    style="white-space: pre-line;" 
+                                    v-if="showMore !== 'review'" 
+                                    class="text">{{review.review.substring(0,300)}}<span 
+                                        class="show-text" 
+                                        v-if="review.review.length >= 200">... Read More
+                                        </span>
+                                    </i>
+                                
                             </a>
                         </div>
                     </div>
@@ -143,6 +155,7 @@
                     name="dates">
                 </flat-pickr>
                 <div class="event-show-showtimes">
+                    <p>Show Details:</p>
                     <p style="white-space: pre-wrap;">{{event.show_times}}</p>
                 </div>
             </div>
@@ -156,6 +169,7 @@
                     name="dates">
                 </flat-pickr>
                 <div class="event-show-showtimes">
+                    <p>Show Details:</p>
                     <p style="white-space: pre-wrap;">{{event.show_times}}</p>
                 </div>
             </div>
@@ -280,6 +294,7 @@
                 <div style="white-space: pre-line;" v-if="event.organizer.description" class="description">
                     {{event.organizer.description}}
                 </div>
+                <ContactOrganizer :user="user" :loadorganizer="event.organizer"></ContactOrganizer>
             </div>
         </section>
         <section v-if="bar && event.location.latitude" class="section event-show location">
@@ -289,14 +304,14 @@
                 </div>
                 <div class="text" v-if="event.location.hiddenLocationToggle">
                     <a rel="noreferrer" target="_blank" :href="`http://maps.google.com/maps?q=${event.location.city},+${event.location.region}`">
-                        <p>{{event.location.city}} {{event.location.region}}</p>
+                        <p>{{event.location.city}}, {{event.location.region}}</p>
                         <br>
                         <p>{{event.location.hiddenLocation}}</p>
                     </a>
                 </div>
                 <div class="text" v-else="event.location.hiddenLocationToggle">
                     <a rel="noreferrer" target="_blank" :href="`http://maps.google.com/maps?q=${event.location.home}+${event.location.street},+${event.location.city},+${event.location.region}`">
-                        <p>{{event.location.home}} {{event.location.street}}, {{event.location.city}},  {{event.location.region}}</p>  
+                        <p>{{locationPlaceholder}}</p>  
                     </a>
                 </div>
                 <div class="location-map">
@@ -315,10 +330,9 @@
                         </div>
                         <div style="width:100%;height:400px">
                             <l-map :zoom="zoom" :center="center" :options="{ scrollWheelZoom: allowZoom, zoomControl: allowZoom }">
-                            <l-tile-layer 
-                            :url="url"></l-tile-layer>
-                            <l-marker 
-                            :lat-lng="center">
+                            <l-tile-layer :url="url"></l-tile-layer>
+                            <l-marker :lat-lng="center">
+                                <l-icon class-name="icons"><p>{{event.organizer.name.slice(0,20)}}<span v-if="event.organizer.name.length > 20">...</span></p></l-icon>
                                 <l-popup>
                                     <div class="show-pop">
                                         <a rel="noreferrer" target="_blank" :href="`http://maps.google.com/maps?q=${event.location.home}+${event.location.street},+${event.location.city},+${event.location.region}`">
@@ -341,21 +355,14 @@
 </template>
 
 <script>
-    import {LMap, LTileLayer, LMarker, LPopup} from 'vue2-leaflet'
+    import {LMap, LTileLayer, LMarker, LPopup, LIcon} from 'vue2-leaflet'
     import format from 'date-fns/format'
     import ContactOrganizer from '../organizers/contact-organizer.vue'
     import flatPickr from 'vue-flatpickr-component'
 
     export default {
 
-        props: {
-            loadevent: {
-                type:Object,
-            },
-            user: {
-                type:String
-            }
-        },
+        props: ['loadevent', 'user'],
 
         components: { 
             LMap, 
@@ -363,7 +370,8 @@
             LMarker,
             flatPickr,
             ContactOrganizer,
-            LPopup
+            LPopup,
+            LIcon
         },
 
         computed: {
@@ -378,6 +386,15 @@
                         ''
                     }
                 }
+            },
+
+            locationPlaceholder() {
+                return this.event.location.postal_code || this.event.location.city ? (this.event.location.home ? this.event.location.home + ' ' : '') 
+                + (this.event.location.street ? this.event.location.street + ' | ' : '') 
+                + (this.event.location.city ? this.event.location.city + ' | ' : '') 
+                + (this.event.location.region ? this.event.location.region + ' | ' : '') 
+                + (this.event.location.country ? this.event.location.country : '') 
+                : '';
             },
         },
 
@@ -416,6 +433,7 @@
                     dateFormat: 'Y-m-d H:i:s',    
                 },
                 searchUrl: '',
+
             }
         },
 

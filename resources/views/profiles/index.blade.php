@@ -9,15 +9,15 @@
 
 @section('nav')
     @auth
-        <vue-nav onclass="profile" :user= "{{auth()->user()}}"></vue-nav>
+        <vue-nav onclass="profile" :user="{{auth()->user()}}"></vue-nav>
     @endauth
     @guest
-        <vue-nav></vue-nav>
+        <vue-nav onclass="profile"></vue-nav>
     @endguest
 @endsection
 
 @section('content')
 	<div id="bodyArea">
-		<user-profile :events="{{ $events }}" :loc="{{ $loc }}" :loaduser="{{ $user }}" auth="{{auth()->id()}}" v-cloak></user-profile>	
+		<user-profile :events="{{ $events }}" :loaduser="{{ $user }}" auth="{{auth()->id()}}" v-cloak></user-profile>	
 	</div>
 @endsection
