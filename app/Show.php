@@ -82,13 +82,15 @@ class Show extends Model
      */
     public static function updateEvent($request, $event)
     {
-        if ($event->shows()->exists()) {
-            $lastDate = $event->shows()->orderBy('date', 'DESC')->first();
+        if ($request->shows) {
+            $lastDate = $event->shows()->orderBy('date', 'DESC')->first()->date;
         }
-        if ($event->showOnGoing()->exists()) {
-            $lastDate = $event->showOnGoing()->first();
+        if ($request->onGoing) {
+            $lastDate = $event->showOnGoing()->first()->date;
         }
-
+        if ($request->always) {
+            $lastDate = Carbon::now()->addMonths(6)->format('Y-m-d H:i:s');
+        }
 
         $event->priceranges()->delete();
 
@@ -104,12 +106,13 @@ class Show extends Model
         } else {
             $pricerange = '$' . $array[0];
         }
+
         $event->update([
-            'closingDate' => $lastDate->date ? $lastDate->date : Carbon::now()->addMonths(6)->format('Y-m-d H:i:s'),
             'show_times' => $request->showtimes,
             'price_range' => $pricerange,
-            'showtype' => $request->shows ? 's' : ($request->onGoing && $request->always ? 'a' : 'o'),
             'embargo_date' => $request->embargo_date,
+            'closingDate' => $lastDate,
+            'showtype' => $request->shows ? 's' : ($request->onGoing ? 'o' : 'a'),
         ]);
     }
 }

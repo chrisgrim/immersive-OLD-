@@ -1,24 +1,27 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[23],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/create/shows.vue?vue&type=script&lang=js&":
-/*!***********************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/create/shows.vue?vue&type=script&lang=js& ***!
-  \***********************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/create/shows.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/create/shows.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var date_fns_format__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! date-fns/format */ "./node_modules/date-fns/format/index.js");
-/* harmony import */ var date_fns_format__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(date_fns_format__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
-/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-flatpickr-component */ "./node_modules/vue-flatpickr-component/dist/vue-flatpickr.min.js");
-/* harmony import */ var vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var flatpickr_dist_flatpickr_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flatpickr/dist/flatpickr.css */ "./node_modules/flatpickr/dist/flatpickr.css");
-/* harmony import */ var flatpickr_dist_flatpickr_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flatpickr_dist_flatpickr_css__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var v_money__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! v-money */ "./node_modules/v-money/dist/v-money.js");
-/* harmony import */ var v_money__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(v_money__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _mixins_form_validation_mixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/form-validation-mixin */ "./resources/js/mixins/form-validation-mixin.js");
+/* harmony import */ var date_fns_format__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! date-fns/format */ "./node_modules/date-fns/format/index.js");
+/* harmony import */ var date_fns_format__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(date_fns_format__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-flatpickr-component */ "./node_modules/vue-flatpickr-component/dist/vue-flatpickr.min.js");
+/* harmony import */ var vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var flatpickr_dist_flatpickr_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! flatpickr/dist/flatpickr.css */ "./node_modules/flatpickr/dist/flatpickr.css");
+/* harmony import */ var flatpickr_dist_flatpickr_css__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(flatpickr_dist_flatpickr_css__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var v_money__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! v-money */ "./node_modules/v-money/dist/v-money.js");
+/* harmony import */ var v_money__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(v_money__WEBPACK_IMPORTED_MODULE_6__);
 //
 //
 //
@@ -419,25 +422,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
+
+
 
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: {
-    event: {
-      type: Object
-    }
-  },
+  props: ['event'],
+  mixins: [_mixins_form_validation_mixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
   components: {
-    flatPickr: vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_2___default.a,
-    Money: v_money__WEBPACK_IMPORTED_MODULE_4__["Money"]
+    flatPickr: vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_4___default.a,
+    Money: v_money__WEBPACK_IMPORTED_MODULE_6__["Money"]
   },
   computed: {
-    // return this.dates.length > 10 ? this.dates.split(",") : '';
+    endpoint: function endpoint() {
+      return "/create-event/".concat(this.event.slug, "/shows");
+    },
     dateArray: function dateArray() {
       if (!Array.isArray(this.dates) && this.dates.includes(",")) {
         return this.dates.split(",");
@@ -448,80 +450,66 @@ __webpack_require__.r(__webpack_exports__);
           '';
         }
       }
+    },
+    submitObject: function submitObject() {
+      return {
+        'dates': Array.isArray(this.dates) ? this.dates : this.dateArray,
+        'showtimes': this.showTimes,
+        'tickets': this.tickets,
+        'shows': this.selectedTab == 's' ? true : false,
+        'embargo_date': this.showEmbargoDate ? this.embargoDate : null,
+        'week': this.week && this.selectedTab == 'a' ? lodash__WEBPACK_IMPORTED_MODULE_2___default.a.mapValues(this.week, function () {
+          return true;
+        }) : this.week,
+        'onGoing': this.selectedTab == 'o' ? true : false,
+        'always': this.selectedTab == 'a' ? true : false
+      };
     }
   },
   data: function data() {
     return {
       eventUrl: "/create-event/".concat(this.event.slug),
-      selectedTab: this.event.showtype !== null ? this.event.showtype : 's',
-      dates: '',
-      embargoDate: '',
+      selectedTab: this.event.showtype ? this.event.showtype : 's',
+      dates: this.event.shows ? this.event.shows.map(function (a) {
+        return a.date;
+      }) : '',
+      embargoDate: this.event.embargo_date ? this.event.embargo_date : '',
       showEmbargoDate: this.event.embargo_date ? true : false,
-      config: {
-        minDate: "today",
-        maxDate: new Date().fp_incr(180),
-        mode: "multiple",
-        inline: true,
-        showMonths: 2,
-        dateFormat: 'Y-m-d H:i:s'
-      },
-      configmobile: {
-        minDate: "today",
-        maxDate: new Date().fp_incr(180),
-        mode: "multiple",
-        inline: true,
-        showMonths: 1,
-        dateFormat: 'Y-m-d H:i:s'
-      },
-      configembargo: {
-        minDate: "today",
-        maxDate: new Date().fp_incr(180),
-        mode: "single",
-        inline: true,
-        showMonths: 1,
-        dateFormat: 'Y-m-d H:i:s'
-      },
-      week: this.initializeWeekObject(),
-      tickets: [this.initializeTicketObject()],
-      showTimes: '',
-      money: {
-        decimal: '.',
-        thousands: '',
-        prefix: '',
-        suffix: '',
-        precision: 2,
-        masked: false
-      },
-      dis: false,
-      num: false,
-      activeItem: null,
-      isVisible: false,
-      free: false,
+      calendarConfig: this.initializeCalendarObject(),
+      mobileCalendarConfig: this.initializeCalendarObject(),
+      embargoCalendarConfig: this.initializeCalendarObject(),
+      week: this.event.show_on_going ? this.event.show_on_going : this.initializeWeekObject(),
+      tickets: this.event.shows.length ? this.event.shows[0].tickets : [this.initializeTicketObject()],
+      showTimes: this.event.shows.length ? this.event.show_times : '',
+      money: this.initializeMoneyObject(),
+      disabled: false,
+      active: null,
+      modal: false,
+      freeTicket: false,
       placeholders: 'Please provide a brief description of show times. For example:' + '\n' + '\n' + '“Doors at 7, Show at 8.”' + '\n' + '“Two shows an hour from 8-10.”',
       placeholdero: 'Please provide a brief description of weekly show times. For example:' + '\n' + '\n' + '10:00PM shows on Monday & Tuesday.' + '\n' + '12:00PM on Wednesday and Thursday.',
       placeholdera: 'Please provide a brief description of daily times. For example:' + '\n' + '\n' + 'Show begins everyday at 12PM.' + '\n' + 'Enjoy at any time.'
     };
   },
   methods: {
-    //deletes a ticket row or clears the first one
-    deleteRow: function deleteRow(index) {
-      this.$delete(this.tickets, index);
-    },
-    selectTab: function selectTab(value) {
-      this.selectedTab = value;
-    },
-    onFree: function onFree() {
-      this.free = true;
-      this.isVisible = false;
-      this.selectedTab == 's' ? this.submitDates() : '';
-      this.selectedTab == 'o' ? this.submitOnGoing() : '';
-      this.selectedTab == 'a' ? this.submitAlways() : '';
-    },
-    initializeShowtimeObject: function initializeShowtimeObject() {
+    initializeCalendarObject: function initializeCalendarObject() {
       return {
-        hh: "00",
-        mm: "00",
-        A: "PM"
+        minDate: "today",
+        maxDate: new Date().fp_incr(180),
+        mode: "multiple",
+        inline: true,
+        showMonths: 2,
+        dateFormat: 'Y-m-d H:i:s'
+      };
+    },
+    initializeMoneyObject: function initializeMoneyObject() {
+      return {
+        decimal: '.',
+        thousands: '',
+        prefix: '',
+        suffix: '',
+        precision: 2,
+        masked: false
       };
     },
     initializeWeekObject: function initializeWeekObject() {
@@ -535,14 +523,6 @@ __webpack_require__.r(__webpack_exports__);
         sun: false
       };
     },
-    addWeekDay: function addWeekDay(day) {
-      this.week[day] = !this.week[day];
-    },
-    // when user clicks new ticket this creates a new ticket object
-    addTickets: function addTickets() {
-      this.tickets.push(this.initializeTicketObject());
-    },
-    //creates a ticket Object
     initializeTicketObject: function initializeTicketObject() {
       return {
         id: '',
@@ -552,171 +532,100 @@ __webpack_require__.r(__webpack_exports__);
         ticket_price: ''
       };
     },
-    // If there is data in Database it will load from the database
-    load: function load() {
+    initializeShowtimeObject: function initializeShowtimeObject() {
+      return {
+        hh: "00",
+        mm: "00",
+        A: "PM"
+      };
+    },
+    deleteRow: function deleteRow(index) {
+      this.$delete(this.tickets, index);
+    },
+    selectTab: function selectTab(value) {
+      this.selectedTab = value;
+    },
+    addWeekDay: function addWeekDay(day) {
+      this.week[day] = !this.week[day];
+    },
+    addTickets: function addTickets() {
+      this.tickets.push(this.initializeTicketObject());
+    },
+    onLoad: function onLoad() {
+      this.mobileCalendarConfig.showMonths = 1;
+      this.embargoCalendarConfig.showMonths = 1;
+      this.embargoCalendarConfig.mode = 'single';
+    },
+    checkFreeTicket: function checkFreeTicket() {
       var _this = this;
-
-      axios.get("".concat(this.eventUrl, "/shows/fetch?timestamp=").concat(new Date().getTime())).then(function (response) {
-        console.log(response.data);
-
-        if (response.data.dates) {
-          _this.dates = response.data.dates;
-        }
-
-        if (response.data.week) {
-          _this.week = response.data.week;
-        }
-
-        response.data.tickets ? _this.tickets = response.data.tickets[0].tickets : '';
-        response.data.showTimes ? _this.showTimes = response.data.showTimes : '';
-        _this.embargoDate = response.data.embargo_date;
-      });
-    },
-    goBack: function goBack() {
-      window.location.href = "".concat(this.eventUrl, "/category");
-    },
-    checkFree: function checkFree() {
-      var _this2 = this;
 
       this.tickets.map(function (value) {
         if (value.ticket_price == 0) {
-          return _this2.isVisible = true;
+          return _this.modal = true;
         }
 
         ;
       });
     },
-    submitAlways: function submitAlways() {
-      var _this3 = this;
-
-      this.week = {
-        mon: true,
-        tue: true,
-        wed: true,
-        thu: true,
-        fri: true,
-        sat: true,
-        sun: true
-      };
-      this.$v.$touch();
-
-      if (this.$v.$invalid) {
-        return false;
-      }
-
-      ;
-      this.free ? '' : this.checkFree();
-
-      if (this.isVisible) {
-        return false;
-      }
-
-      ;
-      this.dis = true;
-      var data = {
-        'week': this.week,
-        'showtimes': this.showTimes,
-        'tickets': this.tickets,
-        'onGoing': true,
-        'always': true,
-        'embargo_date': this.showEmbargoDate ? this.embargoDate : null
-      };
-      axios.post("".concat(this.eventUrl, "/shows"), data).then(function (response) {
-        console.log(response.data);
-        window.location.href = "".concat(_this3.eventUrl, "/description");
-      })["catch"](function (error) {
-        console.log(error.response.data);
-      });
+    onFreeTicket: function onFreeTicket() {
+      this.freeTicket = true;
+      this.modal = false;
+      this.onSubmit();
     },
-    submitOnGoing: function submitOnGoing() {
-      var _this4 = this;
-
-      this.$v.$touch();
-
-      if (this.$v.$invalid) {
-        return false;
-      }
-
-      this.free ? '' : this.checkFree();
-
-      if (this.isVisible) {
-        return false;
-      }
-
-      ;
-      this.dis = true;
-      var data = {
-        'week': this.week,
-        'showtimes': this.showTimes,
-        'tickets': this.tickets,
-        'onGoing': true,
-        'embargo_date': this.showEmbargoDate ? this.embargoDate : null
-      };
-      axios.post("".concat(this.eventUrl, "/shows"), data).then(function (response) {
-        console.log(response.data);
-        window.location.href = "".concat(_this4.eventUrl, "/description");
-      })["catch"](function (error) {
-        console.log(error.response.data);
-      });
+    noFreeTicket: function noFreeTicket() {
+      this.modal = false;
+      this.disabled = false;
     },
-    //Submits the users dates and tickets to the database
-    submitDates: function submitDates() {
-      var _this5 = this;
+    onSubmit: function onSubmit() {
+      var _this2 = this;
 
-      this.num = true;
-      this.$v.$touch();
-
-      if (this.$v.$invalid) {
-        return false;
-      }
-
-      this.free ? '' : this.checkFree();
-
-      if (this.isVisible) {
+      if (this.checkVuelidate()) {
         return false;
       }
 
       ;
-      this.dis = true;
-      var data = {
-        'dates': this.dateArray,
-        'showtimes': this.showTimes,
-        'tickets': this.tickets,
-        'shows': true,
-        'embargo_date': this.showEmbargoDate ? this.embargoDate : null
-      };
-      axios.post("".concat(this.eventUrl, "/shows"), data).then(function (response) {
-        console.log(response.data);
-        window.location.href = "".concat(_this5.eventUrl, "/description");
+      this.checkFreeTicket();
+
+      if (this.modal && !this.freeTicket) {
+        return false;
+      }
+
+      ;
+      axios.post(this.endpoint, this.submitObject).then(function (res) {
+        console.log(res.data);
+
+        _this2.onForward('description');
+      })["catch"](function (err) {
+        _this2.onErrors(err);
       });
     }
   },
   mounted: function mounted() {
-    var _this6 = this;
+    var _this3 = this;
 
-    this.load();
+    this.onLoad();
     setTimeout(function () {
-      return _this6.$refs.datePicker.fp.jumpToDate(new Date());
+      return _this3.$refs.datePicker.fp.jumpToDate(new Date());
     }, 100);
   },
   validations: {
     tickets: {
-      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"],
       $each: {
         name: {
-          required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
-          maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["maxLength"])(80)
+          required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"],
+          maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["maxLength"])(80)
         },
         ticket_price: {
-          required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
-          minValue: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["minValue"])(0.00),
-          maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["maxLength"])(7)
+          required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"],
+          minValue: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["minValue"])(0.00),
+          maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["maxLength"])(7)
         }
       }
     },
     showTimes: {
-      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
-      maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["maxLength"])(400)
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"],
+      maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["maxLength"])(400)
     },
     dates: {
       ifDates: function ifDates() {
@@ -725,7 +634,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     week: {
       ifOngoing: function ifOngoing() {
-        return this.selectedTab == 'o' || this.selectedTab == 'a' ? this.week.mon == 1 || this.week.tue == 1 || this.week.wed == 1 || this.week.thu == 1 || this.week.fri == 1 || this.week.sat == 1 || this.week.sun == 1 ? true : false : true;
+        return this.selectedTab == 'o' ? this.week.mon == 1 || this.week.tue == 1 || this.week.wed == 1 || this.week.thu == 1 || this.week.fri == 1 || this.week.sat == 1 || this.week.sun == 1 ? true : false : true;
       }
     }
   }
@@ -744,10 +653,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/create/shows.vue?vue&type=template&id=07ccd6e4&":
-/*!***************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/create/shows.vue?vue&type=template&id=07ccd6e4& ***!
-  \***************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/create/shows.vue?vue&type=template&id=6a22caac&":
+/*!**********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/create/shows.vue?vue&type=template&id=6a22caac& ***!
+  \**********************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -801,7 +710,7 @@ var render = function() {
                             ],
                             staticClass: "create-input area",
                             class: {
-                              active: _vm.activeItem == "times",
+                              active: _vm.active == "times",
                               error: _vm.$v.showTimes.$error
                             },
                             attrs: {
@@ -813,10 +722,10 @@ var render = function() {
                             domProps: { value: _vm.showTimes },
                             on: {
                               click: function($event) {
-                                _vm.activeItem = "times"
+                                _vm.active = "times"
                               },
                               blur: function($event) {
-                                _vm.activeItem = null
+                                _vm.active = null
                               },
                               input: [
                                 function($event) {
@@ -873,7 +782,7 @@ var render = function() {
                                       ],
                                       staticClass: "create-input",
                                       class: {
-                                        active: _vm.activeItem == "ticket",
+                                        active: _vm.active == "ticket",
                                         error: v.name.$error
                                       },
                                       attrs: {
@@ -883,10 +792,10 @@ var render = function() {
                                       domProps: { value: v.name.$model },
                                       on: {
                                         click: function($event) {
-                                          _vm.activeItem = "ticket"
+                                          _vm.active = "ticket"
                                         },
                                         blur: function($event) {
-                                          _vm.activeItem = null
+                                          _vm.active = null
                                         },
                                         input: function($event) {
                                           if ($event.target.composing) {
@@ -954,11 +863,8 @@ var render = function() {
                                                 }
                                               ],
                                               class: {
-                                                active:
-                                                  _vm.activeItem == "price",
-                                                error:
-                                                  v.ticket_price.$error &&
-                                                  _vm.num
+                                                active: _vm.active == "price",
+                                                error: v.ticket_price.$error
                                               },
                                               staticStyle: {
                                                 "text-align": "right"
@@ -979,10 +885,10 @@ var render = function() {
                                               },
                                               on: {
                                                 click: function($event) {
-                                                  _vm.activeItem = "price"
+                                                  _vm.active = "price"
                                                 },
                                                 blur: function($event) {
-                                                  _vm.activeItem = null
+                                                  _vm.active = null
                                                 },
                                                 keydown: function($event) {
                                                   $event.key === "-"
@@ -1054,11 +960,8 @@ var render = function() {
                                                 }
                                               ],
                                               class: {
-                                                active:
-                                                  _vm.activeItem == "price",
-                                                error:
-                                                  v.ticket_price.$error &&
-                                                  _vm.num
+                                                active: _vm.active == "price",
+                                                error: v.ticket_price.$error
                                               },
                                               staticStyle: {
                                                 "text-align": "right"
@@ -1075,10 +978,10 @@ var render = function() {
                                               },
                                               on: {
                                                 click: function($event) {
-                                                  _vm.activeItem = "price"
+                                                  _vm.active = "price"
                                                 },
                                                 blur: function($event) {
-                                                  _vm.activeItem = null
+                                                  _vm.active = null
                                                 },
                                                 keydown: function($event) {
                                                   $event.key === "-"
@@ -1119,11 +1022,8 @@ var render = function() {
                                                 }
                                               ],
                                               class: {
-                                                active:
-                                                  _vm.activeItem == "price",
-                                                error:
-                                                  v.ticket_price.$error &&
-                                                  _vm.num
+                                                active: _vm.active == "price",
+                                                error: v.ticket_price.$error
                                               },
                                               staticStyle: {
                                                 "text-align": "right"
@@ -1137,10 +1037,10 @@ var render = function() {
                                               },
                                               on: {
                                                 click: function($event) {
-                                                  _vm.activeItem = "price"
+                                                  _vm.active = "price"
                                                 },
                                                 blur: function($event) {
-                                                  _vm.activeItem = null
+                                                  _vm.active = null
                                                 },
                                                 keydown: function($event) {
                                                   $event.key === "-"
@@ -1173,17 +1073,7 @@ var render = function() {
                                             !v.ticket_price.minValue
                                               ? _c(
                                                   "p",
-                                                  {
-                                                    directives: [
-                                                      {
-                                                        name: "show",
-                                                        rawName: "v-show",
-                                                        value: _vm.num,
-                                                        expression: "num"
-                                                      }
-                                                    ],
-                                                    staticClass: "error"
-                                                  },
+                                                  { staticClass: "error" },
                                                   [
                                                     _vm._v(
                                                       "Please enter an amount"
@@ -1269,7 +1159,7 @@ var render = function() {
                                 ref: "datePicker",
                                 staticClass: "form-control",
                                 attrs: {
-                                  config: _vm.config,
+                                  config: _vm.calendarConfig,
                                   placeholder: "Select date",
                                   name: "dates"
                                 },
@@ -1293,7 +1183,7 @@ var render = function() {
                                 ref: "datePicker",
                                 staticClass: "form-control",
                                 attrs: {
-                                  config: _vm.configmobile,
+                                  config: _vm.mobileCalendarConfig,
                                   placeholder: "Select date",
                                   name: "dates"
                                 },
@@ -1388,7 +1278,7 @@ var render = function() {
                                       ref: "datePicker",
                                       staticClass: "form-control",
                                       attrs: {
-                                        config: _vm.configembargo,
+                                        config: _vm.embargoCalendarConfig,
                                         placeholder: "Select date",
                                         name: "dates"
                                       },
@@ -1415,11 +1305,11 @@ var render = function() {
                               "button",
                               {
                                 staticClass: "create",
-                                attrs: { disabled: _vm.dis },
+                                attrs: { disabled: _vm.disabled },
                                 on: {
                                   click: function($event) {
                                     $event.preventDefault()
-                                    return _vm.submitDates()
+                                    return _vm.onSubmit()
                                   }
                                 }
                               },
@@ -1463,7 +1353,7 @@ var render = function() {
                             ],
                             staticClass: "create-input area",
                             class: {
-                              active: _vm.activeItem == "times",
+                              active: _vm.active == "times",
                               error: _vm.$v.showTimes.$error
                             },
                             attrs: {
@@ -1475,10 +1365,10 @@ var render = function() {
                             domProps: { value: _vm.showTimes },
                             on: {
                               click: function($event) {
-                                _vm.activeItem = "times"
+                                _vm.active = "times"
                               },
                               blur: function($event) {
-                                _vm.activeItem = null
+                                _vm.active = null
                               },
                               input: [
                                 function($event) {
@@ -1535,7 +1425,7 @@ var render = function() {
                                       ],
                                       staticClass: "create-input",
                                       class: {
-                                        active: _vm.activeItem == "ticket",
+                                        active: _vm.active == "ticket",
                                         error: v.name.$error
                                       },
                                       attrs: {
@@ -1545,10 +1435,10 @@ var render = function() {
                                       domProps: { value: v.name.$model },
                                       on: {
                                         click: function($event) {
-                                          _vm.activeItem = "ticket"
+                                          _vm.active = "ticket"
                                         },
                                         blur: function($event) {
-                                          _vm.activeItem = null
+                                          _vm.active = null
                                         },
                                         input: function($event) {
                                           if ($event.target.composing) {
@@ -1616,11 +1506,8 @@ var render = function() {
                                                 }
                                               ],
                                               class: {
-                                                active:
-                                                  _vm.activeItem == "price",
-                                                error:
-                                                  v.ticket_price.$error &&
-                                                  _vm.num
+                                                active: _vm.active == "price",
+                                                error: v.ticket_price.$error
                                               },
                                               staticStyle: {
                                                 "text-align": "right"
@@ -1641,10 +1528,10 @@ var render = function() {
                                               },
                                               on: {
                                                 click: function($event) {
-                                                  _vm.activeItem = "price"
+                                                  _vm.active = "price"
                                                 },
                                                 blur: function($event) {
-                                                  _vm.activeItem = null
+                                                  _vm.active = null
                                                 },
                                                 keydown: function($event) {
                                                   $event.key === "-"
@@ -1716,11 +1603,8 @@ var render = function() {
                                                 }
                                               ],
                                               class: {
-                                                active:
-                                                  _vm.activeItem == "price",
-                                                error:
-                                                  v.ticket_price.$error &&
-                                                  _vm.num
+                                                active: _vm.active == "price",
+                                                error: v.ticket_price.$error
                                               },
                                               staticStyle: {
                                                 "text-align": "right"
@@ -1737,10 +1621,10 @@ var render = function() {
                                               },
                                               on: {
                                                 click: function($event) {
-                                                  _vm.activeItem = "price"
+                                                  _vm.active = "price"
                                                 },
                                                 blur: function($event) {
-                                                  _vm.activeItem = null
+                                                  _vm.active = null
                                                 },
                                                 keydown: function($event) {
                                                   $event.key === "-"
@@ -1781,11 +1665,8 @@ var render = function() {
                                                 }
                                               ],
                                               class: {
-                                                active:
-                                                  _vm.activeItem == "price",
-                                                error:
-                                                  v.ticket_price.$error &&
-                                                  _vm.num
+                                                active: _vm.active == "price",
+                                                error: v.ticket_price.$error
                                               },
                                               staticStyle: {
                                                 "text-align": "right"
@@ -1799,10 +1680,10 @@ var render = function() {
                                               },
                                               on: {
                                                 click: function($event) {
-                                                  _vm.activeItem = "price"
+                                                  _vm.active = "price"
                                                 },
                                                 blur: function($event) {
-                                                  _vm.activeItem = null
+                                                  _vm.active = null
                                                 },
                                                 keydown: function($event) {
                                                   $event.key === "-"
@@ -1835,17 +1716,7 @@ var render = function() {
                                             !v.ticket_price.minValue
                                               ? _c(
                                                   "p",
-                                                  {
-                                                    directives: [
-                                                      {
-                                                        name: "show",
-                                                        rawName: "v-show",
-                                                        value: _vm.num,
-                                                        expression: "num"
-                                                      }
-                                                    ],
-                                                    staticClass: "error"
-                                                  },
+                                                  { staticClass: "error" },
                                                   [
                                                     _vm._v(
                                                       "Please enter an amount"
@@ -2102,7 +1973,7 @@ var render = function() {
                                       ref: "datePicker",
                                       staticClass: "form-control",
                                       attrs: {
-                                        config: _vm.configembargo,
+                                        config: _vm.embargoCalendarConfig,
                                         placeholder: "Select date",
                                         name: "dates"
                                       },
@@ -2129,11 +2000,11 @@ var render = function() {
                               "button",
                               {
                                 staticClass: "create",
-                                attrs: { disabled: _vm.dis },
+                                attrs: { disabled: _vm.disabled },
                                 on: {
                                   click: function($event) {
                                     $event.preventDefault()
-                                    return _vm.submitOnGoing()
+                                    return _vm.onSubmit()
                                   }
                                 }
                               },
@@ -2177,7 +2048,7 @@ var render = function() {
                             ],
                             staticClass: "create-input area",
                             class: {
-                              active: _vm.activeItem == "times",
+                              active: _vm.active == "times",
                               error: _vm.$v.showTimes.$error
                             },
                             attrs: {
@@ -2189,10 +2060,10 @@ var render = function() {
                             domProps: { value: _vm.showTimes },
                             on: {
                               click: function($event) {
-                                _vm.activeItem = "times"
+                                _vm.active = "times"
                               },
                               blur: function($event) {
-                                _vm.activeItem = null
+                                _vm.active = null
                               },
                               input: [
                                 function($event) {
@@ -2251,7 +2122,7 @@ var render = function() {
                                       ],
                                       staticClass: "create-input",
                                       class: {
-                                        active: _vm.activeItem == "ticket",
+                                        active: _vm.active == "ticket",
                                         error: v.name.$error
                                       },
                                       attrs: {
@@ -2261,10 +2132,10 @@ var render = function() {
                                       domProps: { value: v.name.$model },
                                       on: {
                                         click: function($event) {
-                                          _vm.activeItem = "ticket"
+                                          _vm.active = "ticket"
                                         },
                                         blur: function($event) {
-                                          _vm.activeItem = null
+                                          _vm.active = null
                                         },
                                         input: function($event) {
                                           if ($event.target.composing) {
@@ -2332,11 +2203,8 @@ var render = function() {
                                                 }
                                               ],
                                               class: {
-                                                active:
-                                                  _vm.activeItem == "price",
-                                                error:
-                                                  v.ticket_price.$error &&
-                                                  _vm.num
+                                                active: _vm.active == "price",
+                                                error: v.ticket_price.$error
                                               },
                                               staticStyle: {
                                                 "text-align": "right"
@@ -2357,10 +2225,10 @@ var render = function() {
                                               },
                                               on: {
                                                 click: function($event) {
-                                                  _vm.activeItem = "price"
+                                                  _vm.active = "price"
                                                 },
                                                 blur: function($event) {
-                                                  _vm.activeItem = null
+                                                  _vm.active = null
                                                 },
                                                 keydown: function($event) {
                                                   $event.key === "-"
@@ -2432,11 +2300,8 @@ var render = function() {
                                                 }
                                               ],
                                               class: {
-                                                active:
-                                                  _vm.activeItem == "price",
-                                                error:
-                                                  v.ticket_price.$error &&
-                                                  _vm.num
+                                                active: _vm.active == "price",
+                                                error: v.ticket_price.$error
                                               },
                                               staticStyle: {
                                                 "text-align": "right"
@@ -2453,10 +2318,10 @@ var render = function() {
                                               },
                                               on: {
                                                 click: function($event) {
-                                                  _vm.activeItem = "price"
+                                                  _vm.active = "price"
                                                 },
                                                 blur: function($event) {
-                                                  _vm.activeItem = null
+                                                  _vm.active = null
                                                 },
                                                 keydown: function($event) {
                                                   $event.key === "-"
@@ -2497,11 +2362,8 @@ var render = function() {
                                                 }
                                               ],
                                               class: {
-                                                active:
-                                                  _vm.activeItem == "price",
-                                                error:
-                                                  v.ticket_price.$error &&
-                                                  _vm.num
+                                                active: _vm.active == "price",
+                                                error: v.ticket_price.$error
                                               },
                                               staticStyle: {
                                                 "text-align": "right"
@@ -2515,10 +2377,10 @@ var render = function() {
                                               },
                                               on: {
                                                 click: function($event) {
-                                                  _vm.activeItem = "price"
+                                                  _vm.active = "price"
                                                 },
                                                 blur: function($event) {
-                                                  _vm.activeItem = null
+                                                  _vm.active = null
                                                 },
                                                 keydown: function($event) {
                                                   $event.key === "-"
@@ -2551,17 +2413,7 @@ var render = function() {
                                             !v.ticket_price.minValue
                                               ? _c(
                                                   "p",
-                                                  {
-                                                    directives: [
-                                                      {
-                                                        name: "show",
-                                                        rawName: "v-show",
-                                                        value: _vm.num,
-                                                        expression: "num"
-                                                      }
-                                                    ],
-                                                    staticClass: "error"
-                                                  },
+                                                  { staticClass: "error" },
                                                   [
                                                     _vm._v(
                                                       "Please enter an amount"
@@ -2708,7 +2560,7 @@ var render = function() {
                                         ref: "datePicker",
                                         staticClass: "form-control",
                                         attrs: {
-                                          config: _vm.configembargo,
+                                          config: _vm.embargoCalendarConfig,
                                           placeholder: "Select date",
                                           name: "dates"
                                         },
@@ -2739,11 +2591,11 @@ var render = function() {
                               "button",
                               {
                                 staticClass: "create",
-                                attrs: { disabled: _vm.dis },
+                                attrs: { disabled: _vm.disabled },
                                 on: {
                                   click: function($event) {
                                     $event.preventDefault()
-                                    return _vm.submitAlways()
+                                    return _vm.onSubmit()
                                   }
                                 }
                               },
@@ -2763,52 +2615,38 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _vm.isVisible
-        ? _c(
-            "modal",
-            {
-              on: {
-                close: function($event) {
-                  _vm.isVisible = false
-                }
-              }
-            },
-            [
-              _c("div", { attrs: { slot: "header" }, slot: "header" }, [
-                _c("div", { staticClass: "circle del" }, [
-                  _c("p", [_vm._v("?")])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { attrs: { slot: "body" }, slot: "body" }, [
-                _c("h3", [
-                  _vm._v(
-                    "You are submitting a free ticket price or forgot to add a price"
-                  )
-                ]),
-                _vm._v(" "),
-                _c("p", [
-                  _vm._v("We just want to double check this is correct.")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { attrs: { slot: "footer" }, slot: "footer" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn del",
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        return _vm.onFree()
-                      }
-                    }
-                  },
-                  [_vm._v("It is")]
+      _vm.modal
+        ? _c("modal", { on: { close: _vm.noFreeTicket } }, [
+            _c("div", { attrs: { slot: "header" }, slot: "header" }, [
+              _c("div", { staticClass: "circle del" }, [_c("p", [_vm._v("?")])])
+            ]),
+            _vm._v(" "),
+            _c("div", { attrs: { slot: "body" }, slot: "body" }, [
+              _c("h3", [
+                _vm._v(
+                  "You are submitting a free ticket price or forgot to add a price"
                 )
-              ])
-            ]
-          )
+              ]),
+              _vm._v(" "),
+              _c("p", [_vm._v("We just want to double check this is correct.")])
+            ]),
+            _vm._v(" "),
+            _c("div", { attrs: { slot: "footer" }, slot: "footer" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn del",
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.onFreeTicket()
+                    }
+                  }
+                },
+                [_vm._v("It is")]
+              )
+            ])
+          ])
         : _vm._e(),
       _vm._v(" "),
       _c("div", { staticClass: "create-button__in-nav" }, [
@@ -2816,11 +2654,11 @@ var render = function() {
           "button",
           {
             staticClass: "create",
-            attrs: { disabled: _vm.dis },
+            attrs: { disabled: _vm.disabled },
             on: {
               click: function($event) {
                 $event.preventDefault()
-                return _vm.goBack()
+                return _vm.onBack("category")
               }
             }
           },
@@ -2830,66 +2668,12 @@ var render = function() {
         _c(
           "button",
           {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.selectedTab == "s",
-                expression: "selectedTab == 's'"
-              }
-            ],
             staticClass: "create",
-            attrs: { disabled: _vm.dis },
+            attrs: { disabled: _vm.disabled },
             on: {
               click: function($event) {
                 $event.preventDefault()
-                return _vm.submitDates()
-              }
-            }
-          },
-          [_vm._v(" Next ")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.selectedTab == "o",
-                expression: "selectedTab == 'o'"
-              }
-            ],
-            staticClass: "create",
-            attrs: { disabled: _vm.dis },
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                return _vm.submitOnGoing()
-              }
-            }
-          },
-          [_vm._v(" Next ")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.selectedTab == "a",
-                expression: "selectedTab == 'a'"
-              }
-            ],
-            staticClass: "create",
-            attrs: { disabled: _vm.dis },
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                return _vm.submitAlways()
+                return _vm.onSubmit()
               }
             }
           },
@@ -3014,17 +2798,57 @@ function normalizeComponent (
 
 /***/ }),
 
-/***/ "./resources/js/components/create/shows.vue":
-/*!**************************************************!*\
-  !*** ./resources/js/components/create/shows.vue ***!
-  \**************************************************/
+/***/ "./resources/js/mixins/form-validation-mixin.js":
+/*!******************************************************!*\
+  !*** ./resources/js/mixins/form-validation-mixin.js ***!
+  \******************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _shows_vue_vue_type_template_id_07ccd6e4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./shows.vue?vue&type=template&id=07ccd6e4& */ "./resources/js/components/create/shows.vue?vue&type=template&id=07ccd6e4&");
-/* harmony import */ var _shows_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./shows.vue?vue&type=script&lang=js& */ "./resources/js/components/create/shows.vue?vue&type=script&lang=js&");
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    checkVuelidate: function checkVuelidate() {
+      this.$v.$touch();
+      !this.$v.$invalid ? this.disabled = true : false;
+      return this.$v.$invalid;
+    },
+    onErrors: function onErrors(err) {
+      err ? this.serverErrors = err.response.data.errors : '';
+      this.disabled = false;
+    },
+    onBackInitial: function onBackInitial() {
+      return window.location.href = "/create-event/edit/";
+    },
+    onBack: function onBack(value) {
+      return window.location.href = "/create-event/".concat(this.event.slug, "/").concat(value);
+    },
+    onForward: function onForward(value) {
+      return window.location.href = "/create-event/".concat(this.event.slug, "/").concat(value);
+    },
+    onRegistered: function onRegistered() {
+      return window.location.href = '/email/verify';
+    },
+    onFinishOrganizer: function onFinishOrganizer(value) {
+      return window.location.href = value;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/pages/create/shows.vue":
+/*!*********************************************!*\
+  !*** ./resources/js/pages/create/shows.vue ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _shows_vue_vue_type_template_id_6a22caac___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./shows.vue?vue&type=template&id=6a22caac& */ "./resources/js/pages/create/shows.vue?vue&type=template&id=6a22caac&");
+/* harmony import */ var _shows_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./shows.vue?vue&type=script&lang=js& */ "./resources/js/pages/create/shows.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -3035,8 +2859,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _shows_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _shows_vue_vue_type_template_id_07ccd6e4___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _shows_vue_vue_type_template_id_07ccd6e4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _shows_vue_vue_type_template_id_6a22caac___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _shows_vue_vue_type_template_id_6a22caac___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -3046,38 +2870,38 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/create/shows.vue"
+component.options.__file = "resources/js/pages/create/shows.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/create/shows.vue?vue&type=script&lang=js&":
-/*!***************************************************************************!*\
-  !*** ./resources/js/components/create/shows.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************/
+/***/ "./resources/js/pages/create/shows.vue?vue&type=script&lang=js&":
+/*!**********************************************************************!*\
+  !*** ./resources/js/pages/create/shows.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_shows_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./shows.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/create/shows.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_shows_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./shows.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/create/shows.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_shows_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/create/shows.vue?vue&type=template&id=07ccd6e4&":
-/*!*********************************************************************************!*\
-  !*** ./resources/js/components/create/shows.vue?vue&type=template&id=07ccd6e4& ***!
-  \*********************************************************************************/
+/***/ "./resources/js/pages/create/shows.vue?vue&type=template&id=6a22caac&":
+/*!****************************************************************************!*\
+  !*** ./resources/js/pages/create/shows.vue?vue&type=template&id=6a22caac& ***!
+  \****************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_shows_vue_vue_type_template_id_07ccd6e4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./shows.vue?vue&type=template&id=07ccd6e4& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/create/shows.vue?vue&type=template&id=07ccd6e4&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_shows_vue_vue_type_template_id_07ccd6e4___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_shows_vue_vue_type_template_id_6a22caac___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./shows.vue?vue&type=template&id=6a22caac& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/create/shows.vue?vue&type=template&id=6a22caac&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_shows_vue_vue_type_template_id_6a22caac___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_shows_vue_vue_type_template_id_07ccd6e4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_shows_vue_vue_type_template_id_6a22caac___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

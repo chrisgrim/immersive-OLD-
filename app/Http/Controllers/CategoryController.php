@@ -110,6 +110,7 @@ class CategoryController extends Controller
     public function select(Event $event)
     {
         $categories = Category::all();
+        $event->load('category');
         return view('create.category', compact('event','categories'));
     }
 

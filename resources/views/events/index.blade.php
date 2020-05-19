@@ -16,6 +16,12 @@
 
 @section('content')
     <div id="bodyArea">
+        @if ( session()->exists( 'verifiy' )) 
+           <vue-email-verify 
+            :user="{{auth()->user()}}" 
+            message="verify">
+            </vue-email-verify>
+        @endif
         <event-index 
         :staffpicks="{{$staffpicks}}"
         :events="{{$events}}" 

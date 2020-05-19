@@ -54,6 +54,12 @@ button.login-button {
     border: none;
     width: 100%;
 }
+button.login-button[disabled]{
+    border: 1px solid #cacaca;
+    background-color: #f9f9f9;
+    color: #c7c7c7;
+}
+
 .inprogress {
     cursor: progress !important;
 }

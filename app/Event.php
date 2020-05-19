@@ -67,6 +67,7 @@ class Event extends Model
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'showtype' => $this->showtype,
             'closingDate' => $this->closingDate,
             'priceranges' => $this->pricerangesSelect,
             'category_id' => $this->category_id,
@@ -309,10 +310,9 @@ class Event extends Model
     */
     public function deleteEvent($event) 
     {
-        // if ($event->largeImagePath) {
-        //     Storage::deleteDirectory('public/event-images/' . pathinfo($event->largeImagePath, PATHINFO_FILENAME));
-        // };
-        Conversation::find($event->moderatorcomments()->first()->conversation_id)->delete();
+        if ($event->moderatorcomments()->exists()) {
+            Conversation::find($event->moderatorcomments()->first()->conversation_id)->delete();
+        }
         $event->delete();
     }
 

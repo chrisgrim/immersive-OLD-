@@ -15,3 +15,7 @@ mix.sass('resources/sass/app-create.scss', 'public/css')
     .sass('resources/sass/app-admin.scss', 'public/css')
     .sass('resources/sass/app-lite.scss', 'public/css')
     .sass('resources/sass/app.scss', 'public/css');
+    
+// if (mix.inProduction()) {
+//     mix.version();
+// }

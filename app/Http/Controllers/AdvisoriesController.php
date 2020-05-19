@@ -12,19 +12,15 @@ use App\Http\Requests\AdvisoryStoreRequest;
 
 class AdvisoriesController extends Controller
 {
+     /**
+     * Add middleware to entire controller
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function __construct()
     {
         $this->middleware(['auth', 'verified']);
         $this->middleware('can:update,event');
-    }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
     }
 
     /**
@@ -34,26 +30,11 @@ class AdvisoriesController extends Controller
      */
     public function create(Event $event)
     {
-        return view('create.advisories', compact('event'));
-    }
-
-    /**
-     * Show the form for creating a new resource. Here I load all of the details of the advisories
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function fetch(Event $event)
-    {
-        return response()->json(array(
-            'advisories' => $event->advisories()->first(),
-            'contactPivots' => $event->contactlevels()->get(),
-            'contactLevels' => ContactLevel::all(),
-            'contentPivots' => $event->contentadvisories()->get(),
-            'contentAdvisories' => ContentAdvisory::where('admin', true)->orWhere('user_id', auth()->user()->id)->get(),
-            'mobilityPivots' => $event->mobilityadvisories()->get(),
-            'mobilityAdvisories' => MobilityAdvisory::where('admin', true)->orWhere('user_id', auth()->user()->id)->get(),
-        ));
-
+        $event->load('contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'advisories');
+        $contactAdvisories = ContactLevel::all();
+        $contentAdvisories = ContentAdvisory::where('admin', true)->orWhere('user_id', auth()->user()->id)->get();
+        $mobilityAdvisories = MobilityAdvisory::where('admin', true)->orWhere('user_id', auth()->user()->id)->get();
+        return view('create.advisories', compact('event', 'contactAdvisories', 'contentAdvisories', 'mobilityAdvisories'));
     }
 
     /**
@@ -62,10 +43,10 @@ class AdvisoriesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AdvisoryStoreRequest $request, Event $event)
+    public function store(Request $request, Event $event)
     {
-        $event->advisories->update($request->except(['contactLevel', 'contentAdvisory', 'mobilityAdvisory']));
-        $event->contactlevels()->sync(request('contactLevel'));
+        $event->advisories->update($request->advisories);
+        $event->contactlevels()->sync(request('contactAdvisory'));
         MobilityAdvisory::saveAdvisories($event, $request);
         ContentAdvisory::saveAdvisories($event, $request);
         $event->update(['advisories_id' => $event->advisories->id]);

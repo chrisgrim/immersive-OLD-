@@ -1,367 +1,20 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[68],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/create/advisories.vue?vue&type=script&lang=js&":
-/*!****************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/create/advisories.vue?vue&type=script&lang=js& ***!
-  \****************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/create/image.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/create/image.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-multiselect */ "./node_modules/vue-multiselect/dist/vue-multiselect.min.js");
-/* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_multiselect__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
-/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__);
-
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    Multiselect: vue_multiselect__WEBPACK_IMPORTED_MODULE_1___default.a
-  },
-  props: {
-    event: {
-      type: Object
-    }
-  },
-  data: function data() {
-    return {
-      advisories: this.initializeEventObject(),
-      contactLevelOptions: [],
-      contentAdvisoryOptions: [],
-      mobilityAdvisoryOptions: [],
-      contactLevel: '',
-      contentAdvisories: '',
-      mobilityAdvisories: '',
-      eventUrl: "/create-event/".concat(this.event.slug),
-      activeItem: null,
-      ageActive: false,
-      ageOptions: ['All Ages', '12+', '16+', '18+', '21+'],
-      dis: false
-    };
-  },
-  methods: {
-    initializeEventObject: function initializeEventObject() {
-      return {
-        contactAdvisories: '',
-        sexualViolence: false,
-        sexualViolenceDescription: '',
-        wheelchairReady: false,
-        ageRestriction: ''
-      };
-    },
-    //updates fields if event is stored in database.
-    updateEventFields: function updateEventFields(input) {
-      if (input !== null && _typeof(input) === "object" && input.id !== null) {
-        this.advisories = lodash__WEBPACK_IMPORTED_MODULE_2___default.a.pick(input, lodash__WEBPACK_IMPORTED_MODULE_2___default.a.intersection(lodash__WEBPACK_IMPORTED_MODULE_2___default.a.keys(this.advisories), lodash__WEBPACK_IMPORTED_MODULE_2___default.a.keys(input)));
-      }
-
-      this.advisories.wheelchairReady ? '' : this.advisories.wheelchairReady = false;
-      this.advisories.sexualViolence ? '' : this.advisories.sexualViolence = false;
-    },
-    addTag: function addTag(newTag) {
-      var tag = {
-        advisories: newTag,
-        id: newTag.substring(0, 0) + Math.floor(Math.random() * 10000000)
-      };
-      this.contentAdvisoryOptions.push(tag);
-      this.contentAdvisories.push(tag);
-    },
-    addTagMobility: function addTagMobility(newTag) {
-      var tag = {
-        mobilities: newTag,
-        id: newTag.substring(0, 0) + Math.floor(Math.random() * 10000000)
-      };
-      this.mobilityAdvisoryOptions.push(tag);
-      this.mobilityAdvisories.push(tag);
-    },
-    //submit data to the database
-    submitAdvisories: function submitAdvisories() {
-      var _this = this;
-
-      var data;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function submitAdvisories$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              this.$v.$touch();
-
-              if (!this.$v.$invalid) {
-                _context.next = 3;
-                break;
-              }
-
-              return _context.abrupt("return", false);
-
-            case 3:
-              ;
-              this.dis = true;
-              data = this.advisories;
-              data.contactLevel = this.contactLevel.map(function (a) {
-                return a.id;
-              });
-              data.contentAdvisory = this.contentAdvisories.map(function (a) {
-                return a.advisories;
-              });
-              data.mobilityAdvisory = this.mobilityAdvisories.map(function (a) {
-                return a.mobilities;
-              });
-              axios.patch("".concat(this.eventUrl, "/advisories"), data).then(function (response) {
-                window.location.href = "".concat(_this.eventUrl, "/images");
-              })["catch"](function (error) {
-                console.log(error.response.data);
-                _this.dis = false;
-              });
-
-            case 10:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, null, this);
-    },
-    goBack: function goBack() {
-      window.location.href = "".concat(this.eventUrl, "/description");
-    },
-    // If there is data in Database it will load from the database
-    load: function load() {
-      var _this2 = this;
-
-      axios.get("".concat(this.eventUrl, "/advisories/fetch?timestamp=").concat(new Date().getTime())).then(function (response) {
-        console.log(response.data);
-
-        _this2.updateEventFields(response.data.advisories);
-
-        _this2.contactLevel = response.data.contactPivots;
-        _this2.contactLevelOptions = response.data.contactLevels;
-        _this2.contentAdvisories = response.data.contentPivots;
-        _this2.contentAdvisoryOptions = response.data.contentAdvisories;
-        _this2.mobilityAdvisories = response.data.mobilityPivots;
-        _this2.mobilityAdvisoryOptions = response.data.mobilityAdvisories;
-      });
-    }
-  },
-  created: function created() {
-    this.load();
-  },
-  validations: {
-    contactLevel: {
-      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"]
-    },
-    mobilityAdvisories: {
-      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"]
-    },
-    contentAdvisories: {
-      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"]
-    },
-    advisories: {
-      contactAdvisories: {
-        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"]
-      },
-      ageRestriction: {
-        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"]
-      },
-      wheelchairReady: {
-        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"]
-      },
-      sexualViolence: {
-        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"]
-      }
-    }
-  }
-});
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /Users/chrisgrim/code/ei/resources/js/pages/create/image.vue: Unexpected token (103:12)\n\n\u001b[0m \u001b[90m 101 | \u001b[39m            axios\u001b[33m.\u001b[39mpost(\u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mendpoint\u001b[33m,\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mformData)\u001b[0m\n\u001b[0m \u001b[90m 102 | \u001b[39m            console\u001b[33m.\u001b[39mlog(\u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mimageFile\u001b[33m.\u001b[39mfile)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 103 | \u001b[39m            \u001b[33m.\u001b[39mthen(res \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m     | \u001b[39m            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 104 | \u001b[39m                \u001b[90m// this.onForward('review')\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 105 | \u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 106 | \u001b[39m                \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39monToggle()\u001b[33m;\u001b[39m\u001b[0m\n    at Parser.raise (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:6983:17)\n    at Parser.unexpected (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:8376:16)\n    at Parser.parseExprAtom (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9637:20)\n    at Parser.parseExprSubscripts (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9213:23)\n    at Parser.parseMaybeUnary (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9193:21)\n    at Parser.parseExprOps (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9059:23)\n    at Parser.parseMaybeConditional (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9032:23)\n    at Parser.parseMaybeAssign (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:8978:21)\n    at Parser.parseExpression (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:8928:23)\n    at Parser.parseStatementContent (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10795:23)\n    at Parser.parseStatement (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10666:17)\n    at Parser.parseBlockOrModuleBlockBody (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11242:25)\n    at Parser.parseBlockBody (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11229:10)\n    at Parser.parseBlock (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11213:10)\n    at Parser.parseFunctionBody (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10232:24)\n    at Parser.parseFunctionBodyAndFinish (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10202:10)\n    at Parser.parseMethod (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10156:10)\n    at Parser.parseObjectMethod (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10072:19)\n    at Parser.parseObjPropValue (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10114:23)\n    at Parser.parseObjectMember (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10038:10)\n    at Parser.parseObj (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9958:25)\n    at Parser.parseExprAtom (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9580:28)\n    at Parser.parseExprSubscripts (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9213:23)\n    at Parser.parseMaybeUnary (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9193:21)\n    at Parser.parseExprOps (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9059:23)\n    at Parser.parseMaybeConditional (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9032:23)\n    at Parser.parseMaybeAssign (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:8978:21)\n    at Parser.parseObjectProperty (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10089:101)\n    at Parser.parseObjPropValue (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10114:101)\n    at Parser.parseObjectMember (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10038:10)\n    at Parser.parseObj (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9958:25)\n    at Parser.parseExprAtom (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9580:28)\n    at Parser.parseExprSubscripts (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9213:23)\n    at Parser.parseMaybeUnary (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9193:21)\n    at Parser.parseExprOps (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9059:23)\n    at Parser.parseMaybeConditional (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9032:23)");
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/create/advisories.vue?vue&type=template&id=3244824f&":
-/*!********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/create/advisories.vue?vue&type=template&id=3244824f& ***!
-  \********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/create/image.vue?vue&type=template&id=b39b771e&":
+/*!**********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/create/image.vue?vue&type=template&id=b39b771e& ***!
+  \**********************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -373,580 +26,273 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "advisories" }, [
-    _c("div", { staticClass: "section" }, [
-      _c("div", { staticClass: "texta" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "field" },
-          [
-            _c("label", { staticClass: "area" }, [
-              _vm._v("Explain the shows content")
-            ]),
-            _vm._v(" "),
-            _c("multiselect", {
-              class: {
-                active: _vm.activeItem == "content",
-                error: _vm.$v.contentAdvisories.$error
-              },
-              attrs: {
-                "show-labels": false,
-                options: _vm.contentAdvisoryOptions,
-                multiple: true,
-                "tag-placeholder": "Add this as new tag",
-                taggable: true,
-                "tag-position": "bottom",
-                placeholder: "Search or add a tag",
-                "open-direction": "bottom",
-                label: "advisories",
-                "track-by": "id"
-              },
-              on: {
-                tag: _vm.addTag,
-                click: function($event) {
-                  _vm.activeItem = "content"
-                },
-                blur: function($event) {
-                  _vm.activeItem = null
-                }
-              },
-              model: {
-                value: _vm.contentAdvisories,
-                callback: function($$v) {
-                  _vm.contentAdvisories = $$v
-                },
-                expression: "contentAdvisories"
-              }
-            }),
-            _vm._v(" "),
-            _vm.$v.contentAdvisories.$error
-              ? _c("div", { staticClass: "validation-error" }, [
-                  !_vm.$v.contentAdvisories.required
-                    ? _c("p", { staticClass: "error" }, [
-                        _vm._v("Must enter a mobility advisory ")
-                      ])
-                    : _vm._e()
-                ])
-              : _vm._e()
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "field" },
-          [
-            _c("label", [_vm._v("Age restriction")]),
-            _vm._v(" "),
-            _c("multiselect", {
-              class: {
-                active: _vm.activeItem == "age",
-                error: _vm.$v.advisories.ageRestriction.$error
-              },
-              attrs: {
-                options: _vm.ageOptions,
-                "show-labels": false,
-                placeholder: "Select the appropriate age group",
-                "open-direction": "bottom",
-                "preselect-first": false
-              },
-              on: {
-                click: function($event) {
-                  _vm.activeItem = "age"
-                },
-                blur: function($event) {
-                  _vm.activeItem = null
-                },
-                input: _vm.$v.advisories.ageRestriction.$touch
-              },
-              model: {
-                value: _vm.advisories.ageRestriction,
-                callback: function($$v) {
-                  _vm.$set(_vm.advisories, "ageRestriction", $$v)
-                },
-                expression: "advisories.ageRestriction"
-              }
-            }),
-            _vm._v(" "),
-            _vm.$v.advisories.ageRestriction.$error
-              ? _c("div", { staticClass: "validation-error" }, [
-                  !_vm.$v.advisories.ageRestriction.required
-                    ? _c("p", { staticClass: "error" }, [_vm._v("Required")])
-                    : _vm._e()
-                ])
-              : _vm._e()
-          ],
-          1
-        )
+  return _c("div", { staticClass: "event-create__image container" }, [
+    _c("section", { staticClass: "field" }, [
+      _c("h2", { staticStyle: { "text-align": "center" } }, [
+        _vm._v("Upload Image")
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "textb" }, [
-        _vm._m(1),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "field" },
-          [
-            _c("label", { staticClass: "area" }, [
-              _vm._v("Select physical interaction level with guests")
-            ]),
-            _vm._v(" "),
-            _c("multiselect", {
-              class: {
-                active: _vm.activeItem == "contact",
-                error: _vm.$v.contactLevel.$error
-              },
-              attrs: {
-                options: _vm.contactLevelOptions,
-                multiple: true,
-                placeholder: "Choose all that apply",
-                "open-direction": "bottom",
-                "show-labels": false,
-                label: "level",
-                "track-by": "id",
-                "preselect-first": false
-              },
-              on: {
-                click: function($event) {
-                  _vm.activeItem = "contact"
-                },
-                blur: function($event) {
-                  _vm.activeItem = null
-                },
-                input: _vm.$v.contactLevel.$touch
-              },
-              model: {
-                value: _vm.contactLevel,
-                callback: function($$v) {
-                  _vm.contactLevel = $$v
-                },
-                expression: "contactLevel"
-              }
-            }),
-            _vm._v(" "),
-            _vm.$v.contactLevel.$error
-              ? _c("div", { staticClass: "validation-error" }, [
-                  !_vm.$v.contactLevel.required
-                    ? _c("p", { staticClass: "error" }, [
-                        _vm._v("Must choose at least one contact level ")
-                      ])
-                    : _vm._e()
-                ])
-              : _vm._e()
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _vm.contactLevel.length
-          ? _c("div", { staticClass: "field" }, [
-              _c("label", { staticClass: "area" }, [
-                _vm._v(" Explain a bit about your contact with the audience ")
-              ]),
-              _vm._v(" "),
-              _c("textarea", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.advisories.contactAdvisories,
-                    expression: "advisories.contactAdvisories"
-                  }
-                ],
-                staticClass: "create-input area",
-                class: {
-                  active: _vm.activeItem == "conAdv",
-                  error: _vm.$v.advisories.contactAdvisories.$error
-                },
-                attrs: {
-                  rows: "8",
-                  placeholder: " ",
-                  required: "",
-                  autofocus: ""
-                },
-                domProps: { value: _vm.advisories.contactAdvisories },
-                on: {
-                  click: function($event) {
-                    _vm.activeItem = "conAdv"
-                  },
-                  blur: function($event) {
-                    _vm.activeItem = null
-                  },
-                  input: [
-                    function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(
-                        _vm.advisories,
-                        "contactAdvisories",
-                        $event.target.value
-                      )
-                    },
-                    _vm.$v.advisories.contactAdvisories.$touch
-                  ]
-                }
-              }),
-              _vm._v(" "),
-              _vm.$v.advisories.contactAdvisories.$error
-                ? _c("div", { staticClass: "validation-error" }, [
-                    !_vm.$v.advisories.contactAdvisories.required
-                      ? _c("p", { staticClass: "error" }, [
-                          _vm._v("Must enter a contact advisory ")
-                        ])
-                      : _vm._e()
-                  ])
-                : _vm._e()
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.contactLevel.length
-          ? _c("div", { staticClass: "field" }, [
-              _c("label", [_vm._v(" Is there sexual Violence? ")]),
-              _vm._v(" "),
-              _c("div", { attrs: { id: "cover" } }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.advisories.sexualViolence,
-                      expression: "advisories.sexualViolence"
-                    }
-                  ],
-                  attrs: { type: "checkbox", id: "checkbox" },
-                  domProps: {
-                    checked: Array.isArray(_vm.advisories.sexualViolence)
-                      ? _vm._i(_vm.advisories.sexualViolence, null) > -1
-                      : _vm.advisories.sexualViolence
-                  },
-                  on: {
-                    change: function($event) {
-                      var $$a = _vm.advisories.sexualViolence,
-                        $$el = $event.target,
-                        $$c = $$el.checked ? true : false
-                      if (Array.isArray($$a)) {
-                        var $$v = null,
-                          $$i = _vm._i($$a, $$v)
-                        if ($$el.checked) {
-                          $$i < 0 &&
-                            _vm.$set(
-                              _vm.advisories,
-                              "sexualViolence",
-                              $$a.concat([$$v])
-                            )
-                        } else {
-                          $$i > -1 &&
-                            _vm.$set(
-                              _vm.advisories,
-                              "sexualViolence",
-                              $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                            )
-                        }
-                      } else {
-                        _vm.$set(_vm.advisories, "sexualViolence", $$c)
-                      }
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("div", { attrs: { id: "bar" } }),
-                _vm._v(" "),
-                _c("div", { attrs: { id: "knob" } }, [
-                  _vm.advisories.sexualViolence
-                    ? _c("p", [_vm._v("Yes")])
-                    : _c("p", [_vm._v("No")])
-                ])
-              ]),
-              _vm._v(" "),
-              _vm.$v.advisories.sexualViolence.$error
-                ? _c("div", { staticClass: "validation-error" }, [
-                    !_vm.$v.advisories.sexualViolence.required
-                      ? _c("p", { staticClass: "error" }, [
-                          _vm._v("Must select if there is sexual violence")
-                        ])
-                      : _vm._e()
-                  ])
-                : _vm._e()
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.advisories.sexualViolence
-          ? _c("div", [
-              _c("div", { staticClass: "field" }, [
-                _c("label", { staticClass: "area" }, [
-                  _vm._v(" Explain more about the sexual violence ")
-                ]),
-                _vm._v(" "),
-                _c("textarea", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.advisories.sexualViolenceDescription,
-                      expression: "advisories.sexualViolenceDescription"
-                    }
-                  ],
-                  staticClass: "create-input area",
-                  class: { active: _vm.activeItem == "sexual" },
-                  attrs: {
-                    rows: "8",
-                    placeholder: " ",
-                    required: "",
-                    autofocus: ""
-                  },
-                  domProps: { value: _vm.advisories.sexualViolenceDescription },
-                  on: {
-                    click: function($event) {
-                      _vm.activeItem = "sexual"
-                    },
-                    blur: function($event) {
-                      _vm.activeItem = null
-                    },
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(
-                        _vm.advisories,
-                        "sexualViolenceDescription",
-                        $event.target.value
-                      )
-                    }
-                  }
-                })
-              ])
-            ])
-          : _vm._e()
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "textc" }, [
-        _vm._m(2),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "field" },
-          [
-            _c("label", { staticClass: "area" }, [
-              _vm._v("Select any mobility restrictions")
-            ]),
-            _vm._v(" "),
-            _c("multiselect", {
-              class: {
-                active: _vm.activeItem == "mobility",
-                error: _vm.$v.mobilityAdvisories.$error
-              },
-              attrs: {
-                options: _vm.mobilityAdvisoryOptions,
-                multiple: true,
-                "show-labels": false,
-                "tag-placeholder": "Add this as new tag",
-                taggable: true,
-                "tag-position": "bottom",
-                placeholder: "Search or add a tag",
-                "open-direction": "bottom",
-                label: "mobilities",
-                "track-by": "id"
-              },
-              on: {
-                tag: _vm.addTagMobility,
-                click: function($event) {
-                  _vm.activeItem = "mobility"
-                },
-                blur: function($event) {
-                  _vm.activeItem = null
-                },
-                input: _vm.$v.mobilityAdvisories.$touch
-              },
-              model: {
-                value: _vm.mobilityAdvisories,
-                callback: function($$v) {
-                  _vm.mobilityAdvisories = $$v
-                },
-                expression: "mobilityAdvisories"
-              }
-            }),
-            _vm._v(" "),
-            _vm.$v.mobilityAdvisories.$error
-              ? _c("div", { staticClass: "validation-error" }, [
-                  !_vm.$v.mobilityAdvisories.required
-                    ? _c("p", { staticClass: "error" }, [
-                        _vm._v("Must enter a mobility advisory ")
-                      ])
-                    : _vm._e()
-                ])
-              : _vm._e()
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "field" }, [
-          _c("label", [_vm._v(" Is the Event Wheel Chair Accessible? ")]),
-          _vm._v(" "),
-          _c("div", { attrs: { id: "cover" } }, [
-            _c("input", {
-              directives: [
+      _c("div", { staticClass: "event-create-image" }, [
+        _c("div", { staticClass: "image-loader" }, [
+          _c(
+            "label",
+            { staticClass: "image-loader__label", style: _vm.displayImage },
+            [
+              _c(
+                "div",
                 {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.advisories.wheelchairReady,
-                  expression: "advisories.wheelchairReady"
-                }
-              ],
-              attrs: { type: "checkbox", id: "checkbox" },
-              domProps: {
-                checked: Array.isArray(_vm.advisories.wheelchairReady)
-                  ? _vm._i(_vm.advisories.wheelchairReady, null) > -1
-                  : _vm.advisories.wheelchairReady
-              },
-              on: {
-                change: function($event) {
-                  var $$a = _vm.advisories.wheelchairReady,
-                    $$el = $event.target,
-                    $$c = $$el.checked ? true : false
-                  if (Array.isArray($$a)) {
-                    var $$v = null,
-                      $$i = _vm._i($$a, $$v)
-                    if ($$el.checked) {
-                      $$i < 0 &&
-                        _vm.$set(
-                          _vm.advisories,
-                          "wheelchairReady",
-                          $$a.concat([$$v])
-                        )
-                    } else {
-                      $$i > -1 &&
-                        _vm.$set(
-                          _vm.advisories,
-                          "wheelchairReady",
-                          $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                        )
-                    }
-                  } else {
-                    _vm.$set(_vm.advisories, "wheelchairReady", $$c)
-                  }
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("div", { attrs: { id: "bar" } }),
-            _vm._v(" "),
-            _c("div", { attrs: { id: "knob" } }, [
-              _vm.advisories.wheelchairReady
-                ? _c("p", [_vm._v("Yes")])
-                : _c("p", [_vm._v("No")])
-            ])
-          ]),
-          _vm._v(" "),
-          _vm.$v.advisories.wheelchairReady.$error
-            ? _c("div", { staticClass: "validation-error" }, [
-                !_vm.$v.advisories.wheelchairReady.required
-                  ? _c("p", { staticClass: "error" }, [
-                      _vm._v(
-                        "Must select if the event is wheelchair accessible "
-                      )
+                  staticClass: "image-loader__label-body",
+                  class: { over: _vm.hasImage, load: _vm.loading }
+                },
+                [
+                  _c("div", { staticClass: "box" }, [
+                    _c("div", { staticClass: "in" }, [
+                      !_vm.loading
+                        ? _c("div", [
+                            _c(
+                              "svg",
+                              {
+                                staticClass: "b",
+                                attrs: {
+                                  height: "32",
+                                  width: "32",
+                                  viewBox: "0 0 24 24",
+                                  "aria-label": "Add an image or video",
+                                  role: "img"
+                                }
+                              },
+                              [
+                                _c("path", {
+                                  attrs: {
+                                    d:
+                                      "M24 12c0-6.627-5.372-12-12-12C5.373 0 0 5.373 0 12s5.373 12 12 12c6.628 0 12-5.373 12-12zm-10.767 3.75a1.25 1.25 0 0 1-2.5 0v-3.948l-1.031 1.031a1.25 1.25 0 0 1-1.768-1.768L12 7l4.066 4.065a1.25 1.25 0 0 1-1.768 1.768l-1.065-1.065v3.982z"
+                                  }
+                                })
+                              ]
+                            )
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("div", [
+                        !_vm.hasImage
+                          ? _c("p", [
+                              _vm._v("Click here to upload image"),
+                              _c("br"),
+                              _vm._v(
+                                "Must be at least 1280 x 800 and under 20mb"
+                              )
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.hasImage
+                          ? _c("p", [_vm._v("Change Image")])
+                          : _vm._e()
+                      ])
                     ])
-                  : _vm._e()
-              ])
-            : _vm._e()
-        ]),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "create",
-            attrs: { disabled: _vm.dis },
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                return _vm.submitAdvisories()
-              }
-            }
-          },
-          [_vm._v(" Next ")]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "mobile" }),
-      _vm._v(" "),
-      _c("div", { staticClass: "inNav" }, [
-        _c(
-          "button",
-          {
-            staticClass: "create",
-            attrs: { disabled: _vm.dis },
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                return _vm.goBack()
-              }
-            }
-          },
-          [_vm._v(" Back ")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "create",
-            attrs: { disabled: _vm.dis },
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                return _vm.submitAdvisories()
-              }
-            }
-          },
-          [_vm._v(" Next ")]
-        )
+                  ]),
+                  _vm._v(" "),
+                  _c("image-upload", { on: { loaded: _vm.onImageUpload } }),
+                  _vm._v(" "),
+                  _c("CubeSpinner", { attrs: { loading: _vm.loading } })
+                ],
+                1
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c("div", [
+            _vm.$v.imageFile.$error
+              ? _c("div", { staticClass: "validation-error" }, [
+                  !_vm.$v.imageFile.required
+                    ? _c("p", { staticClass: "error" }, [
+                        _vm._v("The image is required")
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  !_vm.$v.imageFile.fileSize
+                    ? _c("p", { staticClass: "error" }, [
+                        _vm._v("The image file size is too large")
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  !_vm.$v.imageFile.fileType
+                    ? _c("p", { staticClass: "error" }, [
+                        _vm._v("The image needs to be a JPG, PNG or GIF")
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  !_vm.$v.imageFile.imageRatio
+                    ? _c("p", { staticClass: "error" }, [
+                        _vm._v("The image needs to be at least 800 x 400")
+                      ])
+                    : _vm._e()
+                ])
+              : _vm._e()
+          ])
+        ])
       ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "create-button__in-nav" }, [
+      _c(
+        "button",
+        {
+          staticClass: "create",
+          attrs: { disabled: _vm.disabled },
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              return _vm.onBack("advisories")
+            }
+          }
+        },
+        [_vm._v(" Back ")]
+      ),
+      _vm._v(" "),
+      _vm.readyToSubmit
+        ? _c(
+            "button",
+            {
+              staticClass: "create",
+              attrs: { disabled: _vm.disableUntilUploaded },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.onSubmit($event)
+                }
+              }
+            },
+            [_vm._v(" Final Review ")]
+          )
+        : _vm._e()
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "ctitle" }, [
-      _c("h2", [_vm._v("Content Advisories")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "ctitle" }, [
-      _c("h2", [_vm._v("Contact Advisories")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "ctitle" }, [
-      _c("h2", [_vm._v("Mobility Advisories")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
 
 /***/ }),
 
-/***/ "./resources/js/components/create/advisories.vue":
-/*!*******************************************************!*\
-  !*** ./resources/js/components/create/advisories.vue ***!
-  \*******************************************************/
+/***/ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/runtime/componentNormalizer.js ***!
+  \********************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _advisories_vue_vue_type_template_id_3244824f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./advisories.vue?vue&type=template&id=3244824f& */ "./resources/js/components/create/advisories.vue?vue&type=template&id=3244824f&");
-/* harmony import */ var _advisories_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./advisories.vue?vue&type=script&lang=js& */ "./resources/js/components/create/advisories.vue?vue&type=script&lang=js&");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalizeComponent; });
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier, /* server only */
+  shadowMode /* vue-cli only */
+) {
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = 'data-v-' + scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = shadowMode
+      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
+      : injectStyles
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      var originalRender = options.render
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return originalRender(h, context)
+      }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    }
+  }
+
+  return {
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+
+/***/ "./resources/js/pages/create/image.vue":
+/*!*********************************************!*\
+  !*** ./resources/js/pages/create/image.vue ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _image_vue_vue_type_template_id_b39b771e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./image.vue?vue&type=template&id=b39b771e& */ "./resources/js/pages/create/image.vue?vue&type=template&id=b39b771e&");
+/* harmony import */ var _image_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./image.vue?vue&type=script&lang=js& */ "./resources/js/pages/create/image.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -956,9 +302,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _advisories_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _advisories_vue_vue_type_template_id_3244824f___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _advisories_vue_vue_type_template_id_3244824f___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _image_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _image_vue_vue_type_template_id_b39b771e___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _image_vue_vue_type_template_id_b39b771e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -968,38 +314,38 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/create/advisories.vue"
+component.options.__file = "resources/js/pages/create/image.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/create/advisories.vue?vue&type=script&lang=js&":
-/*!********************************************************************************!*\
-  !*** ./resources/js/components/create/advisories.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************/
+/***/ "./resources/js/pages/create/image.vue?vue&type=script&lang=js&":
+/*!**********************************************************************!*\
+  !*** ./resources/js/pages/create/image.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_advisories_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./advisories.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/create/advisories.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_advisories_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_image_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./image.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/create/image.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_image_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/create/advisories.vue?vue&type=template&id=3244824f&":
-/*!**************************************************************************************!*\
-  !*** ./resources/js/components/create/advisories.vue?vue&type=template&id=3244824f& ***!
-  \**************************************************************************************/
+/***/ "./resources/js/pages/create/image.vue?vue&type=template&id=b39b771e&":
+/*!****************************************************************************!*\
+  !*** ./resources/js/pages/create/image.vue?vue&type=template&id=b39b771e& ***!
+  \****************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_advisories_vue_vue_type_template_id_3244824f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./advisories.vue?vue&type=template&id=3244824f& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/create/advisories.vue?vue&type=template&id=3244824f&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_advisories_vue_vue_type_template_id_3244824f___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_image_vue_vue_type_template_id_b39b771e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./image.vue?vue&type=template&id=b39b771e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/create/image.vue?vue&type=template&id=b39b771e&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_image_vue_vue_type_template_id_b39b771e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_advisories_vue_vue_type_template_id_3244824f___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_image_vue_vue_type_template_id_b39b771e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

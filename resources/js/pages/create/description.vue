@@ -1,0 +1,194 @@
+<template>
+	<div class="event-create__description container grid">
+        <section class="event-create">
+            <div class="title">
+                <h2>Description</h2>
+            </div>
+            <div class="field">
+                <label class="area"> Describe your event to our readers </label>
+                <textarea 
+                type="text"
+                name="description" 
+                v-model="group.description" 
+                placeholder="eg. Our super scary event will bring your fears to the surface..."
+                :class="{ active: active == 'description','error': $v.group.description.$error }"
+                @input="$v.group.description.$touch"
+                @click="active = 'description'"
+                @blur="active = null" 
+                rows="8"></textarea>
+                <div v-if="$v.group.description.$error" class="validation-error">
+                    <p class="error" v-if="!$v.group.description.required">Must provide a description</p>
+                </div>
+            </div>
+            <div class="field">
+                <label>Event website</label>
+                <input 
+                type="text" 
+                v-model="group.websiteUrl"
+                :class="{ active: active == 'website','error': $v.group.websiteUrl.$error }"
+                @click="onToggle('website')"
+                @blur="active = null"
+                @input="$v.group.websiteUrl.$touch"
+                placeholder="Leave blank if using Organizer Website Url"
+                />
+                <div v-if="$v.group.websiteUrl.$error" class="validation-error">
+                    <p class="error" v-if="!$v.group.websiteUrl.url">Must be a url (https://...)</p>
+                    <p class="error" v-if="!$v.group.websiteUrl.webNotWorking">One of your urls isn't working</p>
+                </div>
+            </div>
+            <div class="field">   
+                <label>Ticket website</label>
+                <input 
+                type="text" 
+                v-model="group.ticketUrl"
+                :class="{ active: active == 'ticket','error': $v.group.ticketUrl.$error }"
+                @click="onToggle('ticket')"
+                @blur="active = null"
+                @input="$v.group.ticketUrl.$touch"
+                placeholder="Leave blank if using Organizer Website Url"
+                />
+                <div v-if="$v.group.ticketUrl.$error" class="validation-error">
+                    <p class="error" v-if="!$v.group.ticketUrl.url"> Must be a url (https://...)</p>
+                    <p class="error" v-if="!$v.group.ticketUrl.ticketNotWorking">One of your urls isn't working</p>
+                </div>
+            </div>
+            <div class="event-create__submit-button">
+                <button :disabled="disabled" @click.prevent="onSubmit()" class="create"> Next </button>
+            </div>
+        </section>
+
+        <section>
+            <div class="tag-title">
+                <h3>Event Tags</h3>
+            </div>
+            <div class="field">
+                <label>Type in or select all show tags. We use these to help people find your event!</label>
+                <multiselect 
+                v-model="tagName"
+                tag-placeholder="Add this as new tag" 
+                placeholder="Type here to create your own" 
+                label="genre"
+                :close-on-select="true"
+                track-by="id" 
+                :options="tagOptions" 
+                :multiple="true" 
+                :taggable="true" 
+                tag-position="bottom"
+                :class="{ active: active == 'genre','error': $v.tagName.$error }"
+                @tag="addTag"
+                @input="$v.tagName.$touch"
+                @click="active = 'genre'"
+                @blur="active = null"
+                ></multiselect>
+                <div v-if="$v.tagName.$error" class="validation-error">
+                    <p class="error" v-if="!$v.tagName.required">Must select at least one Tag</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="create-button__in-nav">
+            <button :disabled="disabled" class="create" @click.prevent="onBack('shows')"> Back </button>
+            <button :disabled="disabled" class="create" @click.prevent="onSubmit()"> Next </button>
+        </div>
+        
+    </div>
+</template>
+
+<script>
+    import formValidationMixin from '../../mixins/form-validation-mixin'
+    import Multiselect from 'vue-multiselect'
+    import { required, url } from 'vuelidate/lib/validators'
+    import _ from 'lodash'
+
+	export default {
+        components: { Multiselect },
+
+        mixins: [formValidationMixin],
+
+		props: ['event', 'loadtags'],
+
+        computed: {
+            endpoint() {
+                return `/create-event/${this.event.slug}/description`
+            },
+        },
+
+		data() {
+			return {
+                group: this.initializeSubmitObject(),
+                tagName: this.event.genres ? this.event.genres : '',
+                tagOptions: this.loadtags,
+                disabled: false,
+                serverErrors: [],
+                active: null,
+			}
+		},
+
+		methods: {
+
+            initializeSubmitObject() {
+                return {
+                    description: this.event.description ? this.event.description : '',
+                    websiteUrl: this.event.websiteUrl ? this.event.websiteUrl : '',
+                    ticketUrl: this.event.ticketUrl ? this.event.ticketUrl : '',
+                    genre: this.event.genres ? this.event.genres.map(a => a.genre) : '',
+                }
+            },
+
+			onSubmit() {
+                if (this.checkVuelidate()) { return false };
+				axios.patch(this.endpoint, this.group)
+                .then(res => { 
+                    console.log(res.data);
+                    this.onForward('advisories');
+                })
+                .catch(err => { this.onErrors(err) });
+			},
+
+            onToggle(arr) {
+                this.active = arr;
+                this.serverErrors = [];
+            },
+
+            addTag (newTag) {
+                const tag = {
+                    genre: newTag,
+                    id: newTag.substring(0, 0) + Math.floor((Math.random() * 10000000))
+                }
+                this.tagOptions.push(tag)
+                this.tagName.push(tag)
+            },
+
+		},
+
+
+        watch: {
+            tagName(){
+                return this.group.genre = this.tagName.map(a => a.genre);
+            }
+        },
+
+
+        validations: {
+            tagName: {
+                required
+            },
+            group : {
+                description: {
+                    required
+                },
+                websiteUrl: {
+                   url,
+                   webNotWorking(){ return this.websiteUrl ? !this.hasServerError('broken') : true },
+                },
+                ticketUrl: {
+                   url,
+                   ticketNotWorking(){ return this.ticketUrl ? !this.hasServerError('broken') : true },
+                },
+            }
+        },
+    };
+
+
+
+</script>

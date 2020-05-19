@@ -88,6 +88,7 @@
     margin: auto;
     filter: url('#goo');
     animation: rotate-move 2s ease-in-out infinite;
+    z-index: 1000;
     }
 
     .dot { 

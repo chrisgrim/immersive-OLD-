@@ -180,12 +180,9 @@ class Organizer extends Model
     */
     public function deleteOrganizer($organizer) 
     {
-        if ($organizer->largeImagePath) {
-            Storage::deleteDirectory('public/organizer-images/' . pathinfo($organizer->largeImagePath, PATHINFO_FILENAME));
-        };
-        foreach ($organizer->events as $event) {
-            $event->deleteEvent($event);
-        }
+        // if ($organizer->largeImagePath) {
+        //     Storage::deleteDirectory('public/organizer-images/' . pathinfo($organizer->largeImagePath, PATHINFO_FILENAME));
+        // };
         $organizer->delete();
     }
 

@@ -45,27 +45,6 @@ class VerificationController extends Controller
 
     public function show() {
         if (auth()->user()->email_verified_at) {return redirect('/');}
-        $events = Event::where('closingDate', '>=', Carbon::yesterday()->endOfDay())
-            ->where('status', 'p')
-            ->where('hasLocation', 1)
-            ->orderBy('updated_at', 'desc')
-            ->limit(4)
-            ->with('organizer')
-            ->get();
-        $remote = Event::where('closingDate', '>=', Carbon::yesterday()->endOfDay())
-            ->where('status', 'p')
-            ->where('hasLocation', 0)
-            ->orderBy('updated_at', 'desc')
-            ->limit(4)
-            ->with('organizer')
-            ->get();
-        $categories = Category::take(4)
-            // ->orderBy('rank', 'desc')
-            ->get();
-        $staffpicks = StaffPick::whereDate('end_date','>=', Carbon::yesterday()->endOfDay())
-            ->whereDate('start_date', '<=', Carbon::now())
-            ->orderBy('rank', 'ASC')
-            ->get();;
-        return view('/auth/verify',compact('events', 'categories','staffpicks', 'remote'));
+        return redirect('/')->with( [ 'verifiy' => 'please verifiy' ] );
     }
 }

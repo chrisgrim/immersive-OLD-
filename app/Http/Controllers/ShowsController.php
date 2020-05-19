@@ -28,16 +28,8 @@ class ShowsController extends Controller
      */
     public function create(Event $event)
     {
+        $event->load('showOnGoing','shows.tickets');
         return view('create.show', compact('event'));
-    }
-
-    public function getMondays()
-    {
-        new \DatePeriod(
-            Carbon::parse("first monday of this month"),
-            CarbonInterval::week(),
-            Carbon::parse("first monday of next month")
-        );
     }
 
     /**
@@ -48,9 +40,9 @@ class ShowsController extends Controller
      */
     public function store(Request $request, Event $event)
     {
-        
+
+
         if($request->onGoing) {
-            
             ShowOnGoing::saveNewShowOnGoing($request, $event);
             $dates=[];
             $period = CarbonPeriod::create(Carbon::now()->startOfDay(), Carbon::now()->startOfDay()->addMonths(6));
@@ -64,29 +56,41 @@ class ShowsController extends Controller
                 if ($date->isSunday() && $request->week['sun']) {$dates[]=$date->format('Y-m-d H:i:s');}
             }
             $request->request->add(['dates' => $dates]);
-
+            Show::deleteOld($request, $event);
+            Show::saveNewShows($request, $event);
         }
-        Show::deleteOld($request, $event);
-        Show::saveNewShows($request, $event);
 
-        // if ($request->onGoing) {
-        //     foreach ($event->shows()->get() as $show) {
-        //         $show->tickets()->delete();
-        //     }
-        //     $event->shows()->delete();
-        //     ShowOnGoing::saveNewShowOnGoing($request, $event);
-        // }
-        // if ($request->shows) {
-        //     if ($event->showOnGoing()->exists()) {
-        //         $event->showOnGoing()->first()->tickets()->delete();
-        //         $event->showOnGoing()->first()->delete();
-        //     }
-        //     Show::deleteOld($request, $event);
-        //     Show::saveNewShows($request, $event);
-        // }
+        if ($request->always) {
+            $event->shows()->delete();
+            $event->showOnGoing()->update([
+                'mon' => true,
+                'tue' => true,
+                'wed' => true,
+                'thu' => true,
+                'fri' => true,
+                'sat' => true,
+                'sun' => true,
+            ]);
+            $show = $event->shows()->create([
+                'date' => Carbon::now()->addMonths(6)->format('Y-m-d H:i:s'),
+            ]);
+            foreach ($request->tickets as $ticket) {
+                 $show->tickets()->updateOrCreate([
+                    'name' => $ticket['name'],
+                ],
+                [
+                    'ticket_price' => str_replace('$', '', $ticket['ticket_price'])
+                ]);
+            }
+        }
+
+        if ($request->shows) {
+            Show::deleteOld($request, $event);
+            Show::saveNewShows($request, $event);
+        }
+
 
         Show::updateEvent($request, $event);
-        //updates scout for elastic search
         $event = $event->fresh();
         $event->searchable();
     }

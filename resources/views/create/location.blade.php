@@ -5,5 +5,5 @@
 @endsection
 
 @section('created')			
-    <create-location-google :event="{{$event}}"/>
+    <create-location-google :event="{{$event}}" :remote="{{$remote}}"/>
 @endsection

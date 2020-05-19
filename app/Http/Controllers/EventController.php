@@ -176,9 +176,10 @@ class EventController extends Controller
     {
         $event->update([ 
             'name' => request('name'),
-            'tag_line' => request('tagline')
+            'tag_line' => request('tagLine')
         ]);
-        if($request->reapply){
+        
+        if($request->reSubmitEvent){
             $event->update([
                 'status' => 'd',
                 'approved' => false

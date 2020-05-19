@@ -1,19 +1,16 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[26],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminArea/admin-genres.vue?vue&type=script&lang=js&":
-/*!*********************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/adminArea/admin-genres.vue?vue&type=script&lang=js& ***!
-  \*********************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/adminArea/admin-remote-locations.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/adminArea/admin-remote-locations.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
-/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__);
-
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -91,9 +88,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      genres: '',
-      genreActive: false,
-      genre: '',
+      remoteLocations: '',
+      activeItem: '',
+      remoteLocation: '',
       isModalVisible: false,
       isEditModalVisible: false,
       modalDelete: ''
@@ -102,115 +99,99 @@ __webpack_require__.r(__webpack_exports__);
   computed: {},
   methods: {
     //check if validation rules have been followed and returns false if not. Then I submit the new name and slug. I then get the response data and pass it to the new window load.
-    submitNewGenre: function submitNewGenre() {
+    submitNewLocation: function submitNewLocation() {
       var _this = this;
 
-      var data;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function submitNewGenre$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              this.$v.$touch();
+      this.$v.$touch();
 
-              if (!this.$v.$invalid) {
-                _context.next = 3;
-                break;
-              }
+      if (this.$v.$invalid) {
+        return false;
+      }
 
-              return _context.abrupt("return", false);
+      ;
+      var data = {
+        location: this.remoteLocation
+      };
+      axios.post('/remotelocations', data).then(function (response) {
+        console.log(response.data);
+        _this.isModalVisible = false;
+        _this.remoteLocation = '';
 
-            case 3:
-              ;
-              data = {
-                genre: this.genre
-              };
-              axios.post('/genres', data).then(function (response) {
-                console.log(response.data);
-                _this.isModalVisible = false;
-                _this.genre = '';
-
-                _this.loadGenres();
-              })["catch"](function (error) {
-                _this.isModalVisible = false;
-              });
-
-            case 6:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, null, this);
+        _this.loadLocations();
+      })["catch"](function (error) {
+        _this.isModalVisible = false;
+      });
     },
-    showModal: function showModal(genre) {
-      this.modalDelete = genre;
+    showModal: function showModal(remotelocations) {
+      this.modalDelete = remotelocations;
       this.isEditModalVisible = true;
     },
-    deleteGenre: function deleteGenre(genre) {
+    deleteLocation: function deleteLocation(remotelocations) {
       var _this2 = this;
 
-      axios["delete"]("/genres/".concat(genre.id)).then(function (response) {
+      axios["delete"]("/remotelocations/".concat(remotelocations.id)).then(function (response) {
         console.log(response.data);
         _this2.isEditModalVisible = false;
 
-        _this2.loadGenres();
+        _this2.loadLocations();
       })["catch"](function (error) {
         _this2.serverErrors = error.response.data.errors;
       });
     },
-    loadGenres: function loadGenres() {
+    loadLocations: function loadLocations() {
       var _this3 = this;
 
-      axios.get('/genres').then(function (response) {
-        _this3.genres = response.data;
+      axios.get('/remotelocations').then(function (response) {
+        _this3.remoteLocations = response.data;
       })["catch"](function (error) {
         _this3.serverErrors = error.response.data.errors;
       });
     },
-    saveGenre: function saveGenre(genre) {
+    saveLocation: function saveLocation(remoteLocation) {
       var _this4 = this;
 
       var data = {
-        genre: genre.genre
+        location: remoteLocation.location
       };
-      axios.patch("/genres/".concat(genre.id), data).then(function (response) {
+      axios.patch("/remotelocations/".concat(remoteLocation.id), data).then(function (response) {
         console.log(response.data);
 
-        _this4.loadGenres();
+        _this4.loadLocations();
       })["catch"](function (error) {
         _this4.serverErrors = error.response.data.errors;
       });
     },
-    saveRank: function saveRank(genre) {
+    saveRank: function saveRank(remoteLocation) {
       var _this5 = this;
 
       var data = {
-        rank: genre.rank
+        rank: remoteLocation.rank
       };
-      axios.patch("/genres/".concat(genre.id), data).then(function (response) {
+      axios.patch("/remotelocations/".concat(remoteLocation.id), data).then(function (response) {
         console.log(response.data);
 
-        _this5.loadGenres();
+        _this5.loadLocations();
       })["catch"](function (error) {
         _this5.serverErrors = error.response.data.errors;
       });
     }
   },
   created: function created() {
-    this.loadGenres();
+    this.loadLocations();
   },
   validations: {
-    genre: {
-      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"]
+    remoteLocation: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
     }
   }
 });
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminArea/admin-genres.vue?vue&type=template&id=5b054468&":
-/*!*************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/adminArea/admin-genres.vue?vue&type=template&id=5b054468& ***!
-  \*************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/adminArea/admin-remote-locations.vue?vue&type=template&id=2ed1bbb1&":
+/*!******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/adminArea/admin-remote-locations.vue?vue&type=template&id=2ed1bbb1& ***!
+  \******************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -228,7 +209,7 @@ var render = function() {
     [
       _c("div", {}, [
         _c("div", { staticClass: "title" }, [
-          _c("h1", [_vm._v("Tags")]),
+          _c("h1", [_vm._v("Remote Locations")]),
           _vm._v(" "),
           _c("div", { staticClass: "add" }, [
             _c(
@@ -247,28 +228,28 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _vm._l(_vm.genres, function(genre, index) {
+      _vm._l(_vm.remoteLocations, function(remoteLocation, index) {
         return _c("div", { staticClass: "list" }, [
           _c("input", {
             directives: [
               {
                 name: "model",
                 rawName: "v-model",
-                value: genre.genre,
-                expression: "genre.genre"
+                value: remoteLocation.location,
+                expression: "remoteLocation.location"
               }
             ],
-            attrs: { type: "text", placeholder: "Genre" },
-            domProps: { value: genre.genre },
+            attrs: { type: "text", placeholder: "Remote Location" },
+            domProps: { value: remoteLocation.location },
             on: {
               blur: function($event) {
-                return _vm.saveGenre(genre)
+                return _vm.saveLocation(remoteLocation)
               },
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(genre, "genre", $event.target.value)
+                _vm.$set(remoteLocation, "location", $event.target.value)
               }
             }
           }),
@@ -278,21 +259,21 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: genre.rank,
-                expression: "genre.rank"
+                value: remoteLocation.rank,
+                expression: "remoteLocation.rank"
               }
             ],
-            attrs: { type: "text", placeholder: "Genre" },
-            domProps: { value: genre.rank },
+            attrs: { type: "text", placeholder: "Remote Location" },
+            domProps: { value: remoteLocation.rank },
             on: {
               blur: function($event) {
-                return _vm.saveRank(genre)
+                return _vm.saveRank(remoteLocation)
               },
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(genre, "rank", $event.target.value)
+                _vm.$set(remoteLocation, "rank", $event.target.value)
               }
             }
           }),
@@ -304,7 +285,7 @@ var render = function() {
               on: {
                 click: function($event) {
                   $event.preventDefault()
-                  return _vm.showModal(genre)
+                  return _vm.showModal(remoteLocation)
                 }
               }
             },
@@ -335,7 +316,7 @@ var render = function() {
                 _vm._v(" "),
                 _c("p", [
                   _vm._v(
-                    "You are deleting " + _vm._s(_vm.modalDelete.genre) + "."
+                    "You are deleting " + _vm._s(_vm.modalDelete.location) + "."
                   )
                 ])
               ]),
@@ -348,7 +329,7 @@ var render = function() {
                     on: {
                       click: function($event) {
                         $event.preventDefault()
-                        return _vm.deleteGenre(_vm.modalDelete)
+                        return _vm.deleteLocation(_vm.modalDelete)
                       }
                     }
                   },
@@ -393,37 +374,40 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.genre,
-                                expression: "genre"
+                                value: _vm.remoteLocation,
+                                expression: "remoteLocation"
                               }
                             ],
-                            class: { active: _vm.genreActive },
-                            attrs: { type: "text", placeholder: "Genre" },
-                            domProps: { value: _vm.genre },
+                            class: { active: (_vm.activeItem = "location") },
+                            attrs: {
+                              type: "text",
+                              placeholder: "Remote Location"
+                            },
+                            domProps: { value: _vm.remoteLocation },
                             on: {
                               click: function($event) {
-                                _vm.genreActive = true
+                                _vm.activeItem = "location"
                               },
                               blur: function($event) {
-                                _vm.genreActive = false
+                                _vm.activeItem = null
                               },
                               input: [
                                 function($event) {
                                   if ($event.target.composing) {
                                     return
                                   }
-                                  _vm.genre = $event.target.value
+                                  _vm.remoteLocation = $event.target.value
                                 },
-                                _vm.$v.genre.$touch
+                                _vm.$v.remoteLocation.$touch
                               ]
                             }
                           }),
                           _vm._v(" "),
-                          _vm.$v.genre.$error
+                          _vm.$v.remoteLocation.$error
                             ? _c("div", { staticClass: "validation-error" }, [
-                                !_vm.$v.genre.required
+                                !_vm.$v.remoteLocation.required
                                   ? _c("p", { staticClass: "error" }, [
-                                      _vm._v("Please Add Genre ")
+                                      _vm._v("Please Add Remote Location ")
                                     ])
                                   : _vm._e()
                               ])
@@ -441,7 +425,7 @@ var render = function() {
                         on: {
                           click: function($event) {
                             $event.preventDefault()
-                            return _vm.submitNewGenre()
+                            return _vm.submitNewLocation()
                           }
                         }
                       },
@@ -572,17 +556,17 @@ function normalizeComponent (
 
 /***/ }),
 
-/***/ "./resources/js/components/adminArea/admin-genres.vue":
-/*!************************************************************!*\
-  !*** ./resources/js/components/adminArea/admin-genres.vue ***!
-  \************************************************************/
+/***/ "./resources/js/pages/adminArea/admin-remote-locations.vue":
+/*!*****************************************************************!*\
+  !*** ./resources/js/pages/adminArea/admin-remote-locations.vue ***!
+  \*****************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _admin_genres_vue_vue_type_template_id_5b054468___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./admin-genres.vue?vue&type=template&id=5b054468& */ "./resources/js/components/adminArea/admin-genres.vue?vue&type=template&id=5b054468&");
-/* harmony import */ var _admin_genres_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./admin-genres.vue?vue&type=script&lang=js& */ "./resources/js/components/adminArea/admin-genres.vue?vue&type=script&lang=js&");
+/* harmony import */ var _admin_remote_locations_vue_vue_type_template_id_2ed1bbb1___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./admin-remote-locations.vue?vue&type=template&id=2ed1bbb1& */ "./resources/js/pages/adminArea/admin-remote-locations.vue?vue&type=template&id=2ed1bbb1&");
+/* harmony import */ var _admin_remote_locations_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./admin-remote-locations.vue?vue&type=script&lang=js& */ "./resources/js/pages/adminArea/admin-remote-locations.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -592,9 +576,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _admin_genres_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _admin_genres_vue_vue_type_template_id_5b054468___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _admin_genres_vue_vue_type_template_id_5b054468___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _admin_remote_locations_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _admin_remote_locations_vue_vue_type_template_id_2ed1bbb1___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _admin_remote_locations_vue_vue_type_template_id_2ed1bbb1___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -604,38 +588,38 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/adminArea/admin-genres.vue"
+component.options.__file = "resources/js/pages/adminArea/admin-remote-locations.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/adminArea/admin-genres.vue?vue&type=script&lang=js&":
-/*!*************************************************************************************!*\
-  !*** ./resources/js/components/adminArea/admin-genres.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************************/
+/***/ "./resources/js/pages/adminArea/admin-remote-locations.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/pages/adminArea/admin-remote-locations.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_admin_genres_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./admin-genres.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminArea/admin-genres.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_admin_genres_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_admin_remote_locations_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./admin-remote-locations.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/adminArea/admin-remote-locations.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_admin_remote_locations_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/adminArea/admin-genres.vue?vue&type=template&id=5b054468&":
-/*!*******************************************************************************************!*\
-  !*** ./resources/js/components/adminArea/admin-genres.vue?vue&type=template&id=5b054468& ***!
-  \*******************************************************************************************/
+/***/ "./resources/js/pages/adminArea/admin-remote-locations.vue?vue&type=template&id=2ed1bbb1&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/pages/adminArea/admin-remote-locations.vue?vue&type=template&id=2ed1bbb1& ***!
+  \************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_admin_genres_vue_vue_type_template_id_5b054468___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./admin-genres.vue?vue&type=template&id=5b054468& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminArea/admin-genres.vue?vue&type=template&id=5b054468&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_admin_genres_vue_vue_type_template_id_5b054468___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_admin_remote_locations_vue_vue_type_template_id_2ed1bbb1___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./admin-remote-locations.vue?vue&type=template&id=2ed1bbb1& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/adminArea/admin-remote-locations.vue?vue&type=template&id=2ed1bbb1&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_admin_remote_locations_vue_vue_type_template_id_2ed1bbb1___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_admin_genres_vue_vue_type_template_id_5b054468___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_admin_remote_locations_vue_vue_type_template_id_2ed1bbb1___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

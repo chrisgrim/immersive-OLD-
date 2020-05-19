@@ -33,6 +33,12 @@ class ImageController extends Controller
      */
     public function store(Request $request, Event $event)
     {
-        EventImage::saveFile($request, $event, 1280, 720);
+
+        if ($event->status == 'd') {
+            EventImage::saveNewImage($request, $event, 1280, 720);
+        } else {
+            EventImage::updateImage($request, $event, 1280, 720);
+        }
+
     }
 }

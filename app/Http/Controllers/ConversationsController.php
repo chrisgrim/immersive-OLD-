@@ -23,7 +23,8 @@ class ConversationsController extends Controller
      */
     public function index()
     {
-        return view('messages.index');
+        $conversations = auth()->user()->conversations()->get();
+        return view('messages.index', compact('conversations'));
     }
 
     /**
@@ -51,38 +52,41 @@ class ConversationsController extends Controller
         $this->authorize('update', $conversation);
         $receiver = $conversation->users->where('id', '!=' , auth()->id())->first();
 
-        if ($request->message) {
+        if ($request->type == 'message') {
             $message = Message::Create([
                 'user_id' => auth()->id(),
-                'message' => request('message'),
+                'message' => $request->message,
                 'conversation_id' => $conversation->id
             ]);
             $attributes = [
-                'email' => $receiver->email,
+                'email' => $receiver ? $receiver->email : '',
                 'body' => $request->message,
                 'username' => auth()->user()->name,
             ];
-            $receiver->update(['unread' => 'm']);
+            $receiver ? $receiver->update(['unread' => 'm']) : '';
         };
 
-        if ($request->modmessage) {
+        if ($request->type == 'event') {
             $ModeratorComment = ModeratorComment::create([
                 'conversation_id' => $conversation->id,
                 'event_id' => $conversation->modmessages[0]->event_id,
-                'comments' => $request->modmessage,
+                'comments' => $request->message,
                 'user_id' => auth()->id(),
             ]);
             $attributes = [
-                'email' => $receiver->email,
-                'body' => $request->modmessage,
+                'email' => $receiver ? $receiver->email : '',
+                'body' => $request->message,
                 'username' => auth()->user()->name,
             ];
-            $receiver->update(['unread' => 'e']);
+            $receiver ? $receiver->update(['unread' => 'e']) : '';
         }
 
         $conversation->touch();
+
         
-        Mail::to($receiver->email)->send(new ContactUser($attributes));
+        $receiver ? Mail::to($receiver->email)->send(new ContactUser($attributes)) : '';
+        
+        
         
     }
 

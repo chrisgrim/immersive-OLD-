@@ -217,6 +217,7 @@ button.new-event__button:hover svg.b {
   width: 20rem;
   left: 50%;
   margin-left: -10rem;
+  text-align: center;
 }
 
 .card-inprogress h3 {
@@ -2422,6 +2423,7 @@ img.organizer-info-contact__image {
           filter: url("#goo");
   -webkit-animation: rotate-move 2s ease-in-out infinite;
           animation: rotate-move 2s ease-in-out infinite;
+  z-index: 1000;
 }
 
 .dot {

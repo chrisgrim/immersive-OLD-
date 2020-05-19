@@ -64,7 +64,12 @@
 @section('content')
 
 <div id="bodyArea" class="show">
-	<event-show :loadevent="{{$event}}" user="{{auth()->id()}}">	
+     @auth
+        <event-show :loadevent="{{$event}}" :user="{{auth()->user()}}">  
+    @endauth
+    @guest
+        <event-show :loadevent="{{$event}}" user="{{auth()->id()}}">  
+    @endguest
 </div>
 
 @endsection

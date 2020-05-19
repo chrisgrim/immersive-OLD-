@@ -23,7 +23,9 @@ class DescriptionController extends Controller
      */
     public function create(Event $event)
     {
-        return view('create.description', compact('event'));
+        $event->load('genres');
+        $tags = Genre::where('admin', true)->orWhere('user_id', auth()->user()->id)->get();
+        return view('create.description', compact('event', 'tags'));
     }
 
      /**

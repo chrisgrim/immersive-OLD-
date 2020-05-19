@@ -9,9 +9,9 @@
 
 @section('nav')
     @isset($event)
-        <vue-create-nav :event="{{$event}}"></vue-create-nav>
+        <vue-create-nav :user="{{auth()->user()}}" :event="{{$event}}"></vue-create-nav>
     @else
-        <vue-create-nav event="null"></vue-create-nav>
+        <vue-create-nav :user="{{auth()->user()}}"  event="null"></vue-create-nav>
     @endisset
 @endsection
 

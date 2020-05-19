@@ -61,7 +61,7 @@ Icon.Default.mergeOptions({
  * Vue components. It will recursively scan this directory for the Vue
  * components and automatically register them with their "basename".
  *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
+ * Eg. ./pages/ExampleComponent.vue -> <example-component></example-component>
  */
 
 // const files = require.context('./', true, /\.vue$/i);
@@ -69,86 +69,86 @@ Icon.Default.mergeOptions({
 
 
 //Nav
-Vue.component('vue-nav', () => import('./components/layouts/nav.vue'));
-Vue.component('nav-search', () => import('./components/layouts/nav-search.vue'));
-Vue.component('profile-button', () => import('./components/layouts/profile-button.vue'));
+Vue.component('vue-nav', () => import('./pages/layouts/nav.vue'));
+Vue.component('nav-search', () => import('./pages/layouts/nav-search.vue'));
+Vue.component('profile-button', () => import('./pages/layouts/profile-button.vue'));
 
 
 //Components
-Vue.component('favorite', () => import('./components/layouts/favorite.vue'));
-Vue.component('modal', () => import('./components/layouts/modal.vue'));
-Vue.component('tabs', () => import('./components/layouts/tabs.vue'));
-Vue.component('tab', () => import('./components/layouts/tab.vue'));
-Vue.component('image-upload', () => import('./components/layouts/image-upload.vue'));
-Vue.component('vue-alert', () => import('./components/layouts/alert.vue'));
-Vue.component('vue-email-verify', () => import('./components/layouts/email-verified.vue'));
+Vue.component('favorite', () => import('./pages/layouts/favorite.vue'));
+Vue.component('modal', () => import('./pages/layouts/modal.vue'));
+Vue.component('tabs', () => import('./pages/layouts/tabs.vue'));
+Vue.component('tab', () => import('./pages/layouts/tab.vue'));
+Vue.component('image-upload', () => import('./pages/layouts/image-upload.vue'));
+Vue.component('vue-alert', () => import('./pages/layouts/alert.vue'));
+Vue.component('vue-email-verify', () => import('./pages/layouts/email-verified.vue'));
 
 //Create Events
-Vue.component('vue-create-nav', () => import('./components/create/nav.vue'));
-Vue.component('create-location-google', () => import('./components/create/location-google.vue'));
-Vue.component('create-category', () => import('./components/create/category.vue'));
-Vue.component('create-organizer', () => import('./components/create/organizer.vue'));
-Vue.component('create-title', () => import('./components/create/title.vue'));
-Vue.component('create-image', () => import('./components/create/image.vue'));
-Vue.component('create-date-picker', () => import('./components/create/datepicker.vue'));
-Vue.component('create-shows', () => import('./components/create/shows.vue'));
-Vue.component('show-listing', () => import('./components/create/show-listing.vue'));
-Vue.component('create-description', () => import('./components/create/description.vue'));
-Vue.component('create-advisories', () => import('./components/create/advisories.vue'));
-Vue.component('create-review', () => import('./components/create/review.vue'));
-Vue.component('vue-create-review-event', () => import('./components/create/review-event.vue'));
-Vue.component('vue-create-first-event', () => import('./components/create/start-event-creation.vue'));
+Vue.component('vue-create-nav', () => import('./pages/create/nav.vue'));
+Vue.component('create-location-google', () => import('./pages/create/location-google.vue'));
+Vue.component('create-category', () => import('./pages/create/category.vue'));
+Vue.component('create-organizer', () => import('./pages/create/organizer.vue'));
+Vue.component('create-title', () => import('./pages/create/title.vue'));
+Vue.component('create-image', () => import('./pages/create/image.vue'));
+Vue.component('create-date-picker', () => import('./pages/create/datepicker.vue'));
+Vue.component('create-shows', () => import('./pages/create/shows.vue'));
+Vue.component('show-listing', () => import('./pages/create/show-listing.vue'));
+Vue.component('create-description', () => import('./pages/create/description.vue'));
+Vue.component('create-advisories', () => import('./pages/create/advisories.vue'));
+Vue.component('create-review', () => import('./pages/create/review.vue'));
+Vue.component('vue-create-review-event', () => import('./pages/create/review-event.vue'));
+Vue.component('vue-create-first-event', () => import('./pages/create/start-event-creation.vue'));
 
 
 
 
 //Admin Area
-Vue.component('admin-nav', () => import('./components/adminArea/nav.vue'));
-Vue.component('approval-bar', () => import('./components/adminArea/approve/approval-bar.vue'));
-Vue.component('approval-list', () => import('./components/adminArea/approve/approval-list.vue'));
-Vue.component('admin-categories', () => import('./components/adminArea/admin-categories.vue'));
-Vue.component('admin-contact-level', () => import('./components/adminArea/admin-contact-level.vue'));
-Vue.component('admin-genres', () => import('./components/adminArea/admin-genres.vue'));
-Vue.component('admin-event-reviews', () => import('./components/adminArea/admin-event-reviews.vue'));
-Vue.component('admin-staff-picks', () => import('./components/adminArea/admin-staff-picks.vue'));
-Vue.component('admin-mobility', () => import('./components/adminArea/admin-mobility.vue'));
-Vue.component('admin-regions', () => import('./components/adminArea/admin-regions.vue'));
-Vue.component('admin-user', () => import('./components/adminArea/admin-user.vue'));
-Vue.component('admin-organizer', () => import('./components/adminArea/admin-organizer.vue'));
-Vue.component('admin-content-advisories', () => import('./components/adminArea/admin-content-advisories.vue'));
-Vue.component('vue-admin-remote-locations', () => import('./components/adminArea/admin-remote-locations.vue'));
+Vue.component('admin-nav', () => import('./pages/adminArea/nav.vue'));
+Vue.component('approval-bar', () => import('./pages/adminArea/approve/approval-bar.vue'));
+Vue.component('approval-list', () => import('./pages/adminArea/approve/approval-list.vue'));
+Vue.component('admin-categories', () => import('./pages/adminArea/admin-categories.vue'));
+Vue.component('admin-contact-level', () => import('./pages/adminArea/admin-contact-level.vue'));
+Vue.component('admin-genres', () => import('./pages/adminArea/admin-genres.vue'));
+Vue.component('admin-event-reviews', () => import('./pages/adminArea/admin-event-reviews.vue'));
+Vue.component('admin-staff-picks', () => import('./pages/adminArea/admin-staff-picks.vue'));
+Vue.component('admin-mobility', () => import('./pages/adminArea/admin-mobility.vue'));
+Vue.component('admin-regions', () => import('./pages/adminArea/admin-regions.vue'));
+Vue.component('admin-user', () => import('./pages/adminArea/admin-user.vue'));
+Vue.component('admin-organizer', () => import('./pages/adminArea/admin-organizer.vue'));
+Vue.component('admin-content-advisories', () => import('./pages/adminArea/admin-content-advisories.vue'));
+Vue.component('vue-admin-remote-locations', () => import('./pages/adminArea/admin-remote-locations.vue'));
 
 //Profile
-Vue.component('user-profile', () => import('./components/profile/profile-index.vue'));
-Vue.component('vue-user-notifications', () => import('./components/profile/notifications.vue'));
-Vue.component('vue-user-account', () => import('./components/profile/account.vue'));
-Vue.component('vue-user-favorited', () => import('./components/profile/favorited.vue'));
+Vue.component('user-profile', () => import('./pages/profile/profile-index.vue'));
+Vue.component('vue-user-notifications', () => import('./pages/profile/notifications.vue'));
+Vue.component('vue-user-account', () => import('./pages/profile/account.vue'));
+Vue.component('vue-user-favorited', () => import('./pages/profile/favorited.vue'));
 
 // Messages
-Vue.component('message-index', () => import('./components/messages/message-index.vue'));
-Vue.component('message-show', () => import('./components/messages/message-show.vue'));
+Vue.component('message-index', () => import('./pages/messages/message-index.vue'));
+Vue.component('message-show', () => import('./pages/messages/message-show.vue'));
 
 
 //Categories
-Vue.component('category-show', () => import('./components/categories/category-show.vue'));
+Vue.component('category-show', () => import('./pages/categories/category-show.vue'));
 
 //Organizers
-Vue.component('organizer-show', () => import('./components/organizers/organizer-show.vue'));
-Vue.component('organizer-show-events', () => import('./components/organizers/components/event-list-item.vue'));
+Vue.component('organizer-show', () => import('./pages/organizers/organizer-show.vue'));
+Vue.component('organizer-show-events', () => import('./pages/organizers/components/event-list-item.vue'));
 
 //Events
-Vue.component('event-show', () => import('./components/events/event-show.vue'));
-Vue.component('event-index', () => import('./components/events/event-index.vue'));
-Vue.component('search-listing', () => import('./components/events/event-search.vue'));
-Vue.component('event-map-search', () => import('./components/events/event-map-search.vue'));
-Vue.component('event-list-search', () => import('./components/events/event-list-search.vue'));
-Vue.component('edit-events', () => import('./components/events/event-edit.vue'));
-Vue.component('event-listing-item', () => import('./components/events/components/index-item.vue'));
-Vue.component('vue-event-edit-listing-item', () => import('./components/events/components/event-edit-item.vue'));
+Vue.component('event-show', () => import('./pages/events/event-show.vue'));
+Vue.component('event-index', () => import('./pages/events/event-index.vue'));
+Vue.component('search-listing', () => import('./pages/events/event-search.vue'));
+Vue.component('event-map-search', () => import('./pages/events/event-map-search.vue'));
+Vue.component('event-list-search', () => import('./pages/events/event-list-search.vue'));
+Vue.component('edit-events', () => import('./pages/events/event-edit.vue'));
+Vue.component('event-listing-item', () => import('./pages/events/components/index-item.vue'));
+Vue.component('vue-event-edit-listing-item', () => import('./pages/events/components/event-edit-item.vue'));
 
 //Login z
-Vue.component('login-pop', () => import('./components/layouts/login-pop.vue'));
-Vue.component('vue-register', () => import('./components/layouts/register.vue'));
+Vue.component('login-pop', () => import('./pages/layouts/login-pop.vue'));
+Vue.component('vue-register', () => import('./pages/layouts/register.vue'));
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

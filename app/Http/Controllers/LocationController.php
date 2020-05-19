@@ -30,7 +30,9 @@ class LocationController extends Controller
      */
     public function create(Event $event)
     {
-        return view('create.location', compact('event'));
+        $event->load('location', 'remotelocations');
+        $remote = RemoteLocation::where('admin', true)->orWhere('user_id', auth()->user()->id)->get();
+        return view('create.location', compact('event', 'remote'));
     }
 
     /**
@@ -58,19 +60,18 @@ class LocationController extends Controller
      */
     public function store(LocationStoreRequest $request, Event $event)
     {
-        if($request->noLocation) {
-            if ($request->has('remoteLocation')) {
-                foreach ($request['remoteLocation'] as $loc) {
-                    RemoteLocation::firstOrCreate([
-                        'location' => strtolower($loc)
-                    ],
-                    [
-                        'user_id' => auth()->user()->id,
-                    ]);
-                };
-                $newSync = RemoteLocation::all()->whereIn('location',  array_map('strtolower', $request['remoteLocation']));
-                $event->remotelocations()->sync($newSync);
+
+        if($request->remote) {
+            foreach ($request->remote as $loc) {
+                RemoteLocation::firstOrCreate([
+                    'location' => strtolower($loc)
+                ],
+                [
+                    'user_id' => auth()->user()->id,
+                ]);
             };
+            $newSync = RemoteLocation::all()->whereIn('location',  array_map('strtolower', $request['remote']));
+            $event->remotelocations()->sync($newSync);
 
             return $event->update([
                 'hasLocation' => false,
