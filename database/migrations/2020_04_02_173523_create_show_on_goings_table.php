@@ -14,8 +14,8 @@ class CreateShowOnGoingsTable extends Migration
     public function up()
     {
         Schema::create('show_on_goings', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('event_id');
+            $table->id();
+            $table->foreignId('event_id');
             $table->boolean('mon')->default(false);
             $table->boolean('tue')->default(false);
             $table->boolean('wed')->default(false);

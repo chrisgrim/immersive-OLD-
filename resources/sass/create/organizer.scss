@@ -4,13 +4,11 @@
 
 
 .event-create__organizer {
-    width:90% !important;
-    grid-template-columns: 1fr 1fr;
-    margin:5rem auto !important;
+    width:100%;
+    padding: 9rem 8rem 14rem 8rem;
 }
-
-.event-enter-organization {
-    padding: 0 0 0 13%;
+.event-create__organizer-container {
+    grid-template-columns: 1fr 1fr;
 }
 .event-enter-organization-image {
     margin-top:3rem;

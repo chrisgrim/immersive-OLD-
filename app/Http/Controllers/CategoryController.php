@@ -103,7 +103,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Select the category page.
+     * Displays the User Event Creation Category Page
      *
      * @return \Illuminate\Http\Response
      */
@@ -126,7 +126,7 @@ class CategoryController extends Controller
     }
 
     /**
-    * Fetches the categories list
+    * Updated the Event with the selected category ID
     *
     * @return \Illuminate\Http\Response
     */

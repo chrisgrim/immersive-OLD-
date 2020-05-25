@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Event;
-use App\Region;
 use App\CityList;
 use App\Category;
 use App\Organizer;
@@ -110,7 +109,7 @@ class EventController extends Controller
     public function show(Event $event)
     {
         if($event->status !== 'p') { return redirect('/');}
-        $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'eventreviews', 'staffpick', 'advisories', 'showOnGoing');
+        $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'eventreviews', 'staffpick', 'advisories', 'showOnGoing','interactivelevel', 'remotelocations');
         return view('events.show', compact('event'));
     }
 
@@ -151,43 +150,6 @@ class EventController extends Controller
     }
 
     /**
-     * Returns Title Page in Creation Process
-     *
-     * @param  \App\Event  $event
-     * @return \Illuminate\Http\Response
-     */
-    public function title(Event $event)
-    {
-        return view('create.title', compact('event'));
-    }
-
-    /**
-     * Fetches the current Event Title for the creation process. This involves the timestamp process
-     *
-     * @param  \App\Event  $event
-     * @return \Illuminate\Http\Response
-     */
-    public function fetchTitle(Event $event)
-    {
-        return $event;
-    }
-
-    public function updateTitle(Request $request, Event $event)
-    {
-        $event->update([ 
-            'name' => request('name'),
-            'tag_line' => request('tagLine')
-        ]);
-        
-        if($request->reSubmitEvent){
-            $event->update([
-                'status' => 'd',
-                'approved' => false
-            ]);
-        };
-    }
-
-    /**
      * Returns Review Page in Creation Process
      *
      * @param  \App\Event  $event
@@ -208,6 +170,6 @@ class EventController extends Controller
 
     public function thanks(Event $event)
     {
-        return redirect('create-event/edit')->with('message', 'submitted');
+        return redirect('create-event/edit')->with('submitted', 'submitted');
     }
 }

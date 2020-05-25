@@ -140,6 +140,20 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -166,7 +180,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       return data = {
         remote: this.remoteLocations.map(function (a) {
           return a.location;
-        })
+        }),
+        description: this.description
       };
     },
     endpoint: function endpoint() {
@@ -186,6 +201,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       hasLocation: this.event.hasLocation,
       remoteLocationOptions: this.remote ? this.remote : '',
       remoteLocations: this.event.remotelocations ? this.event.remotelocations : '',
+      description: this.event.remote_description ? this.event.remote_description : '',
       serverErrors: [],
       loading: false
     };
@@ -214,25 +230,25 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         allowZoom: false
       };
     },
-    onSubmit: function onSubmit() {
+    onSubmit: function onSubmit(value) {
       if (this.checkVuelidate()) {
         return false;
       }
 
       ;
-      return this.location.hiddenLocationToggle && this.hasLocation ? this.onCorsSubmit() : this.onNormalSubmit();
+      return this.location.hiddenLocationToggle && this.hasLocation ? this.onCorsSubmit(value) : this.onNormalSubmit(value);
     },
-    onNormalSubmit: function onNormalSubmit() {
+    onNormalSubmit: function onNormalSubmit(value) {
       var _this = this;
 
+      console.log(this.remoteLocationArray);
       axios.patch(this.endpoint, this.hasLocation ? this.location : this.remoteLocationArray).then(function (res) {
-        // console.log(res.data);    
-        _this.onForward('category');
+        value == 'exit' ? _this.onBackInitial() : _this.onForward('category');
       })["catch"](function (err) {
         _this.onErrors(err);
       });
     },
-    onCorsSubmit: function onCorsSubmit() {
+    onCorsSubmit: function onCorsSubmit(value) {
       var _this2 = this;
 
       this.loading = true;
@@ -241,8 +257,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         _this2.location.longitude = res.data.results[0].geometry.location.lng;
       }).then(function (res) {
         axios.patch(_this2.endpoint, _this2.location);
-
-        _this2.onForward('category');
+        value == 'exit' ? _this2.onBackInitial() : _this2.onForward('category');
       })["catch"](function (err) {
         _this2.onErrors(err);
       });
@@ -256,7 +271,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       this.location.latitude ? this.map.center = L.latLng(this.location.latitude, this.location.longitude) : '';
     },
     handleResize: function handleResize() {
-      this.pageHeight = "height:calc(".concat(window.innerHeight, "px - 8rem)");
+      this.pageHeight = "height:calc(".concat(window.innerHeight, "px - 7rem)");
     },
     addTag: function addTag(newTag) {
       var tag = {
@@ -374,7 +389,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "event-create__location container grid" }, [
+  return _c("div", { staticClass: "event-create__location grid" }, [
     _c(
       "section",
       { staticClass: "event-enter-location" },
@@ -600,7 +615,9 @@ var render = function() {
                     _vm._v(" "),
                     !_vm.$v.location.city.ifLocation
                       ? _c("p", { staticClass: "error" }, [
-                          _vm._v("Please include at least the city")
+                          _vm._v(
+                            "We couldn't determine the city. Please try again."
+                          )
                         ])
                       : _vm._e()
                   ])
@@ -675,26 +692,48 @@ var render = function() {
                   : _vm._e()
               ],
               1
-            )
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "field" }, [
+              _c("label", { staticClass: "area" }, [
+                _vm._v(" Helpful remote location event suggestions (optional) ")
+              ]),
+              _vm._v(" "),
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.description,
+                    expression: "description"
+                  }
+                ],
+                class: { active: _vm.active == "description" },
+                attrs: {
+                  type: "text",
+                  name: "description",
+                  placeholder: "eg. Sign on 10 minutes early...",
+                  rows: "8"
+                },
+                domProps: { value: _vm.description },
+                on: {
+                  click: function($event) {
+                    _vm.active = "description"
+                  },
+                  blur: function($event) {
+                    _vm.active = null
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.description = $event.target.value
+                  }
+                }
+              })
+            ])
           ]
         ),
-        _vm._v(" "),
-        _c("div", { staticClass: "event-create__submit-button" }, [
-          _c(
-            "button",
-            {
-              staticClass: "create",
-              attrs: { disabled: _vm.disabled },
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  return _vm.onSubmit()
-                }
-              }
-            },
-            [_vm._v(" Next ")]
-          )
-        ]),
         _vm._v(" "),
         _c("CubeSpinner", { attrs: { loading: _vm.loading } })
       ],
@@ -821,7 +860,24 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _c("div", { staticClass: "create-button__in-nav" }, [
+    _c("div", { staticClass: "event-create__submit-button" }, [
+      _c(
+        "button",
+        {
+          staticClass: "nav-back-button",
+          attrs: { disabled: _vm.disabled },
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              return _vm.onSubmit("exit")
+            }
+          }
+        },
+        [_vm._v(" Save and Exit ")]
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "create-button__back" }, [
       _c(
         "button",
         {
@@ -835,8 +891,10 @@ var render = function() {
           }
         },
         [_vm._v(" Back ")]
-      ),
-      _vm._v(" "),
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "create-button__forward" }, [
       _c(
         "button",
         {
@@ -849,7 +907,7 @@ var render = function() {
             }
           }
         },
-        [_vm._v(" Next ")]
+        [_vm._v(" Save and Continue ")]
       )
     ])
   ])

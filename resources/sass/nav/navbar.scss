@@ -224,9 +224,24 @@ ul.sub-dropdown{
     display: none;
 }
 
+@media (max-width: 1024px) { 
+    .nav {
+        padding: 0rem 1rem;
+    }
+    .nav-search__content {
+        width:100%;
+    }
+}
+
 @media (max-width: 768px) {
     .nav-search__content {
         width: 100%;
+    }
+    .create-bottom-nav {
+        grid-template-columns: 1fr;
+    }
+    .create-button__back {
+        left:2rem;
     }
 }
 

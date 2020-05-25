@@ -14,14 +14,16 @@ class CreateEventsTable extends Migration
     public function up()
     {
         Schema::create('events', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('category_id')->nullable();
-            $table->unsignedBigInteger('advisories_id')->nullable();
-            $table->unsignedBigInteger('organizer_id')->nullable();
+            $table->id();
+            $table->foreignId('user_id');
+            $table->foreignId('category_id')->nullable();
+            $table->foreignId('interactive_level_id')->nullable();
+            $table->foreignId('advisories_id')->nullable();
+            $table->foreignId('organizer_id')->nullable();
             $table->string('slug')->unique();
             $table->string('name')->nullable();
             $table->text('description')->nullable();
+            $table->text('remote_description')->nullable();
             $table->text('tag_line')->nullable();
             $table->string('websiteUrl')->nullable();
             $table->string('show_times')->nullable();

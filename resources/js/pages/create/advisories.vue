@@ -1,5 +1,60 @@
 <template>
-	<div class="event-create__advisories container grid">
+	<div class="event-create__advisories grid">
+        <section class="event-create">
+            <div class="title">
+                <h2>Contact Advisories</h2>
+            </div>
+            <div class="field">
+                <label class="area">Select physical interaction level with guests</label>
+                <multiselect 
+                v-model="contactAdvisories" 
+                :options="contactAdvisoryOptions" 
+                :multiple="true" 
+                placeholder="Choose all that apply"
+                open-direction="bottom"
+                :show-labels="false"
+                :class="{ active: active == 'contact','error': $v.contactAdvisories.$error }"
+                @click="active = 'contact'"
+                @blur="active = null"
+                @input="$v.contactAdvisories.$touch"
+                label="level" 
+                track-by="id" 
+                :preselect-first="false">
+                </multiselect>
+                <div v-if="$v.contactAdvisories.$error" class="validation-error">
+                    <p class="error" v-if="!$v.contactAdvisories.required">Must choose at least one contact level </p>
+                </div>
+            </div>
+            <div class="field">
+                <label> Is there sexual content? </label>
+                <div id="cover">
+                    <input v-model="advisories.sexual" type="checkbox" id="checkbox">
+                    <div id="bar"></div>
+                    <div id="knob">
+                        <p v-if="advisories.sexual">Yes</p>
+                        <p v-else="advisories.sexual">No</p>
+                    </div>
+                </div>
+                <div v-if="$v.advisories.sexual.$error" class="validation-error">
+                    <p class="error" v-if="!$v.advisories.sexual.required">Must select if there is sexual violence</p>
+                </div>
+            </div>
+            <div v-if="advisories.sexual">
+                <div class="field">
+                    <label class="area"> Explain more about the sexual content </label>
+                    <textarea 
+                    v-model="advisories.sexualDescription" 
+                    class="create-input area" 
+                    rows="8"
+                    :class="{ active: active == 'sexual'}"
+                    placeholder=" "
+                    @click="active = 'sexual'"
+                    @blur="active = null"
+                    required 
+                    autofocus></textarea>
+                </div>
+            </div>
+        </section>
         <section class="event-create">
             <div class="title">
                 <h2>Content Advisories</h2>
@@ -48,78 +103,6 @@
         </section>
         <section class="event-create">
             <div class="title">
-                <h2>Contact Advisories</h2>
-            </div>
-            <div class="field">
-                <label class="area">Select physical interaction level with guests</label>
-                <multiselect 
-                v-model="contactAdvisories" 
-                :options="contactAdvisoryOptions" 
-                :multiple="true" 
-                placeholder="Choose all that apply"
-                open-direction="bottom"
-                :show-labels="false"
-                :class="{ active: active == 'contact','error': $v.contactAdvisories.$error }"
-                @click="active = 'contact'"
-                @blur="active = null"
-                @input="$v.contactAdvisories.$touch"
-                label="level" 
-                track-by="id" 
-                :preselect-first="false">
-                </multiselect>
-                <div v-if="$v.contactAdvisories.$error" class="validation-error">
-                    <p class="error" v-if="!$v.contactAdvisories.required">Must choose at least one contact level </p>
-                </div>
-            </div>
-            <div class="field" v-if="contactAdvisories.length">
-                <label class="area"> Audience Role </label>
-                <textarea 
-                v-model="advisories.contactAdvisories" 
-                class="create-input area" 
-                rows="8" 
-                placeholder=" "
-                :class="{ active: active == 'conAdv','error': $v.advisories.contactAdvisories.$error }"
-                @click="active = 'conAdv'"
-                @blur="active = null"
-                @input="$v.advisories.contactAdvisories.$touch"
-                required 
-                autofocus></textarea>
-                <div v-if="$v.advisories.contactAdvisories.$error" class="validation-error">
-                    <p class="error" v-if="!$v.advisories.contactAdvisories.required">Must enter the audience's role </p>
-                </div>
-            </div>
-            <div class="field" v-if="contactAdvisories.length">
-                <label> Is there sexual violence? </label>
-                <div id="cover">
-                    <input v-model="advisories.sexualViolence" type="checkbox" id="checkbox">
-                    <div id="bar"></div>
-                    <div id="knob">
-                        <p v-if="advisories.sexualViolence">Yes</p>
-                        <p v-else="advisories.sexualViolence">No</p>
-                    </div>
-                </div>
-                <div v-if="$v.advisories.sexualViolence.$error" class="validation-error">
-                    <p class="error" v-if="!$v.advisories.sexualViolence.required">Must select if there is sexual violence</p>
-                </div>
-            </div>
-            <div v-if="advisories.sexualViolence">
-                <div class="field">
-                    <label class="area"> Explain more about the sexual violence </label>
-                    <textarea 
-                    v-model="advisories.sexualViolenceDescription" 
-                    class="create-input area" 
-                    rows="8"
-                    :class="{ active: active == 'sexual'}"
-                    placeholder=" "
-                    @click="active = 'sexual'"
-                    @blur="active = null"
-                    required 
-                    autofocus></textarea>
-                </div>
-            </div>
-        </section>
-        <section class="event-create">
-            <div class="title">
                 <h2>Mobility Advisories</h2>
             </div>
             <div class="field">
@@ -160,14 +143,67 @@
                     <p class="error" v-if="!$v.mobilityAdvisories.required">Must enter a mobility advisory </p>
                 </div>
             </div>
-            <div class="event-create__submit-button">
-                <button :disabled="disabled" @click.prevent="onSubmit()" class="create"> Next </button>
-            </div>
         </section>
 
-        <div class="create-button__in-nav">
+        <section class="event-create">
+            <div class="title">
+                <h2>Audience Interaction Level</h2>
+            </div>
+            <div class="field">
+                <label class="area">Select physical interaction level with guests</label>
+                <multiselect 
+                v-model="interactiveLevel" 
+                :options="interactiveLevelOptions" 
+                :multiple="false" 
+                placeholder="Select your events interaction level"
+                open-direction="bottom"
+                :show-labels="false"
+                :class="{ active: active == 'interactive','error': $v.interactiveLevel.$error }"
+                @click="active = 'interactive'"
+                @blur="active = null"
+                @input="$v.interactiveLevel.$touch"
+                label="name" 
+                track-by="id" 
+                :preselect-first="false">
+                <template slot="option" slot-scope="props">
+                    <div class="option__desc">
+                        <div class="option__title">{{ props.option.name }}</div>
+                        <div class="option__small">{{ props.option.description }}</div>
+                    </div>
+                </template>
+                </multiselect>
+                <div v-if="$v.interactiveLevel.$error" class="validation-error">
+                    <p class="error" v-if="!$v.interactiveLevel.required">Must choose at least one contact level </p>
+                </div>
+            </div>
+            <div class="field">
+                <label class="area"> Audience Roll </label>
+                <textarea 
+                v-model="advisories.audience" 
+                class="create-input area" 
+                rows="8" 
+                placeholder=" "
+                :class="{ active: active == 'audience','error': $v.advisories.audience.$error }"
+                @click="active = 'audience'"
+                @blur="active = null"
+                @input="$v.advisories.audience.$touch"
+                required 
+                autofocus></textarea>
+                <div v-if="$v.advisories.audience.$error" class="validation-error">
+                    <p class="error" v-if="!$v.advisories.audience.required">Must enter the audience's role </p>
+                </div>
+            </div>
+
+        </section>
+
+        <div class="event-create__submit-button">
+            <button :disabled="disabled" @click.prevent="onSubmit('exit')" class="nav-back-button"> Save and Exit </button>
+        </div>
+        <div class="create-button__back">
             <button :disabled="disabled" class="create" @click.prevent="onBack('description')"> Back </button>
-            <button :disabled="disabled" class="create" @click.prevent="onSubmit()"> Next </button>
+        </div>
+        <div class="create-button__forward">
+            <button :disabled="disabled" class="create" @click.prevent="onSubmit()"> Save and continue </button>
         </div>
     </div>
 </template>
@@ -184,7 +220,7 @@
 
         components: { Multiselect },
 
-		props: ['event', 'loadcontact', 'loadcontent', 'loadmobility'],
+		props: ['event', 'loadcontact', 'loadcontent', 'loadmobility', 'loadinteractive'],
 
         computed: {
             endpoint() {
@@ -197,6 +233,7 @@
                     contactAdvisory :   this.contactAdvisories.map(a => a.id),
                     contentAdvisory : this.contentAdvisories.map(a => a.advisories),
                     mobilityAdvisory : this.mobilityAdvisories.map(a => a.mobilities),
+                    interactiveLevel : this.interactiveLevel,
                 }
             }
         },
@@ -207,9 +244,11 @@
 				contactAdvisoryOptions: this.loadcontact ? this.loadcontact : [],
 				contentAdvisoryOptions: this.loadcontent ? this.loadcontent : [],
                 mobilityAdvisoryOptions: this.loadmobility ? this.loadmobility : [],
+                interactiveLevelOptions: this.loadinteractive ? this.loadinteractive: [],
 				contactAdvisories: this.event.contact_levels ? this.event.contact_levels : '',
 				contentAdvisories: this.event.content_advisories ? this.event.content_advisories : '',
                 mobilityAdvisories: this.event.mobility_advisories ? this.event.mobility_advisories : '',
+                interactiveLevel: this.event.interactivelevel ? this.event.interactivelevel : '',
                 active: null,
                 ageOptions: ['All Ages', '12+', '16+', '18+', '21+'],
                 disabled: false,
@@ -221,10 +260,11 @@
 			initializeAdvisoriesObject() {
 				return {
 					contactAdvisories: this.event.advisories ? this.event.advisories.contactAdvisories : '',
-					sexualViolence: this.event.advisories.sexualViolence ? this.event.advisories.sexualViolence : false,
-					sexualViolenceDescription: this.event.advisories ? this.event.advisories.sexualViolenceDescription : '',
+					sexual: this.event.advisories.sexualViolence ? this.event.advisories.sexualViolence : false,
+					sexualDescription: this.event.advisories ? this.event.advisories.sexualDescription : '',
 					wheelchairReady: this.event.advisories.wheelchairReady ? this.event.advisories.wheelchairReady : false,
 					ageRestriction: this.event.advisories ? this.event.advisories.ageRestriction : '',
+                    audience: this.event.advisories ? this.event.advisories.audience : '',
 				}
 			},
 
@@ -246,12 +286,12 @@
                 this.mobilityAdvisories.push(tag)
             },
 
-			onSubmit() {
+			onSubmit(value) {
 				if (this.checkVuelidate()) { return false };
 				axios.patch(this.endpoint, this.submitObject)
 				.then(res => { 
-                    console.log(res.data);
-                    this.onForward('images');
+                    // console.log(res.data);
+                    value == 'exit' ? this.onBackInitial() : this.onForward('images');
                 })
 				.catch(err => {
                     this.onErrors(err);
@@ -273,6 +313,7 @@
                     res.data.contactPivots ? this.contactAdvisories = res.data.contactPivots : '';
                     res.data.contentPivots ? this.contentAdvisories = res.data.contentPivots : '';
                     res.data.mobilityPivots ? this.mobilityAdvisories = res.data.mobilityPivots : '';
+                    res.data.interactivePivots ? this.interactiveLevel = res.data.interactivePivots : '';
                 });
             },
 		},
@@ -292,19 +333,25 @@
             contentAdvisories: {
                 required
             },
+            interactiveLevel: {
+                required
+            },
 			advisories: {
-			   	contactAdvisories: {
-			       required,
-			   	},
 			   	ageRestriction: {
 			       required,
 			   	},
                 wheelchairReady: {
                     required,
                 },
-                sexualViolence: {
+                sexual: {
                     required,
                 },
+                sexualDescription: {
+                    required,
+                },
+                audience: {
+                    required,
+                }
 			},	
 		},
     };

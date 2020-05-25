@@ -19,6 +19,6 @@ class ConversationPolicy
      */
     public function update(User $user, Conversation $conversation)
     {
-        return $conversation->users->contains('id', $user->id) || $user->isModerator();
+        return $conversation->users->contains('id', $user->id) || $user->type == 'a' || $user->type == 'm';
     }
 }

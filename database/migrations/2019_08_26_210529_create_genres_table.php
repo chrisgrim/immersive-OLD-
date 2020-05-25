@@ -14,16 +14,16 @@ class CreateGenresTable extends Migration
     public function up()
     {
         Schema::create('genres', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
+            $table->id();
+            $table->foreignId('user_id');
             $table->string('genre')->unique();
             $table->boolean('admin')->default(0);
             $table->integer('rank')->default(0);
             $table->timestamps();
         });
         Schema::create('event_genre', function(Blueprint $table) {
-            $table->unsignedBigInteger('event_id');
-            $table->unsignedBigInteger('genre_id');
+            $table->foreignId('event_id');
+            $table->foreignId('genre_id');
             $table->timestamps();
         });
 

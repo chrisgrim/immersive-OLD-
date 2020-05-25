@@ -14,8 +14,8 @@ class CreateLocationsTable extends Migration
     public function up()
     {
         Schema::create('locations', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('event_id');
+            $table->id();
+            $table->foreignId('event_id');
             $table->boolean('hiddenLocationToggle')->default(0);
             $table->string('hiddenLocation')->nullable();
             $table->string('home')->nullable();

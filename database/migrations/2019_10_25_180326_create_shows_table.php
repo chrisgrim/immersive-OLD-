@@ -14,8 +14,8 @@ class CreateShowsTable extends Migration
     public function up()
     {
         Schema::create('shows', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('event_id');
+            $table->id();
+            $table->foreignId('event_id');
             $table->dateTime('date');
             $table->timestamps();
             $table->foreign('event_id')

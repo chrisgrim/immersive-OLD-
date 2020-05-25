@@ -46,4 +46,9 @@ return [
         'redirect' => env('FACEBOOK_REDIRECT'),
     ],
 
+    'airtable' => [
+        'api_key' => env('AIRTABLE_API_KEY'),
+        'table' => env('AIRTABLE_ID'),
+    ],
+
 ];

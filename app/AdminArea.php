@@ -27,10 +27,12 @@ class AdminArea extends Model
             $remotelocations[] = $remote->location;
         };
 
+        $table = config('services.airtable.table');
+        $key = config('services.airtable.api_key');
         Http::withHeaders([
-            'Authorization' => 'Bearer keyFh096OT6FXNB3x',
+            'Authorization' => "Bearer $key",
             'Content-Type' => 'application/json'
-        ])->post('https://api.airtable.com/v0/appCSC5frNVDpmzun/Submissions', [
+        ])->post("https://api.airtable.com/v0/$table/Submissions", [
             'fields' => [
                 'Show Title' => $event->name,
                 'Region' => $event->location->city ? $event->location->city : 'remote',
@@ -42,9 +44,11 @@ class AdminArea extends Model
                 'Price' => $event->price_range,
                 'Description' => $event->description,
                 'Category' => $event->category->name,
-                'Audience role' => $event->advisories->contactAdvisories,
+                'Audience role' => $event->advisories->audience,
+                'Remote Description' => $event->remote_description,
+                'Interactive Level' => $event->interactive_level->name,
                 'Physical Contact' => implode(", ", $contactlevels),
-                'Advisory for Sexual Violence' => $event->advisories->sexualViolence ? 'yes' : 'no',
+                'Advisory for Sexual Content' => $event->advisories->sexual ? $event->advisories->sexualDescription : 'none',
                 'Other Content Advisories' => implode(", ", $contentadvisories),
                 'Wheelchair accessible?' => $event->advisories->wheelchairReady ? 'yes' : 'no',
                 'Mobility Advisories' => implode(", ", $mobilityadvisories),

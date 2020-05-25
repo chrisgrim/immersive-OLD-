@@ -12,17 +12,18 @@
                         v-model="showType" 
                         :show-labels="false"
                         :options="showTypeOptions"
-                        :class="{ active: active == 'type' }"
+                        :class="{ active: active == 'type','error': $v.$error }"
                         placeholder="Show Type" 
                         open-direction="bottom"
                         :allowEmpty = "false"
+                        @select="dates = []"
                         @click="active = 'type'"
                         @blur="active = null">
                         </multiselect>
                     </div>
                 </div>
                 
-                <div v-show="showType == 'Specific Dates'" class="specific-show-dates container grid">
+                <div v-show="showType == 'Specific Dates'" class="specific-show-dates">
                     <section class="event-enter-showtimes">
                         <div class="field">
                             <label> Show Times</label>
@@ -42,6 +43,8 @@
                                 <p class="error" v-if="!$v.showTimes.required">Please give a brief description of show times</p>
                             </div>
                         </div>
+                    </section>
+                    <section class="ticket-section">
                         <div class="field cost">
                             <label class="area"> Ticket types and prices </label>
                             <div class="create-shows__ticket-box">
@@ -127,7 +130,7 @@
                                 </div>
                             </div>
                             <div v-if="showEmbargoDate">
-                                <div class="calendar">
+                                <div class="embargo-calendar">
                                     <flat-pickr
                                         v-model="embargoDate"
                                         :config="embargoCalendarConfig"
@@ -139,14 +142,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="event-create__submit-button">
-                            <button :disabled="disabled" class="create" @click.prevent="onSubmit()"> Next </button>
-                        </div>
                     </section>
                 </div>
            
            
-                <div v-show="showType == 'Ongoing'" class="ongoing-show-dates container grid">
+                <div v-show="showType == 'Ongoing'" class="ongoing-show-dates">
                     <section class="event-enter-showtimes">
                         <div class="field">
                             <label> Show Times</label>
@@ -275,7 +275,7 @@
                                 </div>
                             </div>
                             <div v-if="showEmbargoDate">
-                                <div class="calendar">
+                                <div class="embargo-calendar">
                                     <flat-pickr
                                         v-model="embargoDate"
                                         :config="embargoCalendarConfig"
@@ -287,13 +287,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="event-create__submit-button">
-                            <button :disabled="disabled" class="create" @click.prevent="onSubmit()"> Next </button>
-                        </div>
                     </section>
                 </div>
            
-                <div v-show="showType == 'Anytime'" class="everyday-show-dates container grid">
+                <div v-show="showType == 'Anytime'" class="everyday-show-dates">
                     <section class="event-enter-showtimes">
                         <div class="field">
                             <label> Show Times</label>
@@ -372,7 +369,7 @@
                                 </div>
                             </div>
                             <div v-if="showEmbargoDate">
-                                <div class="calendar">
+                                <div class="embargo-calendar">
                                     <flat-pickr
                                         v-model="embargoDate"
                                         :config="embargoCalendarConfig"
@@ -384,9 +381,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="event-create__submit-button" style="margin-top:6rem">
-                            <button :disabled="disabled" class="create" @click.prevent="onSubmit()"> Next </button> 
-                        </div>
                     </section>
                 </div>
 
@@ -407,10 +401,15 @@
                 <button class="btn del" @click.prevent="onFreeTicket()">It is</button>
             </div>
         </modal>
-
-        <div class="create-button__in-nav">
+        
+         <div class="event-create__submit-button">
+            <button :disabled="disabled" @click.prevent="onSubmit('exit')" class="nav-back-button"> Save and Exit </button>
+        </div>
+        <div class="create-button__back">
             <button :disabled="disabled" class="create" @click.prevent="onBack('category')"> Back </button>
-            <button :disabled="disabled" class="create" @click.prevent="onSubmit()"> Next </button>
+        </div>
+        <div class="create-button__forward">
+            <button :disabled="disabled" class="create" @click.prevent="onSubmit()"> Save and continue </button>
         </div>
 
     </div>
@@ -475,7 +474,7 @@ export default {
             showEmbargoDate: this.event.embargo_date ? true : false,
 	        calendarConfig: this.initializeCalendarObject(),
             mobileCalendarConfig: this.initializeMobileCalendarObject(),
-            embargoCalendarConfig: this.initializeCalendarObject(),
+            embargoCalendarConfig: this.initializeEmbargoCalendarObject(),
             week: this.event.show_on_going ? this.event.show_on_going : this.initializeWeekObject(),
             tickets: this.event.shows.length ? this.event.shows[0].tickets : [this.initializeTicketObject()],
             showTimes: this.event.shows.length ? this.event.show_times : '',
@@ -488,7 +487,8 @@ export default {
             placeholdero: 'Please provide a brief description of weekly show times. For example:' + '\n' + '\n' + '10:00PM shows on Monday & Tuesday.' + '\n' + '12:00PM on Wednesday and Thursday.',
             placeholdera: 'Please provide a brief description of daily times. For example:' + '\n' + '\n' + 'Show begins everyday at 12PM.' + '\n' + 'Enjoy at any time.',
             showType: '',
-            showTypeOptions: ['Specific Dates', 'Ongoing', 'Anytime']
+            showTypeOptions: ['Specific Dates', 'Ongoing', 'Anytime'],
+            exit: false,
 
         }
     },
@@ -511,6 +511,17 @@ export default {
                 minDate: "today",
                 maxDate: new Date().fp_incr(180),
                 mode: "multiple",
+                inline: true,
+                showMonths: 1,
+                dateFormat: 'Y-m-d H:i:s',     
+            }
+        },
+
+        initializeEmbargoCalendarObject() {
+            return {
+                minDate: "today",
+                maxDate: new Date().fp_incr(180),
+                mode: "single",
                 inline: true,
                 showMonths: 1,
                 dateFormat: 'Y-m-d H:i:s',     
@@ -571,8 +582,6 @@ export default {
         },
 
         onLoad() {
-            this.embargoCalendarConfig.showMonths = 1;
-            this.embargoCalendarConfig.mode = 'single';
             if (this.event.showtype == 'a') { return this.showType = 'Anytime'};
             if (this.event.showtype == 'o') { return this.showType = 'Ongoing'};
             if (this.event.showtype == 's') { return this.showType = 'Specific Dates'};
@@ -585,7 +594,8 @@ export default {
             });
         },
 
-        checkFreeTicket() {
+        checkFreeTicket(value) {
+            value == 'exit' ? this.exit = true : false;
             this.tickets.map(value => {
                 if (value.ticket_price == 0)  {return this.modal = true};
             });
@@ -602,15 +612,14 @@ export default {
             this.disabled = false;
         },
 
-        onSubmit() {
+        onSubmit(value) {
          	if (this.checkVuelidate()) { return false };
-            this.checkFreeTicket();
+            this.checkFreeTicket(value);
             if (this.modal && !this.freeTicket) { return false };
 
             axios.post(this.endpoint, this.submitObject)
             .then(res => {  
-                console.log(res.data)
-                this.onForward('description') 
+                value == 'exit' || this.exit == true ? this.onBackInitial() : this.onForward('description');
             })
             .catch(err => { this.onErrors(err) });
         },

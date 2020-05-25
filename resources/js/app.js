@@ -73,6 +73,9 @@ Vue.component('vue-nav', () => import('./pages/layouts/nav.vue'));
 Vue.component('nav-search', () => import('./pages/layouts/nav-search.vue'));
 Vue.component('profile-button', () => import('./pages/layouts/profile-button.vue'));
 
+//Footer
+Vue.component('vue-footer', () => import('./pages/layouts/footer.vue'));
+
 
 //Components
 Vue.component('favorite', () => import('./pages/layouts/favorite.vue'));
@@ -85,6 +88,8 @@ Vue.component('vue-email-verify', () => import('./pages/layouts/email-verified.v
 
 //Create Events
 Vue.component('vue-create-nav', () => import('./pages/create/nav.vue'));
+Vue.component('vue-create-organizer-nav', () => import('./pages/create/organizer-nav.vue'));
+Vue.component('vue-create-nav-bottom-bar', () => import('./pages/create/nav-bottom-bar.vue'));
 Vue.component('create-location-google', () => import('./pages/create/location-google.vue'));
 Vue.component('create-category', () => import('./pages/create/category.vue'));
 Vue.component('create-organizer', () => import('./pages/create/organizer.vue'));
@@ -117,6 +122,7 @@ Vue.component('admin-user', () => import('./pages/adminArea/admin-user.vue'));
 Vue.component('admin-organizer', () => import('./pages/adminArea/admin-organizer.vue'));
 Vue.component('admin-content-advisories', () => import('./pages/adminArea/admin-content-advisories.vue'));
 Vue.component('vue-admin-remote-locations', () => import('./pages/adminArea/admin-remote-locations.vue'));
+Vue.component('vue-admin-interactive-levels', () => import('./pages/adminArea/admin-interactive-levels.vue'));
 
 //Profile
 Vue.component('user-profile', () => import('./pages/profile/profile-index.vue'));
@@ -149,6 +155,7 @@ Vue.component('vue-event-edit-listing-item', () => import('./pages/events/compon
 //Login z
 Vue.component('login-pop', () => import('./pages/layouts/login-pop.vue'));
 Vue.component('vue-register', () => import('./pages/layouts/register.vue'));
+Vue.component('vue-reset-password', () => import('./pages/layouts/reset-password.vue'));
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -179,6 +186,11 @@ if(document.getElementById("bodyArea")){
       el: '#bodyArea',
       store,
   });
+};
+if(document.getElementById("footer")){
+    const footer = new Vue({
+        el: '#footer',
+    });
 };
 if(document.getElementById("flash")){
   const flash = new Vue({

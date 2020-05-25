@@ -6,9 +6,6 @@ use Illuminate\Http\Request;
 use App\Event;
 use App\Show;
 use App\ShowOnGoing;
-use Carbon\CarbonPeriod;
-use Carbon\CarbonInterval;
-use Carbon\Carbon;
 use App\Http\Requests\ShowStoreRequest;
 
 class ShowsController extends Controller
@@ -42,51 +39,18 @@ class ShowsController extends Controller
     {
         if($request->onGoing) {
             ShowOnGoing::saveNewShowOnGoing($request, $event);
-            $dates=[];
-            $period = CarbonPeriod::create(Carbon::now()->startOfDay(), Carbon::now()->startOfDay()->addMonths(6));
-            foreach ($period as $date) {
-                if ($date->isMonday() && $request->week['mon']) {$dates[]=$date->format('Y-m-d H:i:s');}
-                if ($date->isTuesday() && $request->week['tue']) {$dates[]=$date->format('Y-m-d H:i:s');}
-                if ($date->isWednesday() && $request->week['wed']) {$dates[]=$date->format('Y-m-d H:i:s');}
-                if ($date->isThursday() && $request->week['thu']) {$dates[]=$date->format('Y-m-d H:i:s');}
-                if ($date->isFriday() && $request->week['fri']) {$dates[]=$date->format('Y-m-d H:i:s');}
-                if ($date->isSaturday() && $request->week['sat']) {$dates[]=$date->format('Y-m-d H:i:s');}
-                if ($date->isSunday() && $request->week['sun']) {$dates[]=$date->format('Y-m-d H:i:s');}
-            }
-            $request->request->add(['dates' => $dates]);
             Show::deleteOld($request, $event);
             Show::saveNewShows($request, $event);
         }
 
         if ($request->always) {
-            $event->shows()->delete();
-            $event->showOnGoing()->update([
-                'mon' => true,
-                'tue' => true,
-                'wed' => true,
-                'thu' => true,
-                'fri' => true,
-                'sat' => true,
-                'sun' => true,
-            ]);
-            $show = $event->shows()->create([
-                'date' => Carbon::now()->addMonths(6)->format('Y-m-d H:i:s'),
-            ]);
-            foreach ($request->tickets as $ticket) {
-                 $show->tickets()->updateOrCreate([
-                    'name' => $ticket['name'],
-                ],
-                [
-                    'ticket_price' => str_replace('$', '', $ticket['ticket_price'])
-                ]);
-            }
+            Show::saveAlwaysShow($request, $event);
         }
 
         if ($request->shows) {
             Show::deleteOld($request, $event);
             Show::saveNewShows($request, $event);
         }
-
 
         Show::updateEvent($request, $event);
         $event = $event->fresh();

@@ -12,7 +12,7 @@ class Advisory extends Model
     * @var array
     */
     protected $fillable = [
-    	'wheelchairReady','sexualViolence','sexualViolenceDescription','mobilityAdvisories','contactAdvisories','event_id','ageRestriction'
+    	'wheelchairReady','sexual','sexualDescription','mobilityAdvisories','contactAdvisories','event_id','ageRestriction', 'audience'
     ];
     
     /**

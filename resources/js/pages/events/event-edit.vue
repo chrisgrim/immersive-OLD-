@@ -153,9 +153,9 @@
         <div>
            <div class="new-organization">
                 <div class="new-organization__title">
-                    <h3>Add another organization</h3>
+                    
                     <a href="/organizer/create">
-                        <button class="new-organization__add"><p>+</p></button>
+                        <button class="new-organization__add">Add another organization</button>
                     </a>
                 </div>
             </div>

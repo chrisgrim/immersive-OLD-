@@ -15,3 +15,7 @@
         <message-show :loadmessages="{{ $conversation }}" :loaduser="{{ auth()->user() }}"></message-show> 
     </div>
 @endsection
+
+@section('footer')
+    <vue-footer></vue-footer>
+@endsection 

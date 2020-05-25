@@ -5,11 +5,10 @@
 
 .event-create__shows {
     width:100%;
-    padding: 4rem 8rem 4rem 8rem;
+    padding: 9rem 8rem 14rem 8rem;
 }
 .specific-show-dates, .ongoing-show-dates, .everyday-show-dates {
-    width: 100% !important;
-    grid-template-columns: 1fr minmax(680px, 1fr);
+    max-width: 60.2rem;
 }
 
 .show-type-selection {
@@ -21,13 +20,25 @@
     width: 90%;
     min-height: 320px;
 }
+
+
 section.event-enter-showtimes {
 }
 section.event-enter-showdates {
-
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+section.ticket-section {
+    padding-bottom: 5rem;
 }
 .calendar .flatpickr-calendar.inline {
     margin:inherit;
+}
+.embargo-calendar {
+    margin-top:3rem;
+}
+.embargo-calendar .flatpickr-calendar.inline {
+    margin: inherit;
 }
 
 .create-shows__ticket-box {
@@ -64,7 +75,7 @@ section.event-enter-showdates {
 }
 
 .week-calendar {
-    grid-template-columns: repeat(7,1fr);
+    grid-template-columns: repeat(7,1fr) !important;
     grid-column-gap:0 !important;
     border: 1px solid #ebebeb;
     border-radius: 5px;
@@ -124,14 +135,36 @@ button.delete-circle {
 }
 
 @media (max-width: 768px) {
+
     section.event-enter-showtimes {
         margin: 0;
-        margin-bottom: 4rem;
+        margin-bottom: 7rem;
     }
     section.event-enter-showdates {
         margin-bottom: 4rem;
     }
     .event-create-tab__section {
         margin: 2rem auto 10rem auto;
+    }
+    .event-create__shows {
+        padding: 4rem 2rem 14rem 2rem;
+    }
+    .calendar .flatpickr-calendar.inline {
+        width: 301px !important;
+    }
+    .calendar .flatpickr-days {
+        width: 301px !important;
+    }
+    .show-type-selection {
+        width: 100%;
+    }
+    .ticket-box__element {
+        grid-template-columns: 1fr 1fr !important;
+    }
+    .week-calendar__day {
+        line-height: 6rem;
+        & h4 {
+            font-size: 1rem;
+        }
     }
 }

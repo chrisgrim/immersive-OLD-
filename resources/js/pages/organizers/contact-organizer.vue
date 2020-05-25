@@ -131,7 +131,6 @@
             isVerifyVisible() {
                 return this.isVerifyVisible ? this.toggleBodyClass('addClass', 'noscroll') : this.toggleBodyClass('removeClass', 'noscroll');
             },
-
         },
 
         validations: {

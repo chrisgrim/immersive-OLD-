@@ -57,6 +57,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -135,7 +140,7 @@ __webpack_require__.r(__webpack_exports__);
         return this.imageFile ? ['image/jpeg', 'image/png', 'image/gif'].includes(this.imageFile.file.type) : true;
       },
       imageRatio: function imageRatio() {
-        return this.imageFile ? this.imageFile.width > 800 && this.imageFile.height > 400 : true;
+        return this.imageFile ? this.imageFile.width > 800 && this.imageFile.height > 450 : true;
       }
     }
   }
@@ -205,7 +210,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "event-create__image container" }, [
+  return _c("div", { staticClass: "event-create__image" }, [
     _c("section", { staticClass: "field" }, [
       _c("h2", { staticStyle: { "text-align": "center" } }, [
         _vm._v("Upload Image")
@@ -258,7 +263,7 @@ var render = function() {
                               _vm._v("Click here to upload image"),
                               _c("br"),
                               _vm._v(
-                                "Must be at least 1280 x 800 and under 20mb"
+                                "Must be at least 800 x 450 and under 20mb"
                               )
                             ])
                           : _vm._e(),
@@ -302,7 +307,7 @@ var render = function() {
                   _vm._v(" "),
                   !_vm.$v.imageFile.imageRatio
                     ? _c("p", { staticClass: "error" }, [
-                        _vm._v("The image needs to be at least 800 x 400")
+                        _vm._v("The image needs to be at least 800 x 450")
                       ])
                     : _vm._e()
                 ])
@@ -312,7 +317,24 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "create-button__in-nav" }, [
+    _c("div", { staticClass: "event-create__submit-button" }, [
+      _c(
+        "button",
+        {
+          staticClass: "nav-back-button",
+          attrs: { disabled: _vm.disabled },
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              return _vm.onBackInitial()
+            }
+          }
+        },
+        [_vm._v(" Save and Exit ")]
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "create-button__back" }, [
       _c(
         "button",
         {
@@ -326,8 +348,10 @@ var render = function() {
           }
         },
         [_vm._v(" Back ")]
-      ),
-      _vm._v(" "),
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "create-button__forward" }, [
       _vm.readyToSubmit
         ? _c(
             "button",

@@ -14,16 +14,16 @@ class CreateContactLevelsTable extends Migration
     public function up()
     {
         Schema::create('contact_levels', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
+            $table->id();
+            $table->foreignId('user_id');
             $table->string('level')->unique();
             $table->boolean('admin')->default(0);
             $table->integer('rank')->default(0);
             $table->timestamps();
         });
         Schema::create('contact_level_event', function(Blueprint $table) {
-            $table->unsignedBigInteger('event_id');
-            $table->unsignedBigInteger('contact_level_id');
+            $table->foreignId('event_id');
+            $table->foreignId('contact_level_id');
             $table->timestamps();
         });
     }

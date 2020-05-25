@@ -14,9 +14,9 @@ class CreateStaffPicksTable extends Migration
     public function up()
     {
         Schema::create('staff_picks', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('event_id')->unique();
-            $table->unsignedBigInteger('user_id');
+            $table->id();
+            $table->foreignId('event_id')->unique();
+            $table->foreignId('user_id');
             $table->integer('rank')->default(5);
             $table->dateTime('start_date');
             $table->dateTime('end_date');

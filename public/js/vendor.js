@@ -1,4 +1,4 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["/js/vendor"],{
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[71],{
 
 /***/ "./node_modules/@d_hristov/get-value/dist/get-value.es.js":
 /*!****************************************************************!*\

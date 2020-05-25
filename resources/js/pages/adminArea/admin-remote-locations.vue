@@ -17,6 +17,12 @@
             placeholder="Remote Location"
             @blur="saveLocation(remoteLocation)"
             />
+            <textarea
+            type="text" 
+            v-model="remoteLocation.description" 
+            placeholder="Remote location description"
+            @blur="saveDescription(remoteLocation)"
+            /></textarea> 
             <input 
             type="text" 
             v-model="remoteLocation.rank" 
@@ -50,16 +56,22 @@
                         <div class="name">
                             <input 
                             type="text" 
-                            v-model="remoteLocation" 
+                            v-model="remoteLocation.location" 
                             placeholder="Remote Location"
                             :class="{ active: activeItem = 'location'}"
                             @click="activeItem = 'location'"
                             @blur="activeItem = null"
-                            @input="$v.remoteLocation.$touch"
+                            @input="$v.remoteLocation.location.$touch"
                             />
-                            <div v-if="$v.remoteLocation.$error" class="validation-error">
-                                <p class="error" v-if="!$v.remoteLocation.required">Please Add Remote Location </p>
+                            <div v-if="$v.remoteLocation.location.$error" class="validation-error">
+                                <p class="error" v-if="!$v.remoteLocation.location.required">Please Add Remote Location </p>
                             </div>
+                            <textarea
+                            type="text" 
+                            v-model="remoteLocation.description" 
+                            placeholder="Remote location description"
+                            @blur="saveDescription(remoteLocation)"
+                            /></textarea> 
                         </div>
                     </div>
                 </div>
@@ -82,7 +94,10 @@
             return {
                 remoteLocations: '',
                 activeItem: '',
-                remoteLocation: '',
+                remoteLocation: {
+                    location: '',
+                    description: '',
+                },
                 isModalVisible: false,
                 isEditModalVisible: false,
                 modalDelete: '',
@@ -101,12 +116,12 @@
                 this.$v.$touch(); 
                 if (this.$v.$invalid) { return false };
                 let data = {
-                    location: this.remoteLocation
+                    location: this.remoteLocation.location,
+                    description: this.remoteLocation.description
                 };
 
                 axios.post('/remotelocations', data)
                 .then(response => { 
-                    console.log(response.data);
                     this.isModalVisible = false;
                     this.remoteLocation = '';
                     this.loadLocations();
@@ -153,6 +168,19 @@
                 });
             },
 
+            saveDescription(remoteLocation) {
+                let data = {
+                    description: remoteLocation.description
+                };
+                axios.patch(`/remotelocations/${remoteLocation.id}`, data)
+                .then(response => { 
+                   console.log(response.data)
+                })
+                .catch(error => { 
+                    this.serverErrors = error.response.data.errors; 
+                });
+            },
+
             saveRank(remoteLocation) {
                 let data = {
                     rank: remoteLocation.rank
@@ -176,7 +204,12 @@
 
         validations: {
             remoteLocation: {
-                required,
+                location: {
+                    required,
+                },
+                description: {
+                    required,
+                }
             },
         },
     }

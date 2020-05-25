@@ -1,5 +1,5 @@
 <template>
-	<div class="event-create__description container grid">
+	<div class="event-create__description grid">
         <section class="event-create">
             <div class="title">
                 <h2>Description</h2>
@@ -81,14 +81,16 @@
                     <p class="error" v-if="!$v.tagName.required">Must select at least one Tag</p>
                 </div>
             </div>
-            <div class="event-create__submit-button">
-                <button :disabled="disabled" @click.prevent="onSubmit()" class="create"> Next </button>
-            </div>
         </section>
-
-        <div class="create-button__in-nav">
+        
+        <div class="event-create__submit-button">
+            <button :disabled="disabled" @click.prevent="onSubmit('exit')" class="nav-back-button"> Save and Exit </button>
+        </div>
+        <div class="create-button__back">
             <button :disabled="disabled" class="create" @click.prevent="onBack('shows')"> Back </button>
-            <button :disabled="disabled" class="create" @click.prevent="onSubmit()"> Next </button>
+        </div>
+        <div class="create-button__forward">
+            <button :disabled="disabled" class="create" @click.prevent="onSubmit()"> Save and continue </button>
         </div>
         
     </div>
@@ -135,12 +137,11 @@
                 }
             },
 
-			onSubmit() {
+			onSubmit(value) {
                 if (this.checkVuelidate()) { return false };
 				axios.patch(this.endpoint, this.group)
                 .then(res => { 
-                    console.log(res.data);
-                    this.onForward('advisories');
+                    value == 'exit' ? this.onBackInitial() : this.onForward('advisories');
                 })
                 .catch(err => { this.onErrors(err) });
 			},

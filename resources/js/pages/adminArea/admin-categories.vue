@@ -28,6 +28,12 @@
                      <CubeSpinner :loading="isLoading"></CubeSpinner>
                 </label> 
             </div>
+            <input 
+            type="text" 
+            v-model="category.credit" 
+            placeholder="image credit"
+            @blur="saveCredit(category)"
+            />
             <div>
                 <input 
                 type="text" 
@@ -283,6 +289,19 @@
                 axios.patch(`/categories/${category.slug}`, data)
                 .then(response => { 
                    console.log(response.data)
+                })
+                .catch(error => { 
+                    this.serverErrors = error.response.data.errors; 
+                });
+            },
+
+            saveCredit(category) {
+                let data = {
+                    credit: category.credit
+                };
+                axios.patch(`/categories/${category.slug}`, data)
+                .then(res => { 
+                   console.log(res.data)
                 })
                 .catch(error => { 
                     this.serverErrors = error.response.data.errors; 

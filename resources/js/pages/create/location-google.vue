@@ -1,5 +1,5 @@
 <template>
-	<div class="event-create__location container grid">
+	<div class="event-create__location grid">
 		<section class="event-enter-location">
             <div class="title">
                 <h2>Location</h2>
@@ -55,7 +55,7 @@
                     />
                     <div v-if="$v.location.$error" class="validation-error">
                         <p class="error" v-if="!$v.location.latitude.ifLocation">Please select from the list of locations</p>
-                        <p class="error" v-if="!$v.location.city.ifLocation">Please include at least the city</p>
+                        <p class="error" v-if="!$v.location.city.ifLocation">We couldn't determine the city. Please try again.</p>
                     </div>
                 </div>   
             </div>
@@ -82,10 +82,19 @@
                         <p class="error" v-if="!$v.remoteLocations.ifNoLocation">Please choose at least one Mobile Location</p>
                     </div>
                 </div>
+                <div class="field">
+                    <label class="area"> Helpful remote location event suggestions (optional) </label>
+                    <textarea 
+                    type="text"
+                    name="description" 
+                    v-model="description" 
+                    placeholder="eg. Sign on 10 minutes early..."
+                    :class="{ active: active == 'description'}"
+                    @click="active = 'description'"
+                    @blur="active = null" 
+                    rows="8"></textarea>
+                </div>
             </div>
-            <div class="event-create__submit-button">
-                <button :disabled="disabled" @click.prevent="onSubmit()" class="create"> Next </button>
-            </div> 
             <CubeSpinner :loading="loading"></CubeSpinner>
         </section>
         <section class="event-show-location" :style="pageHeight">
@@ -110,9 +119,14 @@
                 </div>  
             </div>
         </section>
-		<div class="create-button__in-nav">
+        <div class="event-create__submit-button">
+            <button :disabled="disabled" @click.prevent="onSubmit('exit')" class="nav-back-button"> Save and Exit </button>
+        </div>
+		<div class="create-button__back">
             <button :disabled="disabled" class="create" @click.prevent="onBack('title')"> Back </button>
-            <button :disabled="disabled" class="create" @click.prevent="onSubmit()"> Next </button>
+        </div>
+        <div class="create-button__forward">
+            <button :disabled="disabled" class="create" @click.prevent="onSubmit()"> Save and Continue </button>
         </div>
     </div>
 </template>
@@ -144,7 +158,7 @@
 
             remoteLocationArray() {
                 let data; 
-                return data = {remote: this.remoteLocations.map(a => a.location)};
+                return data = {remote: this.remoteLocations.map(a => a.location), description: this.description};
             },
 
             endpoint() {
@@ -167,6 +181,7 @@
                 hasLocation: this.event.hasLocation,
                 remoteLocationOptions: this.remote ? this.remote : '',
                 remoteLocations: this.event.remotelocations ? this.event.remotelocations : '',
+                description: this.event.remote_description ? this.event.remote_description : '',
                 serverErrors: [],
                 loading: false,
 			}
@@ -198,25 +213,23 @@
                 }
             },
 			
-
-			onSubmit() {
+			onSubmit(value) {
 				if (this.checkVuelidate()) { return false };
-
-                return this.location.hiddenLocationToggle && this.hasLocation ? this.onCorsSubmit() : this.onNormalSubmit();
+                return this.location.hiddenLocationToggle && this.hasLocation ? this.onCorsSubmit(value) : this.onNormalSubmit(value);
 			},
 
-            onNormalSubmit() {
+            onNormalSubmit(value) {
+                console.log(this.remoteLocationArray);
                 axios.patch( this.endpoint, this.hasLocation ? this.location : this.remoteLocationArray )
                 .then(res => {  
-                    // console.log(res.data);    
-                    this.onForward('category');
+                    value == 'exit' ? this.onBackInitial() : this.onForward('category');
                 })
                 .catch(err => {
                     this.onErrors(err);
                 });
             },
 
-            onCorsSubmit() {
+            onCorsSubmit(value) {
                 this.loading = true;
                 axios.get(this.corsEndpoint)
                 .then(res => {
@@ -225,7 +238,7 @@
                 })
                 .then(res => {  
                     axios.patch (this.endpoint, this.location )     
-                    this.onForward('category');
+                    value == 'exit' ? this.onBackInitial() : this.onForward('category');
                 })
                 .catch(err => {
                     this.onErrors(err);
@@ -240,7 +253,7 @@
             },
 
             handleResize() {
-                this.pageHeight = `height:calc(${window.innerHeight}px - 8rem)`;
+                this.pageHeight = `height:calc(${window.innerHeight}px - 7rem)`;
             },
 
             addTag (newTag) {
@@ -296,7 +309,7 @@
                 ifNoLocation() {
                     return !this.hasLocation ? this.remoteLocations.length ? true : false : true
                 }
-            }
+            },
 		},
 			
 };

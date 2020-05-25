@@ -43,6 +43,12 @@
             </div>
             </a>
 
+            <a href="/interactivelevels/create">
+            <div class="admin-menu__item" >
+                Interactive Levels
+            </div>
+            </a>
+
             <a href="/master/userlist">
             <div class="admin-menu__item" >
                 Edit Users

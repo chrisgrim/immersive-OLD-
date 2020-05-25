@@ -48,6 +48,34 @@ class Show extends Model
         $event->shows()->whereNotIn('date', $request->dates)->delete();
     }
 
+    public static function saveAlwaysShow($request, $event)
+    {
+        foreach($event->shows as $show){
+            $show->tickets()->delete();
+        }
+        $event->shows()->delete();
+        $event->showOnGoing()->update([
+            'mon' => true,
+            'tue' => true,
+            'wed' => true,
+            'thu' => true,
+            'fri' => true,
+            'sat' => true,
+            'sun' => true,
+        ]);
+        $show = $event->shows()->create([
+            'date' => Carbon::now()->addMonths(6)->format('Y-m-d H:i:s'),
+        ]);
+        foreach ($request->tickets as $ticket) {
+             $show->tickets()->updateOrCreate([
+                'name' => $ticket['name'],
+            ],
+            [
+                'ticket_price' => str_replace('$', '', $ticket['ticket_price'])
+            ]);
+        }
+    }
+
     /**
      * Saving the shows and tickets to database
      *

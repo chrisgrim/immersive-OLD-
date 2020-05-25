@@ -4,9 +4,9 @@
 
 
 .account-index {
-    width:72%;
-    margin:auto;
-    padding:7rem 0rem;
+    width: 100%;
+    margin: auto;
+    padding: 7rem 8rem;
 }
 .account-notifications_header {
     margin:4rem 0rem;
@@ -15,49 +15,33 @@
     grid-template-columns: 1fr 1fr 1fr;
     margin: 5rem 0;
     grid-gap: 1rem;
+    grid-auto-columns: 1fr;
 }
 .account-index__element {
     border: 1px solid #d4d4d4;
     border-radius: 5px;
     padding: 2rem;
     box-shadow: 2px 3px 5px #f3f3f3;
+    height: 100%;
     & h3 {
         margin: 0 0 1rem;
-        font-size: 1.7rem;
+        font-size: 1.5rem;
+        color: #353535;
+        font-weight: 600;
+    }
+    & p {
+        font-weight: 300;
+        font-size: 1.4rem;
     }
 }
 
 
 
-
-
-
-
-.account {
-    width:72%;
-    margin:auto;
-    & .header {
-        margin-top: 4rem;
-        & h2 {
-            font-size: 3rem;
-            margin:1rem 0rem;
-        }
+@media (max-width: 768px) { 
+    .account-index {
+        padding:0 2rem;
     }
-    & .content {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        margin: 5rem 0rem;
-        grid-gap: 1rem;
-        & .item {
-            border: 1px solid #d4d4d4;
-            border-radius: 5px;
-            padding: 2rem;
-            box-shadow: 2px 3px 5px #f3f3f3;
-            & h3 {
-                margin:0;
-                margin-bottom: 1rem;
-                font-size: 1.7rem;
-            }
-        }
+    .account-index-content {
+        grid-template-columns: 1fr;
     }
 }

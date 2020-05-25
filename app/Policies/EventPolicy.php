@@ -19,8 +19,9 @@ class EventPolicy
      */
     public function update(User $user, Event $event)
     {
-        return $event->user_id == $user->id || $user->isModerator();
+        return $event->user_id == $user->id || $user->type == 'a' || $user->type == 'm';
     }
+
 
     /**
      * Determine whether the user can view the event.
@@ -40,6 +41,6 @@ class EventPolicy
         && $event->show_times 
         && $event->description 
         && $event->largeImagePath
-        || $user->isModerator();
+        || $user->type == 'a';
     }
 }

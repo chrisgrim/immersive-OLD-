@@ -1,6 +1,6 @@
 <template>
     <section class="event-search-map">
-        <div v-if="desktop" class="event-search-map_container" :style="map">
+        <div v-if="desktop" class="event-search-map_container" :style="pageHeight">
             <div>
                 <div class="search-map-updated grid">
                     <label>
@@ -27,7 +27,8 @@
                     <l-map
                     :zoom="zoom"
                     :center="mapCenter"
-                    :style="map"
+                    :minZoom="10"
+                    :style="pageHeight"
                     @update:center="centerUpdate"
                     @update:bounds="boundsUpdate"
                     :options="{ scrollWheelZoom: allowZoom, zoomControl: allowZoom }"
@@ -151,7 +152,7 @@
                 results: 15,
                 locationName: new URL(window.location.href).searchParams.get("name"),
                 desktop: true,
-                map: `height:calc(${window.innerHeight}px - 7rem);`,
+                pageHeight: `height: 100vh;`,
                 mobileMap : `height:${window.innerHeight}px;`,
                 fullMap: false,
                 options: {
@@ -192,7 +193,6 @@
             },
 
             handleResize() {
-                console.log(window.innerWidth);
                 window.innerWidth < 768 ? this.desktop = false : true;
             },
 
@@ -219,7 +219,7 @@
             },
             currentCenter() {
                 this.currentCenter.lat.toString().length > 10 && this.desktop ? this.mapSearch ? this.onMapCenterChanged() : '' : '' ;
-            }
+            },
         },
 
         created() {

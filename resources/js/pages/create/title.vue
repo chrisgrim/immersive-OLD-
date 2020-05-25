@@ -1,5 +1,5 @@
 <template>
-	<div class="event-create__title container grid">
+	<div class="event-create__title">
         <section class="event-create">
             <div class="title">
                 <h2>Title</h2>
@@ -40,16 +40,18 @@
                     <p class="error" v-if="!$v.title.tagLine.maxLength">The tag line is too long.</p>
                 </div>
             </div>
-            <div class="event-create__submit-button">
-                <button :disabled="disabled" @click.prevent="onSubmit()" class="create"> Next </button>
-            </div>
+            
         </section>
 
         <section></section>
-
-        <div class="create-button__in-nav">
+        <div class="event-create__submit-button">
+            <button :disabled="disabled" @click.prevent="onSubmit('exit')" class="nav-back-button"> Save and Exit </button>
+        </div>
+        <div class="create-button__back">
             <button :disabled="disabled" class="create" @click.prevent="onBackInitial()"> Back </button>
-            <button :disabled="disabled" class="create" @click.prevent="onSubmit()"> Next </button>
+        </div>
+        <div class="create-button__forward">
+            <button :disabled="disabled" class="create" @click.prevent="onSubmit()"> Save and continue </button>
         </div>
         
         <modal v-if="modal" @close="modal = false">
@@ -113,10 +115,10 @@
 	        	this.serverErrors = [];
 	        },
 
-			onSubmit() {
+			onSubmit(value) {
                 if (this.checkVuelidate()) { return false };
 				axios.patch( this.endpoint, this.title )
-				.then(res => {  this.onForward('location') })
+				.then(res => { value == 'exit' ? this.onBackInitial() : this.onForward('location') })
             	.catch(err => { this.onErrors(err) });
 			},
 

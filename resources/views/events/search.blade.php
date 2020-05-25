@@ -20,3 +20,7 @@
         <search-listing user="{{ auth()->id() }}" :categories="{{ $categories }}" :searchedevents="{{ $searchedevents }}">
     </div>
 @endsection
+
+@section('footer')
+    <vue-footer></vue-footer>
+@endsection 

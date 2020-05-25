@@ -1,5 +1,8 @@
 @extends('create.index')
 
 @section('created')	
-    <create-shows :event="{{$event}}"></create-shows>
+    <div class="create-body">
+        @include('create.nav')
+        <create-shows :event="{{$event}}"></create-shows>
+    </div>
 @endsection

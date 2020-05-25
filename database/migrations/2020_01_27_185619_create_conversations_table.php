@@ -14,14 +14,14 @@ class CreateConversationsTable extends Migration
     public function up()
     {
         Schema::create('conversations', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->softDeletes();
             $table->timestamps(); 
         });
         Schema::create('conversation_user', function(Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('conversation_id');
-            $table->unsignedBigInteger('user_id');
+            $table->id();
+            $table->foreignId('user_id');
+            $table->foreignId('conversation_id');
             $table->timestamps();
             $table->foreign('conversation_id')->references('id')->on('conversations');
             $table->foreign('user_id')->references('id')->on('users');

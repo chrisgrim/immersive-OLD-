@@ -62,14 +62,16 @@
 @endsection
 
 @section('content')
-
-<div id="bodyArea" class="show">
-     @auth
-        <event-show :loadevent="{{$event}}" :user="{{auth()->user()}}">  
-    @endauth
-    @guest
-        <event-show :loadevent="{{$event}}" user="{{auth()->id()}}">  
-    @endguest
-</div>
-
+    <div id="bodyArea" class="show">
+         @auth
+            <event-show :loadevent="{{$event}}" :user="{{auth()->user()}}">  
+        @endauth
+        @guest
+            <event-show :loadevent="{{$event}}" user="{{auth()->id()}}">  
+        @endguest
+    </div>
 @endsection
+
+@section('footer')
+    <vue-footer></vue-footer>
+@endsection 

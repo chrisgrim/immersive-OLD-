@@ -1,5 +1,5 @@
 <template>
-	<div class="event-create__category container grid">
+	<div class="event-create__category grid">
         <section class="event-enter-category">
             <div class="title">
                 <h2>Immersive Categories</h2>
@@ -32,9 +32,6 @@
             <div>
                 <p v-text="this.selectedCategory ? selectedCategory.description : ''"></p>
             </div>
-            <div class="event-create__submit-button">
-                <button :disabled="disabled" @click.prevent="onSubmit()" class="create"> Next </button>
-            </div>
         </section>
 
         <section v-if="selectedCategory"  class="event-show-category__image" :style="pageHeight">
@@ -44,10 +41,14 @@
             </picture>
         </section>
        
-
-        <div class="create-button__in-nav">
+        <div class="event-create__submit-button">
+            <button :disabled="disabled" @click.prevent="onSubmit('exit')" class="nav-back-button"> Save and Exit </button>
+        </div>
+        <div class="create-button__back">
             <button :disabled="disabled" class="create" @click.prevent="onBack('location')"> Back </button>
-            <button :disabled="disabled" class="create" @click.prevent="onSubmit()"> Next </button>
+        </div>
+        <div class="create-button__forward">
+            <button :disabled="disabled" class="create" @click.prevent="onSubmit()"> Save and Continue </button>
         </div>
     </div>
 </template>
@@ -85,12 +86,11 @@
 
 
 		methods: {
-			onSubmit() {
+			onSubmit(value) {
                 if (this.checkVuelidate()) { return false };
 				axios.patch(this.endpoint, this.selectedCategory)
 				.then(res => {  
-                    // console.log(res.data);    
-                    this.onForward('shows');
+                    value == 'exit' ? this.onBackInitial() : this.onForward('shows');
                 })
                 .catch(err => {
                     this.onErrors(err);
@@ -98,7 +98,7 @@
 			},
 
             handleResize() {
-                this.pageHeight = `height:calc(${window.innerHeight}px - 8rem)`;
+                this.pageHeight = `height:calc(${window.innerHeight}px - 7rem)`;
             },
 
             onLoad() {

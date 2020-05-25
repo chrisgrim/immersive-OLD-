@@ -126,7 +126,7 @@ class AdminAreaController extends Controller
      */
     public function showApproval(Event $event)
     {
-        $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'advisories','showOnGoing','shows','remotelocations');
+        $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'eventreviews', 'staffpick', 'advisories', 'showOnGoing','interactivelevel', 'remotelocations');
         return view('adminArea.showapproval',compact('event'));
     }
 
@@ -138,8 +138,6 @@ class AdminAreaController extends Controller
      */
     public function success(Event $event)
     {
-        AdminArea::storeAirtable($event);
-
         $event = $event->load('user');
 
         $slug = Event::finalSlug($event);
@@ -160,9 +158,10 @@ class AdminAreaController extends Controller
             Message::eventnotification($event, 'Thanks, your event has been approved!', $slug);
         }
 
-        
 
         Mail::to($event->user)->send(new EventApproved($event));
+
+        AdminArea::storeAirtable($event);
 
     }
 

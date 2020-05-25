@@ -43,4 +43,31 @@ class Location extends Model
             'hasLocation' => true,
         ]);
     }
+
+    /**
+     * Store a newly created remote in storage. It is a has many relationship
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public static function storeRemoteLocation($request, $event)
+    {
+        foreach ($request->remote as $loc) {
+            RemoteLocation::firstOrCreate([
+                'location' => strtolower($loc)
+            ],
+            [
+                'user_id' => auth()->user()->id,
+            ]);
+        };
+        
+        $newSync = RemoteLocation::all()->whereIn('location',  array_map('strtolower', $request['remote']));
+        $event->remotelocations()->sync($newSync);
+
+        $event->update([
+            'hasLocation' => false,
+            'location_latlon' => null,
+            'remote_description' => $request->description,
+        ]);
+    }
 }

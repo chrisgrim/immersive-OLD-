@@ -29,7 +29,7 @@ class Event extends Model
     * @var array
     */
 	protected $fillable = [
-    	'slug', 'user_id', 'category_id','organizer_id','description','name','largeImagePath','thumbImagePath','advisories_id', 'organizer_id', 'location_latlon', 'closingDate','websiteUrl','ticketUrl','show_times','price_range', 'status','tag_line', 'hasLocation', 'showtype', 'embargo_date'
+    	'slug', 'user_id', 'category_id','interactive_level_id','organizer_id','description','name','largeImagePath','thumbImagePath','advisories_id', 'organizer_id', 'location_latlon', 'closingDate','websiteUrl','ticketUrl','show_times','price_range', 'status','tag_line', 'hasLocation', 'showtype', 'embargo_date', 'remote_description'
 
     ];
 
@@ -227,6 +227,16 @@ class Event extends Model
     }
 
     /**
+     * Each event can belong to one interactive level
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+     */
+    public function interactive_level() 
+    {
+        return $this->belongsTo(InteractiveLevel::class);
+    }
+
+    /**
      * Each event can belong to many remote types
      *
      * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
@@ -234,16 +244,6 @@ class Event extends Model
     public function remotelocations() 
     {
         return $this->belongsToMany(RemoteLocation::class);
-    }
-
-    /**
-     * Each event can belong to many regions
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
-     */
-    public function regions() 
-    {
-        return $this->belongsToMany(Region::class);
     }
 
     /**
@@ -342,8 +342,8 @@ class Event extends Model
     */
     public static function finalSlug($event) 
     {
-        if(Event::where('slug', '=', str_slug($event->name))->exists()){
-            $slug = str_slug($event->name) . '-' . rand(2, 99);
+        if(Event::withTrashed()->where('slug', '=', str_slug($event->name))->exists()){
+            $slug = str_slug($event->name) . '-' . substr(md5(microtime()),rand(0,26),5);
             if(Event::where('slug', '=', $slug)->exists()){
                 return str_slug($event->name) . '-' . rand(1,50000);
             } else {

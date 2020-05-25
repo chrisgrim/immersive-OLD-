@@ -1,56 +1,95 @@
 <template>
-    <nav class="create">
-    	<div class="grid create-menu" :class="{ review : onReview }">
-            <div class="create-menu__home">
-                <div class="nav-logo">
+    <nav v-if="isNotReview" class="create" :style="pageHeight">
+    	<div class="grid create-nav-header">
+            <div class="create-nav-header__home">
+                <div class="nav-create-logo">
                     <a :href="backUrl">
                         <h3>EI</h3>
                     </a>
                 </div>
             </div>
-            <div class="create-menu__item">     
-                <p v-if="url == `/organizer/create`">Organizer: Let users know about your team!</p>
-                <p v-if="url == `/create-event/${this.event.slug}/title`">Title: First Impressions Matter!</p>
-                <p v-if="url == `/create-event/${this.event.slug}/location`">Location: Give your event an address</p>
-                <p v-if="url == `/create-event/${this.event.slug}/category`">Category: Select the best fit for your event</p>
-                <p v-if="url == `/create-event/${this.event.slug}/shows`">Shows: Choose your Dates and Pricing</p>
-                <p v-if="url == `/create-event/${this.event.slug}/description`">Description: Let your users know about the event</p>
-                <p v-if="url == `/create-event/${this.event.slug}/advisories`">Advisories: Provide warnings</p>
-                <p v-if="url == `/create-event/${this.event.slug}/images`">Image: Entice visitors with a great image</p>
-                <p :class="{ 'review-nav-text' : onReview }" v-if="url == `/create-event/${this.event.slug}/review`">Review: One last chance to make sure everything looks good</p>
+            <div class="nav-back">
+                <button class="nav-back-button"> Save and Exit </button>
             </div>
         </div>
-        <div v-if="showBar" class="create-navbar" :class="{over:hover}">
-            <div class="create-navbar__page" style="width: 14.4%; left: 0%;padding-top:1rem;" :class="{ fill: onTitle }">
-                
-            </div>
-            <div  class="create-navbar__page" style="width: 14.4%; left: 0%;padding-top:1rem;" :class="{ fill: onLocation }">
-                
-            </div>
-            <div  class="create-navbar__page" style="width: 14.4%; left: 0%;padding-top:1rem;" :class="{ fill: onCategory }">
-               
-            </div>
-            <div class="create-navbar__page" style="width: 14.4%; left: 0%;padding-top:1rem;" :class="{ fill: onShows }">
-                
-            </div>
-            <div class="create-navbar__page" style="width: 14.4%; left: 0%;padding-top:1rem;" :class="{ fill: onDescription }">
-                
-            </div>
-            <div class="create-navbar__page" style="width: 14.4%; left: 0%;padding-top:1rem;" :class="{ fill: onAdvisories }">
-               
-            </div>
-            <div class="create-navbar__page" style="width: 14.4%; left: 0%;padding-top:1rem;" :class="{ fill: onImage }">
-               
-            </div>
+        <div v-if="isOrganizer" class="create-nav-guide">
+            <h3>Submit your Organization</h3>
         </div>
+        <div v-else class="create-nav-guide">
+            <h3>Submit your Event</h3>
+        </div>
+
+
+        <div v-if="!isOrganizer" class="grid create-menu">
+            <a :href="`/create-event/${this.event.slug}/title`">
+                <NavMenuItem 
+                :active="{active : url == `/create-event/${this.event.slug}/title`}" 
+                name="Title" 
+                :iconstatus="this.event.name ? 'completed' : 'uncomplete'">
+                </NavMenuItem>
+            </a>
+            <a :href="`/create-event/${this.event.slug}/location`">
+                <NavMenuItem 
+                :active="{active : url == `/create-event/${this.event.slug}/location`}" 
+                name="Location" 
+                :iconstatus="this.event.location_latlon || !this.event.hasLocation ? 'completed' : 'uncomplete'">
+                </NavMenuItem>
+            </a>
+            <a :href="`/create-event/${this.event.slug}/category`">
+                <NavMenuItem 
+                :active="{active : url == `/create-event/${this.event.slug}/category`}" 
+                name="Category" 
+                :iconstatus="this.event.category_id ? 'completed' : 'uncomplete'">
+                </NavMenuItem>
+            </a>
+            <a :href="`/create-event/${this.event.slug}/shows`">
+                <NavMenuItem 
+                :active="{active : url == `/create-event/${this.event.slug}/shows`}" 
+                name="Shows" 
+                :iconstatus="this.event.show_times ? 'completed' : 'uncomplete'">
+                </NavMenuItem>
+            </a>
+            <a :href="`/create-event/${this.event.slug}/description`">
+                <NavMenuItem 
+                :active="{active : url == `/create-event/${this.event.slug}/description`}" 
+                name="Description" 
+                :iconstatus="this.event.description ? 'completed' : 'uncomplete'">
+                </NavMenuItem>
+            </a>
+            <a :href="`/create-event/${this.event.slug}/advisories`">
+                <NavMenuItem 
+                :active="{active : url == `/create-event/${this.event.slug}/advisories`}" 
+                name="Advisories" 
+                :iconstatus="this.event.advisories_id ? 'completed' : 'uncomplete'">
+                </NavMenuItem>
+            </a>
+            <a :href="`/create-event/${this.event.slug}/images`">
+                <NavMenuItem 
+                :active="{active : url == `/create-event/${this.event.slug}/images`}" 
+                name="Image" 
+                :iconstatus="this.event.largeImagePath ? 'completed' : 'uncomplete'">
+                </NavMenuItem>
+            </a>
+            <a v-if="cantReview" :href="canReview">
+                <NavMenuItem 
+                :active="{active : url == `/create-event/${this.event.slug}/review`}" 
+                name="Final Review" 
+                :iconstatus="'locked'">
+                </NavMenuItem>
+            </a>
+           
+        </div>
+        
     </nav>
 </template>
 
 <script>
-    import Multiselect from 'vue-multiselect'
+    import NavMenuItem  from './components/nav-menu-item.vue'
 
 	export default {
 		props: ['event', 'user'],
+
+        components: { NavMenuItem },
 
         computed: {
             onReview() {
@@ -61,6 +100,9 @@
             },
             backUrl() {
                 return this.user.hasCreatedOrganizers  ? '/create-event/edit' : '/'
+            },
+            canReview() {
+                return this.readyToSubmit ? `/create-event/${this.event.slug}/review` : '#'
             }
         },
 
@@ -76,63 +118,15 @@
                 onImage: false,
                 url: window.location.pathname,
                 hover: '',
+                pageHeight:'',
+                isNotReview: window.location.pathname == `/create-event/${this.event.slug}/review` ? false : true,
+                isOrganizer: window.location.pathname == `/organizer/create` ? true : false,
+                readyToSubmit: false,
+                cantReview: this.event.status !== 'p' ? true : false,
             }
         },
 
         methods: {
-            getUrl(data) {
-                if (data === `/create-event/${this.event.slug}/review`) {
-                    this.onTitle = true;
-                    this.onLocation = true;
-                    this.onCategory = true;
-                    this.onShows = true;
-                    this.onDescription = true;
-                    this.onAdvisories = true;
-                    return this.onImage = true;
-                }
-                if (data === `/create-event/${this.event.slug}/images`) {
-                    this.onTitle = true;
-                    this.onLocation = true;
-                    this.onCategory = true;
-                    this.onShows = true;
-                    this.onDescription = true;
-                    this.onAdvisories = true;
-                    return this.onImage = true;
-                }
-                if (data === `/create-event/${this.event.slug}/advisories`) {
-                    this.onTitle = true;
-                    this.onLocation = true;
-                    this.onCategory = true;
-                    this.onShows = true;
-                    this.onDescription = true;
-                    return this.onAdvisories = true;
-                }
-                if (data === `/create-event/${this.event.slug}/description`) {
-                    this.onTitle = true;
-                    this.onLocation = true;
-                    this.onCategory = true;
-                    this.onShows = true;
-                    return this.onDescription = true;
-                }
-                if (data === `/create-event/${this.event.slug}/shows`) {
-                    this.onTitle = true;
-                    this.onLocation = true;
-                    this.onCategory = true;
-                    return this.onShows = true;
-                }
-                if (data === `/create-event/${this.event.slug}/category`) {
-                    this.onTitle = true;
-                    this.onLocation = true;
-                    return this.onCategory = true;
-                }
-                if (data === `/create-event/${this.event.slug}/location`) {
-                    this.onTitle = true;
-                    return this.onLocation = true;
-                }
-                if (data === `/create-event/${this.event.slug}/title`) {
-                    return this.onTitle = true;
-                }
-            },
 
             notAllowed() {
                 if(this.event.status) {
@@ -140,15 +134,52 @@
                 }
             },
 
+            handleResize() {
+                this.pageHeight = `min-height:${window.innerHeight}px`;
+            },
+
+            toggleBodyClass(addRemoveClass, className) {
+                const el = document.querySelector(".create-body");
+                if (addRemoveClass === 'addClass') {
+                    el.classList.add(className);
+                } else {
+                    el.classList.remove(className);
+                }
+            },
+
+            isReview() {
+                !this.isNotReview ? this.toggleBodyClass('addClass', 'hidden') : ''
+            },
+
+            checkSubmissionStatus() {
+                this.event.status !== 'p' &&
+                this.event.status !== 'e' &&
+                this.event.organizer_id && 
+                this.event.name && 
+                (this.event.location_latlon || !this.event.hasLocation) && 
+                this.event.category_id &&
+                this.event.show_times &&
+                this.event.description &&
+                this.event.advisories_id
+                ? this.readyToSubmit = true : false;
+            },
+
+        },
+
+        destroyed() {
+            window.removeEventListener('resize', this.handleResize);
         },
 
         mounted() {
             let data = window.location.pathname;
-            this.getUrl(data);
+            this.isReview();
         },
 
         created() {
             this.notAllowed();
+            window.addEventListener('resize', this.handleResize)
+            this.handleResize();
+            this.checkSubmissionStatus();
         }
     }
 

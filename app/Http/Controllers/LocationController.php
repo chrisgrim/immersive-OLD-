@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Location;
 use App\Event;
-use App\Region;
 use App\RemoteLocation;
 use Illuminate\Http\Request;
 use App\Http\Requests\LocationStoreRequest;
@@ -24,7 +23,7 @@ class LocationController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource. Eager Load location with event. Load all of the regions. Load the pivot table that shows which regions are assigned to this event
+     * Show the form for creating a new resource. Eager Load location with event. Load the pivot table that shows which regions are assigned to this event
      *
      * @return \Illuminate\Http\Response
      */
@@ -36,7 +35,7 @@ class LocationController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource. Eager Load location with event. Load all of the regions. Load the pivot table that shows which regions are assigned to this event
+     * Show the form for creating a new resource. Eager Load location with event. Load the pivot table that shows which regions are assigned to this event
      *
      * @return \Illuminate\Http\Response
      */
@@ -45,11 +44,7 @@ class LocationController extends Controller
         return $data = [
             'location' => $event->location()->first(),
             'pivots' => $event->remotelocations()->get(),
-            'remoteLocations' => RemoteLocation::where('admin', true)->orWhere('user_id', auth()->user()->id)->get()
         ];
-        // return response()->json(array(
-        //     'location' => $event->location()->first(),
-        // ));
     }
 
     /**
@@ -60,24 +55,11 @@ class LocationController extends Controller
      */
     public function store(LocationStoreRequest $request, Event $event)
     {
-
         if($request->remote) {
-            foreach ($request->remote as $loc) {
-                RemoteLocation::firstOrCreate([
-                    'location' => strtolower($loc)
-                ],
-                [
-                    'user_id' => auth()->user()->id,
-                ]);
-            };
-            $newSync = RemoteLocation::all()->whereIn('location',  array_map('strtolower', $request['remote']));
-            $event->remotelocations()->sync($newSync);
+            Location::storeRemoteLocation($request, $event);
+        } else {
+            Location::storeEventLocation($request, $event);
+        }
 
-            return $event->update([
-                'hasLocation' => false,
-                'location_latlon' => null,
-        ]);}
-
-        Location::storeEventLocation($request, $event);
     }
 }

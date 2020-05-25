@@ -90,7 +90,7 @@
 	
 		<section class="event-show grid two-panel">
             <div class="event-title">
-                <h2>About {{event.category.name}}</h2>
+                <h2>About</h2>
             </div>
             <div class="right">
                 <p 
@@ -130,17 +130,15 @@
                             </div>
                         </a>
                         <div class="review">
-                            <a rel="noreferrer" target="_blank" :href="review.url">
-                                
-                                    <i 
-                                    style="white-space: pre-line;" 
-                                    v-if="showMore !== 'review'" 
-                                    class="text">{{review.review.substring(0,300)}}<span 
-                                        class="show-text" 
-                                        v-if="review.review.length >= 200">... Read More
-                                        </span>
-                                    </i>
-                                
+                            <a rel="noreferrer" target="_blank" :href="review.url">                 
+                                <i 
+                                style="white-space: pre-line;" 
+                                v-if="showMore !== 'review'" 
+                                class="text">{{review.review.substring(0,300)}}<span 
+                                    class="show-text" 
+                                    v-if="review.review.length >= 200">... Read More
+                                    </span>
+                                </i>
                             </a>
                         </div>
                     </div>
@@ -253,14 +251,14 @@
                 </div>
                 <div class="grid two-panel">
                     <div class="title">
-                        <h3>Contact Advisories</h3>
+                        <h3>Interaction Advisories</h3>
                     </div>
                     <ul class="info">
                         <li v-for="item in event.contact_levels">
                             <p>{{item.level}}</p>
                         </li>
                         <li>
-                            <p>{{event.advisories.contactAdvisories}}</p>
+                            <p>Audience Roll: {{event.advisories.audience}}</p>
                         </li>
                     </ul>
                 </div>
@@ -269,8 +267,21 @@
                         <h3>Mobility Advisories</h3>
                     </div>
                     <ul class="info">
+                        <li>
+                            <p>Event is <span v-if="!event.advisories.wheelchairReady">not</span> wheelchair accessible.</p>
+                        </li>
                         <li v-for="item in event.mobility_advisories">
                             <p>{{item.mobilities}}</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="grid two-panel" v-if="event.advisories.sexual">
+                    <div class="title">
+                        <h3>Sexual Advisories</h3>
+                    </div>
+                    <ul class="info">
+                        <li>
+                            <p>{{event.advisories.sexualDescription}}</p>
                         </li>
                     </ul>
                 </div>
@@ -303,7 +314,7 @@
                 <ContactOrganizer :user="user" :loadorganizer="event.organizer"></ContactOrganizer>
 			</div>
 		</section>
-		<section v-if="bar && event.location.latitude" class="section event-show location">
+		<section v-if="bar && event.hasLocation" class="section event-show location">
 			<div>
 				<div class="event-title">
 					<h2>Location</h2>
@@ -338,13 +349,12 @@
 							<l-map :zoom="zoom" :center="center" :options="{ scrollWheelZoom: allowZoom, zoomControl: allowZoom }">
 							<l-tile-layer :url="url"></l-tile-layer>
 							<l-marker :lat-lng="center">
-                                <l-icon class-name="icons"><p>{{event.organizer.name.slice(0,20)}}<span v-if="event.organizer.name.length > 20">...</span></p></l-icon>
                                 <l-popup>
                                     <div class="show-pop">
                                         <a rel="noreferrer" target="_blank" :href="`http://maps.google.com/maps?q=${event.location.home}+${event.location.street},+${event.location.city},+${event.location.region}`">
                                             <div class="info">
                                                 <div class="name">
-                                                    {{event.location.home}} {{event.location.street}}, {{event.location.city}},  {{event.location.region}} 
+                                                    {{locationPlaceholder}} 
                                                 </div>
                                             </div>
                                         </a>
@@ -357,6 +367,23 @@
 				</div>
 			</div>
 		</section>
+        <section class="event-show grid two-panel" v-if="!event.hasLocation">
+            <div class="event-title">
+                <h2>What you will need</h2>
+            </div>
+            <div class="right">
+                <div>
+                    <div v-for="location in event.remotelocations">
+                        <h3>{{location.location}}</h3>
+                        <p>{{location.description}}</p>
+                    </div>
+                    <div v-if="event.remote_description">
+                        <p>{{event.remote_description}}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
 		<div class="grid event-bottom-bar" :class="{ active: bar }">
 			<div class="event-name desktop">
 				<h4>{{event.name}}</h4>
@@ -376,7 +403,7 @@
 </template>
 
 <script>
-	import {LMap, LTileLayer, LMarker, LPopup, LIcon} from 'vue2-leaflet'
+	import {LMap, LTileLayer, LMarker, LPopup} from 'vue2-leaflet'
     import format from 'date-fns/format'
     import ContactOrganizer from '../organizers/contact-organizer.vue'
     import flatPickr from 'vue-flatpickr-component'
@@ -392,7 +419,6 @@
             flatPickr,
             ContactOrganizer,
             LPopup,
-            LIcon
 		},
 
         computed: {
@@ -468,7 +494,6 @@
             },
 
             handleScroll (event) {
-                // event.path[1].scrollY > 60 ? this.bar = true : this.bar = false; 
                 const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
                 if (currentScrollPosition > 60) {
                     return this.bar = true;

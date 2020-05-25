@@ -137,9 +137,16 @@ button.close-map {
     position: relative;
 }
 .event-search-map_container {
-    position: fixed;
-        overflow: hidden;
-        width: 57rem;
+    overflow: hidden;
+    width: 57rem;
+    height: 100vh;
+    padding-top: 7rem;
+    margin-top: -7rem;
+    position: sticky;
+    top: 0px;
+    & .zoom {
+        margin: 9.4rem 2.4rem;
+    }
 }
 
 .search-map-updated {
@@ -148,7 +155,7 @@ button.close-map {
     border-radius: 1rem;
     width: 23rem;
     margin-left: -11.4rem;
-    margin-top: 2.4rem;
+    margin-top: 9.4rem;
     height: 4.3rem;
     grid-template-columns: 4.4rem auto;
     grid-column-gap: 0rem;
@@ -206,7 +213,7 @@ button.mobile-map-close {
 
 .filter-list {
     width: 100%;
-    position: absolute;
+    position: fixed;
     overflow-y: scroll;
     top: 0;
     height: 100%;

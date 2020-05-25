@@ -75,6 +75,10 @@ class Category extends Model
             $category->updateName($category, $request);
             return '';
         }
+        if($request->credit) {
+            $category->update(['credi' => $request->credit]);
+            return '';
+        }
         if($request->rank) {
             $category->update(['rank' => $request->rank]);
             return '';

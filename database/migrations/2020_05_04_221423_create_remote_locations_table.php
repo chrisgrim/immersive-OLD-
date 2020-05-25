@@ -15,15 +15,16 @@ class CreateRemoteLocationsTable extends Migration
     {
         Schema::create('remote_locations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('user_id');
             $table->string('location')->unique();
+            $table->text('description')->nullable();
             $table->boolean('admin')->default(0);
             $table->integer('rank')->default(0);
             $table->timestamps();
         });
          Schema::create('event_remote_location', function(Blueprint $table) {
-            $table->unsignedBigInteger('event_id');
-            $table->unsignedBigInteger('remote_location_id');
+            $table->foreignId('event_id');
+            $table->foreignId('remote_location_id');
             $table->timestamps();
         });
     }

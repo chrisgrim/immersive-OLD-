@@ -1108,14 +1108,47 @@ ul.sub-dropdown li a:hover {
   display: none;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
+  .nav {
+    padding: 0rem 1rem;
+  }
+
   .nav-search__content {
     width: 100%;
   }
 }
 
+@media (max-width: 768px) {
+  .nav-search__content {
+    width: 100%;
+  }
+
+  .create-bottom-nav {
+    grid-template-columns: 1fr;
+  }
+
+  .create-button__back {
+    left: 2rem;
+  }
+}
+
+/*------------------------------------*\
+  #Layout- Footer
+\*------------------------------------*/
+
 .footer-content {
-  padding: 3rem 0 10rem 0;
+  padding: 3rem 7rem;
+  border-top: 1px solid #c5c5c5;
+}
+
+.footer-content p {
+  color: #222222;
+  font-size: 1.4rem;
+}
+
+.footer-element {
+  display: inline-block;
+  margin: 0 0.5rem 0 0.5rem;
 }
 
 .verify {
@@ -3443,7 +3476,7 @@ a.leaflet-popup-close-button {
   font-weight: 400;
   font-size: 1.7rem !important;
   color: black;
-  padding: 0rem 3rem;
+  padding: 0.2rem 3rem 0rem 3rem;
   margin: 0;
   margin-top: -0.3rem;
 }
@@ -3457,7 +3490,7 @@ a.leaflet-popup-close-button {
 }
 
 .nav-search .multiselect__placeholder {
-  padding: 0rem 3rem;
+  padding: 0.2rem 3rem 0rem 3rem;
   width: 100%;
   font-weight: 400;
   font-size: 1.7rem;
@@ -3717,6 +3750,11 @@ ul {
 
 .bspin {
   cursor: wait;
+}
+
+main {
+  display: block;
+  min-height: 100vh;
 }
 
 .grid {

@@ -17,7 +17,6 @@ Auth::routes(['verify' => true]);
 
 Route::RESOURCE('events', 'EventController');
 Route::RESOURCE('categories', 'CategoryController');
-Route::RESOURCE('regions', 'RegionsController');
 Route::RESOURCE('contactlevels', 'ContactLevelsController');
 Route::RESOURCE('contentadvisories', 'ContentAdvisoriesController');
 Route::RESOURCE('genres', 'GenresController');
@@ -25,6 +24,7 @@ Route::RESOURCE('remotelocations', 'RemoteLocationsController');
 Route::RESOURCE('mobilities', 'MobilityController');
 Route::RESOURCE('staffpicks', 'StaffPicksController');
 Route::RESOURCE('reviewevents', 'ReviewEventsController');
+Route::RESOURCE('interactivelevels', 'InteractiveLevelController');
 
 
 
@@ -73,13 +73,17 @@ Route::POST('favorite/{event}/favorites', 'FavoritesController@store');
 Route::DELETE('favorite/{event}/favorites', 'FavoritesController@destroy');
 Route::GET('favorite/{event}/login', 'FavoritesController@loginToFavorite');
 
+Route::GET('/privacy-policy', 'LegalController@privacy');
+Route::GET('/terms', 'LegalController@terms');
+Route::GET('/disclaimer', 'LegalController@disclaimer');
+
 //Event Creation Process
 Route::GET('/create-event/edit', 'EventController@editEvents');
 Route::GET('/create-event/edit/fetch', 'EventController@fetchEditEvents');
 //Create Title
-Route::GET('/create-event/{event}/title', 'EventController@title');
-Route::GET('/create-event/{event}/title/fetch', 'EventController@fetchTitle');
-Route::PATCH('/create-event/{event}/title ', 'EventController@updateTitle');
+Route::GET('/create-event/{event}/title', 'EventTitleController@title');
+Route::GET('/create-event/{event}/title/fetch', 'EventTitleController@fetchTitle');
+Route::PATCH('/create-event/{event}/title ', 'EventTitleController@updateTitle');
 //Create Location
 Route::GET('/create-event/{event}/location', 'LocationController@create');
 Route::GET('/create-event/{event}/location/fetch', 'LocationController@fetch');

@@ -2,19 +2,53 @@
   #Create Section- General Layout
 \*------------------------------------*/
 
+.create-body {
+   display: grid;
+   grid-template-columns: 23rem 1fr;
+   grid-gap:0 !important;
+   &.hidden {
+    display: inline-block;
+   }
+}
 
 nav.create {
-    height: 7rem;
-    width: 100%;
-    margin: auto;
+    width: 23rem;
     position: relative;
-    z-index: 901;
-    background: #fff;
+    z-index: 902;
+    background: rgb(247, 247, 247);
+    padding: 1.2rem;
+    box-shadow: rgba(0, 0, 0, 0.05) -4px 0px 20px inset;
+}
+.create-nav-header {
+    grid-template-columns: 7rem 1fr;
+    grid-gap:0rem !important;
+}
+.nav-create-logo h3 {
+    color: #404040;
+    font-family: "Open Sans", sans-serif;
+    font-size: 2.3rem;
+    font-weight: 800;
+    letter-spacing: 0.2rem;
+}
+.nav-back {
+    text-align: right;
+}
+button.nav-back-button {
+    font-size: 1.3rem;
+    padding: .8rem 1rem;
+    margin: 0;
+    background: 0;
+    border: 1px solid #bfbfbf;
+}
+.create-nav-guide {
+    margin: 4rem 0rem;
+    & h3 {
+        font-weight: 800;
+    }
 }
 .create-menu {
-    grid-template-columns: 8rem 1fr;
+    grid-template-columns: 1fr;
     position: relative;
-    height:100%;
     align-items: center;
     grid-gap: 0 !important;
     &.review {
@@ -23,12 +57,29 @@ nav.create {
         height: 8rem;
     }
 }
-.create-menu__home {
-    text-align: center;
-    & button {
-        color:$default-color;
-        border-color: $default-color;
+.create-menu__item {
+    display: grid;
+    grid-template-columns: 1fr 2rem;
+    grid-gap: 1rem !important;
+    margin: .3rem 0rem;
+    padding: .6rem 1rem;
+    &.active {
+        background: #e4e4e4;
+        border-radius: .6rem;
     }
+}
+.create-nav-icon-border {
+    border: 2px solid black;
+    border-radius: 50%;
+}
+p.create-menu-text {
+    font-size: 1.4rem;
+    color: #585858;
+    font-weight: 300;
+}
+.create-menu__item.active p.create-menu-text {
+    color:black;
+    font-weight: 400;
 }
 
 .create-navbar__hover {
@@ -46,25 +97,29 @@ nav.create {
         background: none;
     }
 }
-
+.create-bottom-nav {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    height: 7rem;
+    z-index: 901;
+    display: grid;
+    grid-template-columns: 23rem 1fr;
+    &.review {
+        background: $default-color;
+        display: inline-block;
+    }
+}
 .create-navbar {
-    height: 1rem;
+    height: 7rem;
     line-height: 0.8px;
-    background-color: rgb(237, 239, 237);
+    background-color: #fff;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px;
     position: relative;
-    & .grey {
-        display: inline-block;
-        height: 10px;
-        position: absolute;
-    }
-    & .fill {
-        background-color: $default-color;
-        border-radius: 0rem 1rem 1rem 0rem;
-    }
-    &.over {
-        height:4rem;
-        box-shadow:none;
+    border-top: 1px solid #bdbdbd;
+     &.review {
+        border:0;
+        background: $default-color;
     }
 }
 .create-navbar__page {
@@ -82,14 +137,8 @@ nav.create {
     }
 }
 
-.create-body {
-    width: 100%;
-    margin: auto;
-    padding-top: 1rem;
-}
-
 section.event-create {
-    width:90%;
+    
 }
 
 button.create {
@@ -112,17 +161,19 @@ button.create[disabled]{
     background-color: #f9f9f9;
     color: #c7c7c7;
 }
-.create-button__in-nav {
+.create-button__forward {
     position: fixed;
-    top: 1.5rem;
+    bottom: 1.5rem;
     right: 2rem;
     z-index: 902;
+}
+.create-button__back {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 25rem;
+    z-index: 902;
     &.review {
-        top: 0rem;
-        right: 0rem;
-        background: $default-color;
-        padding: 2rem;
-        border-radius: 0rem 0rem 0rem 1rem;
+        left:2rem;
     }
 }
 .review-nav-text {
@@ -130,7 +181,10 @@ button.create[disabled]{
 }
 
 .event-create__submit-button {
-    margin-top:2rem;
+    position: absolute;
+    left: 11.5rem;
+    z-index: 1000;
+    top: 1.2rem;
 }
 
 @media (max-width: 768px) { 
@@ -155,6 +209,14 @@ button.create[disabled]{
             top: inherit;
             right: inherit;
         }
+    }
+    .create-body {
+       display: grid;
+       grid-template-columns: 1fr;
+       grid-gap:0 !important;
+    }
+    nav.create {
+        display: none;
     }
     .event-create__submit-button {
         display: none;

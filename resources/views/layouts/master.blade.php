@@ -9,7 +9,6 @@
             @yield('nav')
         </header>
 		<main>
-            @include('layouts.flashes')
 			@yield('content')
             @yield('content2')
 		</main>

@@ -46,7 +46,7 @@ class MobilityController extends Controller
     public function store(Request $request)
     {
         MobilityAdvisory::create([
-            'mobilities' => $request->mobilities,
+            'mobilities' => strtolower($request->mobilities),
             'admin' => true,
             'user_id' => auth()->user()->id
         ]);
@@ -69,7 +69,7 @@ class MobilityController extends Controller
         }
         if ($request->mobilities) {
              $mobility->update([
-                'mobilities' => $request->mobilities,
+                'mobilities' => strtolower($request->mobilities),
                 'user_id' => auth()->user()->id
             ]);
         }

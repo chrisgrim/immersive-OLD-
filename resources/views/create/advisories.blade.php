@@ -1,5 +1,9 @@
 @extends('create.index')
 
 @section('created')
-    <create-advisories :event="{{$event}}" :loadcontact="{{$contactAdvisories}}" :loadcontent="{{$contentAdvisories}}" :loadmobility="{{$mobilityAdvisories}}">	
+    <div class="create-body">
+        @include('create.nav')
+        <create-advisories :event="{{$event}}" :loadcontact="{{$contactAdvisories}}" :loadcontent="{{$contentAdvisories}}" :loadmobility="{{$mobilityAdvisories}}" :loadinteractive="{{$interactiveLevels}}"></create-advisories>
+    </div>
 @endsection
+

@@ -1,5 +1,5 @@
 <template>
-    <div class="event-search">
+    <div class="event-search" style="min-height: calc(100vh - 7rem);position:relative;">
         <div class="event-search__container grid" :class="{ maphidden: !showMap}">
             <section class="event-search-filter" :style="shift">
                 <div class="title">

@@ -1,8 +1,10 @@
 <template>
     <div>
-        <div class="create-button__in-nav review">
-            <button :disabled="dis" class="create review" @click.prevent="goBack()"> Back </button>
-            <button :disabled="dis" class="create review" @click.prevent="submitEvent()"> Submit </button>
+        <div class="create-button__back review">
+            <button :disabled="disabled" class="create" @click.prevent="goBack()"> Back </button>
+        </div>
+        <div class="create-button__forward review">
+            <button :disabled="disabled" class="create" @click.prevent="onSubmit()"> Submit </button>
         </div>
     </div>
 </template>
@@ -22,22 +24,14 @@
                 eventUrl: `/create-event/${this.event.slug}`,
                 tagLine: '',
                 activeItem: null,
-                dis:false,
+                disabled:false,
             }
         },
 
         methods: {
-
-            //On click Sets class to green to remove error
-            //clears out all server errors
-            clearinput() {
-                this.nameActive = true;
-                this.serverErrors = [];
-            },
-
            
-            submitEvent() {
-                this.dis = true;
+            onSubmit() {
+                this.disabled = true;
                 axios.get(`${this.eventUrl}/submit`);
                 window.location.href = `${this.eventUrl}/thankyou`;
             },

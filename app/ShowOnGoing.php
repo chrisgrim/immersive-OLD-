@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Carbon\CarbonPeriod;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class ShowOnGoing extends Model
@@ -44,5 +46,17 @@ class ShowOnGoing extends Model
                 'sun' => $request->week['sun'],
             ]
         );
+        $dates=[];
+        $period = CarbonPeriod::create(Carbon::now()->startOfDay(), Carbon::now()->startOfDay()->addMonths(6));
+        foreach ($period as $date) {
+            if ($date->isMonday() && $request->week['mon']) {$dates[]=$date->format('Y-m-d H:i:s');}
+            if ($date->isTuesday() && $request->week['tue']) {$dates[]=$date->format('Y-m-d H:i:s');}
+            if ($date->isWednesday() && $request->week['wed']) {$dates[]=$date->format('Y-m-d H:i:s');}
+            if ($date->isThursday() && $request->week['thu']) {$dates[]=$date->format('Y-m-d H:i:s');}
+            if ($date->isFriday() && $request->week['fri']) {$dates[]=$date->format('Y-m-d H:i:s');}
+            if ($date->isSaturday() && $request->week['sat']) {$dates[]=$date->format('Y-m-d H:i:s');}
+            if ($date->isSunday() && $request->week['sun']) {$dates[]=$date->format('Y-m-d H:i:s');}
+        }
+        $request->request->add(['dates' => $dates]);
     }
 }

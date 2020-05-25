@@ -82,7 +82,7 @@
 
             toggle() {
                 if (this.screenwidth) {
-                    return window.location.href = `/users/${this.user.id}`;
+                    return window.location.href = `/account-settings`;
                 }
                 return this.onToggle = !this.onToggle;
             },

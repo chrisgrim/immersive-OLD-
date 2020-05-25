@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Advisory;
 use App\Event;
+use DB;
 use App\ContactLevel;
+use App\InteractiveLevel;
 use App\ContentAdvisory;
 use App\MobilityAdvisory;
 use Illuminate\Http\Request;
@@ -30,11 +32,12 @@ class AdvisoriesController extends Controller
      */
     public function create(Event $event)
     {
-        $event->load('contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'advisories');
+        $event->load('contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'advisories', 'interactive_level');
         $contactAdvisories = ContactLevel::all();
         $contentAdvisories = ContentAdvisory::where('admin', true)->orWhere('user_id', auth()->user()->id)->get();
         $mobilityAdvisories = MobilityAdvisory::where('admin', true)->orWhere('user_id', auth()->user()->id)->get();
-        return view('create.advisories', compact('event', 'contactAdvisories', 'contentAdvisories', 'mobilityAdvisories'));
+        $interactiveLevels = InteractiveLevel::get();
+        return view('create.advisories', compact('event', 'contactAdvisories', 'contentAdvisories', 'mobilityAdvisories', 'interactiveLevels'));
     }
 
     /**
@@ -46,10 +49,13 @@ class AdvisoriesController extends Controller
     public function store(Request $request, Event $event)
     {
         $event->advisories->update($request->advisories);
-        $event->contactlevels()->sync(request('contactAdvisory'));
+        $event->contactlevels()->sync($request->contactAdvisory);
         MobilityAdvisory::saveAdvisories($event, $request);
         ContentAdvisory::saveAdvisories($event, $request);
-        $event->update(['advisories_id' => $event->advisories->id]);
+        $event->update([
+            'advisories_id' => $event->advisories->id,
+            'interactive_level_id' => $request->interactiveLevel['id'],
+        ]);
     }
 
     /**
@@ -64,7 +70,7 @@ class AdvisoriesController extends Controller
             'contactPivots' => $event->contactlevels()->get(),
             'contentPivots' => $event->contentadvisories()->get(),
             'mobilityPivots' => $event->mobilityadvisories()->get(),
+            'interactivePivots' => $event->interactive_level()->first(),
         ));
-
     }
 }

@@ -61,8 +61,17 @@
     display: none;
 }
 
+@media (max-width: 1200px) { 
+    .messages-show {
+        width: 80%;
+    }
+}
 
-
+@media (max-width: 1024px) { 
+    .messages-show {
+        width: 90%;
+    }
+}
 
 
 @media (max-width: 768px) { 

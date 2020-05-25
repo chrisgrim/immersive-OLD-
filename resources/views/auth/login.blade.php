@@ -11,7 +11,7 @@
 @endsection 
 
 @section('content')
-<div id="bodyArea">
-    <vue-register></vue-register>
-</div>
+    <div id="bodyArea">
+        <vue-register></vue-register>
+    </div>
 @endsection

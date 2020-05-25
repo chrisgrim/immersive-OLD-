@@ -111,7 +111,7 @@
                         <div class="field">
                             <div class="messages-show__element-textarea">
                                 <div>
-                                    {{message.message}}
+                                    {{message.message ? message.message : message.comments}}
                                 </div>
                                 <div class="messages-show__element-date">
                                     {{message.created_at | formatDate}}

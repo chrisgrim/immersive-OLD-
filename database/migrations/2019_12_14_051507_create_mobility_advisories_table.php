@@ -14,16 +14,16 @@ class CreateMobilityAdvisoriesTable extends Migration
     public function up()
     {
         Schema::create('mobility_advisories', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
+            $table->id();
+            $table->foreignId('user_id');
             $table->string('mobilities')->unique();
             $table->boolean('admin')->default(0);
             $table->integer('rank')->default(0);
             $table->timestamps();
         });
         Schema::create('event_mobility_advisory', function(Blueprint $table) {
-            $table->unsignedBigInteger('event_id');
-            $table->unsignedBigInteger('mobility_advisory_id');
+            $table->foreignId('event_id');
+            $table->foreignId('mobility_advisory_id');
             $table->timestamps();
         });
     }

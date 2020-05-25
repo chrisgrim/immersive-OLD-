@@ -14,11 +14,12 @@ class CreateAdvisoriesTable extends Migration
     public function up()
     {
         Schema::create('advisories', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('event_id');
+            $table->id();
+            $table->foreignId('event_id');
             $table->boolean('wheelchairReady')->nullable();
-            $table->boolean('sexualViolence')->nullable();
-            $table->text('sexualViolenceDescription')->nullable();
+            $table->boolean('sexual')->nullable();
+            $table->text('sexualDescription')->nullable();
+            $table->text('audience')->nullable();
             $table->string('ageRestriction')->nullable();
             $table->text('contactAdvisories')->nullable();
             $table->timestamps();

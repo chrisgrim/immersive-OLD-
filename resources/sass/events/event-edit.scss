@@ -178,18 +178,14 @@ button.edit-event__sub-button {
 }
     
 button.new-organization__add {
-    background: #008489;
+    background: white;
     display: inline-block;
     padding: 1rem 1.4rem;
-    border-radius: 50%;
-    & p {
-    color: #fff;
-    font-size: 3rem;
-    }
+    border-radius: 1rem;
+    color: black;
+    border: 1px solid green;
+    font-size: 2rem;
 }
-
-
-
 
 @media (max-width: 768px) {
     .event-edit__organizer {

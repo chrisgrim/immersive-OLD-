@@ -14,7 +14,7 @@ class CreateContactOrganizersTable extends Migration
     public function up()
     {
         Schema::create('contact_organizers', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->timestamps();
         });
     }

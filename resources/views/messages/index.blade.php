@@ -15,3 +15,7 @@
         <message-index :conversations="{{$conversations}}" :loaduser="{{ auth()->user() }}"></message-index> 
     </div>
 @endsection
+
+@section('footer')
+    <vue-footer></vue-footer>
+@endsection 

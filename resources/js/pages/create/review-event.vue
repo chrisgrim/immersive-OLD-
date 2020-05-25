@@ -1,15 +1,5 @@
 <template>
     <div class="content">
-        <nav class="event-show mobile">
-            <div class="back">
-                <a v-if="searchUrl" :href="searchUrl">
-                    <svg aria-label="Back" role="img" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 4; overflow: visible;"><g fill="none"><path d="m20 28-11.29289322-11.2928932c-.39052429-.3905243-.39052429-1.0236893 0-1.4142136l11.29289322-11.2928932"></path></g></svg>
-                </a>
-                <a v-else href="/">
-                    <svg aria-label="Back" role="img" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 4; overflow: visible;"><g fill="none"><path d="m20 28-11.29289322-11.2928932c-.39052429-.3905243-.39052429-1.0236893 0-1.4142136l11.29289322-11.2928932"></path></g></svg>
-                </a>
-            </div>
-        </nav>
         <header class="event-show grid">
             <div class="header-left">
                 <div class="content">   
@@ -294,7 +284,6 @@
                 <div style="white-space: pre-line;" v-if="event.organizer.description" class="description">
                     {{event.organizer.description}}
                 </div>
-                <ContactOrganizer :user="user" :loadorganizer="event.organizer"></ContactOrganizer>
             </div>
         </section>
         <section v-if="bar && event.location.latitude" class="section event-show location">
@@ -351,10 +340,19 @@
                 </div>
             </div>
         </section>
+        <div>
+            <div class="create-button__back review">
+                <button :disabled="disabled" class="create review" @click.prevent="onBack('images')"> Back </button>
+            </div>
+            <div class="create-button__forward review">
+                <button :disabled="disabled" class="create review" @click.prevent="onSubmit()"> Submit </button>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
+    import formValidationMixin from '../../mixins/form-validation-mixin'
     import {LMap, LTileLayer, LMarker, LPopup, LIcon} from 'vue2-leaflet'
     import format from 'date-fns/format'
     import ContactOrganizer from '../organizers/contact-organizer.vue'
@@ -363,6 +361,8 @@
     export default {
 
         props: ['loadevent', 'user'],
+
+        mixins: [formValidationMixin],
 
         components: { 
             LMap, 
@@ -433,6 +433,7 @@
                     dateFormat: 'Y-m-d H:i:s',    
                 },
                 searchUrl: '',
+                disabled: false,
 
             }
         },
@@ -444,6 +445,12 @@
                         this.dates.push(event.date)
                     });
                 }
+            },
+
+            onSubmit() {
+                this.disabled = true;
+                axios.get(`/create-event/${this.event.slug}/submit`);
+                window.location.href = `/create-event/${this.event.slug}/thankyou`;
             },
 
             handleScroll (event) {

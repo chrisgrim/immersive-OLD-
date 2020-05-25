@@ -26,3 +26,7 @@
         @endguest
     </div>
 @endsection
+
+@section('footer')
+    <vue-footer></vue-footer>
+@endsection 

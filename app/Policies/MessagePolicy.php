@@ -19,6 +19,6 @@ class MessagePolicy
      */
     public function update(User $user, Message $Message)
     {
-        return $message->user_id == $user->id || $user->isModerator();
+        return $message->user_id == $user->id || $user->type == 'a' || $user->type == 'm';
     }
 }

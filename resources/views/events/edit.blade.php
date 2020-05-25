@@ -16,9 +16,16 @@
 @endsection
 
 @section('content')
-    <div>
-    	<div id="bodyArea">
-    		<edit-events user="{{auth()->id()}}"/>	
-    	</div>
-    </div>
+	<div id="bodyArea">
+        @if ( session()->exists( 'submitted' ))
+            <vue-alert 
+            message="submitted">
+            </vue-alert>
+        @endif
+		<edit-events user="{{auth()->id()}}"/>	
+	</div>
 @endsection
+
+@section('footer')
+    <vue-footer></vue-footer>
+@endsection 

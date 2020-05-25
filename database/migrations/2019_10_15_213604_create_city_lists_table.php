@@ -14,10 +14,9 @@ class CreateCityListsTable extends Migration
     public function up()
     {
         Schema::create('city_lists', function (Blueprint $table) {
-
-            $table->bigIncrements('id');
+            $table->id();
+            $table->foreignId('population');
             $table->string('name');
-            $table->unsignedBigInteger('population');
             $table->DECIMAL('latitude', 10 ,8)->nullable();
             $table->DECIMAL('longitude', 11, 8)->nullable();
             $table->timestamps();            
