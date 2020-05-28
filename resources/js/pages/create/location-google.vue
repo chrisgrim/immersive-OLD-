@@ -66,7 +66,7 @@
                     v-model="remoteLocations"
                     tag-placeholder="Add this as new tag" 
                     placeholder="Type here to create your own" 
-                    label="location"
+                    label="name"
                     :close-on-select="true"
                     track-by="id" 
                     :options="remoteLocationOptions" 
@@ -158,7 +158,7 @@
 
             remoteLocationArray() {
                 let data; 
-                return data = {remote: this.remoteLocations.map(a => a.location), description: this.description};
+                return data = {remote: this.remoteLocations.map(a => a.name), description: this.description};
             },
 
             endpoint() {
@@ -219,7 +219,6 @@
 			},
 
             onNormalSubmit(value) {
-                console.log(this.remoteLocationArray);
                 axios.patch( this.endpoint, this.hasLocation ? this.location : this.remoteLocationArray )
                 .then(res => {  
                     value == 'exit' ? this.onBackInitial() : this.onForward('category');
@@ -258,7 +257,7 @@
 
             addTag (newTag) {
                 const tag = {
-                    location: newTag,
+                    name: newTag,
                     id: newTag.substring(0, 0) + Math.floor((Math.random() * 10000000))
                 }
                 this.remoteLocationOptions.push(tag)

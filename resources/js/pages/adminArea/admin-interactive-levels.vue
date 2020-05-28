@@ -126,9 +126,7 @@
                 axios.post('/interactivelevels', data)
                 .then(res => { 
                     console.log(res.data);
-                    this.isModalVisible = false;
-                    this.interactiveLevel = '';
-                    this.loadInteractiveLevels();
+                    location.reload();
                 })
                 .catch(error => { 
                     this.isModalVisible = false;

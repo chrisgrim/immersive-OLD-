@@ -54,7 +54,8 @@ export default {
             ],
             isLoading: false,
             search: this.initializeSearchObject(),
-            placeholder: new URL(window.location.href).searchParams.get("name") ? new URL(window.location.href).searchParams.get("name") : 'Search by city or event',
+            placeholder: new URL(window.location.href).searchParams.get("name") ? new URL(window.location.href).searchParams.get("name") : 'Search by event type, city or event',
+            type: '',
         }
     },
 
@@ -62,9 +63,10 @@ export default {
 
         asyncGenerateCitiesList (query) {
             axios.get('/api/search/navbar/content', { params: { keywords: query } })
-            .then(response => {
-                console.log(response.data);
-                this.searchBoxOptions = response.data;
+            .then(res => {
+                console.log(res.data);
+                this.searchBoxOptions = res.data.data;
+                this.type = res.data.type;
             });
         },
 
@@ -77,15 +79,14 @@ export default {
         },
 
         searchEvents() {
+            this.type == 'category' ? window.location.href = `/index/search-online?category=${this.searchBoxInput.name}` : '';
+            this.type == 'remote' ? window.location.href = `/index/search-online?remote=${this.searchBoxInput.name}` : '';
+            this.type == 'tag' ? window.location.href = `/index/search-online?tag=${this.searchBoxInput.name}` : '';
+            this.type == 'organizer' ? window.location.href = `/organizer/${this.searchBoxInput.slug}` : '';
+            this.type == 'event' ? window.location.href = `/events/${this.searchBoxInput.slug}` : '';
             if(_.has(this.searchBoxInput, 'latitude')) {
                 this.globalSearch();
             };
-            if(_.has(this.searchBoxInput, 'twitterHandle')) {
-                window.location.href = `/organizer/${this.searchBoxInput.slug}`;
-            };
-            if(_.has(this.searchBoxInput, 'tag_line')) {
-                window.location.href = `/events/${this.searchBoxInput.slug}`;
-            }
         },
 
         globalSearch() {

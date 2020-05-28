@@ -27,7 +27,11 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return Category::all();
+        return [
+            'remote' => Category::all()->where('remote', 1),
+            'location' => Category::all()->where('remote', 0),
+        ];
+        // return Category::all()->where('remote', 1);
     }
 
     /**

@@ -35,6 +35,10 @@
     &.create {
         display: none;
     }
+    &.onlinesearch {
+        background: transparent;
+        border:0;
+    }
 }
 .nav-grid {
     grid-template-columns: 7rem auto auto;

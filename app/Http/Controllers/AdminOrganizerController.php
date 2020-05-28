@@ -34,7 +34,7 @@ class AdminOrganizerController extends Controller
      */
     public function fetch()
     {
-        return Organizer::all();
+        return Organizer::all()->load('user');
     }
 
     /**
@@ -75,9 +75,16 @@ class AdminOrganizerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, Organizer $organizer)
     {
-        //
+        foreach ($organizer->events as $event) {
+            $event->update([
+                'user_id' => $request->id,
+            ]);
+        }
+        $organizer->update([
+            'user_id' => $request->id,
+        ]);
     }
 
     /**

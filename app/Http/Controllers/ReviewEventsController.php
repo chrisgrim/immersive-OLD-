@@ -14,7 +14,7 @@ class ReviewEventsController extends Controller
      */
     public function __construct()
     {
-        // $this->middleware('admin')->except('show');
+        $this->middleware('moderator')->except('show');
     }
 
     /**

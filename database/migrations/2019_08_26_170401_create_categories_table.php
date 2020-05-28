@@ -20,6 +20,7 @@ class CreateCategoriesTable extends Migration
             $table->integer('rank')->default(0);
             $table->string('credit')->nullable();
             $table->text('description');
+            $table->boolean('remote')->default(0);
             $table->string('largeImagePath')->nullable();
             $table->string('thumbImagePath')->nullable();
             $table->timestamps();

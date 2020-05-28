@@ -25,6 +25,20 @@ class Organizer extends Model
     ];
 
     /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        return [
+            "id" => $this->id,
+            "name" => $this->name ,
+            // "email" => $this->email,
+        ];
+    }
+
+    /**
      * The accessors to append to the model's array form.
      *
      * @var array

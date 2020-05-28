@@ -2,6 +2,7 @@
 
 namespace App;
 
+use ScoutElastic\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use App\Scopes\RankScope;
@@ -9,13 +10,16 @@ use Intervention\Image\ImageManagerStatic as Image;
 
 class Category extends Model
 {
+    use Searchable;
+
+    protected $indexConfigurator = CategoryIndexConfigurator::class;
     /**
     * What protected variables are allowed to be passed to the database
     *
     * @var array
     */
     protected $fillable = [
-    	'name', 'slug','description','largeImagePath', 'thumbImagePath', 'rank' ];
+    	'name', 'slug','description','largeImagePath', 'thumbImagePath', 'rank', 'remote' ];
 
     /**
      * The accessors to append to the model's array form.
@@ -33,6 +37,23 @@ class Category extends Model
     {
         static::addGlobalScope(new RankScope);
     }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        return [
+            "id" => $this->id,
+            "name" => $this->name ,
+        ];
+    }
+
+    protected $casts = [
+        'remote' => 'boolean'
+    ];
     
     /**
     * Each Category has many events
@@ -177,5 +198,21 @@ class Category extends Model
             'thumbImagePath' => $newImagePath . '-thumb.webp',
         ]);
     }
+
+    protected $searchRules = [
+        //
+    ];
+
+    protected $mapping = [
+        'properties' => [
+            'id' => [
+                'type' => 'integer',
+                'index' => false
+            ],
+            'name' => [
+                'type' => 'search_as_you_type',
+            ],
+        ]
+    ];
 
 }

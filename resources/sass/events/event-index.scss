@@ -9,13 +9,23 @@
     padding-top: 8rem;
 }
 header.padded {
-    padding: 4rem 8rem 8rem 8rem;
+    padding: 4rem 8rem 4rem 8rem;
 }
 .header-title {
     margin:2rem 0rem;
 }
+.header-title-white{
+    margin:2rem 0rem;
+    & h3 {
+        color:white;
+    }
+}
 section.padded {
     padding: 4rem 8rem;
+}
+.event-list-black {
+    padding: 2rem 8rem 4rem 8rem;
+    background:black;
 }
 .event-index-eventlist{
     width:100%;
@@ -35,6 +45,10 @@ section.padded {
 }
 .card {
     position: relative;
+    border-radius: 1rem;
+    &.black {
+        background:#232323;
+    }
 }
 .card-image{
     & img {
@@ -44,20 +58,32 @@ section.padded {
         width: 100%;
     }
 }
+.card-content {
+    padding: 0rem 1rem 1rem 1rem;
+}
 .card-title h3 {
     margin: 1rem 0 .5rem;
     font-size: 1.6rem;
     font-weight: 500;
+    &.black {
+        color:white;
+    }
 }
 .card-organizer h3 {
     margin: .2rem 0 .3rem;
     font-size: 1.6rem;
     font-weight: 400;
+    &.black {
+        color:white;
+    }
 }
 .card-price h4{
     display: inline-block;
     margin: 0 .5rem 0 0;
     font-size: 1.3rem;
+    &.black {
+        color:white;
+    }
 }
 
 .heart {

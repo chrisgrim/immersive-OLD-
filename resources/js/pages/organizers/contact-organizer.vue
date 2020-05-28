@@ -66,7 +66,7 @@
             },
 
             verify() {
-                return !this.user.email_verified_at ? true : false;
+                return this.user && !this.user.email_verified_at ? true : false;
             },
 
             endPoint() {

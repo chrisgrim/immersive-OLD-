@@ -1,5 +1,5 @@
 <template>
-    <div :class="{ 'dis': isDisabled }" class="card">
+    <div :class="{ 'dis': isDisabled, black : color=='black' }" class="card" >
         <favorite :inputclass="showEventClass" :event="event"></favorite>
         <a :href="url" class="url">
             <div class="card-image" :style="`width:${imageWidth}px`">
@@ -8,14 +8,16 @@
                     <img :src="`/storage/${event.thumbImagePath.slice(0, -4)}jpg`" :alt="`${event.name} Immersive Event`">
                 </picture>
             </div>
-            <div class="card-title">
-                <h3>{{ event.name }}</h3>
-            </div>
-            <div class="card-organizer">
-                <h3>{{ event.organizer.name }}</h3>
-            </div>
-            <div class="card-price">
-                <h4>{{ event.price_range }}</h4>
+            <div class="card-content">
+                <div class="card-title" >
+                    <h3 :class="{ black : color=='black' }">{{ event.name }}</h3>
+                </div>
+                <div class="card-organizer">
+                    <h3 :class="{ black : color=='black' }">{{ event.organizer.name }}</h3>
+                </div>
+                <div class="card-price">
+                    <h4 :class="{ black : color=='black' }">{{ event.price_range }}</h4>
+                </div>
             </div>
         </a>
     </div>
@@ -23,10 +25,7 @@
 
 <script>
     export default {
-        props: {
-            event: { type:Object },
-            loadurl: { type:String }
-        },
+        props:['event', 'loadurl', 'color'],
 
         data() {
             return {

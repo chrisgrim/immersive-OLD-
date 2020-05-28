@@ -26,7 +26,7 @@
                     Account
                 </a>
             </li>
-			<li v-if="user ? user.type == 'a' : ''">
+			<li v-if="user && user.type == 'a' || user && user.type == 'm'">
 				<a href="/admin/dashboard">
 					Admin Dashboard
 				</a>

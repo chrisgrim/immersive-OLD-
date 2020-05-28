@@ -31,7 +31,6 @@ class EventController extends Controller
     {
         $events = Event::where('closingDate', '>=', Carbon::yesterday()->endOfDay())
             ->where('status', 'p')
-            // ->where('hasLocation', 1)
             ->orderBy('updated_at', 'desc')
             ->limit(4)
             ->with('organizer')
@@ -43,7 +42,7 @@ class EventController extends Controller
             ->limit(4)
             ->with('organizer')
             ->get();
-        $categories = Category::take(4)
+        $categories = Category::where('remote', 1)
             // ->orderBy('rank', 'desc')
             ->get();
         $staffpicks = StaffPick::whereDate('end_date','>=', Carbon::yesterday()->endOfDay())
@@ -109,7 +108,7 @@ class EventController extends Controller
     public function show(Event $event)
     {
         if($event->status !== 'p') { return redirect('/');}
-        $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'eventreviews', 'staffpick', 'advisories', 'showOnGoing','interactivelevel', 'remotelocations');
+        $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'eventreviews', 'staffpick', 'advisories', 'showOnGoing','interactive_level', 'remotelocations');
         return view('events.show', compact('event'));
     }
 

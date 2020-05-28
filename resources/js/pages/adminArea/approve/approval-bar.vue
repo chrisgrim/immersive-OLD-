@@ -22,6 +22,7 @@
             </div>
             <div class="buttons">
                 <button :class="{bspin : dis}" :disabled="dis" class="create" @click.prevent="goBack()"> Go Back </button>
+                <button :class="{bspin : dis}" :disabled="dis" class="create" @click.prevent="makeEdits()"> Make Edits Yourself </button>
                 <button :class="{bspin : dis}" :disabled="dis" class="create" @click.prevent="denied()"> Request Changes </button>
                 <button :class="{bspin : dis}" :disabled="dis" class="create" @click.prevent="approved()"> Approved </button>
             </div>
@@ -81,6 +82,10 @@
                     this.serverErrors = error.response.data.errors;
                     this.dis = false;
                 });
+            },
+
+            makeEdits() {
+                window.location.href = `/create-event/${this.event.slug}/title`
             },
 
             goBack() {

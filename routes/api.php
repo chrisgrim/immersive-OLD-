@@ -19,14 +19,20 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::GET('events', 'EventController@get');
 
-//Users entered data into the navbar
+// IS USED Users entered data into the navbar
 Route::GET('search/navbar/content', 'SearchController@searchNav');
+
+// IS USED On Map move send new latlng/ if category that is attached and if dates that is attached 
+Route::POST('search/mapboundary', 'SearchController@searchMapBoundary');
+
+//IS USED Searches remote events
+Route::POST('search/remote', 'SearchController@searchRemote');
+
+
 
 //On Organizer Create Page this searches all organizers and returns based on users selection
 Route::GET('search/organizer', 'SearchController@searchOrganizer');
 
-//On Map move send new latlng/ if category that is attached and if dates that is attached
-Route::POST('search/mapboundary', 'SearchController@searchMapBoundary');
 
 //On admin page returns user list for editing users
 Route::GET('search/user/list', 'SearchController@searchUsers');

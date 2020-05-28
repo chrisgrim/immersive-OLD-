@@ -30,7 +30,7 @@ class ContactUser extends Mailable
     public function build()
     {
         return $this->view('emails.ContactUser')
-                    ->from('EverythingImmersive@ei.com')
+                    ->from('admin@everythingimmersive.com')
                     ->subject('You have recieved a message');
     }
 }

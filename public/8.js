@@ -73,7 +73,7 @@ __webpack_require__.r(__webpack_exports__);
       return this.user && this.user.id != this.loadorganizer.user_id && this.user.email_verified_at ? true : false;
     },
     verify: function verify() {
-      return !this.user.email_verified_at ? true : false;
+      return this.user && !this.user.email_verified_at ? true : false;
     },
     endPoint: function endPoint() {
       return "/message/organizer/".concat(this.organizer.slug, "/").concat(this.user.id);

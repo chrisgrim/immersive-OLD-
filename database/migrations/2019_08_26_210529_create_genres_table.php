@@ -16,7 +16,7 @@ class CreateGenresTable extends Migration
         Schema::create('genres', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->string('genre')->unique();
+            $table->string('name')->unique();
             $table->boolean('admin')->default(0);
             $table->integer('rank')->default(0);
             $table->timestamps();

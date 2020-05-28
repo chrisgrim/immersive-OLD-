@@ -47,8 +47,8 @@ class RemoteLocationsController extends Controller
     public function store(Request $request)
     {
         RemoteLocation::create([
-            'location' => strtolower($request->location),
-            'description' => strtolower($request->description),
+            'name' => strtolower($request->name),
+            'description' => $request->description,
             'admin' => true,
             'user_id' => auth()->user()->id
         ]);
@@ -85,15 +85,15 @@ class RemoteLocationsController extends Controller
      */
     public function update(Request $request, RemoteLocation $remotelocation)
     {
-        if ($request->location) {
+        if ($request->name) {
             $remotelocation->update([
-                'location' => strtolower($request->location),
+                'name' => strtolower($request->name),
                 'user_id' => auth()->user()->id,
             ]);
         }
          if ($request->description) {
             $remotelocation->update([
-                'description' => strtolower($request->description),
+                'description' => $request->description,
                 'user_id' => auth()->user()->id,
             ]);
         }

@@ -1,0 +1,311 @@
+<template>
+    <div>
+        <div class="event-search__filters" v-if="mobile">
+            <button @click="showFilters=true" class="filter">Filters</button>
+        </div>
+        <div class="event-search__filters grid">
+            <!-- Date Search -->
+            <div class="event-filter-item">
+                <div class="button" ref="dates">
+                    <button @click="show('dates')" class="filter">
+                        <p v-if="!datesFormatted.length">Dates</p>
+                        <p v-if="datesFormatted.length">{{datesFormatted[0]}}{{ datesFormatted[1] ? ' to ' + datesFormatted[1] : ''}} </p>
+                    </button>
+                    <div class="event-filter-button__over dates" v-if="active === 'dates'">
+                        <div>
+                            <flat-pickr
+                                v-model="dates"
+                                :config="config"                                         
+                                placeholder="Select date"               
+                                name="dates">
+                            </flat-pickr>
+                        </div>
+                        <div class="save">
+                            <button v-if="datesFormatted.length" @click="datesFormatted = []; datesSubmit = []; dates = [];" class="cancel">clear</button>
+                            <button v-if="!datesFormatted.length" @click="active = null" class="cancel">Cancel</button>
+                            <button class="submit" @click="onSubmit">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Category Search -->
+            <div class="event-filter-item">
+                <div class="button" ref="cat">
+                    <button @click="show('category')" class="filter">
+                        <p v-if="!category">Categories</p>
+                        <p v-if="category">{{category.name}}</p>
+                    </button>
+                    <div v-if="active === 'category'" class="event-filter-button__over cat">
+                        <div class="box">
+                            <multiselect 
+                            v-model="category"
+                            label="name"
+                            :options="categories" 
+                            placeholder="Categories"
+                            @select="submitCat"
+                            open-direction="bottom"
+                            :preselect-first="false">
+                            </multiselect>
+                        </div>
+                        <div class="save">
+                            <button v-if="category" @click="clearCat()" class="cancel">clear</button>
+                            <button v-if="!category" @click="active = null;" class="cancel">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Price Search -->
+            <div class="event-filter-item">
+                <div class="button" ref="price">
+                    <button @click="show('price')" class="filter">
+                        <p v-if="!showPrice && price[0] == 0">{{' Up to ' + '$' + price[1]}}</p>
+                        <p v-if="!showPrice && price[0] != 0">{{'$' + price[0]}}{{' to ' + '$' + price[1]}}</p>
+                        <p v-if="showPrice">Price</p>
+                    </button>
+                    <div v-if="active === 'price'" class="event-filter-button__over price">
+                        <div class="box price">
+                            <vue-slider
+                            v-model="price" 
+                            v-bind="options"
+                            :enable-cross="false" />
+                            </vue-slider>
+                            <div class="amt">
+                                <div class="info">
+                                    <label> Min </label>
+                                    <input type="text"v-model="price[0]">
+                                </div>
+                                <div class="info">
+                                    <label> Max </label>
+                                    <input type="text"v-model="price[1]">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="save">
+                            <button v-if="showPrice" @click="active = null" class="cancel">Cancel</button>
+                            <button v-if="!showPrice" @click="price = [options.min, options.max]" class="cancel">clear</button>
+                            <button @click="onSubmit" class="submit">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Mobile Filter List -->
+        <div v-if="mobile" class="filter-list" v-show="showFilters">
+            <div class="nav">
+                <button @click="cancelMobile" class="close">
+                    <svg viewBox="0 0 12 12" role="presentation" aria-hidden="true" focusable="false" style="height: 14px; width: 14px; display: block; fill: currentcolor;"><path d="m11.5 10.5c.3.3.3.8 0 1.1s-.8.3-1.1 0l-4.4-4.5-4.5 4.5c-.3.3-.8.3-1.1 0s-.3-.8 0-1.1l4.5-4.5-4.4-4.5c-.3-.3-.3-.8 0-1.1s.8-.3 1.1 0l4.4 4.5 4.5-4.5c.3-.3.8-.3 1.1 0s .3.8 0 1.1l-4.5 4.5z" fill-rule="evenodd"></path></svg>
+                </button>
+                <div class="clear">
+                    <button @click="clearMobile">Clear</button>
+                </div>
+            </div>
+            <div class="content">
+                <div class="dates">
+                    <h3>Dates</h3>
+                    <flat-pickr
+                        v-model="dates"
+                        :config="configmobile"                                         
+                        placeholder="Select date"               
+                        name="dates">
+                    </flat-pickr>
+                </div>
+                <div class="prices">
+                    <h3>Prices</h3>
+                    <div class="box price">
+                        <vue-slider
+                        v-model="price" 
+                        v-bind="options"
+                        :enable-cross="false" />
+                        <div class="amt">
+                            <div class="info">
+                                <label> Min </label>
+                                <input type="text"v-model="price[0]">
+                            </div>
+                            <div class="info">
+                                <label> Max </label>
+                                <input type="text"v-model="price[1]">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="categories">
+                    <h3>Categories</h3>
+                    <multiselect 
+                    v-model="category"
+                    label="name"
+                    :options="categories" 
+                    placeholder="Categories"
+                    @input="submitCat()"
+                    open-direction="bottom"
+                    :preselect-first="false">
+                    </multiselect>
+                </div>
+            </div>
+            <div class="filter">
+                <div class="button">
+                    <button @click="submitMobile">Filter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    import flatPickr from 'vue-flatpickr-component'
+    import 'flatpickr/dist/flatpickr.css'
+    import Multiselect from 'vue-multiselect'
+    import VueSlider from 'vue-slider-component'
+    import 'vue-slider-component/theme/antd.css'
+
+    export default {
+
+        props:['categories'],
+
+        components: { flatPickr, Multiselect, VueSlider },
+
+        computed: {
+            showPrice() {
+                return this.price[1] == this.options.max && this.price[0] == this.options.min ? true : false;
+            },
+
+            submitObject() {
+                return {
+                    category: this.category ? this.category : '',
+                    dates: this.datesSubmit ? this.datesSubmit : '',
+                    price: this.hasPrice ? this.price : '',
+                }
+            }
+        },
+
+        data() {
+            return {
+                eventList: [],
+                dates: [],
+                datesSubmit: [],
+                datesFormatted: [],
+                config: this.initializeConfigObject(),
+                configmobile: this.initializeConfigObject(),
+                active: '',
+                category: '',
+                price: [0,500],
+                hasPrice: false,
+                options: { min: 0, max: 500 },
+                showFilters: false,
+                mobile: window.innerWidth < 768,
+            }
+        },
+
+        methods: {
+            initializeConfigObject(){
+                return {
+                    minDate: "today",
+                    altFormat:'M d',
+                    altInput: true,
+                    mode: "range",
+                    inline: true,
+                    showMonths: this.mobile ? 1 : 2,
+                    dateFormat: 'Y-m-d H:i:s',
+                    onClose: [this.dateFunc()], 
+                }
+            },
+
+            onSubmit() {
+                console.log(this.submitObject);
+                this.active = null;
+                axios.post('/api/search/remote', this.submitObject)
+                .then(res => {
+                    this.$emit('eventlist', res.data);
+                })
+                .catch(errorResponse => { 
+                   console.log(errorResponse.data);
+                });
+            },
+
+            show(type) {
+                console.log(type);
+                this.active === type ? this.active = null : this.active = type;
+                setTimeout(() => document.addEventListener("click", this.onClickOutside), 200);
+            },
+
+            submitCat(value) {
+                this.category = value;
+                this.onSubmit();
+            },
+
+            clearCat() {
+                this.category = '';
+                this.onSubmit();
+            },
+
+            submitMobile() {
+                this.onSubmit();
+                this.showFilters = false;
+            },
+
+            cancelMobile() {
+                this.clearMobile();
+                this.showFilters = false;
+            },
+
+            clearMobile() {
+                this.price = [this.options.min, this.options.max]
+                this.datesFormatted = [];
+                this.datesSubmit = [];
+                this.dates = [];
+                this.category = '';
+            },
+
+            dateFunc() {
+            // Save component this in that
+            const that = this;
+            // return function needed
+            return function(value) {
+                that.datesSubmit = value.map(date => 
+                    this.formatDate(date, "Y-m-d H:i:S"));
+                that.datesFormatted = value.map(date => 
+                    this.formatDate(date, "M d"));
+                }
+            },
+
+            getPriceRange() {
+                let prices = [] 
+                this.eventList.forEach(event=>{ 
+                  event.priceranges.forEach(pricerange=>{ 
+                    prices.push(pricerange.price) 
+                  }) 
+                })
+
+                function compareNumbers(a, b) {
+                  return a - b;
+                }
+
+                let arr = Math.ceil(parseFloat(prices.sort(compareNumbers).slice(-1)[0]));
+                console.log(arr);
+
+                prices.length ? this.price[1] = arr : this.price[1] = 1000;
+                prices.length ? this.options.max = arr : this.options.max = 1000;
+            },
+
+            onClickOutside(event) {
+                console.log('test');
+                let cat =  this.$refs.cat;
+                let dates =  this.$refs.dates;
+                let price =  this.$refs.price;
+                if (!cat || cat.contains(event.target) || !dates || dates.contains(event.target) || !price || price.contains(event.target)) return;
+                this.active = null;
+                this.onSubmit();
+            },
+        },
+
+        watch: {
+            price() {
+                this.hasPrice = true;
+            },
+            showFilters() {
+                return this.showFilters ? this.toggleBodyClass('addClass', 'noscroll') : this.toggleBodyClass('removeClass', 'noscroll');
+            },
+        },
+
+}
+</script>

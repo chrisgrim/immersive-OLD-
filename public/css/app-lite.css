@@ -121,6 +121,10 @@ textarea {
   #Event- Show Page
 \*------------------------------------*/
 
+.show-content {
+  margin: 0 0 10rem 0;
+}
+
 nav.event-show {
   height: 7rem;
   grid-template-columns: 1rem auto;
@@ -146,7 +150,7 @@ header.event-show {
 
 .header-left__cat {
   font-size: 2rem;
-  font-family: Annie Use Your Telescope, cursive;
+  font-family: "Playfair Display", serif;
   font-weight: 300;
   color: #914669;
   display: block;
@@ -509,15 +513,28 @@ section .event-title {
 }
 
 header.padded {
-  padding: 4rem 8rem 8rem 8rem;
+  padding: 4rem 8rem 4rem 8rem;
 }
 
 .header-title {
   margin: 2rem 0rem;
 }
 
+.header-title-white {
+  margin: 2rem 0rem;
+}
+
+.header-title-white h3 {
+  color: white;
+}
+
 section.padded {
   padding: 4rem 8rem;
+}
+
+.event-list-black {
+  padding: 2rem 8rem 4rem 8rem;
+  background: black;
 }
 
 .event-index-eventlist {
@@ -541,6 +558,11 @@ section.padded {
 
 .card {
   position: relative;
+  border-radius: 1rem;
+}
+
+.card.black {
+  background: #232323;
 }
 
 .card-image img {
@@ -551,10 +573,18 @@ section.padded {
   width: 100%;
 }
 
+.card-content {
+  padding: 0rem 1rem 1rem 1rem;
+}
+
 .card-title h3 {
   margin: 1rem 0 0.5rem;
   font-size: 1.6rem;
   font-weight: 500;
+}
+
+.card-title h3.black {
+  color: white;
 }
 
 .card-organizer h3 {
@@ -563,10 +593,18 @@ section.padded {
   font-weight: 400;
 }
 
+.card-organizer h3.black {
+  color: white;
+}
+
 .card-price h4 {
   display: inline-block;
   margin: 0 0.5rem 0 0;
   font-size: 1.3rem;
+}
+
+.card-price h4.black {
+  color: white;
 }
 
 .heart {
@@ -855,6 +893,434 @@ button.nopro-button {
 }*/
 
 /*------------------------------------*\
+  #Event- Search Page
+\*------------------------------------*/
+
+.event-search {
+  padding-top: 7rem;
+}
+
+.event-search__container {
+  width: 100%;
+  grid-template-columns: 1fr 57rem;
+  grid-column-gap: 0;
+}
+
+.event-search__container.maphidden {
+  grid-template-columns: 1fr;
+}
+
+.event-search-filter {
+  position: relative;
+  display: inline-block;
+  padding: 2.55rem 2.5rem 2rem 2.5rem;
+  width: 100%;
+}
+
+.event-search__filters {
+  width: 100%;
+  height: 5rem;
+  grid-template-columns: repeat(5, auto);
+  -webkit-box-pack: left;
+          justify-content: left;
+  -webkit-box-align: center;
+          align-items: center;
+  z-index: 1;
+  position: relative;
+  margin: 1.4rem 0rem;
+  grid-column-gap: 0rem;
+  display: inline-grid;
+  grid-gap: 1rem !important;
+}
+
+.event-filter-item {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  width: 100%;
+}
+
+.event-filter-item.showmap {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 10rem;
+  margin-top: -4.6rem;
+}
+
+button.filter {
+  padding: 0.8rem;
+  background: #fff;
+  display: inline-block;
+  border-radius: 2rem;
+  border: 1px solid #000;
+  font-weight: 300;
+}
+
+button.filter:hover {
+  background: black;
+}
+
+button.filter p {
+  font-size: 1.4rem;
+}
+
+button.filter p:hover {
+  color: white;
+}
+
+.event-filter-button__over {
+  position: absolute;
+  background: white;
+  border-radius: 1rem;
+  border: 1px solid black;
+  margin-top: 2.5rem;
+  margin-left: -0.6rem;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 10px 37px;
+}
+
+.event-filter-button__over .box {
+  padding: 5rem 3rem;
+}
+
+.event-filter-button__over .save {
+  padding: 1rem;
+  border-top: 1px solid #929292;
+  margin-top: 0.3rem;
+}
+
+.event-filter-button__over .save button.cancel {
+  background: white;
+  border: 1px solid darkgrey;
+  color: #989898;
+  padding: 0.3rem 1rem;
+}
+
+.event-filter-button__over .save button.submit {
+  float: right;
+  padding: 0.3rem 1rem;
+}
+
+.event-filter-button__over .flatpickr-calendar {
+  box-shadow: none;
+}
+
+.event-filter-button__over.cat {
+  width: 35rem;
+}
+
+.event-filter-button__over.cat .box {
+  padding: 0rem;
+}
+
+.event-filter-button__over.cat .box .multiselect__tags {
+  border: none;
+  padding: 18px 40px 0 8px;
+  background: none;
+}
+
+.event-filter-button__over.price {
+  width: 35rem;
+}
+
+.event-filter-button__over .flatpickr-input,
+.event-filter-button__over .form-control.input {
+  display: none;
+}
+
+button.close-map {
+  position: fixed;
+  top: 9.3rem;
+  right: 50rem;
+  z-index: 900;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 50%;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.04) !important;
+}
+
+.event-search-list {
+  width: 100%;
+  grid-template-columns: 1fr 1fr;
+}
+
+.event-search-list.maphidden {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.event-search-map {
+  display: inline-block;
+  position: relative;
+}
+
+.event-search-map_container {
+  overflow: hidden;
+  width: 57rem;
+  height: 100vh;
+  padding-top: 7rem;
+  margin-top: -7rem;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0px;
+}
+
+.event-search-map_container .zoom {
+  margin: 9.4rem 2.4rem;
+}
+
+.search-map-updated {
+  left: 50%;
+  top: 0;
+  border-radius: 1rem;
+  width: 23rem;
+  margin-left: -11.4rem;
+  margin-top: 9.4rem;
+  height: 4.3rem;
+  grid-template-columns: 4.4rem auto;
+  grid-column-gap: 0rem;
+  -webkit-box-align: center;
+          align-items: center;
+  position: absolute;
+  z-index: 900;
+  background: #fff;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.04) !important;
+}
+
+.search-map-updated p {
+  display: inline-block;
+  margin: 0;
+  padding: 1rem 0;
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+.search-map-updated__checkbox {
+  width: 2.4rem;
+  height: 2.4rem;
+  background: #f64747;
+  position: relative;
+  border-radius: 0.5rem;
+  display: inline-block;
+  margin: 1rem;
+}
+
+.search-map-updated__checkbox input:checked + .check {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  width: 8px;
+  height: 14px;
+  border-width: 0 2px 2px 0;
+  border-style: solid;
+  border-color: #fff;
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+  margin-left: -4px;
+  margin-top: -7px;
+}
+
+.search-map-updated__checkbox input[type=checkbox] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+       appearance: none;
+}
+
+button.mobile-map-close {
+  position: fixed;
+  top: 2.4rem;
+  left: 2.4rem;
+  z-index: 900;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 50%;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.04) !important;
+}
+
+.filter-list {
+  width: 100%;
+  position: fixed;
+  overflow-y: scroll;
+  top: 0;
+  height: 100%;
+  background: white;
+  z-index: 3000;
+}
+
+.filter-list .nav {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 7rem;
+  -webkit-box-align: center;
+          align-items: center;
+  padding: 1.1rem 3rem;
+  border-bottom: 1px solid black;
+}
+
+.filter-list .nav .clear {
+  text-align: right;
+}
+
+.filter-list .nav .clear button {
+  background: none;
+  border: none;
+}
+
+.filter-list .nav button.close {
+  background: none;
+  border: none;
+}
+
+.filter-list .content {
+  background: white;
+  padding-top: 13rem;
+}
+
+.filter-list .content .dates {
+  padding: 3rem;
+  border-bottom: 1px solid #cccccc;
+  min-height: 42rem;
+}
+
+.filter-list .content .dates .flatpickr-calendar.inline {
+  box-shadow: none;
+}
+
+.filter-list .content .prices {
+  padding: 3rem;
+  border-bottom: 1px solid #cccccc;
+}
+
+.filter-list .content .prices .box.price {
+  width: 26rem;
+  margin: auto;
+}
+
+.filter-list .content .categories {
+  padding: 3rem;
+  min-height: 32rem;
+}
+
+.filter-list .content .categories .multiselect {
+  margin: auto;
+  width: 30rem;
+}
+
+.filter-list .filter {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 4px 24px, rgba(0, 0, 0, 0.04) 0px 0px 0px 1px !important;
+  position: fixed;
+  background: white;
+  bottom: 0;
+  width: 100%;
+  height: 7rem;
+  border-top: 1px solid #cccccc;
+}
+
+.filter-list .filter .button {
+  background: white;
+  width: 70%;
+  margin: auto;
+  margin-top: 1.5rem;
+}
+
+.filter-list .filter .button button {
+  width: 100%;
+  color: white;
+  background-color: #008489;
+}
+
+.amt {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 2rem;
+}
+
+.amt .info {
+  background: white;
+  padding: 1rem 2rem;
+  border-radius: 2rem;
+  border: 1px solid black;
+}
+
+.amt .info label {
+  display: inherit;
+}
+
+.amt .info input {
+  width: 100%;
+  font-size: 3rem !important;
+  border: none;
+}
+
+@media (max-width: 768px) {
+  .event-search {
+    padding: 0;
+  }
+
+  .event-search__container {
+    grid-template-columns: 1fr;
+  }
+
+  .event-search-filter {
+    width: 100%;
+    z-index: 901;
+    background-color: #fff;
+    margin-top: 65%;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.04) !important;
+    min-height: 56rem;
+    height: 100%;
+    position: relative;
+    display: inline-block;
+    padding-top: 4rem;
+  }
+
+  .event-search__filters {
+    margin: 1rem 0rem 0.5rem 0rem;
+  }
+
+  .event-search__filters.mobile {
+    display: grid;
+  }
+
+  .event-search__filters.desktop {
+    display: none;
+  }
+
+  .event-search-map {
+    width: 100%;
+    grid-column: 1;
+    grid-row: 1;
+    display: inline-block;
+    position: relative;
+    padding: 0;
+  }
+
+  .event-search-map_container {
+    position: fixed;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .search-map-updated {
+    display: inline-block;
+    width: 13rem;
+    border-radius: 5rem;
+    margin-left: -6.5rem;
+    padding: 0;
+  }
+
+  .search-map-updated svg {
+    padding-top: 0.3rem;
+  }
+
+  .event-search-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+/*------------------------------------*\
   #Nav
 \*------------------------------------*/
 
@@ -897,6 +1363,11 @@ button.nopro-button {
 
 .nav.create {
   display: none;
+}
+
+.nav.onlinesearch {
+  background: transparent;
+  border: 0;
 }
 
 .nav-grid {
@@ -3506,6 +3977,7 @@ a.leaflet-popup-close-button {
 
 .index-nav-search .multiselect {
   margin: 0;
+  z-index: 2;
 }
 
 .index-nav-search .multiselect__tags {
@@ -3544,6 +4016,10 @@ a.leaflet-popup-close-button {
 
 .index-nav-search .multiselect__select {
   display: none;
+}
+
+.multiselect__option {
+  white-space: inherit !important;
 }
 
 .multiselect {

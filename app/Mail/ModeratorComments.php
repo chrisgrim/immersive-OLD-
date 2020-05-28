@@ -36,7 +36,7 @@ class ModeratorComments extends Mailable
      */
     public function build()
     {
-        return $this->from('EverythingImmersive@ei.com')
+        return $this->from('submissions@everythingimmersive.com')
                     ->view('emails.moderator-comments')
                     ->with([
                         'comments' => $this->ModeratorComment->comments,

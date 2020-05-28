@@ -2,6 +2,9 @@
   #Event- Show Page
 \*------------------------------------*/
 
+.show-content {
+    margin: 0 0 10rem 0;
+}
 
 nav.event-show {
     height: 7rem;
@@ -24,7 +27,7 @@ header.event-show {
     position: relative;
     &__cat {
         font-size: 2rem;
-        font-family: Annie Use Your Telescope,cursive;
+        font-family: 'Playfair Display', serif;
         font-weight: 300;
         color: #914669;
         display: block;

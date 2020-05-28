@@ -1,23 +1,19 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[30],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/create/advisories.vue?vue&type=script&lang=js&":
-/*!***********************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/create/advisories.vue?vue&type=script&lang=js& ***!
-  \***********************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/layouts/reset-password.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/layouts/reset-password.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _mixins_form_validation_mixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/form-validation-mixin */ "./resources/js/mixins/form-validation-mixin.js");
-/* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-multiselect */ "./node_modules/vue-multiselect/dist/vue-multiselect.min.js");
-/* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_multiselect__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
-/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__);
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _mixins_form_validation_mixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../mixins/form-validation-mixin */ "./resources/js/mixins/form-validation-mixin.js");
 //
 //
 //
@@ -92,217 +88,48 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mixins: [_mixins_form_validation_mixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
-  components: {
-    Multiselect: vue_multiselect__WEBPACK_IMPORTED_MODULE_1___default.a
-  },
-  props: ['event', 'loadcontact', 'loadcontent', 'loadmobility', 'loadinteractive'],
+  props: ['token'],
+  mixins: [_mixins_form_validation_mixin__WEBPACK_IMPORTED_MODULE_2__["default"]],
   computed: {
-    endpoint: function endpoint() {
-      return "/create-event/".concat(this.event.slug, "/advisories");
+    passwordIsVisible: function passwordIsVisible() {
+      return this.fieldType == 'password' ? false : true;
     },
     submitObject: function submitObject() {
       return {
-        advisories: this.advisories,
-        contactAdvisory: this.contactAdvisories.map(function (a) {
-          return a.id;
-        }),
-        contentAdvisory: this.contentAdvisories.map(function (a) {
-          return a.advisories;
-        }),
-        mobilityAdvisory: this.mobilityAdvisories.map(function (a) {
-          return a.mobilities;
-        }),
-        interactiveLevel: this.interactiveLevel
+        email: this.user.email,
+        password: this.user.password,
+        password_confirmation: !this.isLogin ? this.user.passwordConfirm : '',
+        token: this.token
       };
+    },
+    endPoint: function endPoint() {
+      return '/password/reset';
     }
   },
   data: function data() {
     return {
-      advisories: this.initializeAdvisoriesObject(),
-      contactAdvisoryOptions: this.loadcontact ? this.loadcontact : [],
-      contentAdvisoryOptions: this.loadcontent ? this.loadcontent : [],
-      mobilityAdvisoryOptions: this.loadmobility ? this.loadmobility : [],
-      interactiveLevelOptions: this.loadinteractive ? this.loadinteractive : [],
-      contactAdvisories: this.event.contact_levels ? this.event.contact_levels : '',
-      contentAdvisories: this.event.content_advisories ? this.event.content_advisories : '',
-      mobilityAdvisories: this.event.mobility_advisories ? this.event.mobility_advisories : '',
-      interactiveLevel: this.event.interactivelevel ? this.event.interactivelevel : '',
-      active: null,
-      ageOptions: ['All Ages', '12+', '16+', '18+', '21+'],
-      disabled: false,
-      serverErrors: []
+      user: this.initializeUserObject(),
+      fieldType: 'password',
+      pageHeight: 0,
+      active: '',
+      serverErrors: [],
+      alerts: [],
+      disabled: false
     };
   },
   methods: {
-    initializeAdvisoriesObject: function initializeAdvisoriesObject() {
+    initializeUserObject: function initializeUserObject() {
       return {
-        contactAdvisories: this.event.advisories ? this.event.advisories.contactAdvisories : '',
-        sexual: this.event.advisories.sexualViolence ? this.event.advisories.sexualViolence : false,
-        sexualDescription: this.event.advisories ? this.event.advisories.sexualDescription : '',
-        wheelchairReady: this.event.advisories.wheelchairReady ? this.event.advisories.wheelchairReady : false,
-        ageRestriction: this.event.advisories ? this.event.advisories.ageRestriction : '',
-        audience: this.event.advisories ? this.event.advisories.audience : ''
+        email: '',
+        password: '',
+        passwordConfirm: ''
       };
     },
-    addContentTag: function addContentTag(newTag) {
-      var tag = {
-        advisories: newTag,
-        id: newTag.substring(0, 0) + Math.floor(Math.random() * 10000000)
-      };
-      this.contentAdvisoryOptions.push(tag);
-      this.contentAdvisories.push(tag);
-    },
-    addMobilityTag: function addMobilityTag(newTag) {
-      var tag = {
-        mobilities: newTag,
-        id: newTag.substring(0, 0) + Math.floor(Math.random() * 10000000)
-      };
-      this.mobilityAdvisoryOptions.push(tag);
-      this.mobilityAdvisories.push(tag);
-    },
-    onSubmit: function onSubmit(value) {
+    onSubmit: function onSubmit() {
       var _this = this;
 
       if (this.checkVuelidate()) {
@@ -310,65 +137,57 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       }
 
       ;
-      axios.patch(this.endpoint, this.submitObject).then(function (res) {
-        // console.log(res.data);
-        value == 'exit' ? _this.onBackInitial() : _this.onForward('images');
+      console.log(this.submitObject);
+      axios.post(this.endPoint, this.submitObject).then(function (res) {
+        _this.isLogin ? location.reload() : _this.onRegistered();
       })["catch"](function (err) {
         _this.onErrors(err);
       });
     },
-    updateAdvisoryFields: function updateAdvisoryFields(input) {
-      if (input !== null && _typeof(input) === "object" && input.id !== null) {
-        this.advisories = lodash__WEBPACK_IMPORTED_MODULE_2___default.a.pick(input, lodash__WEBPACK_IMPORTED_MODULE_2___default.a.intersection(lodash__WEBPACK_IMPORTED_MODULE_2___default.a.keys(this.advisories), lodash__WEBPACK_IMPORTED_MODULE_2___default.a.keys(input)));
-      }
-
-      this.advisories.wheelchairReady ? '' : this.advisories.wheelchairReady = false;
-      this.advisories.sexualViolence ? '' : this.advisories.sexualViolence = false;
+    onToggle: function onToggle(arr) {
+      this.active = arr;
+      arr == 'password' ? this.$v.user.password.$touch : '';
+      this.serverErrors = [];
     },
-    onLoad: function onLoad() {
-      var _this2 = this;
-
-      axios.get(this.onFetch('advisories')).then(function (res) {
-        _this2.updateAdvisoryFields(res.data.advisories);
-
-        res.data.contactPivots ? _this2.contactAdvisories = res.data.contactPivots : '';
-        res.data.contentPivots ? _this2.contentAdvisories = res.data.contentPivots : '';
-        res.data.mobilityPivots ? _this2.mobilityAdvisories = res.data.mobilityPivots : '';
-        res.data.interactivePivots ? _this2.interactiveLevel = res.data.interactivePivots : '';
-      });
+    hideAlerts: function hideAlerts() {
+      this.disabled = false;
+      this.alerts = [];
+    },
+    handleResize: function handleResize() {
+      this.pageHeight = "height:".concat(window.innerHeight, "px");
+    },
+    togglePasswordVisible: function togglePasswordVisible() {
+      this.fieldType = this.fieldType === 'password' ? 'text' : 'password';
+    },
+    hasServerError: function hasServerError(field) {
+      return field && lodash__WEBPACK_IMPORTED_MODULE_0___default.a.has(this, 'serverErrors.' + field) && !lodash__WEBPACK_IMPORTED_MODULE_0___default.a.isEmpty(this.serverErrors[field]);
     }
   },
   created: function created() {
-    this.onLoad();
+    window.addEventListener('resize', this.handleResize);
+    this.handleResize();
+  },
+  destroyed: function destroyed() {
+    window.removeEventListener('resize', this.handleResize);
   },
   validations: {
-    contactAdvisories: {
-      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"]
-    },
-    mobilityAdvisories: {
-      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"]
-    },
-    contentAdvisories: {
-      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"]
-    },
-    interactiveLevel: {
-      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"]
-    },
-    advisories: {
-      ageRestriction: {
-        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"]
+    user: {
+      email: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
+        serverFailed: function serverFailed() {
+          return !this.hasServerError('email');
+        }
       },
-      wheelchairReady: {
-        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"]
+      password: {
+        serverFailed: function serverFailed() {
+          return !this.hasServerError('password');
+        },
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"]
       },
-      sexual: {
-        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"]
-      },
-      sexualDescription: {
-        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"]
-      },
-      audience: {
-        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"]
+      passwordConfirm: {
+        sameAsPassword: function sameAsPassword() {
+          return !this.isLogin ? this.user.password == this.user.passwordConfirm ? true : false : true;
+        }
       }
     }
   }
@@ -376,10 +195,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/create/advisories.vue?vue&type=template&id=7abe6ef1&":
-/*!***************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/create/advisories.vue?vue&type=template&id=7abe6ef1& ***!
-  \***************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/layouts/reset-password.vue?vue&type=template&id=0d338ac8&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/layouts/reset-password.vue?vue&type=template&id=0d338ac8& ***!
+  \********************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -391,628 +210,369 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "event-create__advisories grid" }, [
-    _c("section", { staticClass: "event-create" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "field" },
-        [
-          _c("label", { staticClass: "area" }, [
-            _vm._v("Select physical interaction level with guests")
-          ]),
-          _vm._v(" "),
-          _c("multiselect", {
-            class: {
-              active: _vm.active == "contact",
-              error: _vm.$v.contactAdvisories.$error
-            },
-            attrs: {
-              options: _vm.contactAdvisoryOptions,
-              multiple: true,
-              placeholder: "Choose all that apply",
-              "open-direction": "bottom",
-              "show-labels": false,
-              label: "level",
-              "track-by": "id",
-              "preselect-first": false
-            },
-            on: {
-              click: function($event) {
-                _vm.active = "contact"
-              },
-              blur: function($event) {
-                _vm.active = null
-              },
-              input: _vm.$v.contactAdvisories.$touch
-            },
-            model: {
-              value: _vm.contactAdvisories,
-              callback: function($$v) {
-                _vm.contactAdvisories = $$v
-              },
-              expression: "contactAdvisories"
-            }
-          }),
-          _vm._v(" "),
-          _vm.$v.contactAdvisories.$error
-            ? _c("div", { staticClass: "validation-error" }, [
-                !_vm.$v.contactAdvisories.required
-                  ? _c("p", { staticClass: "error" }, [
-                      _vm._v("Must choose at least one contact level ")
-                    ])
-                  : _vm._e()
-              ])
-            : _vm._e()
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "field" }, [
-        _c("label", [_vm._v(" Is there sexual content? ")]),
+  return _c(
+    "div",
+    { staticClass: "login-index grid", style: _vm.pageHeight },
+    [
+      _c("div", { staticClass: "login-information" }, [
+        _vm._m(0),
         _vm._v(" "),
-        _c("div", { attrs: { id: "cover" } }, [
+        _c("div", { staticClass: "field" }, [
           _c("input", {
             directives: [
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.advisories.sexual,
-                expression: "advisories.sexual"
+                value: _vm.user.email,
+                expression: "user.email"
               }
             ],
-            attrs: { type: "checkbox", id: "checkbox" },
-            domProps: {
-              checked: Array.isArray(_vm.advisories.sexual)
-                ? _vm._i(_vm.advisories.sexual, null) > -1
-                : _vm.advisories.sexual
+            class: {
+              active: _vm.active == "email",
+              error: _vm.$v.user.email.$error
             },
+            attrs: {
+              id: "email",
+              type: "email",
+              required: "",
+              placeholder: "Email",
+              autofocus: ""
+            },
+            domProps: { value: _vm.user.email },
             on: {
-              change: function($event) {
-                var $$a = _vm.advisories.sexual,
-                  $$el = $event.target,
-                  $$c = $$el.checked ? true : false
-                if (Array.isArray($$a)) {
-                  var $$v = null,
-                    $$i = _vm._i($$a, $$v)
-                  if ($$el.checked) {
-                    $$i < 0 &&
-                      _vm.$set(_vm.advisories, "sexual", $$a.concat([$$v]))
-                  } else {
-                    $$i > -1 &&
-                      _vm.$set(
-                        _vm.advisories,
-                        "sexual",
-                        $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                      )
+              click: function($event) {
+                return _vm.onToggle("email")
+              },
+              blur: function($event) {
+                _vm.active = null
+              },
+              input: [
+                function($event) {
+                  if ($event.target.composing) {
+                    return
                   }
-                } else {
-                  _vm.$set(_vm.advisories, "sexual", $$c)
-                }
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("div", { attrs: { id: "bar" } }),
-          _vm._v(" "),
-          _c("div", { attrs: { id: "knob" } }, [
-            _vm.advisories.sexual
-              ? _c("p", [_vm._v("Yes")])
-              : _c("p", [_vm._v("No")])
-          ])
-        ]),
-        _vm._v(" "),
-        _vm.$v.advisories.sexual.$error
-          ? _c("div", { staticClass: "validation-error" }, [
-              !_vm.$v.advisories.sexual.required
-                ? _c("p", { staticClass: "error" }, [
-                    _vm._v("Must select if there is sexual violence")
-                  ])
-                : _vm._e()
-            ])
-          : _vm._e()
-      ]),
-      _vm._v(" "),
-      _vm.advisories.sexual
-        ? _c("div", [
-            _c("div", { staticClass: "field" }, [
-              _c("label", { staticClass: "area" }, [
-                _vm._v(" Explain more about the sexual content ")
-              ]),
-              _vm._v(" "),
-              _c("textarea", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.advisories.sexualDescription,
-                    expression: "advisories.sexualDescription"
-                  }
-                ],
-                staticClass: "create-input area",
-                class: { active: _vm.active == "sexual" },
-                attrs: {
-                  rows: "8",
-                  placeholder: " ",
-                  required: "",
-                  autofocus: ""
+                  _vm.$set(_vm.user, "email", $event.target.value)
                 },
-                domProps: { value: _vm.advisories.sexualDescription },
-                on: {
-                  click: function($event) {
-                    _vm.active = "sexual"
-                  },
-                  blur: function($event) {
-                    _vm.active = null
-                  },
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(
-                      _vm.advisories,
-                      "sexualDescription",
-                      $event.target.value
-                    )
-                  }
+                _vm.$v.user.email.$touch
+              ],
+              keyup: function($event) {
+                if (
+                  !$event.type.indexOf("key") &&
+                  _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                ) {
+                  return null
                 }
-              })
-            ])
-          ])
-        : _vm._e()
-    ]),
-    _vm._v(" "),
-    _c("section", { staticClass: "event-create" }, [
-      _vm._m(1),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "field" },
-        [
-          _c("label", { staticClass: "area" }, [
-            _vm._v("Include warnings and advisories")
-          ]),
-          _vm._v(" "),
-          _c("multiselect", {
-            class: {
-              active: _vm.active == "content",
-              error: _vm.$v.contentAdvisories.$error
-            },
-            attrs: {
-              "show-labels": false,
-              options: _vm.contentAdvisoryOptions,
-              multiple: true,
-              "tag-placeholder": "Add this as new tag",
-              taggable: true,
-              "tag-position": "bottom",
-              placeholder: "Type here to create your own",
-              "open-direction": "bottom",
-              label: "advisories",
-              "track-by": "id"
-            },
-            on: {
-              tag: _vm.addContentTag,
-              click: function($event) {
-                _vm.active = "content"
-              },
-              blur: function($event) {
-                _vm.active = null
+                return _vm.onSubmit($event)
               }
-            },
-            model: {
-              value: _vm.contentAdvisories,
-              callback: function($$v) {
-                _vm.contentAdvisories = $$v
-              },
-              expression: "contentAdvisories"
             }
           }),
           _vm._v(" "),
-          _vm.$v.contentAdvisories.$error
+          _vm.$v.user.email.$error
             ? _c("div", { staticClass: "validation-error" }, [
-                !_vm.$v.contentAdvisories.required
+                !_vm.$v.user.email.required
                   ? _c("p", { staticClass: "error" }, [
-                      _vm._v("Must enter a mobility advisory ")
+                      _vm._v("The email is required")
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                !_vm.$v.user.email.serverFailed
+                  ? _c("p", { staticClass: "error" }, [
+                      _vm._v(_vm._s(_vm.serverErrors.email[0]))
                     ])
                   : _vm._e()
               ])
             : _vm._e()
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "field" },
-        [
-          _c("label", [_vm._v("Age restriction")]),
-          _vm._v(" "),
-          _c("multiselect", {
-            class: {
-              active: _vm.active == "age",
-              error: _vm.$v.advisories.ageRestriction.$error
-            },
-            attrs: {
-              options: _vm.ageOptions,
-              "show-labels": false,
-              placeholder: "Select the appropriate age group",
-              "open-direction": "bottom",
-              "preselect-first": false
-            },
-            on: {
-              click: function($event) {
-                _vm.active = "age"
-              },
-              blur: function($event) {
-                _vm.active = null
-              },
-              input: _vm.$v.advisories.ageRestriction.$touch
-            },
-            model: {
-              value: _vm.advisories.ageRestriction,
-              callback: function($$v) {
-                _vm.$set(_vm.advisories, "ageRestriction", $$v)
-              },
-              expression: "advisories.ageRestriction"
-            }
-          }),
-          _vm._v(" "),
-          _vm.$v.advisories.ageRestriction.$error
-            ? _c("div", { staticClass: "validation-error" }, [
-                !_vm.$v.advisories.ageRestriction.required
-                  ? _c("p", { staticClass: "error" }, [_vm._v("Required")])
-                  : _vm._e()
-              ])
-            : _vm._e()
-        ],
-        1
-      )
-    ]),
-    _vm._v(" "),
-    _c("section", { staticClass: "event-create" }, [
-      _vm._m(2),
-      _vm._v(" "),
-      _c("div", { staticClass: "field" }, [
-        _c("label", [_vm._v(" Is the Event Wheel Chair Accessible? ")]),
+        ]),
         _vm._v(" "),
-        _c("div", { attrs: { id: "cover" } }, [
+        _c("div", { staticClass: "field" }, [
           _c("input", {
             directives: [
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.advisories.wheelchairReady,
-                expression: "advisories.wheelchairReady"
+                value: _vm.user.password,
+                expression: "user.password"
               }
             ],
-            attrs: { type: "checkbox", id: "checkbox" },
-            domProps: {
-              checked: Array.isArray(_vm.advisories.wheelchairReady)
-                ? _vm._i(_vm.advisories.wheelchairReady, null) > -1
-                : _vm.advisories.wheelchairReady
+            staticClass: "pass",
+            class: {
+              active: _vm.active == "password",
+              error: _vm.$v.user.password.$error
             },
+            attrs: {
+              id: "password",
+              type: "password",
+              required: "",
+              placeholder: "Password"
+            },
+            domProps: { value: _vm.user.password },
             on: {
-              change: function($event) {
-                var $$a = _vm.advisories.wheelchairReady,
-                  $$el = $event.target,
-                  $$c = $$el.checked ? true : false
-                if (Array.isArray($$a)) {
-                  var $$v = null,
-                    $$i = _vm._i($$a, $$v)
-                  if ($$el.checked) {
-                    $$i < 0 &&
-                      _vm.$set(
-                        _vm.advisories,
-                        "wheelchairReady",
-                        $$a.concat([$$v])
-                      )
-                  } else {
-                    $$i > -1 &&
-                      _vm.$set(
-                        _vm.advisories,
-                        "wheelchairReady",
-                        $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                      )
+              click: function($event) {
+                return _vm.onToggle("password")
+              },
+              blur: function($event) {
+                _vm.active = null
+              },
+              input: [
+                function($event) {
+                  if ($event.target.composing) {
+                    return
                   }
-                } else {
-                  _vm.$set(_vm.advisories, "wheelchairReady", $$c)
+                  _vm.$set(_vm.user, "password", $event.target.value)
+                },
+                function($event) {
+                  return _vm.onToggle("password")
                 }
+              ],
+              keyup: function($event) {
+                if (
+                  !$event.type.indexOf("key") &&
+                  _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                ) {
+                  return null
+                }
+                return _vm.onSubmit($event)
               }
             }
           }),
           _vm._v(" "),
-          _c("div", { attrs: { id: "bar" } }),
-          _vm._v(" "),
-          _c("div", { attrs: { id: "knob" } }, [
-            _vm.advisories.wheelchairReady
-              ? _c("p", [_vm._v("Yes")])
-              : _c("p", [_vm._v("No")])
-          ])
+          _vm.$v.user.password.$error
+            ? _c("div", { staticClass: "validation-error" }, [
+                !_vm.$v.user.password.serverFailed
+                  ? _c("p", { staticClass: "error" }, [
+                      _vm._v("Must be at least 8 characters")
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                !_vm.$v.user.password.required
+                  ? _c("p", { staticClass: "error" }, [
+                      _vm._v("The password is required")
+                    ])
+                  : _vm._e()
+              ])
+            : _vm._e()
         ]),
         _vm._v(" "),
-        _vm.$v.advisories.wheelchairReady.$error
-          ? _c("div", { staticClass: "validation-error" }, [
-              !_vm.$v.advisories.wheelchairReady.required
-                ? _c("p", { staticClass: "error" }, [
-                    _vm._v("Must select if the event is wheelchair accessible ")
-                  ])
-                : _vm._e()
-            ])
-          : _vm._e()
+        _c("div", { staticClass: "field" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.user.passwordConfirm,
+                expression: "user.passwordConfirm"
+              }
+            ],
+            staticClass: "pass",
+            class: {
+              active: _vm.active == "passwordConfirm",
+              error: _vm.$v.user.passwordConfirm.$error
+            },
+            attrs: {
+              id: "password",
+              type: "password",
+              required: "",
+              placeholder: "Confirm Password"
+            },
+            domProps: { value: _vm.user.passwordConfirm },
+            on: {
+              click: function($event) {
+                _vm.active = "passwordConfirm"
+              },
+              blur: function($event) {
+                _vm.active = null
+              },
+              input: [
+                function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.user, "passwordConfirm", $event.target.value)
+                },
+                function($event) {
+                  _vm.active = "passwordConfirm"
+                }
+              ],
+              keyup: function($event) {
+                if (
+                  !$event.type.indexOf("key") &&
+                  _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                ) {
+                  return null
+                }
+                return _vm.onSubmit($event)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _vm.$v.user.passwordConfirm.$error
+            ? _c("div", { staticClass: "validation-error" }, [
+                !_vm.$v.user.passwordConfirm.sameAsPassword
+                  ? _c("p", { staticClass: "error" }, [
+                      _vm._v("Passwords must be the same")
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                !_vm.$v.user.passwordConfirm.isRequiredRegister
+                  ? _c("p", { staticClass: "error" }, [
+                      _vm._v("The passwordConfirm is required")
+                    ])
+                  : _vm._e()
+              ])
+            : _vm._e()
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "field" }, [
+          _c(
+            "button",
+            {
+              staticClass: "login-button",
+              attrs: { type: "submit", disabled: _vm.disabled },
+              on: { click: _vm.onSubmit }
+            },
+            [_vm._v(" Reset ")]
+          )
+        ])
       ]),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "field" },
-        [
-          _c("label", { staticClass: "area" }, [
-            _vm._v("Select any mobility restrictions")
-          ]),
-          _vm._v(" "),
-          _c("multiselect", {
-            class: {
-              active: _vm.active == "mobility",
-              error: _vm.$v.mobilityAdvisories.$error
-            },
-            attrs: {
-              options: _vm.mobilityAdvisoryOptions,
-              multiple: true,
-              "show-labels": false,
-              "tag-placeholder": "Add this as new tag",
-              taggable: true,
-              "tag-position": "bottom",
-              placeholder: "Type here to create your own",
-              "open-direction": "bottom",
-              label: "mobilities",
-              "track-by": "id"
-            },
-            on: {
-              tag: _vm.addMobilityTag,
-              click: function($event) {
-                _vm.active = "mobility"
-              },
-              blur: function($event) {
-                _vm.active = null
-              },
-              input: _vm.$v.mobilityAdvisories.$touch
-            },
-            model: {
-              value: _vm.mobilityAdvisories,
-              callback: function($$v) {
-                _vm.mobilityAdvisories = $$v
-              },
-              expression: "mobilityAdvisories"
-            }
-          }),
-          _vm._v(" "),
-          _vm.$v.mobilityAdvisories.$error
-            ? _c("div", { staticClass: "validation-error" }, [
-                !_vm.$v.mobilityAdvisories.required
-                  ? _c("p", { staticClass: "error" }, [
-                      _vm._v("Must enter a mobility advisory ")
-                    ])
-                  : _vm._e()
-              ])
-            : _vm._e()
-        ],
-        1
-      )
-    ]),
-    _vm._v(" "),
-    _c("section", { staticClass: "event-create" }, [
-      _vm._m(3),
+      _c("div", { staticClass: "login-image" }, [
+        _c("picture", [
+          _c("img", {
+            style: _vm.pageHeight,
+            attrs: { src: "/storage/website-files/login-image.jpg" }
+          })
+        ])
+      ]),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "field" },
-        [
-          _c("label", { staticClass: "area" }, [
-            _vm._v("Select physical interaction level with guests")
-          ]),
-          _vm._v(" "),
-          _c("multiselect", {
-            class: {
-              active: _vm.active == "interactive",
-              error: _vm.$v.interactiveLevel.$error
-            },
-            attrs: {
-              options: _vm.interactiveLevelOptions,
-              multiple: false,
-              placeholder: "Select your events interaction level",
-              "open-direction": "bottom",
-              "show-labels": false,
-              label: "name",
-              "track-by": "id",
-              "preselect-first": false
-            },
-            on: {
-              click: function($event) {
-                _vm.active = "interactive"
-              },
-              blur: function($event) {
-                _vm.active = null
-              },
-              input: _vm.$v.interactiveLevel.$touch
-            },
-            scopedSlots: _vm._u([
-              {
-                key: "option",
-                fn: function(props) {
-                  return [
-                    _c("div", { staticClass: "option__desc" }, [
-                      _c("div", { staticClass: "option__title" }, [
-                        _vm._v(_vm._s(props.option.name))
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "option__small" }, [
-                        _vm._v(_vm._s(props.option.description))
-                      ])
-                    ])
-                  ]
-                }
-              }
-            ]),
-            model: {
-              value: _vm.interactiveLevel,
-              callback: function($$v) {
-                _vm.interactiveLevel = $$v
-              },
-              expression: "interactiveLevel"
-            }
-          }),
-          _vm._v(" "),
-          _vm.$v.interactiveLevel.$error
-            ? _c("div", { staticClass: "validation-error" }, [
-                !_vm.$v.interactiveLevel.required
-                  ? _c("p", { staticClass: "error" }, [
-                      _vm._v("Must choose at least one contact level ")
-                    ])
-                  : _vm._e()
-              ])
-            : _vm._e()
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "field" }, [
-        _c("label", { staticClass: "area" }, [_vm._v(" Audience Roll ")]),
-        _vm._v(" "),
-        _c("textarea", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.advisories.audience,
-              expression: "advisories.audience"
-            }
-          ],
-          staticClass: "create-input area",
-          class: {
-            active: _vm.active == "audience",
-            error: _vm.$v.advisories.audience.$error
-          },
-          attrs: { rows: "8", placeholder: " ", required: "", autofocus: "" },
-          domProps: { value: _vm.advisories.audience },
-          on: {
-            click: function($event) {
-              _vm.active = "audience"
-            },
-            blur: function($event) {
-              _vm.active = null
-            },
-            input: [
-              function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.advisories, "audience", $event.target.value)
-              },
-              _vm.$v.advisories.audience.$touch
-            ]
-          }
-        }),
-        _vm._v(" "),
-        _vm.$v.advisories.audience.$error
-          ? _c("div", { staticClass: "validation-error" }, [
-              !_vm.$v.advisories.audience.required
-                ? _c("p", { staticClass: "error" }, [
-                    _vm._v("Must enter the audience's role ")
-                  ])
-                : _vm._e()
-            ])
-          : _vm._e()
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "event-create__submit-button" }, [
-      _c(
-        "button",
-        {
-          staticClass: "nav-back-button",
-          attrs: { disabled: _vm.disabled },
-          on: {
-            click: function($event) {
-              $event.preventDefault()
-              return _vm.onSubmit("exit")
-            }
-          }
-        },
-        [_vm._v(" Save and Exit ")]
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "create-button__back" }, [
-      _c(
-        "button",
-        {
-          staticClass: "create",
-          attrs: { disabled: _vm.disabled },
-          on: {
-            click: function($event) {
-              $event.preventDefault()
-              return _vm.onBack("description")
-            }
-          }
-        },
-        [_vm._v(" Back ")]
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "create-button__forward" }, [
-      _c(
-        "button",
-        {
-          staticClass: "create",
-          attrs: { disabled: _vm.disabled },
-          on: {
-            click: function($event) {
-              $event.preventDefault()
-              return _vm.onSubmit()
-            }
-          }
-        },
-        [_vm._v(" Save and continue ")]
-      )
-    ])
-  ])
+      _vm.alerts.message
+        ? _c("PasswordForget", {
+            attrs: { message: _vm.alerts.message },
+            on: { close: _vm.hideAlerts }
+          })
+        : _vm._e()
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "title" }, [
-      _c("h2", [_vm._v("Contact Advisories")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "title" }, [
-      _c("h2", [_vm._v("Content Advisories")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "title" }, [
-      _c("h2", [_vm._v("Mobility Advisories")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "title" }, [
-      _c("h2", [_vm._v("Audience Interaction Level")])
+    return _c("div", { staticClass: "login-information__title" }, [
+      _c("h3", [_vm._v("Reset Password")])
     ])
   }
 ]
 render._withStripped = true
 
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/runtime/componentNormalizer.js ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalizeComponent; });
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier, /* server only */
+  shadowMode /* vue-cli only */
+) {
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = 'data-v-' + scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = shadowMode
+      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
+      : injectStyles
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      var originalRender = options.render
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return originalRender(h, context)
+      }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    }
+  }
+
+  return {
+    exports: scriptExports,
+    options: options
+  }
+}
 
 
 /***/ }),
@@ -1060,17 +620,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/pages/create/advisories.vue":
-/*!**************************************************!*\
-  !*** ./resources/js/pages/create/advisories.vue ***!
-  \**************************************************/
+/***/ "./resources/js/pages/layouts/reset-password.vue":
+/*!*******************************************************!*\
+  !*** ./resources/js/pages/layouts/reset-password.vue ***!
+  \*******************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _advisories_vue_vue_type_template_id_7abe6ef1___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./advisories.vue?vue&type=template&id=7abe6ef1& */ "./resources/js/pages/create/advisories.vue?vue&type=template&id=7abe6ef1&");
-/* harmony import */ var _advisories_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./advisories.vue?vue&type=script&lang=js& */ "./resources/js/pages/create/advisories.vue?vue&type=script&lang=js&");
+/* harmony import */ var _reset_password_vue_vue_type_template_id_0d338ac8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./reset-password.vue?vue&type=template&id=0d338ac8& */ "./resources/js/pages/layouts/reset-password.vue?vue&type=template&id=0d338ac8&");
+/* harmony import */ var _reset_password_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./reset-password.vue?vue&type=script&lang=js& */ "./resources/js/pages/layouts/reset-password.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -1080,9 +640,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _advisories_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _advisories_vue_vue_type_template_id_7abe6ef1___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _advisories_vue_vue_type_template_id_7abe6ef1___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _reset_password_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _reset_password_vue_vue_type_template_id_0d338ac8___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _reset_password_vue_vue_type_template_id_0d338ac8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -1092,38 +652,38 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/pages/create/advisories.vue"
+component.options.__file = "resources/js/pages/layouts/reset-password.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/pages/create/advisories.vue?vue&type=script&lang=js&":
-/*!***************************************************************************!*\
-  !*** ./resources/js/pages/create/advisories.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************/
+/***/ "./resources/js/pages/layouts/reset-password.vue?vue&type=script&lang=js&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/pages/layouts/reset-password.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_advisories_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./advisories.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/create/advisories.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_advisories_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_reset_password_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./reset-password.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/layouts/reset-password.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_reset_password_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/pages/create/advisories.vue?vue&type=template&id=7abe6ef1&":
-/*!*********************************************************************************!*\
-  !*** ./resources/js/pages/create/advisories.vue?vue&type=template&id=7abe6ef1& ***!
-  \*********************************************************************************/
+/***/ "./resources/js/pages/layouts/reset-password.vue?vue&type=template&id=0d338ac8&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/pages/layouts/reset-password.vue?vue&type=template&id=0d338ac8& ***!
+  \**************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_advisories_vue_vue_type_template_id_7abe6ef1___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./advisories.vue?vue&type=template&id=7abe6ef1& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/create/advisories.vue?vue&type=template&id=7abe6ef1&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_advisories_vue_vue_type_template_id_7abe6ef1___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_reset_password_vue_vue_type_template_id_0d338ac8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./reset-password.vue?vue&type=template&id=0d338ac8& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/layouts/reset-password.vue?vue&type=template&id=0d338ac8&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_reset_password_vue_vue_type_template_id_0d338ac8___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_advisories_vue_vue_type_template_id_7abe6ef1___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_reset_password_vue_vue_type_template_id_0d338ac8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

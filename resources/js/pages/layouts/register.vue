@@ -29,11 +29,11 @@
                 :type="fieldType" 
                 class="pass" 
                 v-model="user.password"
-                :class="{ active: active == 'password','error': $v.user.password.$error }"
-                @click="active = 'password'"
+                :class="{ active: active == 'password','error': $v.user.password.$error, 'error': $v.user.email.$error }"
+                @click="onToggle('password')"
                 @blur="active = null" 
                 @keyup.enter="onSubmit"
-                @input="$v.user.password.$touch"
+                @input="onToggle('password')"
                 required
                 placeholder="password">
                 <div v-if="$v.user.password.$error" class="validation-error">
@@ -51,6 +51,7 @@
             <div class="field">
                 <button type="submit" :disabled="disabled" class="login-button" @click="onSubmit"> Sign In </button>
             </div>
+            <!--
             <div class="login-information__line">
                 <hr>
                 <span>or</span>
@@ -62,7 +63,8 @@
                <button @click="onAlternateLogin('Google')" class="social-login">
                     <p>Google</p>
                </button>
-            </div>
+            </div> 
+            -->
             <div class="login-information__switch">
                 <p>Don't have an account? <button @click.prevent="onPageSwitch" class="switch_login">Join Now</button></p>
             </div>
@@ -127,7 +129,7 @@
             </div>
             <div class="field">
                 <input 
-                id="password" 
+                id="passwordConfirm" 
                 type="password" 
                 class="pass" 
                 v-model="user.passwordConfirm"
@@ -146,6 +148,7 @@
             <div class="field">
                 <button type="submit" :disabled="disabled" class="login-button" @click="onSubmit"> Register </button>
             </div>
+             <!--
             <div class="login-information__line">
                 <hr>
                 <span>or</span>
@@ -158,6 +161,7 @@
                     <p>Google</p>
                </button>
             </div>
+            -->
             <div class="login-information__switch">
                 <p>Already have an account? <button @click.prevent="onPageSwitch" class="switch_login">Sign In Now</button></p>
             </div>

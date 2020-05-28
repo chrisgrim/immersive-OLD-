@@ -17,11 +17,11 @@
             margin: auto;
             ">
             <div style="text-align: center;max-width: 650px;margin: auto;padding: 0rem 1rem;">
-                <img style="width:100%;border-radius:.3rem;" src="https://secretchickens.com/storage/{{$image}}" alt="">
+                <img style="width:100%;border-radius:.3rem;" src="https://everythingimmersive.com/storage/{{$image}}" alt="">
             </div>
         </div>
         <div style="text-align: center;max-width: 550px;margin: auto;padding: 2rem 1rem;">
-            <a href="https://secretchickens.com/events/{{$slug}}">
+            <a href="https://everythingimmersive.com/events/{{$slug}}">
                 <button style="border: 1px solid #1abdb6;padding: .5rem 1rem;font-size: 1rem;color:#0c8a84;">Check it out</button>
             </a>
         </div>

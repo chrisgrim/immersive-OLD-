@@ -1,0 +1,26 @@
+
+
+
+header.online-search__header {
+    height:30rem;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-position: center 70% !important;
+    padding: 12rem 8rem 0 8rem;
+}
+.online-search__title {
+    margin-bottom: 1rem;
+    & h2 {
+        font-size: 4.5rem;
+        line-height: 4.2rem;
+    }
+}
+.online-search__tagline {
+    width: 30rem;
+}
+.event-online-search-filter {
+    position: relative;
+    display: inline-block;
+    padding: 2rem 7rem;
+    width: 100%;
+}

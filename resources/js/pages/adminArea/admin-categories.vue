@@ -8,42 +8,82 @@
                 </div>
             </div>
         </div>
-
-        <div class="list" v-for="(category, index) in categories">
-            <input 
-            type="text" 
-            v-model="category.name" 
-            placeholder="Category Name"
-            @blur="saveName(category)"
-            />
-            <textarea
-            type="text" 
-            v-model="category.description" 
-            placeholder="Category Name"
-            @blur="saveDescription(category)"
-            /></textarea> 
-            <div class="box" :style="{ backgroundImage: `url('/storage/${category.thumbImagePath}')` }">
-                <label @click="tempCat = category">
-                     <image-upload @loaded="onImageEdit"></image-upload>
-                     <CubeSpinner :loading="isLoading"></CubeSpinner>
-                </label> 
-            </div>
-            <input 
-            type="text" 
-            v-model="category.credit" 
-            placeholder="image credit"
-            @blur="saveCredit(category)"
-            />
-            <div>
-                <input 
-                type="text" 
-                v-model="category.rank" 
-                placeholder="Category Rank"
-                @blur="saveRank(category)"
-                />
-            </div>
-            <button @click.prevent="showModal(category)" class="delete-circle"><p>X</p></button>
-        </div>
+        <tabs>
+            <tab title="Location Based Events" :active="true" class="tab-events">
+                <div class="list" v-for="(category, index) in categories.location">
+                    <input 
+                    type="text" 
+                    v-model="category.name" 
+                    placeholder="Category Name"
+                    @blur="saveName(category)"
+                    />
+                    <textarea
+                    type="text" 
+                    v-model="category.description" 
+                    placeholder="Category Name"
+                    @blur="saveDescription(category)"
+                    /></textarea> 
+                    <div class="box" :style="{ backgroundImage: `url('/storage/${category.thumbImagePath}')` }">
+                        <label @click="tempCat = category">
+                             <image-upload @loaded="onImageEdit"></image-upload>
+                             <CubeSpinner :loading="isLoading"></CubeSpinner>
+                        </label> 
+                    </div>
+                    <input 
+                    type="text" 
+                    v-model="category.credit" 
+                    placeholder="image credit"
+                    @blur="saveCredit(category)"
+                    />
+                    <div>
+                        <input 
+                        type="text" 
+                        v-model="category.rank" 
+                        placeholder="Category Rank"
+                        @blur="saveRank(category)"
+                        />
+                    </div>
+                    <button @click.prevent="showModal(category)" class="delete-circle"><p>X</p></button>
+                </div>
+            </tab>
+            <tab title="Online Events" class="tab-events">
+                <div class="list" v-for="(category, index) in categories.remote">
+                    <input 
+                    type="text" 
+                    v-model="category.name" 
+                    placeholder="Category Name"
+                    @blur="saveName(category)"
+                    />
+                    <textarea
+                    type="text" 
+                    v-model="category.description" 
+                    placeholder="Category Name"
+                    @blur="saveDescription(category)"
+                    /></textarea> 
+                    <div class="box" :style="{ backgroundImage: `url('/storage/${category.thumbImagePath}')` }">
+                        <label @click="tempCat = category">
+                             <image-upload @loaded="onImageEdit"></image-upload>
+                             <CubeSpinner :loading="isLoading"></CubeSpinner>
+                        </label> 
+                    </div>
+                    <input 
+                    type="text" 
+                    v-model="category.credit" 
+                    placeholder="image credit"
+                    @blur="saveCredit(category)"
+                    />
+                    <div>
+                        <input 
+                        type="text" 
+                        v-model="category.rank" 
+                        placeholder="Category Rank"
+                        @blur="saveRank(category)"
+                        />
+                    </div>
+                    <button @click.prevent="showModal(category)" class="delete-circle"><p>X</p></button>
+                </div>
+            </tab>
+        </tabs>
         <modal v-if="isEditModalVisible" @close="isEditModalVisible = false">
             <div slot="header">
                 <div class="circle del">
@@ -117,6 +157,17 @@
                                 <p class="error" v-if="!$v.description.required">Please Add Category Description </p>
                             </div>
                         </div>
+                        <div class="field">
+                            <div style="text-align:left;">Is this a remote category?</div>
+                            <div id="cover">
+                                <input v-model="remote" type="checkbox" id="checkbox">
+                                <div id="bar"></div>
+                                <div id="knob">
+                                    <p v-if="remote">Yes</p>
+                                    <p v-else="remote">No</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div slot="footer">
@@ -153,6 +204,7 @@
                 tempCat: '',
                 serverErrors: [],
                 isLoading: false,
+                remote: false,
             }
         },
 
@@ -171,8 +223,8 @@
                 data.append('imagePath', this.finalImage);
                 data.append('name', this.name);
                 data.append('description', this.description);
+                data.append('remote', this.remote ? 1 : 0 );
 
-                console.log(data);
 
                 axios.post('/categories', data)
                 .then(response => { 
@@ -180,6 +232,7 @@
                     this.isModalVisible = false;
                     this.name = '';
                     this.description = '';
+                    this.remote = '';
                     this.imageSrc = '';
                     this.finalImage = '';
                     this.isLoading = false;

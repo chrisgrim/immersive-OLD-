@@ -23,7 +23,36 @@
                     </div>
                 </div>
                 
+                <!-- Specific Dates -->
                 <div v-show="showType == 'Specific Dates'" class="specific-show-dates">
+                    <section class="event-enter-showdates">
+                        <div class="field">
+                            <label> Select all show dates</label>
+                            <div class="calendar desktop">
+                                <flat-pickr
+                                    v-model="dates"
+                                    :config="calendarConfig"
+                                    ref="datePicker"                                              
+                                    class="form-control"
+                                    placeholder="Select date"               
+                                    name="dates">
+                                </flat-pickr>
+                            </div>
+                            <div class="calendar mobile">
+                                <flat-pickr
+                                    v-model="dates"
+                                    :config="mobileCalendarConfig"
+                                    ref="datePicker"                                              
+                                    class="form-control"
+                                    placeholder="Select date"               
+                                    name="dates">
+                                </flat-pickr>
+                            </div>
+                            <div v-if="$v.dates.$error" class="validation-error">
+                                <p class="error" v-if="!$v.dates.required">Please add at least 1 show date</p>
+                            </div>
+                        </div>
+                    </section>
                     <section class="event-enter-showtimes">
                         <div class="field">
                             <label> Show Times</label>
@@ -92,33 +121,7 @@
                             </div>
                         </div>
                     </section>
-                    <section class="event-enter-showdates">
-                        <div class="field">
-                            <label> Select all show dates</label>
-                            <div class="calendar desktop">
-                                <flat-pickr
-                                    v-model="dates"
-                                    :config="calendarConfig"
-                                    ref="datePicker"                                              
-                                    class="form-control"
-                                    placeholder="Select date"               
-                                    name="dates">
-                                </flat-pickr>
-                            </div>
-                            <div class="calendar mobile">
-                                <flat-pickr
-                                    v-model="dates"
-                                    :config="mobileCalendarConfig"
-                                    ref="datePicker"                                              
-                                    class="form-control"
-                                    placeholder="Select date"               
-                                    name="dates">
-                                </flat-pickr>
-                            </div>
-                            <div v-if="$v.dates.$error" class="validation-error">
-                                <p class="error" v-if="!$v.dates.required">Please add at least 1 show date</p>
-                            </div>
-                        </div>
+                    <section>
                         <div class="field">
                             <label> Does the event have a specific embargo date? (date you would like it to appear on EI) </label>
                             <div id="cover">
@@ -145,74 +148,8 @@
                     </section>
                 </div>
            
-           
+                <!-- Weekly Dates -->
                 <div v-show="showType == 'Ongoing'" class="ongoing-show-dates">
-                    <section class="event-enter-showtimes">
-                        <div class="field">
-                            <label> Show Times</label>
-                            <textarea 
-                            v-model="showTimes" 
-                            class="create-input area"
-                            :class="{ active: active == 'times','error': $v.showTimes.$error }"
-                            rows="8" 
-                            :placeholder="placeholdero" 
-                            required
-                            @click="active = 'times'"
-                            @blur="active = null"
-                            @input="$v.showTimes.$touch"
-                            autofocus>
-                            </textarea>
-                            <div v-if="$v.showTimes.$error" class="validation-error">
-                                <p class="error" v-if="!$v.showTimes.required">Please give a brief description of show times</p>
-                            </div>
-                        </div>
-                        <div class="field cost">
-                            <label class="area"> Ticket types and prices </label>
-                            <div class="create-shows__ticket-box">
-                                <div v-for="(v, index) in $v.tickets.$each.$iter" class="ticket-box__element grid">
-                                    <div class="field">
-                                        <label>Ticket Type</label>
-                                        <input 
-                                        class="create-input"  
-                                        name="name"
-                                        :class="{ active: active == 'ticket','error': v.name.$error }"
-                                        @click="active = 'ticket'"
-                                        @blur="active = null"
-                                        v-model="v.name.$model" 
-                                        placeholder="ex: General, VIP, Student"
-                                        />
-                                        <div v-if="v.name.$error" class="validation-error">
-                                            <p class="error" v-if="!v.name.required">Must enter a ticket name</p>
-                                            <p class="error" v-if="!v.name.maxLength">Name is too Long</p>
-                                        </div>
-                                    </div>
-                                    <div class="field">
-                                        <label>Ticket Price</label>
-                                        <input 
-                                        v-model="v.ticket_price.$model"
-                                        v-money="money"
-                                        @click="active = 'price'"
-                                        @blur="active = null"
-                                        placeholder="$0.00"
-                                        v-bind="money"
-                                        :class="{ active: active == 'price','error': v.ticket_price.$error }"
-                                        @keydown="$event.key === '-' ? $event.preventDefault() : null"
-                                        style="text-align: right" 
-                                        />
-                                        <div v-if="v.ticket_price.$error" class="validation-error">
-                                            <p class="error" v-if="!v.ticket_price.minValue">Please enter an amount</p>
-                                            <p class="error" v-if="!v.ticket_price.maxLength">Please enter an amount under $10,000</p>
-                                            <p class="error" v-if="!v.ticket_price.required">Please enter a price</p>
-                                        </div>
-                                        <button v-if="tickets.length > 1" @click.prevent="deleteRow(index)" class="delete-circle">X</button>
-                                    </div>
-                                </div>
-                            </div>
-                             <div class="ticket-box__add-button" @click.prevent="addTickets">
-                                <button>&#43; Ticket Types</button>
-                            </div>
-                        </div>
-                    </section>
                     <section class="event-enter-showdates">
                         <div class="field">
                             <label> Select show days</label>
@@ -264,6 +201,76 @@
                                 <p class="error" v-if="!$v.week.ifOngoing">Please select at least one day</p>
                             </div>
                         </div>
+                    </section>
+                    <section class="event-enter-showtimes">
+                        <div class="field">
+                            <label> Show Times</label>
+                            <textarea 
+                            v-model="showTimes" 
+                            class="create-input area"
+                            :class="{ active: active == 'times','error': $v.showTimes.$error }"
+                            rows="8" 
+                            :placeholder="placeholdero" 
+                            required
+                            @click="active = 'times'"
+                            @blur="active = null"
+                            @input="$v.showTimes.$touch"
+                            autofocus>
+                            </textarea>
+                            <div v-if="$v.showTimes.$error" class="validation-error">
+                                <p class="error" v-if="!$v.showTimes.required">Please give a brief description of show times</p>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="ticket-section">
+                        <div class="field cost">
+                            <label class="area"> Ticket types and prices </label>
+                            <div class="create-shows__ticket-box">
+                                <div v-for="(v, index) in $v.tickets.$each.$iter" class="ticket-box__element grid">
+                                    <div class="field">
+                                        <label>Ticket Type</label>
+                                        <input 
+                                        class="create-input"  
+                                        name="name"
+                                        :class="{ active: active == 'ticket','error': v.name.$error }"
+                                        @click="active = 'ticket'"
+                                        @blur="active = null"
+                                        v-model="v.name.$model" 
+                                        placeholder="ex: General, VIP, Student"
+                                        />
+                                        <div v-if="v.name.$error" class="validation-error">
+                                            <p class="error" v-if="!v.name.required">Must enter a ticket name</p>
+                                            <p class="error" v-if="!v.name.maxLength">Name is too Long</p>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <label>Ticket Price</label>
+                                        <input 
+                                        v-model="v.ticket_price.$model"
+                                        v-money="money"
+                                        @click="active = 'price'"
+                                        @blur="active = null"
+                                        placeholder="$0.00"
+                                        v-bind="money"
+                                        :class="{ active: active == 'price','error': v.ticket_price.$error }"
+                                        @keydown="$event.key === '-' ? $event.preventDefault() : null"
+                                        style="text-align: right" 
+                                        />
+                                        <div v-if="v.ticket_price.$error" class="validation-error">
+                                            <p class="error" v-if="!v.ticket_price.minValue">Please enter an amount</p>
+                                            <p class="error" v-if="!v.ticket_price.maxLength">Please enter an amount under $10,000</p>
+                                            <p class="error" v-if="!v.ticket_price.required">Please enter a price</p>
+                                        </div>
+                                        <button v-if="tickets.length > 1" @click.prevent="deleteRow(index)" class="delete-circle">X</button>
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="ticket-box__add-button" @click.prevent="addTickets">
+                                <button>&#43; Ticket Types</button>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
                         <div class="field">
                             <label> Does the event have a specific embargo date? (date you would like it to appear on EI) </label>
                             <div id="cover">
@@ -289,7 +296,7 @@
                         </div>
                     </section>
                 </div>
-           
+                
                 <div v-show="showType == 'Anytime'" class="everyday-show-dates">
                     <section class="event-enter-showtimes">
                         <div class="field">

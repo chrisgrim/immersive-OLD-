@@ -9,13 +9,17 @@ use App\Date;
 use App\User;
 use App\Organizer;
 use App\CityList;
+use App\RemoteLocation;
 use App\OrganizerSearchRule;
 use App\CityListSearchRule;
 use App\EventSearchRule;
 use App\GenreSearchRule;
 use App\DateSearchRule;
 use App\UserSearchRule;
-use App\EventDatesRule;
+use App\EventMapSearchRule;
+use App\EventRemoteSearchRule;
+use App\CategorySearchRule;
+use App\RemoteLocationSearchRule;
 use DB;
 use Carbon\Carbon;
 use Session;
@@ -37,6 +41,18 @@ class SearchController extends Controller
         $categories = Category::all();
 
         return view('events.search',compact('searchedevents', 'categories'));
+    }
+
+    public function onlinesearch(Request $request)
+    {
+
+        $searchedevents = Event::search('*')
+            ->where('closingDate', '>=', 'now/d')
+            ->with(['location', 'organizer'])
+            ->get(); 
+
+        $categories = Category::all();
+        return view('events.searchonline',compact('searchedevents', 'categories'));
     }
 
     public function filterIndex(Request $request)
@@ -79,32 +95,131 @@ class SearchController extends Controller
     public function searchNav(Request $request)
     {
         if ($request->keywords) {
-            $ajaxCity = CityList::search($request->keywords)
+            $category = Category::search($request->keywords)
+            ->rule(CategorySearchRule::class)
+            ->take(10)
+            ->get();
+        } else {
+            $category = Category::search('*')
+            ->take(10)
+            ->get();
+        }
+        if ($category->count()) {
+            return [
+                'data' => $category,
+                'type' => 'category'
+            ];
+        }
+
+        if ($request->keywords) {
+            $remote = RemoteLocation::search($request->keywords)
+            ->rule(RemoteLocationSearchRule::class)
+            ->take(10)
+            ->get();
+        } else {
+            $remote = RemoteLocation::search('*')
+            ->take(10)
+            ->get();
+        }
+        if ($remote->count()) {
+            return [
+                'data' => $remote,
+                'type' => 'remote'
+            ];
+        }
+        
+        if ($request->keywords) {
+            $tag = Genre::search($request->keywords)
+            ->rule(GenreSearchRule::class)
+            ->take(10)
+            ->get();
+        } else {
+            $tag = Genre::search('*')
+            ->take(10)
+            ->get();
+        }
+        if ($tag->count()) {
+            return [
+                'data' => $tag,
+                'type' => 'tag'
+            ];
+        }
+
+        if ($request->keywords) {
+            $event = Event::search($request->keywords)
+                ->rule(EventSearchRule::class)
+                ->take(10)
+                ->get();
+        } else {
+            $event = Event::search('*')
+            ->take(10)
+            ->get();
+        }
+
+        if ($event->count()) {
+            return [
+                'data' => $event,
+                'type' => 'event'
+            ];
+        }
+
+        if ($request->keywords) {
+            $organizer = Organizer::search($request->keywords)
+                ->rule(OrganizerSearchRule::class)
+                ->take(10)
+                ->get();
+        } else {
+            $organizer = Organizer::search('*')
+            ->take(10)
+            ->get();
+        }
+
+        if ($organizer->count()) {
+            return [
+                'data' => $organizer,
+                'type' => 'organizer'
+            ];
+        }
+
+        if ($request->keywords) {
+            $city = CityList::search($request->keywords)
             ->rule(CityListSearchRule::class)
             ->orderBy('population', 'desc')
             ->get();
         } else {
-            $ajaxCity = CityList::search('*')
+            $city = CityList::search('*')
             ->orderBy('population', 'desc')
-            ->take(20)
+            ->take(10)
             ->get();
         }
 
-        if($ajaxCity->count()) {
-            return response()->json($ajaxCity);
-        } else {
-            $ajaxEvents = Event::search($request->keywords)
-            ->rule(EventSearchRule::class)
-            ->get();
-            if ($ajaxEvents->count()) {
-                return response()->json($ajaxEvents);
-            } else {
-                $ajaxOrganizers = Organizer::search($request->keywords)
-                ->rule(OrganizerSearchRule::class)
-                ->get();
-                return response()->json($ajaxOrganizers);
-            }
-        };
+        if ($city->count()) {
+            return [
+                'data' => $city,
+                'type' => 'city'
+            ];
+        }
+
+
+        // if($ajaxType->count()) {
+        //     return response()->json($ajaxType);
+        // } else {
+        //     if($ajaxCity->count()) {
+        //         return response()->json($ajaxCity);
+        //     } else {
+        //         $ajaxEvents = Event::search($request->keywords)
+        //         ->rule(EventSearchRule::class)
+        //         ->get();
+        //         if ($ajaxEvents->count()) {
+        //             return response()->json($ajaxEvents);
+        //         } else {
+        //             $ajaxOrganizers = Organizer::search($request->keywords)
+        //             ->rule(OrganizerSearchRule::class)
+        //             ->get();
+        //             return response()->json($ajaxOrganizers);
+        //         }
+        //     }
+        // };
     }
     public function searchDatastore(Request $request)
     {
@@ -133,7 +248,16 @@ class SearchController extends Controller
     public function searchMapBoundary(Request $request)
     {   
         return $events =  Event::search('a')
-            ->rule(EventDatesRule::class)
+            ->rule(EventMapSearchRule::class)
+            ->with(['location', 'organizer'])
+            ->take($request->results)
+            ->get();
+    }
+
+    public function searchRemote(Request $request)
+    {
+        return $events =  Event::search('a')
+            ->rule(EventRemoteSearchRule::class)
             ->with(['location', 'organizer'])
             ->take($request->results)
             ->get();

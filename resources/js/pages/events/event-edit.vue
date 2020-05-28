@@ -155,7 +155,7 @@
                 <div class="new-organization__title">
                     
                     <a href="/organizer/create">
-                        <button class="new-organization__add">Add another organization</button>
+                        <button class="preview-organizer">Add another organization</button>
                     </a>
                 </div>
             </div>

@@ -29,10 +29,12 @@ Route::RESOURCE('interactivelevels', 'InteractiveLevelController');
 
 
 // ----------   Search Page -------
-// Adds Top Search to Session
+
 Route::POST('/search/storedata', 'SearchController@searchDatastore');
-// Loads Search Page with Session variable
+
 Route::GET('/index/search', 'SearchController@index');
+
+Route::GET('/index/search-online', 'SearchController@onlinesearch');
 // This is the search for vuex
 Route::POST('/vuex/search', 'SearchController@filterIndex');
 
@@ -60,6 +62,7 @@ Route::GET('/admin/organizer/fetch', 'AdminOrganizerController@fetch');
 Route::POST('/organizer/{organizer}/patch', 'OrganizerController@update');
 Route::RESOURCE('organizer', 'OrganizerController');
 Route::POST('message/organizer/{organizer}/{user}', 'OrganizerController@message');
+Route::POST('change/organizer/{organizer}/', 'AdminOrganizerController@edit');
 
 //User Profile Pages
 Route::RESOURCE('users', 'ProfilesController');

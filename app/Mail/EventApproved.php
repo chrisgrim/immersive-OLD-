@@ -36,7 +36,7 @@ class EventApproved extends Mailable
      */
     public function build()
     {
-        return $this->from('EverythingImmersive@ei.com')
+        return $this->from('submissions@everythingimmersive.com')
                     ->view('emails.event-approved')
                     ->with([
                         'name' => $this->event->name,

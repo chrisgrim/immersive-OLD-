@@ -33,8 +33,8 @@
                         :type="fieldType" 
                         class="pass" 
                         v-model="user.password"
-                        :class="{ active: active == 'password','error': $v.user.password.$error }"
-                        @click="active = 'password'"
+                        :class="{ active: active == 'password','error': $v.user.password.$error ,'error': $v.user.email.$error }"
+                        @click="onToggle('password')"
                         @blur="active = null" 
                         @input="$v.user.password.$touch"
                         required

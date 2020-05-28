@@ -44,6 +44,7 @@
 .index-nav-search {
     & .multiselect {
         margin: 0;
+        z-index: 2;
         &__tags {
             box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 10px, rgba(0, 0, 0, 0.04) 0px 0px 0px 1px !important;
             border: none;
@@ -80,7 +81,9 @@
     }
 }
 
-
+.multiselect__option {
+    white-space: inherit !important;
+}
 
 .multiselect {
     margin: 0rem 0rem 1rem 0rem;

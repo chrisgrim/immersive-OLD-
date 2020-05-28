@@ -21,15 +21,15 @@
             placeholder="Organization"
             @blur="onSaveName(organizer)"
             />
-            <input 
-            type="text" 
-            v-model="organizer.user_id" 
-            placeholder="Owner Id"
-            @blur="onSaveUser(organizer)"
-            />
+            <div>
+                {{organizer.user.email}}
+            </div>
+            <div>
+                <button @click.prevent="showModal(organizer, 'changeOrg')">Change Owner</button>
+            </div>
             <button @click.prevent="showModal(organizer, 'deleteOrg')" class="delete-circle"><p>X</p></button>
         </div>
-         <modal v-if="modal == 'deleteOrg'" @close="modal = null">
+        <modal v-if="modal == 'deleteOrg'" @close="modal = null">
             <div slot="header">
                 <div class="circle del">
                     <p>X</p>
@@ -41,6 +41,28 @@
             </div>
             <div slot="footer">
                 <button class="btn del" @click="deleteOrg()">Delete</button>
+            </div>
+        </modal>
+        <modal v-if="modal == 'changeOrg'" @close="modal = null">
+            <div slot="header">
+                <div class="circle sub">
+                    <p>!</p>
+                </div>
+            </div>
+            <div slot="body"> 
+                <h3>Change Organizer Owner</h3>
+                <multiselect 
+                v-model="user" 
+                deselect-label="Can't remove this value" 
+                track-by="email" 
+                label="email" 
+                placeholder="Select one" 
+                :options="users"
+                @input="asyncGenerateUserList(user)">
+                </multiselect>
+            </div>
+            <div slot="footer">
+                <button class="btn sub" @click="onChangeOwner()">Change Owner</button>
             </div>
         </modal>
     </div>
@@ -56,6 +78,10 @@
 
         components: { Multiselect },
 
+        computed: {
+
+        },
+
         data() {
             return {
                 organizer: [],
@@ -67,6 +93,9 @@
                 isLoading: '',
                 selectedModal: '',
                 modal: '',
+                newOwner: 'bob',
+                user: '',
+                users:[],
 
             }
         },
@@ -90,7 +119,7 @@
                     this.events = response.data;
                     this.selectedModal = '';
                     this.modal = '';
-                    this.loadEvents();
+                    this.onLoad();
                 })
                 .catch(errorResponse => { 
                     errorResponse.response.data.errors 
@@ -105,11 +134,39 @@
                 .catch(error => { this.serverErrors = error.response.data.errors; });
             },
 
-            onSaveUser(val) {
+            onChangeOwner() {
+                axios.post(`/change/organizer/${this.selectedModal.slug}`, this.user)
+                .then(res => { 
+                    console.log(res.data)
+                    this.modal = '';
+                    this.onLoad();
+                })
+            },
+
+            asyncGenerateUserList (query) {
+                axios.get('/api/search/user/list', { params: { keywords: query } })
+                .then(res => {
+                    this.users = res.data;
+                })
+                .catch(error => {
+                    this.loadUsers();
+                })
+            },
+
+            loadUsers() {
+                axios.get('/userlist/fetch')
+                .then(res => {
+                    console.log(res.data);
+                    this.users = res.data;
+                })
+                .catch(error => { this.serverErrors = error.response.data.errors; });
+            },
+
+            onSaveUser(value) {
                 let data = {
-                    user_id: val.user_id,
+                    user_id: value.user_id,
                 };
-                axios.patch(`/admin/organizer/${val.slug}`, data)
+                axios.patch(`/admin/organizer/${value.slug}`, data)
                 .then(response => { 
                     console.log(response.data)
                    this.onLoad()
@@ -144,7 +201,8 @@
         },
 
         created() {
-            this.onLoad()
+            this.onLoad();
+            this.loadUsers();
         },
 
         validations: {

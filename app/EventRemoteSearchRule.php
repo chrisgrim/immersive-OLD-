@@ -5,7 +5,7 @@ namespace App;
 use ScoutElastic\SearchRule;
 use Request;
 
-class EventDatesRule extends SearchRule
+class EventRemoteSearchRule extends SearchRule
 {
     /**
      * @inheritdoc
@@ -20,7 +20,7 @@ class EventDatesRule extends SearchRule
      */
     public function buildQueryPayload()
     {
-        if (!Request::get('mapboundary') && Request::get('category')) {
+        if (Request::get('category') && Request::get('dates') && Request::get('price')) {
             return [
                 'must' => 
                 [
@@ -49,61 +49,8 @@ class EventDatesRule extends SearchRule
                             'category_id' => Request::get('category')['id'],
                         ]
                     ],
-
                 ],
 
-                'filter' => 
-                [
-                    'geo_distance' => 
-                    [
-                        'distance' => '40km',
-                        'location_latlon' => 
-                        [
-                            'lat' => Request::get('loc')['lat'],
-                            'lon' => Request::get('loc')['lng']
-                        ]
-                    ]
-                ],
-            ];  
-        }
-        if (!Request::get('mapboundary') && Request::get('dates')) {
-            return [
-                'must' => 
-                [
-                    [
-                        'range' => 
-                        [
-                            'closingDate' => 
-                            [
-                                'gte' => 'now/d',
-                            ],
-                        ],
-                    ],
-                    [
-                        'range' => 
-                        [
-                            'priceranges.price' =>
-                            [
-                                'gte' => Request::get('price')[0],
-                                'lte' => Request::get('price')[1],
-                            ]
-                        ]
-                    ],
-
-                ],
-
-                'filter' => 
-                [
-                    'geo_distance' => 
-                    [
-                        'distance' => '40km',
-                        'location_latlon' => 
-                        [
-                            'lat' => Request::get('loc')['lat'],
-                            'lon' => Request::get('loc')['lng']
-                        ]
-                    ]
-                ],
                 'should' => 
                 [
                     [
@@ -138,7 +85,7 @@ class EventDatesRule extends SearchRule
                 'minimum_should_match' => 1,
             ];  
         }
-        if (!Request::get('mapboundary') && Request::get('dates') && Request::get('category')) {
+        if (Request::get('dates') && Request::get('price')) {
             return [
                 'must' => 
                 [
@@ -161,27 +108,8 @@ class EventDatesRule extends SearchRule
                             ]
                         ]
                     ],
-                    [
-                        'match' => 
-                        [
-                            'category_id' => Request::get('category')['id'],
-                        ]
-                    ],
-
                 ],
 
-                'filter' => 
-                [
-                    'geo_distance' => 
-                    [
-                        'distance' => '40km',
-                        'location_latlon' => 
-                        [
-                            'lat' => Request::get('loc')['lat'],
-                            'lon' => Request::get('loc')['lng']
-                        ]
-                    ]
-                ],
                 'should' => 
                 [
                     [
@@ -216,7 +144,7 @@ class EventDatesRule extends SearchRule
                 'minimum_should_match' => 1,
             ];  
         }
-        if (!Request::get('mapboundary')) {
+        if (Request::get('category') && Request::get('price')) {
             return [
                 'must' => 
                 [
@@ -239,21 +167,13 @@ class EventDatesRule extends SearchRule
                             ]
                         ]
                     ],
-
-                ],
-
-                'filter' => 
-                [
-                    'geo_distance' => 
                     [
-                        'distance' => '40km',
-                        'location_latlon' => 
+                        'match' => 
                         [
-                            'lat' => Request::get('loc')['lat'],
-                            'lon' => Request::get('loc')['lng']
+                            'category_id' => Request::get('category')['id'],
                         ]
-                    ]
-                ],
+                    ],
+                ]
             ];  
         }
         if (Request::get('category') && Request::get('dates')) {
@@ -270,42 +190,11 @@ class EventDatesRule extends SearchRule
                         ],
                     ],
                     [
-                        'range' => 
-                        [
-                            'priceranges.price' =>
-                            [
-                                'gte' => Request::get('price')[0],
-                                'lte' => Request::get('price')[1],
-                            ]
-                        ]
-                    ],
-                    [
                         'match' => 
                         [
                             'category_id' => Request::get('category')['id'],
                         ]
                     ],
-
-                ],
-
-                'filter' => 
-                [
-                    'geo_bounding_box' => 
-                    [
-                        'location_latlon' => 
-                        [
-                            'top_right' => 
-                            [
-                                'lat' => Request::get('mapboundary')['_northEast']['lat'],
-                                'lon' => Request::get('mapboundary')['_northEast']['lng'],
-                            ],
-                            'bottom_left' =>
-                            [
-                                'lat' => Request::get('mapboundary')['_southWest']['lat'],
-                                'lon' => Request::get('mapboundary')['_southWest']['lng'],
-                            ]
-                        ]
-                    ]
                 ],
 
                 'should' => 
@@ -340,9 +229,8 @@ class EventDatesRule extends SearchRule
                     ],
                 ],
                 'minimum_should_match' => 1,
-            ];
+            ];  
         }
-
         if (Request::get('category')) {
             return [
                 'must' => 
@@ -357,46 +245,14 @@ class EventDatesRule extends SearchRule
                         ],
                     ],
                     [
-                        'range' => 
-                        [
-                            'priceranges.price' =>
-                            [
-                                'gte' => Request::get('price')[0],
-                                'lte' => Request::get('price')[1],
-                            ]
-                        ]
-                    ],
-                    [
                         'match' => 
                         [
                             'category_id' => Request::get('category')['id'],
                         ]
                     ],
-
                 ],
-
-                'filter' => 
-                [
-                    'geo_bounding_box' => 
-                    [
-                        'location_latlon' => 
-                        [
-                            'top_right' => 
-                            [
-                                'lat' => Request::get('mapboundary')['_northEast']['lat'],
-                                'lon' => Request::get('mapboundary')['_northEast']['lng'],
-                            ],
-                            'bottom_left' =>
-                            [
-                                'lat' => Request::get('mapboundary')['_southWest']['lat'],
-                                'lon' => Request::get('mapboundary')['_southWest']['lng'],
-                            ]
-                        ]
-                    ]
-                ],
-            ];
+            ];  
         }
-
         if (Request::get('dates')) {
             return [
                 'must' => 
@@ -410,36 +266,6 @@ class EventDatesRule extends SearchRule
                             ],
                         ],
                     ],
-                    [
-                        'range' => 
-                        [
-                            'priceranges.price' =>
-                            [
-                                'gte' => Request::get('price')[0],
-                                'lte' => Request::get('price')[1],
-                            ]
-                        ]
-                    ],
-                ],
-
-                'filter' => 
-                [
-                    'geo_bounding_box' => 
-                    [
-                        'location_latlon' => 
-                        [
-                            'top_right' => 
-                            [
-                                'lat' => Request::get('mapboundary')['_northEast']['lat'],
-                                'lon' => Request::get('mapboundary')['_northEast']['lng'],
-                            ],
-                            'bottom_left' =>
-                            [
-                                'lat' => Request::get('mapboundary')['_southWest']['lat'],
-                                'lon' => Request::get('mapboundary')['_southWest']['lng'],
-                            ]
-                        ]
-                    ]
                 ],
 
                 'should' => 
@@ -474,53 +300,33 @@ class EventDatesRule extends SearchRule
                     ],
                 ],
                 'minimum_should_match' => 1,
-            ];
+            ];  
         }
-
-
-        return [
-            'must' => 
-            [
+        if (Request::get('price')) {
+            return [
+                'must' => 
                 [
-                    'range' => 
                     [
-                        'closingDate' => 
+                        'range' => 
                         [
-                            'gte' => 'now/d',
+                            'closingDate' => 
+                            [
+                                'gte' => 'now/d',
+                            ],
                         ],
                     ],
-                ],
-                [
-                    'range' => 
                     [
-                        'priceranges.price' =>
+                        'range' => 
                         [
-                            'gte' => Request::get('price')[0],
-                            'lte' => Request::get('price')[1],
+                            'priceranges.price' =>
+                            [
+                                'gte' => Request::get('price')[0],
+                                'lte' => Request::get('price')[1],
+                            ]
                         ]
-                    ]
+                    ],
                 ],
-            ],
-
-            'filter' => 
-            [
-                'geo_bounding_box' => 
-                [
-                    'location_latlon' => 
-                    [
-                        'top_right' => 
-                        [
-                            'lat' => Request::get('mapboundary')['_northEast']['lat'],
-                            'lon' => Request::get('mapboundary')['_northEast']['lng'],
-                        ],
-                        'bottom_left' =>
-                        [
-                            'lat' => Request::get('mapboundary')['_southWest']['lat'],
-                            'lon' => Request::get('mapboundary')['_southWest']['lng'],
-                        ]
-                    ]
-                ]
-            ],
-        ];
+            ];  
+        }
     }
 }

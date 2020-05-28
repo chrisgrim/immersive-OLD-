@@ -149,8 +149,9 @@ Vue.component('search-listing', () => import('./pages/events/event-search.vue'))
 Vue.component('event-map-search', () => import('./pages/events/event-map-search.vue'));
 Vue.component('event-list-search', () => import('./pages/events/event-list-search.vue'));
 Vue.component('edit-events', () => import('./pages/events/event-edit.vue'));
-Vue.component('event-listing-item', () => import('./pages/events/components/index-item.vue'));
+Vue.component('vue-event-index', () => import('./pages/events/components/index-item.vue'));
 Vue.component('vue-event-edit-listing-item', () => import('./pages/events/components/event-edit-item.vue'));
+Vue.component('vue-event-online-search', () => import('./pages/events/event-online-search.vue'));
 
 //Login z
 Vue.component('login-pop', () => import('./pages/layouts/login-pop.vue'));

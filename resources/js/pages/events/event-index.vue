@@ -3,13 +3,24 @@
         <div class="event-index">
             <header class="padded">
                 <div class="header-title">
-                    <h3>Discover Immersive Everything!</h3>
+                    <h3>Discover immersive shows near you...</h3>
                 </div>
                 <div class="index-nav-search">
                     <nav-search></nav-search>
                 </div>
             </header>
 
+
+            <section class="padded event-list">
+                <div class="header-title">
+                    <h3>Check out our staff favorites</h3>
+                </div>   
+                <div class="event-index-eventlist grid">
+                    <div v-for="(event, index) in eventList" class="eventlist__element">
+                        <vue-event-index :event="event"></vue-event-index>
+                    </div>
+                </div>
+            </section>
 
             <section>
                 <div class="index-nopro">
@@ -25,13 +36,6 @@
                 </div>
             </section>
 
-            <section class="padded events">
-                <div class="event-index-eventlist grid">
-                    <div v-for="(event, index) in events" class="eventlist__element">
-                        <event-listing-item :event="event"></event-listing-item>
-                    </div>
-                </div>
-            </section>
 
         </div>
     </div>
@@ -42,28 +46,14 @@
     import Multiselect from 'vue-multiselect';
     import format from 'date-fns/format';
     import catitem  from '../events/components/cat-item.vue';
+    import SearchFilter  from './components/filter-remote.vue'
 
 
     export default {
 
-        components: {
-            Multiselect, catitem
-        },
+        components: { Multiselect, catitem, SearchFilter },
 
-        props: {
-            events: {
-                type:Array,
-            },
-            remote: {
-                type:Array,
-            },
-            categories: {
-                type:Array
-            },
-            staffpicks: {
-                type:Array
-            },
-        }, 
+        props:['events', 'remote', 'categories', 'staffpicks'],
 
         computed: {
             user () {
@@ -73,6 +63,7 @@
 
         data() {
             return {
+                eventList: this.events ? this.events : [],
                 value: '',
                 list: [],
                 price: '',
@@ -90,6 +81,10 @@
                     console.log(err)
                 });
             },
+
+            updateEventList(value) {
+                this.eventList = value;
+            }
 
         },
 

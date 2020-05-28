@@ -10,6 +10,15 @@
     grid-gap: 6rem !important;
 }
 
+.option__title--interaction {
+    font-size: 2rem;
+    margin-bottom: .5rem;
+}
+
+.option__small-interaction {
+    font-size: 1.3rem
+}
+
 @media (max-width: 768px) { 
     .event-create__advisories {
         padding: 5rem 2rem 14rem 2rem;

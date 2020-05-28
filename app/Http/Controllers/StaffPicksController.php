@@ -17,7 +17,7 @@ class StaffPicksController extends Controller
     */
     public function __construct()
     {
-        $this->middleware('admin')->except('fetch');
+        $this->middleware('moderator')->except('fetch');
     }
     
     /**

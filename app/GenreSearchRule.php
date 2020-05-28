@@ -25,9 +25,9 @@ class GenreSearchRule extends SearchRule
                     "query" =>  $this->builder->query,
                     "type"  =>  'bool_prefix',
                     "fields"    =>  [
-                        'genre',
-                        'genre.2gram',
-                        'genre.3gram'
+                        'name',
+                        'name.2gram',
+                        'name.3gram'
                     ],
                 ]
             ]

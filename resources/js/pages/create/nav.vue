@@ -128,11 +128,11 @@
 
         methods: {
 
-            notAllowed() {
-                if(this.event.status) {
-                    return (['d','n','p', 'e'].includes(this.event.status)) ? '' : window.location.href = '/create-event/edit';
-                }
-            },
+            // notAllowed() {
+            //     if(this.event.status) {
+            //         return (['d','n','p', 'e'].includes(this.event.status)) ? '' : window.location.href = '/create-event/edit';
+            //     }
+            // },
 
             handleResize() {
                 this.pageHeight = `min-height:${window.innerHeight}px`;
@@ -176,7 +176,6 @@
         },
 
         created() {
-            this.notAllowed();
             window.addEventListener('resize', this.handleResize)
             this.handleResize();
             this.checkSubmissionStatus();

@@ -51,4 +51,10 @@ return [
         'table' => env('AIRTABLE_ID'),
     ],
 
+    'analytics' => [
+        'id' => env('ANALYTICS_ID'),
+    ],
+
+
+
 ];

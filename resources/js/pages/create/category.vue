@@ -107,12 +107,22 @@
                     this.selectedCategory = res.data;
                 });
             },
+
+            selectCategoryType() {
+
+                if (this.event.hasLocation) {
+                    return this.categoryOptions = this.categories.filter(category => category.remote == 0);
+                } else {
+                    return this.categoryOptions = this.categories.filter(category => category.remote == 1);
+                }
+            }
 		},
 
         created() {
             window.addEventListener('resize', this.handleResize)
             this.handleResize();
             this.onLoad();
+            this.selectCategoryType();
         },
 
         destroyed() {

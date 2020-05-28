@@ -1,5 +1,5 @@
 <template>
-	<div class="content">
+	<div class="show-content">
         <nav class="event-show mobile">
             <div class="back">
                 <a v-if="searchUrl" :href="searchUrl">

@@ -64,7 +64,7 @@
                 v-model="tagName"
                 tag-placeholder="Add this as new tag" 
                 placeholder="Type here to create your own" 
-                label="genre"
+                label="name"
                 :close-on-select="true"
                 track-by="id" 
                 :options="tagOptions" 
@@ -133,7 +133,7 @@
                     description: this.event.description ? this.event.description : '',
                     websiteUrl: this.event.websiteUrl ? this.event.websiteUrl : '',
                     ticketUrl: this.event.ticketUrl ? this.event.ticketUrl : '',
-                    genre: this.event.genres ? this.event.genres.map(a => a.genre) : '',
+                    genre: this.event.genres ? this.event.genres.map(a => a.name) : '',
                 }
             },
 
@@ -153,7 +153,7 @@
 
             addTag (newTag) {
                 const tag = {
-                    genre: newTag,
+                    name: newTag,
                     id: newTag.substring(0, 0) + Math.floor((Math.random() * 10000000))
                 }
                 this.tagOptions.push(tag)
@@ -166,7 +166,7 @@
                     res.data.event ? this.group.description = res.data.event.description : '';
                     res.data.event ? this.group.websiteUrl = res.data.event.websiteUrl : '';
                     res.data.event ? this.group.ticketUrl = res.data.event.ticketUrl : '';
-                    res.data.genres ? this.group.genre = res.data.genres.map(a => a.genre) : '';
+                    res.data.genres ? this.group.genre = res.data.genres.map(a => a.name) : '';
                 });
             },
 
@@ -178,7 +178,7 @@
 
         watch: {
             tagName(){
-                return this.group.genre = this.tagName.map(a => a.genre);
+                return this.group.genre = this.tagName.map(a => a.name);
             }
         },
 

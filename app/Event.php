@@ -375,13 +375,13 @@ class Event extends Model
         if ($request->has('genre')) {
             foreach ($request['genre'] as $genre) {
                 Genre::firstOrCreate([
-                    'genre' => strtolower($genre)
+                    'name' => strtolower($genre)
                 ],
                 [
                     'user_id' => auth()->user()->id,
                 ]);
             };
-            $newSync = Genre::all()->whereIn('genre', array_map('strtolower', $request['genre']));
+            $newSync = Genre::all()->whereIn('name', array_map('strtolower', $request['genre']));
             $event->genres()->sync($newSync);
         };
     }

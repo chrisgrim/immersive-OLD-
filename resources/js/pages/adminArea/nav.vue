@@ -7,55 +7,55 @@
             <h3>Admin Area</h3>
         </div>
         <div class="admin-menu">
-            <a href="/categories/create">
+            <a v-if="admin" href="/categories/create">
             <div class="admin-menu__item">
                 Categories
             </div>
             </a>
 
-            <a href="/genres/create">
+            <a v-if="admin" href="/genres/create">
             <div class="admin-menu__item" >
                 Tags
             </div>
             </a>
 
-            <a href="/contactlevels/create">
+            <a v-if="admin" href="/contactlevels/create">
             <div class="admin-menu__item" >
                 Contact Levels
             </div>
             </a>
 
-            <a href="/remotelocations/create">
+            <a v-if="admin" href="/remotelocations/create">
             <div class="admin-menu__item" >
                 Remote Locations
             </div>
             </a>
 
-            <a href="/contentadvisories/create">
+            <a v-if="admin" href="/contentadvisories/create">
             <div class="admin-menu__item" >
                 Content Advisories
             </div>
             </a>
 
-            <a href="/mobilities/create">
+            <a v-if="admin" href="/mobilities/create">
             <div class="admin-menu__item" >
                 Mobility Advisories
             </div>
             </a>
 
-            <a href="/interactivelevels/create">
+            <a v-if="admin" href="/interactivelevels/create">
             <div class="admin-menu__item" >
                 Interactive Levels
             </div>
             </a>
 
-            <a href="/master/userlist">
+            <a v-if="admin" href="/master/userlist">
             <div class="admin-menu__item" >
                 Edit Users
             </div>
             </a>
 
-            <a href="/admin/organizer">
+            <a v-if="admin" href="/admin/organizer">
             <div class="admin-menu__item" >
                 Edit Organizers
             </div>
@@ -75,12 +75,10 @@
 
              <a href="/finish/events">
                 <div class="admin-menu__item">
-                    
                     <div v-if="user.needsApproval" class="admin-menu__notification">
                         <p>{{user.needsApproval}}</p>
                     </div>
                     Approve Events
-                
                 </div>
             </a>
         </div>
@@ -96,6 +94,8 @@
         data() {
             return {
                 user: this.loaduser ? this.loaduser : '',
+                admin: this.loaduser.type == 'a' ? true : false,
+                mod: this.loaduser.type == 'm' ? true : false,
             };
         },
 

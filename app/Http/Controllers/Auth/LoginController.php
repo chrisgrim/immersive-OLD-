@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -81,4 +82,5 @@ class LoginController extends Controller
         ]);
         return $user;
     }
+
 }

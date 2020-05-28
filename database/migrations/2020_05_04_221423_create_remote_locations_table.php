@@ -16,7 +16,7 @@ class CreateRemoteLocationsTable extends Migration
         Schema::create('remote_locations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->string('location')->unique();
+            $table->string('name')->unique();
             $table->text('description')->nullable();
             $table->boolean('admin')->default(0);
             $table->integer('rank')->default(0);

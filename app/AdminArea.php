@@ -21,10 +21,10 @@ class AdminArea extends Model
             $mobilityadvisories[] = $mobilities->mobilities;
         };
         foreach ($event->genres()->get() as $genre) {
-            $genres[] = $genre->genre;
+            $genres[] = $genre->name;
         };
         foreach ($event->remotelocations()->get() as $remote) {
-            $remotelocations[] = $remote->location;
+            $remotelocations[] = $remote->name;
         };
 
         $table = config('services.airtable.table');
@@ -56,7 +56,7 @@ class AdminArea extends Model
                 'Event Link' => $event->websiteUrl,
                 'Production Company' => $event->organizer->name,
                 'Company Website' => $event->organizer->website,
-                'Image Link' => 'https://secretchickens.com/storage/' . $event->largeImagePath,
+                'Image Link' => 'https://everythingimmersive.com/storage/' . $event->largeImagePath,
                 'Primary Contact Name' => $event->organizer->user->name,
                 'Email for Contact' => $event->organizer->user->email,
                 'Instagram handle' => $event->organizer->instagramHandle,

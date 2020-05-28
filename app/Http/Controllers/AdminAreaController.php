@@ -28,7 +28,7 @@ class AdminAreaController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('admin');
+        $this->middleware('moderator');
     }
     /**
      * Display a listing of the resource.
@@ -126,7 +126,7 @@ class AdminAreaController extends Controller
      */
     public function showApproval(Event $event)
     {
-        $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'eventreviews', 'staffpick', 'advisories', 'showOnGoing','interactivelevel', 'remotelocations');
+        $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'eventreviews', 'staffpick', 'advisories', 'showOnGoing','interactive_level', 'remotelocations');
         return view('adminArea.showapproval',compact('event'));
     }
 

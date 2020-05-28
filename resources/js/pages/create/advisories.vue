@@ -25,6 +25,11 @@
                     <p class="error" v-if="!$v.contactAdvisories.required">Must choose at least one contact level </p>
                 </div>
             </div>
+        </section>
+        <section class="event-create">
+            <div class="title">
+                <h2>Content Advisories</h2>
+            </div>
             <div class="field">
                 <label> Is there sexual content? </label>
                 <div id="cover">
@@ -35,9 +40,6 @@
                         <p v-else="advisories.sexual">No</p>
                     </div>
                 </div>
-                <div v-if="$v.advisories.sexual.$error" class="validation-error">
-                    <p class="error" v-if="!$v.advisories.sexual.required">Must select if there is sexual violence</p>
-                </div>
             </div>
             <div v-if="advisories.sexual">
                 <div class="field">
@@ -46,18 +48,17 @@
                     v-model="advisories.sexualDescription" 
                     class="create-input area" 
                     rows="8"
-                    :class="{ active: active == 'sexual'}"
+                    :class="{ active: active == 'sexual','error': $v.advisories.sexualDescription.$error }"
                     placeholder=" "
                     @click="active = 'sexual'"
+                    @input="$v.advisories.sexualDescription.$touch"
                     @blur="active = null"
                     required 
                     autofocus></textarea>
+                    <div v-if="$v.advisories.sexualDescription.$error" class="validation-error">
+                        <p class="error" v-if="!$v.advisories.sexualDescription.ifSexual">Please describe the sexual content </p>
+                    </div>
                 </div>
-            </div>
-        </section>
-        <section class="event-create">
-            <div class="title">
-                <h2>Content Advisories</h2>
             </div>
             <div class="field">
                 <label class="area">Include warnings and advisories</label>
@@ -115,9 +116,6 @@
                         <p v-else="advisories.wheelchairReady">No</p>
                     </div>
                 </div>
-                <div v-if="$v.advisories.wheelchairReady.$error" class="validation-error">
-                    <p class="error" v-if="!$v.advisories.wheelchairReady.required">Must select if the event is wheelchair accessible </p>
-                </div>
             </div>
             <div class="field">
                 <label class="area">Select any mobility restrictions</label>
@@ -167,8 +165,8 @@
                 :preselect-first="false">
                 <template slot="option" slot-scope="props">
                     <div class="option__desc">
-                        <div class="option__title">{{ props.option.name }}</div>
-                        <div class="option__small">{{ props.option.description }}</div>
+                        <div class="option__title--interaction">{{ props.option.name }}</div>
+                        <div class="option__small-interaction">{{ props.option.description }}</div>
                     </div>
                 </template>
                 </multiselect>
@@ -260,7 +258,7 @@
 			initializeAdvisoriesObject() {
 				return {
 					contactAdvisories: this.event.advisories ? this.event.advisories.contactAdvisories : '',
-					sexual: this.event.advisories.sexualViolence ? this.event.advisories.sexualViolence : false,
+					sexual: this.event.advisories.sexual ? this.event.advisories.sexual : false,
 					sexualDescription: this.event.advisories ? this.event.advisories.sexualDescription : '',
 					wheelchairReady: this.event.advisories.wheelchairReady ? this.event.advisories.wheelchairReady : false,
 					ageRestriction: this.event.advisories ? this.event.advisories.ageRestriction : '',
@@ -303,7 +301,7 @@
                     this.advisories = _.pick(input, _.intersection( _.keys(this.advisories), _.keys(input) ));
                 }
                 this.advisories.wheelchairReady ? '' : this.advisories.wheelchairReady = false;
-                this.advisories.sexualViolence ? '' : this.advisories.sexualViolence = false;
+                this.advisories.sexual ? '' : this.advisories.sexual = false;
             },
 
             onLoad() {
@@ -340,14 +338,10 @@
 			   	ageRestriction: {
 			       required,
 			   	},
-                wheelchairReady: {
-                    required,
-                },
-                sexual: {
-                    required,
-                },
                 sexualDescription: {
-                    required,
+                    ifSexual() {
+                        return this.advisories.sexual ? this.advisories.sexualDescription ? true : false : true
+                    }
                 },
                 audience: {
                     required,

@@ -8,7 +8,7 @@
                     </a>
                 </div>
                 <div  class="nav-search" :class="{ fullmap: fullmap }">
-                    <nav-search v-if="onclass!='homepage'"></nav-search>
+                    <nav-search v-if="dontShowNavSearch"></nav-search>
                 </div>
                 <div class="nav-menu" :class="{ active: bar }">
                     <div class="nav-menu-item" v-if="user">
@@ -141,6 +141,9 @@
             },
             dontShowMenu() {
                 return this.onclass == 'show' || this.onclass == 'messageshow' ? false : true;
+            },
+            dontShowNavSearch() {
+                return this.onclass == 'homepage' || this.onclass=='onlinesearch' ?  false : true;
             }
         },
 

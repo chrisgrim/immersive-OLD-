@@ -27,6 +27,20 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        return [
+            "id" => $this->id,
+            "name" => $this->name ,
+            "email" => $this->email,
+        ];
+    }
+
+    /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
@@ -142,7 +156,7 @@ class User extends Authenticatable implements MustVerifyEmail
     * @return bool
     */
     public function isModerator() {
-        return $this->where('type', 'm')->exists();
+        return $this->where('type', 'm')->orWhere('type', 'a')->exists();
     }
 
     /**

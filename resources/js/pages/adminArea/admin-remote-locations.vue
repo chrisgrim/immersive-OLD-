@@ -13,7 +13,7 @@
         <div class="list" v-for="(remoteLocation, index) in remoteLocations">
             <input 
             type="text" 
-            v-model="remoteLocation.location" 
+            v-model="remoteLocation.name" 
             placeholder="Remote Location"
             @blur="saveLocation(remoteLocation)"
             />
@@ -56,15 +56,15 @@
                         <div class="name">
                             <input 
                             type="text" 
-                            v-model="remoteLocation.location" 
+                            v-model="remoteLocation.name" 
                             placeholder="Remote Location"
-                            :class="{ active: activeItem = 'location'}"
-                            @click="activeItem = 'location'"
+                            :class="{ active: activeItem = 'name'}"
+                            @click="activeItem = 'name'"
                             @blur="activeItem = null"
-                            @input="$v.remoteLocation.location.$touch"
+                            @input="$v.remoteLocation.name.$touch"
                             />
-                            <div v-if="$v.remoteLocation.location.$error" class="validation-error">
-                                <p class="error" v-if="!$v.remoteLocation.location.required">Please Add Remote Location </p>
+                            <div v-if="$v.remoteLocation.name.$error" class="validation-error">
+                                <p class="error" v-if="!$v.remoteLocation.name.required">Please Add Remote Location </p>
                             </div>
                             <textarea
                             type="text" 
@@ -95,7 +95,7 @@
                 remoteLocations: '',
                 activeItem: '',
                 remoteLocation: {
-                    location: '',
+                    name: '',
                     description: '',
                 },
                 isModalVisible: false,
@@ -116,15 +116,13 @@
                 this.$v.$touch(); 
                 if (this.$v.$invalid) { return false };
                 let data = {
-                    location: this.remoteLocation.location,
+                    name: this.remoteLocation.name,
                     description: this.remoteLocation.description
                 };
 
                 axios.post('/remotelocations', data)
                 .then(response => { 
-                    this.isModalVisible = false;
-                    this.remoteLocation = '';
-                    this.loadLocations();
+                    location.reload();
                 })
                 .catch(error => { 
                     this.isModalVisible = false;
@@ -156,7 +154,7 @@
 
             saveLocation(remoteLocation) {
                 let data = {
-                    location: remoteLocation.location
+                    name: remoteLocation.name
                 };
                 axios.patch(`/remotelocations/${remoteLocation.id}`, data)
                 .then(response => { 
@@ -204,7 +202,7 @@
 
         validations: {
             remoteLocation: {
-                location: {
+                name: {
                     required,
                 },
                 description: {

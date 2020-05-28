@@ -28,8 +28,6 @@ class CityList extends Model
             "id" => $this->id,
             "name" => $this->name ,
             "population" => $this->population,
-            // "latitude" => $this->latitude,
-            // "longitude" => $this->longitude,
         ];
     }
 

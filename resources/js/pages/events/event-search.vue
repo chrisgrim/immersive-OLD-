@@ -8,7 +8,7 @@
                 <div class="event-search__filters mobile">
                     <button @click="showFilters=true" class="filter">Filters</button>
                 </div>
-                <div class="event-search__filters grid desktop">
+                <div v-if="!mobile" class="event-search__filters grid">
                     <div class="event-filter-item">
                         <div class="button" ref="dates">
                             <button @click="show('dates')" class="filter">
@@ -266,6 +266,7 @@
                 },
                 shift: '',
                 showFilters: false,
+                mobile: window.innerWidth < 768,
             }
         },
 

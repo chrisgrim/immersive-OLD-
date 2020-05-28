@@ -13,7 +13,7 @@
         <div class="list" v-for="(genre, index) in genres">
             <input 
             type="text" 
-            v-model="genre.genre" 
+            v-model="genre.name" 
             placeholder="Genre"
             @blur="saveGenre(genre)"
             />
@@ -50,15 +50,15 @@
                         <div class="name">
                             <input 
                             type="text" 
-                            v-model="genre" 
+                            v-model="name" 
                             placeholder="Genre"
-                            :class="{ active: genreActive}"
-                            @click="genreActive = true"
-                            @blur="genreActive = false"
-                            @input="$v.genre.$touch"
+                            :class="{ active: active}"
+                            @click="active = true"
+                            @blur="active = false"
+                            @input="$v.name.$touch"
                             />
-                            <div v-if="$v.genre.$error" class="validation-error">
-                                <p class="error" v-if="!$v.genre.required">Please Add Genre </p>
+                            <div v-if="$v.name.$error" class="validation-error">
+                                <p class="error" v-if="!$v.name.required">Please Add Genre </p>
                             </div>
                         </div>
                     </div>
@@ -81,8 +81,8 @@
         data() {
             return {
                 genres: '',
-                genreActive: false,
-                genre: '',
+                active: false,
+                name: '',
                 isModalVisible: false,
                 isEditModalVisible: false,
                 modalDelete: '',
@@ -97,18 +97,18 @@
         methods: {
 
             //check if validation rules have been followed and returns false if not. Then I submit the new name and slug. I then get the response data and pass it to the new window load.
-            async submitNewGenre() {
+            submitNewGenre() {
                 this.$v.$touch(); 
                 if (this.$v.$invalid) { return false };
                 let data = {
-                    genre: this.genre
+                    name: this.name
                 }
 
                 axios.post('/genres', data)
                 .then(response => { 
                     console.log(response.data);
                     this.isModalVisible = false;
-                    this.genre = '';
+                    this.name = '';
                     this.loadGenres();
                 })
                 .catch(error => { 
@@ -133,19 +133,19 @@
 
             loadGenres() {
                 axios.get('/genres')
-                .then(response => { 
-                   this.genres = response.data;
+                .then(res => { 
+                   this.genres = res.data;
                 })
                 .catch(error => { this.serverErrors = error.response.data.errors; });
             },
 
             saveGenre(genre) {
                 let data = {
-                    genre: genre.genre
+                    name: genre.name
                 };
                 axios.patch(`/genres/${genre.id}`, data)
-                .then(response => { 
-                    console.log(response.data)
+                .then(res => { 
+                    console.log(res.data)
                     this.loadGenres()
                 })
                 .catch(error => { 
@@ -158,8 +158,8 @@
                     rank: genre.rank
                 };
                 axios.patch(`/genres/${genre.id}`, data)
-                .then(response => { 
-                    console.log(response.data)
+                .then(res => { 
+                    console.log(res.data)
                     this.loadGenres()
                 })
                 .catch(error => { 
@@ -175,7 +175,7 @@
         },
 
         validations: {
-            genre: {
+            name: {
                 required,
             },
         },
