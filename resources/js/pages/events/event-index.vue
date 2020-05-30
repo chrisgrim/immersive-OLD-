@@ -3,24 +3,12 @@
         <div class="event-index">
             <header class="padded">
                 <div class="header-title">
-                    <h3>Discover immersive shows near you...</h3>
+                    <h3>Discover immersive experiences...</h3>
                 </div>
                 <div class="index-nav-search">
                     <nav-search></nav-search>
                 </div>
             </header>
-
-
-            <section class="padded event-list">
-                <div class="header-title">
-                    <h3>Check out our staff favorites</h3>
-                </div>   
-                <div class="event-index-eventlist grid">
-                    <div v-for="(event, index) in eventList" class="eventlist__element">
-                        <vue-event-index :event="event"></vue-event-index>
-                    </div>
-                </div>
-            </section>
 
             <section>
                 <div class="index-nopro">
@@ -32,6 +20,17 @@
                                 Check it out
                             </button>
                         </a>
+                    </div>
+                </div>
+            </section>
+
+             <section class="padded event-list">
+                <div class="header-title">
+                    <h3>Check out our staff favorites</h3>
+                </div>   
+                <div class="event-index-eventlist grid">
+                    <div v-for="(event, index) in eventList" class="eventlist__element">
+                        <vue-event-index :event="event"></vue-event-index>
                     </div>
                 </div>
             </section>

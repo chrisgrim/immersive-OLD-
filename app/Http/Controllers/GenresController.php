@@ -46,7 +46,7 @@ class GenresController extends Controller
     public function store(Request $request)
     {
         Genre::create([
-            'name' => $request->name,
+            'name' => strtolower($request->name),
             'admin' => true,
             'user_id' => auth()->user()->id
         ]);
@@ -91,7 +91,7 @@ class GenresController extends Controller
         }
         if ($request->genre) {
             $genre->update([
-                'name' => $request->name,
+                'name' => strtolower($request->name),
                 'user_id' => auth()->user()->id,
             ]);
         }

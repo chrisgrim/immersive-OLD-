@@ -120,14 +120,7 @@
 
 	export default {
 
-        props: {
-            user: {
-                type:Object
-            },
-            onclass: {
-                type:String
-            }
-        },
+        props:['user', 'onclass'],
 
         computed: {
             fullmap() {
@@ -137,7 +130,7 @@
                 return this.onclass=='show' || this.onclass=='message' || this.onclass=='entry' ?  false : true;
             },
             dontShowNav() {
-                return this.onclass == 'show' || this.onclass == 'message' || this.onclass == 'profile' || this.onclass == 'messageshow' || this.onclass == 'entry' || this.onclass == 'homepage' ? false : true;
+                return this.onclass == 'show' || this.onclass == 'message' || this.onclass == 'profile' || this.onclass == 'messageshow' || this.onclass == 'entry' || this.onclass == 'homepage' || this.onclass=='onlinesearch' ? false : true;
             },
             dontShowMenu() {
                 return this.onclass == 'show' || this.onclass == 'messageshow' ? false : true;
@@ -153,6 +146,7 @@
                 lastScrollPosition: 0,
                 mobileDevice: false,
                 url: '',
+                page: this.onclass
 			};
 		},
 

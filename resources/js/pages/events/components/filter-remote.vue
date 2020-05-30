@@ -1,8 +1,5 @@
 <template>
     <div>
-        <div class="event-search__filters" v-if="mobile">
-            <button @click="showFilters=true" class="filter">Filters</button>
-        </div>
         <div class="event-search__filters grid">
             <!-- Date Search -->
             <div class="event-filter-item">
@@ -175,7 +172,7 @@
                     dates: this.datesSubmit ? this.datesSubmit : '',
                     price: this.hasPrice ? this.price : '',
                 }
-            }
+            },
         },
 
         data() {
@@ -193,6 +190,10 @@
                 options: { min: 0, max: 500 },
                 showFilters: false,
                 mobile: window.innerWidth < 768,
+                searchcategory: new URL(window.location.href).searchParams.get("category"),
+                searchtag: new URL(window.location.href).searchParams.get("tag"),
+                searchremote: new URL(window.location.href).searchParams.get("remote"),
+                id: new URL(window.location.href).searchParams.get("id"),
             }
         },
 
@@ -204,7 +205,7 @@
                     altInput: true,
                     mode: "range",
                     inline: true,
-                    showMonths: this.mobile ? 1 : 2,
+                    showMonths: window.innerWidth < 768 ? 1 : 2,
                     dateFormat: 'Y-m-d H:i:s',
                     onClose: [this.dateFunc()], 
                 }
@@ -296,6 +297,14 @@
                 this.active = null;
                 this.onSubmit();
             },
+
+            onLoad() {
+
+                if (this.searchcategory) {
+                    this.category = this.categories.find(element => element.id == this.id);
+                    this.onSubmit();
+                }
+            }
         },
 
         watch: {
@@ -306,6 +315,11 @@
                 return this.showFilters ? this.toggleBodyClass('addClass', 'noscroll') : this.toggleBodyClass('removeClass', 'noscroll');
             },
         },
+
+        created() {
+            this.onLoad();
+        },
+
 
 }
 </script>

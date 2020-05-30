@@ -182,4 +182,12 @@ button.default-border {
     .mobile { display: inherit;}
     .desktop { display: none;}
     .grid {grid-template-columns: 1fr;}
+    .active-dot {
+        right: 15%;
+        top: -.2rem;
+    }
+    .vue-tab-element .active-dot {
+        right: 3%;
+        top: 1rem;
+    }
 }

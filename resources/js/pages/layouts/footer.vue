@@ -22,6 +22,12 @@
                     <p>Disclaimer</p>
                 </a>
             </div>
+            <span>&#183;</span>
+            <div class="footer-element">
+                <a rel="noreferrer" target="_blank" href="https://www.facebook.com/groups/everythingimmersive">
+                    <p>Join us on Facebook.</p>
+                </a>
+            </div>
         </div> 
     </div>
 

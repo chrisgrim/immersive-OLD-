@@ -144,8 +144,11 @@ button.nopro-button {
     .eventlist__element {
         padding: .7rem;
     }
+    .event-list {
+        padding-top: 1rem !important;
+    }
     header.padded {
-        padding: 4rem 2rem 8rem 2rem;
+        padding: 4rem 2rem 6rem 2rem;
     }
     section.padded {
         padding: 4rem 2rem;

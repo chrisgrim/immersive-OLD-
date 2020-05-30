@@ -14,3 +14,15 @@
     display: inline-block;
     margin: 0 .5rem 0 .5rem;
 }
+
+@media (max-width: 768px) {
+    .footer-content {
+        padding: 2rem 2rem;
+        & span {
+            display: none;
+        }
+    }
+    .footer-element {
+        display: block;
+    }
+}

@@ -38,8 +38,19 @@
     &.onlinesearch {
         background: transparent;
         border:0;
+        &.scroll {
+            background: white
+        }
     }
 }
+
+.onlinesearch a.menu-link {
+    color: white;
+}
+.onlinesearch.scroll a.menu-link {
+    color: black;
+}
+
 .nav-grid {
     grid-template-columns: 7rem auto auto;
     align-items: center;

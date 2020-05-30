@@ -9,6 +9,7 @@ import store from './store/index'
 import vuelidateErrorExtractor, { templates } from "vuelidate-error-extractor";
 import { Icon }  from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+
 // import VueRouter from 'vue-router';
 // import {routes} from './routes';
 // Vue.use(VueRouter);

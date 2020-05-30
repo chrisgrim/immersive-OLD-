@@ -19,7 +19,7 @@ class Category extends Model
     * @var array
     */
     protected $fillable = [
-    	'name', 'slug','description','largeImagePath', 'thumbImagePath', 'rank', 'remote' ];
+    	'name', 'slug','description','largeImagePath', 'thumbImagePath', 'rank', 'remote','credit' ];
 
     /**
      * The accessors to append to the model's array form.
@@ -97,7 +97,7 @@ class Category extends Model
             return '';
         }
         if($request->credit) {
-            $category->update(['credi' => $request->credit]);
+            $category->update(['credit' => $request->credit]);
             return '';
         }
         if($request->rank) {
@@ -120,6 +120,12 @@ class Category extends Model
     * @return Nothing
     */
     public function deleteCategory($category) {
+        foreach ($category->events as $event) {
+            $event->update([
+                'category_id' => 0
+            ]);
+        }
+        return 'test';
         Storage::deleteDirectory('public/category-images/' . pathinfo($category->largeImagePath, PATHINFO_FILENAME));
         $category->delete();
     }

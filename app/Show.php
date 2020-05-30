@@ -129,8 +129,13 @@ class Show extends Model
             $array[] = $ticket['ticket_price'] + 0;
         }
         rsort($array);
+        if (last($array) == 0) {
+            $first = 'free';
+        } else {
+            $first = '$'. last($array);
+        }
         if (sizeof($array) > 1) {
-            $pricerange = '$'. last($array) . ' - ' . '$' . $array[0];
+            $pricerange = $first . ' - ' . '$' . $array[0];
         } else {
             $pricerange = '$' . $array[0];
         }

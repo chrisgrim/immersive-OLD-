@@ -54,7 +54,7 @@ export default {
             ],
             isLoading: false,
             search: this.initializeSearchObject(),
-            placeholder: new URL(window.location.href).searchParams.get("name") ? new URL(window.location.href).searchParams.get("name") : 'Search by event type, city or event',
+            placeholder: new URL(window.location.href).searchParams.get("name") ? new URL(window.location.href).searchParams.get("name") : window.innerWidth < 768 ? 'Search' : 'Search by event type, city or event',
             type: '',
         }
     },
@@ -79,14 +79,13 @@ export default {
         },
 
         searchEvents() {
-            this.type == 'category' ? window.location.href = `/index/search-online?category=${this.searchBoxInput.name}` : '';
-            this.type == 'remote' ? window.location.href = `/index/search-online?remote=${this.searchBoxInput.name}` : '';
-            this.type == 'tag' ? window.location.href = `/index/search-online?tag=${this.searchBoxInput.name}` : '';
+            this.type == 'category' ? window.location.href = `/index/search-online?category=${this.searchBoxInput.name}&id=${this.searchBoxInput.id}` : '';
+            this.type == 'remote' ? window.location.href = `/index/search-online?remote=${this.searchBoxInput.name}&id=${this.searchBoxInput.id}` : '';
+            this.type == 'tag' ? window.location.href = `/index/search-online?tag=${this.searchBoxInput.name}&id=${this.searchBoxInput.id}` : '';
             this.type == 'organizer' ? window.location.href = `/organizer/${this.searchBoxInput.slug}` : '';
             this.type == 'event' ? window.location.href = `/events/${this.searchBoxInput.slug}` : '';
-            if(_.has(this.searchBoxInput, 'latitude')) {
-                this.globalSearch();
-            };
+            this.type == 'city' ? this.globalSearch() : '';
+
         },
 
         globalSearch() {

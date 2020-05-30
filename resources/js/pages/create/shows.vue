@@ -149,7 +149,7 @@
                 </div>
            
                 <!-- Weekly Dates -->
-                <div v-show="showType == 'Ongoing'" class="ongoing-show-dates">
+                <div v-show="showType == 'Weekly'" class="ongoing-show-dates">
                     <section class="event-enter-showdates">
                         <div class="field">
                             <label> Select show days</label>
@@ -198,7 +198,7 @@
                                 </div>
                             </div>
                             <div v-if="$v.week.$error" class="validation-error">
-                                <p class="error" v-if="!$v.week.ifOngoing">Please select at least one day</p>
+                                <p class="error" v-if="!$v.week.ifWeekly">Please select at least one day</p>
                             </div>
                         </div>
                     </section>
@@ -458,6 +458,17 @@ export default {
         	}
         },
 
+        weeklyOngoing() {
+            if (this.week.mon == 0) {return true};
+            if (this.week.tue == 0) {return true};
+            if (this.week.wed == 0) {return true};
+            if (this.week.thu == 0) {return true};
+            if (this.week.fri == 0) {return true};
+            if (this.week.sat == 0) {return true};
+            if (this.week.sun == 0) {return true};
+            return false;
+        },
+
         submitObject() {
             return {
                 'dates': Array.isArray(this.dates) ? this.dates : this.dateArray,
@@ -466,8 +477,8 @@ export default {
                 'shows': this.showType == 'Specific Dates' ? true : false,
                 'embargo_date' : this.showEmbargoDate ? this.embargoDate : null,
                 'week': this.week && this.showType == 'Anytime' ? _.mapValues(this.week, () => true) : this.week,
-                'onGoing' : this.showType == 'Ongoing' ? true : false,
-                'always': this.showType == 'Anytime' ? true : false,
+                'onGoing' : this.showType == 'Weekly' && this.weeklyOngoing ? true : false,
+                'always': this.showType == 'Anytime' || !this.weeklyOngoing ? true : false,
             }
         },
     },
@@ -494,7 +505,7 @@ export default {
             placeholdero: 'Please provide a brief description of weekly show times. For example:' + '\n' + '\n' + '10:00PM shows on Monday & Tuesday.' + '\n' + '12:00PM on Wednesday and Thursday.',
             placeholdera: 'Please provide a brief description of daily times. For example:' + '\n' + '\n' + 'Show begins everyday at 12PM.' + '\n' + 'Enjoy at any time.',
             showType: '',
-            showTypeOptions: ['Specific Dates', 'Ongoing', 'Anytime'],
+            showTypeOptions: ['Specific Dates', 'Weekly', 'Anytime'],
             exit: false,
 
         }
@@ -590,7 +601,7 @@ export default {
 
         onLoad() {
             if (this.event.showtype == 'a') { return this.showType = 'Anytime'};
-            if (this.event.showtype == 'o') { return this.showType = 'Ongoing'};
+            if (this.event.showtype == 'o') { return this.showType = 'Weekly'};
             if (this.event.showtype == 's') { return this.showType = 'Specific Dates'};
             axios.get(this.onFetch('shows'))
             .then(res => {
@@ -663,8 +674,8 @@ export default {
             },
         },
         week: {
-            ifOngoing() {
-                return this.showType == 'Ongoing' ? this.week.mon == 1 || this.week.tue == 1 || this.week.wed == 1 || this.week.thu == 1 || this.week.fri == 1 || this.week.sat == 1 || this.week.sun == 1  ? true : false : true
+            ifWeekly() {
+                return this.showType == 'Weekly' ? this.week.mon == 1 || this.week.tue == 1 || this.week.wed == 1 || this.week.thu == 1 || this.week.fri == 1 || this.week.sat == 1 || this.week.sun == 1  ? true : false : true
             }
         }
 	},

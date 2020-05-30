@@ -2,11 +2,13 @@
     <div class="event-online-search" style="min-height: calc(100vh - 7rem);position:relative;">
         <div class="event-online-search__container">
             <header class="online-search__header" style="background: url('/storage/website-files/online-search.jpg');">
-                <div class="online-search__title">
-                    <h2>{{title}}</h2>
-                </div>
-                <div class="online-search__tagline">
-                    <p>Enjoy immersive experiences from the comfort of your home.</p>
+                <div class="online-search__header-content">
+                     <div class="online-search__title">
+                        <h2>{{title}}</h2>
+                    </div>
+                    <div class="online-search__tagline">
+                        <p>Enjoy immersive experiences from the comfort of your home.</p>
+                    </div>
                 </div>
             </header>
             <section class="event-online-search-filter">
@@ -15,11 +17,14 @@
                 @eventlist="updateEventList">
                 </SearchFilter>
                          
-                <div class="event-search-list grid"> 
+
+            </section>
+
+            <section class="padded event-list"> 
+                <div class="event-index-eventlist grid">
                     <div v-for="(event, index) in eventList" class="eventlist__element">
-                        <search-item :user="user" :event="event"></search-item>
+                        <vue-event-index :event="event"></vue-event-index>
                     </div>
-                    <button v-if="eventList.length >14" @click="loadMoreEvents">Load More</button>
                 </div>
             </section>
         </div>
@@ -50,10 +55,11 @@
         
         data() {
             return {
-                eventList: this.searchedevents,
+                eventList: [],
                 category: new URL(window.location.href).searchParams.get("category"),
                 tag: new URL(window.location.href).searchParams.get("tag"),
                 remote: new URL(window.location.href).searchParams.get("remote"),
+                id: new URL(window.location.href).searchParams.get("id"),
 
             }
         },

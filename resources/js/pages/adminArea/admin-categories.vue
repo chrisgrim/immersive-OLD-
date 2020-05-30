@@ -341,7 +341,7 @@
                 };
                 axios.patch(`/categories/${category.slug}`, data)
                 .then(response => { 
-                   console.log(response.data)
+                   this.loadCategories();
                 })
                 .catch(error => { 
                     this.serverErrors = error.response.data.errors; 
@@ -354,7 +354,7 @@
                 };
                 axios.patch(`/categories/${category.slug}`, data)
                 .then(res => { 
-                   console.log(res.data)
+                   this.loadCategories();
                 })
                 .catch(error => { 
                     this.serverErrors = error.response.data.errors; 

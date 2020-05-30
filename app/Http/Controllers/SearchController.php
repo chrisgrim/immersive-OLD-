@@ -200,26 +200,6 @@ class SearchController extends Controller
             ];
         }
 
-
-        // if($ajaxType->count()) {
-        //     return response()->json($ajaxType);
-        // } else {
-        //     if($ajaxCity->count()) {
-        //         return response()->json($ajaxCity);
-        //     } else {
-        //         $ajaxEvents = Event::search($request->keywords)
-        //         ->rule(EventSearchRule::class)
-        //         ->get();
-        //         if ($ajaxEvents->count()) {
-        //             return response()->json($ajaxEvents);
-        //         } else {
-        //             $ajaxOrganizers = Organizer::search($request->keywords)
-        //             ->rule(OrganizerSearchRule::class)
-        //             ->get();
-        //             return response()->json($ajaxOrganizers);
-        //         }
-        //     }
-        // };
     }
     public function searchDatastore(Request $request)
     {
