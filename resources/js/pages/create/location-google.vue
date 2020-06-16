@@ -98,14 +98,14 @@
             <CubeSpinner :loading="loading"></CubeSpinner>
         </section>
         <section class="event-show-location" :style="pageHeight">
-            <div v-if="map.center && hasLocation" class="map">
+            <div v-if="map.center && hasLocation" class="event-create-map">
                 <div class="zoom">
-                    <div class="in">
+                    <div class="zoom__in">
                         <button @click.prevent="map.zoom += 1">
                             <svg viewBox="0 0 16 16" height="16" width="16" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M7 1a1 1 0 0 1 2 0v14a1 1 0 1 1-2 0V1z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"></path></svg>
                         </button>
                     </div>
-                    <div class="out">
+                    <div class="zoom__out">
                         <button @click.prevent="map.zoom -= 1">
                             <svg viewBox="0 0 16 16" height="16" width="16" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"></path></svg>
                         </button>

@@ -22,6 +22,7 @@
             </div>
             <div class="buttons">
                 <button :class="{bspin : dis}" :disabled="dis" class="create" @click.prevent="goBack()"> Go Back </button>
+                <button :class="{bspin : dis}" :disabled="dis" class="create" @click.prevent="rejected()"> Reject </button>
                 <button :class="{bspin : dis}" :disabled="dis" class="create" @click.prevent="makeEdits()"> Make Edits Yourself </button>
                 <button :class="{bspin : dis}" :disabled="dis" class="create" @click.prevent="denied()"> Request Changes </button>
                 <button :class="{bspin : dis}" :disabled="dis" class="create" @click.prevent="approved()"> Approved </button>
@@ -72,14 +73,33 @@
                     comments: this.comments
                 };
                 axios.post(`/unapprove/${this.event.slug}`, data)
-                .then(response => { 
-                    console.log(response.data)
+                .then(res => { 
+                    console.log(res.data)
                     this.dis = false;
                     window.location.href = '/finish/events';
                 })
                 .catch(error => {  
                     console.log(error.response.data);       
                     this.serverErrors = error.response.data.errors;
+                    this.dis = false;
+                });
+            },
+
+            rejected() {
+                this.$v.$touch(); 
+                if (this.$v.$invalid) { return false };
+                this.dis = true;
+                let data = {
+                    comments: this.comments
+                };
+                axios.post(`/reject/${this.event.slug}`, data)
+                .then(res => { 
+                    console.log(res.data);
+                    window.location.href = '/finish/events';
+                })
+                .catch(err => {   
+                    console.log(err.response.data);      
+                    this.serverErrors = err.response.data.errors;
                     this.dis = false;
                 });
             },

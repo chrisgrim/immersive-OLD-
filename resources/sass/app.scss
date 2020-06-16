@@ -6,6 +6,8 @@
 @import 'events/event-online-search';
 @import 'events/components/search-grid-component';
 
+@import 'events/components/search-filters';
+
 // categories
 @import 'categories/category-show';
 
@@ -18,6 +20,7 @@
 @import 'profile/profile';
 @import 'profile/account';
 @import 'profile/notifications';
+@import 'profile/favorited';
 
 //Components 
 @import 'components/tab';

@@ -45,7 +45,7 @@
             <a :href="`/create-event/${this.event.slug}/shows`">
                 <NavMenuItem 
                 :active="{active : url == `/create-event/${this.event.slug}/shows`}" 
-                name="Shows" 
+                name="Dates and Times" 
                 :iconstatus="this.event.show_times ? 'completed' : 'uncomplete'">
                 </NavMenuItem>
             </a>

@@ -37,6 +37,9 @@
             </select>
             <button @click.prevent="showModal(user, 'delete')" class="delete-circle"><p>X</p></button>
         </div>
+        <div class="pagination-button">
+            <button class="default" @click="loadMore">Load more</button>
+        </div>
         <modal v-if="modal == 'delete'" @close="modal = null">
             <div slot="header">
                 <div class="circle del">
@@ -75,6 +78,7 @@
                 modal: false,
                 selectedModal: '',
                 isLoading: '',
+                pagination: {paginate:10},
 
             }
         },
@@ -98,8 +102,13 @@
                 .catch(error => { this.serverErrors = error.response.data.errors; });
             },
 
+            loadMore() {
+                this.pagination.paginate += 10;
+                this.loadUsers();
+            },
+
             loadUsers() {
-                axios.get('/userlist/fetch')
+                axios.post('/userlist/fetch', this.pagination)
                 .then(response => {
                     console.log(response.data);
                     this.users = response.data;

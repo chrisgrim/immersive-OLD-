@@ -6,13 +6,20 @@
     margin: 0 0 10rem 0;
 }
 
+
+
 nav.event-show {
     height: 7rem;
-    grid-template-columns: 1rem auto;
+    grid-template-columns: 5rem auto;
     text-align: right;
     -webkit-box-align: center;
     align-items: center;
-    margin: 0 2rem;
+}
+.event-show-nav__back-arrow {
+    padding: 2rem 4rem 2rem 3.2rem;
+}
+.event-show-nav__favorite {
+    padding: 0rem 3rem;
 }
 header.event-show {
     position: relative;
@@ -204,18 +211,15 @@ section .event-title {
         color: #484848;
     }
 }
-.location-map {
-    position: relative;
-}
 .event-bottom-bar {
     position: fixed;
     bottom: -7rem;
     left: 0px;
     right: 0px;
     background: white;
-    grid-template-columns: 1fr auto 12rem;
+    grid-template-columns: 1fr auto auto;
     z-index: 900;
-    padding: 1.6rem 8rem;
+    padding: 1.6rem 12rem;
     align-items: center;
     box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.14);
     transition: all .5s ease 0s;
@@ -227,14 +231,26 @@ section .event-title {
         letter-spacing: .2rem;
         color: #5d5d5d;
         font-weight: 800;
+        display: inline-block;
     }
-    & button {
-        background: $default-color;
-        color:white;
-        float:right;
-        border:0;
-        font-weight: 600;
-    }
+}
+.event-bottom-bar__name {
+    display: grid;
+    grid-template-columns: 5.7rem 1fr;
+    width: 100%;
+    align-items: center;
+}
+img.event-bottom-bar__img {
+    object-fit: cover;
+    border-radius: 50%
+}
+button.event-bottom-bar__button {
+    background: #f55151;
+    color: white;
+    float: right;
+    border: 0;
+    font-weight: 600;
+    padding: 1.6rem 5rem;
 }
 
 .popup-content .info {
@@ -326,8 +342,22 @@ section .event-title {
         }
     }
 
+    .show-week-calendar {
+        grid-template-columns: repeat(7,1fr) !important;
+    }
+    .show-week-calendar_day {
+        line-height: 7rem;
+        & h4 {
+            font-size: 1.4rem;
+        }
+    }
+
     .event-show-showtimes {
         width: 260px;
+    }
+
+    .event-bottom-bar__name {
+        display: none;
     }
 
     ul.info {

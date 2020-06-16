@@ -121,8 +121,8 @@ button.verify-email {
 @media (max-width: 768px) {
     .user-profile {
         grid-template-columns: 1fr;
-        width:80%;
-        padding-top:6rem;
+        width:100%;
+        padding:6rem 2rem 6rem 2rem;
     }
     .user-profile-image {
         width: 5rem;

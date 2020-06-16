@@ -58,13 +58,13 @@
                         type="url" 
                         v-model="organizer.website" 
                         name="website"
-                        :class="{ active: active == 'website','error': $v.organizer.website.$error }"
+                        :class="{ active: active == 'website','error': $v.organizer.$error && $v.organizer.website.$error }"
                         @input="$v.organizer.website.$touch"
                         @click="toggle('website')"
                         @blur="active = null" 
                         placeholder=" "
                         />
-                        <div v-if="$v.organizer.website.$error" class="validation-error">
+                        <div v-if="$v.organizer.$error && $v.organizer.website.$error" class="validation-error">
                             <p class="error" v-if="!$v.organizer.website.url">Must be a url (Needs http://)</p>
                             <p class="error" v-if="!$v.organizer.website.notWorking">The url doesn't seem to be working</p>
                         </div>
@@ -76,10 +76,14 @@
                         v-model="organizer.email" 
                         name="email"
                         @click="active = 'email'"
-                        :class="{ active: active == 'email' }"
+                        :class="{ active: active == 'email','error': $v.organizer.$error && $v.organizer.email.$error }"
+                        @input="$v.organizer.email.$touch"
                         @blur="active = null" 
                         placeholder=" "
                         />
+                        <div v-if="$v.organizer.$error && $v.organizer.email.$error" class="validation-error">
+                            <p class="error" v-if="!$v.organizer.email.email">Must be email</p>
+                        </div>
                     </div>
                     <div class="field">
                         <label>Twitter handle (optional)</label>
@@ -87,11 +91,15 @@
                         type="text" 
                         v-model="organizer.twitterHandle" 
                         name="twitterHandle"
+                        @input="$v.organizer.twitterHandle.$touch"
                         @click="active = 'twitter'"
-                        :class="{ active: active == 'twitter' }"
+                        :class="{ active: active == 'twitter','error': $v.organizer.twitterHandle.$error}"
                         @blur="active = null" 
                         placeholder=" "
                         />
+                        <div v-if="$v.organizer.twitterHandle.$error" class="validation-error">
+                            <p class="error" v-if="!$v.organizer.twitterHandle.ifHttp">Please only include the social media handle (no urls)</p>
+                        </div>
                     </div>
                     <div class="field">
                         <label>Facebook handle (optional)</label>
@@ -99,11 +107,15 @@
                         type="text" 
                         v-model="organizer.facebookHandle" 
                         name="facebookHandle"
+                        @input="$v.organizer.facebookHandle.$touch"
                         @click="active = 'facebook'"
-                        :class="{ active: active == 'facebook' }"
+                        :class="{ active: active == 'facebook','error': $v.organizer.facebookHandle.$error }"
                         @blur="active = null" 
                         placeholder=" "
                         />
+                        <div v-if="$v.organizer.facebookHandle.$error" class="validation-error">
+                            <p class="error" v-if="!$v.organizer.facebookHandle.ifHttp">Please only include the social media handle (no urls)</p>
+                        </div>
                     </div>
                     <div class="field">
                         <label>Instagram handle (optional)</label>
@@ -111,11 +123,15 @@
                         type="text" 
                         v-model="organizer.instagramHandle" 
                         name="instagramHandle"
+                        @input="$v.organizer.instagramHandle.$touch"
                         @click="active = 'instagram'"
-                        :class="{ active: active == 'instagram' }"
+                        :class="{ active: active == 'instagram','error': $v.organizer.instagramHandle.$error }"
                         @blur="active = null" 
                         placeholder=" "
                         />
+                        <div v-if="$v.organizer.instagramHandle.$error" class="validation-error">
+                            <p class="error" v-if="!$v.organizer.instagramHandle.ifHttp">Please only include the social media handle (no urls)</p>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -182,7 +198,7 @@ import _ from 'lodash'
 import ImageUpload from '../layouts/image-upload.vue'
 import Multiselect from 'vue-multiselect'
 import CubeSpinner  from '../layouts/loading.vue'
-import { required, minLength, maxLength, url } from 'vuelidate/lib/validators'
+import { required, minLength, maxLength, url, email } from 'vuelidate/lib/validators'
 import formValidationMixin from '../../mixins/form-validation-mixin'
 
 export default {
@@ -196,6 +212,7 @@ export default {
         hasImage() {
             return this.organizer.largeImagePath || this.imageFile.src ? true : false;
         },
+
         displayImage() {
             return `backgroundImage: url('${this.imageFile.src ? this.imageFile.src : (this.loadorganizer ? '/storage/' + this.loadorganizer.largeImagePath : '')}')`
         },
@@ -203,7 +220,6 @@ export default {
         endPoint() {
             return this.loadorganizer ? `/organizer/${this.loadorganizer.slug}/patch` : '/organizer';
         },
-
 
     },
     
@@ -257,11 +273,10 @@ export default {
             this.imageFile = image; 
             this.$v.imageFile.$touch();
             if (this.$v.imageFile.$invalid) { return false };
-            this.formData.append('imagePath', this.imageFile.file);
+            this.formData.append('image', this.imageFile.file);
         },
 
         onSubmit() {
-
             if (this.checkVuelidate()) { return false };
             this.appendData()
             axios.post(this.endPoint, this.formData)
@@ -275,25 +290,28 @@ export default {
 
         appendData() {
             this.imageFile ? this.isLoading = true : '';
-            this.formData.append('slug', this.slugify(this.organizer.name));
             for (var field in this.organizer) {
                 if (this.organizer[field] !== null) {
                     this.formData.append(field, this.organizer[field]);
                 } 
             }
+            this.formData.append('slug', this.slugify(this.organizer.name));
         },
 
         onErrors(errors) {
             errors.response.data.message.length ? this.serverErrors = {broken: 'Url is broken'} : '';
             errors.response.data.errors ? this.serverErrors = errors.response.data.errors : '';
             this.isLoading = false;
-            this.dis = false;
+            this.disabled = false;
         },
 
         goBack() {
             window.location.href = '/create-event/edit';
         },
 
+        validateText(str) {
+            return str && str.startsWith("http") ? true : false
+        },
 
         //checks to see if passed variable is in the server errors
         hasServerError(field) {
@@ -342,6 +360,24 @@ export default {
                 url,
                 // serverFailed : function(){ return !this.hasServerError('website'); },
                 notWorking : function(){ return !this.hasServerError('broken'); },
+            },
+            email: {
+                email,
+            },
+            twitterHandle: {
+                ifHttp() {
+                    return this.validateText(this.organizer.twitterHandle) ? false : true
+                }
+            },
+            facebookHandle: {
+                ifHttp() {
+                    return this.validateText(this.organizer.facebookHandle) ? false : true
+                }
+            },
+            instagramHandle: {
+                ifHttp() {
+                    return this.validateText(this.organizer.instagramHandle) ? false : true
+                }
             },
         },
     },

@@ -22,7 +22,7 @@
                 <p><b>Needs Changes</b></p>
             </div>
              <div class="card-inprogress" v-if="event.status == 'e'">
-                <p><b>Goes Live <br> {{event.embargo_date | formatDate}} </b></p>
+                <p><b>Goes Live <br> {{ new Date(event.embargo_date) | dateFormat('MMM DD, YYYY')}} </b></p>
             </div>
         </a>
         <div class="card-inprogress" v-if="event.status == 'r'">
@@ -32,7 +32,6 @@
 </template>
 
 <script>
-    import moment from 'moment'
     export default {
         props: {
             event: { type:Object },
@@ -101,13 +100,6 @@
             this.eventStatus();
         },
 
-        filters: {
-            formatDate(value) {
-                if (value) {
-                    return moment(String(value)).format('MMM Do, YYYY')
-                }
-            }
-        },
 
     };
 </script>

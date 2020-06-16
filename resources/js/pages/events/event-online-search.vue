@@ -7,7 +7,7 @@
                         <h2>{{title}}</h2>
                     </div>
                     <div class="online-search__tagline">
-                        <p>Enjoy immersive experiences from the comfort of your home.</p>
+                        <p>Discover immersive experiences.</p>
                     </div>
                 </div>
             </header>

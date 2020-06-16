@@ -12,6 +12,13 @@ a { text-decoration: none; color: inherit; }
 p {line-height: 2.5rem;}
 button {cursor: pointer;}
 ul {margin:0;padding:0;}
+select {
+   -o-appearance: none !important;
+   -ms-appearance: none !important;
+   -webkit-appearance: none !important;
+   -moz-appearance: none !important;
+   appearance: none !important;
+}
 
 
 *, *:before, *:after {
@@ -23,6 +30,7 @@ ul {margin:0;padding:0;}
 .noscroll {
     overflow: hidden;
 }
+
 
 .container {
     width:90%;
@@ -81,6 +89,33 @@ button {
     padding: 1rem;
     font-size: 1.6rem;
     background: white;
+    border: 1px solid grey;
+}
+button.default {
+    color: $default-color;
+    border-radius: 5rem;
+    background: #fff;
+    border: 1px solid $default-color;
+    display: inline-block;
+    font-size: 1.4rem;
+    font-weight: 600;
+    &:hover {
+        background: $default-color;
+        color:white;
+    }
+}
+button.black {
+    color: white;
+    border-radius: 5rem;
+    background: black;
+    border: 1px solid white;
+    display: inline-block;
+    font-size: 1.4rem;
+    font-weight: 500;
+    &:hover {
+        background: white;
+        color:black;
+    }
 }
 
 .organizer-icon-text {
@@ -175,7 +210,7 @@ button.default-border {
     body, p { font-size: 14px; font-size: 1.6rem; font-family: 'Montserrat', sans-serif; margin:0px; height:100%;} /* =14px */
     h1   { font-size: 32px; font-size: 3.2rem;color:#484848; transform: scale(1, 1.11);display: inherit;} /* =24px */
     h2   { font-size: 24px; font-size: 2.4rem;color:rgb(34, 34, 34); transform: scale(1, 1.11);} /* =24px */
-    h3   { color:#484848; transform: scale(1, 1.11);} /* =24px */
+    h3   { color:#484848; transform: scale(1, 1.11);font-weight: 600;} /* =24px */
     a { text-decoration: none; color: inherit; }
     p {line-height: 2.1rem;}
     button {cursor: pointer;}

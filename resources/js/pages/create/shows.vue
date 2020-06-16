@@ -3,17 +3,17 @@
         <section class="">
             <div class="listing-details-block">
                 <div class="title">
-                    <h2>Shows</h2>
+                    <h2>Dates and Times</h2>
                 </div>
                 <div class="show-type-selection">
                     <div class="field">
-                        <label class="area">Select your show type</label>
+                        <label class="area">Select the type of operating hours</label>
                         <multiselect 
                         v-model="showType" 
                         :show-labels="false"
                         :options="showTypeOptions"
                         :class="{ active: active == 'type','error': $v.$error }"
-                        placeholder="Show Type" 
+                        placeholder="Show hours type" 
                         open-direction="bottom"
                         :allowEmpty = "false"
                         @select="dates = []"
@@ -55,7 +55,7 @@
                     </section>
                     <section class="event-enter-showtimes">
                         <div class="field">
-                            <label> Show Times</label>
+                            <label> Show Times (please include time zone)</label>
                             <textarea 
                             v-model="showTimes"
                             class="create-input area"
@@ -204,7 +204,7 @@
                     </section>
                     <section class="event-enter-showtimes">
                         <div class="field">
-                            <label> Show Times</label>
+                            <label> Show Times (please include time zone)</label>
                             <textarea 
                             v-model="showTimes" 
                             class="create-input area"
@@ -300,7 +300,7 @@
                 <div v-show="showType == 'Anytime'" class="everyday-show-dates">
                     <section class="event-enter-showtimes">
                         <div class="field">
-                            <label> Show Times</label>
+                            <label> Show Times (please include time zone)</label>
                             <textarea 
                             v-model="showTimes" 
                             class="create-input area"
@@ -515,7 +515,7 @@ export default {
 
         initializeCalendarObject() {
             return {
-                minDate: "today",
+                // minDate: "today",
                 maxDate: new Date().fp_incr(180),
                 mode: "multiple",
                 inline: true,
@@ -526,7 +526,7 @@ export default {
 
         initializeMobileCalendarObject() {
             return {
-                minDate: "today",
+                // minDate: "today",
                 maxDate: new Date().fp_incr(180),
                 mode: "multiple",
                 inline: true,
@@ -537,7 +537,7 @@ export default {
 
         initializeEmbargoCalendarObject() {
             return {
-                minDate: "today",
+                // minDate: "today",
                 maxDate: new Date().fp_incr(180),
                 mode: "single",
                 inline: true,

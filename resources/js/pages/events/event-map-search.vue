@@ -1,23 +1,26 @@
 <template>
-    <section class="event-search-map">
-        <div v-if="desktop" class="event-search-map_container" :style="pageHeight">
+    <section class="e-search-map">
+        <div v-if="desktop" class="e-search-map-container" :style="pageHeight">
             <div>
-                <div class="search-map-updated grid">
+                <div class="e-search-map-container__update-box grid">
                     <label>
-                        <span class="search-map-updated__checkbox">
-                            <input @click="mapSearch = !mapSearch" type="checkbox" v-model="mapSearch">
+                        <span class="e-search-map-container__update-box--checkbox">
+                            <input 
+                            @click="mapSearch = !mapSearch" 
+                            type="checkbox" 
+                            v-model="mapSearch">
                             <span class=check></span>
                         </span> 
                     </label>
                     <p>Search as I move the map </p>
                 </div>
                 <div class="zoom">
-                    <div class="in">
+                    <div class="zoom__in">
                         <button @click.prevent="zoom += 1">
                             <svg viewBox="0 0 16 16" height="16" width="16" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M7 1a1 1 0 0 1 2 0v14a1 1 0 1 1-2 0V1z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"></path></svg>
                         </button>
                     </div>
-                    <div class="out">
+                    <div class="zoom__out">
                         <button @click.prevent="zoom -= 1">
                             <svg viewBox="0 0 16 16" height="16" width="16" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"></path></svg>
                         </button>
@@ -50,25 +53,14 @@
             </div>
         </div>
 
-        <div v-else class="event-search-map_container fullmap" :style="mobileMap" @click="fullscreen">
-            <button class="search-map-updated" @click="onMapCenterChanged" v-if="fullMap">
+        <div v-else class="e-search-map-container fullmap" :style="mobileMap" @click="fullscreen">
+            <button class="e-search-map-container__update-box" @click="onMapCenterChanged" v-if="fullMap">
                 <span><svg viewBox="0 0 16 16" height="16" width="16"><path fill-rule="evenodd" clip-rule="evenodd" d="M10.227 3.152a5.552 5.552 0 0 0-3.595-.19 5.4 5.4 0 0 0-2.915 2.041 5.14 5.14 0 0 0-.955 3.352 5.177 5.177 0 0 0 1.413 3.197 5.455 5.455 0 0 0 3.175 1.64 5.537 5.537 0 0 0 3.535-.662 5.293 5.293 0 0 0 2.318-2.66.75.75 0 1 1 1.397.549 6.793 6.793 0 0 1-2.973 3.415 7.037 7.037 0 0 1-4.494.842 6.954 6.954 0 0 1-4.048-2.093 6.677 6.677 0 0 1-1.819-4.124 6.64 6.64 0 0 1 1.23-4.328A6.9 6.9 0 0 1 6.22 1.52a7.052 7.052 0 0 1 4.568.24 6.9 6.9 0 0 1 2.462 1.685V2.002a.75.75 0 0 1 1.5 0v3.6a.75.75 0 0 1-.75.75h-3.692a.75.75 0 1 1 0-1.5h2.171a5.386 5.386 0 0 0-2.252-1.7z" fill="currentColor"></path></svg></span>
                 <span>
                     <p>Search here</p>
                 </span>
             </button>
-            <div class="zoom" v-if="fullMap">
-                <div class="in">
-                    <button @click.prevent="zoom += 1">
-                        <svg viewBox="0 0 16 16" height="16" width="16" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M7 1a1 1 0 0 1 2 0v14a1 1 0 1 1-2 0V1z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"></path></svg>
-                    </button>
-                </div>
-                <div class="out">
-                    <button @click.prevent="zoom -= 1">
-                        <svg viewBox="0 0 16 16" height="16" width="16" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"></path></svg>
-                    </button>
-                </div>
-            </div>
+            
             <div style="width:100%;">
                 <l-map
                 :zoom="zoom"
@@ -110,19 +102,9 @@
 
     export default {
 
+        components: { Multiselect, LPopup, LMap, LTileLayer, LMarker, 'l-marker-cluster': Vue2LeafletMarkerCluster, PopupContent, LIcon },
 
-        components: {
-            Multiselect, LPopup, LMap, LTileLayer, LMarker, 'l-marker-cluster': Vue2LeafletMarkerCluster, PopupContent, LIcon,
-        },
-
-        props: {
-            events: {
-                type:Array
-            },
-            user: {
-                type:String
-            }
-        }, 
+        props: [ 'events', 'user' ],
 
         computed: {
             mapCenter() {
@@ -151,7 +133,7 @@
                 mapSearch: true,
                 results: 15,
                 locationName: new URL(window.location.href).searchParams.get("name"),
-                desktop: true,
+                desktop: window.innerWidth > 769,
                 pageHeight: `height: 100vh;`,
                 mobileMap : `height:${window.innerHeight}px;`,
                 fullMap: false,
@@ -193,7 +175,7 @@
             },
 
             handleResize() {
-                window.innerWidth < 768 ? this.desktop = false : true;
+                //
             },
 
             fullscreen() {
@@ -224,7 +206,6 @@
 
         created() {
             window.addEventListener('resize', this.handleResize)
-            this.handleResize();
         },
 
         destroyed() {

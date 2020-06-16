@@ -20,7 +20,7 @@ class ModeratorComment extends Model
     *
     * @var array
     */
-    protected $with = ['event'];
+    protected $with = ['event', 'user'];
 
     /**
     * Each comment belongs to one Event
@@ -29,7 +29,17 @@ class ModeratorComment extends Model
     */
     public function event() 
     {
-        return $this->belongsTo(Event::class);
+        return $this->belongsTo(Event::class)->withTrashed();
+    }
+
+    /**
+    * Each comment belongs to one Event
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+    */
+    public function user() 
+    {
+        return $this->belongsTo(User::class);
     }
 
     /**

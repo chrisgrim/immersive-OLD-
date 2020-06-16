@@ -52,18 +52,23 @@
                                 <button :class="{bspin : disabled}" :disabled="disabled" @click="onSubmit">Send message</button>
                             </div>
                         </div>
-                        <div class="message-index__image" :style="`background:${owner.hexColor}`">
-                            <label v-if="owner.largeImagePath" class="profile-image" >
-                                <picture>
-                                    <source type="image/webp" :srcset="`/storage/${owner.thumbImagePath}`"> 
-                                    <img :src="`/storage/${owner.thumbImagePath.slice(0, -4)}jpg`" :alt="owner.name + `'s account`">
-                                </picture>
-                            </label>
-                            <div v-else-if="owner.gravatar" class="profile-image">
-                                <img :src="owner.gravatar" :alt="owner.name + `'s account`">
+                        <div>
+                            <div class="message-index__image" :style="`background:${owner.hexColor}`">
+                                <label v-if="owner.largeImagePath" class="profile-image" >
+                                    <picture>
+                                        <source type="image/webp" :srcset="`/storage/${owner.thumbImagePath}`"> 
+                                        <img :src="`/storage/${owner.thumbImagePath.slice(0, -4)}jpg`" :alt="owner.name + `'s account`">
+                                    </picture>
+                                </label>
+                                <div v-else-if="owner.gravatar" class="profile-image">
+                                    <img :src="owner.gravatar" :alt="owner.name + `'s account`">
+                                </div>
+                                <div v-else class="message-index__user-noimage">
+                                    <h2>{{owner ? owner.name.charAt(0) : ''}}</h2>
+                                </div>
                             </div>
-                            <div v-else class="message-index__user-noimage">
-                                <h2>{{owner ? owner.name.charAt(0) : ''}}</h2>
+                            <div class="message-show__username">
+                                {{owner.name}}
                             </div>
                         </div>
                     </div>
@@ -74,38 +79,48 @@
                                     {{message.message ? message.message : message.comments}}
                                 </div>
                                 <div class="messages-show__element-date">
-                                    {{message.created_at | formatDate}}
+                                    {{ new Date(message.created_at) | dateFormat('MMM DD, YYYY')}}
                                 </div>
                             </div>
                         </div>
-                        <div class="message-index__image" :style="`background:${owner.hexColor}`">
-                            <label v-if="owner.largeImagePath" class="profile-image" >
-                                <picture>
-                                    <source type="image/webp" :srcset="`/storage/${owner.thumbImagePath}`"> 
-                                    <img :src="`/storage/${owner.thumbImagePath.slice(0, -4)}jpg`" :alt="owner.name + `'s account`">
-                                </picture>
-                            </label>
-                            <div v-else-if="owner.gravatar" class="profile-image">
-                                <img :src="owner.gravatar" :alt="owner.name + `'s account`">
+                        <div class="messages-show__element-image">
+                            <div class="message-index__image" :style="`background:${owner.hexColor}`">
+                                <label v-if="owner.largeImagePath" class="profile-image" >
+                                    <picture>
+                                        <source type="image/webp" :srcset="`/storage/${owner.thumbImagePath}`"> 
+                                        <img :src="`/storage/${owner.thumbImagePath.slice(0, -4)}jpg`" :alt="owner.name + `'s account`">
+                                    </picture>
+                                </label>
+                                <div v-else-if="owner.gravatar" class="profile-image">
+                                    <img :src="owner.gravatar" :alt="owner.name + `'s account`">
+                                </div>
+                                <div v-else class="message-index__user-noimage">
+                                    <h2>{{owner ? owner.name.charAt(0) : ''}}</h2>
+                                </div>
                             </div>
-                            <div v-else class="message-index__user-noimage">
-                                <h2>{{owner ? owner.name.charAt(0) : ''}}</h2>
+                            <div class="message-show__username">
+                                {{owner.name}}
                             </div>
                         </div>
                     </div>
                     <div class="messages-show__element grid" v-else="isResponder(message)" :class="{inv: isResponder(message)}">
-                        <div class="message-index__image" :style="`background:${responder.hexColor}`">
-                            <label v-if="responder.largeImagePath" class="profile-image" >
-                                <picture>
-                                    <source type="image/webp" :srcset="`/storage/${responder.thumbImagePath}`"> 
-                                    <img :src="`/storage/${responder.thumbImagePath.slice(0, -4)}jpg`" :alt="responder.name + `'s account`">
-                                </picture>
-                            </label>
-                            <div v-else-if="responder.gravatar" class="profile-image">
-                                <img :src="responder.gravatar" :alt="responder.name + `'s account`">
+                        <div class="messages-show__element-image">
+                            <div class="message-index__image" :style="`background:${message.user.hexColor}`">
+                                <label v-if="message.user.largeImagePath" class="profile-image" >
+                                    <picture>
+                                        <source type="image/webp" :srcset="`/storage/${message.user.thumbImagePath}`"> 
+                                        <img :src="`/storage/${message.user.thumbImagePath.slice(0, -4)}jpg`" :alt="message.user.name + `'s account`">
+                                    </picture>
+                                </label>
+                                <div v-else-if="message.user.gravatar" class="profile-image">
+                                    <img :src="message.user.gravatar" :alt="message.user.name + `'s account`">
+                                </div>
+                                <div v-else class="message-index__user-noimage">
+                                    <h2>{{message.user ? message.user.name.charAt(0) : ''}}</h2>
+                                </div>
                             </div>
-                            <div v-else class="message-index__user-noimage">
-                                <h2>{{responder ? responder.name.charAt(0) : ''}}</h2>
+                            <div class="message-show__username">
+                                {{message.user.name}}
                             </div>
                         </div>
                         <div class="field">
@@ -114,7 +129,7 @@
                                     {{message.message ? message.message : message.comments}}
                                 </div>
                                 <div class="messages-show__element-date">
-                                    {{message.created_at | formatDate}}
+                                    {{ new Date(message.created_at) | dateFormat('MMM DD, YYYY')}}
                                 </div>
                             </div>
                         </div>
@@ -137,7 +152,6 @@
 </template>
 
 <script>
-    import moment from 'moment'
     import formValidationMixin from '../../mixins/form-validation-mixin'
     import { required } from 'vuelidate/lib/validators';
 
@@ -209,13 +223,7 @@
            this.getOwner();
         },
 
-        filters: {
-            formatDate(value) {
-                if (value) {
-                    return moment(String(value)).format('MMM Do, YYYY')
-                }
-            }
-        },
+
 
         validations: {
             message: {

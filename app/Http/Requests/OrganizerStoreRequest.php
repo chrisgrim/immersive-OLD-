@@ -23,13 +23,17 @@ class OrganizerStoreRequest extends FormRequest
      */
     public function rules()
     {
-
+        if ($this->organizer) {
+            return [
+                'name' => "required|unique:organizers,name,{$this->organizer->id}",
+                'slug' => "required|unique:organizers,slug,{$this->organizer->id}",
+                'description' => 'required|string|min:1|max:40000',
+            ];
+        }
         return [
-            'name' => 'required|unique:organizers',
-            'description' => 'required',
-            'slug' => 'required|unique:organizers',
-            'website' => 'required|unique:organizers'
-            // 'imagePath' => 'required',
+            'name' => "required|unique:organizers,name",
+            'slug' => "required|unique:organizers,slug",
+            'description' => 'required|string|min:1|max:40000',
         ];
     }
 }

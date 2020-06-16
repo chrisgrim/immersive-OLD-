@@ -10,6 +10,11 @@ import vuelidateErrorExtractor, { templates } from "vuelidate-error-extractor";
 import { Icon }  from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
+import VueFilterDateFormat from '@vuejs-community/vue-filter-date-format';
+
+
+
+
 // import VueRouter from 'vue-router';
 // import {routes} from './routes';
 // Vue.use(VueRouter);
@@ -23,6 +28,7 @@ window.axios = require('axios');
 window.Vue = require('vue');
 
 Vue.use(Vuelidate);
+Vue.use(VueFilterDateFormat);
 
 Vue.use(require('vue-cookies'));
 // require('./bootstrap');
@@ -115,6 +121,9 @@ Vue.component('approval-list', () => import('./pages/adminArea/approve/approval-
 Vue.component('admin-categories', () => import('./pages/adminArea/admin-categories.vue'));
 Vue.component('admin-contact-level', () => import('./pages/adminArea/admin-contact-level.vue'));
 Vue.component('admin-genres', () => import('./pages/adminArea/admin-genres.vue'));
+Vue.component('vue-admin-events', () => import('./pages/adminArea/admin-events.vue'));
+Vue.component('vue-admin-boneyard', () => import('./pages/adminArea/admin-boneyard.vue'));
+Vue.component('vue-admin-stats', () => import('./pages/adminArea/admin-stats.vue'));
 Vue.component('admin-event-reviews', () => import('./pages/adminArea/admin-event-reviews.vue'));
 Vue.component('admin-staff-picks', () => import('./pages/adminArea/admin-staff-picks.vue'));
 Vue.component('admin-mobility', () => import('./pages/adminArea/admin-mobility.vue'));

@@ -6,13 +6,14 @@ use App\AdminArea;
 use App\Event;
 use App\Category;
 use App\User;
-use App\EventImage;
+use App\MakeImage;
 use App\Message;
 use App\ModeratorComment;
 use App\Conversation;
 use Carbon\Carbon;
 use App\Mail\ModeratorComments;
 use App\Mail\EventApproved;
+use App\Mail\EventRejected;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
 
@@ -37,7 +38,9 @@ class AdminAreaController extends Controller
      */
     public function index()
     {
-        return view('adminArea.index');
+        $usercount = User::count();
+        $eventcount = Event::where('status', 'p')->count();
+        return view('adminArea.stats', compact('usercount', 'eventcount'));
     }
 
     /**
@@ -142,7 +145,7 @@ class AdminAreaController extends Controller
 
         $slug = Event::finalSlug($event);
         
-        EventImage::finalizeImage($event, $slug);
+        MakeImage::renameImage($event, $slug, 'event', null);
 
         if ($event->embargo_date && $event->embargo_date > Carbon::now()) {
             $event->update([
@@ -180,5 +183,20 @@ class AdminAreaController extends Controller
         $event->update([
             'status' => 'n',
         ]);
+    }
+
+    /**
+     * Fail Event Creates a new moderator comment in the table, then emails the user that comment. Finally it assigns a value of hasIssues to the event database table.
+     *
+     * @param  \App\AdminArea  $adminArea
+     * @return \Illuminate\Http\Response
+     */
+    public function reject(Request $request, Event $event)
+    {
+        $ModeratorComment = Message::eventnotification($event, 'denied', $request)->load('event');
+
+        Mail::to($event->user)->send(new EventRejected($event));
+
+        $event->delete();
     }
 }

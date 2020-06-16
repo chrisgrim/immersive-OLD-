@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Event;
+use App\MakeImage;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Http\Requests\CategoryStoreRequest;
@@ -52,10 +53,9 @@ class CategoryController extends Controller
      */
     public function store(CategoryStoreRequest $request)
     {
-        $validated = $request->validated();
-        // if(Category::where('name', '=', $request->name)->exists()) { return '';}
-        $category = Category::create($request->except(['imagePath']));
-        $category->saveFile($request, $category, 600, 600);
+        $category = Category::create($request->except(['image']));
+        $category->update(['slug'=> str_slug($request->name)]);
+        MakeImage::saveImage($request, $category, 600, 600, 'category');
     }
 
     /**
@@ -90,7 +90,7 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(CategoryStoreRequest $request, Category $category)
     {
         $category->updateElements($request, $category);
     }

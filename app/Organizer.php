@@ -106,62 +106,6 @@ class Organizer extends Model
     * @param  \Illuminate\Http\Request  $request
     * @param  $organizer
     */
-    public static function saveImages($organizer, $request, $width, $height)
-    {
-        ini_set('memory_limit','512M');
-        if ($organizer->imagePath) {
-            Storage::deleteDirectory('public/organizer-images/' . pathinfo($organizer->largeImagePath, PATHINFO_FILENAME));
-        };
-
-        $extension = $request->file('imagePath')->getClientOriginalExtension();
-        $inputFile= $request->slug . '.' . $extension;
-        $filename= $request->slug;
-
-        $request->file('imagePath')->storeAs('/public/organizer-images/' . $filename, $inputFile);
-        Image::make(storage_path()."/app/public/organizer-images/$filename/$inputFile")
-        ->fit($width, $height)
-        ->save(storage_path("/app/public/organizer-images/$filename/$filename.webp"))
-        ->save(storage_path("/app/public/organizer-images/$filename/$filename.jpg"))
-        ->fit( $width / 2, $height / 2)
-        ->save(storage_path("/app/public/organizer-images/$filename/$filename-thumb.webp"))
-        ->save(storage_path("/app/public/organizer-images/$filename/$filename-thumb.jpg"));
-
-        $organizer->update([ 
-            'largeImagePath' => 'organizer-images/' . $filename . '/' . $filename. '.webp',
-            'thumbImagePath' => 'organizer-images/' . $filename. '/' . $filename. '-thumb.webp',
-        ]);
-    }
-
-     /**
-    * Update image name 
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @param  $organizer
-    */
-    public static function updateImages($organizer, $request)
-    {
-        $path = pathinfo($organizer->largeImagePath, PATHINFO_FILENAME);
-        $newImagePath = 'organizer-images/' . $request->slug . '/' . $request->slug;
-
-        Storage::move('public/organizer-images/' . $path . '/' . $path . '.webp', 'public/' . $newImagePath . '.webp' );
-        Storage::move('public/organizer-images/' . $path . '/' . $path . '.jpg', 'public/' . $newImagePath . '.jpg' );
-        Storage::move('public/organizer-images/' . $path . '/' . $path . '-thumb.webp', 'public/' . $newImagePath . '-thumb.webp' );
-        Storage::move('public/organizer-images/' . $path . '/' . $path . '-thumb.jpg', 'public/' . $newImagePath . '-thumb.jpg' );
-
-        Storage::deleteDirectory('public/organizer-images/' . pathinfo($organizer->largeImagePath, PATHINFO_FILENAME));
-
-        $organizer->update([
-            'largeImagePath' => $newImagePath . '.webp',
-            'thumbImagePath' => $newImagePath . '-thumb.webp',
-        ]);
-    }
-
-    /**
-    * Save File and update organizer model with path name
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @param  $organizer
-    */
     public static function getOrganizerEvents()
     {
         $organizers = auth()->user()->organizers->load([
@@ -194,9 +138,6 @@ class Organizer extends Model
     */
     public function deleteOrganizer($organizer) 
     {
-        // if ($organizer->largeImagePath) {
-        //     Storage::deleteDirectory('public/organizer-images/' . pathinfo($organizer->largeImagePath, PATHINFO_FILENAME));
-        // };
         $organizer->delete();
     }
 
@@ -220,47 +161,8 @@ class Organizer extends Model
                 'type' => 'integer',
                 'index' => false
             ],
-            'user_id' => [
-                'type' => 'integer',
-                'index' => false
-            ],
             'name' => [
                 'type' => 'search_as_you_type',
-            ],
-            'website' => [
-                'type' => 'keyword'
-            ],
-            'emai' => [
-                'type' => 'text',
-                'index' => false
-            ],
-            'description' => [
-                'type' => 'text',
-                'analyzer' => 'english'
-            ],
-            'slug' => [
-                'type' => 'text',
-                'index' => false
-            ],
-            'rating' => [
-                'type' => 'integer',
-                'index' => false
-            ],
-            'imagePath' => [
-                'type' => 'text',
-                'index' => false
-            ],
-            'instagramHandle' => [
-                'type' => 'keyword',
-                'index' => false
-            ],
-            'facebookHandle' => [
-                'type' => 'keyword',
-                'index' => false
-            ],
-            'twitterHandle' => [
-                'type' => 'keyword',
-                'index' => false
             ],
         ]
     ];

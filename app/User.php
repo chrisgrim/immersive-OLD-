@@ -218,39 +218,33 @@ class User extends Authenticatable implements MustVerifyEmail
     {
 
         ini_set('memory_limit','512M');
-        if ($user->largeImagePath) {
-            Storage::deleteDirectory('public/user-images/' . pathinfo($user->largeImagePath, PATHINFO_FILENAME));
-        };
-        $extension = $request->file('image')->getClientOriginalExtension();
-        $rand = rand(1,50000);
-        $inputFile= str_slug($user->name . '_' . $rand . '.' . $extension);
-        $filename= str_slug($user->name . '_' . $rand);
 
-        $request->file('image')->storeAs('/public/user-images/' . $filename, $inputFile);
-        Image::make(storage_path()."/app/public/user-images/$filename/$inputFile")
+        $extension = $request->file('image')->getClientOriginalExtension();
+        //      jpg
+        $rand = substr(md5(microtime()),rand(0,26),7);
+        //      546ds3g
+        $name = str_slug($user->name);
+        //      chris-grim
+        $directory = 'user-images/' . $name . '-' . $rand;
+        //      user-images/chris-grim-54fwd3g
+        $inputFile = $name . '.' . $extension;
+        //      chris-grim.jpg
+
+
+        $request->file('image')->storeAs('/public/' . $directory, $inputFile);
+        Image::make(storage_path()."/app/public/$directory/$inputFile")
         ->fit($width, $height)
-        ->save(storage_path("/app/public/user-images/$filename/$filename.webp"))
-        ->save(storage_path("/app/public/user-images/$filename/$filename.jpg"))
+        ->save(storage_path("/app/public/$directory/$name.webp"))
+        ->save(storage_path("/app/public/$directory/$name.jpg"))
         ->fit( $width / 2, $height / 2)
-        ->save(storage_path("/app/public/user-images/$filename/$filename-thumb.webp"))
-        ->save(storage_path("/app/public/user-images/$filename/$filename-thumb.jpg"));
+        ->save(storage_path("/app/public/$directory/$name-thumb.webp"))
+        ->save(storage_path("/app/public/$directory/$name-thumb.jpg"));
 
         $user->update([ 
-            'largeImagePath' => 'user-images/' . $filename . '/' . $filename. '.webp',
-            'thumbImagePath' => 'user-images/' . $filename. '/' . $filename. '-thumb.webp',
+            'largeImagePath' => $directory . '/' . $name. '.webp',
+            'thumbImagePath' => $directory . '/' . $name. '-thumb.webp',
         ]);
 
-        // $old = $user->image_path;
-        
-        // $extension = $request->file('image')->getClientOriginalExtension();
-        // $filename = $user->name .'-'. rand(5,9999) . '.' .$extension;
-        // $imagePath = "avatars/$filename";
-        // $request->file('image')->storeAs('/public/avatars', $filename);
-        // Image::make(storage_path()."/app/public/avatars/$filename")->fit(640, 640)->save(storage_path("/app/public/$imagePath"));
-        
-        // $old ? Storage::delete('public/' . $old) : '';
-
-        // $user->update([ 'image_path' => $imagePath ]);
     }
 
     protected $searchRules = [

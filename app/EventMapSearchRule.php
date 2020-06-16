@@ -73,15 +73,6 @@ class EventMapSearchRule extends SearchRule
                     [
                         'range' => 
                         [
-                            'closingDate' => 
-                            [
-                                'gte' => 'now/d',
-                            ],
-                        ],
-                    ],
-                    [
-                        'range' => 
-                        [
                             'priceranges.price' =>
                             [
                                 'gte' => Request::get('price')[0],
@@ -142,15 +133,6 @@ class EventMapSearchRule extends SearchRule
             return [
                 'must' => 
                 [
-                    [
-                        'range' => 
-                        [
-                            'closingDate' => 
-                            [
-                                'gte' => 'now/d',
-                            ],
-                        ],
-                    ],
                     [
                         'range' => 
                         [
@@ -260,15 +242,6 @@ class EventMapSearchRule extends SearchRule
             return [
                 'must' => 
                 [
-                    [
-                        'range' => 
-                        [
-                            'closingDate' => 
-                            [
-                                'gte' => 'now/d',
-                            ],
-                        ],
-                    ],
                     [
                         'range' => 
                         [
@@ -401,15 +374,6 @@ class EventMapSearchRule extends SearchRule
             return [
                 'must' => 
                 [
-                    [
-                        'range' => 
-                        [
-                            'closingDate' => 
-                            [
-                                'gte' => 'now/d',
-                            ],
-                        ],
-                    ],
                     [
                         'range' => 
                         [

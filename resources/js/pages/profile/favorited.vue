@@ -1,13 +1,14 @@
 <template>
-    <div class="container">
-        <div class="event-index">
-            
-            <h2>Your Favorited Events</h2>
-            <div class="event-index-eventlist grid">
-                <div v-for="(event, index) in events" class="eventlist__element">
-                    <event-listing-item :event="event"></event-listing-item>
-                </div>
+    <div class="favorited-index">
+        <div class="favorited-index__title">
+            <h3>Your Favorited Events</h3>
+        </div>
+
+        <div class="event-index-eventlist grid">
+            <div v-for="(event, index) in events" class="eventlist__element">
+                <vue-event-index :event="event"></vue-event-index>
             </div>
+        </div>
 
         </div>
     </div>

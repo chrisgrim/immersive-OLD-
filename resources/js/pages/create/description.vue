@@ -15,7 +15,7 @@
                 @input="$v.group.description.$touch"
                 @click="active = 'description'"
                 @blur="active = null" 
-                rows="8"></textarea>
+                rows="14"></textarea>
                 <div v-if="$v.group.description.$error" class="validation-error">
                     <p class="error" v-if="!$v.group.description.required">Must provide a description</p>
                 </div>

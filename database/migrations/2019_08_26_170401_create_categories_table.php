@@ -23,6 +23,7 @@ class CreateCategoriesTable extends Migration
             $table->boolean('remote')->default(0);
             $table->string('largeImagePath')->nullable();
             $table->string('thumbImagePath')->nullable();
+            $table->char('type', 1)->default('c');
             $table->timestamps();
         });
     }

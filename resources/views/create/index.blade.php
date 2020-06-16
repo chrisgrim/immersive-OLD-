@@ -1,9 +1,9 @@
 @extends('layouts.master')
 
 @section('meta')
-        <link href="/css/app-create.css" rel="stylesheet">
-        <link href="/css/app-lite.css" rel="stylesheet">
-        <link href="/css/app.css" rel="stylesheet">
+        <link href="{{ mix('/assets/app-create.css') }}" rel="stylesheet">
+        <link href="{{ mix('/assets/app.css') }}" rel="stylesheet">
+        <link href="{{ mix('/assets/app-lite.css') }}" rel="stylesheet">
         @yield('location')
 @endsection
 

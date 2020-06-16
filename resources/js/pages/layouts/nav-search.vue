@@ -15,9 +15,9 @@
         :options-limit="30" 
         :limit="5"  
         track-by="name"
-        @open="asyncGenerateCitiesList"
-        @search-change="asyncGenerateCitiesList"
-        @input="searchEvents"
+        @open="generateSearchList"
+        @search-change="generateSearchList"
+        @input="searchInput"
         :show-no-results="false"
         :allow-empty="false">
             <template 
@@ -61,12 +61,11 @@ export default {
 
     methods: {
 
-        asyncGenerateCitiesList (query) {
+        generateSearchList (query) {
             axios.get('/api/search/navbar/content', { params: { keywords: query } })
             .then(res => {
                 console.log(res.data);
                 this.searchBoxOptions = res.data.data;
-                this.type = res.data.type;
             });
         },
 
@@ -78,13 +77,13 @@ export default {
             }
         },
 
-        searchEvents() {
-            this.type == 'category' ? window.location.href = `/index/search-online?category=${this.searchBoxInput.name}&id=${this.searchBoxInput.id}` : '';
-            this.type == 'remote' ? window.location.href = `/index/search-online?remote=${this.searchBoxInput.name}&id=${this.searchBoxInput.id}` : '';
-            this.type == 'tag' ? window.location.href = `/index/search-online?tag=${this.searchBoxInput.name}&id=${this.searchBoxInput.id}` : '';
-            this.type == 'organizer' ? window.location.href = `/organizer/${this.searchBoxInput.slug}` : '';
-            this.type == 'event' ? window.location.href = `/events/${this.searchBoxInput.slug}` : '';
-            this.type == 'city' ? this.globalSearch() : '';
+        searchInput() {
+            this.searchBoxInput.type == 'c' ? window.location.href = `/index/search-online?category=${this.searchBoxInput.name}&id=${this.searchBoxInput.id}` : '';
+            this.searchBoxInput.type == 'r' ? window.location.href = `/index/search-online?remote=${this.searchBoxInput.name}&id=${this.searchBoxInput.id}` : '';
+            this.searchBoxInput.type == 't' ? window.location.href = `/index/search-online?tag=${this.searchBoxInput.name}&id=${this.searchBoxInput.id}` : '';
+            this.searchBoxInput.type == 'o' ? window.location.href = `/organizer/${this.searchBoxInput.slug}` : '';
+            this.searchBoxInput.status == 'p' ? window.location.href = `/events/${this.searchBoxInput.slug}` : '';
+            this.searchBoxInput.latitude ? this.globalSearch() : '';
 
         },
 

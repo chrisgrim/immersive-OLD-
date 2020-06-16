@@ -1,29 +1,86 @@
 @extends('layouts.master')
 
 @section('meta')
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"Organization","address":{"@type":"PostalAddress","addressLocality":"Petaluma","addressRegion":"SF","postalCode":"94952","streetAddress":"600 East D St"},"logo":"https://www.todaytix.com/img/TodayTix_logo.png","name":"Everything Immersive","sameAs":["https://www.facebook.com/EverythingImmersive/","https://www.linkedin.com/company/everythingimmersive","https://www.instagram.com/everythingimmersive/","https://twitter.com/everythingimmersive","https://plus.google.com/+everythingimmersive","https://en.wikipedia.org/wiki/everythingimmersive"],"url":"https://www.everythingimmersive.com"}</script>
-    <script type="application/ld+json">{
-        "@context":"http://schema.org",
-        "@type":"Event",
-        @if($event->hasLocation)
-            "location":{"@type":"Place",
-            "address":{"@type":"PostalAddress","addressLocality":"{{$event->location->city}}","addressRegion":"{{$event->location->region}}",
-            "postalCode":"{{$event->location->postal_code}}",
-            "streetAddress":"{{$event->location->street}}"},
-        @endif
-        "name":"{{$event->name}}"},
-        "image":"/storage/{{$event->largeImagePath}}",
-        "description":"{{$event->description}}",
-        "name":"{{$event->name}}",
-        @if($event->shows->isEmpty())
-            "startDate":{{$event->created_at}},
-        @else
-            "startDate":"{{$event->shows[0]->date}}",
-        @endif
-        "endDate":"{{$event->closingDate}}",
-        "url":"{{ url('/'). '/events/'.$event->slug }}",
-        "organizer":"{{$event->organizer->name}}"}
-    </script>
+    
+    @if($event->hasLocation)
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Event",
+            "name": "{{$event->name}}",
+             @if($event->shows->isEmpty())
+            "startDate":{{ \Carbon\Carbon::parse($event->created_at)->toIso8601String()}},
+            @else
+            "startDate":"{{ \Carbon\Carbon::parse($event->shows[0]->date)->toIso8601String()}}", 
+            @endif
+            "endDate": "{{ \Carbon\Carbon::parse($event->closingDate)->toIso8601String()}}",
+            "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+            "eventStatus": "https://schema.org/EventScheduled",
+            "location": {
+                "@type": "Place",
+                "name": "Snickerpark Stadium",
+                "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "{{$event->location->home . ' ' . $event->location->street}}",
+                    "addressLocality": "{{$event->location->city}}",
+                    "postalCode": "{{$event->location->postal_code}}",
+                    "addressRegion": "{{$event->location->region}}",
+                    "addressCountry": "{{$event->location->country}}"
+                    }
+            },
+            "image":"/storage/{{$event->largeImagePath}}",
+            "description": "{{$event->description}}",
+            "offers": {
+                "@type": "Offer",
+                "url": "{{$event->ticketUrl}}",
+                "price": "{{$event->priceranges[0]->price}}",
+                "priceCurrency": "USD",
+                "availability": "https://schema.org/InStock",
+                "validFrom": "{{$event->priceranges[0]->created_at}}"
+            },
+            "organizer": {
+                "@type": "Organization",
+                "name": "{{$event->organizer->name}}",
+                "url": "{{$event->organizer->website ? $event->organizer->website : Request::root() .'/organizer/' . $event->organizer->slug }}"
+            }
+        }
+        </script>
+    @else
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Event",
+            "name": "{{$event->name}}",
+            @if($event->shows->isEmpty())
+            "startDate":{{ \Carbon\Carbon::parse($event->created_at)->toIso8601String()}},
+            @else
+            "startDate":"{{ \Carbon\Carbon::parse($event->shows[0]->date)->toIso8601String()}}", 
+            @endif
+            "endDate": "{{ \Carbon\Carbon::parse($event->closingDate)->toIso8601String()}}",
+            "eventStatus": "https://schema.org/EventScheduled",
+            "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
+                "location": {
+                    "@type": "VirtualLocation",
+                    "url": "{{$event->websiteUrl ? $event->websiteUrl : ($event->ticketUrl ? $event->ticketUrl : Request::url())}}"
+                },
+            "image":"/storage/{{$event->largeImagePath}}",
+            "description": "{{$event->description}}",
+            "offers": {
+                "@type": "Offer",
+                "url": "{{$event->ticketUrl ? $event->ticketUrl : ($event->websiteUrl ? $event->websiteUrl : Request::url())}}",
+                "price": "{{$event->priceranges[0]->price}}",
+                "priceCurrency": "USD",
+                "availability": "https://schema.org/InStock",
+                "validFrom": "{{$event->priceranges[0]->created_at}}"
+            },
+            "organizer": {
+                "@type": "Organization",
+                "name": "{{$event->organizer->name}}",
+                "url": "{{$event->organizer->website ? $event->organizer->website : Request::root() .'/organizer/' . $event->organizer->slug }}"
+            }
+        }
+        </script>
+    @endif
     
     <title>{{$event->name}}</title>
     <link rel="canonical" href="{{url()->current()}}">
@@ -49,7 +106,7 @@
     <meta name="twitter:site" content="@everythingimmersive" />
     <meta name="twitter:image" content="{{ url('/') }}/storage/{{$event->largeImagePath}}" />
     <meta name="twitter:creator" content="@everythingimmersive" />
-    <link href="/css/app-lite.css" rel="stylesheet">
+    <link href="{{ mix('/assets/app-lite.css') }}" rel="stylesheet">
 @endsection
 
 @section('nav')

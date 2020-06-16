@@ -21,7 +21,7 @@
                     <div class="message-index__name">
                         <p><b>{{user.name}}</b></p>
                         <div v-if="firstMessage(index)" v-for="(message, index) in conversation.messages" class="desktop">
-                            <p><span>{{message.updated_at | formatDate}}</span></p>
+                            <p><span>{{new Date(message.updated_at) | dateFormat('MMM DD, YYYY')}}</span></p>
                         </div>
                         <div v-if="firstMessage(index)" v-for="(message, index) in conversation.messages" class="message-index__message mobile">
                         <p><span>{{ message.message }}</span></p>
@@ -40,7 +40,7 @@
                 <div class="message-index__name">
                     <p><b>{{conversation.modmessages[0].event.name}}</b></p>
                     <div v-if="firstMessage(index)" v-for="(message, index) in conversation.modmessages" class="desktop">
-                        <p><span>{{message.updated_at | formatDate}}</span></p>
+                        <p><span>{{ new Date(message.updated_at) | dateFormat('MMM DD, YYYY')}}</span></p>
                     </div>
                     <div v-if="firstMessage(index)" v-for="(message, index) in conversation.modmessages" class="message-index__message mobile">
                         <p><span>{{ message.comments }}</span></p>
@@ -53,7 +53,7 @@
                     <p><span>{{ message.message }}</span></p>
                 </div>
                 <div v-if="firstMessage(index)" v-for="(message, index) in conversation.messages" class="message-index__mdates mobile">
-                    <p><span>{{message.updated_at | formatDate}}</span></p>
+                    <p><span>{{ new Date(message.updated_at) | dateFormat('MMM DD, YYYY')}}</span></p>
                 </div>
             </div>
 
@@ -62,7 +62,7 @@
                     <p><span>{{ message.comments  }}</span></p>
                 </div>
                 <div v-if="firstMessage(index)" v-for="(message, index) in conversation.modmessages" class="message-index__mdates mobile">
-                    <p><span>{{message.updated_at | formatDate}}</span></p>
+                    <p><span>{{ new Date(message.updated_at) | dateFormat('MMM DD, YYYY')}}</span></p>
                 </div>
             </div> 
 
@@ -71,7 +71,6 @@
 </template>
 
 <script>
-    import moment from 'moment'
     export default {
         props: {
             conversation: { type:Object },
@@ -98,14 +97,6 @@
 
         methods: {
           
-        },
-
-        filters: {
-            formatDate(value) {
-                if (value) {
-                    return moment(String(value)).format('MMM Do, YYYY')
-                }
-            }
         },
 
         mounted() {

@@ -47,13 +47,14 @@ class StaffPicksController extends Controller
      */
     public function fetch(Request $request)
     {
-        if($request->keywords) {
-            return $events = Event::search($request->keywords)
-                ->rule(EventSearchRule::class)
-                ->where('status', 'p')
-                ->get();
-        }
-        return Event::all()->where('status', 'p');
+        // if($request->keywords) {
+        //     return $events = Event::search($request->keywords)
+        //         ->rule(EventSearchRule::class)
+        //         ->get();
+        // }
+        return Event::all()
+            ->where('status', 'p')
+            ->take(10);
     }
 
     /**

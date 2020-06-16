@@ -31,7 +31,6 @@ class SearchController extends Controller
 {
     public function index(Request $request)
     {
-
         $searchedevents = Event::search('*')
             ->where('closingDate', '>=', 'now/d')
             ->whereGeoDistance('location_latlon', [floatval($request->lng), floatval($request->lat)], '40km')
@@ -81,16 +80,6 @@ class SearchController extends Controller
 
     }
 
-	public function searchOrganizer(Request $request)
-    {
-        if($request->keywords) {
-            $organizers = Organizer::search($request->keywords)
-		    ->rule(OrganizerSearchRule::class)
-		    ->get();
-            return $organizers;
-        };
-    }
-
 
     public function searchNav(Request $request)
     {
@@ -104,12 +93,6 @@ class SearchController extends Controller
             ->take(10)
             ->get();
         }
-        if ($category->count()) {
-            return [
-                'data' => $category,
-                'type' => 'category'
-            ];
-        }
 
         if ($request->keywords) {
             $remote = RemoteLocation::search($request->keywords)
@@ -121,12 +104,6 @@ class SearchController extends Controller
             ->take(10)
             ->get();
         }
-        if ($remote->count()) {
-            return [
-                'data' => $remote,
-                'type' => 'remote'
-            ];
-        }
         
         if ($request->keywords) {
             $tag = Genre::search($request->keywords)
@@ -137,12 +114,6 @@ class SearchController extends Controller
             $tag = Genre::search('*')
             ->take(10)
             ->get();
-        }
-        if ($tag->count()) {
-            return [
-                'data' => $tag,
-                'type' => 'tag'
-            ];
         }
 
         if ($request->keywords) {
@@ -156,13 +127,6 @@ class SearchController extends Controller
             ->get();
         }
 
-        if ($event->count()) {
-            return [
-                'data' => $event,
-                'type' => 'event'
-            ];
-        }
-
         if ($request->keywords) {
             $organizer = Organizer::search($request->keywords)
                 ->rule(OrganizerSearchRule::class)
@@ -174,10 +138,11 @@ class SearchController extends Controller
             ->get();
         }
 
-        if ($organizer->count()) {
+        $concatdata = $category->concat($remote)->concat($tag)->concat($event)->concat($organizer);
+
+        if ($concatdata->count()) {
             return [
-                'data' => $organizer,
-                'type' => 'organizer'
+                'data' => $concatdata,
             ];
         }
 
@@ -196,15 +161,33 @@ class SearchController extends Controller
         if ($city->count()) {
             return [
                 'data' => $city,
-                'type' => 'city'
             ];
         }
 
     }
-    public function searchDatastore(Request $request)
+
+    public function searchLocation(Request $request)
     {
-        Session::put('searchDataStore', $request->all());        
+        if ($request->keywords) {
+            $city = CityList::search($request->keywords)
+            ->rule(CityListSearchRule::class)
+            ->orderBy('population', 'desc')
+            ->get();
+        } else {
+            $city = CityList::search('*')
+            ->orderBy('population', 'desc')
+            ->take(10)
+            ->get();
+        }
+
+        if ($city->count()) {
+            return [
+                'data' => $city,
+            ];
+        }
+
     }
+
 
     public function searchUsers(Request $request)
     {
@@ -219,10 +202,31 @@ class SearchController extends Controller
 
     public function searchEvents(Request $request)
     {
-        $events = Event::search($request->keywords)
+        if ($request->keywords) {
+            $events = Event::search($request->keywords)
                 ->rule(EventSearchRule::class)
                 ->get();
-        return $users;  
+             if ($events->count()) {
+                return $events;  
+            }
+        }
+        return Event::all()->where('status','p')->take(10);
+    }
+
+    public function searchBoneyard(Request $request)
+    {
+        return Event::onlyTrashed()->where('name', 'like', '%' . $request->keywords . '%')->get();
+        return Event::onlyTrashed()->take(10)->get();
+    }
+    public function searchOrganizer(Request $request)
+    {
+        if($request->keywords) {
+            $organizers = Organizer::search($request->keywords)
+            ->rule(OrganizerSearchRule::class)
+            ->with(['user'])
+            ->get();
+            return $organizers;
+        };
     }
 
     public function searchMapBoundary(Request $request)

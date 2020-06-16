@@ -49,6 +49,7 @@
             box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 10px, rgba(0, 0, 0, 0.04) 0px 0px 0px 1px !important;
             border: none;
             padding: 1rem;
+            border-radius: 5rem;
         }
     }
     & .multiselect__input {
@@ -79,7 +80,48 @@
     & .multiselect__select{
         display: none;
     }
+    & .multiselect--active {
+        & .multiselect__tags {
+            border: 1px solid rgb(0, 132, 137) !important;
+            border-top-left-radius: 3rem !important;
+            border-top-right-radius: 3rem !important;
+        }
+    }
 }
+
+.multiselect.multi-button {
+    margin:0;
+    & .multiselect__tags {
+        border-radius: 5rem;
+        border: 1px solid black;
+        min-height: 43px;
+        padding: 8px 8px 0 8px;
+    }
+    & .multiselect__placeholder {
+        color: #484848;
+        font-weight: 300;
+    }
+    & .multiselect__select {
+        display: none;
+    }
+    &.multiselect--active {
+        & .multiselect__tags {
+            border: 1px solid rgb(0, 132, 137) !important;
+            border-radius: 5px !important;
+            border-top-left-radius: 2rem !important;
+            border-top-right-radius: 2rem !important;
+        }
+    }
+    & .multiselect__input {
+        font-weight: 400;
+        font-size: 1.4rem !important;
+        color: black;
+        padding: 0rem;
+        margin:0;
+        margin-top:.1rem;
+    }
+}
+
 
 .multiselect__option {
     white-space: inherit !important;

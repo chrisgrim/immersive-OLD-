@@ -7,7 +7,7 @@ use App\Message;
 use App\ModeratorComment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\ContactUser;
+use App\Mail\NewMessage;
 
 class ConversationsController extends Controller
 {
@@ -23,7 +23,7 @@ class ConversationsController extends Controller
      */
     public function index()
     {
-        $conversations = auth()->user()->conversations()->get();
+        $conversations = auth()->user()->conversations()->withTrashed()->get();
         return view('messages.index', compact('conversations'));
     }
 
@@ -61,7 +61,7 @@ class ConversationsController extends Controller
             $attributes = [
                 'email' => $receiver ? $receiver->email : '',
                 'body' => $request->message,
-                'username' => auth()->user()->name,
+                'name' => auth()->user()->name,
             ];
             $receiver ? $receiver->update(['unread' => 'm']) : '';
         };
@@ -76,7 +76,7 @@ class ConversationsController extends Controller
             $attributes = [
                 'email' => $receiver ? $receiver->email : '',
                 'body' => $request->message,
-                'username' => auth()->user()->name,
+                'name' => auth()->user()->name,
             ];
             $receiver ? $receiver->update(['unread' => 'e']) : '';
         }
@@ -84,7 +84,7 @@ class ConversationsController extends Controller
         $conversation->touch();
 
         
-        $receiver ? Mail::to($receiver->email)->send(new ContactUser($attributes)) : '';
+        $receiver ? Mail::to($receiver->email)->send(new NewMessage($attributes)) : '';
         
         
         

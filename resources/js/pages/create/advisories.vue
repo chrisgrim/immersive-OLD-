@@ -175,7 +175,7 @@
                 </div>
             </div>
             <div class="field">
-                <label class="area"> Audience Roll </label>
+                <label class="area"> Audience Role </label>
                 <textarea 
                 v-model="advisories.audience" 
                 class="create-input area" 

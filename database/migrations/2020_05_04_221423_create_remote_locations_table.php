@@ -20,6 +20,7 @@ class CreateRemoteLocationsTable extends Migration
             $table->text('description')->nullable();
             $table->boolean('admin')->default(0);
             $table->integer('rank')->default(0);
+            $table->char('type', 1)->default('r');
             $table->timestamps();
         });
          Schema::create('event_remote_location', function(Blueprint $table) {

@@ -55,7 +55,18 @@
             </div>
             </a>
 
-            <a v-if="admin" href="/admin/organizer">
+            <a v-if="admin" href="/admin/events">
+            <div class="admin-menu__item" >
+                Edit Events
+            </div>
+            </a>
+            <a v-if="admin" href="/admin/boneyard">
+            <div class="admin-menu__item" >
+                Boneyard
+            </div>
+            </a>
+
+            <a href="/admin/organizer">
             <div class="admin-menu__item" >
                 Edit Organizers
             </div>

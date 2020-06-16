@@ -2,7 +2,7 @@
     <div>
         <div class="footer-content">
             <div class="footer-element">
-                <p>© 2020 Everything Immersive, All rights reserved</p>
+                <p>A project of HERE Institute, INC</p>
             </div>
             <span>&#183;</span>
             <div class="footer-element">
@@ -26,6 +26,11 @@
             <div class="footer-element">
                 <a rel="noreferrer" target="_blank" href="https://www.facebook.com/groups/everythingimmersive">
                     <p>Join us on Facebook.</p>
+                </a>
+            </div>
+            <div class="footer-element" style="float:right">
+                <a rel="noreferrer" target="_blank" href="https://likelyrain.com/">
+                    <p>Site by Likely Rain.</p>
                 </a>
             </div>
         </div> 

@@ -1,21 +1,23 @@
 <template>
     <div class="event-search" style="min-height: calc(100vh - 7rem);position:relative;">
         <div class="event-search__container grid" :class="{ maphidden: !showMap}">
-            <section class="event-search-filter" :style="shift">
+            <section class="e-search-filter" :style="shift">
                 <div class="title">
-                    <h2>Immersive in {{city}}</h2>
+                    <h2>{{category ? category.name : 'Immersive'}} in {{searchedCity}}</h2>
                 </div>
-                <div class="event-search__filters mobile">
+                <div v-if="mobile" class="e-search-filter__row">
                     <button @click="showFilters=true" class="filter">Filters</button>
                 </div>
-                <div v-if="!mobile" class="event-search__filters grid">
-                    <div class="event-filter-item">
-                        <div class="button" ref="dates">
+                <div v-if="!mobile" class="e-search-filter__row grid">
+
+                    <!-- Date Search -->
+                    <div class="e-search-filter__item">
+                        <div class="e-search-filter__button" ref="dates">
                             <button @click="show('dates')" class="filter">
-                                <p v-if="!datesFormatted.length">Dates</p>
-                                <p v-if="datesFormatted.length">{{datesFormatted[0]}}{{ datesFormatted[1] ? ' to ' + datesFormatted[1] : ''}} </p>
+                                <p v-if="showDates">Dates</p>
+                                <p v-else>{{datesFormatted[0]}}{{ datesFormatted[1] ? ' to ' + datesFormatted[1] : ''}} </p>
                             </button>
-                            <div class="event-filter-button__over dates" v-if="activeItem === 'dates'">
+                            <div class="e-search-filter__pop-box" v-if="active == 'dates'">
                                 <div>
                                     <flat-pickr
                                         v-model="dates"
@@ -24,22 +26,24 @@
                                         name="dates">
                                     </flat-pickr>
                                 </div>
-                                <div class="save">
-                                    <button v-if="datesFormatted.length" @click="datesFormatted = []; datesSubmit = []; dates = [];" class="cancel">clear</button>
-                                    <button v-if="!datesFormatted.length" @click="activeItem = null" class="cancel">Cancel</button>
-                                    <button @click="submit" class="submit">Save</button>
+                                <div class="e-search-filter__pop-box--footer">
+                                    <button v-if="showDates" @click="active = null" class="pop-box__cancel">Cancel</button>
+                                    <button v-else @click="datesFormatted = []; datesSubmit = []; dates = [];" class="pop-box__cancel">clear</button>
+                                    <button @click="submit" class="pop-box__submit">Save</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="event-filter-item">
-                        <div class="button" ref="cat">
+
+                    <!-- Category Search -->
+                    <div class="e-search-filter__item">
+                        <div class="e-search-filter__button" ref="cat">
                             <button @click="show('category')" class="filter">
                                 <p v-if="!category">Categories</p>
                                 <p v-if="category">{{category.name}}</p>
                             </button>
-                            <div v-if="activeItem === 'category'" class="event-filter-button__over cat">
-                                <div class="box">
+                            <div v-if="active === 'category'" class="e-search-filter__pop-box">
+                                <div class="e-search-filter__pop-box--category">
                                     <multiselect 
                                     v-model="category"
                                     label="name"
@@ -50,46 +54,48 @@
                                     :preselect-first="false">
                                     </multiselect>
                                 </div>
-                                <div class="save">
-                                    <button v-if="category" @click="clearCat" class="cancel">clear</button>
-                                    <button v-if="!category" @click="activeItem = null;" class="cancel">Cancel</button>
+                                <div class="e-search-filter__pop-box--footer">
+                                    <button v-if="category" @click="clearCat" class="pop-box__cancel">clear</button>
+                                    <button v-if="!category" @click="active = null;" class="pop-box__cancel">Cancel</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="event-filter-item">
-                        <div class="button" ref="price">
+
+                    <!-- Price Search -->
+                    <div class="e-search-filter__item">
+                        <div class="e-search-filter__button" ref="price">
                             <button @click="show('price')" class="filter">
                                 <p v-if="!showPrice && price[0] == 0">{{' Up to ' + '$' + price[1]}}</p>
                                 <p v-if="!showPrice && price[0] != 0">{{'$' + price[0]}}{{' to ' + '$' + price[1]}}</p>
                                 <p v-if="showPrice">Price</p>
                             </button>
-                            <div v-if="activeItem === 'price'" class="event-filter-button__over price">
-                                <div class="box price">
+                            <div v-if="active === 'price'" class="e-search-filter__pop-box">
+                                <div class="e-search-filter__pop-box--price">
                                     <vue-slider
                                     v-model="price" 
                                     v-bind="options"
                                     :enable-cross="false" />
-                                    <div class="amt">
-                                        <div class="info">
+                                    <div class="price-box__amount">
+                                        <div class="price-box__amount--info">
                                             <label> Min </label>
                                             <input type="text"v-model="price[0]">
                                         </div>
-                                        <div class="info">
+                                        <div class="price-box__amount--info">
                                             <label> Max </label>
                                             <input type="text"v-model="price[1]">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="save">
-                                    <button v-if="showPrice" @click="activeItem = null" class="cancel">Cancel</button>
-                                    <button v-if="!showPrice" @click="price = [options.min, options.max]" class="cancel">clear</button>
-                                    <button @click="submit" class="submit">Save</button>
+                                <div class="e-search-filter__pop-box--footer">
+                                    <button v-if="showPrice" @click="active = null" class="pop-box__cancel">Cancel</button>
+                                    <button v-if="!showPrice" @click="price = [options.min, options.max]" class="pop-box__cancel">clear</button>
+                                    <button @click="submit" class="pop-box__submit">Save</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="event-filter-item showmap" v-if="!showMap">
+                    <div class="e-search-filter__item--showmap" v-if="!showMap">
                         <div class="field">
                             <label> Show Map </label>
                             <div id="cover">
@@ -122,45 +128,31 @@
             :events="eventList"></event-map-search>
         </div>
 
-        <div class="filter-list" v-show="showFilters">
-            <div class="nav">
-                <button @click="cancelMobile" class="close">
+        <!-- Mobile Filter List -->
+        <div class="mobile-filter-list" v-show="showFilters">
+            <div class="mobile-filter-list__nav">
+                <button @click="cancelMobile" class="mobile-filter-list__nav--close-button">
                     <svg viewBox="0 0 12 12" role="presentation" aria-hidden="true" focusable="false" style="height: 14px; width: 14px; display: block; fill: currentcolor;"><path d="m11.5 10.5c.3.3.3.8 0 1.1s-.8.3-1.1 0l-4.4-4.5-4.5 4.5c-.3.3-.8.3-1.1 0s-.3-.8 0-1.1l4.5-4.5-4.4-4.5c-.3-.3-.3-.8 0-1.1s.8-.3 1.1 0l4.4 4.5 4.5-4.5c.3-.3.8-.3 1.1 0s .3.8 0 1.1l-4.5 4.5z" fill-rule="evenodd"></path></svg>
                 </button>
-                <div class="clear">
-                    <button @click="clearMobile">Clear</button>
+                <div class="mobile-filter-list__clear">
+                    <button class="mobile-filter-list__clear-button" @click="clearMobile">Clear</button>
                 </div>
             </div>
-            <div class="content">
-                <div class="dates">
+            <div class="mobile-filter-list__content">
+
+                <!-- Mobile Date Search -->
+                <div class="mobile-filter-list__content--dates">
                     <h3>Dates</h3>
                     <flat-pickr
                         v-model="dates"
-                        :config="configmob"                                         
+                        :config="configmobile"                                         
                         placeholder="Select date"               
                         name="dates">
                     </flat-pickr>
                 </div>
-                <div class="prices">
-                    <h3>Prices</h3>
-                    <div class="box price">
-                        <vue-slider
-                        v-model="price" 
-                        v-bind="options"
-                        :enable-cross="false" />
-                        <div class="amt">
-                            <div class="info">
-                                <label> Min </label>
-                                <input type="text"v-model="price[0]">
-                            </div>
-                            <div class="info">
-                                <label> Max </label>
-                                <input type="text"v-model="price[1]">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="categories">
+                
+                <!-- Mobile Category Search -->
+                <div class="mobile-filter-list__content--categories">
                     <h3>Categories</h3>
                     <multiselect 
                     v-model="category"
@@ -171,13 +163,35 @@
                     :preselect-first="false">
                     </multiselect>
                 </div>
+                
+                <!-- Mobile Price Search -->
+                <div class="mobile-filter-list__content--prices">
+                    <h3>Prices</h3>
+                    <div class="mobile-filter-list__price-box">
+                        <vue-slider
+                        v-model="price" 
+                        v-bind="options"
+                        :enable-cross="false" />
+                        <div class="price-box__amount">
+                            <div class="price-box__amount--info">
+                                <label> Min </label>
+                                <input type="text"v-model="price[0]">
+                            </div>
+                            <div class="price-box__amount--info">
+                                <label> Max </label>
+                                <input type="text"v-model="price[1]">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="filter">
-                <div class="button">
-                    <button @click="filterMobile">Filter</button>
+            <div class="mobile-filter-list__footer">
+                <div class="mobile-filter-list__footer--button">
+                    <button class="mobile-filter-button" @click="filterMobile">Filter</button>
                 </div>
             </div>
         </div>
+
     </div>
 </template>
 
@@ -192,25 +206,16 @@
 
     export default {
 
-        components: {
-            flatPickr, Multiselect, VueSlider, searchItem
-        },
+        components: { flatPickr, Multiselect, VueSlider, searchItem },
 
-        props: {
-            searchedevents: {
-                type:Array,
-            },
-            categories: {
-                type:Array
-            },
-            user: {
-                type:String
-            }
-        },
+        props:['searchedevents','categories','user'],
 
         computed: {
             showPrice() {
                 return this.price[1] == this.options.max && this.price[0] == this.options.min ? true : false;
+            },
+            showDates() {
+                return !this.datesFormatted.length ? true : false;
             },
 
             data() {
@@ -229,7 +234,7 @@
         data() {
             return {
                 eventList: this.searchedevents,
-                activeItem: null,
+                active: null,
                 category: '',
                 showMap: true,
                 price: [0,0],
@@ -239,41 +244,35 @@
                 hasPrice: false,
                 dates: [],
                 results: '',
-                city: new URL(window.location.href).searchParams.get("name"),
-                config: {
-                    minDate: "today",
-                    altFormat:'M d',
-                    altInput: true,
-                    mode: "range",
-                    inline: true,
-                    showMonths: 2,
-                    dateFormat: 'Y-m-d H:i:s',
-                    onClose: [this.dateFunc()], 
-                },
-                configmob: {
-                    minDate: "today",
-                    altFormat:'M d',
-                    altInput: true,
-                    mode: "range",
-                    inline: true,
-                    showMonths: 1,
-                    dateFormat: 'Y-m-d H:i:s',
-                    onClose: [this.dateFunc()], 
-                },
-                options: {
-                    min: 0,
-                    max: 500, 
-                },
+                searchedCity: new URL(window.location.href).searchParams.get("name"),
+                searchedCategory: new URL(window.location.href).searchParams.get("category"),
+                config: this.initializeConfigObject(),
+                configmobile: this.initializeConfigObject(),
+                options: { min: 0, max: 500 },
                 shift: '',
                 showFilters: false,
                 mobile: window.innerWidth < 768,
+                
             }
         },
 
         methods: {
 
+            initializeConfigObject(){
+                return {
+                    // minDate: "today",
+                    altFormat:'M d',
+                    altInput: true,
+                    mode: "range",
+                    inline: true,
+                    showMonths: window.innerWidth < 768 ? 1 : 2,
+                    dateFormat: 'Y-m-d H:i:s',
+                    onClose: [this.dateFunc()], 
+                }
+            },
+
             show(type) {
-                this.activeItem === type ? this.activeItem = null : this.activeItem = type;
+                this.active === type ? this.active = null : this.active = type;
                 setTimeout(() => document.addEventListener("click", this.onClickOutside), 200);
             },
 
@@ -321,7 +320,7 @@
             },
 
             submit() {
-                this.activeItem = null;
+                this.active = null;
                 console.log(this.data);
                 axios.post('/api/search/mapboundary', this.data)
                 .then(response => {
@@ -381,9 +380,15 @@
                 let dates =  this.$refs.dates;
                 let price =  this.$refs.price;
                 if (!cat || cat.contains(event.target) || !dates || dates.contains(event.target) || !price || price.contains(event.target)) return;
-                this.activeItem = null;
+                this.active = null;
                 this.submit();
             },
+
+            getCategory() {
+                if (this.searchedCategory) {
+                    this.category = this.categories.find(element => element.id == this.searchedCategory);
+                }
+            }
 
         },
 
@@ -396,8 +401,12 @@
             },
         },
 
+        mounted() {
+            this.getCategory();
+        },
+
         created() {
-            this.getPriceRange()
+            this.getPriceRange();
         },
 
 

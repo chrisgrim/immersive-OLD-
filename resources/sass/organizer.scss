@@ -3,10 +3,11 @@
 \*------------------------------------*/
 
 .organizer-show {
-    grid-template-columns: .23fr .76fr;
+    grid-template-columns: 25rem 1fr;
     width:100%;
     margin: auto;
     min-height: 100vh;
+    overflow: auto;
 }
 .organizer-show-image {
     width: 100%;
@@ -25,16 +26,21 @@
         border-radius: 50%;
         height: 100%;
         object-fit: cover;
+        background: white;
     }
 }
 .organizer-show-info {
     width: 100%;
     position: relative;
     padding: 10rem 10rem 0rem 25rem;
+    overflow: hidden;
 }
 .organizer-show-info__name h2 {
     font-size: 9rem;
     margin-bottom: 1rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 .organizer-show-info__contact {
     grid-template-columns: auto auto auto auto;
@@ -54,6 +60,10 @@ img.organizer-info-contact__image {
     color: #484848;
     display: block;
     margin-bottom: 0.5rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 15rem;
 }
 .organizer-show-info__description {
     color: #676767;

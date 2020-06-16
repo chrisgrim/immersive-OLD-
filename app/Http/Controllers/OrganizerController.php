@@ -7,15 +7,16 @@ use App\Conversation;
 use App\Event;
 use App\Message;
 use App\User;
+use App\MakeImage;
 use DB;
 use Swift_SmtpTransport;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\OrganizerStoreRequest;
-use App\Http\Requests\OrganizerUpdateRequest;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactUser;
+use App\Mail\ContactOrganizer;
 use Redirect;
 
 class OrganizerController extends Controller
@@ -55,11 +56,10 @@ class OrganizerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(OrganizerUpdateRequest $request)
-    {   
-        $validated = $request->validated();
-        $organizer = Organizer::Create($request->except(['imagePath', 'user_id']) + ['user_id' => auth()->id()]);
-        $request->imagePath ? Organizer::saveImages($organizer, $request, 600, 600) : null;
+    public function store(OrganizerStoreRequest $request)
+    {  
+        $organizer = Organizer::Create($request->except(['image', 'user_id']) + ['user_id' => auth()->id()]);
+        $request->image ? MakeImage::saveImage($request, $organizer, 600, 600, 'organizer') : null;
     }
 
     /**
@@ -97,16 +97,14 @@ class OrganizerController extends Controller
      * @param  \App\Organizer  $organizer
      * @return \Illuminate\Http\Response
      */
-    public function update(OrganizerUpdateRequest $request, Organizer $organizer)
+    public function update(OrganizerStoreRequest $request, Organizer $organizer)
     {
         // $web = get_headers($request->website, 1)[0];
         // if (strstr($web, '302') || strstr($web, '200 OK') || strstr($web, '301')) {
         // } else { return abort(404, "broken");}
-        
-        $validated = $request->validated();
-        if($request->name !== $organizer->name) {
-            Organizer::updateImages($organizer, $request) ;
-        }
+
+        $request->name !== $organizer->name && !$request->image ? MakeImage::renameImage($organizer, null, 'organizer', $request) : '';
+
         $organizer = Organizer::updateOrCreate(
             [
                 'id' => $request->id,
@@ -122,7 +120,7 @@ class OrganizerController extends Controller
                 'instagramHandle' => $request->instagramHandle,
             ]
         );
-        $request->imagePath ? Organizer::saveImages($organizer, $request, 600, 600) : null;
+        $request->image ? MakeImage::saveImage($request, $organizer, 600, 600, 'organizer') : null;
         
     }
 
@@ -170,7 +168,8 @@ class OrganizerController extends Controller
         $attributes = [
             'email' => $user->email,
             'body' => $request->message,
-            'username' => $user->name,
+            'organizer-name' => $organizer->name,
+            'name' => $user->name,
         ];
 
 
@@ -181,7 +180,10 @@ class OrganizerController extends Controller
         };
 
         if ($organizer->user->silence == 'n') {
-            Mail::mailer('smtp')->to($dest)->send(new ContactUser($attributes));
+            Mail::mailer('smtp')->to($dest)->send(new ContactOrganizer($attributes));
+        }
+        if ($user->silence == 'n') {
+            Mail::mailer('smtp')->to($user->email)->send(new ContactUser($attributes));
         }
 
         $organizer->user->update(['unread' => 'm']);

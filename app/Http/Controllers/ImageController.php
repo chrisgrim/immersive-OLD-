@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Event;
-use App\EventImage;
+use App\MakeImage;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManagerStatic as Image;
 
@@ -33,11 +33,10 @@ class ImageController extends Controller
      */
     public function store(Request $request, Event $event)
     {
-
         if ($event->status == 'd') {
-            EventImage::saveNewImage($request, $event, 1280, 720);
+            MakeImage::saveNewImage($request, $event, 1280, 720, 'event');
         } else {
-            EventImage::updateImage($request, $event, 1280, 720);
+            MakeImage::updateImage($request, $event, 1280, 720, 'event');
         }
 
     }

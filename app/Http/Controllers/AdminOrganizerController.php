@@ -14,7 +14,7 @@ class AdminOrganizerController extends Controller
     */
     public function __construct()
     {
-        $this->middleware('admin');
+        $this->middleware('moderator');
     }
 
     /**
@@ -32,9 +32,9 @@ class AdminOrganizerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function fetch()
+    public function fetch(Request $request)
     {
-        return Organizer::all()->load('user');
+        return Organizer::all()->take($request->paginate)->load('user');
     }
 
     /**

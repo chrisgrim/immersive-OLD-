@@ -15,7 +15,14 @@
             type="text">
         </div>
         <div class="list" v-for="(organizer, index) in organizers">
+            <div v-if="!changeName">
+                <span @mouseover="showEdit = true">
+                    {{organizer.name}}
+                </span>
+                <button v-if="showEdit" @click="changeName = true" class="default">Edit</button>
+            </div>
             <input 
+            v-if="changeName"
             type="text" 
             v-model="organizer.name" 
             placeholder="Organization"
@@ -28,6 +35,9 @@
                 <button @click.prevent="showModal(organizer, 'changeOrg')">Change Owner</button>
             </div>
             <button @click.prevent="showModal(organizer, 'deleteOrg')" class="delete-circle"><p>X</p></button>
+        </div>
+        <div class="pagination-button">
+            <button class="default" @click="loadMore">Load more</button>
         </div>
         <modal v-if="modal == 'deleteOrg'" @close="modal = null">
             <div slot="header">
@@ -96,6 +106,9 @@
                 newOwner: 'bob',
                 user: '',
                 users:[],
+                changeName: false,
+                showEdit: false,
+                pagination: {paginate:10},
 
             }
         },
@@ -126,12 +139,18 @@
                 });
             },
 
+            loadMore() {
+                this.pagination.paginate += 10;
+                this.onLoad();
+            },
+
             onLoad() {
-                axios.get('/admin/organizer/fetch')
-                .then(response => {
-                    this.initOrganizers = response.data;
+                axios.post('/admin/organizer/fetch', this.pagination)
+                .then(res => {
+                    console.log(res.data);
+                    this.initOrganizers = res.data;
                 })
-                .catch(error => { this.serverErrors = error.response.data.errors; });
+                .catch(error => { this.serverErrors = error.res.data.errors; });
             },
 
             onChangeOwner() {
@@ -154,9 +173,8 @@
             },
 
             loadUsers() {
-                axios.get('/userlist/fetch')
+                axios.get('/api/search/user/list')
                 .then(res => {
-                    console.log(res.data);
                     this.users = res.data;
                 })
                 .catch(error => { this.serverErrors = error.response.data.errors; });
@@ -180,20 +198,20 @@
                     name: val.name
                 };
                 axios.patch(`/admin/organizer/${val.slug}`, data)
-                .then(response => { 
-                    console.log(response.data)
+                .then(res => { 
+                    console.log(res.data)
                    this.onLoad()
                 })
                 .catch(error => { 
-                    this.serverErrors = error.response.data.errors; 
+                    this.serverErrors = error.res.data.errors; 
                 });
             }, 
 
             asyncGenerateOrganizerList(query) {
-                axios.get('/api/organizer/search', { params: { keywords: query } })
-                .then(response => {
-                    console.log(response.data);
-                    this.organizerList = response.data;
+                axios.get('/api/search/organizer', { params: { keywords: query } })
+                .then(res => {
+                    console.log(res.data);
+                    this.organizerList = res.data;
                 });
             },
 

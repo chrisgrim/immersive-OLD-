@@ -28,14 +28,14 @@
     padding: 1rem;
 }
 .messages-show__element {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1fr 7rem;
     margin: 4rem 0rem;
     grid-gap: 4rem;
     &.submit {
         margin: 0rem;
     }
     &.inv {
-        grid-template-columns: auto 1fr;
+        grid-template-columns: 7rem 1fr;
     }
 }
 .messages-show__submit-bottom {
@@ -47,6 +47,7 @@
     margin-bottom: -0.5rem;
     border: 1px solid #c3c3c3;
     padding: 1.3rem;
+    white-space: pre-line;
     & textarea {
         border:none;
     }
@@ -59,6 +60,12 @@
 }
 .message-bar-mobile {
     display: none;
+}
+.message-show__username {
+    font-size: 1.2rem;
+    text-align: center;
+    width: 100%;
+    overflow: hidden;
 }
 
 @media (max-width: 1200px) { 

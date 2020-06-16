@@ -130,7 +130,7 @@
                 return this.onclass=='show' || this.onclass=='message' || this.onclass=='entry' ?  false : true;
             },
             dontShowNav() {
-                return this.onclass == 'show' || this.onclass == 'message' || this.onclass == 'profile' || this.onclass == 'messageshow' || this.onclass == 'entry' || this.onclass == 'homepage' || this.onclass=='onlinesearch' ? false : true;
+                return this.onclass == 'show' || this.onclass == 'favorited' || this.onclass == 'message' || this.onclass == 'profile' || this.onclass == 'messageshow' || this.onclass == 'entry' || this.onclass == 'homepage' || this.onclass=='onlinesearch' ? false : true;
             },
             dontShowMenu() {
                 return this.onclass == 'show' || this.onclass == 'messageshow' ? false : true;

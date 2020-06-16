@@ -9,24 +9,19 @@
                     <nav-search></nav-search>
                 </div>
             </header>
-
-            <section>
-                <div class="index-nopro">
-                    <div class="nopro-content" style="background: center / cover no-repeat url('/storage/website-files/nopro-back.jpg')">
-                        <h3>Check out the latest reviews on</h3>
-                        <h2>No Proscenium</h2>
-                        <a rel="noreferrer" target="_blank" href="https://noproscenium.com/">
-                            <button class="nopro-button">
-                                Check it out
-                            </button>
-                        </a>
-                    </div>
+            
+             <section class="announcement padded">
+                <div class="header-title__announcement">
+                    <h3>Read The 2020 Immersive Entertainment Industry Annual Report</h3>
+                    <p>Discover The Strength of Immersive Entertainment!</p>
+                    <br>
+                    <p><a href="/storage/website-files/documents/2020 Immersive Entertainment Industry Annual Report.pdf"><button class="black">Check out the report here</button></a></p>
                 </div>
             </section>
-
-             <section class="padded event-list">
+            
+            <section class="padded event-list">
                 <div class="header-title">
-                    <h3>Check out our staff favorites</h3>
+                    <h3>Latest events</h3>
                 </div>   
                 <div class="event-index-eventlist grid">
                     <div v-for="(event, index) in eventList" class="eventlist__element">
@@ -34,6 +29,36 @@
                     </div>
                 </div>
             </section>
+
+            <section>
+                <div class="index-contributers">
+                    <h3>Check out our partners</h3>
+                    <div class="contributer-content grid">
+                        <div class="contributer__element" >
+                            <a target="_blank" rel="noopener noreferrer" href="https://www.argn.com/">
+                                <button style="background: url('/storage/website-files/argn-logo.jpg') center center / cover no-repeat;" class="contributer--button"></button>
+                            </a>
+                        </div>
+                        <div class="contributer__element" >
+                            <a target="_blank" rel="noopener noreferrer" href="https://roomescapeartist.com/">
+                                <button style="background: url('/storage/website-files/rea-logo.png') center center / cover no-repeat;" class="contributer--button"></button>
+                            </a>
+                        </div>
+                        <div class="contributer__element" >
+                             <a target="_blank" rel="noopener noreferrer" href="https://noproscenium.com/">
+                                <button style="background: url('/storage/website-files/nopro-logo.jpg') center center / cover no-repeat;" class="contributer--button"></button>
+                            </a>
+                        </div>
+                        <div class="contributer__element" >
+                             <a target="_blank" rel="noopener noreferrer" href="https://www.herefest.com/">
+                                <button style="background: url('/storage/website-files/here-logo.png') center center / cover no-repeat;" class="contributer--button"></button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            
 
 
         </div>

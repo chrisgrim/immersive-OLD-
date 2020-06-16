@@ -103,7 +103,6 @@
             onSubmit() {
                 this.onToggle();
                 this.formData.append('image', this.imageFile.file);
-                console.log(this.imageFile.file);
                 axios.post(this.endpoint, this.formData)
                 .then(res => {
                     this.disableUntilUploaded = false;

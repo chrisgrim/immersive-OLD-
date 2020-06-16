@@ -3,8 +3,8 @@
 @section('meta')
     <title>{{$organizer->name}}</title>
     <script> window.myToken =  <?php echo json_encode(['csrfToken' => csrf_token()]); ?></script>
-    <link href="/css/app-lite.css" rel="stylesheet">
-    <link href="/css/app.css" rel="stylesheet">
+    <link href="{{ mix('/assets/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('/assets/app-lite.css') }}" rel="stylesheet">
 @endsection
 
 @section('nav')

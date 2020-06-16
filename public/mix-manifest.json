@@ -1,6 +1,9 @@
 {
-    "/css/app-create.css": "/css/app-create.css",
-    "/css/app-admin.css": "/css/app-admin.css",
-    "/css/app-lite.css": "/css/app-lite.css",
-    "/css/app.css": "/css/app.css"
+    "/assets/app-create.css": "/assets/app-create.css",
+    "/assets/app-admin.css": "/assets/app-admin.css",
+    "/assets/app-lite.css": "/assets/app-lite.css",
+    "/assets/app.css": "/assets/app.css",
+    "/assets/vendor.js": "/assets/vendor.js?id=e1432d1add5cee022c31",
+    "/assets/app.js": "/assets/app.js?id=9aa336fa4b77c1fdb6b0",
+    "/assets/manifest.js": "/assets/manifest.js"
 }

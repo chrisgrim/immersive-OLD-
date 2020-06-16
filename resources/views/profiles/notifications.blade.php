@@ -2,8 +2,8 @@
 
 @section('meta')
     <title>{{config('app.name')}}</title>
-    <link href="/css/app-lite.css" rel="stylesheet">
-    <link href="/css/app.css" rel="stylesheet">
+    <link href="{{ mix('/assets/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('/assets/app-lite.css') }}" rel="stylesheet">
 @endsection 
 
 @section('nav')

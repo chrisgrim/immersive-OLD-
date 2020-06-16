@@ -1,16 +1,14 @@
 {
     "private": true,
     "scripts": {
-        "dev": "npm run development",
-        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "watch": "npm run development -- --watch",
-        "watch-poll": "npm run watch -- --watch-poll",
-        "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "prod": "npm run production",
-        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "css-watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --watch --hide-modules --env.mixfile=webpack.css.js --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "css-dev": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --env.mixfile=webpack.css.js --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "css-production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no--progress --hide-modules --env.mixfile=webpack.css.js --config=node_modules/laravel-mix/setup/webpack.config.js"
+        "dev": "npm run development-js && npm run development-css",
+        "development-js": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --watch --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js --env.mixfile=webpack.js.mix",
+        "development-css": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --watch --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js --env.mixfile=webpack.css.mix",
+        "prod": "npm run production-css && npm run production-js",
+        "production-js": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js --env.mixfile=webpack.js.mix",
+        "production-css": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js --env.mixfile=webpack.css.mix",
+        "watch": "npm run development-css -- --watch & npm run development-js -- --watch",
+        "watch-poll": "npm run watch -- --watch-poll"
     },
     "devDependencies": {
         "axios": "^0.19.2",
@@ -18,6 +16,7 @@
         "cross-env": "^5.2.1",
         "jquery": "^3.5.1",
         "laravel-mix": "^5.0.4",
+        "laravel-mix-merge-manifest": "^0.1.2",
         "lodash": "^4.17.15",
         "popper.js": "^1.16.1",
         "resolve-url-loader": "^2.3.1",
@@ -27,6 +26,7 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
+        "@vuejs-community/vue-filter-date-format": "^1.3.2",
         "google-maps-api-loader": "^1.1.1",
         "leaflet": "^1.6.0",
         "leaflet-geosearch": "^2.7.0",
@@ -36,8 +36,8 @@
         "vue-clickaway": "^2.2.2",
         "vue-cookies": "^1.7.0",
         "vue-date-fns": "^1.1.0",
+        "vue-dayjs": "^1.0.2",
         "vue-flatpickr-component": "^8.1.5",
-        "vue-moment": "^4.1.0",
         "vue-multiselect": "^2.1.6",
         "vue-router": "^3.3.1",
         "vue-slider-component": "^3.1.4",

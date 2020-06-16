@@ -32,9 +32,9 @@ class UserMasterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function fetch()
+    public function fetch(Request $request)
     {
-        return User::all();
+        return User::all()->take($request->paginate);
     }
 
     /**

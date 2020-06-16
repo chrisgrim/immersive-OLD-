@@ -191,8 +191,9 @@
 
             loadEvents (query) {
                 axios.get('/api/admin/search/events', { params: { keywords: query } })
-                .then(response => {
-                    this.events = response.data;
+                .then(res => {
+                    console.log(res.data);
+                    this.events = res.data;
                 });
             },
 

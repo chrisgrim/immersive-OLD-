@@ -11,11 +11,28 @@ class Message extends Model
     protected $fillable = ['message', 'user_id', 'conversation_id'];
 
     /**
+    * The relations to eager load on every query. I am adding shows here because I need to filter by dates for the search
+    *
+    * @var array
+    */
+    protected $with = ['user'];
+
+    /**
      * This message belongs to a user
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function sender()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * This message belongs to a user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
     {
         return $this->belongsTo(User::class);
     }

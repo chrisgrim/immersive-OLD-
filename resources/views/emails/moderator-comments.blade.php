@@ -19,11 +19,11 @@
             width: 100%;
             ">
             <div style="text-align: center;max-width: 550px;margin: auto;padding: 0rem 1rem;">
-                <span style="font-family: 'Sen', sans-serif;color: white;"><p>"{{$comments}}"</p></span>
+                <span style="font-family: 'Sen', sans-serif;color: white;"><p style="white-space: pre-line;">"{{$comments}}"</p></span>
             </div>
         </div>
         <div style="text-align: center;max-width: 550px;margin: auto;padding: 2rem 1rem;">
-            <a href="https://everythingimmersive.com/create-event/edit">
+            <a href="https://everythingimmersive.com/messages">
                 <button style="border: 1px solid #1abdb6;padding: .5rem 1rem;font-size: 1rem;color:#0c8a84;">Check it out</button>
             </a>
         </div>

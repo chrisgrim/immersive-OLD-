@@ -42,6 +42,7 @@ export default {
     watch: {
         activeTab(activeTab) {
             this.tabs.map(tab => (tab.isActive = tab == activeTab));
+            console.log(this.tabs);
             this.$emit('current', activeTab.id);
         }
     },

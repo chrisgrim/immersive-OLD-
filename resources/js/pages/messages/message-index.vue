@@ -5,14 +5,14 @@
         </div>
         <div class="listing-details-block">
             <tabs>
-                <tab v-if="conversations[0].messages.length" title="Messages" :notification="user.unread=='m'" :active="true" class="tab-events">
+                <tab v-if="userConversations && userConversations.length" title="Messages" :notification="user.unread=='m'" :active="true" class="tab-events">
                     <div>
                         <div v-for="conversation in userConversations">
                             <MessageIndexTab :conversation="conversation" :loaduser="loaduser"></MessageIndexTab>
                         </div>
                     </div>
                 </tab>
-                <tab v-if="conversations[0].modmessages.length" title="Events" :notification="user.unread=='e'" class="tab-events">
+                <tab v-if="eventConversations && eventConversations.length" title="Events" :notification="user.unread=='e'" class="tab-events">
                     <div>
                         <div v-for="conversation in eventConversations">
                             <MessageIndexTab :conversation="conversation" :loaduser="loaduser"></MessageIndexTab> 
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-    import moment from 'moment'
+    
     import MessageIndexTab from '../messages/components/message-index-tab.vue'
     export default {
 

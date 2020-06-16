@@ -19,6 +19,7 @@ class CreateGenresTable extends Migration
             $table->string('name')->unique();
             $table->boolean('admin')->default(0);
             $table->integer('rank')->default(0);
+            $table->char('type', 1)->default('t');
             $table->timestamps();
         });
         Schema::create('event_genre', function(Blueprint $table) {

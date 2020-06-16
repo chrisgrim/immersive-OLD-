@@ -137,7 +137,7 @@
                 </div>
                 <div class="info">
                     <div class="profile-user-info">
-                        Member since {{user.created_at | formatDate }}
+                        Member since {{ new Date(user.created_at) | dateFormat('YYYY') }}
                     </div>
                     <div v-if="canEditPage" class="profile-user-edit" @click="onEditUser = true">
                         Edit profile
@@ -166,7 +166,6 @@
     import ImageUpload from '../layouts/image-upload.vue'
     import { required, maxLength, email } from 'vuelidate/lib/validators'
     import CubeSpinner  from '../layouts/loading.vue'
-    import moment from 'moment'
     import profileLocationMixin from './components/profile-location-mixin'
     import formValidationMixin from '../../mixins/form-validation-mixin'
 
@@ -331,12 +330,6 @@
             );
             this.autocomplete.addListener('place_changed', this.setPlace);
             this.canUseWebP();
-        },
-
-        filters: {
-            formatDate(value) {
-                return value ? moment(String(value)).format('MMM YYYY') : ''
-            },
         },
 
         validations: {

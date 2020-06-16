@@ -3,13 +3,17 @@
         <nav class="event-show mobile">
             <div class="back">
                 <a v-if="searchUrl" :href="searchUrl">
-                    <svg aria-label="Back" role="img" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 4; overflow: visible;"><g fill="none"><path d="m20 28-11.29289322-11.2928932c-.39052429-.3905243-.39052429-1.0236893 0-1.4142136l11.29289322-11.2928932"></path></g></svg>
+                    <div class="event-show-nav__back-arrow">
+                        <svg aria-label="Back" role="img" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 4; overflow: visible;"><g fill="none"><path d="m20 28-11.29289322-11.2928932c-.39052429-.3905243-.39052429-1.0236893 0-1.4142136l11.29289322-11.2928932"></path></g></svg>
+                    </div>
                 </a>
                 <a v-else href="/">
-                    <svg aria-label="Back" role="img" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 4; overflow: visible;"><g fill="none"><path d="m20 28-11.29289322-11.2928932c-.39052429-.3905243-.39052429-1.0236893 0-1.4142136l11.29289322-11.2928932"></path></g></svg>
+                    <div class="event-show-nav__back-arrow">
+                        <svg aria-label="Back" role="img" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 4; overflow: visible;"><g fill="none"><path d="m20 28-11.29289322-11.2928932c-.39052429-.3905243-.39052429-1.0236893 0-1.4142136l11.29289322-11.2928932"></path></g></svg>
+                    </div>
                 </a>
             </div>
-            <div>
+            <div class="event-show-nav__favorite">
                 <favorite :user="user" :inputclass="showEventMobileClass" :event="event"></favorite>
             </div>
         </nav>
@@ -257,9 +261,6 @@
                         <li v-for="item in event.contact_levels">
                             <p>{{item.level}}</p>
                         </li>
-                        <li>
-                            <p>Audience Roll: {{event.advisories.audience}}</p>
-                        </li>
                     </ul>
                 </div>
                 <div class="grid two-panel">
@@ -272,6 +273,16 @@
                         </li>
                         <li v-for="item in event.mobility_advisories">
                             <p>{{item.mobilities}}</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="grid two-panel">
+                    <div class="title">
+                        <h3>Audience Role</h3>
+                    </div>
+                    <ul class="info">
+                        <li>
+                            <p>{{event.advisories.audience}}</p>
                         </li>
                     </ul>
                 </div>
@@ -331,15 +342,15 @@
                         <p>{{locationPlaceholder}}</p>  
                     </a>
                 </div>
-				<div class="location-map">
+				<div class="event-show-map">
 					<div v-if="center">
 						<div class="zoom">
-							<div class="in">
+							<div class="zoom__in">
 								<button @click.prevent="zoom += 1">
 									<svg viewBox="0 0 16 16" height="16" width="16" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M7 1a1 1 0 0 1 2 0v14a1 1 0 1 1-2 0V1z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"></path></svg>
 								</button>
 							</div>
-							<div class="out">
+							<div class="zoom__out">
 								<button @click.prevent="zoom -= 1">
 									<svg viewBox="0 0 16 16" height="16" width="16" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"></path></svg>
 								</button>
@@ -374,7 +385,7 @@
             <div class="right">
                 <div>
                     <div v-for="location in event.remotelocations">
-                        <h3>{{location.location}}</h3>
+                        <h3>{{location.name}}</h3>
                         <p>{{location.description}}</p>
                     </div>
                     <div v-if="event.remote_description">
@@ -385,7 +396,11 @@
         </section>
 
 		<div class="grid event-bottom-bar" :class="{ active: bar }">
-			<div class="event-name desktop">
+			<div class="event-bottom-bar__name">
+                <picture>
+                    <source height="50" width="50" type="image/webp" :srcset="`/storage/${event.thumbImagePath}`"> 
+                    <img class="event-bottom-bar__img" height="50" width="50" :src="`/storage/${event.thumbImagePath.slice(0, -4)}jpg`" :alt="event.name">
+                </picture>
 				<h4>{{event.name}}</h4>
 			</div>
 			<div class="event-price">
@@ -393,7 +408,7 @@
 			</div>
 			<div class="event-get-tickets">
 				<a :href="event.ticketUrl" rel="noreferrer" target="_blank">
-					<button>
+					<button class="event-bottom-bar__button">
 						Get Tickets
 					</button>
 				</a>
@@ -464,7 +479,7 @@
                 bar: false,
                 lastScrollPosition: 0,
                 config: {
-                    minDate: "today",
+                    // minDate: "today",
                     maxDate: new Date().fp_incr(180),
                     mode: "multiple",
                     inline: true,
@@ -472,7 +487,7 @@
                     dateFormat: 'Y-m-d H:i:s',    
                 },
                 configMob: {
-                    minDate: "today",
+                    // minDate: "today",
                     maxDate: new Date().fp_incr(180),
                     mode: "multiple",
                     inline: true,
