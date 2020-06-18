@@ -34,8 +34,6 @@ Route::POST('/search/storedata', 'SearchController@searchDatastore');
 
 Route::GET('/index/search', 'SearchController@index');
 
-Route::POST('/index/loadmore', 'EventController@fetch');
-
 Route::GET('/index/search-online', 'SearchController@onlinesearch');
 // This is the search for vuex
 Route::POST('/vuex/search', 'SearchController@filterIndex');

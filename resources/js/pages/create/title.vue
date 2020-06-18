@@ -146,11 +146,11 @@
             title: {
                 name: {
                     required,
-                    maxLength: maxLength(140),
+                    maxLength: maxLength(100),
                     serverFailed(){ return !this.serverErrors['name']; },
                 },
                 tagLine: {
-                    maxLength: maxLength(140)
+                    maxLength: maxLength(100)
                 }
             }
 		},

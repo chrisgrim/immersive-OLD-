@@ -103,7 +103,7 @@
 
             intersected() {
                 if (this.page >= 4) { return false};
-                axios.post(`/index/loadmore?page=${this.page}`)
+                axios.post(`/api/index/loadmore?page=${this.page}`)
                 .then(res => {  
                     console.log(res.data);
                     this.eventList = this.eventList.concat(res.data.data);

@@ -34,6 +34,9 @@ Route::GET('search/location', 'SearchController@searchLocation');
 //IS USED Searches remote events
 Route::POST('search/remote', 'SearchController@searchRemote');
 
+// IS USED Gets pagination for home index page
+Route::POST('index/loadmore', 'EventController@fetch');
+
 
 //Admin Section
 //IS USED On Organizer Create Page this searches all organizers and returns based on users selection

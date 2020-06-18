@@ -4,7 +4,7 @@
             <div class="header-left">
                 <div class="content">   
                     <span class="header-left__cat">{{event.category ? event.category.name : ''}}</span>
-                    <span class="header-left__title"><h1>{{event.name}}</h1></span>
+                    <span class="header-left__title"><h1 :style="titleFontSize">{{event.name}}</h1></span>
                     <span class="header-left__tag"><i>{{event.tag_line}}</i></span>
                     <div v-if="event.staffpick">
                         EI Pick of the week!
@@ -460,6 +460,7 @@
                 },
                 searchUrl: '',
                 disabled: false,
+                titleFontSize: '',
 
             }
         },
@@ -509,6 +510,16 @@
                 }
             },
 
+            getTitleFontSize() {
+                if (this.event.name.length > 70) {
+                   return this.titleFontSize = `font-size:3rem;line-height:3rem`
+                }
+                if (this.event.name.length > 40) {
+                    return this.titleFontSize = `font-size:4rem;line-height:4rem`
+                }
+                return this.titleFontSize = `font-size:5rem;line-height:5rem`
+            },
+
         },
 
         watch: {
@@ -521,6 +532,7 @@
             this.getDates();
             this.canUseWebP();
             this.breadcrumbs();
+            this.getTitleFontSize();
         },
         created () {
             window.addEventListener('scroll', this.handleScroll);

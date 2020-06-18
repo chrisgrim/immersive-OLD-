@@ -21,8 +21,7 @@
 			<div class="header-left">
 				<div class="content">	
 					<span class="header-left__cat">{{event.category ? event.category.name : ''}}</span>
-					<span v-if="event.name.length < 46" class="header-left__title"><h1>{{event.name}}</h1></span>
-                    <span v-else class="header-left__title--small"><h1>{{event.name}}</h1></span>
+					<span class="header-left__title"><h1 :style="titleFontSize">{{event.name}}</h1></span>
                     <span class="header-left__tag"><i>{{event.tag_line}}</i></span>
                     <div v-if="event.staffpick">
                         EI Pick of the week!
@@ -496,6 +495,7 @@
                     dateFormat: 'Y-m-d H:i:s',    
                 },
                 searchUrl: '',
+                titleFontSize: '',
 
 			}
 		},
@@ -537,6 +537,16 @@
                     return this.organizerImage = `background-image:url('/storage/${this.loadevent.organizer.thumbImagePath.slice(0, -4)}jpg')`;
                 }
             },
+            
+            getTitleFontSize() {
+                if (this.event.name.length > 70) {
+                   return this.titleFontSize = `font-size:3rem;line-height:3rem`
+                }
+                if (this.event.name.length > 40) {
+                    return this.titleFontSize = `font-size:4rem;line-height:4rem`
+                }
+                return this.titleFontSize = `font-size:5rem;line-height:5rem`
+            },
 
 		},
 
@@ -550,6 +560,7 @@
             this.getDates();
             this.canUseWebP();
             this.breadcrumbs();
+            this.getTitleFontSize();
         },
         created () {
             window.addEventListener('scroll', this.handleScroll);

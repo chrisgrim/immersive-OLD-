@@ -56,20 +56,6 @@ header.event-show {
         display: block
     }
 }
-.header-left__title--small {
-    top: 0;
-    max-height: 31.3rem;
-    display: inline-block;
-    color: #484848;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    word-break: break-word;
-    & h1 {
-        font-size: 3.7rem;
-        line-height: 3.7rem;
-        font-weight: 400;
-    }
-}
 
 .header-left__details {
     display: grid;
