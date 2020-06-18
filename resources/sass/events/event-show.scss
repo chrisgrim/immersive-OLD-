@@ -46,6 +46,7 @@ header.event-show {
         color: #484848;
         margin-top: 1rem;
         margin-bottom: 1rem;
+        word-break: break-word;
         & h1 {
             line-height: 5.2rem;
             font-weight: 400;
@@ -53,6 +54,20 @@ header.event-show {
     }
     &__tag {
         display: block
+    }
+}
+.header-left__title--small {
+    top: 0;
+    max-height: 31.3rem;
+    display: inline-block;
+    color: #484848;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    word-break: break-word;
+    & h1 {
+        font-size: 3.7rem;
+        line-height: 3.7rem;
+        font-weight: 400;
     }
 }
 
@@ -115,15 +130,10 @@ section .event-title {
 }
 
 .event-show-review {
-    padding-top:16rem;
-    padding-bottom: 12rem;
-    & h2 {
-        font-size: 5.1rem;
-        line-height: 5rem;
-    }
+
 }
 .event-show-review__right {
-    margin-top: -3.5rem;
+    margin-top: -2.9rem;
     font-size: 1.4rem;
     line-height: 2rem;
     & h4 {
@@ -213,10 +223,10 @@ section .event-title {
 }
 .event-bottom-bar {
     position: fixed;
-    bottom: -7rem;
+    bottom: -9rem;
     left: 0px;
     right: 0px;
-    background: white;
+    background: black;
     grid-template-columns: 1fr auto auto;
     z-index: 900;
     padding: 1.6rem 12rem;
@@ -229,7 +239,7 @@ section .event-title {
     & h4 {    
         font-size: 1.4rem;
         letter-spacing: .2rem;
-        color: #5d5d5d;
+        color: white;
         font-weight: 800;
         display: inline-block;
     }
@@ -370,6 +380,16 @@ button.event-bottom-bar__button {
         & button {
             padding: 1.5rem 3rem;
         }
+    }
+    
+    .event-show-review__right--image {
+        display: inline-block;
+    }
+    .event-show-review__right--name {
+        display: inline-block;
+    }
+    .event-show-review__right {
+        margin: 0;
     }
 }
 

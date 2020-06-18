@@ -19,7 +19,7 @@
                 </div>
             </section>
             
-            <section class="padded event-list">
+            <section id="latestevents" class="padded event-list">
                 <div class="header-title">
                     <h3>Latest events</h3>
                 </div>   
@@ -28,6 +28,7 @@
                         <vue-event-index :event="event"></vue-event-index>
                     </div>
                 </div>
+                <load-more @intersect="intersected"></load-more>
             </section>
 
             <section>
@@ -71,13 +72,14 @@
     import format from 'date-fns/format';
     import catitem  from '../events/components/cat-item.vue';
     import SearchFilter  from './components/filter-remote.vue'
+    import LoadMore  from '../../components/LoadMore.js'
 
 
     export default {
 
-        components: { Multiselect, catitem, SearchFilter },
+        components: { Multiselect, catitem, SearchFilter, LoadMore },
 
-        props:['events', 'remote', 'categories', 'staffpicks'],
+        props:['events', 'categories'],
 
         computed: {
             user () {
@@ -93,21 +95,24 @@
                 price: '',
                 eventName: '',
                 location: [],
+                page: 2,
             }
         },
 
         methods: {
-            loc() {
-                navigator.geolocation.getCurrentPosition(pos => {
-                    this.location = pos.coords;
-                    console.log(pos.coords);
-                }, err => {
-                    console.log(err)
-                });
-            },
 
-            updateEventList(value) {
-                this.eventList = value;
+            intersected() {
+                if (this.page >= 4) { return false};
+                axios.post(`/index/loadmore?page=${this.page}`)
+                .then(res => {  
+                    console.log(res.data);
+                    this.eventList = this.eventList.concat(res.data.data);
+                    this.page++;
+            
+                })
+                .catch(err => {
+                    this.onErrors(err);
+                });
             }
 
         },

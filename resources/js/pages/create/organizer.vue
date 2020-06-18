@@ -98,7 +98,7 @@
                         placeholder=" "
                         />
                         <div v-if="$v.organizer.twitterHandle.$error" class="validation-error">
-                            <p class="error" v-if="!$v.organizer.twitterHandle.ifHttp">Please only include the social media handle (no urls)</p>
+                            <p class="error" v-if="!$v.organizer.twitterHandle.ifHttp">Please only include the social media handle (no urls or @)</p>
                         </div>
                     </div>
                     <div class="field">
@@ -114,7 +114,7 @@
                         placeholder=" "
                         />
                         <div v-if="$v.organizer.facebookHandle.$error" class="validation-error">
-                            <p class="error" v-if="!$v.organizer.facebookHandle.ifHttp">Please only include the social media handle (no urls)</p>
+                            <p class="error" v-if="!$v.organizer.facebookHandle.ifHttp">Please only include the social media handle (no urls or @)</p>
                         </div>
                     </div>
                     <div class="field">
@@ -130,7 +130,7 @@
                         placeholder=" "
                         />
                         <div v-if="$v.organizer.instagramHandle.$error" class="validation-error">
-                            <p class="error" v-if="!$v.organizer.instagramHandle.ifHttp">Please only include the social media handle (no urls)</p>
+                            <p class="error" v-if="!$v.organizer.instagramHandle.ifHttp">Please only include the social media handle (no urls or @)</p>
                         </div>
                     </div>
                 </div>
@@ -310,7 +310,7 @@ export default {
         },
 
         validateText(str) {
-            return str && str.startsWith("http") ? true : false
+            return str && str.startsWith("http") || str.startsWith("@") ? true : false
         },
 
         //checks to see if passed variable is in the server errors

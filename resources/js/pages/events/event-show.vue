@@ -21,7 +21,8 @@
 			<div class="header-left">
 				<div class="content">	
 					<span class="header-left__cat">{{event.category ? event.category.name : ''}}</span>
-					<span class="header-left__title"><h1>{{event.name}}</h1></span>
+					<span v-if="event.name.length < 46" class="header-left__title"><h1>{{event.name}}</h1></span>
+                    <span v-else class="header-left__title--small"><h1>{{event.name}}</h1></span>
                     <span class="header-left__tag"><i>{{event.tag_line}}</i></span>
                     <div v-if="event.staffpick">
                         EI Pick of the week!
@@ -120,16 +121,16 @@
             <div class="content grid two-panel">
                 <div class="left">
                    <div class="event-title">
-                        <h2>Show<br>Reviews</h2>
+                        <h2>Show Reviews</h2>
                     </div>
                 </div>
                 <div class="event-show-review__right">
                     <div class="box" v-for="review in event.eventreviews">
                         <a rel="noreferrer" target="_blank" :href="review.url">
-                            <div class="image">
-                                <img width="40px" height="40px" :src="review.image_path" alt="">
+                            <div class="event-show-review__right--image">
+                                <img width="33px" height="33px" :src="review.image_path" alt="">
                             </div>
-                            <div class="name">
+                            <div class="event-show-review__right--name">
                                 <h4>{{review.reviewer_name}}</h4>
                             </div>
                         </a>
@@ -407,7 +408,7 @@
 				<h4>{{event.price_range}}</h4>
 			</div>
 			<div class="event-get-tickets">
-				<a :href="event.ticketUrl" rel="noreferrer" target="_blank">
+				<a :href="event.ticketUrl" rel="noreferrer noopener" target="_blank">
 					<button class="event-bottom-bar__button">
 						Get Tickets
 					</button>

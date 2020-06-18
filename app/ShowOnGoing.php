@@ -30,8 +30,15 @@ class ShowOnGoing extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
-    public static function saveNewShowOnGoing($request, $event)
+    public static function saveNewShowOnGoing($request, $event, $startdate)
     {
+        if ($startdate) {
+            $initialdate = new Carbon($startdate);
+            $period = CarbonPeriod::create(new Carbon($startdate), $initialdate->addMonths(6));
+        } else {
+            $period = CarbonPeriod::create(Carbon::now()->startOfDay(), Carbon::now()->startOfDay()->addMonths(6));
+        }
+
         $ongoing = ShowOnGoing::updateOrCreate(
             [
                 'event_id' => $event->id,
@@ -47,7 +54,6 @@ class ShowOnGoing extends Model
             ]
         );
         $dates=[];
-        $period = CarbonPeriod::create(Carbon::now()->startOfDay(), Carbon::now()->startOfDay()->addMonths(6));
         foreach ($period as $date) {
             if ($date->isMonday() && $request->week['mon']) {$dates[]=$date->format('Y-m-d H:i:s');}
             if ($date->isTuesday() && $request->week['tue']) {$dates[]=$date->format('Y-m-d H:i:s');}

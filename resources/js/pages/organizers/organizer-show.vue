@@ -16,25 +16,25 @@
                 <h2>{{organizer.name}}</h2>
             </div>
             <div class="organizer-show-info__contact grid">
-                <a rel="noreferrer" target="_blank" :href="`https://www.twitter.com/${organizer.instagramHandle}`" v-if="organizer.twitterHandle">
+                <a rel="noreferrer noopener" target="_blank" :href="`https://www.twitter.com/${organizer.twitterHandle}`" v-if="organizer.twitterHandle">
                     <div class="">
                         <img class="organizer-info-contact__image" src="/storage/website-files/twitter.png" alt="">
                         <span class="organizer-info-contact__type">{{organizer.twitterHandle}}</span>
                     </div>
                 </a>
-                <a rel="noreferrer" target="_blank" :href="`https://www.facebook.com/${organizer.instagramHandle}`" v-if="organizer.facebookHandle">
+                <a rel="noreferrer noopener" target="_blank" :href="`https://www.facebook.com/${organizer.facebookHandle}`" v-if="organizer.facebookHandle">
                     <div class="" >
                         <img class="organizer-info-contact__image" src="/storage/website-files/facebook.png" alt="">
                         <span class="organizer-info-contact__type">{{organizer.facebookHandle}}</span>
                     </div>
                 </a>
-                <a rel="noreferrer" target="_blank" :href="`https://www.instagram.com/${organizer.instagramHandle}`" v-if="organizer.instagramHandle">
+                <a rel="noreferrer noopener" target="_blank" :href="`https://www.instagram.com/${organizer.instagramHandle}`" v-if="organizer.instagramHandle">
                     <div class="">
                         <img class="organizer-info-contact__image" src="/storage/website-files/insta.png" alt="">
                         <span class="organizer-info-contact__type">{{organizer.instagramHandle}}</span>
                     </div>
                 </a>
-                <a rel="noreferrer" target="_blank" :href="`${organizer.website}`" v-if="organizer.website">
+                <a rel="noreferrer noopener" target="_blank" :href="`${organizer.website}`" v-if="organizer.website">
                     <div class="">
                         <img class="organizer-info-contact__image" src="/storage/website-files/orgwebsite.png" alt="">
                         <span class="organizer-info-contact__type">{{organizer.name}}</span>

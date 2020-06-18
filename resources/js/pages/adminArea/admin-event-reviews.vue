@@ -222,7 +222,7 @@
                 reviews: [],
                 url: '',
                 selectedModal: '',
-                reviewerList: ['No Procenium', 'Escape Room Artist'],
+                reviewerList: ['No Proscenium', 'Room Escape Artist'],
             }
         },
 
@@ -241,7 +241,7 @@
 
             assignUrl(arr) {
                 this.$v.reviewername.$touch;
-                if(arr == 'No Procenium') {
+                if(arr == 'No Proscenium') {
                     return this.image_path = '/storage/reviews/nopro.png'
                 }
                 return this.url = '';

@@ -151,12 +151,14 @@ class AdminAreaController extends Controller
             $event->update([
                 'status' => 'e',
                 'slug' => $slug,
+                'published_at' => Carbon::now(),
             ]);
             Message::eventnotification($event, 'Thanks, your event has been approved and will be displayed on your chosen date.', $slug);
         } else {
             $event->update([
                 'status' => 'p',
                 'slug' => $slug,
+                'published_at' => Carbon::now(),
             ]);
             Message::eventnotification($event, 'Thanks, your event has been approved!', $slug);
         }

@@ -201,6 +201,19 @@
                                 <p class="error" v-if="!$v.week.ifWeekly">Please select at least one day</p>
                             </div>
                         </div>
+                        <div v-show="showStartDate" class="field">
+                            <label> Select the first day your weekly shows begin</label>
+                            <div class="embargo-calendar">
+                                <flat-pickr
+                                    v-model="startDate"
+                                    :config="embargoCalendarConfig"
+                                    ref="datePicker"                                              
+                                    class="form-control"
+                                    placeholder="Select date"               
+                                    name="dates">
+                                </flat-pickr>
+                            </div>
+                        </div>
                     </section>
                     <section class="event-enter-showtimes">
                         <div class="field">
@@ -479,6 +492,7 @@ export default {
                 'week': this.week && this.showType == 'Anytime' ? _.mapValues(this.week, () => true) : this.week,
                 'onGoing' : this.showType == 'Weekly' && this.weeklyOngoing ? true : false,
                 'always': this.showType == 'Anytime' || !this.weeklyOngoing ? true : false,
+                'start_date': this.startDate ? this.startDate : null,
             }
         },
     },
@@ -488,6 +502,7 @@ export default {
             eventUrl:`/create-event/${this.event.slug}`,
             showType: this.event.showtype ? this.event.showtype : 's',
             dates: this.event.shows ? this.event.shows.map(a => a.date) : '',
+            startDate: '',
             embargoDate: this.event.embargo_date ? this.event.embargo_date : '',
             showEmbargoDate: this.event.embargo_date ? true : false,
 	        calendarConfig: this.initializeCalendarObject(),
@@ -507,6 +522,7 @@ export default {
             showType: '',
             showTypeOptions: ['Specific Dates', 'Weekly', 'Anytime'],
             exit: false,
+            showStartDate: this.event.show_on_going ? true : false,
 
         }
     },
@@ -592,6 +608,7 @@ export default {
         },
 
         addWeekDay(day) {
+            this.showStartDate = true;
             this.week[day] = !this.week[day];
         },
 
@@ -634,7 +651,6 @@ export default {
          	if (this.checkVuelidate()) { return false };
             this.checkFreeTicket(value);
             if (this.modal && !this.freeTicket) { return false };
-
             axios.post(this.endpoint, this.submitObject)
             .then(res => {  
                 value == 'exit' || this.exit == true ? this.onBackInitial() : this.onForward('description');

@@ -46,9 +46,7 @@
             </vue-email-verify>
         @endif
         <event-index 
-        :staffpicks="{{$staffpicks}}"
         :events="{{$events}}" 
-        :remote="{{$remote}}" 
         :categories="{{$categories}}"/>	
     </div>
 @endsection

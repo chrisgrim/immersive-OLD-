@@ -20,7 +20,7 @@ class EventController extends Controller
     {
         $this->middleware(['auth', 'verified'])->except('index','show');
         $this->middleware('can:update,event')
-        ->except(['index','create','show','editEvents','store','fetchEditEvents']);
+        ->except(['index','create','show','editEvents','store','fetchEditEvents','fetch']);
     }
     /**
      * Display a listing of the resource.
@@ -31,26 +31,28 @@ class EventController extends Controller
     {
         $events = Event::where('closingDate', '>=', Carbon::yesterday()->endOfDay())
             ->where('status', 'p')
-            ->orderBy('updated_at', 'desc')
-            ->limit(4)
-            ->with('organizer')
-            ->get();
-        $remote = Event::where('closingDate', '>=', Carbon::yesterday()->endOfDay())
-            ->where('status', 'p')
-            ->where('hasLocation', 0)
-            ->orderBy('updated_at', 'desc')
+            ->orderBy('published_at', 'desc')
             ->limit(4)
             ->with('organizer')
             ->get();
         $categories = Category::where('remote', 1)
             // ->orderBy('rank', 'desc')
             ->get();
-        $staffpicks = StaffPick::whereDate('end_date','>=', Carbon::yesterday()->endOfDay())
-            ->whereDate('start_date', '<=', Carbon::now())
-            ->orderBy('rank', 'ASC')
-            ->get();
-        return view('events.index',compact('events', 'categories','staffpicks', 'remote'));
+        return view('events.index',compact('events', 'categories'));
     }
+
+     /**
+     * Fetch the events
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function fetch(Request $request) {
+        return $events = Event::where('closingDate', '>=', Carbon::yesterday()->endOfDay())
+            ->where('status', 'p')
+            ->orderBy('published_at', 'desc')
+            ->with('organizer')
+            ->paginate(4);
+    }   
 
     /**
      * Show the form for creating a new resource.

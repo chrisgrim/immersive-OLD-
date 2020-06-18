@@ -54,18 +54,6 @@
                     <div class="field">
                         <button type="submit" :disabled="disabled" class="login-button" @click="onSubmit"> Sign In </button>
                     </div>
-                    <div class="login-information__line">
-                        <hr>
-                        <span>or</span>
-                    </div>
-                    <div class="login-information__social-login grid">
-                        <button @click="onAlternateLogin('Facebook')" class="social-login">
-                            <p>Facebook</p>
-                        </button>
-                       <button @click="onAlternateLogin('Google')" class="social-login">
-                            <p>Google</p>
-                       </button>
-                    </div>
                      <div class="login-information__switch">
                         <p>Don't have an account? <button class="switch_login" @click.prevent="onPageSwitch">Join Now</button></p>
                     </div>
@@ -152,18 +140,6 @@
                     </div>
                     <div class="field">
                         <button type="submit" :disabled="disabled" class="save" @click="onSubmit"> Register </button>
-                    </div>
-                    <div class="login-information__line">
-                        <hr>
-                        <span>or</span>
-                    </div>
-                    <div class="login-information__social-login grid">
-                        <button @click="onAlternateLogin('Facebook')" class="social-login">
-                            <p>Facebook</p>
-                        </button>
-                       <button @click="onAlternateLogin('Google')" class="social-login">
-                            <p>Google</p>
-                       </button>
                     </div>
                    <div class="login-information__switch">
                         <p>Already have an account? <button class="switch_login"  @click.prevent="onPageSwitch">Sign In Now</button></p>

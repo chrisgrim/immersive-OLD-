@@ -54,8 +54,8 @@
             approved() {
                 this.dis = true;
                 axios.post(`/approve/${this.event.slug}`)
-                .then(response => { 
-                    console.log(response.data);
+                .then(res => { 
+                    // console.log(res.data);
                     window.location.href = '/finish/events';
                 })
                 .catch(error => {   
