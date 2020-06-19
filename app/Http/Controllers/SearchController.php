@@ -44,11 +44,10 @@ class SearchController extends Controller
 
     public function onlinesearch(Request $request)
     {
-
-        $searchedevents = Event::search('*')
-            ->where('closingDate', '>=', 'now/d')
-            ->with(['location', 'organizer'])
-            ->get(); 
+        $searchedevents = Event::limit(4)
+                        ->where('status', 'p')
+                        ->with(['location', 'organizer'])
+                        ->get(); 
 
         $categories = Category::all();
         return view('events.searchonline',compact('searchedevents', 'categories'));
@@ -243,7 +242,7 @@ class SearchController extends Controller
         return $events =  Event::search('a')
             ->rule(EventRemoteSearchRule::class)
             ->with(['location', 'organizer'])
-            ->take($request->results)
+            ->take(8)
             ->get();
     }
 

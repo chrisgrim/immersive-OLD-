@@ -1,20 +1,208 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[77],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/create/shows.vue?vue&type=script&lang=js&":
-/*!******************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/create/shows.vue?vue&type=script&lang=js& ***!
-  \******************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/events/components/search-item.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/events/components/search-item.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************/
 /*! exports provided: default */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /Users/chrisgrim/code/ei/resources/js/pages/create/shows.vue: Unexpected token, expected \",\" (504:33)\n\n\u001b[0m \u001b[90m 502 | \u001b[39m            showType\u001b[33m:\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mevent\u001b[33m.\u001b[39mshowtype \u001b[33m?\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mevent\u001b[33m.\u001b[39mshowtype \u001b[33m:\u001b[39m \u001b[32m's'\u001b[39m\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 503 | \u001b[39m            dates\u001b[33m:\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mevent\u001b[33m.\u001b[39mshows \u001b[33m?\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mevent\u001b[33m.\u001b[39mshows\u001b[33m.\u001b[39mmap(a \u001b[33m=>\u001b[39m a\u001b[33m.\u001b[39mdate) \u001b[33m:\u001b[39m \u001b[32m''\u001b[39m\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 504 | \u001b[39m            startDate\u001b[33m:\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mDate\u001b[39m()\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m     | \u001b[39m                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 505 | \u001b[39m            embargoDate\u001b[33m:\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mevent\u001b[33m.\u001b[39membargo_date \u001b[33m?\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mevent\u001b[33m.\u001b[39membargo_date \u001b[33m:\u001b[39m \u001b[32m''\u001b[39m\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 506 | \u001b[39m            showEmbargoDate\u001b[33m:\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mevent\u001b[33m.\u001b[39membargo_date \u001b[33m?\u001b[39m \u001b[36mtrue\u001b[39m \u001b[33m:\u001b[39m \u001b[36mfalse\u001b[39m\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 507 | \u001b[39m\t        calendarConfig\u001b[33m:\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39minitializeCalendarObject()\u001b[33m,\u001b[39m\u001b[0m\n    at Parser._raise (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:745:17)\n    at Parser.raiseWithData (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:738:17)\n    at Parser.raise (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:732:17)\n    at Parser.unexpected (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:8806:16)\n    at Parser.expect (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:8792:28)\n    at Parser.parseObj (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10438:14)\n    at Parser.parseExprAtom (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10054:28)\n    at Parser.parseExprSubscripts (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9655:23)\n    at Parser.parseMaybeUnary (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9635:21)\n    at Parser.parseExprOps (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9505:23)\n    at Parser.parseMaybeConditional (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9478:23)\n    at Parser.parseMaybeAssign (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9433:21)\n    at Parser.parseExpression (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9385:23)\n    at Parser.parseReturnStatement (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11522:28)\n    at Parser.parseStatementContent (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11203:21)\n    at Parser.parseStatement (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11155:17)\n    at Parser.parseBlockOrModuleBlockBody (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11730:25)\n    at Parser.parseBlockBody (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11716:10)\n    at Parser.parseBlock (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11700:10)\n    at Parser.parseFunctionBody (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10707:24)\n    at Parser.parseFunctionBodyAndFinish (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10690:10)\n    at Parser.parseMethod (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10652:10)\n    at Parser.parseObjectMethod (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10568:19)\n    at Parser.parseObjPropValue (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10610:23)\n    at Parser.parseObjectMember (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10534:10)\n    at Parser.parseObj (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10447:25)\n    at Parser.parseExprAtom (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:10054:28)\n    at Parser.parseExprSubscripts (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9655:23)\n    at Parser.parseMaybeUnary (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9635:21)\n    at Parser.parseExprOps (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9505:23)\n    at Parser.parseMaybeConditional (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9478:23)\n    at Parser.parseMaybeAssign (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:9433:21)\n    at Parser.parseExportDefaultExpression (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:12357:24)\n    at Parser.parseExport (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:12259:31)\n    at Parser.parseStatementContent (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11259:27)\n    at Parser.parseStatement (/Users/chrisgrim/code/ei/node_modules/@babel/parser/lib/index.js:11155:17)");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "search-item",
+  props: {
+    event: {
+      type: Object
+    },
+    user: {
+      type: String
+    }
+  },
+  data: function data() {
+    return {
+      divBackground: "background-image: url(\"/storage/".concat(this.event.thumbImagePath, "\");"),
+      showEventClass: 'heart',
+      name: new URL(window.location.href).searchParams.get("name"),
+      lat: new URL(window.location.href).searchParams.get("lat"),
+      lng: new URL(window.location.href).searchParams.get("lng"),
+      eventImage: ''
+    };
+  },
+  methods: {
+    canUseWebP: function canUseWebP() {
+      var webp = document.createElement('canvas').toDataURL('image/webp').indexOf('data:image/webp') == 0;
+
+      if (this.event.thumbImagePath && webp) {
+        return this.eventImage = "background-image: url('/storage/".concat(this.event.thumbImagePath, "')");
+      }
+
+      ;
+
+      if (this.event.thumbImagePath) {
+        return this.eventImage = "background-image: url('/storage/".concat(this.event.thumbImagePath.slice(0, -4), "jpg')");
+      }
+    }
+  },
+  mounted: function mounted() {
+    this.canUseWebP();
+  }
+});
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/create/shows.vue?vue&type=template&id=6a22caac&":
-/*!**********************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/create/shows.vue?vue&type=template&id=6a22caac& ***!
-  \**********************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/events/event-online-search.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/events/event-online-search.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _components_filter_remote_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/filter-remote.vue */ "./resources/js/pages/events/components/filter-remote.vue");
+/* harmony import */ var _components_search_item_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/search-item.vue */ "./resources/js/pages/events/components/search-item.vue");
+/* harmony import */ var _components_LoadMore_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/LoadMore.js */ "./resources/js/components/LoadMore.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['searchedevents', 'categories', 'user'],
+  components: {
+    SearchFilter: _components_filter_remote_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    SearchItem: _components_search_item_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    LoadMore: _components_LoadMore_js__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
+  computed: {
+    title: function title() {
+      if (this.category) {
+        return this.category;
+      }
+
+      ;
+
+      if (this.tag) {
+        return this.tag;
+      }
+
+      ;
+
+      if (this.remote) {
+        return this.remote;
+      }
+
+      ;
+      return 'Immersive Online';
+    }
+  },
+  data: function data() {
+    return {
+      eventList: this.searchedevents ? this.searchedevents : [],
+      category: new URL(window.location.href).searchParams.get("category"),
+      tag: new URL(window.location.href).searchParams.get("tag"),
+      remote: new URL(window.location.href).searchParams.get("remote"),
+      id: new URL(window.location.href).searchParams.get("id"),
+      page: 2,
+      hasFilter: false
+    };
+  },
+  methods: {
+    updateEventList: function updateEventList(value) {
+      console.log(value);
+
+      if (value) {
+        this.hasFilter = true;
+      }
+
+      ;
+      this.eventList = value;
+    },
+    intersected: function intersected() {
+      var _this = this;
+
+      if (this.hasFilter) {
+        return false;
+      }
+
+      ;
+      axios.post("/api/index/loadmore?page=".concat(this.page)).then(function (res) {
+        console.log(res.data);
+        _this.eventList = _this.eventList.concat(res.data.data);
+        _this.page++;
+      })["catch"](function (err) {
+        _this.onErrors(err);
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/events/components/search-item.vue?vue&type=template&id=fb9d8588&":
+/*!***************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/events/components/search-item.vue?vue&type=template&id=fb9d8588& ***!
+  \***************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -28,1885 +216,156 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "event-create__shows" },
+    { staticClass: "card" },
     [
-      _c("section", {}, [
-        _c("div", { staticClass: "listing-details-block" }, [
-          _vm._m(0),
+      _c("favorite", {
+        attrs: { inputclass: _vm.showEventClass, event: _vm.event }
+      }),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "url",
+          attrs: {
+            href:
+              "/events/" +
+              _vm.event.slug +
+              "?name=" +
+              _vm.name +
+              "&lat=" +
+              _vm.lat +
+              "&lng=" +
+              _vm.lng
+          }
+        },
+        [
+          _c("div", { staticClass: "card-image" }, [
+            _c("picture", [
+              _c("source", {
+                attrs: {
+                  type: "image/webp",
+                  srcset: "/storage/" + _vm.event.thumbImagePath
+                }
+              }),
+              _vm._v(" "),
+              _c("img", {
+                attrs: {
+                  src:
+                    "/storage/" + _vm.event.thumbImagePath.slice(0, -4) + "jpg",
+                  alt: _vm.event.name + " Immersive Event"
+                }
+              })
+            ])
+          ]),
           _vm._v(" "),
-          _c("div", { staticClass: "show-type-selection" }, [
-            _c(
-              "div",
-              { staticClass: "field" },
-              [
-                _c("label", { staticClass: "area" }, [
-                  _vm._v("Select the type of operating hours")
-                ]),
-                _vm._v(" "),
-                _c("multiselect", {
-                  class: { active: _vm.active == "type", error: _vm.$v.$error },
-                  attrs: {
-                    "show-labels": false,
-                    options: _vm.showTypeOptions,
-                    placeholder: "Show hours type",
-                    "open-direction": "bottom",
-                    allowEmpty: false
-                  },
-                  on: {
-                    select: function($event) {
-                      _vm.dates = []
-                    },
-                    click: function($event) {
-                      _vm.active = "type"
-                    },
-                    blur: function($event) {
-                      _vm.active = null
-                    }
-                  },
-                  model: {
-                    value: _vm.showType,
-                    callback: function($$v) {
-                      _vm.showType = $$v
-                    },
-                    expression: "showType"
-                  }
-                })
-              ],
-              1
+          _c("div", { staticClass: "card-title" }, [
+            _c("h3", [_vm._v(_vm._s(_vm.event.name))])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-organizer" }, [
+            _c("h3", [_vm._v(_vm._s(_vm.event.organizer.name))])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-location" }, [
+            _vm._v(
+              "\n            " + _vm._s(_vm.event.location.city) + "\n        "
             )
           ]),
           _vm._v(" "),
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.showType == "Specific Dates",
-                  expression: "showType == 'Specific Dates'"
-                }
-              ],
-              staticClass: "specific-show-dates"
-            },
-            [
-              _c("section", { staticClass: "event-enter-showdates" }, [
-                _c("div", { staticClass: "field" }, [
-                  _c("label", [_vm._v(" Select all show dates")]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "calendar desktop" },
-                    [
-                      _c("flat-pickr", {
-                        ref: "datePicker",
-                        staticClass: "form-control",
-                        attrs: {
-                          config: _vm.calendarConfig,
-                          placeholder: "Select date",
-                          name: "dates"
-                        },
-                        model: {
-                          value: _vm.dates,
-                          callback: function($$v) {
-                            _vm.dates = $$v
-                          },
-                          expression: "dates"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "calendar mobile" },
-                    [
-                      _c("flat-pickr", {
-                        ref: "datePicker",
-                        staticClass: "form-control",
-                        attrs: {
-                          config: _vm.mobileCalendarConfig,
-                          placeholder: "Select date",
-                          name: "dates"
-                        },
-                        model: {
-                          value: _vm.dates,
-                          callback: function($$v) {
-                            _vm.dates = $$v
-                          },
-                          expression: "dates"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _vm.$v.dates.$error
-                    ? _c("div", { staticClass: "validation-error" }, [
-                        !_vm.$v.dates.required
-                          ? _c("p", { staticClass: "error" }, [
-                              _vm._v("Please add at least 1 show date")
-                            ])
-                          : _vm._e()
-                      ])
-                    : _vm._e()
-                ])
-              ]),
-              _vm._v(" "),
-              _c("section", { staticClass: "event-enter-showtimes" }, [
-                _c("div", { staticClass: "field" }, [
-                  _c("label", [
-                    _vm._v(" Show Times (please include time zone)")
-                  ]),
-                  _vm._v(" "),
-                  _c("textarea", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.showTimes,
-                        expression: "showTimes"
-                      }
-                    ],
-                    staticClass: "create-input area",
-                    class: {
-                      active: _vm.active == "times",
-                      error: _vm.$v.showTimes.$error
-                    },
-                    attrs: {
-                      rows: "8",
-                      placeholder: _vm.placeholders,
-                      required: "",
-                      autofocus: ""
-                    },
-                    domProps: { value: _vm.showTimes },
-                    on: {
-                      click: function($event) {
-                        _vm.active = "times"
-                      },
-                      blur: function($event) {
-                        _vm.active = null
-                      },
-                      input: [
-                        function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.showTimes = $event.target.value
-                        },
-                        _vm.$v.showTimes.$touch
-                      ]
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm.$v.showTimes.$error
-                    ? _c("div", { staticClass: "validation-error" }, [
-                        !_vm.$v.showTimes.required
-                          ? _c("p", { staticClass: "error" }, [
-                              _vm._v(
-                                "Please give a brief description of show times"
-                              )
-                            ])
-                          : _vm._e()
-                      ])
-                    : _vm._e()
-                ])
-              ]),
-              _vm._v(" "),
-              _c("section", { staticClass: "ticket-section" }, [
-                _c("div", { staticClass: "field cost" }, [
-                  _c("label", { staticClass: "area" }, [
-                    _vm._v(" Ticket types and prices ")
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "create-shows__ticket-box" },
-                    _vm._l(_vm.$v.tickets.$each.$iter, function(v, index) {
-                      return _c(
-                        "div",
-                        { staticClass: "ticket-box__element grid" },
-                        [
-                          _c("div", { staticClass: "field" }, [
-                            _c("label", [_vm._v("Ticket Type")]),
-                            _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: v.name.$model,
-                                  expression: "v.name.$model"
-                                }
-                              ],
-                              staticClass: "create-input",
-                              class: {
-                                active: _vm.active == "ticket",
-                                error: v.name.$error
-                              },
-                              attrs: {
-                                name: "name",
-                                placeholder: "ex: General, VIP, Student"
-                              },
-                              domProps: { value: v.name.$model },
-                              on: {
-                                click: function($event) {
-                                  _vm.active = "ticket"
-                                },
-                                blur: function($event) {
-                                  _vm.active = null
-                                },
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    v.name,
-                                    "$model",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            v.name.$error
-                              ? _c("div", { staticClass: "validation-error" }, [
-                                  !v.name.required
-                                    ? _c("p", { staticClass: "error" }, [
-                                        _vm._v("Must enter a ticket name")
-                                      ])
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  !v.name.maxLength
-                                    ? _c("p", { staticClass: "error" }, [
-                                        _vm._v("Name is too Long")
-                                      ])
-                                    : _vm._e()
-                                ])
-                              : _vm._e()
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "field" }, [
-                            _c("label", [_vm._v("Ticket Price")]),
-                            _vm._v(" "),
-                            _vm.money.type === "checkbox"
-                              ? _c(
-                                  "input",
-                                  _vm._b(
-                                    {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: v.ticket_price.$model,
-                                          expression: "v.ticket_price.$model"
-                                        },
-                                        {
-                                          name: "money",
-                                          rawName: "v-money",
-                                          value: _vm.money,
-                                          expression: "money"
-                                        }
-                                      ],
-                                      class: {
-                                        active: _vm.active == "price",
-                                        error: v.ticket_price.$error
-                                      },
-                                      staticStyle: { "text-align": "right" },
-                                      attrs: {
-                                        placeholder: "$0.00",
-                                        type: "checkbox"
-                                      },
-                                      domProps: {
-                                        checked: Array.isArray(
-                                          v.ticket_price.$model
-                                        )
-                                          ? _vm._i(
-                                              v.ticket_price.$model,
-                                              null
-                                            ) > -1
-                                          : v.ticket_price.$model
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          _vm.active = "price"
-                                        },
-                                        blur: function($event) {
-                                          _vm.active = null
-                                        },
-                                        keydown: function($event) {
-                                          $event.key === "-"
-                                            ? $event.preventDefault()
-                                            : null
-                                        },
-                                        change: function($event) {
-                                          var $$a = v.ticket_price.$model,
-                                            $$el = $event.target,
-                                            $$c = $$el.checked ? true : false
-                                          if (Array.isArray($$a)) {
-                                            var $$v = null,
-                                              $$i = _vm._i($$a, $$v)
-                                            if ($$el.checked) {
-                                              $$i < 0 &&
-                                                _vm.$set(
-                                                  v.ticket_price,
-                                                  "$model",
-                                                  $$a.concat([$$v])
-                                                )
-                                            } else {
-                                              $$i > -1 &&
-                                                _vm.$set(
-                                                  v.ticket_price,
-                                                  "$model",
-                                                  $$a
-                                                    .slice(0, $$i)
-                                                    .concat($$a.slice($$i + 1))
-                                                )
-                                            }
-                                          } else {
-                                            _vm.$set(
-                                              v.ticket_price,
-                                              "$model",
-                                              $$c
-                                            )
-                                          }
-                                        }
-                                      }
-                                    },
-                                    "input",
-                                    _vm.money,
-                                    false
-                                  )
-                                )
-                              : _vm.money.type === "radio"
-                              ? _c(
-                                  "input",
-                                  _vm._b(
-                                    {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: v.ticket_price.$model,
-                                          expression: "v.ticket_price.$model"
-                                        },
-                                        {
-                                          name: "money",
-                                          rawName: "v-money",
-                                          value: _vm.money,
-                                          expression: "money"
-                                        }
-                                      ],
-                                      class: {
-                                        active: _vm.active == "price",
-                                        error: v.ticket_price.$error
-                                      },
-                                      staticStyle: { "text-align": "right" },
-                                      attrs: {
-                                        placeholder: "$0.00",
-                                        type: "radio"
-                                      },
-                                      domProps: {
-                                        checked: _vm._q(
-                                          v.ticket_price.$model,
-                                          null
-                                        )
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          _vm.active = "price"
-                                        },
-                                        blur: function($event) {
-                                          _vm.active = null
-                                        },
-                                        keydown: function($event) {
-                                          $event.key === "-"
-                                            ? $event.preventDefault()
-                                            : null
-                                        },
-                                        change: function($event) {
-                                          return _vm.$set(
-                                            v.ticket_price,
-                                            "$model",
-                                            null
-                                          )
-                                        }
-                                      }
-                                    },
-                                    "input",
-                                    _vm.money,
-                                    false
-                                  )
-                                )
-                              : _c(
-                                  "input",
-                                  _vm._b(
-                                    {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: v.ticket_price.$model,
-                                          expression: "v.ticket_price.$model"
-                                        },
-                                        {
-                                          name: "money",
-                                          rawName: "v-money",
-                                          value: _vm.money,
-                                          expression: "money"
-                                        }
-                                      ],
-                                      class: {
-                                        active: _vm.active == "price",
-                                        error: v.ticket_price.$error
-                                      },
-                                      staticStyle: { "text-align": "right" },
-                                      attrs: {
-                                        placeholder: "$0.00",
-                                        type: _vm.money.type
-                                      },
-                                      domProps: {
-                                        value: v.ticket_price.$model
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          _vm.active = "price"
-                                        },
-                                        blur: function($event) {
-                                          _vm.active = null
-                                        },
-                                        keydown: function($event) {
-                                          $event.key === "-"
-                                            ? $event.preventDefault()
-                                            : null
-                                        },
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.$set(
-                                            v.ticket_price,
-                                            "$model",
-                                            $event.target.value
-                                          )
-                                        }
-                                      }
-                                    },
-                                    "input",
-                                    _vm.money,
-                                    false
-                                  )
-                                ),
-                            _vm._v(" "),
-                            v.ticket_price.$error
-                              ? _c("div", { staticClass: "validation-error" }, [
-                                  !v.ticket_price.minValue
-                                    ? _c("p", { staticClass: "error" }, [
-                                        _vm._v("Please enter an amount")
-                                      ])
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  !v.ticket_price.maxLength
-                                    ? _c("p", { staticClass: "error" }, [
-                                        _vm._v(
-                                          "Please enter an amount under $10,000"
-                                        )
-                                      ])
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  !v.ticket_price.required
-                                    ? _c("p", { staticClass: "error" }, [
-                                        _vm._v("Please enter a price")
-                                      ])
-                                    : _vm._e()
-                                ])
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _vm.tickets.length > 1
-                              ? _c(
-                                  "button",
-                                  {
-                                    staticClass: "delete-circle",
-                                    on: {
-                                      click: function($event) {
-                                        $event.preventDefault()
-                                        return _vm.deleteRow(index)
-                                      }
-                                    }
-                                  },
-                                  [_vm._v("X")]
-                                )
-                              : _vm._e()
-                          ])
-                        ]
-                      )
-                    }),
-                    0
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "ticket-box__add-button",
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          return _vm.addTickets($event)
-                        }
-                      }
-                    },
-                    [_c("button", [_vm._v("+ Ticket Types")])]
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("section", [
-                _c("div", { staticClass: "field" }, [
-                  _c("label", [
-                    _vm._v(
-                      " Does the event have a specific embargo date? (date you would like it to appear on EI) "
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { attrs: { id: "cover" } }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.showEmbargoDate,
-                          expression: "showEmbargoDate"
-                        }
-                      ],
-                      attrs: { type: "checkbox", id: "checkbox" },
-                      domProps: {
-                        checked: Array.isArray(_vm.showEmbargoDate)
-                          ? _vm._i(_vm.showEmbargoDate, null) > -1
-                          : _vm.showEmbargoDate
-                      },
-                      on: {
-                        change: function($event) {
-                          var $$a = _vm.showEmbargoDate,
-                            $$el = $event.target,
-                            $$c = $$el.checked ? true : false
-                          if (Array.isArray($$a)) {
-                            var $$v = null,
-                              $$i = _vm._i($$a, $$v)
-                            if ($$el.checked) {
-                              $$i < 0 &&
-                                (_vm.showEmbargoDate = $$a.concat([$$v]))
-                            } else {
-                              $$i > -1 &&
-                                (_vm.showEmbargoDate = $$a
-                                  .slice(0, $$i)
-                                  .concat($$a.slice($$i + 1)))
-                            }
-                          } else {
-                            _vm.showEmbargoDate = $$c
-                          }
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("div", { attrs: { id: "bar" } }),
-                    _vm._v(" "),
-                    _c("div", { attrs: { id: "knob" } }, [
-                      _vm.showEmbargoDate
-                        ? _c("p", [_vm._v("Yes")])
-                        : _c("p", [_vm._v("No")])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _vm.showEmbargoDate
-                    ? _c("div", [
-                        _c(
-                          "div",
-                          { staticClass: "embargo-calendar" },
-                          [
-                            _c("flat-pickr", {
-                              ref: "datePicker",
-                              staticClass: "form-control",
-                              attrs: {
-                                config: _vm.embargoCalendarConfig,
-                                placeholder: "Select date",
-                                name: "dates"
-                              },
-                              model: {
-                                value: _vm.embargoDate,
-                                callback: function($$v) {
-                                  _vm.embargoDate = $$v
-                                },
-                                expression: "embargoDate"
-                              }
-                            })
-                          ],
-                          1
-                        )
-                      ])
-                    : _vm._e()
-                ])
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.showType == "Weekly",
-                  expression: "showType == 'Weekly'"
-                }
-              ],
-              staticClass: "ongoing-show-dates"
-            },
-            [
-              _c("section", { staticClass: "event-enter-showdates" }, [
-                _c("div", { staticClass: "field" }, [
-                  _c("label", [_vm._v(" Select show days")]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "week-calendar grid" }, [
-                    _c(
-                      "div",
-                      {
-                        staticClass: "week-calendar__day",
-                        class: { active: _vm.week.mon },
-                        on: {
-                          click: function($event) {
-                            return _vm.addWeekDay("mon")
-                          }
-                        }
-                      },
-                      [_c("h4", [_vm._v("Mon")])]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "week-calendar__day",
-                        class: { active: _vm.week.tue },
-                        on: {
-                          click: function($event) {
-                            return _vm.addWeekDay("tue")
-                          }
-                        }
-                      },
-                      [_c("h4", [_vm._v("Tue")])]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "week-calendar__day",
-                        class: { active: _vm.week.wed },
-                        on: {
-                          click: function($event) {
-                            return _vm.addWeekDay("wed")
-                          }
-                        }
-                      },
-                      [_c("h4", [_vm._v("Wed")])]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "week-calendar__day",
-                        class: { active: _vm.week.thu },
-                        on: {
-                          click: function($event) {
-                            return _vm.addWeekDay("thu")
-                          }
-                        }
-                      },
-                      [_c("h4", [_vm._v("Thu")])]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "week-calendar__day",
-                        class: { active: _vm.week.fri },
-                        on: {
-                          click: function($event) {
-                            return _vm.addWeekDay("fri")
-                          }
-                        }
-                      },
-                      [_c("h4", [_vm._v("Fri")])]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "week-calendar__day",
-                        class: { active: _vm.week.sat },
-                        on: {
-                          click: function($event) {
-                            return _vm.addWeekDay("sat")
-                          }
-                        }
-                      },
-                      [_c("h4", [_vm._v("Sat")])]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "week-calendar__day",
-                        class: { active: _vm.week.sun },
-                        on: {
-                          click: function($event) {
-                            return _vm.addWeekDay("sun")
-                          }
-                        }
-                      },
-                      [_c("h4", [_vm._v("Sun")])]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _vm.$v.week.$error
-                    ? _c("div", { staticClass: "validation-error" }, [
-                        !_vm.$v.week.ifWeekly
-                          ? _c("p", { staticClass: "error" }, [
-                              _vm._v("Please select at least one day")
-                            ])
-                          : _vm._e()
-                      ])
-                    : _vm._e()
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "field" }, [
-                  _c("label", [_vm._v(" Select start day")]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "embargo-calendar" },
-                    [
-                      _c("flat-pickr", {
-                        ref: "datePicker",
-                        staticClass: "form-control",
-                        attrs: {
-                          config: _vm.embargoCalendarConfig,
-                          placeholder: "Select date",
-                          name: "dates"
-                        },
-                        model: {
-                          value: _vm.startDate,
-                          callback: function($$v) {
-                            _vm.startDate = $$v
-                          },
-                          expression: "startDate"
-                        }
-                      })
-                    ],
-                    1
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("section", { staticClass: "event-enter-showtimes" }, [
-                _c("div", { staticClass: "field" }, [
-                  _c("label", [
-                    _vm._v(" Show Times (please include time zone)")
-                  ]),
-                  _vm._v(" "),
-                  _c("textarea", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.showTimes,
-                        expression: "showTimes"
-                      }
-                    ],
-                    staticClass: "create-input area",
-                    class: {
-                      active: _vm.active == "times",
-                      error: _vm.$v.showTimes.$error
-                    },
-                    attrs: {
-                      rows: "8",
-                      placeholder: _vm.placeholdero,
-                      required: "",
-                      autofocus: ""
-                    },
-                    domProps: { value: _vm.showTimes },
-                    on: {
-                      click: function($event) {
-                        _vm.active = "times"
-                      },
-                      blur: function($event) {
-                        _vm.active = null
-                      },
-                      input: [
-                        function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.showTimes = $event.target.value
-                        },
-                        _vm.$v.showTimes.$touch
-                      ]
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm.$v.showTimes.$error
-                    ? _c("div", { staticClass: "validation-error" }, [
-                        !_vm.$v.showTimes.required
-                          ? _c("p", { staticClass: "error" }, [
-                              _vm._v(
-                                "Please give a brief description of show times"
-                              )
-                            ])
-                          : _vm._e()
-                      ])
-                    : _vm._e()
-                ])
-              ]),
-              _vm._v(" "),
-              _c("section", { staticClass: "ticket-section" }, [
-                _c("div", { staticClass: "field cost" }, [
-                  _c("label", { staticClass: "area" }, [
-                    _vm._v(" Ticket types and prices ")
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "create-shows__ticket-box" },
-                    _vm._l(_vm.$v.tickets.$each.$iter, function(v, index) {
-                      return _c(
-                        "div",
-                        { staticClass: "ticket-box__element grid" },
-                        [
-                          _c("div", { staticClass: "field" }, [
-                            _c("label", [_vm._v("Ticket Type")]),
-                            _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: v.name.$model,
-                                  expression: "v.name.$model"
-                                }
-                              ],
-                              staticClass: "create-input",
-                              class: {
-                                active: _vm.active == "ticket",
-                                error: v.name.$error
-                              },
-                              attrs: {
-                                name: "name",
-                                placeholder: "ex: General, VIP, Student"
-                              },
-                              domProps: { value: v.name.$model },
-                              on: {
-                                click: function($event) {
-                                  _vm.active = "ticket"
-                                },
-                                blur: function($event) {
-                                  _vm.active = null
-                                },
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    v.name,
-                                    "$model",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            v.name.$error
-                              ? _c("div", { staticClass: "validation-error" }, [
-                                  !v.name.required
-                                    ? _c("p", { staticClass: "error" }, [
-                                        _vm._v("Must enter a ticket name")
-                                      ])
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  !v.name.maxLength
-                                    ? _c("p", { staticClass: "error" }, [
-                                        _vm._v("Name is too Long")
-                                      ])
-                                    : _vm._e()
-                                ])
-                              : _vm._e()
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "field" }, [
-                            _c("label", [_vm._v("Ticket Price")]),
-                            _vm._v(" "),
-                            _vm.money.type === "checkbox"
-                              ? _c(
-                                  "input",
-                                  _vm._b(
-                                    {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: v.ticket_price.$model,
-                                          expression: "v.ticket_price.$model"
-                                        },
-                                        {
-                                          name: "money",
-                                          rawName: "v-money",
-                                          value: _vm.money,
-                                          expression: "money"
-                                        }
-                                      ],
-                                      class: {
-                                        active: _vm.active == "price",
-                                        error: v.ticket_price.$error
-                                      },
-                                      staticStyle: { "text-align": "right" },
-                                      attrs: {
-                                        placeholder: "$0.00",
-                                        type: "checkbox"
-                                      },
-                                      domProps: {
-                                        checked: Array.isArray(
-                                          v.ticket_price.$model
-                                        )
-                                          ? _vm._i(
-                                              v.ticket_price.$model,
-                                              null
-                                            ) > -1
-                                          : v.ticket_price.$model
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          _vm.active = "price"
-                                        },
-                                        blur: function($event) {
-                                          _vm.active = null
-                                        },
-                                        keydown: function($event) {
-                                          $event.key === "-"
-                                            ? $event.preventDefault()
-                                            : null
-                                        },
-                                        change: function($event) {
-                                          var $$a = v.ticket_price.$model,
-                                            $$el = $event.target,
-                                            $$c = $$el.checked ? true : false
-                                          if (Array.isArray($$a)) {
-                                            var $$v = null,
-                                              $$i = _vm._i($$a, $$v)
-                                            if ($$el.checked) {
-                                              $$i < 0 &&
-                                                _vm.$set(
-                                                  v.ticket_price,
-                                                  "$model",
-                                                  $$a.concat([$$v])
-                                                )
-                                            } else {
-                                              $$i > -1 &&
-                                                _vm.$set(
-                                                  v.ticket_price,
-                                                  "$model",
-                                                  $$a
-                                                    .slice(0, $$i)
-                                                    .concat($$a.slice($$i + 1))
-                                                )
-                                            }
-                                          } else {
-                                            _vm.$set(
-                                              v.ticket_price,
-                                              "$model",
-                                              $$c
-                                            )
-                                          }
-                                        }
-                                      }
-                                    },
-                                    "input",
-                                    _vm.money,
-                                    false
-                                  )
-                                )
-                              : _vm.money.type === "radio"
-                              ? _c(
-                                  "input",
-                                  _vm._b(
-                                    {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: v.ticket_price.$model,
-                                          expression: "v.ticket_price.$model"
-                                        },
-                                        {
-                                          name: "money",
-                                          rawName: "v-money",
-                                          value: _vm.money,
-                                          expression: "money"
-                                        }
-                                      ],
-                                      class: {
-                                        active: _vm.active == "price",
-                                        error: v.ticket_price.$error
-                                      },
-                                      staticStyle: { "text-align": "right" },
-                                      attrs: {
-                                        placeholder: "$0.00",
-                                        type: "radio"
-                                      },
-                                      domProps: {
-                                        checked: _vm._q(
-                                          v.ticket_price.$model,
-                                          null
-                                        )
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          _vm.active = "price"
-                                        },
-                                        blur: function($event) {
-                                          _vm.active = null
-                                        },
-                                        keydown: function($event) {
-                                          $event.key === "-"
-                                            ? $event.preventDefault()
-                                            : null
-                                        },
-                                        change: function($event) {
-                                          return _vm.$set(
-                                            v.ticket_price,
-                                            "$model",
-                                            null
-                                          )
-                                        }
-                                      }
-                                    },
-                                    "input",
-                                    _vm.money,
-                                    false
-                                  )
-                                )
-                              : _c(
-                                  "input",
-                                  _vm._b(
-                                    {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: v.ticket_price.$model,
-                                          expression: "v.ticket_price.$model"
-                                        },
-                                        {
-                                          name: "money",
-                                          rawName: "v-money",
-                                          value: _vm.money,
-                                          expression: "money"
-                                        }
-                                      ],
-                                      class: {
-                                        active: _vm.active == "price",
-                                        error: v.ticket_price.$error
-                                      },
-                                      staticStyle: { "text-align": "right" },
-                                      attrs: {
-                                        placeholder: "$0.00",
-                                        type: _vm.money.type
-                                      },
-                                      domProps: {
-                                        value: v.ticket_price.$model
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          _vm.active = "price"
-                                        },
-                                        blur: function($event) {
-                                          _vm.active = null
-                                        },
-                                        keydown: function($event) {
-                                          $event.key === "-"
-                                            ? $event.preventDefault()
-                                            : null
-                                        },
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.$set(
-                                            v.ticket_price,
-                                            "$model",
-                                            $event.target.value
-                                          )
-                                        }
-                                      }
-                                    },
-                                    "input",
-                                    _vm.money,
-                                    false
-                                  )
-                                ),
-                            _vm._v(" "),
-                            v.ticket_price.$error
-                              ? _c("div", { staticClass: "validation-error" }, [
-                                  !v.ticket_price.minValue
-                                    ? _c("p", { staticClass: "error" }, [
-                                        _vm._v("Please enter an amount")
-                                      ])
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  !v.ticket_price.maxLength
-                                    ? _c("p", { staticClass: "error" }, [
-                                        _vm._v(
-                                          "Please enter an amount under $10,000"
-                                        )
-                                      ])
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  !v.ticket_price.required
-                                    ? _c("p", { staticClass: "error" }, [
-                                        _vm._v("Please enter a price")
-                                      ])
-                                    : _vm._e()
-                                ])
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _vm.tickets.length > 1
-                              ? _c(
-                                  "button",
-                                  {
-                                    staticClass: "delete-circle",
-                                    on: {
-                                      click: function($event) {
-                                        $event.preventDefault()
-                                        return _vm.deleteRow(index)
-                                      }
-                                    }
-                                  },
-                                  [_vm._v("X")]
-                                )
-                              : _vm._e()
-                          ])
-                        ]
-                      )
-                    }),
-                    0
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "ticket-box__add-button",
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          return _vm.addTickets($event)
-                        }
-                      }
-                    },
-                    [_c("button", [_vm._v("+ Ticket Types")])]
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("section", [
-                _c("div", { staticClass: "field" }, [
-                  _c("label", [
-                    _vm._v(
-                      " Does the event have a specific embargo date? (date you would like it to appear on EI) "
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { attrs: { id: "cover" } }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.showEmbargoDate,
-                          expression: "showEmbargoDate"
-                        }
-                      ],
-                      attrs: { type: "checkbox", id: "checkbox" },
-                      domProps: {
-                        checked: Array.isArray(_vm.showEmbargoDate)
-                          ? _vm._i(_vm.showEmbargoDate, null) > -1
-                          : _vm.showEmbargoDate
-                      },
-                      on: {
-                        change: function($event) {
-                          var $$a = _vm.showEmbargoDate,
-                            $$el = $event.target,
-                            $$c = $$el.checked ? true : false
-                          if (Array.isArray($$a)) {
-                            var $$v = null,
-                              $$i = _vm._i($$a, $$v)
-                            if ($$el.checked) {
-                              $$i < 0 &&
-                                (_vm.showEmbargoDate = $$a.concat([$$v]))
-                            } else {
-                              $$i > -1 &&
-                                (_vm.showEmbargoDate = $$a
-                                  .slice(0, $$i)
-                                  .concat($$a.slice($$i + 1)))
-                            }
-                          } else {
-                            _vm.showEmbargoDate = $$c
-                          }
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("div", { attrs: { id: "bar" } }),
-                    _vm._v(" "),
-                    _c("div", { attrs: { id: "knob" } }, [
-                      _vm.showEmbargoDate
-                        ? _c("p", [_vm._v("Yes")])
-                        : _c("p", [_vm._v("No")])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _vm.showEmbargoDate
-                    ? _c("div", [
-                        _c(
-                          "div",
-                          { staticClass: "embargo-calendar" },
-                          [
-                            _c("flat-pickr", {
-                              ref: "datePicker",
-                              staticClass: "form-control",
-                              attrs: {
-                                config: _vm.embargoCalendarConfig,
-                                placeholder: "Select date",
-                                name: "dates"
-                              },
-                              model: {
-                                value: _vm.embargoDate,
-                                callback: function($$v) {
-                                  _vm.embargoDate = $$v
-                                },
-                                expression: "embargoDate"
-                              }
-                            })
-                          ],
-                          1
-                        )
-                      ])
-                    : _vm._e()
-                ])
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.showType == "Anytime",
-                  expression: "showType == 'Anytime'"
-                }
-              ],
-              staticClass: "everyday-show-dates"
-            },
-            [
-              _c("section", { staticClass: "event-enter-showtimes" }, [
-                _c("div", { staticClass: "field" }, [
-                  _c("label", [
-                    _vm._v(" Show Times (please include time zone)")
-                  ]),
-                  _vm._v(" "),
-                  _c("textarea", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.showTimes,
-                        expression: "showTimes"
-                      }
-                    ],
-                    staticClass: "create-input area",
-                    class: {
-                      active: _vm.active == "times",
-                      error: _vm.$v.showTimes.$error
-                    },
-                    attrs: {
-                      rows: "8",
-                      placeholder: _vm.placeholdera,
-                      required: "",
-                      autofocus: ""
-                    },
-                    domProps: { value: _vm.showTimes },
-                    on: {
-                      click: function($event) {
-                        _vm.active = "times"
-                      },
-                      blur: function($event) {
-                        _vm.active = null
-                      },
-                      input: [
-                        function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.showTimes = $event.target.value
-                        },
-                        _vm.$v.showTimes.$touch
-                      ]
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm.$v.showTimes.$error
-                    ? _c("div", { staticClass: "validation-error" }, [
-                        !_vm.$v.showTimes.required
-                          ? _c("p", { staticClass: "error" }, [
-                              _vm._v(
-                                "Please give a brief description of show times"
-                              )
-                            ])
-                          : _vm._e()
-                      ])
-                    : _vm._e()
-                ])
-              ]),
-              _vm._v(" "),
-              _c("section", { staticClass: "event-enter-showdates" }, [
-                _c("div", { staticClass: "field cost" }, [
-                  _c("label", { staticClass: "area" }, [
-                    _vm._v(" Ticket types and prices ")
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "create-shows__ticket-box" },
-                    _vm._l(_vm.$v.tickets.$each.$iter, function(v, index) {
-                      return _c(
-                        "div",
-                        { staticClass: "ticket-box__element grid" },
-                        [
-                          _c("div", { staticClass: "field" }, [
-                            _c("label", [_vm._v("Ticket Type")]),
-                            _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: v.name.$model,
-                                  expression: "v.name.$model"
-                                }
-                              ],
-                              staticClass: "create-input",
-                              class: {
-                                active: _vm.active == "ticket",
-                                error: v.name.$error
-                              },
-                              attrs: {
-                                name: "name",
-                                placeholder: "ex: General, VIP, Student"
-                              },
-                              domProps: { value: v.name.$model },
-                              on: {
-                                click: function($event) {
-                                  _vm.active = "ticket"
-                                },
-                                blur: function($event) {
-                                  _vm.active = null
-                                },
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    v.name,
-                                    "$model",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            v.name.$error
-                              ? _c("div", { staticClass: "validation-error" }, [
-                                  !v.name.required
-                                    ? _c("p", { staticClass: "error" }, [
-                                        _vm._v("Must enter a ticket name")
-                                      ])
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  !v.name.maxLength
-                                    ? _c("p", { staticClass: "error" }, [
-                                        _vm._v("Name is too Long")
-                                      ])
-                                    : _vm._e()
-                                ])
-                              : _vm._e()
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "field" }, [
-                            _c("label", [_vm._v("Ticket Price")]),
-                            _vm._v(" "),
-                            _vm.money.type === "checkbox"
-                              ? _c(
-                                  "input",
-                                  _vm._b(
-                                    {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: v.ticket_price.$model,
-                                          expression: "v.ticket_price.$model"
-                                        },
-                                        {
-                                          name: "money",
-                                          rawName: "v-money",
-                                          value: _vm.money,
-                                          expression: "money"
-                                        }
-                                      ],
-                                      class: {
-                                        active: _vm.active == "price",
-                                        error: v.ticket_price.$error
-                                      },
-                                      staticStyle: { "text-align": "right" },
-                                      attrs: {
-                                        placeholder: "$0.00",
-                                        type: "checkbox"
-                                      },
-                                      domProps: {
-                                        checked: Array.isArray(
-                                          v.ticket_price.$model
-                                        )
-                                          ? _vm._i(
-                                              v.ticket_price.$model,
-                                              null
-                                            ) > -1
-                                          : v.ticket_price.$model
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          _vm.active = "price"
-                                        },
-                                        blur: function($event) {
-                                          _vm.active = null
-                                        },
-                                        keydown: function($event) {
-                                          $event.key === "-"
-                                            ? $event.preventDefault()
-                                            : null
-                                        },
-                                        change: function($event) {
-                                          var $$a = v.ticket_price.$model,
-                                            $$el = $event.target,
-                                            $$c = $$el.checked ? true : false
-                                          if (Array.isArray($$a)) {
-                                            var $$v = null,
-                                              $$i = _vm._i($$a, $$v)
-                                            if ($$el.checked) {
-                                              $$i < 0 &&
-                                                _vm.$set(
-                                                  v.ticket_price,
-                                                  "$model",
-                                                  $$a.concat([$$v])
-                                                )
-                                            } else {
-                                              $$i > -1 &&
-                                                _vm.$set(
-                                                  v.ticket_price,
-                                                  "$model",
-                                                  $$a
-                                                    .slice(0, $$i)
-                                                    .concat($$a.slice($$i + 1))
-                                                )
-                                            }
-                                          } else {
-                                            _vm.$set(
-                                              v.ticket_price,
-                                              "$model",
-                                              $$c
-                                            )
-                                          }
-                                        }
-                                      }
-                                    },
-                                    "input",
-                                    _vm.money,
-                                    false
-                                  )
-                                )
-                              : _vm.money.type === "radio"
-                              ? _c(
-                                  "input",
-                                  _vm._b(
-                                    {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: v.ticket_price.$model,
-                                          expression: "v.ticket_price.$model"
-                                        },
-                                        {
-                                          name: "money",
-                                          rawName: "v-money",
-                                          value: _vm.money,
-                                          expression: "money"
-                                        }
-                                      ],
-                                      class: {
-                                        active: _vm.active == "price",
-                                        error: v.ticket_price.$error
-                                      },
-                                      staticStyle: { "text-align": "right" },
-                                      attrs: {
-                                        placeholder: "$0.00",
-                                        type: "radio"
-                                      },
-                                      domProps: {
-                                        checked: _vm._q(
-                                          v.ticket_price.$model,
-                                          null
-                                        )
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          _vm.active = "price"
-                                        },
-                                        blur: function($event) {
-                                          _vm.active = null
-                                        },
-                                        keydown: function($event) {
-                                          $event.key === "-"
-                                            ? $event.preventDefault()
-                                            : null
-                                        },
-                                        change: function($event) {
-                                          return _vm.$set(
-                                            v.ticket_price,
-                                            "$model",
-                                            null
-                                          )
-                                        }
-                                      }
-                                    },
-                                    "input",
-                                    _vm.money,
-                                    false
-                                  )
-                                )
-                              : _c(
-                                  "input",
-                                  _vm._b(
-                                    {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: v.ticket_price.$model,
-                                          expression: "v.ticket_price.$model"
-                                        },
-                                        {
-                                          name: "money",
-                                          rawName: "v-money",
-                                          value: _vm.money,
-                                          expression: "money"
-                                        }
-                                      ],
-                                      class: {
-                                        active: _vm.active == "price",
-                                        error: v.ticket_price.$error
-                                      },
-                                      staticStyle: { "text-align": "right" },
-                                      attrs: {
-                                        placeholder: "$0.00",
-                                        type: _vm.money.type
-                                      },
-                                      domProps: {
-                                        value: v.ticket_price.$model
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          _vm.active = "price"
-                                        },
-                                        blur: function($event) {
-                                          _vm.active = null
-                                        },
-                                        keydown: function($event) {
-                                          $event.key === "-"
-                                            ? $event.preventDefault()
-                                            : null
-                                        },
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.$set(
-                                            v.ticket_price,
-                                            "$model",
-                                            $event.target.value
-                                          )
-                                        }
-                                      }
-                                    },
-                                    "input",
-                                    _vm.money,
-                                    false
-                                  )
-                                ),
-                            _vm._v(" "),
-                            v.ticket_price.$error
-                              ? _c("div", { staticClass: "validation-error" }, [
-                                  !v.ticket_price.minValue
-                                    ? _c("p", { staticClass: "error" }, [
-                                        _vm._v("Please enter an amount")
-                                      ])
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  !v.ticket_price.maxLength
-                                    ? _c("p", { staticClass: "error" }, [
-                                        _vm._v(
-                                          "Please enter an amount under $10,000"
-                                        )
-                                      ])
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  !v.ticket_price.required
-                                    ? _c("p", { staticClass: "error" }, [
-                                        _vm._v("Please enter a price")
-                                      ])
-                                    : _vm._e()
-                                ])
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _vm.tickets.length > 1
-                              ? _c(
-                                  "button",
-                                  {
-                                    staticClass: "delete-circle",
-                                    on: {
-                                      click: function($event) {
-                                        $event.preventDefault()
-                                        return _vm.deleteRow(index)
-                                      }
-                                    }
-                                  },
-                                  [_vm._v("X")]
-                                )
-                              : _vm._e()
-                          ])
-                        ]
-                      )
-                    }),
-                    0
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "ticket-box__add-button",
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          return _vm.addTickets($event)
-                        }
-                      }
-                    },
-                    [_c("button", [_vm._v("+ Ticket Types")])]
-                  )
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "field",
-                    staticStyle: { "margin-top": "6rem" }
-                  },
-                  [
-                    _c("label", [
-                      _vm._v(
-                        " Does the event have a specific embargo date? (date you would like it to appear on EI) "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { attrs: { id: "cover" } }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.showEmbargoDate,
-                            expression: "showEmbargoDate"
-                          }
-                        ],
-                        attrs: { type: "checkbox", id: "checkbox" },
-                        domProps: {
-                          checked: Array.isArray(_vm.showEmbargoDate)
-                            ? _vm._i(_vm.showEmbargoDate, null) > -1
-                            : _vm.showEmbargoDate
-                        },
-                        on: {
-                          change: function($event) {
-                            var $$a = _vm.showEmbargoDate,
-                              $$el = $event.target,
-                              $$c = $$el.checked ? true : false
-                            if (Array.isArray($$a)) {
-                              var $$v = null,
-                                $$i = _vm._i($$a, $$v)
-                              if ($$el.checked) {
-                                $$i < 0 &&
-                                  (_vm.showEmbargoDate = $$a.concat([$$v]))
-                              } else {
-                                $$i > -1 &&
-                                  (_vm.showEmbargoDate = $$a
-                                    .slice(0, $$i)
-                                    .concat($$a.slice($$i + 1)))
-                              }
-                            } else {
-                              _vm.showEmbargoDate = $$c
-                            }
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("div", { attrs: { id: "bar" } }),
-                      _vm._v(" "),
-                      _c("div", { attrs: { id: "knob" } }, [
-                        _vm.showEmbargoDate
-                          ? _c("p", [_vm._v("Yes")])
-                          : _c("p", [_vm._v("No")])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _vm.showEmbargoDate
-                      ? _c("div", [
-                          _c(
-                            "div",
-                            { staticClass: "embargo-calendar" },
-                            [
-                              _c("flat-pickr", {
-                                ref: "datePicker",
-                                staticClass: "form-control",
-                                attrs: {
-                                  config: _vm.embargoCalendarConfig,
-                                  placeholder: "Select date",
-                                  name: "dates"
-                                },
-                                model: {
-                                  value: _vm.embargoDate,
-                                  callback: function($$v) {
-                                    _vm.embargoDate = $$v
-                                  },
-                                  expression: "embargoDate"
-                                }
-                              })
-                            ],
-                            1
-                          )
-                        ])
-                      : _vm._e()
-                  ]
-                )
-              ])
-            ]
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _vm.modal
-        ? _c("modal", { on: { close: _vm.noFreeTicket } }, [
-            _c("div", { attrs: { slot: "header" }, slot: "header" }, [
-              _c("div", { staticClass: "circle del" }, [_c("p", [_vm._v("?")])])
-            ]),
-            _vm._v(" "),
-            _c("div", { attrs: { slot: "body" }, slot: "body" }, [
-              _c("h3", [
-                _vm._v(
-                  "You are submitting a free ticket price or forgot to add a price"
-                )
-              ]),
-              _vm._v(" "),
-              _c("p", [_vm._v("We just want to double check this is correct.")])
-            ]),
-            _vm._v(" "),
-            _c("div", { attrs: { slot: "footer" }, slot: "footer" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn del",
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.onFreeTicket()
-                    }
-                  }
-                },
-                [_vm._v("It is")]
-              )
-            ])
+          _c("div", { staticClass: "card-price" }, [
+            _c("h4", [_vm._v(_vm._s(_vm.event.price_range))])
           ])
-        : _vm._e(),
-      _vm._v(" "),
-      _c("div", { staticClass: "event-create__submit-button" }, [
-        _c(
-          "button",
-          {
-            staticClass: "nav-back-button",
-            attrs: { disabled: _vm.disabled },
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                return _vm.onSubmit("exit")
-              }
-            }
-          },
-          [_vm._v(" Save and Exit ")]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "create-button__back" }, [
-        _c(
-          "button",
-          {
-            staticClass: "create",
-            attrs: { disabled: _vm.disabled },
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                return _vm.onBack("category")
-              }
-            }
-          },
-          [_vm._v(" Back ")]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "create-button__forward" }, [
-        _c(
-          "button",
-          {
-            staticClass: "create",
-            attrs: { disabled: _vm.disabled },
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                return _vm.onSubmit()
-              }
-            }
-          },
-          [_vm._v(" Save and continue ")]
-        )
-      ])
+        ]
+      )
     ],
     1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/events/event-online-search.vue?vue&type=template&id=45c9ca22&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/events/event-online-search.vue?vue&type=template&id=45c9ca22& ***!
+  \************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "event-online-search",
+      staticStyle: { "min-height": "calc(100vh - 7rem)", position: "relative" }
+    },
+    [
+      _c("div", { staticClass: "event-online-search__container" }, [
+        _c(
+          "header",
+          {
+            staticClass: "online-search__header",
+            staticStyle: {
+              background: "url('/storage/website-files/online-search.jpg')"
+            }
+          },
+          [
+            _c("div", { staticClass: "online-search__header-content" }, [
+              _c("div", { staticClass: "online-search__title" }, [
+                _c("h2", [_vm._v(_vm._s(_vm.title))])
+              ]),
+              _vm._v(" "),
+              _vm._m(0)
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "section",
+          { staticClass: "event-online-search-filter" },
+          [
+            _c("SearchFilter", {
+              attrs: { categories: _vm.categories },
+              on: { eventlist: _vm.updateEventList }
+            })
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "section",
+          { staticClass: "padded event-list" },
+          [
+            _c(
+              "div",
+              { staticClass: "event-index-eventlist grid" },
+              _vm._l(_vm.eventList, function(event, index) {
+                return _c(
+                  "div",
+                  { staticClass: "eventlist__element" },
+                  [_c("vue-event-index", { attrs: { event: event } })],
+                  1
+                )
+              }),
+              0
+            ),
+            _vm._v(" "),
+            _c("load-more", { on: { intersect: _vm.intersected } })
+          ],
+          1
+        )
+      ])
+    ]
   )
 }
 var staticRenderFns = [
@@ -1914,8 +373,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "title" }, [
-      _c("h2", [_vm._v("Dates and Times")])
+    return _c("div", { staticClass: "online-search__tagline" }, [
+      _c("p", [_vm._v("Discover immersive experiences.")])
     ])
   }
 ]
@@ -1925,130 +384,18 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js":
-/*!********************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/runtime/componentNormalizer.js ***!
-  \********************************************************************/
+/***/ "./resources/js/pages/events/components/search-item.vue":
+/*!**************************************************************!*\
+  !*** ./resources/js/pages/events/components/search-item.vue ***!
+  \**************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalizeComponent; });
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-function normalizeComponent (
-  scriptExports,
-  render,
-  staticRenderFns,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier, /* server only */
-  shadowMode /* vue-cli only */
-) {
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (render) {
-    options.render = render
-    options.staticRenderFns = staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = 'data-v-' + scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = shadowMode
-      ? function () {
-        injectStyles.call(
-          this,
-          (options.functional ? this.parent : this).$root.$options.shadowRoot
-        )
-      }
-      : injectStyles
-  }
-
-  if (hook) {
-    if (options.functional) {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functional component in vue file
-      var originalRender = options.render
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return originalRender(h, context)
-      }
-    } else {
-      // inject component registration as beforeCreate hook
-      var existing = options.beforeCreate
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    }
-  }
-
-  return {
-    exports: scriptExports,
-    options: options
-  }
-}
-
-
-/***/ }),
-
-/***/ "./resources/js/pages/create/shows.vue":
-/*!*********************************************!*\
-  !*** ./resources/js/pages/create/shows.vue ***!
-  \*********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _shows_vue_vue_type_template_id_6a22caac___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./shows.vue?vue&type=template&id=6a22caac& */ "./resources/js/pages/create/shows.vue?vue&type=template&id=6a22caac&");
-/* harmony import */ var _shows_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./shows.vue?vue&type=script&lang=js& */ "./resources/js/pages/create/shows.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _search_item_vue_vue_type_template_id_fb9d8588___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./search-item.vue?vue&type=template&id=fb9d8588& */ "./resources/js/pages/events/components/search-item.vue?vue&type=template&id=fb9d8588&");
+/* harmony import */ var _search_item_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./search-item.vue?vue&type=script&lang=js& */ "./resources/js/pages/events/components/search-item.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -2057,9 +404,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _shows_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _shows_vue_vue_type_template_id_6a22caac___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _shows_vue_vue_type_template_id_6a22caac___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _search_item_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _search_item_vue_vue_type_template_id_fb9d8588___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _search_item_vue_vue_type_template_id_fb9d8588___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -2069,38 +416,107 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/pages/create/shows.vue"
+component.options.__file = "resources/js/pages/events/components/search-item.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/pages/create/shows.vue?vue&type=script&lang=js&":
-/*!**********************************************************************!*\
-  !*** ./resources/js/pages/create/shows.vue?vue&type=script&lang=js& ***!
-  \**********************************************************************/
+/***/ "./resources/js/pages/events/components/search-item.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/pages/events/components/search-item.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_shows_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./shows.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/create/shows.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_shows_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_search_item_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./search-item.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/events/components/search-item.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_search_item_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/pages/create/shows.vue?vue&type=template&id=6a22caac&":
-/*!****************************************************************************!*\
-  !*** ./resources/js/pages/create/shows.vue?vue&type=template&id=6a22caac& ***!
-  \****************************************************************************/
+/***/ "./resources/js/pages/events/components/search-item.vue?vue&type=template&id=fb9d8588&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/pages/events/components/search-item.vue?vue&type=template&id=fb9d8588& ***!
+  \*********************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_shows_vue_vue_type_template_id_6a22caac___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./shows.vue?vue&type=template&id=6a22caac& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/create/shows.vue?vue&type=template&id=6a22caac&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_shows_vue_vue_type_template_id_6a22caac___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_search_item_vue_vue_type_template_id_fb9d8588___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./search-item.vue?vue&type=template&id=fb9d8588& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/events/components/search-item.vue?vue&type=template&id=fb9d8588&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_search_item_vue_vue_type_template_id_fb9d8588___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_shows_vue_vue_type_template_id_6a22caac___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_search_item_vue_vue_type_template_id_fb9d8588___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/pages/events/event-online-search.vue":
+/*!***********************************************************!*\
+  !*** ./resources/js/pages/events/event-online-search.vue ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _event_online_search_vue_vue_type_template_id_45c9ca22___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./event-online-search.vue?vue&type=template&id=45c9ca22& */ "./resources/js/pages/events/event-online-search.vue?vue&type=template&id=45c9ca22&");
+/* harmony import */ var _event_online_search_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./event-online-search.vue?vue&type=script&lang=js& */ "./resources/js/pages/events/event-online-search.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _event_online_search_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _event_online_search_vue_vue_type_template_id_45c9ca22___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _event_online_search_vue_vue_type_template_id_45c9ca22___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/pages/events/event-online-search.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/pages/events/event-online-search.vue?vue&type=script&lang=js&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/pages/events/event-online-search.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_event_online_search_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./event-online-search.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/events/event-online-search.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_event_online_search_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/pages/events/event-online-search.vue?vue&type=template&id=45c9ca22&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/pages/events/event-online-search.vue?vue&type=template&id=45c9ca22& ***!
+  \******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_event_online_search_vue_vue_type_template_id_45c9ca22___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./event-online-search.vue?vue&type=template&id=45c9ca22& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/events/event-online-search.vue?vue&type=template&id=45c9ca22&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_event_online_search_vue_vue_type_template_id_45c9ca22___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_event_online_search_vue_vue_type_template_id_45c9ca22___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

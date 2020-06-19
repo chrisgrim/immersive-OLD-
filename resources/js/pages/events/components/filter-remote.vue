@@ -290,8 +290,8 @@
             },
 
             onSubmit() {
-                console.log(this.submitObject);
                 this.active = null;
+                console.log(this.submitObject);
                 axios.post('/api/search/remote', this.submitObject)
                 .then(res => {
                     this.$emit('eventlist', res.data);
@@ -302,7 +302,6 @@
             },
 
             show(type) {
-                console.log(type);
                 this.active === type ? this.active = null : this.active = type;
                 setTimeout(() => document.addEventListener("click", this.onClickOutside), 200);
             },
@@ -367,7 +366,6 @@
             },
 
             onClickOutside(event) {
-                console.log('test');
                 let cat =  this.$refs.cat;
                 let dates =  this.$refs.dates;
                 let price =  this.$refs.price;

@@ -29,6 +29,11 @@
                     </div>
                 </div>
                 <load-more @intersect="intersected"></load-more>
+                <div class="see-more-events">
+                    <a href="/index/search-online">
+                        <button class="default"> See More Events</button>
+                    </a>
+                </div>
             </section>
 
             <section>

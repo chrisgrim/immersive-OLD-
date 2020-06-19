@@ -20,9 +20,12 @@
             <div>
                 {{event.name}}
             </div>
+            <div>
+                <button @click="resurrect(event)">Resurrect</button>
+            </div>
         </div>
-         <div class="pagination-button">
-            <button class="default" @click="loadMore">Load more</button>
+        <div class="pagination-button">
+            <button v-if="moreToLoad" @click="loadMore">Load More</button>
         </div>
     </div>
 </template>
@@ -31,35 +34,27 @@
     
     import { required } from 'vuelidate/lib/validators';
 
-
     export default {
+
+        props: ['loadedevents'],
 
         data() {
             return {
-                events: '',
+                events: this.loadedevents ? this.loadedevents : [],
                 eventList: '',
-                pagination: {paginate:10},
+                page: 2,
+                moreToLoad: true,
 
             }
         },
 
         computed: {
-            
+          //
         },
 
         methods: {
 
-             loadEvents() {
-                axios.post('/admin/boneyard/fetch', this.pagination)
-                .then(res => {
-                    console.log(res.data);
-                    this.events = res.data;
-                })
-                .catch(error => { this.serverErrors = error.response.data.errors; });
-            },
-
             asyncGenerateEventList(eventList) {
-                
                 axios.get('/api/admin/search/boneyard', { params: { keywords: eventList } })
                 .then(res => {
                     console.log(res.data);
@@ -68,13 +63,24 @@
             },
 
             loadMore() {
-                this.pagination.paginate += 10;
-                this.loadEvents();
-            },        
-        },
+                axios.post(`/admin/boneyard/fetch?page=${this.page}`)
+                .then(res => {  
+                    console.log(res.data);
+                    this.events = this.events.concat(res.data.data);
+                    this.page++;
+                    this.page == res.data.total + 1 ? this.moreToLoad = false : '';
+                })
+                .catch(err => {
+                    this.onErrors(err);
+                });
+            },
 
-        created() {
-            this.loadEvents()
+            resurrect(event) {
+                axios.post(`/admin/boneyard/${event.id}`)
+                .then(res => {
+                    location.reload()
+                });
+            }   
         },
 
     }

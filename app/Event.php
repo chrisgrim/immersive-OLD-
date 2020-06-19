@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Model;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Scopes\PublishedScope;
 
 class Event extends Model
 {
@@ -46,6 +47,16 @@ class Event extends Model
     * @var array
     */
     protected $appends = ['isFavorited'];
+
+        /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::addGlobalScope(new PublishedScope);
+    }
 
     /**
     * What events should be searchable for scout elastic search

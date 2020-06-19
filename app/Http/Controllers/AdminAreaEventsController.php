@@ -34,7 +34,8 @@ class AdminAreaEventsController extends Controller
      */
     public function boneyard()
     {
-        return view('adminArea.boneyard');
+        $events = Event::onlyTrashed()->whereNotNull('name')->limit(10)->get();
+        return view('adminArea.boneyard', compact('events'));
     }
 
     /**
@@ -54,6 +55,25 @@ class AdminAreaEventsController extends Controller
      */
     public function boneyardFetch(Request $request)
     {
-        return Event::onlyTrashed()->take($request->paginate)->get();
+        return Event::onlyTrashed()
+                ->whereNotNull('name')
+                ->paginate(10);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function resurrect($event)
+    {
+        $eventrestore = Event::withTrashed()
+                ->where('id', $event)
+                ->restore();
+
+        Event::where('id', $event)
+                ->update([
+                    'status' => 'd',
+                ]);
     }
 }

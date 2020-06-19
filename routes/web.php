@@ -61,6 +61,7 @@ Route::GET('/admin/events', 'AdminAreaEventsController@index');
 Route::GET('/admin/boneyard', 'AdminAreaEventsController@boneyard');
 Route::POST('/admin/events/fetch', 'AdminAreaEventsController@fetch');
 Route::POST('/admin/boneyard/fetch', 'AdminAreaEventsController@boneyardFetch');
+Route::POST('/admin/boneyard/{event}', 'AdminAreaEventsController@resurrect');
 
 
 //Organizer 

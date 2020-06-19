@@ -16,8 +16,6 @@
                 :categories="categories" 
                 @eventlist="updateEventList">
                 </SearchFilter>
-                         
-
             </section>
 
             <section class="padded event-list"> 
@@ -26,6 +24,7 @@
                         <vue-event-index :event="event"></vue-event-index>
                     </div>
                 </div>
+                <load-more @intersect="intersected"></load-more>
             </section>
         </div>
 
@@ -37,12 +36,13 @@
 <script>
     import SearchFilter  from './components/filter-remote.vue'
     import SearchItem  from './components/search-item.vue'
+    import LoadMore  from '../../components/LoadMore.js'
 
     export default {
 
         props: ['searchedevents', 'categories', 'user'],
 
-        components: { SearchFilter, SearchItem},
+        components: { SearchFilter, SearchItem, LoadMore },
 
         computed: {
             title() {
@@ -55,18 +55,38 @@
         
         data() {
             return {
-                eventList: [],
+                eventList: this.searchedevents ? this.searchedevents : [],
                 category: new URL(window.location.href).searchParams.get("category"),
                 tag: new URL(window.location.href).searchParams.get("tag"),
                 remote: new URL(window.location.href).searchParams.get("remote"),
                 id: new URL(window.location.href).searchParams.get("id"),
+                page: 2,
+                hasFilter: false,
 
             }
         },
 
         methods: {
             updateEventList(value) {
+                console.log(value);
+                if(value) {
+                    this.hasFilter = true;
+                };
                 this.eventList = value;
+            },
+
+            intersected() {
+                if(this.hasFilter) {return false};
+                axios.post(`/api/index/loadmore?page=${this.page}`)
+                .then(res => {  
+                    console.log(res.data);
+                    this.eventList = this.eventList.concat(res.data.data);
+                    this.page++;
+            
+                })
+                .catch(err => {
+                    this.onErrors(err);
+                });
             }
 
         },

@@ -31,7 +31,6 @@ class EventController extends Controller
     {
         $events = Event::where('closingDate', '>=', Carbon::yesterday()->endOfDay())
             ->where('status', 'p')
-            ->orderBy('published_at', 'desc')
             ->limit(4)
             ->with('organizer')
             ->get();
