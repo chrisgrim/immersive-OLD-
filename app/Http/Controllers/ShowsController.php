@@ -38,9 +38,9 @@ class ShowsController extends Controller
      */
     public function store(Request $request, Event $event)
     {
+
         if($request->onGoing) {
             ShowOnGoing::saveNewShowOnGoing($request, $event, $request->start_date);
-            Show::deleteOld($request, $event);
             Show::saveNewShows($request, $event);
         }
 
@@ -49,7 +49,6 @@ class ShowsController extends Controller
         }
 
         if ($request->shows) {
-            Show::deleteOld($request, $event);
             Show::saveNewShows($request, $event);
         }
 

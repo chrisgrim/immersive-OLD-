@@ -1,0 +1,110 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Event;
+use App\Show;
+use App\ShowOnGoing;
+use Carbon\Carbon;
+use App\Http\Requests\ShowStoreRequest;
+
+class TicketsController extends Controller
+{
+    /**
+     * Create a new Tickets Controller validation .
+     */
+    public function __construct()
+    {
+        $this->middleware(['auth', 'verified']);
+        $this->middleware('can:update,event');
+    }
+    /**
+     * Show the form for creating a new resource and passing the event variable
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create(Event $event)
+    {
+        $event->load('showOnGoing','shows.tickets');
+        return view('create.ticket', compact('event'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request, Event $event)
+    {
+        // goes through each show attached to the event
+        foreach( $event->shows as $show) {
+
+            //  gets a list of all submitted tickets
+            foreach ($request->tickets as $ticket) {
+                $ticketname[] = $ticket['name'];
+            };
+
+            //  checks name of tickets against any tickets already assigned to show and deletes any that aren't there
+            $show->tickets()->whereNotIn('name', $ticketname)->delete();
+
+            //  goes through and updates or creates new tickets for each show 
+            foreach ($request->tickets as $ticket) {
+                 $show->tickets()->updateOrCreate([
+                    'name' => $ticket['name'],
+                ],
+                [
+                    'description' => $ticket['description'],
+                    'ticket_price' => str_replace('$', '', $ticket['ticket_price'])
+                ]);
+            }
+        };
+
+        //  Delete previous price ranges
+        $event->priceranges()->delete();
+
+        //  Create new Price ranges based off request tickets and create an array from them
+        foreach ($request->tickets as $ticket) {
+            $event->priceranges()->Create([
+                'price' => $ticket['ticket_price']
+            ]);
+            $array[] = $ticket['ticket_price'];
+        }
+
+        // Using the array create a string called price range for the user to see
+        rsort($array);
+        if (last($array) == 0) {
+            $first = 'free';
+        } else {
+            $first = '$'. last($array);
+        }
+        if (sizeof($array) > 1) {
+            $pricerange = $first . ' - ' . '$' . $array[0];
+        } else {
+            $pricerange = '$' . $array[0];
+        }
+
+        // Add price range string to event
+        $event->update([
+            'price_range' => $pricerange,
+        ]);
+
+
+        $event = $event->fresh();
+        $event->searchable();
+    }
+
+    /**
+     * Fetch the stored shows and tickets
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function fetch(Event $event)
+    {
+        return response()->json(array(
+            'tickets' => $event->shows()->with('tickets')->get(),
+        ));
+    }
+}

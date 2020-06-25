@@ -81,7 +81,7 @@
         
         data() {
             return {
-                image: this.event.largeImagePath ? `/storage/${this.event.largeImagePath}` : '',
+                image: this.event.largeImagePath ? `/storage/${this.event.largeImagePath.slice(0, -4)}jpg` : '',
                 loading: false,
                 disabled: false,
                 readyToSubmit: false,

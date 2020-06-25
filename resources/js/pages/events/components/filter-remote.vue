@@ -20,7 +20,7 @@
                             label="name"
                             :options="categories" 
                             placeholder="Categories"
-                            @select="submitCat"
+                            @select="submitCategory"
                             open-direction="bottom"
                             :preselect-first="false">
                             </multiselect>
@@ -83,7 +83,7 @@
                         <div class="e-search-filter__pop-box--footer">
                             <button v-if="datesFormatted.length" @click="datesFormatted = []; datesSubmit = []; dates = [];" class="pop-box__cancel">clear</button>
                             <button v-if="!datesFormatted.length" @click="active = null" class="pop-box__cancel">Cancel</button>
-                            <button class="pop-box__submit" @click="onSubmit">Save</button>
+                            <button class="pop-box__submit" @click="submitNew()">Save</button>
                         </div>
                     </div>
                 </div>
@@ -117,7 +117,7 @@
                         <div class="e-search-filter__pop-box--footer">
                             <button v-if="showPrice" @click="active = null" class="pop-box__cancel">Cancel</button>
                             <button v-if="!showPrice" @click="price = [options.min, options.max]" class="pop-box__cancel">clear</button>
-                            <button @click="onSubmit" class="pop-box__submit">Save</button>
+                            <button @click="submitNew" class="pop-box__submit">Save</button>
                         </div>
                     </div>
                 </div>
@@ -220,6 +220,16 @@
                 </div>
             </div>
         </div>
+
+        
+        <div class="event-index-eventlist grid">
+            <div v-for="(event, index) in eventList" class="eventlist__element">
+                <vue-event-index :event="event"></vue-event-index>
+            </div>
+        </div>
+        <load-more @intersect="intersected"></load-more>
+      
+
     </div>
 </template>
 <script>
@@ -228,30 +238,33 @@
     import Multiselect from 'vue-multiselect'
     import VueSlider from 'vue-slider-component'
     import 'vue-slider-component/theme/antd.css'
+    import LoadMore  from '../../../components/LoadMore.js'
 
     export default {
 
-        props:['categories'],
+        props:['categories','maxprice', 'events'],
 
-        components: { flatPickr, Multiselect, VueSlider },
+        components: { flatPickr, Multiselect, VueSlider, LoadMore },
 
         computed: {
             showPrice() {
                 return this.price[1] == this.options.max && this.price[0] == this.options.min ? true : false;
             },
 
+
             submitObject() {
                 return {
-                    category: this.category ? this.category : '',
-                    dates: this.datesSubmit ? this.datesSubmit : '',
-                    price: this.hasPrice ? this.price : '',
+                    category: this.category ? this.category : null,
+                    dates: this.datesSubmit.length ? this.datesSubmit : null,
+                    price: !this.showPrice ? this.price : null,
                 }
             },
         },
 
         data() {
             return {
-                eventList: [],
+                eventList: this.events,
+                searchList:this.events,
                 dates: [],
                 datesSubmit: [],
                 datesFormatted: [],
@@ -259,9 +272,9 @@
                 configmobile: this.initializeConfigObject(),
                 active: '',
                 category: '',
-                price: [0,500],
+                price: [0, this.maxprice],
                 hasPrice: false,
-                options: { min: 0, max: 500 },
+                options: { min: 0, max: this.maxprice  },
                 showFilters: false,
                 mobile: window.innerWidth < 768,
                 searchcategory: new URL(window.location.href).searchParams.get("category"),
@@ -269,9 +282,10 @@
                 searchremote: new URL(window.location.href).searchParams.get("remote"),
                 id: new URL(window.location.href).searchParams.get("id"),
                 searchBoxInput: [],
-                searchBoxOptions: [
-                    {name: 'Loading List...'}
-                ],
+                searchBoxOptions: [ {name: 'Loading List...'}],
+                page: 2,
+                pagination:'',
+                hasFilter: false,
             }
         },
 
@@ -291,14 +305,23 @@
 
             onSubmit() {
                 this.active = null;
-                console.log(this.submitObject);
-                axios.post('/api/search/remote', this.submitObject)
+                axios.post(`/api/search/remote?page=${this.page}`, this.submitObject)
                 .then(res => {
-                    this.$emit('eventlist', res.data);
+                    console.log(res.data);
+                    res.data.current_page == 1 ? this.eventList = res.data.data : this.eventList = this.eventList.concat(res.data.data);
+                    this.pagination = res.data;
+                    this.page = res.data.current_page + 1;
                 })
                 .catch(errorResponse => { 
                    console.log(errorResponse.data);
                 });
+            },
+
+            intersected() {
+                console.log('intersected');
+                if( this.pagination.last_page < this.page ) {return false};
+                this.onSubmit();
+     
             },
 
             show(type) {
@@ -306,19 +329,29 @@
                 setTimeout(() => document.addEventListener("click", this.onClickOutside), 200);
             },
 
-            submitCat(value) {
-                this.category = value;
+            submitNew() {
+                this.hasFilter = true;
+                this.page = 1;
+                this.eventList = [];
                 this.onSubmit();
+            },
+
+            submitCategory(value) {
+                this.$store.commit('searchtype', value.name)
+                this.category = value;
+                this.submitNew();
+            },
+
+            submitMobile() {
+                this.submitNew();
+                this.showFilters = false;
             },
 
             clearCat() {
                 this.category = '';
+                this.page = 1;
+                this.eventList = [];
                 this.onSubmit();
-            },
-
-            submitMobile() {
-                this.onSubmit();
-                this.showFilters = false;
             },
 
             cancelMobile() {
@@ -332,6 +365,7 @@
                 this.datesSubmit = [];
                 this.dates = [];
                 this.category = '';
+                this.submitNew();
             },
 
             dateFunc() {
@@ -346,38 +380,21 @@
                 }
             },
 
-            getPriceRange() {
-                let prices = [] 
-                this.eventList.forEach(event=>{ 
-                  event.priceranges.forEach(pricerange=>{ 
-                    prices.push(pricerange.price) 
-                  }) 
-                })
-
-                function compareNumbers(a, b) {
-                  return a - b;
-                }
-
-                let arr = Math.ceil(parseFloat(prices.sort(compareNumbers).slice(-1)[0]));
-                console.log(arr);
-
-                prices.length ? this.price[1] = arr : this.price[1] = 1000;
-                prices.length ? this.options.max = arr : this.options.max = 1000;
-            },
-
             onClickOutside(event) {
+                if (this.active == null) {return false};
                 let cat =  this.$refs.cat;
                 let dates =  this.$refs.dates;
                 let price =  this.$refs.price;
                 if (!cat || cat.contains(event.target) || !dates || dates.contains(event.target) || !price || price.contains(event.target)) return;
                 this.active = null;
-                this.onSubmit();
+                this.submitNew();
             },
 
             onLoad() {
                 if (this.searchcategory) {
                     this.category = this.categories.find(element => element.id == this.id);
-                    this.onSubmit();
+                    this.$store.commit('searchtype', this.category.name)
+                    this.submitNew();
                 }
             },
 
@@ -407,9 +424,6 @@
         },
 
         watch: {
-            price() {
-                this.hasPrice = true;
-            },
             showFilters() {
                 return this.showFilters ? this.toggleBodyClass('addClass', 'noscroll') : this.toggleBodyClass('removeClass', 'noscroll');
             },

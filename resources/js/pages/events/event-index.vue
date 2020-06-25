@@ -28,7 +28,6 @@
                         <vue-event-index :event="event"></vue-event-index>
                     </div>
                 </div>
-                <load-more @intersect="intersected"></load-more>
                 <div class="see-more-events">
                     <a href="/index/search-online">
                         <button class="default"> See More Events</button>
@@ -100,25 +99,13 @@
                 price: '',
                 eventName: '',
                 location: [],
-                page: 2,
+
             }
         },
 
         methods: {
 
-            intersected() {
-                if (this.page >= 4) { return false};
-                axios.post(`/api/index/loadmore?page=${this.page}`)
-                .then(res => {  
-                    console.log(res.data);
-                    this.eventList = this.eventList.concat(res.data.data);
-                    this.page++;
             
-                })
-                .catch(err => {
-                    this.onErrors(err);
-                });
-            }
 
         },
 

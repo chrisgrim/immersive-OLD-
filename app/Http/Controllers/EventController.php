@@ -20,7 +20,7 @@ class EventController extends Controller
     {
         $this->middleware(['auth', 'verified'])->except('index','show', 'fetch');
         $this->middleware('can:update,event')
-        ->except(['index','create','show','editEvents','store','fetchEditEvents','fetch']);
+        ->except(['index','create','show','editEvents','store','fetchEditEvents','fetch', 'thanks']);
     }
     /**
      * Display a listing of the resource.
@@ -31,7 +31,7 @@ class EventController extends Controller
     {
         $events = Event::where('closingDate', '>=', Carbon::yesterday()->endOfDay())
             ->where('status', 'p')
-            ->limit(4)
+            ->limit(12)
             ->with('organizer')
             ->get();
         $categories = Category::where('remote', 1)
@@ -165,6 +165,7 @@ class EventController extends Controller
     public function submitEvent(Event $event) 
     {
         $this->authorize('finalize', $event);
+        $event->update(['status' => 'r',]);
         $event->finalizeEvent($event);
     }
 

@@ -8,89 +8,90 @@
         </div>
         <div class="admin-menu">
             <a v-if="admin" href="/categories/create">
-            <div class="admin-menu__item">
+            <button :class="{active: active == 'categories'}" class="admin-menu__item">
                 Categories
-            </div>
+            </button>
             </a>
-
+            
             <a v-if="admin" href="/genres/create">
-            <div class="admin-menu__item" >
+            <button :class="{active: active == 'tags'}" class="admin-menu__item" >
                 Tags
-            </div>
+            </button>
             </a>
+            
 
             <a v-if="admin" href="/contactlevels/create">
-            <div class="admin-menu__item" >
+            <button :class="{active: active == 'contact'}" class="admin-menu__item" >
                 Contact Levels
-            </div>
+            </button>
             </a>
 
             <a v-if="admin" href="/remotelocations/create">
-            <div class="admin-menu__item" >
+            <button :class="{active: active == 'remote'}" class="admin-menu__item" >
                 Remote Locations
-            </div>
+            </button>
             </a>
 
             <a v-if="admin" href="/contentadvisories/create">
-            <div class="admin-menu__item" >
+            <button :class="{active: active == 'content'}" class="admin-menu__item" >
                 Content Advisories
-            </div>
+            </button>
             </a>
 
             <a v-if="admin" href="/mobilities/create">
-            <div class="admin-menu__item" >
+            <button :class="{active: active == 'mobilities'}" class="admin-menu__item" >
                 Mobility Advisories
-            </div>
+            </button>
             </a>
 
             <a v-if="admin" href="/interactivelevels/create">
-            <div class="admin-menu__item" >
+            <button :class="{active: active == 'interactive'}" class="admin-menu__item" >
                 Interactive Levels
-            </div>
+            </button>
             </a>
 
             <a v-if="admin" href="/master/userlist">
-            <div class="admin-menu__item" >
+            <button :class="{active: active == 'users'}" class="admin-menu__item" >
                 Edit Users
-            </div>
+            </button>
             </a>
 
             <a v-if="admin" href="/admin/events">
-            <div class="admin-menu__item" >
+            <button :class="{active: active == 'events'}" class="admin-menu__item" >
                 Edit Events
-            </div>
+            </button>
             </a>
             <a v-if="admin" href="/admin/boneyard">
-            <div class="admin-menu__item" >
+            <button :class="{active: active == 'boneyard'}" class="admin-menu__item" >
                 Boneyard
-            </div>
+            </button>
             </a>
 
             <a href="/admin/organizer">
-            <div class="admin-menu__item" >
+            <button :class="{active: active == 'organizers'}" class="admin-menu__item" >
                 Edit Organizers
-            </div>
+            </button>
             </a>
 
             <a href="/reviewevents/create">
-            <div class="admin-menu__item" >
+            <button :class="{active: active == 'reviews'}" class="admin-menu__item" >
                 Event Reviews
-            </div>
+            </button>
             </a>
 
             <a href="/staffpicks/create">
-            <div class="admin-menu__item" >
+            <button :class="{active: active == 'picks'}" class="admin-menu__item" >
                 Picks Of The Week
-            </div>
+            </button>
             </a>
 
              <a href="/finish/events">
-                <div class="admin-menu__item">
+                <button :class="{active: active == 'approve'}" class="admin-menu__item" >
                     <div v-if="user.needsApproval" class="admin-menu__notification">
                         <p>{{user.needsApproval}}</p>
                     </div>
                     Approve Events
-                </div>
+                </button>
             </a>
         </div>
     </nav>
@@ -107,13 +108,33 @@
                 user: this.loaduser ? this.loaduser : '',
                 admin: this.loaduser.type == 'a' ? true : false,
                 mod: this.loaduser.type == 'm' ? true : false,
+                active: '',
             };
         },
 
         methods: {
-            
+            onLoad() {
+                let path = new URL(window.location.href).pathname;
+                path == '/categories/create' ? this.active = 'categories' : '';
+                path == '/genres/create' ? this.active = 'tags' : '';
+                path == '/contactlevels/create' ? this.active = 'contact' : '';
+                path == '/remotelocations/create' ? this.active = 'remote' : '';
+                path == '/contentadvisories/create' ? this.active = 'content' : '';
+                path == '/mobilities/create' ? this.active = 'mobilities' : '';
+                path == '/interactivelevels/create' ? this.active = 'interactive' : '';
+                path == '/master/userlist' ? this.active = 'users' : '';
+                path == '/admin/events' ? this.active = 'events' : '';
+                path == '/admin/boneyard' ? this.active = 'boneyard' : '';
+                path == '/admin/organizer' ? this.active = 'organizers' : '';
+                path == '/reviewevents/create' ? this.active = 'reviews' : '';
+                path == '/staffpicks/create' ? this.active = 'picks' : '';
+                path == '/finish/events' ? this.active = 'approve' : '';
+            }
         },
 
+        mounted() {
+            this.onLoad();
+        },  
     }
 </script>
 

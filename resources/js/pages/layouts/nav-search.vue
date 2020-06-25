@@ -20,14 +20,12 @@
         @input="searchInput"
         :show-no-results="false"
         :allow-empty="false">
-            <template 
-            slot="selection" 
-            slot-scope="{ values, search, isOpen }">
-                <span 
-                class="multiselect__single" 
-                v-if="values.length &amp;&amp; !isOpen">
-                    {{ values.length }} options selected
-                </span>
+             <template slot="option" slot-scope="props">
+                <div class="option__desc">
+                    <span class="option__title">
+                        {{ props.option.name }}
+                    </span>
+                </div>
             </template>
         </multiselect>      
     </div>

@@ -4,6 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use App\Scopes\DateScope;
 
 class Show extends Model
 {
@@ -13,6 +14,16 @@ class Show extends Model
     * @var array
     */
 	protected $fillable = ['date','event_id'];
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::addGlobalScope(new DateScope);
+    }
 
 	/**
      * Show Model belongs to the Event Model
@@ -34,26 +45,25 @@ class Show extends Model
         return $this->morphMany(Ticket::class, 'ticket');
     }
 
-    /**
-     * Delete Tickets and Old Shows
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
-     */
-    public static function deleteOld($request, $event)
-    {
-        $showDelete = $event->shows()->whereNotIn('date', $request->dates)->get();
-        foreach($showDelete as $show){
-            $show->tickets()->delete();
-        }
-        $event->shows()->whereNotIn('date', $request->dates)->delete();
-    }
-
     public static function saveAlwaysShow($request, $event)
     {
+
+        // check to see if tickets exists for this show and save them as $old_tickets
+        if ($event->shows()->exists() && $event->shows()->first()->tickets()->exists()) {
+            $old_tickets = $event->shows()->first()->tickets()->get();
+        } else {
+            $old_tickets = null;
+        }
+
+        //  delete old tickets assigned to this show
         foreach($event->shows as $show){
             $show->tickets()->delete();
         }
+
+        // delete all shows assigned to event
         $event->shows()->delete();
+
+        // add showongoing model to event
         $event->showOnGoing()->update([
             'mon' => true,
             'tue' => true,
@@ -63,16 +73,23 @@ class Show extends Model
             'sat' => true,
             'sun' => true,
         ]);
+
+        // create a new single show for the event 6 months from now
         $show = $event->shows()->create([
             'date' => Carbon::now()->addMonths(6)->format('Y-m-d H:i:s'),
         ]);
-        foreach ($request->tickets as $ticket) {
-             $show->tickets()->updateOrCreate([
-                'name' => $ticket['name'],
-            ],
-            [
-                'ticket_price' => str_replace('$', '', $ticket['ticket_price'])
-            ]);
+       
+       // update that single show with tickets saved from earlier
+        if ($old_tickets) {
+            foreach ($old_tickets as $ticket) {
+                 $show->tickets()->updateOrCreate([
+                    'name' => $ticket['name'],
+                ],
+                [
+                    'description' => $ticket['description'],
+                    'ticket_price' => str_replace('$', '', $ticket['ticket_price'])
+                ]);
+            }
         }
     }
 
@@ -83,22 +100,40 @@ class Show extends Model
      */
     public static function saveNewShows($request, $event)
     {
+        // check to see if tickets exists for this show and save them as $old_tickets
+        if ($event->shows()->exists() && $event->shows()->first()->tickets()->exists()) {
+            $old_tickets = $event->shows()->first()->tickets()->get();
+        } else {
+            $old_tickets = null;
+        }
+
+        // Delete all old shows
+        $showDelete = $event->shows()->whereNotIn('date', $request->dates)->get();
+        foreach($showDelete as $show){
+            $show->tickets()->delete();
+        }
+        $event->shows()->whereNotIn('date', $request->dates)->delete();
+
+        //  for each date do this
         foreach( $request->dates as $date) {
+
+            //  for each show update or create. This means if I have a lot of overlapping dates I don't delete all of them
             $show = Show::updateOrCreate([
                 'date' => $date,
                 'event_id' => $event->id
             ]);
-            foreach ($request->tickets as $ticket) {
-                $ticketname[] = $ticket['name'];
-            };
-            $show->tickets()->whereNotIn('name', $ticketname)->delete();
-            foreach ($request->tickets as $ticket) {
-                 $show->tickets()->updateOrCreate([
-                    'name' => $ticket['name'],
-                ],
-                [
-                    'ticket_price' => str_replace('$', '', $ticket['ticket_price'])
-                ]);
+
+            // if tickets were already entered, add them to the new dates
+            if ($old_tickets) {
+                foreach ($old_tickets as $ticket) {
+                    $show->tickets()->updateOrCreate([
+                        'name' => $ticket['name'],
+                    ],
+                    [
+                        'description' => $ticket['description'],
+                        'ticket_price' => str_replace('$', '', $ticket['ticket_price'])
+                    ]);
+                }
             }
         };
     }
@@ -110,6 +145,7 @@ class Show extends Model
      */
     public static function updateEvent($request, $event)
     {
+        //  get the last date based on show type
         if ($request->shows) {
             $lastDate = $event->shows()->orderBy('date', 'DESC')->first()->date;
         }
@@ -120,29 +156,8 @@ class Show extends Model
             $lastDate = Carbon::now()->addMonths(6)->format('Y-m-d H:i:s');
         }
 
-        $event->priceranges()->delete();
-
-        foreach ($request->tickets as $ticket) {
-            $event->priceranges()->Create([
-                'price' => $ticket['ticket_price']
-            ]);
-            $array[] = $ticket['ticket_price'] + 0;
-        }
-        rsort($array);
-        if (last($array) == 0) {
-            $first = 'free';
-        } else {
-            $first = '$'. last($array);
-        }
-        if (sizeof($array) > 1) {
-            $pricerange = $first . ' - ' . '$' . $array[0];
-        } else {
-            $pricerange = '$' . $array[0];
-        }
-
         $event->update([
             'show_times' => $request->showtimes,
-            'price_range' => $pricerange,
             'embargo_date' => $request->embargo_date,
             'closingDate' => $lastDate,
             'showtype' => $request->shows ? 's' : ($request->onGoing ? 'o' : 'a'),

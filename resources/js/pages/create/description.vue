@@ -87,7 +87,7 @@
             <button :disabled="disabled" @click.prevent="onSubmit('exit')" class="nav-back-button"> Save and Exit </button>
         </div>
         <div class="create-button__back">
-            <button :disabled="disabled" class="create" @click.prevent="onBack('shows')"> Back </button>
+            <button :disabled="disabled" class="create" @click.prevent="onBack('tickets')"> Back </button>
         </div>
         <div class="create-button__forward">
             <button :disabled="disabled" class="create" @click.prevent="onSubmit()"> Save and continue </button>

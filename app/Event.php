@@ -78,6 +78,7 @@ class Event extends Model
         return [
             'id' => $this->id,
             'name' => $this->name,
+            // 'published_at' => $this->published_at,
             'showtype' => $this->showtype,
             'closingDate' => $this->closingDate,
             'priceranges' => $this->pricerangesSelect,
@@ -341,9 +342,6 @@ class Event extends Model
         if ($event->ticketUrl == null) {
             $event->update([ 'ticketUrl' => $website ]);
         }
-        $event->update([
-            'status' => 'r',
-        ]);
     }
 
     /**

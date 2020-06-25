@@ -2,7 +2,7 @@
 	<div class="event-create__advisories grid">
         <section class="event-create">
             <div class="title">
-                <h2>Contact Advisories</h2>
+                <h2>Physical Contact Advisories</h2>
             </div>
             <div class="field">
                 <label class="area">Select physical interaction level with guests</label>

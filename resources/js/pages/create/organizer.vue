@@ -277,8 +277,10 @@ export default {
         },
 
         onSubmit() {
+
             if (this.checkVuelidate()) { return false };
             this.appendData()
+
             axios.post(this.endPoint, this.formData)
             .then(res => { 
                 this.onFinishOrganizer('/create-event/edit');
@@ -310,7 +312,7 @@ export default {
         },
 
         validateText(str) {
-            return str && str.startsWith("http") || str.startsWith("@") ? true : false
+            return str && str.startsWith("http") || str && str.startsWith("@") ? true : false
         },
 
         //checks to see if passed variable is in the server errors

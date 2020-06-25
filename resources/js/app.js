@@ -104,6 +104,7 @@ Vue.component('create-title', () => import('./pages/create/title.vue'));
 Vue.component('create-image', () => import('./pages/create/image.vue'));
 Vue.component('create-date-picker', () => import('./pages/create/datepicker.vue'));
 Vue.component('create-shows', () => import('./pages/create/shows.vue'));
+Vue.component('vue-create-tickets', () => import('./pages/create/tickets.vue'));
 Vue.component('show-listing', () => import('./pages/create/show-listing.vue'));
 Vue.component('create-description', () => import('./pages/create/description.vue'));
 Vue.component('create-advisories', () => import('./pages/create/advisories.vue'));
@@ -179,7 +180,6 @@ if(document.getElementById("header")){
 	const header = new Vue({
     	el: '#header',
         store,
-        
 	});
 };
 if(document.getElementById("create")){

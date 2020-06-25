@@ -17,6 +17,7 @@
             <div>
                 {{event.name}}
             </div>
+            <a :href="`/events/${event.slug}`"><button class="default">view</button></a>
             <a :href="`/create-event/${event.slug}/title`"><button class="default">edit</button></a>
         </div>
          <div class="pagination-button">

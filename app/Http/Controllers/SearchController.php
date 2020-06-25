@@ -44,13 +44,21 @@ class SearchController extends Controller
 
     public function onlinesearch(Request $request)
     {
-        $searchedevents = Event::limit(4)
+
+        foreach (Event::where('status', 'p')->with('priceranges')->get() as $event) {
+            foreach ($event->priceranges as $price) {
+                $array[] = $price['price'];
+            }
+        }
+        // get an array of all the prices from published events
+        $maxprice =  ceil(max($array));
+        //  get the max price of that array
+        $searchedevents = Event::limit(12)
                         ->where('status', 'p')
                         ->with(['location', 'organizer'])
-                        ->get(); 
-
+                        ->get();
         $categories = Category::all();
-        return view('events.searchonline',compact('searchedevents', 'categories'));
+        return view('events.searchonline',compact('searchedevents', 'categories', 'maxprice'));
     }
 
     public function filterIndex(Request $request)
@@ -139,7 +147,7 @@ class SearchController extends Controller
 
         $concatdata = $category->concat($remote)->concat($tag)->concat($event)->concat($organizer);
 
-        if ($concatdata->count()) {
+        if ($concatdata->count() > 8) {
             return [
                 'data' => $concatdata,
             ];
@@ -157,12 +165,9 @@ class SearchController extends Controller
             ->get();
         }
 
-        if ($city->count()) {
-            return [
-                'data' => $city,
-            ];
-        }
-
+        return [
+            'data' => $concatdata->concat($city),
+        ];
     }
 
     public function searchLocation(Request $request)
@@ -239,12 +244,16 @@ class SearchController extends Controller
 
     public function searchRemote(Request $request)
     {
-        return $events =  Event::search('a')
+        if ($request->category || $request->dates || $request->price ) {
+            return $events =  Event::search('a')
             ->rule(EventRemoteSearchRule::class)
             ->with(['location', 'organizer'])
-            ->take(8)
-            ->get();
-    }
-
-    
+            // ->orderBy('published_at', 'desc')
+            ->paginate(12);
+        } else {
+            return $events = Event::where('status', 'p')
+                ->with(['location', 'organizer'])
+                ->paginate(12);
+        }
+    }    
 }

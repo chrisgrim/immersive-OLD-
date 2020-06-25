@@ -105,6 +105,10 @@ Route::PATCH('/create-event/{event}/category', 'CategoryController@add');
 Route::GET('/create-event/{event}/shows', 'ShowsController@create');
 Route::GET('/create-event/{event}/shows/fetch', 'ShowsController@fetch');
 Route::POST('/create-event/{event}/shows', 'ShowsController@store');
+//Create Tickets
+Route::GET('/create-event/{event}/tickets', 'TicketsController@create');
+Route::GET('/create-event/{event}/tickets/fetch', 'TicketsController@fetch');
+Route::POST('/create-event/{event}/tickets', 'TicketsController@store');
 //Create Description
 Route::GET('/create-event/{event}/description', 'DescriptionController@create');
 Route::GET('/create-event/{event}/description/fetch', 'DescriptionController@fetch');

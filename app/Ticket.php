@@ -11,7 +11,7 @@ class Ticket extends Model
     *
     * @var array
     */
-	protected $fillable = ['name','ticket_price','ticket_id', 'ticket_type'];
+	protected $fillable = ['name','ticket_price','ticket_id', 'ticket_type', 'description'];
     
 	/**
      * Ticket Belongs to the Show Model

@@ -49,6 +49,13 @@
                 :iconstatus="this.event.show_times ? 'completed' : 'uncomplete'">
                 </NavMenuItem>
             </a>
+            <a :href="`/create-event/${this.event.slug}/tickets`">
+                <NavMenuItem 
+                :active="{active : url == `/create-event/${this.event.slug}/tickets`}" 
+                name="Tickets" 
+                :iconstatus="this.event.price_range ? 'completed' : 'uncomplete'">
+                </NavMenuItem>
+            </a>
             <a :href="`/create-event/${this.event.slug}/description`">
                 <NavMenuItem 
                 :active="{active : url == `/create-event/${this.event.slug}/description`}" 

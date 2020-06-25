@@ -10,13 +10,15 @@
 </template>
 
 <script>
+    import formValidationMixin from '../../mixins/form-validation-mixin'
     
     import { required, maxLength } from 'vuelidate/lib/validators';
 
     export default {
-        props: {
-            event: { type:Object },
-        },
+
+        mixins: [formValidationMixin],
+
+        props: ['event'],
 
         data() {
             return {
@@ -32,8 +34,12 @@
            
             onSubmit() {
                 this.disabled = true;
-                axios.get(`${this.eventUrl}/submit`);
-                window.location.href = `${this.eventUrl}/thankyou`;
+                axios.get(`${this.eventUrl}/submit`)
+                .then(res => {
+                   window.location.href = `${this.eventUrl}/thankyou`;
+                })
+                .catch(err => { this.onErrors(err) });
+    
             },
 
             goBack() {

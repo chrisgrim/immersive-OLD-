@@ -19,6 +19,7 @@ state: {
     user: {},
     map: false,
     mobile: true,
+    searchtype: 'Immersive Online',
   },
   
 mutations: {
@@ -30,6 +31,9 @@ mutations: {
     },
     ismobile (state, mobile) {
         state.mobile = mobile
+    },
+    searchtype (state, searchtype) {
+        state.searchtype = searchtype
     },
   },
   

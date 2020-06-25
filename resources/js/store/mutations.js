@@ -2,6 +2,9 @@ let mutations = {
         adduser(state, user) {
           state.user = user
         },
+        addsearchtype(state, searchtype) {
+          state.searchtype = searchtype
+        },
         CREATE_EVENT(state, event) {
             state.events.unshift(event)
         },

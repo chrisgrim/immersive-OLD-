@@ -100,6 +100,7 @@
                             </div>
                             <div class="message-show__username">
                                 {{owner.name}}
+                                <b v-if="owner.type == 'a'">admin</b>
                             </div>
                         </div>
                     </div>
@@ -121,6 +122,7 @@
                             </div>
                             <div class="message-show__username">
                                 {{message.user.name}}
+                                <b v-if="message.user.type == 'a'">admin</b>
                             </div>
                         </div>
                         <div class="field">
