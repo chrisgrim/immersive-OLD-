@@ -11,6 +11,8 @@ import { Icon }  from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 import VueFilterDateFormat from '@vuejs-community/vue-filter-date-format';
+import Dayjs from 'vue-dayjs';
+
 
 
 
@@ -26,14 +28,16 @@ import VueFilterDateFormat from '@vuejs-community/vue-filter-date-format';
 
 window.axios = require('axios');
 window.Vue = require('vue');
-
+Vue.use(Dayjs);
 Vue.use(Vuelidate);
 Vue.use(VueFilterDateFormat);
+
 
 Vue.use(require('vue-cookies'));
 // require('./bootstrap');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
 
 /**
  * Next we will register the CSRF Token as a common header with Axios so that

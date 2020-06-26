@@ -129,7 +129,7 @@ class AdminAreaController extends Controller
      */
     public function showApproval(Event $event)
     {
-        $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'eventreviews', 'staffpick', 'advisories', 'showOnGoing','interactive_level', 'remotelocations');
+        $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'eventreviews', 'staffpick', 'advisories', 'showOnGoing','interactive_level', 'remotelocations', 'timezone');
         return view('adminArea.showapproval',compact('event'));
     }
 
@@ -141,8 +141,9 @@ class AdminAreaController extends Controller
      */
     public function success(Event $event)
     {
-        $event = $event->load('user');
-
+        
+        $event = $event->load('user', 'timezone');
+        
         $slug = Event::finalSlug($event);
         
         MakeImage::renameImage($event, $slug, 'event', null);
@@ -151,14 +152,14 @@ class AdminAreaController extends Controller
             $event->update([
                 'status' => 'e',
                 'slug' => $slug,
-                'published_at' => Carbon::now(),
+                'published_at' => Carbon::now()->format('Y-m-d H:i:s'),
             ]);
             Message::eventnotification($event, 'Thanks, your event has been approved and will be displayed on your chosen date.', $slug);
         } else {
             $event->update([
                 'status' => 'p',
                 'slug' => $slug,
-                'published_at' => Carbon::now(),
+                'published_at' => Carbon::now()->format('Y-m-d H:i:s'),
             ]);
             Message::eventnotification($event, 'Thanks, your event has been approved!', $slug);
         }

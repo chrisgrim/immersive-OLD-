@@ -4,6 +4,22 @@
 		"selected_items":
 		[
 			[
+				"rem",
+				"remaining"
+			],
+			[
+				"time",
+				"timezone"
+			],
+			[
+				"pri",
+				"pricerange"
+			],
+			[
+				"defau",
+				"defaultNames"
+			],
+			[
 				"pub",
 				"published_at"
 			],
@@ -452,10 +468,6 @@
 				"embargo_date"
 			],
 			[
-				"rem",
-				"remoteLocation"
-			],
-			[
 				"remotelo",
 				"remotelocations"
 			],
@@ -502,18 +514,6 @@
 			[
 				"grid-te",
 				"grid-template-columns\tproperty"
-			],
-			[
-				"Event",
-				"EventDatesRule"
-			],
-			[
-				"ad",
-				"adjustCalendar"
-			],
-			[
-				"padd",
-				"padding-bottom\tproperty"
 			]
 		]
 	},
@@ -529,47 +529,13 @@
 			}
 		},
 		{
-			"file": "app/Http/Controllers/SearchController.php",
+			"contents": "Searching 87 files for \"dateFormat\" (regex)\n\n/Users/chrisgrim/code/ei/resources/js/pages/adminArea/admin-staff-picks.vue:\n  164                      inline: true,\n  165                      showMonths: 2,\n  166:                     dateFormat: 'Y-m-d H:i:s',\n  167                      onClose: [this.dateFunc()], \n  168                  },\n  ...\n  174                      inline: false,\n  175                      showMonths: 2,\n  176:                     dateFormat: 'Y-m-d H:i:s',\n  177                      onClose: [this.listDateFunc()], \n  178                  },\n\n/Users/chrisgrim/code/ei/resources/js/pages/create/datepicker_old.vue:\n   91      data() {\n   92          return {\n   93:             dateFormat: 'D MMM',\n   94              dateOne: '',\n   95              dateTwo: '',\n   ..\n  105  \n  106              if (dateOne) {\n  107:                     formattedDates = format(dateOne, this.dateFormat)\n  108              }\n  109              return formattedDates\n  ...\n  114  \n  115              if (dateTwo) {\n  116:                 formattedDates = format(dateTwo, this.dateFormat)\n  117              }\n  118              return formattedDates\n\n/Users/chrisgrim/code/ei/resources/js/pages/create/review-event.vue:\n  498                      inline: true,\n  499                      showMonths: 2,\n  500:                     dateFormat: 'Y-m-d H:i:s',    \n  501                  },\n  502                  configMob: {\n  ...\n  506                      inline: true,\n  507                      showMonths: 1,\n  508:                     dateFormat: 'Y-m-d H:i:s',    \n  509                  },\n  510                  searchUrl: '',\n\n/Users/chrisgrim/code/ei/resources/js/pages/create/shows.vue:\n  446                  inline: true,\n  447                  showMonths: 2,\n  448:                 dateFormat: 'Y-m-d H:i:s',     \n  449              }\n  450          },\n  ...\n  457                  inline: true,\n  458                  showMonths: 1,\n  459:                 dateFormat: 'Y-m-d H:i:s',     \n  460              }\n  461          },\n  ...\n  468                  inline: true,\n  469                  showMonths: 1,\n  470:                 dateFormat: 'Y-m-d H:i:s',     \n  471              }\n  472          },\n\n/Users/chrisgrim/code/ei/resources/js/pages/events/components/event-edit-item.vue:\n   23              </div>\n   24               <div class=\"card-inprogress\" v-if=\"event.status == 'e'\">\n   25:                 <p><b>Goes Live <br> {{ new Date(event.embargo_date) | dateFormat('MMM DD, YYYY')}} </b></p>\n   26              </div>\n   27          </a>\n\n/Users/chrisgrim/code/ei/resources/js/pages/events/components/filter-remote.vue:\n  299                      inline: true,\n  300                      showMonths: window.innerWidth < 768 ? 1 : 2,\n  301:                     dateFormat: 'Y-m-d H:i:s',\n  302                      onClose: [this.dateFunc()], \n  303                  }\n\n/Users/chrisgrim/code/ei/resources/js/pages/events/event-search.vue:\n  267                      inline: true,\n  268                      showMonths: window.innerWidth < 768 ? 1 : 2,\n  269:                     dateFormat: 'Y-m-d H:i:s',\n  270                      onClose: [this.dateFunc()], \n  271                  }\n\n/Users/chrisgrim/code/ei/resources/js/pages/events/event-show.vue:\n  527                      inline: true,\n  528                      showMonths: 2,\n  529:                     dateFormat: 'Y-m-d H:i:s',    \n  530                  },\n  531                  configMob: {\n  ...\n  535                      inline: true,\n  536                      showMonths: 1,\n  537:                     dateFormat: 'Y-m-d H:i:s',    \n  538                  },\n  539                  searchUrl: '',\n\n/Users/chrisgrim/code/ei/resources/js/pages/messages/components/message-index-tab.vue:\n   22                          <p><b>{{user.name}}</b></p>\n   23                          <div v-if=\"firstMessage(index)\" v-for=\"(message, index) in conversation.messages\" class=\"desktop\">\n   24:                             <p><span>{{new Date(message.updated_at) | dateFormat('MMM DD, YYYY')}}</span></p>\n   25                          </div>\n   26                          <div v-if=\"firstMessage(index)\" v-for=\"(message, index) in conversation.messages\" class=\"message-index__message mobile\">\n   ..\n   41                      <p><b>{{conversation.modmessages[0].event.name}}</b></p>\n   42                      <div v-if=\"firstMessage(index)\" v-for=\"(message, index) in conversation.modmessages\" class=\"desktop\">\n   43:                         <p><span>{{ new Date(message.updated_at) | dateFormat('MMM DD, YYYY')}}</span></p>\n   44                      </div>\n   45                      <div v-if=\"firstMessage(index)\" v-for=\"(message, index) in conversation.modmessages\" class=\"message-index__message mobile\">\n   ..\n   54                  </div>\n   55                  <div v-if=\"firstMessage(index)\" v-for=\"(message, index) in conversation.messages\" class=\"message-index__mdates mobile\">\n   56:                     <p><span>{{ new Date(message.updated_at) | dateFormat('MMM DD, YYYY')}}</span></p>\n   57                  </div>\n   58              </div>\n   ..\n   63                  </div>\n   64                  <div v-if=\"firstMessage(index)\" v-for=\"(message, index) in conversation.modmessages\" class=\"message-index__mdates mobile\">\n   65:                     <p><span>{{ new Date(message.updated_at) | dateFormat('MMM DD, YYYY')}}</span></p>\n   66                  </div>\n   67              </div> \n\n/Users/chrisgrim/code/ei/resources/js/pages/messages/message-show.vue:\n   80                                  </div>\n   81                                  <div class=\"messages-show__element-date\">\n   82:                                     {{ new Date(message.created_at) | dateFormat('MMM DD, YYYY')}}\n   83                                  </div>\n   84                              </div>\n   ..\n  132                                  </div>\n  133                                  <div class=\"messages-show__element-date\">\n  134:                                     {{ new Date(message.created_at) | dateFormat('MMM DD, YYYY')}}\n  135                                  </div>\n  136                              </div>\n\n/Users/chrisgrim/code/ei/resources/js/pages/profile/profile-index.vue:\n  138                  <div class=\"info\">\n  139                      <div class=\"profile-user-info\">\n  140:                         Member since {{ new Date(user.created_at) | dateFormat('YYYY') }}\n  141                      </div>\n  142                      <div v-if=\"canEditPage\" class=\"profile-user-edit\" @click=\"onEditUser = true\">\n\n22 matches across 11 files\n",
 			"settings":
 			{
-				"buffer_size": 7582,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "resources/js/pages/layouts/nav-search.vue",
-			"settings":
-			{
-				"buffer_size": 3516,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "resources/js/pages/events/components/filter-remote.vue",
-			"settings":
-			{
-				"buffer_size": 18686,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "app/Event.php",
-			"settings":
-			{
-				"buffer_size": 12295,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "<template slot=\"singleLabel\" slot-scope=\"props\">\n                <img class=\"option__image\" :src=\"props.option.img\" alt=\"No Man’s Sky\">\n                <span class=\"option__desc\">\n                <span class=\"option__title\">\n                    {{ props.option.name }}</span>\n                </span>\n            </template>\n             <template slot=\"option\" slot-scope=\"props\">\n                <div class=\"option__desc\">\n                    <span class=\"option__title\">\n                        <div style=\"display:inline-block\">\n                            <svg viewBox=\"0 0 24 24\" fill=\"currentColor\" fill-opacity=\"0\" stroke=\"currentColor\" stroke-width=\"1.5\" focusable=\"false\" aria-hidden=\"true\" role=\"presentation\" stroke-linecap=\"round\" stroke-linejoin=\"round\" style=\"height: 24px; width: 24px; display: inline-block; overflow: visible;\"><path d=\"M18,19c2.6,0,4.6-1.2,4.5-3.5v-9C22.5,4,20.5,2,18,2H6C3.5,2,1.5,4,1.5,6.5v9c0,2.3,2,3.5,4.5,3.5h2.6 c0.6,0,1.1,0.3,1.5,0.8l1.9,2.7l1.4-2.3c0.2-0.3,0.5-0.6,0.8-0.8c0.4-0.2,0.9-0.4,1.3-0.4H18z\"/></svg>\n                        </div>\n                        {{ props.option.name }}\n                    </span>\n                    <span class=\"option__small\">\n                        {{ props.option.desc }}\n                    </span>\n                </div>\n            </template>",
-			"settings":
-			{
-				"buffer_size": 1330,
-				"line_ending": "Unix"
+				"buffer_size": 6659,
+				"line_ending": "Unix",
+				"name": "Find Results",
+				"scratch": true
 			}
 		}
 	],
@@ -626,46 +592,60 @@
 		"/Users/chrisgrim/code/ei/app",
 		"/Users/chrisgrim/code/ei/app/Http",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers",
-		"/Users/chrisgrim/code/ei/database",
 		"/Users/chrisgrim/code/ei/resources",
 		"/Users/chrisgrim/code/ei/resources/js",
 		"/Users/chrisgrim/code/ei/resources/js/components",
 		"/Users/chrisgrim/code/ei/resources/js/mixins",
 		"/Users/chrisgrim/code/ei/resources/js/pages",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create",
-		"/Users/chrisgrim/code/ei/resources/js/pages/events",
-		"/Users/chrisgrim/code/ei/resources/js/pages/events/components",
+		"/Users/chrisgrim/code/ei/resources/js/pages/profile",
+		"/Users/chrisgrim/code/ei/resources/js/pages/profile/components",
 		"/Users/chrisgrim/code/ei/resources/sass",
-		"/Users/chrisgrim/code/ei/resources/sass/events",
-		"/Users/chrisgrim/code/ei/resources/sass/nav",
 		"/Users/chrisgrim/code/ei/resources/views",
 		"/Users/chrisgrim/code/ei/resources/views/create",
 		"/Users/chrisgrim/code/ei/routes"
 	],
 	"file_history":
 	[
-		"/Users/chrisgrim/Library/Application Support/Sublime Text 3/Packages/User/SFTP.errors.log",
+		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-show.vue",
+		"/Users/chrisgrim/code/ei/resources/js/pages/create/review-event.vue",
+		"/Users/chrisgrim/code/ei/resources/js/pages/profile/profile-index.vue",
+		"/Users/chrisgrim/code/ei/resources/js/app.js",
+		"/Users/chrisgrim/code/ei/app/AdminArea.php",
+		"/Users/chrisgrim/code/ei/.env",
 		"/Users/chrisgrim/code/ei/app/Event.php",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/AdminAreaController.php",
+		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/approve/approval-bar.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/tickets.vue",
-		"/Users/chrisgrim/code/ei/app/Show.php",
-		"/Users/chrisgrim/code/ei/resources/sass/create/shows.scss",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/TicketsController.php",
+		"/Users/chrisgrim/code/ei/resources/js/pages/create/review.vue",
+		"/Users/chrisgrim/code/ei/resources/js/pages/create/shows.vue",
+		"/Users/chrisgrim/code/ei/app/Timezone.php",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/EventController.php",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/ShowsController.php",
+		"/Users/chrisgrim/code/ei/app/Show.php",
+		"/Users/chrisgrim/code/ei/resources/views/create/show.blade.php",
+		"/Users/chrisgrim/code/ei/database/migrations/2020_06_25_222733_add_timezone_id_to_events_table.php",
+		"/Users/chrisgrim/code/ei/database/migrations/2020_06_25_221305_create_timezones_table.php",
+		"/Users/chrisgrim/code/ei/database/migrations/2020_06_25_204502_add_time_zone_to_events_table.php",
+		"/Users/chrisgrim/code/ei/resources/js/pages/create/nav.vue",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/SearchController.php",
+		"/Users/chrisgrim/code/ei/resources/js/pages/layouts/nav-search.vue",
+		"/Users/chrisgrim/code/ei/resources/sass/slowlayout.scss",
+		"/Users/chrisgrim/code/ei/resources/sass/auth/register.scss",
+		"/Users/chrisgrim/code/ei/resources/sass/auth/login.scss",
+		"/Users/chrisgrim/code/ei/resources/js/pages/events/components/filter-remote.vue",
+		"/Users/chrisgrim/Library/Application Support/Sublime Text 3/Packages/User/SFTP.errors.log",
+		"/Users/chrisgrim/code/ei/resources/sass/create/shows.scss",
 		"/Users/chrisgrim/code/ei/app/Http/Requests/TicketStoreRequest.php",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/organizer.vue",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/ShowsController.php",
 		"/Users/chrisgrim/code/ei/app/Ticket.php",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/description.vue",
-		"/Users/chrisgrim/code/ei/resources/js/pages/create/nav.vue",
-		"/Users/chrisgrim/code/ei/resources/js/pages/create/shows.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/advisories.vue",
-		"/Users/chrisgrim/code/ei/resources/js/pages/layouts/nav-search.vue",
 		"/Users/chrisgrim/code/ei/resources/views/create/ticket.blade.php",
-		"/Users/chrisgrim/code/ei/resources/js/app.js",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/SearchController.php",
 		"/Users/chrisgrim/code/ei/resources/sass/nav/navbar.scss",
 		"/Users/chrisgrim/code/ei/resources/sass/adminarea/nav.scss",
 		"/Users/chrisgrim/code/ei/resources/js/pages/layouts/nav.vue",
-		"/Users/chrisgrim/code/ei/resources/js/pages/events/components/filter-remote.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/admin-events.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/nav.vue",
 		"/Users/chrisgrim/code/ei/resources/js/store/index.js",
@@ -676,7 +656,6 @@
 		"/Users/chrisgrim/code/ei/resources/js/store/getters.js",
 		"/Users/chrisgrim/code/ei/resources/js/store/state.js",
 		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-index.vue",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/EventController.php",
 		"/Users/chrisgrim/code/ei/resources/views/events/searchonline.blade.php",
 		"/Users/chrisgrim/code/ei/app/EventRemoteSearchRule.php",
 		"/Users/chrisgrim/code/ei/app/Scopes/DateScope.php",
@@ -684,8 +663,6 @@
 		"/Users/chrisgrim/code/ei/sftp-config.json",
 		"/Users/chrisgrim/code/ei/sftp-config-alt.json",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/image.vue",
-		"/Users/chrisgrim/code/ei/resources/js/pages/create/review.vue",
-		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-show.vue",
 		"/Users/chrisgrim/code/ei/resources/sass/events/event-index.scss",
 		"/Users/chrisgrim/code/ei/resources/sass/events/event-show.scss",
 		"/Users/chrisgrim/code/ei/app/Scopes/PublishedScope.php",
@@ -694,7 +671,6 @@
 		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/admin-boneyard.vue",
 		"/Users/chrisgrim/code/ei/routes/api.php",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/title.vue",
-		"/Users/chrisgrim/code/ei/resources/js/pages/create/review-event.vue",
 		"/Users/chrisgrim/code/ei/resources/views/events/index.blade.php",
 		"/Users/chrisgrim/code/ei/resources/js/components/LoadMore.js",
 		"/Users/chrisgrim/code/ei/resources/views/layouts/meta.blade.php",
@@ -702,8 +678,6 @@
 		"/Users/chrisgrim/code/ei/resources/js/pages/layouts/login-pop.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/organizers/organizer-show.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/layouts/footer.vue",
-		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/approve/approval-bar.vue",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/AdminAreaController.php",
 		"/Users/chrisgrim/code/ei/config/app.php",
 		"/Users/chrisgrim/code/ei/app/ShowOnGoing.php",
 		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/admin-event-reviews.vue",
@@ -723,7 +697,6 @@
 		"/Users/chrisgrim/code/ei/resources/views/emails/event-rejected.blade.php",
 		"/Users/chrisgrim/code/ei/app/Mail/EventRejected.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/ConversationsController.php",
-		"/Users/chrisgrim/code/ei/resources/sass/slowlayout.scss",
 		"/Users/chrisgrim/code/ei/app/Mail/ContactOrganizer.php",
 		"/Users/chrisgrim/code/ei/resources/views/emails/contact-organizer.blade.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/OrganizerController.php",
@@ -754,7 +727,6 @@
 		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-search.vue",
 		"/Users/chrisgrim/code/ei/resources/sass/organizer.scss",
 		"/Users/chrisgrim/code/ei/app/EventMapSearchRule.php",
-		"/Users/chrisgrim/code/ei/.env",
 		"/Users/chrisgrim/code/ei/resources/views/layouts/master.blade.php",
 		"/Users/chrisgrim/code/ei/resources/sass/events/components/search-filters.scss",
 		"/Users/chrisgrim/code/ei/resources/sass/layout.scss",
@@ -762,16 +734,7 @@
 		"/Users/chrisgrim/code/ei/resources/sass/app.scss",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/location-google.vue",
 		"/Users/chrisgrim/code/ei/resources/sass/components/leaflet.scss",
-		"/Users/chrisgrim/code/ei/resources/sass/app-lite.scss",
-		"/Users/chrisgrim/code/ei/resources/sass/components/multiselect.scss",
-		"/Users/chrisgrim/code/ei/resources/js/pages/profile/favorited.vue",
-		"/Users/chrisgrim/code/ei/resources/sass/profile/favorited.scss",
-		"/Users/chrisgrim/code/ei/resources/sass/messages/messages-index.scss",
-		"/Users/chrisgrim/code/ei/resources/sass/profile/notifications.scss",
-		"/Users/chrisgrim/code/ei/resources/sass/profile/account.scss",
-		"/Users/chrisgrim/code/ei/resources/sass/profile/profile.scss",
-		"/Users/chrisgrim/code/ei/app/User.php",
-		"/Users/chrisgrim/code/ei/webpack.js.mix.js"
+		"/Users/chrisgrim/code/ei/resources/sass/app-lite.scss"
 	],
 	"find":
 	{
@@ -782,6 +745,8 @@
 		"height": 164.0,
 		"where_history":
 		[
+			"/Users/chrisgrim/code/ei/resources/js/pages",
+			"/Users/chrisgrim/code/ei/resources/sass",
 			"/Users/chrisgrim/code/ei",
 			"/Users/chrisgrim/code/ei/resources/sass",
 			"/Users/chrisgrim/code/ei",
@@ -885,6 +850,29 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"dateFormat",
+			"dateArray",
+			"dates",
+			"remaining",
+			"[],\n",
+			"timezeone",
+			"event.timezone.description",
+			"showTimes",
+			"p",
+			"audience",
+			"400",
+			"isreview",
+			"class=\"st0\"",
+			"v-if",
+			"span",
+			"2",
+			"test",
+			"},",
+			"margin: 2rem 0rem 1rem 0rem;",
+			".field",
+			".field input",
+			".field",
+			"input",
 			"maxprice",
 			"minValue",
 			"startswith",
@@ -989,30 +977,7 @@
 			"->id",
 			"''",
 			",{$this->organizer->id}",
-			"OrganizerUpdateRequest",
-			"imagePath",
-			"event",
-			"title",
-			"error",
-			"response",
-			"href=\"",
-			"40",
-			"28",
-			"ticketUrl",
-			"websiteUrl",
-			"response",
-			"admin-genres",
-			"deleteeve",
-			"Show Times</label>",
-			"Show Times",
-			"response",
-			"div",
-			"text",
-			"invalid",
-			"error",
-			"twitterHandle",
-			"website",
-			"organizer"
+			"OrganizerUpdateRequest"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -1030,7 +995,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -1058,164 +1023,144 @@
 							"syntax": "Packages/PHP/PHP.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "app/Http/Controllers/SearchController.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 7582,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1387,
-								1387
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/PHP/PHP.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 987.0,
+						"translation.y": 133.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "resources/js/pages/layouts/nav-search.vue",
+					"buffer": 1,
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3516,
+						"buffer_size": 6659,
 						"regions":
 						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										232,
+										242
+									],
+									[
+										458,
+										468
+									],
+									[
+										706,
+										716
+									],
+									[
+										904,
+										914
+									],
+									[
+										1087,
+										1097
+									],
+									[
+										1341,
+										1351
+									],
+									[
+										1550,
+										1560
+									],
+									[
+										1806,
+										1816
+									],
+									[
+										1981,
+										1991
+									],
+									[
+										2156,
+										2166
+									],
+									[
+										2492,
+										2502
+									],
+									[
+										2798,
+										2808
+									],
+									[
+										3116,
+										3126
+									],
+									[
+										3402,
+										3412
+									],
+									[
+										3611,
+										3621
+									],
+									[
+										4060,
+										4070
+									],
+									[
+										4583,
+										4593
+									],
+									[
+										5057,
+										5067
+									],
+									[
+										5405,
+										5415
+									],
+									[
+										5778,
+										5788
+									],
+									[
+										6105,
+										6115
+									],
+									[
+										6470,
+										6480
+									]
+								],
+								"scope": ""
+							}
 						},
 						"selection":
 						[
 							[
-								1255,
-								1255
+								0,
+								0
 							]
 						],
 						"settings":
 						{
+							"detect_indentation": false,
 							"incomplete_sync": null,
+							"line_numbers": false,
+							"output_tag": 1,
 							"remote_loading": false,
+							"result_base_dir": "",
+							"result_file_regex": "^([^ \t].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
 							"synced": false,
-							"syntax": "Packages/Vuejs Complete Package/vue.tmLanguage"
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1325.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "resources/js/pages/events/components/filter-remote.vue",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 18686,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								11948,
-								11956
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/Vuejs Complete Package/vue.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 5255.0,
+						"translation.y": 1426.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "app/Event.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 12295,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2028,
-								2028
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/PHP/PHP.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1330,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1330,
-								1330
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/Vuejs Complete Package/vue.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
 					"type": "text"
 				}
 			]

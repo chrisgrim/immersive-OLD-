@@ -65,6 +65,7 @@ class AdminArea extends Model
                 'Tags' => implode(", ", $genres),
                 'Suggested Tag Line (Internal)' => $event->tag_line,
                 'Ticket Link' => $event->ticketUrl,
+                'Times/Time Zone' => $event->timezone ? $event->timezone->description : ''
             ],
         ]);
     }

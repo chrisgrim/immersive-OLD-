@@ -17,6 +17,8 @@
                 <favorite :user="user" :inputclass="showEventMobileClass" :event="event"></favorite>
             </div>
         </nav>
+
+        <!-- header -->
 		<header class="event-show grid">
 			<div class="header-left">
 				<div class="content">	
@@ -49,8 +51,9 @@
                             <img src="/storage/website-files/calendar.png" alt="">
                             <span v-if="event.showtype=='s'">
                                 <span class="header__show-info">Shows</span>
-                                <span v-if="dateArray && dateArray.length > 1 ? dateArray.length : ''" class="header__show-info bold">{{ dateArray.length }} dates left</span>
-                                <span v-if="dateArray && dateArray.length == 1 ? dateArray.length : ''" class="header__show-info bold">{{ dateArray.length }} date left</span>
+                                <span v-if="remaining && remaining.length > 1 ? remaining.length : ''" class="header__show-info bold">{{ remaining.length }} dates left</span>
+                                <span v-else-if="remaining && remaining.length == 1 ? remaining.length : ''" class="header__show-info bold">{{ remaining.length }} date left</span>
+                                <span v-else class="header__show-info bold">no dates left</span>
                             </span>
                             <span v-if="event.showtype=='o'">
                                 <span class="header__show-info">Shows</span>
@@ -90,8 +93,9 @@
                     <favorite :user="user" :inputclass="showEventClass" :event="event"></favorite>
                 </div>
 			</div>
-		</header>
-	
+        </header>
+	   
+        <!-- About -->
 		<section class="event-show grid two-panel">
             <div class="event-title">
                 <h2>About</h2>
@@ -116,6 +120,8 @@
                 </p>
             </div>
         </section>
+
+        <!-- Reviews -->
         <section v-if="event.eventreviews ? event.eventreviews.length : null" class=" event-show grey event-show-review">
             <div class="content grid two-panel">
                 <div class="left">
@@ -149,6 +155,8 @@
                 </div>
             </div>
         </section>
+
+        <!-- Dates -->
         <section v-if="event.showtype == 's'" class="grid event-show two-panel">
             <div class="event-title">
                 <h2>Show Dates</h2>
@@ -164,6 +172,7 @@
                 </flat-pickr>
                 <div class="event-show-showtimes">
                     <p>Show Details:</p>
+                    <p>{{event.timezone ? event.timezone.description : ''}}</p>
                     <p style="white-space: pre-wrap;">{{event.show_times}}</p>
                 </div>
             </div>
@@ -178,10 +187,13 @@
                 </flat-pickr>
                 <div class="event-show-showtimes">
                     <p>Show Details:</p>
+                    <p>{{event.timezone ? event.timezone.description : ''}}</p>
                     <p style="white-space: pre-wrap;">{{event.show_times}}</p>
                 </div>
             </div>
         </section>
+
+        <!-- Dates On Going -->
         <section v-if="event.show_on_going" class="grid event-show two-panel">
             <div class="event-title">
                 <h2>Show Times</h2>
@@ -229,10 +241,14 @@
                     </div>
                 </div>
                 <div class="weektimes">
+                    <p>Show Details:</p>
+                    <p>{{event.timezone ? event.timezone.description : ''}}</p>
                     <p style="white-space: pre-wrap;">{{event.show_times}}</p>
                 </div>
             </div>
         </section>
+
+        <!-- Details -->
         <section class="grid event-show two-panel">
             <div class="left">
                 <div class="event-title">
@@ -282,7 +298,23 @@
                     </div>
                     <ul class="info">
                         <li>
-                            <p>{{event.advisories.audience}}</p>
+                            <p 
+                            style="white-space: pre-line;" 
+                            v-if="showMore !== 'audience'" 
+                            class="text">{{event.advisories.audience.substring(0,160)}}<span 
+                                class="show-text" 
+                                v-if="event.advisories.audience.length >= 160"
+                                @click="showMore = 'audience'">... Show More
+                                </span>
+                            </p>
+                            <p 
+                            style="white-space: pre-line;" 
+                            v-show="showMore == 'audience'" 
+                            class="text">{{event.advisories.audience}}<span 
+                                class="show-text" 
+                                @click="showMore = null">... Show Less
+                                </span>
+                            </p>
                         </li>
                     </ul>
                 </div>
@@ -298,6 +330,8 @@
                 </div>
             </div>
         </section>
+
+        <!-- Organizer -->
         <section class="grid event-show two-panel">
             <div class="left">
                 <div class="event-title">
@@ -320,11 +354,29 @@
                     </div>
                 </a>
                 <div style="white-space: pre-line;" v-if="event.organizer.description" class="description">
-                    {{event.organizer.description}}
+                    <span 
+                    style="white-space: pre-line;" 
+                    v-if="showMore !== 'organizer'" 
+                    class="text">{{event.organizer.description.substring(0,160)}}<span 
+                        class="show-text" 
+                        v-if="event.organizer.description.length >= 160"
+                        @click="showMore = 'organizer'">... Show More
+                        </span>
+                    </span>
+                    <span 
+                    style="white-space: pre-line;" 
+                    v-show="showMore == 'organizer'" 
+                    class="text">{{event.organizer.description}}<span 
+                        class="show-text" 
+                        @click="showMore = null">... Show Less
+                        </span>
+                    </span>
                 </div>
                 <ContactOrganizer :user="user" :loadorganizer="event.organizer"></ContactOrganizer>
 			</div>
 		</section>
+
+        <!-- location -->
 		<section v-if="bar && event.hasLocation" class="section event-show location">
 			<div>
 				<div class="event-title">
@@ -378,6 +430,8 @@
 				</div>
 			</div>
 		</section>
+
+        <!-- No Location -->
         <section class="event-show grid two-panel" v-if="!event.hasLocation">
             <div class="event-title">
                 <h2>What you will need</h2>
@@ -437,19 +491,6 @@
 		},
 
         computed: {
-
-            dateArray() {
-                if(!Array.isArray(this.dates) && this.dates.includes(",")) {
-                    return this.dates.split(",");
-                } else {
-                    if(!Array.isArray(this.dates)) {
-                        return [this.dates];
-                    } else {
-                        ''
-                    }
-                }
-            },
-
             locationPlaceholder() {
                 return this.event.location.postal_code || this.event.location.city ? (this.event.location.home ? this.event.location.home + ' ' : '') 
                 + (this.event.location.street ? this.event.location.street + ' | ' : '') 
@@ -504,6 +545,9 @@
             getDates() {
                 if(this.event.shows) {
                     this.event.shows.forEach(event=> {
+                        if (this.$dayjs().subtract(1, 'day').format('YYYY-MM-DD 23:59:00') < event.date) {
+                            this.remaining.push(event.date)
+                        }
                         this.dates.push(event.date)
                     });
                 }

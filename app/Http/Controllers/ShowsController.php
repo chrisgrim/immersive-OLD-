@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Event;
 use App\Show;
+use App\Timezone;
 use App\ShowOnGoing;
 use Carbon\Carbon;
 use App\Http\Requests\ShowStoreRequest;
@@ -26,8 +27,9 @@ class ShowsController extends Controller
      */
     public function create(Event $event)
     {
-        $event->load('showOnGoing','shows.tickets');
-        return view('create.show', compact('event'));
+        $event->load('showOnGoing','shows.tickets','timezone');
+        $timezones = Timezone::all()->sortBy('offset')->values();
+        return view('create.show', compact('event', 'timezones'));
     }
 
     /**
@@ -38,7 +40,6 @@ class ShowsController extends Controller
      */
     public function store(Request $request, Event $event)
     {
-
         if($request->onGoing) {
             ShowOnGoing::saveNewShowOnGoing($request, $event, $request->start_date);
             Show::saveNewShows($request, $event);

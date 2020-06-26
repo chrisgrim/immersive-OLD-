@@ -1,5 +1,5 @@
 <template>
-    <nav v-if="isNotReview" class="create" :style="pageHeight">
+    <nav class="create" :style="pageHeight">
     	<div class="grid create-nav-header">
             <div class="create-nav-header__home">
                 <div class="nav-create-logo">
@@ -99,12 +99,12 @@
         components: { NavMenuItem },
 
         computed: {
-            onReview() {
-                return this.url === `/create-event/${this.event.slug}/review` ? true : '';
-            },
-            showBar() {
-                return this.onReview || this.url === `/organizer/create` ? false : true;
-            },
+            // onReview() {
+            //     return this.url === `/create-event/${this.event.slug}/review` ? true : '';
+            // },
+            // showBar() {
+            //     return this.onReview || this.url === `/organizer/create` ? false : true;
+            // },
             backUrl() {
                 return this.user.hasCreatedOrganizers  ? '/create-event/edit' : '/'
             },
@@ -154,9 +154,9 @@
                 }
             },
 
-            isReview() {
-                !this.isNotReview ? this.toggleBodyClass('addClass', 'hidden') : ''
-            },
+            // isReview() {
+            //     !this.isNotReview ? this.toggleBodyClass('addClass', 'hidden') : ''
+            // },
 
             checkSubmissionStatus() {
                 this.event.status !== 'p' &&
@@ -179,7 +179,7 @@
 
         mounted() {
             let data = window.location.pathname;
-            this.isReview();
+            // this.isReview();
         },
 
         created() {

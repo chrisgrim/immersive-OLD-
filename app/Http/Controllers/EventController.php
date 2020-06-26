@@ -109,7 +109,7 @@ class EventController extends Controller
     public function show(Event $event)
     {
         if($event->status !== 'p') { return redirect('/');}
-        $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'eventreviews', 'staffpick', 'advisories', 'showOnGoing','interactive_level', 'remotelocations');
+        $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'eventreviews', 'staffpick', 'advisories', 'showOnGoing','interactive_level', 'remotelocations', 'timezone');
         return view('events.show', compact('event'));
     }
 
@@ -158,7 +158,7 @@ class EventController extends Controller
     public function review(Event $event)
     {
         $this->authorize('finalize', $event);
-        $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'advisories', 'showOnGoing', 'remotelocations');
+        $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'advisories', 'showOnGoing', 'remotelocations', 'timezone');
         return view('create.review', compact('event'));
     }
 

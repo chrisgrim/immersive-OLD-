@@ -51,6 +51,7 @@
                                     v-model="v.name.$model" 
                                     class="create-input"  
                                     name="name"
+                                    :disabled="locked.includes(v.name.$model) ? true : false"
                                     :class="{ active: active == `${v.name.$model}name`,'error': v.name.$error }"
                                     @click="active = `${v.name.$model}name`; tempErrorName = false"
                                     @blur="active = null"
@@ -61,7 +62,7 @@
                                         <p class="error" v-if="!v.name.maxLength">Name is too Long</p>
                                     </div>
                                     <div v-if="tempErrorName" class="validation-error">
-                                        <p class="error">Cant repeat same name</p>
+                                        <p class="error">Cant have same name</p>
                                     </div>
                                 </div>
                                 <div class="field">
@@ -71,12 +72,11 @@
                                     @blur="active = null"
                                     placeholder="optional"
                                     :class="{ active: active == `${v.name.$model}des` }"
-                                    style="text-align: right" 
                                     />
                                 </div>
                                 <div v-if="v.name.$model == 'Free' || v.name.$model == 'PWYC'" class="field">
                                     <div  class="free-ticket__field">
-                                        FREE
+                                        
                                     </div>
                                 </div>
                                 <div v-else class="field">
@@ -150,16 +150,14 @@ export default {
             return {
                 'tickets': this.tickets,
             }
-        }
+        },
+
 
     },
 
     data() {
         return {
             tickets: this.event.shows.length && this.event.shows[0].tickets.length ? this.event.shows[0].tickets : [],
-            test: [
-                { id:'', name: 'VIP', ticket_price: '', description: ''},
-            ],
             money: this.initializeMoneyObject(),
             ticketOptions: [
                 { id:'', name: 'VIP', ticket_price: '', description: ''},
@@ -168,6 +166,7 @@ export default {
                 { id:'', name: 'Free', ticket_price: '', description: ''},
                 { id:'', name: 'PWYC', ticket_price: '', description: ''},
             ],
+            locked: ['VIP','Student','General','Free','PWYC'],
             disabled: false,
             active: null,
             modal: false,
@@ -205,7 +204,6 @@ export default {
         deleteRow(index, v) {
             this.ticketOptions.push({name: v.name.$model,ticket_price:0.00, description: '', });
             this.$delete(this.tickets, index) ;
-
         },
 
         pushTicket(value) {

@@ -30,8 +30,7 @@ class Event extends Model
     * @var array
     */
 	protected $fillable = [
-    	'slug', 'user_id', 'category_id','interactive_level_id','organizer_id','description','name','largeImagePath','thumbImagePath','advisories_id', 'organizer_id', 'location_latlon', 'closingDate','websiteUrl','ticketUrl','show_times','price_range', 'status','tag_line', 'hasLocation', 'showtype', 'embargo_date', 'remote_description', 'published_at'
-
+    	'slug', 'user_id', 'timezone_id', 'category_id','interactive_level_id','organizer_id','description','name','largeImagePath','thumbImagePath','advisories_id', 'organizer_id', 'location_latlon', 'closingDate','websiteUrl','ticketUrl','show_times','price_range', 'status','tag_line', 'hasLocation', 'showtype', 'embargo_date', 'remote_description', 'published_at'
     ];
 
     /**
@@ -78,7 +77,7 @@ class Event extends Model
         return [
             'id' => $this->id,
             'name' => $this->name,
-            // 'published_at' => $this->published_at,
+            'published_at' => $this->published_at,
             'showtype' => $this->showtype,
             'closingDate' => $this->closingDate,
             'priceranges' => $this->pricerangesSelect,
@@ -145,6 +144,16 @@ class Event extends Model
     public function category() 
     {
         return $this->belongsTo(Category::class);
+    }
+
+    /**
+    * Each event belongs to one timezone
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+    */
+    public function timezone() 
+    {
+        return $this->belongsTo(Timezone::class);
     }
 
     /**
@@ -462,6 +471,10 @@ class Event extends Model
                 'type' => 'geo_point'                
             ],
             'closingDate' => [
+                'type' => 'date',
+                'format' => 'yyyy-MM-dd HH:mm:ss'
+            ],
+            'published_at' => [
                 'type' => 'date',
                 'format' => 'yyyy-MM-dd HH:mm:ss'
             ],

@@ -70,20 +70,44 @@ class TicketsController extends Controller
                 'price' => $ticket['ticket_price']
             ]);
             $array[] = $ticket['ticket_price'];
+            $name[] = $ticket['name'];
         }
 
         // Using the array create a string called price range for the user to see
-        rsort($array);
-        if (last($array) == 0) {
-            $first = 'free';
+        if (in_array("PWYC", $name)) {
+            rsort($array);
+            if (last($array) == 0) {
+                $first = 'PWYC';
+            } else {
+                $first = '$'. last($array);
+            }
+            if (sizeof($array) > 1) {
+                if ($array[0] == 0) {
+                    $pricerange = $first;
+                } else {
+                     $pricerange = $first . ' - ' . '$' . $array[0];
+                }
+            } else {
+                $pricerange = $first;
+            }
         } else {
-            $first = '$'. last($array);
+            rsort($array);
+            if (last($array) == 0) {
+                $first = 'Free';
+            } else {
+                $first = '$'. last($array);
+            }
+            if (sizeof($array) > 1) {
+                if ($array[0] == 0) {
+                    $pricerange = $first;
+                } else {
+                     $pricerange = $first . ' - ' . '$' . $array[0];
+                }
+            } else {
+                $pricerange = $first;
+            }
         }
-        if (sizeof($array) > 1) {
-            $pricerange = $first . ' - ' . '$' . $array[0];
-        } else {
-            $pricerange = '$' . $array[0];
-        }
+        
 
         // Add price range string to event
         $event->update([

@@ -1,4 +1,4 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[7],{
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[83],{
 
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/events/event-show.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************************************************************************************************!*\
@@ -487,7 +487,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -503,6 +502,17 @@ __webpack_require__.r(__webpack_exports__);
     LPopup: vue2_leaflet__WEBPACK_IMPORTED_MODULE_0__["LPopup"]
   },
   computed: {
+    dateArray: function dateArray() {
+      if (!Array.isArray(this.dates) && this.dates.includes(",")) {
+        return this.dates.split(",");
+      } else {
+        if (!Array.isArray(this.dates)) {
+          return [this.dates];
+        } else {
+          '';
+        }
+      }
+    },
     locationPlaceholder: function locationPlaceholder() {
       return this.event.location.postal_code || this.event.location.city ? (this.event.location.home ? this.event.location.home + ' ' : '') + (this.event.location.street ? this.event.location.street + ' | ' : '') + (this.event.location.city ? this.event.location.city + ' | ' : '') + (this.event.location.region ? this.event.location.region + ' | ' : '') + (this.event.location.country ? this.event.location.country : '') : '';
     }
@@ -551,11 +561,14 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.event.shows) {
         this.event.shows.forEach(function (event) {
-          if (_this.$dayjs().subtract(1, 'day').format('YYYY-MM-DD 23:59:00') < event.date) {
-            _this.remaining.push(event.date);
-          }
+          console.log(_this.$date(new Date(), "dd MMMM yyyy"));
+          console.log(event.date);
 
-          _this.dates.push(event.date);
+          if (new Date() < event.date) {
+            console.log('test');
+
+            _this.dates.push(event.date);
+          }
         });
       }
     },
@@ -807,21 +820,21 @@ var render = function() {
                       _vm._v("Shows")
                     ]),
                     _vm._v(" "),
-                    (_vm.remaining && _vm.remaining.length > 1
-                    ? _vm.remaining.length
+                    (_vm.dateArray && _vm.dateArray.length > 1
+                    ? _vm.dateArray.length
                     : "")
                       ? _c("span", { staticClass: "header__show-info bold" }, [
-                          _vm._v(_vm._s(_vm.remaining.length) + " dates left")
+                          _vm._v(_vm._s(_vm.dateArray.length) + " dates left")
                         ])
-                      : (_vm.remaining && _vm.remaining.length == 1
-                        ? _vm.remaining.length
-                        : "")
+                      : _vm._e(),
+                    _vm._v(" "),
+                    (_vm.dateArray && _vm.dateArray.length == 1
+                    ? _vm.dateArray.length
+                    : "")
                       ? _c("span", { staticClass: "header__show-info bold" }, [
-                          _vm._v(_vm._s(_vm.remaining.length) + " date left")
+                          _vm._v(_vm._s(_vm.dateArray.length) + " date left")
                         ])
-                      : _c("span", { staticClass: "header__show-info bold" }, [
-                          _vm._v("no dates left")
-                        ])
+                      : _vm._e()
                   ])
                 : _vm._e(),
               _vm._v(" "),

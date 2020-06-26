@@ -53,9 +53,32 @@
                             </div>
                         </div>
                     </section>
+                    <section>
+                        <div class="field">
+                            <label> Show Timezone </label>
+                            <multiselect 
+                            v-model="timezone" 
+                            deselect-label="Can't remove this value" 
+                            track-by="name"
+                            :class="{ active: active == 'timezone','error': $v.timezone.$error }"
+                            @click="active = 'timezone'"
+                            @blur="active = null"
+                            label="description" 
+                            placeholder="Select timezone" 
+                            :options="timezones" 
+                            :allow-empty="false">
+                                <template slot="singleLabel" slot-scope="{ option }">
+                                    <strong>{{ option.description }}</strong>
+                                </template>
+                            </multiselect>
+                            <div v-if="$v.timezone.$error" class="validation-error">
+                                <p class="error" v-if="!$v.timezone.required">Please include timezone of show</p>
+                            </div>
+                        </div>
+                    </section>
                     <section class="event-enter-showtimes">
                         <div class="field">
-                            <label> Show Times (please include time zone)</label>
+                            <label> Show Times</label>
                             <textarea 
                             v-model="showTimes"
                             class="create-input area"
@@ -167,6 +190,29 @@
                             </div>
                         </div>
                     </section>
+                     <section>
+                        <div class="field">
+                            <label> Show Timezone </label>
+                            <multiselect 
+                            v-model="timezone" 
+                            deselect-label="Can't remove this value" 
+                            track-by="name"
+                            :class="{ active: active == 'timezone','error': $v.timezone.$error }"
+                            @click="active = 'timezone'"
+                            @blur="active = null"
+                            label="description" 
+                            placeholder="Select timezone" 
+                            :options="timezones" 
+                            :allow-empty="false">
+                                <template slot="singleLabel" slot-scope="{ option }">
+                                    <strong>{{ option.description }}</strong>
+                                </template>
+                            </multiselect>
+                            <div v-if="$v.timezone.$error" class="validation-error">
+                                <p class="error" v-if="!$v.timezone.required">Please include timezone of show</p>
+                            </div>
+                        </div>
+                    </section>
                     <section class="event-enter-showtimes">
                         <div class="field">
                             <label> Show Times (please include time zone)</label>
@@ -235,6 +281,29 @@
                             </div>
                         </div>
                     </section>
+                     <section>
+                        <div class="field">
+                            <label> Show Timezone </label>
+                            <multiselect 
+                            v-model="timezone" 
+                            deselect-label="Can't remove this value" 
+                            track-by="name"
+                            :class="{ active: active == 'timezone','error': $v.timezone.$error }"
+                            @click="active = 'timezone'"
+                            @blur="active = null"
+                            label="description" 
+                            placeholder="Select timezone" 
+                            :options="timezones" 
+                            :allow-empty="false">
+                                <template slot="singleLabel" slot-scope="{ option }">
+                                    <strong>{{ option.description }}</strong>
+                                </template>
+                            </multiselect>
+                            <div v-if="$v.timezone.$error" class="validation-error">
+                                <p class="error" v-if="!$v.timezone.required">Please include timezone of show</p>
+                            </div>
+                        </div>
+                    </section>
                     <section class="event-enter-showdates">
                         <div class="field" style="margin-top:6rem">
                             <label> Does the event have a specific embargo date? (date you would like it to appear on EI) </label>
@@ -288,7 +357,7 @@
 
 
 export default {
-    props: ['event'],
+    props: ['event', 'timezones'],
 
     mixins: [formValidationMixin],
 
@@ -333,6 +402,7 @@ export default {
                 'onGoing' : this.showType == 'Weekly' && this.weeklyOngoing ? true : false,
                 'always': this.showType == 'Anytime' || !this.weeklyOngoing ? true : false,
                 'start_date': this.startDate ? this.startDate : null,
+                'timezone': this.timezone,
             }
         },
 
@@ -361,6 +431,7 @@ export default {
             showTypeOptions: ['Specific Dates', 'Weekly', 'Anytime'],
             exit: false,
             showStartDate: this.event.show_on_going ? true : false,
+            timezone: this.event.timezone ? this.event.timezone : '',
 
         }
     },
@@ -473,6 +544,9 @@ export default {
             ifWeekly() {
                 return this.showType == 'Weekly' ? this.week.mon == 1 || this.week.tue == 1 || this.week.wed == 1 || this.week.thu == 1 || this.week.fri == 1 || this.week.sat == 1 || this.week.sun == 1  ? true : false : true
             }
+        },
+        timezone: {
+            required,
         }
 	},
 }  

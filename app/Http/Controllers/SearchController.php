@@ -248,7 +248,7 @@ class SearchController extends Controller
             return $events =  Event::search('a')
             ->rule(EventRemoteSearchRule::class)
             ->with(['location', 'organizer'])
-            // ->orderBy('published_at', 'desc')
+            ->orderBy('published_at', 'desc')
             ->paginate(12);
         } else {
             return $events = Event::where('status', 'p')
