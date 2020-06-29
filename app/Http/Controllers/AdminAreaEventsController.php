@@ -45,7 +45,7 @@ class AdminAreaEventsController extends Controller
      */
     public function fetch(Request $request)
     {
-        return Event::all()->where('status','p')->take($request->paginate);
+        return Event::where('status','p')->take($request->paginate)->get();
     }
 
     /**

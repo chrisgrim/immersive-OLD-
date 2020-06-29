@@ -2,11 +2,12 @@
 
 
 header.online-search__header {
-    height:30rem;
+    height:27rem;
     background-repeat: no-repeat !important;
     background-size: cover !important;
     background-position: center 70% !important;
     position: relative;
+    background: black;
 }
 .online-search__header-content {
     position: absolute;
@@ -18,10 +19,14 @@ header.online-search__header {
     & h2 {
         font-size: 4.5rem;
         line-height: 4.2rem;
+        color:white;
     }
 }
 .online-search__tagline {
     width: 30rem;
+    & p {
+        color:white;
+    }
 }
 .event-online-search-filter {
     position: relative;

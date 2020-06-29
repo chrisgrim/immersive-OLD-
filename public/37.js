@@ -1,1 +1,270 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[37],{ciAJ:function(e,i,t){"use strict";i.a={methods:{checkVuelidate:function(){return this.$v.$touch(),!this.$v.$invalid&&(this.disabled=!0),this.$v.$invalid},onErrors:function(e){e&&(this.serverErrors=e.response.data.errors),this.disabled=!1},onBackInitial:function(){return window.location.href="/create-event/edit/"},onBack:function(e){return window.location.href="/create-event/".concat(this.event.slug,"/").concat(e)},onFetch:function(e){return"/create-event/".concat(this.event.slug,"/").concat(e,"/fetch?timestamp=").concat((new Date).getTime())},onForward:function(e){return window.location.href="/create-event/".concat(this.event.slug,"/").concat(e)},onRegistered:function(){return window.location.href="/email/verify"},onFinishOrganizer:function(e){return window.location.href=e}}}},oFXv:function(e,i,t){"use strict";t.r(i);var s=t("ciAJ"),a=t("jl8+"),o=t.n(a),r=t("LvDl"),n=t.n(r),c=t("ta7f");function l(e){return(l="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}var v={mixins:[s.a],components:{Multiselect:o.a},props:["event","loadcontact","loadcontent","loadmobility","loadinteractive"],computed:{endpoint:function(){return"/create-event/".concat(this.event.slug,"/advisories")},submitObject:function(){return{advisories:this.advisories,contactAdvisory:this.contactAdvisories.map((function(e){return e.id})),contentAdvisory:this.contentAdvisories.map((function(e){return e.advisories})),mobilityAdvisory:this.mobilityAdvisories.map((function(e){return e.mobilities})),interactiveLevel:this.interactiveLevel}}},data:function(){return{advisories:this.initializeAdvisoriesObject(),contactAdvisoryOptions:this.loadcontact?this.loadcontact:[],contentAdvisoryOptions:this.loadcontent?this.loadcontent:[],mobilityAdvisoryOptions:this.loadmobility?this.loadmobility:[],interactiveLevelOptions:this.loadinteractive?this.loadinteractive:[],contactAdvisories:this.event.contact_levels?this.event.contact_levels:"",contentAdvisories:this.event.content_advisories?this.event.content_advisories:"",mobilityAdvisories:this.event.mobility_advisories?this.event.mobility_advisories:"",interactiveLevel:this.event.interactivelevel?this.event.interactivelevel:"",active:null,ageOptions:["All Ages","12+","16+","18+","21+"],disabled:!1,serverErrors:[]}},methods:{initializeAdvisoriesObject:function(){return{contactAdvisories:this.event.advisories?this.event.advisories.contactAdvisories:"",sexual:!!this.event.advisories.sexual&&this.event.advisories.sexual,sexualDescription:this.event.advisories?this.event.advisories.sexualDescription:"",wheelchairReady:!!this.event.advisories.wheelchairReady&&this.event.advisories.wheelchairReady,ageRestriction:this.event.advisories?this.event.advisories.ageRestriction:"",audience:this.event.advisories?this.event.advisories.audience:""}},addContentTag:function(e){var i={advisories:e,id:e.substring(0,0)+Math.floor(1e7*Math.random())};this.contentAdvisoryOptions.push(i),this.contentAdvisories.push(i)},addMobilityTag:function(e){var i={mobilities:e,id:e.substring(0,0)+Math.floor(1e7*Math.random())};this.mobilityAdvisoryOptions.push(i),this.mobilityAdvisories.push(i)},onSubmit:function(e){var i=this;if(this.checkVuelidate())return!1;axios.patch(this.endpoint,this.submitObject).then((function(t){"exit"==e?i.onBackInitial():i.onForward("images")})).catch((function(e){i.onErrors(e)}))},updateAdvisoryFields:function(e){null!==e&&"object"===l(e)&&null!==e.id&&(this.advisories=n.a.pick(e,n.a.intersection(n.a.keys(this.advisories),n.a.keys(e)))),!this.advisories.wheelchairReady&&(this.advisories.wheelchairReady=!1),!this.advisories.sexual&&(this.advisories.sexual=!1)},onLoad:function(){var e=this;axios.get(this.onFetch("advisories")).then((function(i){e.updateAdvisoryFields(i.data.advisories),i.data.contactPivots&&(e.contactAdvisories=i.data.contactPivots),i.data.contentPivots&&(e.contentAdvisories=i.data.contentPivots),i.data.mobilityPivots&&(e.mobilityAdvisories=i.data.mobilityPivots),i.data.interactivePivots&&(e.interactiveLevel=i.data.interactivePivots)}))}},created:function(){this.onLoad()},validations:{contactAdvisories:{required:c.required},mobilityAdvisories:{required:c.required},contentAdvisories:{required:c.required},interactiveLevel:{required:c.required},advisories:{ageRestriction:{required:c.required},sexualDescription:{ifSexual:function(){return!this.advisories.sexual||!!this.advisories.sexualDescription}},audience:{required:c.required}}}},d=t("KHd+"),u=Object(d.a)(v,(function(){var e=this,i=e.$createElement,t=e._self._c||i;return t("div",{staticClass:"event-create__advisories grid"},[t("section",{staticClass:"event-create"},[e._m(0),e._v(" "),t("div",{staticClass:"field"},[t("label",{staticClass:"area"},[e._v("Select physical interaction level with guests")]),e._v(" "),t("multiselect",{class:{active:"contact"==e.active,error:e.$v.contactAdvisories.$error},attrs:{options:e.contactAdvisoryOptions,multiple:!0,placeholder:"Choose all that apply","open-direction":"bottom","show-labels":!1,label:"level","track-by":"id","preselect-first":!1},on:{click:function(i){e.active="contact"},blur:function(i){e.active=null},input:e.$v.contactAdvisories.$touch},model:{value:e.contactAdvisories,callback:function(i){e.contactAdvisories=i},expression:"contactAdvisories"}}),e._v(" "),e.$v.contactAdvisories.$error?t("div",{staticClass:"validation-error"},[e.$v.contactAdvisories.required?e._e():t("p",{staticClass:"error"},[e._v("Must choose at least one contact level ")])]):e._e()],1)]),e._v(" "),t("section",{staticClass:"event-create"},[e._m(1),e._v(" "),t("div",{staticClass:"field"},[t("label",[e._v(" Is there sexual content? ")]),e._v(" "),t("div",{attrs:{id:"cover"}},[t("input",{directives:[{name:"model",rawName:"v-model",value:e.advisories.sexual,expression:"advisories.sexual"}],attrs:{type:"checkbox",id:"checkbox"},domProps:{checked:Array.isArray(e.advisories.sexual)?e._i(e.advisories.sexual,null)>-1:e.advisories.sexual},on:{change:function(i){var t=e.advisories.sexual,s=i.target,a=!!s.checked;if(Array.isArray(t)){var o=e._i(t,null);s.checked?o<0&&e.$set(e.advisories,"sexual",t.concat([null])):o>-1&&e.$set(e.advisories,"sexual",t.slice(0,o).concat(t.slice(o+1)))}else e.$set(e.advisories,"sexual",a)}}}),e._v(" "),t("div",{attrs:{id:"bar"}}),e._v(" "),t("div",{attrs:{id:"knob"}},[e.advisories.sexual?t("p",[e._v("Yes")]):t("p",[e._v("No")])])])]),e._v(" "),e.advisories.sexual?t("div",[t("div",{staticClass:"field"},[t("label",{staticClass:"area"},[e._v(" Explain more about the sexual content ")]),e._v(" "),t("textarea",{directives:[{name:"model",rawName:"v-model",value:e.advisories.sexualDescription,expression:"advisories.sexualDescription"}],staticClass:"create-input area",class:{active:"sexual"==e.active,error:e.$v.advisories.sexualDescription.$error},attrs:{rows:"8",placeholder:" ",required:"",autofocus:""},domProps:{value:e.advisories.sexualDescription},on:{click:function(i){e.active="sexual"},input:[function(i){i.target.composing||e.$set(e.advisories,"sexualDescription",i.target.value)},e.$v.advisories.sexualDescription.$touch],blur:function(i){e.active=null}}}),e._v(" "),e.$v.advisories.sexualDescription.$error?t("div",{staticClass:"validation-error"},[e.$v.advisories.sexualDescription.ifSexual?e._e():t("p",{staticClass:"error"},[e._v("Please describe the sexual content ")])]):e._e()])]):e._e(),e._v(" "),t("div",{staticClass:"field"},[t("label",{staticClass:"area"},[e._v("Include warnings and advisories")]),e._v(" "),t("multiselect",{class:{active:"content"==e.active,error:e.$v.contentAdvisories.$error},attrs:{"show-labels":!1,options:e.contentAdvisoryOptions,multiple:!0,"tag-placeholder":"Add this as new tag",taggable:!0,"tag-position":"bottom",placeholder:"Type here to create your own","open-direction":"bottom",label:"advisories","track-by":"id"},on:{tag:e.addContentTag,click:function(i){e.active="content"},blur:function(i){e.active=null}},model:{value:e.contentAdvisories,callback:function(i){e.contentAdvisories=i},expression:"contentAdvisories"}}),e._v(" "),e.$v.contentAdvisories.$error?t("div",{staticClass:"validation-error"},[e.$v.contentAdvisories.required?e._e():t("p",{staticClass:"error"},[e._v("Must enter a mobility advisory ")])]):e._e()],1),e._v(" "),t("div",{staticClass:"field"},[t("label",[e._v("Age restriction")]),e._v(" "),t("multiselect",{class:{active:"age"==e.active,error:e.$v.advisories.ageRestriction.$error},attrs:{options:e.ageOptions,"show-labels":!1,placeholder:"Select the appropriate age group","open-direction":"bottom","preselect-first":!1},on:{click:function(i){e.active="age"},blur:function(i){e.active=null},input:e.$v.advisories.ageRestriction.$touch},model:{value:e.advisories.ageRestriction,callback:function(i){e.$set(e.advisories,"ageRestriction",i)},expression:"advisories.ageRestriction"}}),e._v(" "),e.$v.advisories.ageRestriction.$error?t("div",{staticClass:"validation-error"},[e.$v.advisories.ageRestriction.required?e._e():t("p",{staticClass:"error"},[e._v("Required")])]):e._e()],1)]),e._v(" "),t("section",{staticClass:"event-create"},[e._m(2),e._v(" "),t("div",{staticClass:"field"},[t("label",[e._v(" Is the Event Wheel Chair Accessible? ")]),e._v(" "),t("div",{attrs:{id:"cover"}},[t("input",{directives:[{name:"model",rawName:"v-model",value:e.advisories.wheelchairReady,expression:"advisories.wheelchairReady"}],attrs:{type:"checkbox",id:"checkbox"},domProps:{checked:Array.isArray(e.advisories.wheelchairReady)?e._i(e.advisories.wheelchairReady,null)>-1:e.advisories.wheelchairReady},on:{change:function(i){var t=e.advisories.wheelchairReady,s=i.target,a=!!s.checked;if(Array.isArray(t)){var o=e._i(t,null);s.checked?o<0&&e.$set(e.advisories,"wheelchairReady",t.concat([null])):o>-1&&e.$set(e.advisories,"wheelchairReady",t.slice(0,o).concat(t.slice(o+1)))}else e.$set(e.advisories,"wheelchairReady",a)}}}),e._v(" "),t("div",{attrs:{id:"bar"}}),e._v(" "),t("div",{attrs:{id:"knob"}},[e.advisories.wheelchairReady?t("p",[e._v("Yes")]):t("p",[e._v("No")])])])]),e._v(" "),t("div",{staticClass:"field"},[t("label",{staticClass:"area"},[e._v("Select any mobility restrictions")]),e._v(" "),t("multiselect",{class:{active:"mobility"==e.active,error:e.$v.mobilityAdvisories.$error},attrs:{options:e.mobilityAdvisoryOptions,multiple:!0,"show-labels":!1,"tag-placeholder":"Add this as new tag",taggable:!0,"tag-position":"bottom",placeholder:"Type here to create your own","open-direction":"bottom",label:"mobilities","track-by":"id"},on:{tag:e.addMobilityTag,click:function(i){e.active="mobility"},blur:function(i){e.active=null},input:e.$v.mobilityAdvisories.$touch},model:{value:e.mobilityAdvisories,callback:function(i){e.mobilityAdvisories=i},expression:"mobilityAdvisories"}}),e._v(" "),e.$v.mobilityAdvisories.$error?t("div",{staticClass:"validation-error"},[e.$v.mobilityAdvisories.required?e._e():t("p",{staticClass:"error"},[e._v("Must enter a mobility advisory ")])]):e._e()],1)]),e._v(" "),t("section",{staticClass:"event-create"},[e._m(3),e._v(" "),t("div",{staticClass:"field"},[t("label",{staticClass:"area"},[e._v("Select physical interaction level with guests")]),e._v(" "),t("multiselect",{class:{active:"interactive"==e.active,error:e.$v.interactiveLevel.$error},attrs:{options:e.interactiveLevelOptions,multiple:!1,placeholder:"Select your events interaction level","open-direction":"bottom","show-labels":!1,label:"name","track-by":"id","preselect-first":!1},on:{click:function(i){e.active="interactive"},blur:function(i){e.active=null},input:e.$v.interactiveLevel.$touch},scopedSlots:e._u([{key:"option",fn:function(i){return[t("div",{staticClass:"option__desc"},[t("div",{staticClass:"option__title--interaction"},[e._v(e._s(i.option.name))]),e._v(" "),t("div",{staticClass:"option__small-interaction"},[e._v(e._s(i.option.description))])])]}}]),model:{value:e.interactiveLevel,callback:function(i){e.interactiveLevel=i},expression:"interactiveLevel"}}),e._v(" "),e.$v.interactiveLevel.$error?t("div",{staticClass:"validation-error"},[e.$v.interactiveLevel.required?e._e():t("p",{staticClass:"error"},[e._v("Must choose at least one contact level ")])]):e._e()],1),e._v(" "),t("div",{staticClass:"field"},[t("label",{staticClass:"area"},[e._v(" Audience Role ")]),e._v(" "),t("textarea",{directives:[{name:"model",rawName:"v-model",value:e.advisories.audience,expression:"advisories.audience"}],staticClass:"create-input area",class:{active:"audience"==e.active,error:e.$v.advisories.audience.$error},attrs:{rows:"8",placeholder:" ",required:"",autofocus:""},domProps:{value:e.advisories.audience},on:{click:function(i){e.active="audience"},blur:function(i){e.active=null},input:[function(i){i.target.composing||e.$set(e.advisories,"audience",i.target.value)},e.$v.advisories.audience.$touch]}}),e._v(" "),e.$v.advisories.audience.$error?t("div",{staticClass:"validation-error"},[e.$v.advisories.audience.required?e._e():t("p",{staticClass:"error"},[e._v("Must enter the audience's role ")])]):e._e()])]),e._v(" "),t("div",{staticClass:"event-create__submit-button"},[t("button",{staticClass:"nav-back-button",attrs:{disabled:e.disabled},on:{click:function(i){return i.preventDefault(),e.onSubmit("exit")}}},[e._v(" Save and Exit ")])]),e._v(" "),t("div",{staticClass:"create-button__back"},[t("button",{staticClass:"create",attrs:{disabled:e.disabled},on:{click:function(i){return i.preventDefault(),e.onBack("description")}}},[e._v(" Back ")])]),e._v(" "),t("div",{staticClass:"create-button__forward"},[t("button",{staticClass:"create",attrs:{disabled:e.disabled},on:{click:function(i){return i.preventDefault(),e.onSubmit()}}},[e._v(" Save and continue ")])])])}),[function(){var e=this.$createElement,i=this._self._c||e;return i("div",{staticClass:"title"},[i("h2",[this._v("Physical Contact Advisories")])])},function(){var e=this.$createElement,i=this._self._c||e;return i("div",{staticClass:"title"},[i("h2",[this._v("Content Advisories")])])},function(){var e=this.$createElement,i=this._self._c||e;return i("div",{staticClass:"title"},[i("h2",[this._v("Mobility Advisories")])])},function(){var e=this.$createElement,i=this._self._c||e;return i("div",{staticClass:"title"},[i("h2",[this._v("Audience Interaction Level")])])}],!1,null,null,null);i.default=u.exports}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[37],{
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/adminArea/admin-stats.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/adminArea/admin-stats.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['eventcount', 'usercount'],
+  data: function data() {
+    return {};
+  },
+  computed: {},
+  methods: {},
+  created: function created() {}
+});
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/adminArea/admin-stats.vue?vue&type=template&id=c4d9ba16&":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/adminArea/admin-stats.vue?vue&type=template&id=c4d9ba16& ***!
+  \*******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "admin-events" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", [
+      _vm._v("\n        number of users: " + _vm._s(_vm.usercount) + "\n    ")
+    ]),
+    _vm._v(" "),
+    _c("div", [
+      _vm._v("\n        number of events: " + _vm._s(_vm.eventcount) + "\n    ")
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", {}, [
+      _c("div", { staticClass: "admin-events__title" }, [
+        _c("h1", [_vm._v("Stats")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/runtime/componentNormalizer.js ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalizeComponent; });
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier, /* server only */
+  shadowMode /* vue-cli only */
+) {
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = 'data-v-' + scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = shadowMode
+      ? function () {
+        injectStyles.call(
+          this,
+          (options.functional ? this.parent : this).$root.$options.shadowRoot
+        )
+      }
+      : injectStyles
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functional component in vue file
+      var originalRender = options.render
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return originalRender(h, context)
+      }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    }
+  }
+
+  return {
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+
+/***/ "./resources/js/pages/adminArea/admin-stats.vue":
+/*!******************************************************!*\
+  !*** ./resources/js/pages/adminArea/admin-stats.vue ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _admin_stats_vue_vue_type_template_id_c4d9ba16___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./admin-stats.vue?vue&type=template&id=c4d9ba16& */ "./resources/js/pages/adminArea/admin-stats.vue?vue&type=template&id=c4d9ba16&");
+/* harmony import */ var _admin_stats_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./admin-stats.vue?vue&type=script&lang=js& */ "./resources/js/pages/adminArea/admin-stats.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _admin_stats_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _admin_stats_vue_vue_type_template_id_c4d9ba16___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _admin_stats_vue_vue_type_template_id_c4d9ba16___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/pages/adminArea/admin-stats.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/pages/adminArea/admin-stats.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/pages/adminArea/admin-stats.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_admin_stats_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./admin-stats.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/adminArea/admin-stats.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_admin_stats_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/pages/adminArea/admin-stats.vue?vue&type=template&id=c4d9ba16&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/pages/adminArea/admin-stats.vue?vue&type=template&id=c4d9ba16& ***!
+  \*************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_admin_stats_vue_vue_type_template_id_c4d9ba16___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./admin-stats.vue?vue&type=template&id=c4d9ba16& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/adminArea/admin-stats.vue?vue&type=template&id=c4d9ba16&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_admin_stats_vue_vue_type_template_id_c4d9ba16___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_admin_stats_vue_vue_type_template_id_c4d9ba16___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ })
+
+}]);

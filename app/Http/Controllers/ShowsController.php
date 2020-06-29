@@ -9,6 +9,7 @@ use App\Timezone;
 use App\ShowOnGoing;
 use Carbon\Carbon;
 use App\Http\Requests\ShowStoreRequest;
+use Illuminate\Support\Facades\Log;
 
 class ShowsController extends Controller
 {
@@ -40,6 +41,7 @@ class ShowsController extends Controller
      */
     public function store(Request $request, Event $event)
     {
+
         if($request->onGoing) {
             ShowOnGoing::saveNewShowOnGoing($request, $event, $request->start_date);
             Show::saveNewShows($request, $event);

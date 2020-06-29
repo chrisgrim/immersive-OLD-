@@ -112,16 +112,16 @@ class SearchController extends Controller
             ->get();
         }
         
-        if ($request->keywords) {
-            $tag = Genre::search($request->keywords)
-            ->rule(GenreSearchRule::class)
-            ->take(10)
-            ->get();
-        } else {
-            $tag = Genre::search('*')
-            ->take(10)
-            ->get();
-        }
+        // if ($request->keywords) {
+        //     $tag = Genre::search($request->keywords)
+        //     ->rule(GenreSearchRule::class)
+        //     ->take(10)
+        //     ->get();
+        // } else {
+        //     $tag = Genre::search('*')
+        //     ->take(10)
+        //     ->get();
+        // }
 
         if ($request->keywords) {
             $event = Event::search($request->keywords)
@@ -145,7 +145,7 @@ class SearchController extends Controller
             ->get();
         }
 
-        $concatdata = $category->concat($remote)->concat($tag)->concat($event)->concat($organizer);
+        $concatdata = $category->concat($remote)->concat($event)->concat($organizer);
 
         if ($concatdata->count() > 8) {
             return [
@@ -214,7 +214,7 @@ class SearchController extends Controller
                 return $events;  
             }
         }
-        return Event::all()->where('status','p')->take(10);
+        return Event::where('status','p')->take(10)->get();
     }
 
     public function searchBoneyard(Request $request)

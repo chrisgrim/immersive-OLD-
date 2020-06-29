@@ -93,6 +93,7 @@
                             </textarea>
                             <div v-if="$v.showTimes.$error" class="validation-error">
                                 <p class="error" v-if="!$v.showTimes.required">Please give a brief description of show times</p>
+                                <p class="error" v-if="!$v.showTimes.maxLength">Show time is too long</p>
                             </div>
                         </div>
                     </section>
@@ -230,6 +231,7 @@
                             </textarea>
                             <div v-if="$v.showTimes.$error" class="validation-error">
                                 <p class="error" v-if="!$v.showTimes.required">Please give a brief description of show times</p>
+                                <p class="error" v-if="!$v.showTimes.maxLength">Show time is too long</p>
                             </div>
                         </div>
                     </section>
@@ -278,6 +280,7 @@
                             </textarea>
                             <div v-if="$v.showTimes.$error" class="validation-error">
                                 <p class="error" v-if="!$v.showTimes.required">Please give a brief description of show times</p>
+                                <p class="error" v-if="!$v.showTimes.maxLength">Show time is too long</p>
                             </div>
                         </div>
                     </section>
@@ -533,7 +536,7 @@ export default {
     validations: {
         showTimes: {
             required,
-            maxLength: maxLength(400)
+            maxLength: maxLength(1000)
         },
         dates: {
             ifDates() { 

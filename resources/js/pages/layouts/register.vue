@@ -237,7 +237,6 @@
 
             onSubmit() {
                 if (this.checkVuelidate()) { return false };
-                console.log(this.submitObject);
                 axios.post(this.endPoint, this.submitObject)
                 .then(res => {  
                    this.isLogin ? location.reload() : this.onRegistered();

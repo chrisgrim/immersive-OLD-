@@ -99,12 +99,7 @@
         components: { NavMenuItem },
 
         computed: {
-            // onReview() {
-            //     return this.url === `/create-event/${this.event.slug}/review` ? true : '';
-            // },
-            // showBar() {
-            //     return this.onReview || this.url === `/organizer/create` ? false : true;
-            // },
+
             backUrl() {
                 return this.user.hasCreatedOrganizers  ? '/create-event/edit' : '/'
             },
@@ -135,12 +130,6 @@
 
         methods: {
 
-            // notAllowed() {
-            //     if(this.event.status) {
-            //         return (['d','n','p', 'e'].includes(this.event.status)) ? '' : window.location.href = '/create-event/edit';
-            //     }
-            // },
-
             handleResize() {
                 this.pageHeight = `min-height:${window.innerHeight}px`;
             },
@@ -154,10 +143,6 @@
                 }
             },
 
-            // isReview() {
-            //     !this.isNotReview ? this.toggleBodyClass('addClass', 'hidden') : ''
-            // },
-
             checkSubmissionStatus() {
                 this.event.status !== 'p' &&
                 this.event.status !== 'e' &&
@@ -166,7 +151,9 @@
                 (this.event.location_latlon || !this.event.hasLocation) && 
                 this.event.category_id &&
                 this.event.show_times &&
+                this.event.price_range &&
                 this.event.description &&
+                this.event.largeImagePath &&
                 this.event.advisories_id
                 ? this.readyToSubmit = true : false;
             },
@@ -179,7 +166,6 @@
 
         mounted() {
             let data = window.location.pathname;
-            // this.isReview();
         },
 
         created() {

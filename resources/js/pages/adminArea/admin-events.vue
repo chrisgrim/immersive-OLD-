@@ -60,20 +60,17 @@
                 .catch(error => { this.serverErrors = error.response.data.errors; });
             },
 
-             loadEvents() {
+            loadEvents() {
                 axios.post('/admin/events/fetch', this.pagination)
                 .then(res => {
-                    console.log(res.data);
                     this.events = res.data;
                 })
                 .catch(error => { this.serverErrors = error.response.data.errors; });
             },
 
             asyncGenerateEventList(eventList) {
-                
                 axios.get('/api/admin/search/events', { params: { keywords: eventList } })
                 .then(res => {
-                    console.log(res.data);
                     this.events = res.data;
                 });
             },

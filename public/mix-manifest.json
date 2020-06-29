@@ -1,9 +1,9 @@
 {
-    "/assets/app-create.css": "/assets/app-create.css?id=cc77cb6f99cf6669eadd",
-    "/assets/app-admin.css": "/assets/app-admin.css?id=13d7140292fdd969e91a",
-    "/assets/app-lite.css": "/assets/app-lite.css?id=cfc2b3f0dee9b86d18f7",
-    "/assets/app.css": "/assets/app.css?id=e4db7a64f08b4b8d0301",
-    "/assets/vendor.js": "/assets/vendor.js?id=48cc793f838fe3949b5b",
-    "/assets/app.js": "/assets/app.js?id=70318bcf0084c0cbfbf0",
-    "/assets/manifest.js": "/assets/manifest.js?id=c58c7c1edd8b5240ca4d"
+    "/assets/app-create.css": "/assets/app-create.css",
+    "/assets/app-admin.css": "/assets/app-admin.css",
+    "/assets/app-lite.css": "/assets/app-lite.css",
+    "/assets/app.css": "/assets/app.css",
+    "/assets/vendor.js": "/assets/vendor.js?id=e1432d1add5cee022c31",
+    "/assets/app.js": "/assets/app.js?id=e27b0a9d4ad65dd27176",
+    "/assets/manifest.js": "/assets/manifest.js"
 }

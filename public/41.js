@@ -1,1 +1,1122 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[41],{"+fbh":function(e,t,i){"use strict";i.r(t);var r=i("ta7f"),n=i("jl8+"),a={components:{Multiselect:i.n(n).a},data:function(){return{event:"",events:[],add:!1,rank:"",rankOptions:["1","2","3","4","5"],modal:"",isLoading:"",isActive:"",reviewername:"",image_path:"",review:"",reviews:[],url:"",selectedModal:"",reviewerList:["No Proscenium","Room Escape Artist"]}},computed:{},methods:{loadEvents:function(e){var t=this;axios.get("/api/admin/search/events",{params:{keywords:e}}).then((function(e){t.events=e.data}))},assignUrl:function(e){return this.$v.reviewername.$touch,"No Proscenium"==e?this.image_path="/storage/reviews/nopro.png":this.url=""},addReview:function(){if(this.$v.$touch(),this.$v.$invalid)return!1;var e={reviewername:this.reviewername,review:this.review,url:this.url,rank:this.rank,event:this.event,image_path:this.image_path?this.image_path:""};axios.post("/reviewevents",e).then((function(e){location.reload()})).catch((function(e){}))},showModal:function(e,t){this.selectedModal=e,this.modal=t},deleteReview:function(e){var t=this;axios.delete("/reviewevents/".concat(e.id)).then((function(e){t.modal=null,t.loadReviews()})).catch((function(e){t.serverErrors=e.response.data.errors}))},loadReviews:function(){var e=this;axios.get("/reviewevents/").then((function(t){console.log(t.data),e.reviews=t.data})).catch((function(t){e.serverErrors=t.response.data.errors}))},updateReview:function(e,t){var i=this,r=new FormData;"name"==t&&r.append("reviewer_name",e.reviewer_name),"url"==t&&r.append("url",e.url),"review"==t&&r.append("review",e.review),"rank"==t&&r.append("rank",e.rank),r.append("_method","PATCH"),axios.post("/reviewevents/".concat(e.id),r).then((function(e){console.log(e.data)})).catch((function(e){i.serverErrors=e.response.data.errors}))},addTag:function(e){this.reviewerList.push(e),this.reviewername=e}},created:function(){this.loadReviews()},validations:{event:{required:r.required},reviewername:{required:r.required},url:{required:r.required,url:r.url},review:{required:r.required,maxLength:Object(r.maxLength)(1200)}}},s=i("KHd+"),o=Object(s.a)(a,(function(){var e=this,t=e.$createElement,i=e._self._c||t;return i("div",{staticClass:"reviewevent"},[i("div",{},[i("div",{staticClass:"title"},[i("h1",[e._v("Add Reviews to events")]),e._v(" "),i("div",{staticClass:"add"},[i("button",{on:{click:function(t){t.preventDefault(),e.add=!0}}},[i("p",[e._v("+")])])])])]),e._v(" "),e.add?i("div",{staticClass:"new"},[i("div",{staticClass:"content"},[i("div",{staticClass:"event"},[i("label",[e._v("Event")]),e._v(" "),i("multiselect",{class:{active:"event"==e.isActive,error:e.$v.event.$error},attrs:{options:e.events,"open-direction":"bottom",placeholder:"Select the event",label:"name","show-labels":!1,"internal-search":!1,"options-limit":30,limit:5,"track-by":"name","show-no-results":!1,"allow-empty":!1},on:{click:function(t){e.isActive="event"},blur:function(t){e.isActive=null},open:e.loadEvents,"search-change":e.loadEvents,input:e.$v.event.$touch},scopedSlots:e._u([{key:"singleLabel",fn:function(t){return[i("img",{staticClass:"option__image",attrs:{src:"/storage/"+t.option.thumbImagePath,alt:t.option.name}}),e._v(" "),i("span",{staticClass:"option__desc"},[i("span",{staticClass:"option__title"},[e._v(e._s(t.option.name)+"\n                            ")])])]}}],null,!1,2578371558),model:{value:e.event,callback:function(t){e.event=t},expression:"event"}}),e._v(" "),e.$v.event.$error?i("div",{staticClass:"validation-error"},[e.$v.event.required?e._e():i("p",{staticClass:"error"},[e._v("Please select event")])]):e._e()],1),e._v(" "),i("div",{staticClass:"field"},[i("label",[e._v("Reviewer")]),e._v(" "),i("multiselect",{class:{active:"name"==e.isActive,error:e.$v.reviewername.$error},attrs:{"show-labels":!1,options:e.reviewerList,multiple:!1,"tag-placeholder":"Add this as new tag",taggable:!0,"tag-position":"bottom",placeholder:"Select reviewer or add your own","open-direction":"bottom"},on:{tag:e.addTag,input:function(t){return e.assignUrl(e.reviewername)},click:function(t){e.isActive="name"},blur:function(t){e.isActive=null}},model:{value:e.reviewername,callback:function(t){e.reviewername=t},expression:"reviewername"}}),e._v(" "),e.$v.reviewername.$error?i("div",{staticClass:"validation-error"},[e.$v.reviewername.required?e._e():i("p",{staticClass:"error"},[e._v("Please add reviews name")])]):e._e()],1),e._v(" "),i("div",{staticClass:"field"},[i("label",[e._v("Review URL")]),e._v(" "),i("input",{directives:[{name:"model",rawName:"v-model",value:e.url,expression:"url"}],class:{active:"url"==e.isActive,error:e.$v.url.$error},attrs:{type:"text",placeholder:"Link to the review"},domProps:{value:e.url},on:{click:function(t){e.isActive="url"},input:[function(t){t.target.composing||(e.url=t.target.value)},e.$v.url.$touch],blur:function(t){e.isActive=null}}}),e._v(" "),e.$v.url.$error?i("div",{staticClass:"validation-error"},[e.$v.url.required?e._e():i("p",{staticClass:"error"},[e._v("Please add url")])]):e._e()]),e._v(" "),i("div",{staticClass:"rank"},[i("label",[e._v("Rank")]),e._v(" "),i("multiselect",{class:{active:"rank"==e.isActive},attrs:{options:e.rankOptions,"show-labels":!1,placeholder:"Leave blank for default Rank of 5 (1 being most important)","open-direction":"bottom","preselect-first":!1},on:{click:function(t){e.isActive="rank"},blur:function(t){e.isActive=null}},model:{value:e.rank,callback:function(t){e.rank=t},expression:"rank"}})],1)]),e._v(" "),i("div",{staticClass:"content"},[i("label",[e._v("Review")]),e._v(" "),i("textarea",{directives:[{name:"model",rawName:"v-model",value:e.review,expression:"review"}],class:{active:"review"==e.isActive,error:e.$v.review.$error},attrs:{type:"textarea",rows:"6",placeholder:"Review snippet (no longer than 120 characters)"},domProps:{value:e.review},on:{click:function(t){e.isActive="review"},input:[function(t){t.target.composing||(e.review=t.target.value)},e.$v.review.$touch],blur:function(t){e.isActive=null}}}),e._v(" "),e.$v.review.$error?i("div",{staticClass:"validation-error"},[e.$v.review.required?e._e():i("p",{staticClass:"error"},[e._v("Please add review snippet.")]),e._v(" "),e.$v.review.maxLength?e._e():i("p",{staticClass:"error"},[e._v("Please keep it under 1200 letters.")])]):e._e()]),e._v(" "),i("div",{staticClass:"content"},[i("button",{on:{click:function(t){return t.preventDefault(),e.addReview(t)}}},[e._v("Add Review")])])]):e._e(),e._v(" "),i("div",{staticClass:"listing"},[e._m(0),e._v(" "),e._l(e.reviews,(function(t,r){return i("div",{staticClass:"list"},[i("div",{staticClass:"field"},[e._v("\n                "+e._s(t.event.name)+"\n            ")]),e._v(" "),i("div",{staticClass:"field"},[i("input",{directives:[{name:"model",rawName:"v-model",value:t.reviewer_name,expression:"item.reviewer_name"}],class:{active:"reviewername"==e.isActive},attrs:{type:"text",placeholder:"Reviewer's name"},domProps:{value:t.reviewer_name},on:{click:function(t){e.isActive="reviewername"},blur:function(i){return e.updateReview(t,"name")},input:function(i){i.target.composing||e.$set(t,"reviewer_name",i.target.value)}}})]),e._v(" "),i("div",{staticClass:"field"},[i("input",{directives:[{name:"model",rawName:"v-model",value:t.url,expression:"item.url"}],class:{active:"url"==e.isActive},attrs:{type:"text",placeholder:"Link to the review"},domProps:{value:t.url},on:{click:function(t){e.isActive="url"},blur:function(i){return e.updateReview(t,"url")},input:function(i){i.target.composing||e.$set(t,"url",i.target.value)}}})]),e._v(" "),i("div",{staticClass:"field"},[i("textarea",{directives:[{name:"model",rawName:"v-model",value:t.review,expression:"item.review"}],class:{active:"review"==e.isActive},attrs:{type:"textarea",rows:"6",placeholder:"Review snippet"},domProps:{value:t.review},on:{click:function(t){e.isActive="review"},blur:function(i){return e.updateReview(t,"review")},input:function(i){i.target.composing||e.$set(t,"review",i.target.value)}}})]),e._v(" "),i("div",{staticClass:"field"},[i("multiselect",{class:{active:"rank"==e.isActive},attrs:{options:e.rankOptions,"show-labels":!1,placeholder:"Leave blank for default Rank of 5 (1 being most important)","open-direction":"bottom","preselect-first":!1},on:{input:function(i){return e.updateReview(t,"rank")}},model:{value:t.rank,callback:function(i){e.$set(t,"rank",i)},expression:"item.rank"}})],1),e._v(" "),i("button",{staticClass:"delete-circle",on:{click:function(i){return i.preventDefault(),e.showModal(t,"delete")}}},[i("p",[e._v("X")])])])}))],2),e._v(" "),"delete"==e.modal?i("modal",{on:{close:function(t){e.modal=null}}},[i("div",{attrs:{slot:"header"},slot:"header"},[i("div",{staticClass:"circle del"},[i("p",[e._v("X")])])]),e._v(" "),i("div",{attrs:{slot:"body"},slot:"body"},[i("h3",[e._v("Are you sure?")]),e._v(" "),i("p",[e._v("You are deleting the review "+e._s(e.selectedModal.name)+".")])]),e._v(" "),i("div",{attrs:{slot:"footer"},slot:"footer"},[i("button",{staticClass:"btn del",on:{click:function(t){return t.preventDefault(),e.deleteReview(e.selectedModal)}}},[e._v("Delete")])])]):e._e()],1)}),[function(){var e=this.$createElement,t=this._self._c||e;return t("div",[t("h2",[this._v("Latest Reviews")])])}],!1,null,null,null);t.default=o.exports},"KHd+":function(e,t,i){"use strict";function r(e,t,i,r,n,a,s,o){var l,v="function"==typeof e?e.options:e;if(t&&(v.render=t,v.staticRenderFns=i,v._compiled=!0),r&&(v.functional=!0),a&&(v._scopeId="data-v-"+a),s?(l=function(e){(e=e||this.$vnode&&this.$vnode.ssrContext||this.parent&&this.parent.$vnode&&this.parent.$vnode.ssrContext)||"undefined"==typeof __VUE_SSR_CONTEXT__||(e=__VUE_SSR_CONTEXT__),n&&n.call(this,e),e&&e._registeredComponents&&e._registeredComponents.add(s)},v._ssrRegister=l):n&&(l=o?function(){n.call(this,(v.functional?this.parent:this).$root.$options.shadowRoot)}:n),l)if(v.functional){v._injectStyles=l;var c=v.render;v.render=function(e,t){return l.call(t),c(e,t)}}else{var u=v.beforeCreate;v.beforeCreate=u?[].concat(u,l):[l]}return{exports:e,options:v}}i.d(t,"a",(function(){return r}))}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[41],{
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/create/advisories.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/create/advisories.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mixins_form_validation_mixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/form-validation-mixin */ "./resources/js/mixins/form-validation-mixin.js");
+/* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-multiselect */ "./node_modules/vue-multiselect/dist/vue-multiselect.min.js");
+/* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_multiselect__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_mixins_form_validation_mixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  components: {
+    Multiselect: vue_multiselect__WEBPACK_IMPORTED_MODULE_1___default.a
+  },
+  props: ['event', 'loadcontact', 'loadcontent', 'loadmobility', 'loadinteractive'],
+  computed: {
+    endpoint: function endpoint() {
+      return "/create-event/".concat(this.event.slug, "/advisories");
+    },
+    submitObject: function submitObject() {
+      return {
+        advisories: this.advisories,
+        contactAdvisory: this.contactAdvisories.map(function (a) {
+          return a.id;
+        }),
+        contentAdvisory: this.contentAdvisories.map(function (a) {
+          return a.advisories;
+        }),
+        mobilityAdvisory: this.mobilityAdvisories.map(function (a) {
+          return a.mobilities;
+        }),
+        interactiveLevel: this.interactiveLevel
+      };
+    }
+  },
+  data: function data() {
+    return {
+      advisories: this.initializeAdvisoriesObject(),
+      contactAdvisoryOptions: this.loadcontact ? this.loadcontact : [],
+      contentAdvisoryOptions: this.loadcontent ? this.loadcontent : [],
+      mobilityAdvisoryOptions: this.loadmobility ? this.loadmobility : [],
+      interactiveLevelOptions: this.loadinteractive ? this.loadinteractive : [],
+      contactAdvisories: this.event.contact_levels ? this.event.contact_levels : '',
+      contentAdvisories: this.event.content_advisories ? this.event.content_advisories : '',
+      mobilityAdvisories: this.event.mobility_advisories ? this.event.mobility_advisories : '',
+      interactiveLevel: this.event.interactivelevel ? this.event.interactivelevel : '',
+      active: null,
+      ageOptions: ['All Ages', '12+', '16+', '18+', '21+'],
+      disabled: false,
+      serverErrors: []
+    };
+  },
+  methods: {
+    initializeAdvisoriesObject: function initializeAdvisoriesObject() {
+      return {
+        contactAdvisories: this.event.advisories ? this.event.advisories.contactAdvisories : '',
+        sexual: this.event.advisories.sexual ? this.event.advisories.sexual : false,
+        sexualDescription: this.event.advisories ? this.event.advisories.sexualDescription : '',
+        wheelchairReady: this.event.advisories.wheelchairReady ? this.event.advisories.wheelchairReady : false,
+        ageRestriction: this.event.advisories ? this.event.advisories.ageRestriction : '',
+        audience: this.event.advisories ? this.event.advisories.audience : ''
+      };
+    },
+    addContentTag: function addContentTag(newTag) {
+      var tag = {
+        advisories: newTag,
+        id: newTag.substring(0, 0) + Math.floor(Math.random() * 10000000)
+      };
+      this.contentAdvisoryOptions.push(tag);
+      this.contentAdvisories.push(tag);
+    },
+    addMobilityTag: function addMobilityTag(newTag) {
+      var tag = {
+        mobilities: newTag,
+        id: newTag.substring(0, 0) + Math.floor(Math.random() * 10000000)
+      };
+      this.mobilityAdvisoryOptions.push(tag);
+      this.mobilityAdvisories.push(tag);
+    },
+    onSubmit: function onSubmit(value) {
+      var _this = this;
+
+      if (this.checkVuelidate()) {
+        return false;
+      }
+
+      ;
+      axios.patch(this.endpoint, this.submitObject).then(function (res) {
+        // console.log(res.data);
+        value == 'exit' ? _this.onBackInitial() : _this.onForward('images');
+      })["catch"](function (err) {
+        _this.onErrors(err);
+      });
+    },
+    updateAdvisoryFields: function updateAdvisoryFields(input) {
+      if (input !== null && _typeof(input) === "object" && input.id !== null) {
+        this.advisories = lodash__WEBPACK_IMPORTED_MODULE_2___default.a.pick(input, lodash__WEBPACK_IMPORTED_MODULE_2___default.a.intersection(lodash__WEBPACK_IMPORTED_MODULE_2___default.a.keys(this.advisories), lodash__WEBPACK_IMPORTED_MODULE_2___default.a.keys(input)));
+      }
+
+      this.advisories.wheelchairReady ? '' : this.advisories.wheelchairReady = false;
+      this.advisories.sexual ? '' : this.advisories.sexual = false;
+    },
+    onLoad: function onLoad() {
+      var _this2 = this;
+
+      axios.get(this.onFetch('advisories')).then(function (res) {
+        _this2.updateAdvisoryFields(res.data.advisories);
+
+        res.data.contactPivots ? _this2.contactAdvisories = res.data.contactPivots : '';
+        res.data.contentPivots ? _this2.contentAdvisories = res.data.contentPivots : '';
+        res.data.mobilityPivots ? _this2.mobilityAdvisories = res.data.mobilityPivots : '';
+        res.data.interactivePivots ? _this2.interactiveLevel = res.data.interactivePivots : '';
+      });
+    }
+  },
+  created: function created() {
+    this.onLoad();
+  },
+  validations: {
+    contactAdvisories: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"]
+    },
+    mobilityAdvisories: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"]
+    },
+    contentAdvisories: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"]
+    },
+    interactiveLevel: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"]
+    },
+    advisories: {
+      ageRestriction: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"]
+      },
+      sexualDescription: {
+        ifSexual: function ifSexual() {
+          return this.advisories.sexual ? this.advisories.sexualDescription ? true : false : true;
+        }
+      },
+      audience: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"]
+      }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/create/advisories.vue?vue&type=template&id=7abe6ef1&":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/create/advisories.vue?vue&type=template&id=7abe6ef1& ***!
+  \***************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "event-create__advisories grid" }, [
+    _c("section", { staticClass: "event-create" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "field" },
+        [
+          _c("label", { staticClass: "area" }, [
+            _vm._v("Select physical interaction level with guests")
+          ]),
+          _vm._v(" "),
+          _c("multiselect", {
+            class: {
+              active: _vm.active == "contact",
+              error: _vm.$v.contactAdvisories.$error
+            },
+            attrs: {
+              options: _vm.contactAdvisoryOptions,
+              multiple: true,
+              placeholder: "Choose all that apply",
+              "open-direction": "bottom",
+              "show-labels": false,
+              label: "level",
+              "track-by": "id",
+              "preselect-first": false
+            },
+            on: {
+              click: function($event) {
+                _vm.active = "contact"
+              },
+              blur: function($event) {
+                _vm.active = null
+              },
+              input: _vm.$v.contactAdvisories.$touch
+            },
+            model: {
+              value: _vm.contactAdvisories,
+              callback: function($$v) {
+                _vm.contactAdvisories = $$v
+              },
+              expression: "contactAdvisories"
+            }
+          }),
+          _vm._v(" "),
+          _vm.$v.contactAdvisories.$error
+            ? _c("div", { staticClass: "validation-error" }, [
+                !_vm.$v.contactAdvisories.required
+                  ? _c("p", { staticClass: "error" }, [
+                      _vm._v("Must choose at least one contact level ")
+                    ])
+                  : _vm._e()
+              ])
+            : _vm._e()
+        ],
+        1
+      )
+    ]),
+    _vm._v(" "),
+    _c("section", { staticClass: "event-create" }, [
+      _vm._m(1),
+      _vm._v(" "),
+      _c("div", { staticClass: "field" }, [
+        _c("label", [_vm._v(" Is there sexual content? ")]),
+        _vm._v(" "),
+        _c("div", { attrs: { id: "cover" } }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.advisories.sexual,
+                expression: "advisories.sexual"
+              }
+            ],
+            attrs: { type: "checkbox", id: "checkbox" },
+            domProps: {
+              checked: Array.isArray(_vm.advisories.sexual)
+                ? _vm._i(_vm.advisories.sexual, null) > -1
+                : _vm.advisories.sexual
+            },
+            on: {
+              change: function($event) {
+                var $$a = _vm.advisories.sexual,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 &&
+                      _vm.$set(_vm.advisories, "sexual", $$a.concat([$$v]))
+                  } else {
+                    $$i > -1 &&
+                      _vm.$set(
+                        _vm.advisories,
+                        "sexual",
+                        $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                      )
+                  }
+                } else {
+                  _vm.$set(_vm.advisories, "sexual", $$c)
+                }
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("div", { attrs: { id: "bar" } }),
+          _vm._v(" "),
+          _c("div", { attrs: { id: "knob" } }, [
+            _vm.advisories.sexual
+              ? _c("p", [_vm._v("Yes")])
+              : _c("p", [_vm._v("No")])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _vm.advisories.sexual
+        ? _c("div", [
+            _c("div", { staticClass: "field" }, [
+              _c("label", { staticClass: "area" }, [
+                _vm._v(" Explain more about the sexual content ")
+              ]),
+              _vm._v(" "),
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.advisories.sexualDescription,
+                    expression: "advisories.sexualDescription"
+                  }
+                ],
+                staticClass: "create-input area",
+                class: {
+                  active: _vm.active == "sexual",
+                  error: _vm.$v.advisories.sexualDescription.$error
+                },
+                attrs: {
+                  rows: "8",
+                  placeholder: " ",
+                  required: "",
+                  autofocus: ""
+                },
+                domProps: { value: _vm.advisories.sexualDescription },
+                on: {
+                  click: function($event) {
+                    _vm.active = "sexual"
+                  },
+                  input: [
+                    function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.advisories,
+                        "sexualDescription",
+                        $event.target.value
+                      )
+                    },
+                    _vm.$v.advisories.sexualDescription.$touch
+                  ],
+                  blur: function($event) {
+                    _vm.active = null
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.$v.advisories.sexualDescription.$error
+                ? _c("div", { staticClass: "validation-error" }, [
+                    !_vm.$v.advisories.sexualDescription.ifSexual
+                      ? _c("p", { staticClass: "error" }, [
+                          _vm._v("Please describe the sexual content ")
+                        ])
+                      : _vm._e()
+                  ])
+                : _vm._e()
+            ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "field" },
+        [
+          _c("label", { staticClass: "area" }, [
+            _vm._v("Include warnings and advisories")
+          ]),
+          _vm._v(" "),
+          _c("multiselect", {
+            class: {
+              active: _vm.active == "content",
+              error: _vm.$v.contentAdvisories.$error
+            },
+            attrs: {
+              "show-labels": false,
+              options: _vm.contentAdvisoryOptions,
+              multiple: true,
+              "tag-placeholder": "Add this as new tag",
+              taggable: true,
+              "tag-position": "bottom",
+              placeholder: "Type here to create your own",
+              "open-direction": "bottom",
+              label: "advisories",
+              "track-by": "id"
+            },
+            on: {
+              tag: _vm.addContentTag,
+              click: function($event) {
+                _vm.active = "content"
+              },
+              blur: function($event) {
+                _vm.active = null
+              }
+            },
+            model: {
+              value: _vm.contentAdvisories,
+              callback: function($$v) {
+                _vm.contentAdvisories = $$v
+              },
+              expression: "contentAdvisories"
+            }
+          }),
+          _vm._v(" "),
+          _vm.$v.contentAdvisories.$error
+            ? _c("div", { staticClass: "validation-error" }, [
+                !_vm.$v.contentAdvisories.required
+                  ? _c("p", { staticClass: "error" }, [
+                      _vm._v("Must enter a mobility advisory ")
+                    ])
+                  : _vm._e()
+              ])
+            : _vm._e()
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "field" },
+        [
+          _c("label", [_vm._v("Age restriction")]),
+          _vm._v(" "),
+          _c("multiselect", {
+            class: {
+              active: _vm.active == "age",
+              error: _vm.$v.advisories.ageRestriction.$error
+            },
+            attrs: {
+              options: _vm.ageOptions,
+              "show-labels": false,
+              placeholder: "Select the appropriate age group",
+              "open-direction": "bottom",
+              "preselect-first": false
+            },
+            on: {
+              click: function($event) {
+                _vm.active = "age"
+              },
+              blur: function($event) {
+                _vm.active = null
+              },
+              input: _vm.$v.advisories.ageRestriction.$touch
+            },
+            model: {
+              value: _vm.advisories.ageRestriction,
+              callback: function($$v) {
+                _vm.$set(_vm.advisories, "ageRestriction", $$v)
+              },
+              expression: "advisories.ageRestriction"
+            }
+          }),
+          _vm._v(" "),
+          _vm.$v.advisories.ageRestriction.$error
+            ? _c("div", { staticClass: "validation-error" }, [
+                !_vm.$v.advisories.ageRestriction.required
+                  ? _c("p", { staticClass: "error" }, [_vm._v("Required")])
+                  : _vm._e()
+              ])
+            : _vm._e()
+        ],
+        1
+      )
+    ]),
+    _vm._v(" "),
+    _c("section", { staticClass: "event-create" }, [
+      _vm._m(2),
+      _vm._v(" "),
+      _c("div", { staticClass: "field" }, [
+        _c("label", [_vm._v(" Is the Event Wheel Chair Accessible? ")]),
+        _vm._v(" "),
+        _c("div", { attrs: { id: "cover" } }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.advisories.wheelchairReady,
+                expression: "advisories.wheelchairReady"
+              }
+            ],
+            attrs: { type: "checkbox", id: "checkbox" },
+            domProps: {
+              checked: Array.isArray(_vm.advisories.wheelchairReady)
+                ? _vm._i(_vm.advisories.wheelchairReady, null) > -1
+                : _vm.advisories.wheelchairReady
+            },
+            on: {
+              change: function($event) {
+                var $$a = _vm.advisories.wheelchairReady,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 &&
+                      _vm.$set(
+                        _vm.advisories,
+                        "wheelchairReady",
+                        $$a.concat([$$v])
+                      )
+                  } else {
+                    $$i > -1 &&
+                      _vm.$set(
+                        _vm.advisories,
+                        "wheelchairReady",
+                        $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                      )
+                  }
+                } else {
+                  _vm.$set(_vm.advisories, "wheelchairReady", $$c)
+                }
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("div", { attrs: { id: "bar" } }),
+          _vm._v(" "),
+          _c("div", { attrs: { id: "knob" } }, [
+            _vm.advisories.wheelchairReady
+              ? _c("p", [_vm._v("Yes")])
+              : _c("p", [_vm._v("No")])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "field" },
+        [
+          _c("label", { staticClass: "area" }, [
+            _vm._v("Select any mobility restrictions")
+          ]),
+          _vm._v(" "),
+          _c("multiselect", {
+            class: {
+              active: _vm.active == "mobility",
+              error: _vm.$v.mobilityAdvisories.$error
+            },
+            attrs: {
+              options: _vm.mobilityAdvisoryOptions,
+              multiple: true,
+              "show-labels": false,
+              "tag-placeholder": "Add this as new tag",
+              taggable: true,
+              "tag-position": "bottom",
+              placeholder: "Type here to create your own",
+              "open-direction": "bottom",
+              label: "mobilities",
+              "track-by": "id"
+            },
+            on: {
+              tag: _vm.addMobilityTag,
+              click: function($event) {
+                _vm.active = "mobility"
+              },
+              blur: function($event) {
+                _vm.active = null
+              },
+              input: _vm.$v.mobilityAdvisories.$touch
+            },
+            model: {
+              value: _vm.mobilityAdvisories,
+              callback: function($$v) {
+                _vm.mobilityAdvisories = $$v
+              },
+              expression: "mobilityAdvisories"
+            }
+          }),
+          _vm._v(" "),
+          _vm.$v.mobilityAdvisories.$error
+            ? _c("div", { staticClass: "validation-error" }, [
+                !_vm.$v.mobilityAdvisories.required
+                  ? _c("p", { staticClass: "error" }, [
+                      _vm._v("Must enter a mobility advisory ")
+                    ])
+                  : _vm._e()
+              ])
+            : _vm._e()
+        ],
+        1
+      )
+    ]),
+    _vm._v(" "),
+    _c("section", { staticClass: "event-create" }, [
+      _vm._m(3),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "field" },
+        [
+          _c("label", { staticClass: "area" }, [
+            _vm._v("Select physical interaction level with guests")
+          ]),
+          _vm._v(" "),
+          _c("multiselect", {
+            class: {
+              active: _vm.active == "interactive",
+              error: _vm.$v.interactiveLevel.$error
+            },
+            attrs: {
+              options: _vm.interactiveLevelOptions,
+              multiple: false,
+              placeholder: "Select your events interaction level",
+              "open-direction": "bottom",
+              "show-labels": false,
+              label: "name",
+              "track-by": "id",
+              "preselect-first": false
+            },
+            on: {
+              click: function($event) {
+                _vm.active = "interactive"
+              },
+              blur: function($event) {
+                _vm.active = null
+              },
+              input: _vm.$v.interactiveLevel.$touch
+            },
+            scopedSlots: _vm._u([
+              {
+                key: "option",
+                fn: function(props) {
+                  return [
+                    _c("div", { staticClass: "option__desc" }, [
+                      _c("div", { staticClass: "option__title--interaction" }, [
+                        _vm._v(_vm._s(props.option.name))
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "option__small-interaction" }, [
+                        _vm._v(_vm._s(props.option.description))
+                      ])
+                    ])
+                  ]
+                }
+              }
+            ]),
+            model: {
+              value: _vm.interactiveLevel,
+              callback: function($$v) {
+                _vm.interactiveLevel = $$v
+              },
+              expression: "interactiveLevel"
+            }
+          }),
+          _vm._v(" "),
+          _vm.$v.interactiveLevel.$error
+            ? _c("div", { staticClass: "validation-error" }, [
+                !_vm.$v.interactiveLevel.required
+                  ? _c("p", { staticClass: "error" }, [
+                      _vm._v("Must choose at least one contact level ")
+                    ])
+                  : _vm._e()
+              ])
+            : _vm._e()
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "field" }, [
+        _c("label", { staticClass: "area" }, [_vm._v(" Audience Role ")]),
+        _vm._v(" "),
+        _c("textarea", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.advisories.audience,
+              expression: "advisories.audience"
+            }
+          ],
+          staticClass: "create-input area",
+          class: {
+            active: _vm.active == "audience",
+            error: _vm.$v.advisories.audience.$error
+          },
+          attrs: { rows: "8", placeholder: " ", required: "", autofocus: "" },
+          domProps: { value: _vm.advisories.audience },
+          on: {
+            click: function($event) {
+              _vm.active = "audience"
+            },
+            blur: function($event) {
+              _vm.active = null
+            },
+            input: [
+              function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.advisories, "audience", $event.target.value)
+              },
+              _vm.$v.advisories.audience.$touch
+            ]
+          }
+        }),
+        _vm._v(" "),
+        _vm.$v.advisories.audience.$error
+          ? _c("div", { staticClass: "validation-error" }, [
+              !_vm.$v.advisories.audience.required
+                ? _c("p", { staticClass: "error" }, [
+                    _vm._v("Must enter the audience's role ")
+                  ])
+                : _vm._e()
+            ])
+          : _vm._e()
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "event-create__submit-button" }, [
+      _c(
+        "button",
+        {
+          staticClass: "nav-back-button",
+          attrs: { disabled: _vm.disabled },
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              return _vm.onSubmit("exit")
+            }
+          }
+        },
+        [_vm._v(" Save and Exit ")]
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "create-button__back" }, [
+      _c(
+        "button",
+        {
+          staticClass: "create",
+          attrs: { disabled: _vm.disabled },
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              return _vm.onBack("description")
+            }
+          }
+        },
+        [_vm._v(" Back ")]
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "create-button__forward" }, [
+      _c(
+        "button",
+        {
+          staticClass: "create",
+          attrs: { disabled: _vm.disabled },
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              return _vm.onSubmit()
+            }
+          }
+        },
+        [_vm._v(" Save and continue ")]
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "title" }, [
+      _c("h2", [_vm._v("Physical Contact Advisories")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "title" }, [
+      _c("h2", [_vm._v("Content Advisories")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "title" }, [
+      _c("h2", [_vm._v("Mobility Advisories")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "title" }, [
+      _c("h2", [_vm._v("Audience Interaction Level")])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./resources/js/mixins/form-validation-mixin.js":
+/*!******************************************************!*\
+  !*** ./resources/js/mixins/form-validation-mixin.js ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    checkVuelidate: function checkVuelidate() {
+      this.$v.$touch();
+      !this.$v.$invalid ? this.disabled = true : false;
+      return this.$v.$invalid;
+    },
+    onErrors: function onErrors(err) {
+      err ? this.serverErrors = err.response.data.errors : '';
+      this.disabled = false;
+    },
+    onBackInitial: function onBackInitial() {
+      return window.location.href = "/create-event/edit/";
+    },
+    onBack: function onBack(value) {
+      return window.location.href = "/create-event/".concat(this.event.slug, "/").concat(value);
+    },
+    onFetch: function onFetch(value) {
+      return "/create-event/".concat(this.event.slug, "/").concat(value, "/fetch?timestamp=").concat(new Date().getTime());
+    },
+    onForward: function onForward(value) {
+      return window.location.href = "/create-event/".concat(this.event.slug, "/").concat(value);
+    },
+    onRegistered: function onRegistered() {
+      return window.location.href = '/email/verify';
+    },
+    onFinishOrganizer: function onFinishOrganizer(value) {
+      return window.location.href = value;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/pages/create/advisories.vue":
+/*!**************************************************!*\
+  !*** ./resources/js/pages/create/advisories.vue ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _advisories_vue_vue_type_template_id_7abe6ef1___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./advisories.vue?vue&type=template&id=7abe6ef1& */ "./resources/js/pages/create/advisories.vue?vue&type=template&id=7abe6ef1&");
+/* harmony import */ var _advisories_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./advisories.vue?vue&type=script&lang=js& */ "./resources/js/pages/create/advisories.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _advisories_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _advisories_vue_vue_type_template_id_7abe6ef1___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _advisories_vue_vue_type_template_id_7abe6ef1___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/pages/create/advisories.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/pages/create/advisories.vue?vue&type=script&lang=js&":
+/*!***************************************************************************!*\
+  !*** ./resources/js/pages/create/advisories.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_advisories_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./advisories.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/create/advisories.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_advisories_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/pages/create/advisories.vue?vue&type=template&id=7abe6ef1&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/pages/create/advisories.vue?vue&type=template&id=7abe6ef1& ***!
+  \*********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_advisories_vue_vue_type_template_id_7abe6ef1___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./advisories.vue?vue&type=template&id=7abe6ef1& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/create/advisories.vue?vue&type=template&id=7abe6ef1&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_advisories_vue_vue_type_template_id_7abe6ef1___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_advisories_vue_vue_type_template_id_7abe6ef1___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ })
+
+}]);

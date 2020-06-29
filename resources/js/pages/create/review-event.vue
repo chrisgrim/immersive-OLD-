@@ -417,7 +417,7 @@
             <div class="right">
                 <div>
                     <div v-for="location in event.remotelocations">
-                        <h3>{{location.location}}</h3>
+                        <h3>{{location.name}}</h3>
                         <p>{{location.description}}</p>
                     </div>
                     <div v-if="event.remote_description">

@@ -64,11 +64,8 @@ class ReviewEventsController extends Controller
             'url' => $request->url,
             'review' => $request->review,
             'image_path' => $request->image_path,
+            'rank' => $request->rank ? $request->rank : 5
         ]);
-
-        // if(auth()->user()->type == 'a'){$review->update(['rank' => $request->rank]);}; 
-
-    
     }
 
     /**

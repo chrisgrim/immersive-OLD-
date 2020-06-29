@@ -1,7 +1,7 @@
 <template>
     <div class="event-online-search" style="min-height: calc(100vh - 7rem);position:relative;">
         <div class="event-online-search__container">
-            <header class="online-search__header" style="background: url('/storage/website-files/online-search.jpg');">
+            <header class="online-search__header">
                 <div class="online-search__header-content">
                      <div class="online-search__title">
                         <h2>{{this.$store.state.searchtype}}</h2>

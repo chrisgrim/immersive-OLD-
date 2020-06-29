@@ -22,9 +22,9 @@
                     :show-labels="false"
                     :internal-search="false"
                     :options-limit="30"
-                    :class="{ active: isActive == 'event','error': $v.event.$error}"
-                    :limit="5"  
                     track-by="name"
+                    :class="{ active: isActive == 'event','error': $v.event.$error}"
+                    :limit="5"
                     @click="isActive = 'event'"
                     @blur="isActive = null"
                     @open="loadEvents"
@@ -206,6 +206,21 @@
 
         components: { Multiselect },
 
+        computed: {
+            submitObject() {
+                return {
+                    reviewername: this.reviewername ? this.reviewername : '',
+                    review: this.review ? this.review : '',
+                    url: this.url ? this.url : '',
+                    rank: this.rank ? this.rank : '',
+                    event: this.event ? this.event : '',
+                    image_path: this.image_path ? this.image_path : '/storage/reviews/default.png'
+                }
+            },
+        },
+
+
+
         data() {
             return {
                 event: '',
@@ -223,19 +238,16 @@
                 url: '',
                 selectedModal: '',
                 reviewerList: ['No Proscenium', 'Room Escape Artist'],
+                pagination: {paginate:10},
             }
-        },
-
-        computed: {
-
         },
 
         methods: {
 
-            loadEvents (query) {
+            loadEvents(query) {
                 axios.get('/api/admin/search/events', { params: { keywords: query } })
-                .then(response => {
-                    this.events = response.data;
+                .then(res => {
+                    this.events = res.data;
                 });
             },
 
@@ -244,27 +256,18 @@
                 if(arr == 'No Proscenium') {
                     return this.image_path = '/storage/reviews/nopro.png'
                 }
+                this.image_path = '/storage/reviews/default.png'
                 return this.url = '';
             },
 
             addReview() {
                 this.$v.$touch(); 
                 if (this.$v.$invalid) { return false };
-                let data = {
-                    reviewername: this.reviewername,
-                    review: this.review,
-                    url: this.url,
-                    rank: this.rank,
-                    event: this.event,
-                    image_path: this.image_path ? this.image_path : ''
-                }
-                axios.post('/reviewevents', data)
+                axios.post('/reviewevents', this.submitObject)
                  .then(response => {
-                    // console.log(response.data);
                     location.reload();
                 })
                 .catch(error => {
-                    // console.log(error.response.data);
                 });
             },
 
@@ -285,7 +288,6 @@
             loadReviews() {
                 axios.get('/reviewevents/')
                 .then(response => {
-                    console.log(response.data);
                     this.reviews = response.data;
                 })
                 .catch(error => { this.serverErrors = error.response.data.errors; });
@@ -311,7 +313,6 @@
                 this.reviewerList.push(newTag)
                 this.reviewername = newTag;
             },
-            
         },
 
         created() {
