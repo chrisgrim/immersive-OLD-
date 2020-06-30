@@ -1,6 +1,6 @@
 <template>
     <nav class="create" :style="pageHeight">
-    	<div class="grid create-nav-header">
+        <div class="grid create-nav-header">
             <div class="create-nav-header__home">
                 <div class="nav-create-logo">
                     <a :href="backUrl">
@@ -93,8 +93,8 @@
 <script>
     import NavMenuItem  from './components/nav-menu-item.vue'
 
-	export default {
-		props: ['event', 'user'],
+    export default {
+        props: ['event', 'user'],
 
         components: { NavMenuItem },
 

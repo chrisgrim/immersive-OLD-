@@ -7,6 +7,40 @@
             <h3>Admin Area</h3>
         </div>
         <div class="admin-menu">
+
+            <a href="/finish/events">
+                <button :class="{active: active == 'approve'}" class="admin-menu__item" >
+                    <div v-if="user.needsApproval" class="admin-menu__notification">
+                        <p>{{user.needsApproval}}</p>
+                    </div>
+                    Approve Events
+                </button>
+            </a>
+
+            <a v-if="admin" href="/admin/events">
+            <button :class="{active: active == 'events'}" class="admin-menu__item" >
+                Edit Events
+            </button>
+            </a>
+            
+            <a v-if="admin" href="/admin/boneyard">
+            <button :class="{active: active == 'boneyard'}" class="admin-menu__item" >
+                Boneyard
+            </button>
+            </a>
+
+            <a v-if="admin" href="/master/userlist">
+            <button :class="{active: active == 'users'}" class="admin-menu__item" >
+                Edit Users
+            </button>
+            </a>
+
+            <a href="/admin/organizer">
+            <button :class="{active: active == 'organizers'}" class="admin-menu__item" >
+                Edit Organizers
+            </button>
+            </a>
+
             <a v-if="admin" href="/categories/create">
             <button :class="{active: active == 'categories'}" class="admin-menu__item">
                 Categories
@@ -19,7 +53,6 @@
             </button>
             </a>
             
-
             <a v-if="admin" href="/contactlevels/create">
             <button :class="{active: active == 'contact'}" class="admin-menu__item" >
                 Contact Levels
@@ -50,29 +83,6 @@
             </button>
             </a>
 
-            <a v-if="admin" href="/master/userlist">
-            <button :class="{active: active == 'users'}" class="admin-menu__item" >
-                Edit Users
-            </button>
-            </a>
-
-            <a v-if="admin" href="/admin/events">
-            <button :class="{active: active == 'events'}" class="admin-menu__item" >
-                Edit Events
-            </button>
-            </a>
-            <a v-if="admin" href="/admin/boneyard">
-            <button :class="{active: active == 'boneyard'}" class="admin-menu__item" >
-                Boneyard
-            </button>
-            </a>
-
-            <a href="/admin/organizer">
-            <button :class="{active: active == 'organizers'}" class="admin-menu__item" >
-                Edit Organizers
-            </button>
-            </a>
-
             <a href="/reviewevents/create">
             <button :class="{active: active == 'reviews'}" class="admin-menu__item" >
                 Event Reviews
@@ -85,14 +95,6 @@
             </button>
             </a>
 
-             <a href="/finish/events">
-                <button :class="{active: active == 'approve'}" class="admin-menu__item" >
-                    <div v-if="user.needsApproval" class="admin-menu__notification">
-                        <p>{{user.needsApproval}}</p>
-                    </div>
-                    Approve Events
-                </button>
-            </a>
         </div>
     </nav>
 </template>

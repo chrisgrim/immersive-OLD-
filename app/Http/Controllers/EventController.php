@@ -110,7 +110,8 @@ class EventController extends Controller
     {
         if($event->status !== 'p') { return redirect('/');}
         $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'eventreviews', 'staffpick', 'advisories', 'showOnGoing','interactive_level', 'remotelocations', 'timezone');
-        return view('events.show', compact('event'));
+        $tickets = $event->shows()->first()->tickets()->orderBy('ticket_price')->get();
+        return view('events.show', compact('event', 'tickets'));
     }
 
     /**
@@ -159,7 +160,8 @@ class EventController extends Controller
     {
         $this->authorize('finalize', $event);
         $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'advisories', 'showOnGoing', 'remotelocations', 'timezone');
-        return view('create.review', compact('event'));
+        $tickets = $event->shows()->first()->tickets()->orderBy('ticket_price')->get();
+        return view('create.review', compact('event', 'tickets'));
     }
 
     public function submitEvent(Event $event) 

@@ -4,6 +4,22 @@
 		"selected_items":
 		[
 			[
+				"in",
+				"inline-grid\tdisplay"
+			],
+			[
+				"full",
+				"fullShowtimes"
+			],
+			[
+				"organ",
+				"organizer"
+			],
+			[
+				"o",
+				"organizerText"
+			],
+			[
 				"bac",
 				"background\tproperty"
 			],
@@ -68,16 +84,8 @@
 				"old_tickets"
 			],
 			[
-				"in",
-				"inline-block"
-			],
-			[
 				"rev",
 				"reviews"
-			],
-			[
-				"organ",
-				"organizers"
 			],
 			[
 				"inter",
@@ -506,14 +514,6 @@
 			[
 				"user-pro",
 				"user-profile-image"
-			],
-			[
-				"padding",
-				"padding-top\tproperty"
-			],
-			[
-				"grid-co",
-				"grid-column-gap\tproperty"
 			]
 		]
 	},
@@ -580,25 +580,41 @@
 	[
 		"/Users/chrisgrim/code/ei",
 		"/Users/chrisgrim/code/ei/app",
-		"/Users/chrisgrim/code/ei/app/Http",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers",
+		"/Users/chrisgrim/code/ei/database",
+		"/Users/chrisgrim/code/ei/database/migrations",
 		"/Users/chrisgrim/code/ei/resources",
-		"/Users/chrisgrim/code/ei/resources/js",
-		"/Users/chrisgrim/code/ei/resources/js/components",
-		"/Users/chrisgrim/code/ei/resources/js/mixins",
-		"/Users/chrisgrim/code/ei/resources/js/pages",
-		"/Users/chrisgrim/code/ei/resources/js/pages/create",
-		"/Users/chrisgrim/code/ei/resources/js/pages/layouts",
 		"/Users/chrisgrim/code/ei/resources/sass",
+		"/Users/chrisgrim/code/ei/resources/sass/create",
+		"/Users/chrisgrim/code/ei/resources/sass/events",
 		"/Users/chrisgrim/code/ei/resources/views",
+		"/Users/chrisgrim/code/ei/resources/views/events",
 		"/Users/chrisgrim/code/ei/resources/views/layouts",
 		"/Users/chrisgrim/code/ei/routes"
 	],
 	"file_history":
 	[
-		"/Users/chrisgrim/code/ei/composer.json",
 		"/Users/chrisgrim/code/ei/sftp-config.json",
+		"/Users/chrisgrim/code/ei/resources/js/pages/create/review-event.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/nav.vue",
+		"/Users/chrisgrim/code/ei/resources/sass/create/layout.scss",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/EventController.php",
+		"/Users/chrisgrim/code/ei/resources/views/create/review.blade.php",
+		"/Users/chrisgrim/code/ei/resources/js/pages/messages/message-show.vue",
+		"/Users/chrisgrim/code/ei/resources/views/events/show.blade.php",
+		"/Users/chrisgrim/code/ei/resources/views/events/index.blade.php",
+		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-show.vue",
+		"/Users/chrisgrim/code/ei/resources/sass/events/event-show.scss",
+		"/Users/chrisgrim/code/ei/resources/js/pages/events/components/index-item.vue",
+		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/nav.vue",
+		"/Users/chrisgrim/code/ei/resources/views/layouts/meta.blade.php",
+		"/Users/chrisgrim/code/ei/resources/js/pages/layouts/nav.vue",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/ReviewEventsController.php",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/AdminAreaEventsController.php",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/SearchController.php",
+		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/admin-events.vue",
+		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/admin-event-reviews.vue",
+		"/Users/chrisgrim/code/ei/composer.json",
+		"/Users/chrisgrim/code/ei/database/migrations/2019_08_21_172519_create_events_table.php",
 		"/Users/chrisgrim/code/ei/resources/js/pages/layouts/nav-search.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/shows.vue",
 		"/Users/chrisgrim/code/ei/database/migrations/2020_06_28_210727_alter_table_events_change_show_times.php",
@@ -606,13 +622,9 @@
 		"/Users/chrisgrim/code/ei/resources/sass/nav/navbar.scss",
 		"/Users/chrisgrim/code/ei/resources/sass/events/event-online-search.scss",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/ShowsController.php",
-		"/Users/chrisgrim/code/ei/resources/views/layouts/meta.blade.php",
 		"/Users/chrisgrim/code/ei/resources/js/pages/layouts/register.vue",
 		"/Users/chrisgrim/code/ei/resources/js/app.js",
 		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-online-search.vue",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/SearchController.php",
-		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-show.vue",
-		"/Users/chrisgrim/code/ei/resources/js/pages/create/review-event.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/profile/profile-index.vue",
 		"/Users/chrisgrim/code/ei/app/AdminArea.php",
 		"/Users/chrisgrim/code/ei/.env",
@@ -623,7 +635,6 @@
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/TicketsController.php",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/review.vue",
 		"/Users/chrisgrim/code/ei/app/Timezone.php",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/EventController.php",
 		"/Users/chrisgrim/code/ei/app/Show.php",
 		"/Users/chrisgrim/code/ei/resources/views/create/show.blade.php",
 		"/Users/chrisgrim/code/ei/database/migrations/2020_06_25_222733_add_timezone_id_to_events_table.php",
@@ -642,11 +653,7 @@
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/advisories.vue",
 		"/Users/chrisgrim/code/ei/resources/views/create/ticket.blade.php",
 		"/Users/chrisgrim/code/ei/resources/sass/adminarea/nav.scss",
-		"/Users/chrisgrim/code/ei/resources/js/pages/layouts/nav.vue",
-		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/admin-events.vue",
-		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/nav.vue",
 		"/Users/chrisgrim/code/ei/resources/js/store/index.js",
-		"/Users/chrisgrim/code/ei/resources/js/pages/messages/message-show.vue",
 		"/Users/chrisgrim/code/ei/resources/js/store/mutations.js",
 		"/Users/chrisgrim/code/ei/resources/js/store/actions.js",
 		"/Users/chrisgrim/code/ei/resources/js/store/getters.js",
@@ -659,14 +666,11 @@
 		"/Users/chrisgrim/code/ei/sftp-config-alt.json",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/image.vue",
 		"/Users/chrisgrim/code/ei/resources/sass/events/event-index.scss",
-		"/Users/chrisgrim/code/ei/resources/sass/events/event-show.scss",
 		"/Users/chrisgrim/code/ei/app/Scopes/PublishedScope.php",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/AdminAreaEventsController.php",
 		"/Users/chrisgrim/code/ei/resources/views/adminArea/boneyard.blade.php",
 		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/admin-boneyard.vue",
 		"/Users/chrisgrim/code/ei/routes/api.php",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/title.vue",
-		"/Users/chrisgrim/code/ei/resources/views/events/index.blade.php",
 		"/Users/chrisgrim/code/ei/resources/js/components/LoadMore.js",
 		"/Users/chrisgrim/code/ei/resources/js/pages/layouts/loadmore.js",
 		"/Users/chrisgrim/code/ei/resources/js/pages/layouts/login-pop.vue",
@@ -674,7 +678,6 @@
 		"/Users/chrisgrim/code/ei/resources/js/pages/layouts/footer.vue",
 		"/Users/chrisgrim/code/ei/config/app.php",
 		"/Users/chrisgrim/code/ei/app/ShowOnGoing.php",
-		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/admin-event-reviews.vue",
 		"/Users/chrisgrim/code/ei/database/migrations/2020_06_17_000108_add_published_at_to_events_table.php",
 		"/Users/chrisgrim/code/ei/database/migrations/2020_06_16_235840_add_published_at_to_events_table.php",
 		"/Users/chrisgrim/code/ei/database/migrations/2020_06_16_235426_add_published_at_to_events_table.php",
@@ -702,7 +705,6 @@
 		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/admin-organizer.vue",
 		"/Users/chrisgrim/code/ei/resources/views/emails/moderator-comments.blade.php",
 		"/Users/chrisgrim/code/ei/resources/views/emails/ContactUser.blade.php",
-		"/Users/chrisgrim/code/ei/resources/views/events/show.blade.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/CategoryController.php",
 		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/admin-categories.vue",
 		"/Users/chrisgrim/code/ei/app/Category.php",
@@ -718,12 +720,7 @@
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/UserMasterController.php",
 		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/admin-user.vue",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/ProfilesController.php",
-		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-search.vue",
-		"/Users/chrisgrim/code/ei/resources/sass/organizer.scss",
-		"/Users/chrisgrim/code/ei/app/EventMapSearchRule.php",
-		"/Users/chrisgrim/code/ei/resources/views/layouts/master.blade.php",
-		"/Users/chrisgrim/code/ei/resources/sass/events/components/search-filters.scss",
-		"/Users/chrisgrim/code/ei/resources/sass/layout.scss"
+		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-search.vue"
 	],
 	"find":
 	{
@@ -734,6 +731,8 @@
 		"height": 164.0,
 		"where_history":
 		[
+			"/Users/chrisgrim/code/ei/resources/js/pages",
+			"/Users/chrisgrim/code/ei/resources/js",
 			"/Users/chrisgrim/code/ei/resources/js/pages",
 			"/Users/chrisgrim/code/ei/resources/sass",
 			"/Users/chrisgrim/code/ei",
@@ -839,6 +838,26 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"calendar",
+			"ticketUrl",
+			"event-title",
+			"section",
+			"fullAdvisories",
+			"text",
+			"event",
+			"organizer",
+			"pre-line",
+			"showtype",
+			"show",
+			"showtimes",
+			"what you",
+			"/api/admin/search/events",
+			"admin/events/fetch",
+			"asyncGenerateEventList",
+			"eventList",
+			"loadEvents",
+			"searchevents",
+			"search",
 			"price_range",
 			"dateFormat",
 			"dateArray",
@@ -946,27 +965,7 @@
 			"genres",
 			"eventImage",
 			"eventimage",
-			"fileName",
-			"directory",
-			"events",
-			"error",
-			"response",
-			"ContactUser",
-			"organizer",
-			"organizers",
-			"imageSrc",
-			"finalImage",
-			"tempcat",
-			"slug",
-			"imagepath",
-			"event",
-			",{$this->organizer ? $this->organizer->id : null}",
-			" : null",
-			"$this->organizer ? ",
-			" ? $this->organizer->id : null",
-			"->id",
-			"''",
-			",{$this->organizer->id}"
+			"fileName"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -1000,8 +999,8 @@
 						"selection":
 						[
 							[
-								5083,
-								5083
+								207,
+								207
 							]
 						],
 						"settings":
@@ -1012,7 +1011,7 @@
 							"syntax": "Packages/PHP/PHP.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 2455.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -1073,6 +1072,10 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"",
+				"routes/web.php"
+			],
 			[
 				"authen",
 				"vendor/laravel/ui/auth-backend/AuthenticatesUsers.php"
@@ -1440,10 +1443,6 @@
 			[
 				"cors.",
 				"node_modules/caniuse-lite/data/features/cors.js"
-			],
-			[
-				"",
-				"resources/sass/elements.scss"
 			],
 			[
 				"conf",

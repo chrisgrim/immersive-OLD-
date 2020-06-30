@@ -1,5 +1,5 @@
 <template>
-	<div class="show-content">
+    <div class="show-content">
         <nav class="event-show mobile">
             <div class="back">
                 <a v-if="searchUrl" :href="searchUrl">
@@ -19,11 +19,11 @@
         </nav>
 
         <!-- header -->
-		<header class="event-show grid">
-			<div class="header-left">
-				<div class="content">	
-					<span class="header-left__cat">{{event.category ? event.category.name : ''}}</span>
-					<span class="header-left__title"><h1 :style="titleFontSize">{{event.name}}</h1></span>
+        <header class="event-show grid">
+            <div class="header-left">
+                <div class="content">   
+                    <span class="header-left__cat">{{event.category ? event.category.name : ''}}</span>
+                    <span class="header-left__title"><h1 :style="titleFontSize">{{event.name}}</h1></span>
                     <span class="header-left__tag"><i>{{event.tag_line}}</i></span>
                     <div v-if="event.staffpick">
                         EI Pick of the week!
@@ -80,9 +80,9 @@
                             </span>
                         </div>
                     </div>
-				</div>
-			</div>
-			<div class="header-right">
+                </div>
+            </div>
+            <div class="header-right">
                 <div class="header-right__image">
                     <picture>
                         <source type="image/webp" :srcset="`/storage/${event.largeImagePath}`"> 
@@ -92,32 +92,21 @@
                 <div class="desktop">
                     <favorite :user="user" :inputclass="showEventClass" :event="event"></favorite>
                 </div>
-			</div>
+            </div>
         </header>
-	   
+       
         <!-- About -->
-		<section class="event-show grid two-panel">
+        <section class="event-show grid two-panel">
             <div class="event-title">
                 <h2>About</h2>
             </div>
             <div class="right">
-                <p 
-                style="white-space: pre-line;" 
-                v-if="showMore !== 'description'" 
-                class="text">{{event.description.substring(0,400)}}<span 
-                    class="show-text" 
-                    v-if="event.description.length >= 400"
-                    @click="showMore = 'description'">... Show More
-                    </span>
-                </p>
-                <p 
-                style="white-space: pre-line;" 
-                v-show="showMore == 'description'" 
-                class="text">{{event.description}}<span 
-                    class="show-text" 
-                    @click="showMore = null">... Show Less
-                    </span>
-                </p>
+                <div class="event-show__description">
+                    <p style="white-space: pre-wrap;" class="text">{{ descriptionText }}<span class="show-text" 
+                        v-if="!fullDescription" @click="fullDescription = !fullDescription">... Show More</span>
+                        <span class="show-text"v-if="fullDescription && event.description.length >= 400" @click="fullDescription = !fullDescription">... Show Less </span>
+                    </p>
+                </div>
             </div>
         </section>
 
@@ -142,7 +131,7 @@
                         <div class="review">
                             <a rel="noreferrer" target="_blank" :href="review.url">                 
                                 <i 
-                                style="white-space: pre-line;" 
+                                style="white-space: pre-wrap;" 
                                 v-if="showMore !== 'review'" 
                                 class="text">{{review.review.substring(0,300)}}<span 
                                     class="show-text" 
@@ -170,10 +159,13 @@
                     ref="datePicker"             
                     name="dates">
                 </flat-pickr>
-                <div class="event-show-showtimes">
+                <div class="event-show__showtimes--specific">
                     <p>Show Details:</p>
                     <p>{{event.timezone ? event.timezone.description : ''}}</p>
-                    <p style="white-space: pre-wrap;">{{event.show_times}}</p>
+                    <p style="white-space: pre-wrap;" class="text">{{ showtimesText }}<span class="show-text" 
+                        v-if="!fullShowtimes" @click="fullShowtimes = !fullShowtimes">... Show More</span>
+                        <span class="show-text"v-if="fullShowtimes && event.show_times.length >= 160" @click="fullShowtimes = !fullShowtimes">... Show Less </span>
+                    </p>
                 </div>
             </div>
             <div class="right lockedcalendar mobile">
@@ -185,16 +177,19 @@
                     ref="datePicker"             
                     name="dates">
                 </flat-pickr>
-                <div class="event-show-showtimes">
+                <div class="event-show__showtimes--specific">
                     <p>Show Details:</p>
                     <p>{{event.timezone ? event.timezone.description : ''}}</p>
-                    <p style="white-space: pre-wrap;">{{event.show_times}}</p>
+                    <p style="white-space: pre-wrap;" class="text">{{ showtimesText }}<span class="show-text" 
+                        v-if="!fullShowtimes" @click="fullShowtimes = !fullShowtimes">... Show More</span>
+                        <span class="show-text"v-if="fullShowtimes && event.show_times.length >= 160" @click="fullShowtimes = !fullShowtimes">... Show Less </span>
+                    </p>
                 </div>
             </div>
         </section>
 
         <!-- Dates On Going -->
-        <section v-if="event.show_on_going" class="grid event-show two-panel">
+        <section v-if="event.showtype == 'o'" class="grid event-show two-panel">
             <div class="event-title">
                 <h2>Show Times</h2>
             </div>
@@ -240,10 +235,31 @@
                         </div>
                     </div>
                 </div>
-                <div class="weektimes">
+                <div class="event-show__showtimes--ongoing">
                     <p>Show Details:</p>
                     <p>{{event.timezone ? event.timezone.description : ''}}</p>
-                    <p style="white-space: pre-wrap;">{{event.show_times}}</p>
+                    <p style="white-space: pre-wrap;" class="text">{{ showtimesText }}<span class="show-text" 
+                        v-if="!fullShowtimes" @click="fullShowtimes = !fullShowtimes">... Show More</span>
+                        <span class="show-text"v-if="fullShowtimes && event.show_times.length >= 160" @click="fullShowtimes = !fullShowtimes">... Show Less </span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dates Always -->
+        <section v-if="event.showtype == 'a'" class="grid event-show two-panel">
+            <div class="event-title">
+                <h2>Show Times</h2>
+            </div>
+            <div class="right">
+                <h3>Anytime</h3>
+                <div class="event-show__showtimes--specific">
+                    <p>Show Details:</p>
+                    <p>{{event.timezone ? event.timezone.description : ''}}</p>
+                    <p style="white-space: pre-wrap;" class="text">{{ showtimesText }}<span class="show-text" 
+                        v-if="!fullShowtimes" @click="fullShowtimes = !fullShowtimes">... Show More</span>
+                        <span class="show-text"v-if="fullShowtimes && event.show_times.length >= 160" @click="fullShowtimes = !fullShowtimes">... Show Less </span>
+                    </p>
                 </div>
             </div>
         </section>
@@ -296,24 +312,11 @@
                     <div class="title">
                         <h3>Audience Role</h3>
                     </div>
-                    <ul class="info">
+                    <ul class="audience-role__info">
                         <li>
-                            <p 
-                            style="white-space: pre-line;" 
-                            v-if="showMore !== 'audience'" 
-                            class="text">{{event.advisories.audience.substring(0,160)}}<span 
-                                class="show-text" 
-                                v-if="event.advisories.audience.length >= 160"
-                                @click="showMore = 'audience'">... Show More
-                                </span>
-                            </p>
-                            <p 
-                            style="white-space: pre-line;" 
-                            v-show="showMore == 'audience'" 
-                            class="text">{{event.advisories.audience}}<span 
-                                class="show-text" 
-                                @click="showMore = null">... Show Less
-                                </span>
+                            <p style="white-space: pre-wrap;" class="text">{{ advisoryText }}<span class="show-text" 
+                                v-if="!fullAdvisories" @click="fullAdvisories = !fullAdvisories">... Show More</span>
+                                <span class="show-text"v-if="fullAdvisories && event.advisories.audience.length >= 160" @click="fullAdvisories = !fullAdvisories">... Show Less </span>
                             </p>
                         </li>
                     </ul>
@@ -338,7 +341,7 @@
                     <h2>About the organizer</h2>
                 </div>
             </div>
-			<div class="right">
+            <div class="right">
                 <a :href="`/organizer/${event.organizer.slug}`">
                     <div class="event-show-organizer-image">
                         <div :style="event.organizer.thumbImagePath ? organizerImage : `background:${event.organizer.hexColor}`" class="img">
@@ -353,65 +356,51 @@
                         <h3>{{event.organizer.name}}</h3>
                     </div>
                 </a>
-                <div style="white-space: pre-line;" v-if="event.organizer.description" class="description">
-                    <span 
-                    style="white-space: pre-line;" 
-                    v-if="showMore !== 'organizer'" 
-                    class="text">{{event.organizer.description.substring(0,160)}}<span 
-                        class="show-text" 
-                        v-if="event.organizer.description.length >= 160"
-                        @click="showMore = 'organizer'">... Show More
-                        </span>
-                    </span>
-                    <span 
-                    style="white-space: pre-line;" 
-                    v-show="showMore == 'organizer'" 
-                    class="text">{{event.organizer.description}}<span 
-                        class="show-text" 
-                        @click="showMore = null">... Show Less
-                        </span>
+                <div style="white-space: pre-wrap;" v-if="event.organizer.description" class="description">
+                    <span style="white-space: pre-wrap;" class="text">{{organizerText}}<span class="show-text" v-if="!fullOrganizer" @click="fullOrganizer = !fullOrganizer">... Show More</span>
+                        <span class="show-text" v-else @click="fullOrganizer = !fullOrganizer">... Show Less </span>
                     </span>
                 </div>
                 <ContactOrganizer :user="user" :loadorganizer="event.organizer"></ContactOrganizer>
-			</div>
-		</section>
+            </div>
+        </section>
 
         <!-- location -->
-		<section v-if="bar && event.hasLocation" class="section event-show location">
-			<div>
-				<div class="event-title">
-					<h2>Location</h2>
-				</div>
-				<div class="text" v-if="event.location.hiddenLocationToggle">
+        <section v-if="bar && event.hasLocation" class="section event-show location">
+            <div>
+                <div class="event-title">
+                    <h2>Location</h2>
+                </div>
+                <div class="text" v-if="event.location.hiddenLocationToggle">
                     <a rel="noreferrer" target="_blank" :href="`http://maps.google.com/maps?q=${event.location.city},+${event.location.region}`">
-						<p>{{event.location.city}}, {{event.location.region}}</p>
+                        <p>{{event.location.city}}, {{event.location.region}}</p>
                         <br>
                         <p>{{event.location.hiddenLocation}}</p>
                     </a>
-				</div>
+                </div>
                 <div class="text" v-else="event.location.hiddenLocationToggle">
                     <a rel="noreferrer" target="_blank" :href="`http://maps.google.com/maps?q=${event.location.home}+${event.location.street},+${event.location.city},+${event.location.region}`">
                         <p>{{locationPlaceholder}}</p>  
                     </a>
                 </div>
-				<div class="event-show-map">
-					<div v-if="center">
-						<div class="zoom">
-							<div class="zoom__in">
-								<button @click.prevent="zoom += 1">
-									<svg viewBox="0 0 16 16" height="16" width="16" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M7 1a1 1 0 0 1 2 0v14a1 1 0 1 1-2 0V1z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"></path></svg>
-								</button>
-							</div>
-							<div class="zoom__out">
-								<button @click.prevent="zoom -= 1">
-									<svg viewBox="0 0 16 16" height="16" width="16" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"></path></svg>
-								</button>
-							</div>
-						</div>
-						<div style="width:100%;height:400px">
-							<l-map :zoom="zoom" :center="center" :options="{ scrollWheelZoom: allowZoom, zoomControl: allowZoom }">
-							<l-tile-layer :url="url"></l-tile-layer>
-							<l-marker :lat-lng="center">
+                <div class="event-show-map">
+                    <div v-if="center">
+                        <div class="zoom">
+                            <div class="zoom__in">
+                                <button @click.prevent="zoom += 1">
+                                    <svg viewBox="0 0 16 16" height="16" width="16" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M7 1a1 1 0 0 1 2 0v14a1 1 0 1 1-2 0V1z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"></path></svg>
+                                </button>
+                            </div>
+                            <div class="zoom__out">
+                                <button @click.prevent="zoom -= 1">
+                                    <svg viewBox="0 0 16 16" height="16" width="16" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div style="width:100%;height:400px">
+                            <l-map :zoom="zoom" :center="center" :options="{ scrollWheelZoom: allowZoom, zoomControl: allowZoom }">
+                            <l-tile-layer :url="url"></l-tile-layer>
+                            <l-marker :lat-lng="center">
                                 <l-popup>
                                     <div class="show-pop">
                                         <a rel="noreferrer" target="_blank" :href="`http://maps.google.com/maps?q=${event.location.home}+${event.location.street},+${event.location.city},+${event.location.region}`">
@@ -424,12 +413,12 @@
                                     </div>
                                 </l-popup>                        
                             </l-marker>
-							</l-map>
-						</div>	
-					</div>
-				</div>
-			</div>
-		</section>
+                            </l-map>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <!-- No Location -->
         <section class="event-show grid two-panel" v-if="!event.hasLocation">
@@ -449,46 +438,40 @@
             </div>
         </section>
 
-		<div class="grid event-bottom-bar" :class="{ active: bar }">
-			<div class="event-bottom-bar__name">
+        <div class="grid event-bottom-bar" :class="{ active: bar }">
+            <div class="event-bottom-bar__name">
                 <picture>
                     <source height="50" width="50" type="image/webp" :srcset="`/storage/${event.thumbImagePath}`"> 
                     <img class="event-bottom-bar__img" height="50" width="50" :src="`/storage/${event.thumbImagePath.slice(0, -4)}jpg`" :alt="event.name">
                 </picture>
-				<h4>{{event.name}}</h4>
-			</div>
-			<div class="event-price">
-				<h4>{{event.price_range}}</h4>
-			</div>
-			<div class="event-get-tickets">
-				<a :href="event.ticketUrl" rel="noreferrer noopener" target="_blank">
-					<button class="event-bottom-bar__button">
-						Get Tickets
-					</button>
-				</a>
-			</div>
-		</div>
+                <h4>{{event.name}}</h4>
+            </div>
+            <div class="event-price">
+                <h4>{{event.price_range}}</h4>
+            </div>
+            <div class="event-get-tickets">
+                <a :href="eventUrl" rel="noreferrer noopener" target="_blank">
+                    <button class="event-bottom-bar__button">
+                        Get Tickets
+                    </button>
+                </a>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
-	import {LMap, LTileLayer, LMarker, LPopup} from 'vue2-leaflet'
+    import {LMap, LTileLayer, LMarker, LPopup} from 'vue2-leaflet'
     import format from 'date-fns/format'
     import ContactOrganizer from '../organizers/contact-organizer.vue'
     import flatPickr from 'vue-flatpickr-component'
+    import LoadMore  from '../../components/LoadMore.js'
 
-	export default {
+    export default {
 
-        props: ['loadevent', 'user'],
+        props: ['loadevent', 'user', 'tickets'],
 
-	    components: { 
-			LMap, 
-			LTileLayer, 
-			LMarker,
-            flatPickr,
-            ContactOrganizer,
-            LPopup,
-		},
+        components: { LMap, LTileLayer, LMarker, flatPickr, ContactOrganizer, LPopup, LoadMore},
 
         computed: {
             locationPlaceholder() {
@@ -499,19 +482,47 @@
                 + (this.event.location.country ? this.event.location.country : '') 
                 : '';
             },
+
+            eventUrl() {
+                if (this.loadevent.ticketUrl) {
+                    return this.loadevent.ticketUrl;
+                }
+                if (this.loadevent.websiteUrl) {
+                    return this.loadevent.websiteUrl;
+                }
+                if (this.loadevent.organizer.website) {
+                    return this.loadevent.organizer.website;
+                }
+            },
+
+            organizerText() {
+                return this.fullOrganizer ? this.loadevent.organizer.description : this.loadevent.organizer.description.substring(0,160)
+            },
+
+            advisoryText() {
+                return this.fullAdvisories ? this.loadevent.advisories.audience : this.loadevent.advisories.audience.substring(0,160)
+            },
+
+            showtimesText() {
+                return this.fullShowtimes ? this.loadevent.show_times : this.loadevent.show_times.substring(0,160)
+            },
+
+            descriptionText() {
+                return this.fullDescription ? this.loadevent.description : this.loadevent.description.substring(0,400)
+            },
         },
 
-		data() {
-			return {
-				event: this.loadevent ? this.loadevent : '',
-				isModalVisible: false,
-				zoom:13,
-				center: this.loadevent.location_latlon,
-				url:'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
-				attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-				allowZoom: false,
+        data() {
+            return {
+                event: this.loadevent ? this.loadevent : '',
+                isModalVisible: false,
+                zoom:13,
+                center: this.loadevent.location_latlon,
+                url:'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+                attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+                allowZoom: false,
                 week: this.loadevent ? this.loadevent.show_on_going : '',
-				showEventClass: 'show-heart-location',
+                showEventClass: 'show-heart-location',
                 showEventMobileClass: 'show-heart-mobile-location',
                 showMore: null,
                 organizerImage: '',
@@ -537,11 +548,17 @@
                 },
                 searchUrl: '',
                 titleFontSize: '',
+                fullOrganizer: this.loadevent.organizer.description.length <= 160 ? true : false,
+                fullAdvisories: this.loadevent.advisories.audience.length <= 160 ? true : false,
+                fullShowtimes: this.loadevent.show_times.length <= 160 ? true : false,
+                fullDescription: this.loadevent.description.length <= 400 ? true : false,
+                hover: null,
+                hasIntersected: false,
 
-			}
-		},
+            }
+        },
 
-		methods: {
+        methods: {
             getDates() {
                 if(this.event.shows) {
                     this.event.shows.forEach(event=> {
@@ -553,17 +570,18 @@
                 }
             },
 
+            intersected() {
+                console.log('intersected');
+                return this.hasIntersected = true;
+            },
+
             handleScroll (event) {
                 const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-                if (currentScrollPosition > 60) {
+                // if (window.pageYOffset < 300) { this.hasIntersected = false; };
+                if (currentScrollPosition > 60 && this.hasIntersected) {
                     return this.bar = true;
                 }
                 return this.bar = false;
-                // if (Math.abs(currentScrollPosition - this.lastScrollPosition) < 60) {
-                //     return
-                // }
-                // this.bar = currentScrollPosition < this.lastScrollPosition;
-                // this.lastScrollPosition = currentScrollPosition ;
             },
 
             breadcrumbs() {
@@ -592,7 +610,7 @@
                 return this.titleFontSize = `font-size:5rem;line-height:5rem`
             },
 
-		},
+        },
 
         watch: {
             dates() {

@@ -104,7 +104,9 @@ section.event-show {
 section .event-title {
     position:sticky;
     margin-bottom: 1.4rem;
+    margin-top: -.7rem;
 }
+
 .two-panel {
     grid-template-columns: 42rem 1fr;
     & .two-panel {
@@ -113,6 +115,80 @@ section .event-title {
         border-bottom: 1px solid #ebebeb;
         margin-bottom: 3rem;
     }
+}
+.right {
+    position: relative;
+    overflow: hidden;
+}
+.bg-black {
+    background:black;
+}
+
+.event-show__description {
+    width:100%;
+    overflow: hidden;
+}
+
+.event-show__tickets {
+    width:100%;
+    position: relative;
+    height:20rem;
+}
+
+.event-show__tickets--grid {
+    display: inline-grid;
+    grid-template-columns: repeat(5,auto);
+    grid-auto-rows: 1fr; 
+    position: relative;
+}
+
+button.event-show__ticket-button {
+    border:0;
+    border: 1px solid white;
+    border-radius: 1rem;
+    padding: 1rem 2rem;
+    margin: 2rem;
+    background:none;
+    text-align: left;
+    &:hover {
+        background:white;
+        & p {
+            color:black !important;
+        }
+        & .event-show__ticket--description p {
+            display: none;
+        }
+    }
+}
+
+.event-show__ticket--name p {
+    color: white;
+    font-size: 1.2rem;
+    line-height: auto
+}
+
+.event-show__ticket--price {
+    margin-top: -.3rem;
+    min-width: 7rem;
+}
+
+.event-show__ticket--price p {
+    color: white;
+    font-size: 3rem;
+    line-height: auto
+}
+.event-show__ticket--description {
+    min-height: 3rem;
+}
+.event-show__ticket--description p{
+    color: white;
+    font-size: 1.2rem;
+}
+.event-show__ticket--full {
+    position:absolute;
+    bottom:0;
+    color:white;
+    margin-left:2rem;
 }
 
 .event-show-review {
@@ -140,7 +216,7 @@ section .event-title {
 .show-week-calendar_day {
     width: 100%;
     height: 100%;
-    line-height: 10rem;
+    line-height: 8rem;
     &.active {
         background: $default-color;
         border: 1px solid #e0e0e0;
@@ -170,11 +246,21 @@ section .event-title {
     margin-left: -.5rem;
 }
 
-.event-show-showtimes {
+.event-show__showtimes--specific {
     width: 100%;
     margin: 4rem 0;
+    overflow: hidden;
 }
+.event-show__showtimes--ongoing {
+    width: 100%;
+    overflow: hidden;
+}
+.audience-role__info {
+    overflow: hidden;
+    word-break: break-word;
+    hyphens: auto
 
+}
 
 .show-heart-location {
     position: absolute;

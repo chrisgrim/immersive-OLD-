@@ -81,23 +81,12 @@
                 <h2>About</h2>
             </div>
             <div class="right">
-                <p 
-                style="white-space: pre-line;" 
-                v-if="showMore !== 'description'" 
-                class="text">{{event.description.substring(0,400)}}<span 
-                    class="show-text" 
-                    v-if="event.description.length >= 400"
-                    @click="showMore = 'description'">... Show More
-                    </span>
-                </p>
-                <p 
-                style="white-space: pre-line;" 
-                v-show="showMore == 'description'" 
-                class="text">{{event.description}}<span 
-                    class="show-text" 
-                    @click="showMore = null">... Show Less
-                    </span>
-                </p>
+                <div class="event-show__description">
+                    <p style="white-space: pre-wrap;" class="text">{{ descriptionText }}<span class="show-text" 
+                        v-if="!fullDescription" @click="fullDescription = !fullDescription">... Show More</span>
+                        <span class="show-text"v-if="fullDescription && event.description.length >= 400" @click="fullDescription = !fullDescription">... Show Less </span>
+                    </p>
+                </div>
             </div>
         </section>
 
@@ -121,7 +110,7 @@
                         <div class="review">
                             <a rel="noreferrer" target="_blank" :href="review.url">                 
                                 <i 
-                                style="white-space: pre-line;" 
+                                style="white-space: pre-wrap;" 
                                 v-if="showMore !== 'review'" 
                                 class="text">{{review.review.substring(0,300)}}<span 
                                     class="show-text" 
@@ -149,10 +138,13 @@
                     ref="datePicker"             
                     name="dates">
                 </flat-pickr>
-                <div class="event-show-showtimes">
+                <div class="event-show__showtimes--specific">
                     <p>Show Details:</p>
                     <p>{{event.timezone ? event.timezone.description : ''}}</p>
-                    <p style="white-space: pre-wrap;">{{event.show_times}}</p>
+                    <p style="white-space: pre-wrap;" class="text">{{ showtimesText }}<span class="show-text" 
+                        v-if="!fullShowtimes" @click="fullShowtimes = !fullShowtimes">... Show More</span>
+                        <span class="show-text"v-if="fullShowtimes && event.show_times.length >= 160" @click="fullShowtimes = !fullShowtimes">... Show Less </span>
+                    </p>
                 </div>
             </div>
             <div class="right lockedcalendar mobile">
@@ -164,16 +156,19 @@
                     ref="datePicker"             
                     name="dates">
                 </flat-pickr>
-                <div class="event-show-showtimes">
+                <div class="event-show__showtimes--specific">
                     <p>Show Details:</p>
                     <p>{{event.timezone ? event.timezone.description : ''}}</p>
-                    <p style="white-space: pre-wrap;">{{event.show_times}}</p>
+                    <p style="white-space: pre-wrap;" class="text">{{ showtimesText }}<span class="show-text" 
+                        v-if="!fullShowtimes" @click="fullShowtimes = !fullShowtimes">... Show More</span>
+                        <span class="show-text"v-if="fullShowtimes && event.show_times.length >= 160" @click="fullShowtimes = !fullShowtimes">... Show Less </span>
+                    </p>
                 </div>
             </div>
         </section>
 
         <!-- Dates On Going -->
-        <section v-if="event.show_on_going" class="grid event-show two-panel">
+        <section v-if="event.showtype == 'o'" class="grid event-show two-panel">
             <div class="event-title">
                 <h2>Show Times</h2>
             </div>
@@ -219,10 +214,32 @@
                         </div>
                     </div>
                 </div>
-                <div class="weektimes">
+                <div class="event-show__showtimes--ongoing">
                     <p>Show Details:</p>
                     <p>{{event.timezone ? event.timezone.description : ''}}</p>
-                    <p style="white-space: pre-wrap;">{{event.show_times}}</p>
+                    <p style="white-space: pre-wrap;" class="text">{{ showtimesText }}<span class="show-text" 
+                        v-if="!fullShowtimes" @click="fullShowtimes = !fullShowtimes">... Show More</span>
+                        <span class="show-text"v-if="fullShowtimes && event.show_times.length >= 160" @click="fullShowtimes = !fullShowtimes">... Show Less </span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+         <!-- Dates Always -->
+        <section v-if="event.showtype == 'a'" class="grid event-show two-panel">
+            <div class="event-title">
+                <h2>Show Times</h2>
+            </div>
+            <div class="right">
+                <div></div>
+                <h3>Anytime</h3>
+                <div class="event-show__showtimes--specific">
+                    <p>Show Details:</p>
+                    <p>{{event.timezone ? event.timezone.description : ''}}</p>
+                    <p style="white-space: pre-wrap;" class="text">{{ showtimesText }}<span class="show-text" 
+                        v-if="!fullShowtimes" @click="fullShowtimes = !fullShowtimes">... Show More</span>
+                        <span class="show-text"v-if="fullShowtimes && event.show_times.length >= 160" @click="fullShowtimes = !fullShowtimes">... Show Less </span>
+                    </p>
                 </div>
             </div>
         </section>
@@ -275,24 +292,11 @@
                     <div class="title">
                         <h3>Audience Role</h3>
                     </div>
-                    <ul class="info">
+                    <ul class="audience-role__info">
                         <li>
-                            <p 
-                            style="white-space: pre-line;" 
-                            v-if="showMore !== 'audience'" 
-                            class="text">{{event.advisories.audience.substring(0,160)}}<span 
-                                class="show-text" 
-                                v-if="event.advisories.audience.length >= 160"
-                                @click="showMore = 'audience'">... Show More
-                                </span>
-                            </p>
-                            <p 
-                            style="white-space: pre-line;" 
-                            v-show="showMore == 'audience'" 
-                            class="text">{{event.advisories.audience}}<span 
-                                class="show-text" 
-                                @click="showMore = null">... Show Less
-                                </span>
+                            <p style="white-space: pre-wrap;" class="text">{{ advisoryText }}<span class="show-text" 
+                                v-if="!fullAdvisories" @click="fullAdvisories = !fullAdvisories">... Show More</span>
+                                <span class="show-text"v-if="fullAdvisories && event.advisories.audience.length >= 160" @click="fullAdvisories = !fullAdvisories">... Show Less </span>
                             </p>
                         </li>
                     </ul>
@@ -332,23 +336,9 @@
                         <h3>{{event.organizer.name}}</h3>
                     </div>
                 </a>
-                <div style="white-space: pre-line;" v-if="event.organizer.description" class="description">
-                    <span 
-                    style="white-space: pre-line;" 
-                    v-if="showMore !== 'organizer'" 
-                    class="text">{{event.organizer.description.substring(0,160)}}<span 
-                        class="show-text" 
-                        v-if="event.organizer.description.length >= 160"
-                        @click="showMore = 'organizer'">... Show More
-                        </span>
-                    </span>
-                    <span 
-                    style="white-space: pre-line;" 
-                    v-show="showMore == 'organizer'" 
-                    class="text">{{event.organizer.description}}<span 
-                        class="show-text" 
-                        @click="showMore = null">... Show Less
-                        </span>
+                <div style="white-space: pre-wrap;" v-if="event.organizer.description" class="description">
+                    <span style="white-space: pre-wrap;" class="text">{{organizerText}}<span class="show-text" v-if="!fullOrganizer" @click="fullOrganizer = !fullOrganizer">... Show More</span>
+                        <span class="show-text" v-if="fullOrganizer && event.organizer.description.length >= 160" @click="fullOrganizer = !fullOrganizer">... Show Less </span>
                     </span>
                 </div>
             </div>
@@ -446,7 +436,7 @@
 
     export default {
 
-        props: ['loadevent', 'user'],
+        props: ['loadevent', 'user', 'tickets'],
 
         mixins: [formValidationMixin],
 
@@ -470,6 +460,35 @@
                 + (this.event.location.country ? this.event.location.country : '') 
                 : '';
             },
+
+            eventUrl() {
+                if (this.loadevent.ticketUrl) {
+                    return this.loadevent.ticketUrl;
+                }
+                if (this.loadevent.websiteUrl) {
+                    return this.loadevent.websiteUrl;
+                }
+                if (this.loadevent.organizer.website) {
+                    return this.loadevent.organizer.website;
+                }
+            },
+
+            organizerText() {
+                return this.fullOrganizer ? this.loadevent.organizer.description : this.loadevent.organizer.description.substring(0,160)
+            },
+
+            advisoryText() {
+                return this.fullAdvisories ? this.loadevent.advisories.audience : this.loadevent.advisories.audience.substring(0,160)
+            },
+
+            showtimesText() {
+                return this.fullShowtimes ? this.loadevent.show_times : this.loadevent.show_times.substring(0,160)
+            },
+
+            descriptionText() {
+                return this.fullDescription ? this.loadevent.description : this.loadevent.description.substring(0,400)
+            },
+
         },
 
         data() {
@@ -509,7 +528,11 @@
                 searchUrl: '',
                 disabled: false,
                 titleFontSize: '',
-
+                fullOrganizer: this.loadevent.organizer.description.length <= 160 ? true : false,
+                fullAdvisories: this.loadevent.advisories.audience.length <= 160 ? true : false,
+                fullShowtimes: this.loadevent.show_times.length <= 160 ? true : false,
+                fullDescription: this.loadevent.description.length <= 400 ? true : false,
+                hover: null,
             }
         },
 
