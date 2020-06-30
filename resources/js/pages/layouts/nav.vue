@@ -46,7 +46,7 @@
 
                     <div class="nav-menu-item" v-if="!user">
                         <a class="menu-link" href="/register">
-                            <div>Host an Experience</div>
+                            <div>Submit Your Experience</div>
                         </a>
                     </div>
                 </div>
@@ -99,7 +99,7 @@
                 <a class="menu-link" href="/create-event/edit">
                     <div class="nav-mobile-footer__icon">
                         <svg viewBox="0 0 24 24" fill="currentColor" fill-opacity="0" stroke="currentColor" stroke-width="1.5" focusable="false" aria-hidden="true" role="presentation" stroke-linecap="round" stroke-linejoin="round" style="height: 100%; width: 100%; display: inline-block; overflow: visible;"><circle class="st0" cx="12" cy="12.2" r="10.2"/><line class="st0" x1="12" y1="8.6" x2="12" y2="15.9"/><line class="st0" x1="8.3" y1="12.2" x2="15.7" y2="12.2"/></svg>
-                        <p class="mobile-nav-footer__text">Events</p>
+                        <p class="mobile-nav-footer__text">Submit</p>
                     </div>
                 </a>
             </div>
@@ -107,7 +107,7 @@
                 <a class="menu-link" href="/events/create">
                     <div class="nav-mobile-footer__icon">
                         <svg viewBox="0 0 24 24" fill="currentColor" fill-opacity="0" stroke="currentColor" stroke-width="1.5" focusable="false" aria-hidden="true" role="presentation" stroke-linecap="round" stroke-linejoin="round" style="height: 100%; width: 100%; display: inline-block; overflow: visible;"><circle class="st0" cx="12" cy="12.2" r="10.2"/><line class="st0" x1="12" y1="8.6" x2="12" y2="15.9"/><line class="st0" x1="8.3" y1="12.2" x2="15.7" y2="12.2"/></svg>
-                        <p class="mobile-nav-footer__text">Events</p>
+                        <p class="mobile-nav-footer__text">Submit</p>
                     </div>
                 </a>
             </div>

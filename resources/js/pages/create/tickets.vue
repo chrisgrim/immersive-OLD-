@@ -41,7 +41,7 @@
                                      <label>Ticket Description (optional)</label>
                                 </div>
                                 <div>
-                                     <label>Ticket Price</label>
+                                     <label>Ticket Price (USD)</label>
                                 </div>
                             </div>
 
@@ -104,6 +104,22 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="field">   
+                            <label>Ticket Link (required)</label>
+                            <input 
+                            type="text" 
+                            v-model="ticketUrl"
+                            :class="{ active: active == 'ticket','error': $v.ticketUrl.$error }"
+                            @click="active = 'ticket'"
+                            @blur="active = null"
+                            @input="$v.ticketUrl.$touch"
+                            placeholder="Leave blank if using organizer website url"
+                            />
+                            <div v-if="$v.ticketUrl.$error" class="validation-error">
+                                <p class="error" v-if="!$v.ticketUrl.url"> Must be a url (https://...)</p>
+                                <p class="error" v-if="!$v.ticketUrl.required">Please enter a URL</p>
+                            </div>
+                        </div>
                     </div>
                 </section>
                 <section v-else>
@@ -128,7 +144,7 @@
 <script>
     import formValidationMixin from '../../mixins/form-validation-mixin'
     import _ from 'lodash'
-    import { required, minLength, maxLength, minValue } from 'vuelidate/lib/validators'
+    import { required, minLength, maxLength, minValue, url } from 'vuelidate/lib/validators'
     import {Money} from 'v-money'
     import Multiselect from 'vue-multiselect'
 
@@ -149,6 +165,7 @@ export default {
         submitObject() {
             return {
                 'tickets': this.tickets,
+                'ticketUrl': this.ticketUrl,
             }
         },
 
@@ -175,6 +192,7 @@ export default {
             selected: '',
             tempErrorName: false,
             tempErrorPrice: false,
+            ticketUrl: this.event.ticketUrl ? this.event.ticketUrl : '',
         }
     },
 
@@ -222,6 +240,7 @@ export default {
             axios.get(this.onFetch('tickets'))
             .then(res => {
                 res.data.tickets ? this.tickets = res.data.tickets[0].tickets : '';
+                res.data.ticketUrl ? this.ticketUrl = res.data.ticketUrl : '';
             });
         },
 
@@ -245,7 +264,6 @@ export default {
             if (this.checkVuelidate()) { return false };
             axios.post(this.endpoint, this.submitObject)
             .then(res => {  
-                console.log(res.data);
                 value == 'exit' || this.exit == true ? this.onBackInitial() : this.onForward('description');
             })
             .catch(err => { this.onErrors(err) });
@@ -269,6 +287,10 @@ export default {
     },
 
     validations: {
+        ticketUrl: {
+           url,
+           required,
+        },
         tickets: {
             required,
             $each: {
@@ -281,7 +303,7 @@ export default {
                     maxLength: maxLength(7),
                 },
                 description: {
-                   maxLength: maxLength(80),
+                   maxLength: maxLength(60),
                 },
             }
         },

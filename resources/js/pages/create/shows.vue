@@ -23,8 +23,8 @@
                     </div>
                 </div>
                 
-                <!-- Specific Dates -->
-                <div v-show="showType == 'Specific Dates'" class="specific-show-dates">
+                <!-- Limited Run (Specific Dates) -->
+                <div v-show="showType == 'Limited Run (Specific Dates)'" class="specific-show-dates">
                     <section class="event-enter-showdates">
                         <div class="field">
                             <label> Select all show dates</label>
@@ -72,7 +72,7 @@
                                 </template>
                             </multiselect>
                             <div v-if="$v.timezone.$error" class="validation-error">
-                                <p class="error" v-if="!$v.timezone.required">Please include timezone of show</p>
+                                <p class="error" v-if="!$v.timezone.ifOnDemand">Please include timezone of show</p>
                             </div>
                         </div>
                     </section>
@@ -124,8 +124,8 @@
                     </section>
                 </div>
            
-                <!-- Weekly Dates -->
-                <div v-show="showType == 'Weekly'" class="ongoing-show-dates">
+                <!-- Open Ended (Weekly) Dates -->
+                <div v-show="showType == 'Open Ended (Weekly)'" class="ongoing-show-dates">
                     <section class="event-enter-showdates">
                         <div class="field">
                             <label> Select show days</label>
@@ -210,13 +210,13 @@
                                 </template>
                             </multiselect>
                             <div v-if="$v.timezone.$error" class="validation-error">
-                                <p class="error" v-if="!$v.timezone.required">Please include timezone of show</p>
+                                <p class="error" v-if="!$v.timezone.ifOnDemand">Please include timezone of show</p>
                             </div>
                         </div>
                     </section>
                     <section class="event-enter-showtimes">
                         <div class="field">
-                            <label> Show Times (please include time zone)</label>
+                            <label> Show Times</label>
                             <textarea 
                             v-model="showTimes" 
                             class="create-input area"
@@ -262,10 +262,10 @@
                     </section>
                 </div>
                 
-                <div v-show="showType == 'Anytime'" class="everyday-show-dates">
+                <div v-show="showType == 'On Demand (Any Time)'" class="everyday-show-dates">
                     <section class="event-enter-showtimes">
                         <div class="field">
-                            <label> Show Times (please include time zone)</label>
+                            <label> Show Times</label>
                             <textarea 
                             v-model="showTimes" 
                             class="create-input area"
@@ -281,29 +281,6 @@
                             <div v-if="$v.showTimes.$error" class="validation-error">
                                 <p class="error" v-if="!$v.showTimes.required">Please give a brief description of show times</p>
                                 <p class="error" v-if="!$v.showTimes.maxLength">Show time is too long</p>
-                            </div>
-                        </div>
-                    </section>
-                     <section>
-                        <div class="field">
-                            <label> Show Timezone </label>
-                            <multiselect 
-                            v-model="timezone" 
-                            deselect-label="Can't remove this value" 
-                            track-by="name"
-                            :class="{ active: active == 'timezone','error': $v.timezone.$error }"
-                            @click="active = 'timezone'"
-                            @blur="active = null"
-                            label="description" 
-                            placeholder="Select timezone" 
-                            :options="timezones" 
-                            :allow-empty="false">
-                                <template slot="singleLabel" slot-scope="{ option }">
-                                    <strong>{{ option.description }}</strong>
-                                </template>
-                            </multiselect>
-                            <div v-if="$v.timezone.$error" class="validation-error">
-                                <p class="error" v-if="!$v.timezone.required">Please include timezone of show</p>
                             </div>
                         </div>
                     </section>
@@ -399,11 +376,11 @@ export default {
             return {
                 'dates': Array.isArray(this.dates) ? this.dates : this.dateArray,
                 'showtimes': this.showTimes,
-                'shows': this.showType == 'Specific Dates' ? true : false,
+                'shows': this.showType == 'Limited Run (Specific Dates)' ? true : false,
                 'embargo_date' : this.showEmbargoDate ? this.embargoDate : null,
-                'week': this.week && this.showType == 'Anytime' ? _.mapValues(this.week, () => true) : this.week,
-                'onGoing' : this.showType == 'Weekly' && this.weeklyOngoing ? true : false,
-                'always': this.showType == 'Anytime' || !this.weeklyOngoing ? true : false,
+                'week': this.week && this.showType == 'On Demand (Any Time)' ? _.mapValues(this.week, () => true) : this.week,
+                'onGoing' : this.showType == 'Open Ended (Weekly)' && this.weeklyOngoing ? true : false,
+                'always': this.showType == 'On Demand (Any Time)' || !this.weeklyOngoing ? true : false,
                 'start_date': this.startDate ? this.startDate : null,
                 'timezone': this.timezone,
             }
@@ -431,7 +408,7 @@ export default {
             placeholdero: 'Please provide a brief description of weekly show times. For example:' + '\n' + '\n' + '10:00PM shows on Monday & Tuesday.' + '\n' + '12:00PM on Wednesday and Thursday.',
             placeholdera: 'Please provide a brief description of daily times. For example:' + '\n' + '\n' + 'Show begins everyday at 12PM.' + '\n' + 'Enjoy at any time.',
             showType: '',
-            showTypeOptions: ['Specific Dates', 'Weekly', 'Anytime'],
+            showTypeOptions: ['Limited Run (Specific Dates)', 'Open Ended (Weekly)', 'On Demand (Any Time)'],
             exit: false,
             showStartDate: this.event.show_on_going ? true : false,
             timezone: this.event.timezone ? this.event.timezone : '',
@@ -500,9 +477,9 @@ export default {
         },
 
         onLoad() {
-            if (this.event.showtype == 'a') { return this.showType = 'Anytime'};
-            if (this.event.showtype == 'o') { return this.showType = 'Weekly'};
-            if (this.event.showtype == 's') { return this.showType = 'Specific Dates'};
+            if (this.event.showtype == 'a') { return this.showType = 'On Demand (Any Time)'};
+            if (this.event.showtype == 'o') { return this.showType = 'Open Ended (Weekly)'};
+            if (this.event.showtype == 's') { return this.showType = 'Limited Run (Specific Dates)'};
             axios.get(this.onFetch('shows'))
             .then(res => {
                 res.data.dates ? this.dates = res.data.dates : '';
@@ -540,16 +517,18 @@ export default {
         },
         dates: {
             ifDates() { 
-                return this.showType == 'Specific Dates' ? this.dates.length ? true : false : true
+                return this.showType == 'Limited Run (Specific Dates)' ? this.dates.length ? true : false : true
             },
         },
         week: {
             ifWeekly() {
-                return this.showType == 'Weekly' ? this.week.mon == 1 || this.week.tue == 1 || this.week.wed == 1 || this.week.thu == 1 || this.week.fri == 1 || this.week.sat == 1 || this.week.sun == 1  ? true : false : true
+                return this.showType == 'Open Ended (Weekly)' ? this.week.mon == 1 || this.week.tue == 1 || this.week.wed == 1 || this.week.thu == 1 || this.week.fri == 1 || this.week.sat == 1 || this.week.sun == 1  ? true : false : true
             }
         },
         timezone: {
-            required,
+            ifOnDemand() {
+                return this.showType == 'On Demand (Any Time)' ? true : (this.timezone ? true : false)
+            }
         }
 	},
 }  

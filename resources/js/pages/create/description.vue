@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div class="field">
-                <label>Event website (optional)</label>
+                <label>Event Link (Optional)</label>
                 <input 
                 type="text" 
                 v-model="group.websiteUrl"
@@ -29,27 +29,11 @@
                 @click="onToggle('website')"
                 @blur="active = null"
                 @input="$v.group.websiteUrl.$touch"
-                placeholder="Leave blank if using organizer website url"
+                placeholder="Link to a page that has more information about your event"
                 />
                 <div v-if="$v.group.websiteUrl.$error" class="validation-error">
                     <p class="error" v-if="!$v.group.websiteUrl.url">Must be a url (https://...)</p>
                     <p class="error" v-if="!$v.group.websiteUrl.webNotWorking">One of your urls isn't working</p>
-                </div>
-            </div>
-            <div class="field">   
-                <label>Ticket website (optional)</label>
-                <input 
-                type="text" 
-                v-model="group.ticketUrl"
-                :class="{ active: active == 'ticket','error': $v.group.ticketUrl.$error }"
-                @click="onToggle('ticket')"
-                @blur="active = null"
-                @input="$v.group.ticketUrl.$touch"
-                placeholder="Leave blank if using organizer website url"
-                />
-                <div v-if="$v.group.ticketUrl.$error" class="validation-error">
-                    <p class="error" v-if="!$v.group.ticketUrl.url"> Must be a url (https://...)</p>
-                    <p class="error" v-if="!$v.group.ticketUrl.ticketNotWorking">One of your urls isn't working</p>
                 </div>
             </div>
         </section>
@@ -132,7 +116,6 @@
                 return {
                     description: this.event.description ? this.event.description : '',
                     websiteUrl: this.event.websiteUrl ? this.event.websiteUrl : '',
-                    ticketUrl: this.event.ticketUrl ? this.event.ticketUrl : '',
                     genre: this.event.genres ? this.event.genres.map(a => a.name) : '',
                 }
             },
@@ -165,7 +148,6 @@
                 .then(res => {
                     res.data.event ? this.group.description = res.data.event.description : '';
                     res.data.event ? this.group.websiteUrl = res.data.event.websiteUrl : '';
-                    res.data.event ? this.group.ticketUrl = res.data.event.ticketUrl : '';
                     res.data.genres ? this.group.genre = res.data.genres.map(a => a.name) : '';
                 });
             },
@@ -194,10 +176,6 @@
                 websiteUrl: {
                    url,
                    webNotWorking(){ return this.websiteUrl ? !this.hasServerError('broken') : true },
-                },
-                ticketUrl: {
-                   url,
-                   ticketNotWorking(){ return this.ticketUrl ? !this.hasServerError('broken') : true },
                 },
             }
         },

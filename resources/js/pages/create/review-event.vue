@@ -90,39 +90,34 @@
             </div>
         </section>
 
-        <section v-if="event.eventreviews ? event.eventreviews.length : null" class=" event-show grey event-show-review">
-            <div class="content grid two-panel">
-                <div class="left">
-                   <div class="event-title">
-                        <h2>Show<br>Reviews</h2>
-                    </div>
-                </div>
-                <div class="event-show-review__right">
-                    <div class="box" v-for="review in event.eventreviews">
-                        <a rel="noreferrer" target="_blank" :href="review.url">
-                            <div class="image">
-                                <img width="40px" height="40px" :src="review.image_path" alt="">
-                            </div>
-                            <div class="name">
-                                <h4>{{review.reviewer_name}}</h4>
+        <!-- Tickets -->
+        <section id="tickets" class="event-show grid two-panel grey">
+            <div class="event-title">
+                <h2>Tickets</h2>
+            </div>
+            <div class="right">
+                <div class="event-show__tickets">
+                    <div class="event-show__tickets--grid">
+                        <a :href="eventUrl" rel="noreferrer noopener" target="_blank" v-for="ticket in tickets" :key="ticket.name">
+                            <div class="event-show__ticket" @mouseover="hover = ticket" @mouseleave="hover = null">
+                                <div>
+                                     <div class="event-show__ticket--name">
+                                        <p>{{ticket.name}}</p>
+                                    </div>
+                                    <div class="event-show__ticket--price">
+                                        <p>${{ticket.ticket_price}}</p>
+                                    </div>
+                                </div>
+                                <div class="event-show__ticket--description">
+                                    <p>{{ticket.description}}</p>
+                                </div>
                             </div>
                         </a>
-                        <div class="review">
-                            <a rel="noreferrer" target="_blank" :href="review.url">                 
-                                <i 
-                                style="white-space: pre-wrap;" 
-                                v-if="showMore !== 'review'" 
-                                class="text">{{review.review.substring(0,300)}}<span 
-                                    class="show-text" 
-                                    v-if="review.review.length >= 200">... Read More
-                                    </span>
-                                </i>
-                            </a>
-                        </div>
                     </div>
                 </div>
             </div>
         </section>
+        <load-more @intersect="intersected"></load-more>
 
         <!-- Dates -->
         <section v-if="event.showtype == 's'" class="grid event-show two-panel">
@@ -314,6 +309,41 @@
             </div>
         </section>
 
+        <!-- Reviews -->
+        <section v-if="event.eventreviews ? event.eventreviews.length : null" class=" event-show grey event-show-review">
+            <div class="content grid two-panel">
+                <div class="left">
+                   <div class="event-title">
+                        <h2>Show<br>Reviews</h2>
+                    </div>
+                </div>
+                <div class="event-show-review__right">
+                    <div class="box" v-for="review in event.eventreviews">
+                        <a rel="noreferrer" target="_blank" :href="review.url">
+                            <div class="image">
+                                <img width="40px" height="40px" :src="review.image_path" alt="">
+                            </div>
+                            <div class="name">
+                                <h4>{{review.reviewer_name}}</h4>
+                            </div>
+                        </a>
+                        <div class="review">
+                            <a rel="noreferrer" target="_blank" :href="review.url">                 
+                                <i 
+                                style="white-space: pre-wrap;" 
+                                v-if="showMore !== 'review'" 
+                                class="text">{{review.review.substring(0,300)}}<span 
+                                    class="show-text" 
+                                    v-if="review.review.length >= 200">... Read More
+                                    </span>
+                                </i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Organizer -->
         <section class="grid event-show two-panel">
             <div class="left">
@@ -433,6 +463,7 @@
     import format from 'date-fns/format'
     import ContactOrganizer from '../organizers/contact-organizer.vue'
     import flatPickr from 'vue-flatpickr-component'
+     import LoadMore  from '../../components/LoadMore.js'
 
     export default {
 
@@ -440,15 +471,7 @@
 
         mixins: [formValidationMixin],
 
-        components: { 
-            LMap, 
-            LTileLayer, 
-            LMarker,
-            flatPickr,
-            ContactOrganizer,
-            LPopup,
-            LIcon
-        },
+        components: { LMap, LTileLayer, LMarker, flatPickr, ContactOrganizer, LPopup, LIcon, LoadMore},
 
         computed: {
 
@@ -533,7 +556,7 @@
                 fullShowtimes: this.loadevent.show_times.length <= 160 ? true : false,
                 fullDescription: this.loadevent.description.length <= 400 ? true : false,
                 hover: null,
-            }
+                hasIntersected: false,            }
         },
 
         methods: {
@@ -546,6 +569,11 @@
                         this.dates.push(event.date)
                     });
                 }
+            },
+
+            intersected() {
+                console.log('intersected');
+                return this.hasIntersected = true;
             },
 
             onSubmit() {

@@ -16,7 +16,7 @@ class IsModerator
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user() && Auth::user()->IsModerator()) {
+        if (Auth::user() && Auth::user()->isModerator()) {
             return $next($request);
         }
 

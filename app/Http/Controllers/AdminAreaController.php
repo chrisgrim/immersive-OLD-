@@ -16,8 +16,6 @@ use App\Mail\EventApproved;
 use App\Mail\EventRejected;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
-
-
 use Illuminate\Http\Request;
 
 class AdminAreaController extends Controller

@@ -23,17 +23,19 @@
             <div class="messages-show-content grid" :class="{single: isMessage}">
                  <!-- Event Image Section -->
                 <div v-if="!isMessage">
-                    <div class="messages-show-event">
-                        <div class="messages-show-event__image">
-                             <picture>
-                                <source type="image/webp" :srcset="`/storage/${conversations.modmessages[0].event.thumbImagePath}`"> 
-                                <img :src="`/storage/${conversations.modmessages[0].event.thumbImagePath.slice(0, -4)}jpg`" :alt="user.name + `'s account`">
-                            </picture>
+                    <a :href="url">
+                        <div class="messages-show-event">
+                            <div class="messages-show-event__image">
+                                 <picture>
+                                    <source type="image/webp" :srcset="`/storage/${conversations.modmessages[0].event.thumbImagePath}`"> 
+                                    <img :src="`/storage/${conversations.modmessages[0].event.thumbImagePath.slice(0, -4)}jpg`" :alt="user.name + `'s account`">
+                                </picture>
+                            </div>
+                            <div class="messages-show-event__title">
+                                <h3>{{ conversations.modmessages[0].event.name }}</h3>
+                            </div>
                         </div>
-                        <div class="messages-show-event__title">
-                            <h3>{{ conversations.modmessages[0].event.name }}</h3>
-                        </div>
-                    </div>
+                    </a>
                 </div>
                  <!--Message Section -->
                 <div>
@@ -184,6 +186,18 @@
 
             submitObject() {
                 return {message: this.message, type:this.isMessage ? 'message' : 'event' };
+            },
+
+            url() {
+                if (this.conversations.modmessages[0].event.status == 'p') {
+                    return `/events/${this.conversations.modmessages[0].event.slug}`;
+                }
+                if (this.loaduser.type == 'a') {
+                    return `/finish/events/${this.conversations.modmessages[0].event.slug}`;
+                }
+                if (this.loaduser.type !== 'a') {
+                    return `/create-event/${this.conversations.modmessages[0].event.slug}/title`;
+                }
             }
 
         },

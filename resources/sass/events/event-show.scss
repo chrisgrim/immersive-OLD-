@@ -120,9 +120,6 @@ section .event-title {
     position: relative;
     overflow: hidden;
 }
-.bg-black {
-    background:black;
-}
 
 .event-show__description {
     width:100%;
@@ -132,62 +129,50 @@ section .event-title {
 .event-show__tickets {
     width:100%;
     position: relative;
-    height:20rem;
 }
 
 .event-show__tickets--grid {
-    display: inline-grid;
-    grid-template-columns: repeat(5,auto);
-    grid-auto-rows: 1fr; 
     position: relative;
 }
 
-button.event-show__ticket-button {
+.event-show__ticket {
+    display: grid;
+    grid-template-columns: 17rem 1fr;
     border:0;
-    border: 1px solid white;
-    border-radius: 1rem;
-    padding: 1rem 2rem;
-    margin: 2rem;
     background:none;
     text-align: left;
-    &:hover {
-        background:white;
-        & p {
-            color:black !important;
-        }
-        & .event-show__ticket--description p {
-            display: none;
-        }
-    }
+    margin-bottom: 2rem;
+    align-items: end;
 }
 
 .event-show__ticket--name p {
-    color: white;
-    font-size: 1.2rem;
-    line-height: auto
+    color: black;
+    font-weight: 600;
+    font-size: 1.4rem;
+    line-height: auto;
 }
 
 .event-show__ticket--price {
     margin-top: -.3rem;
-    min-width: 7rem;
 }
 
 .event-show__ticket--price p {
-    color: white;
-    font-size: 3rem;
+    font-size: 2.5rem;
+    font-weight: 300;
     line-height: auto
 }
-.event-show__ticket--description {
-    min-height: 3rem;
-}
+
 .event-show__ticket--description p{
-    color: white;
-    font-size: 1.2rem;
+    font-size: 2rem;
+    font-weight: 300;
+    margin: 0;
+    padding: 0;
+    line-height: 2.5rem !important;
 }
 .event-show__ticket--full {
     position:absolute;
     bottom:0;
-    color:white;
+    color:black;
     margin-left:2rem;
 }
 
@@ -212,6 +197,8 @@ button.event-show__ticket-button {
     text-align: center;
     align-items: center;
     grid-column-gap: 0rem !important;
+    max-width: 60rem;
+    overflow: hidden;
 }
 .show-week-calendar_day {
     width: 100%;
@@ -219,8 +206,6 @@ button.event-show__ticket-button {
     line-height: 8rem;
     &.active {
         background: $default-color;
-        border: 1px solid #e0e0e0;
-        border-radius: 5px;
         & h4 {
             color:white;
         }

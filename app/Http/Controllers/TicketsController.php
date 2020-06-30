@@ -112,6 +112,7 @@ class TicketsController extends Controller
         // Add price range string to event
         $event->update([
             'price_range' => $pricerange,
+            'ticketUrl' => $request->ticketUrl,
         ]);
 
 
@@ -129,6 +130,7 @@ class TicketsController extends Controller
     {
         return response()->json(array(
             'tickets' => $event->shows()->with('tickets')->get(),
+            'ticketUrl' => $event->ticketUrl,
         ));
     }
 }

@@ -147,7 +147,7 @@ class User extends Authenticatable implements MustVerifyEmail
     * @return bool
     */
     public function isAdmin() {
-        return $this->where('type', 'a')->exists();
+        return $this->type === 'a';
     }
 
     /**
@@ -156,7 +156,7 @@ class User extends Authenticatable implements MustVerifyEmail
     * @return bool
     */
     public function isModerator() {
-        return $this->where('type', 'm')->orWhere('type', 'a')->exists();
+        return $this->type === 'm' || $this->type === 'a';
     }
 
     /**

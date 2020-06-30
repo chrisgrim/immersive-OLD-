@@ -22,63 +22,71 @@
         <header class="event-show grid">
             <div class="header-left">
                 <div class="content">   
-                    <span class="header-left__cat">{{event.category ? event.category.name : ''}}</span>
+                    <a v-if="event.category" :href="`/index/search-online?category=${event.category.name}&id=${event.category.id}`">
+                        <span class="header-left__cat">{{event.category.name}}</span>
+                    </a>
                     <span class="header-left__title"><h1 :style="titleFontSize">{{event.name}}</h1></span>
                     <span class="header-left__tag"><i>{{event.tag_line}}</i></span>
                     <div v-if="event.staffpick">
                         EI Pick of the week!
                     </div>
                     <div class="header-left__details">
-                        <div class="item">
-                            <img src="/storage/website-files/price.png" alt="">
-                            <span>
-                                <span class="header__show-info">Price</span>
-                                <span class="header__show-info bold">{{event.price_range}}</span>
-                            </span>
-                        </div>
-                        <div class="item">
-                            <img src="/storage/website-files/location.png" alt="">
-                            <span v-if="event.hasLocation">
-                                <span class="header__show-info">Location</span>
-                                <span class="header__show-info bold">{{event.location.city}}</span>
-                            </span>
-                            <span v-else>
-                                <span class="header__show-info">Location</span>
-                                <span class="header__show-info bold">Anywhere</span>
-                            </span>
-                        </div>
-                        <div class="item">
-                            <img src="/storage/website-files/calendar.png" alt="">
-                            <span v-if="event.showtype=='s'">
-                                <span class="header__show-info">Shows</span>
-                                <span v-if="remaining && remaining.length > 1 ? remaining.length : ''" class="header__show-info bold">{{ remaining.length }} dates left</span>
-                                <span v-else-if="remaining && remaining.length == 1 ? remaining.length : ''" class="header__show-info bold">{{ remaining.length }} date left</span>
-                                <span v-else class="header__show-info bold">no dates left</span>
-                            </span>
-                            <span v-if="event.showtype=='o'">
-                                <span class="header__show-info">Shows</span>
-                                <span class="header__show-info bold">
-                                    <span v-if="event.show_on_going.mon">M</span>
-                                    <span v-else style="color:#bbbbbb;">M</span>
-                                    <span v-if="event.show_on_going.tue">T</span>
-                                    <span v-else style="color:#bbbbbb;">T</span>
-                                    <span v-if="event.show_on_going.wed">W</span>
-                                    <span v-else style="color:#bbbbbb;">W</span>
-                                    <span v-if="event.show_on_going.thu">T</span>
-                                    <span v-else style="color:#bbbbbb;">T</span>
-                                    <span v-if="event.show_on_going.fri">F</span>
-                                    <span v-else style="color:#bbbbbb;">F</span>
-                                    <span v-if="event.show_on_going.sat">S</span>
-                                    <span v-else style="color:#bbbbbb;">S</span>
-                                    <span v-if="event.show_on_going.sun">S</span>
-                                    <span v-else style="color:#bbbbbb;">S</span>
+                        <a href="#tickets">
+                            <div class="item">
+                                <img src="/storage/website-files/price.png" alt="">
+                                <span>
+                                    <span class="header__show-info">Price</span>
+                                    <span class="header__show-info bold">{{event.price_range}}</span>
                                 </span>
-                            </span>
-                            <span v-if="event.showtype=='a'">
-                                <span class="header__show-info">Show Days</span>
-                                <span class="header__show-info bold">Any Time</span>
-                            </span>
-                        </div>
+                            </div>
+                        </a>
+                        <a href="#location">
+                            <div class="item">
+                                <img src="/storage/website-files/location.png" alt="">
+                                <span v-if="event.hasLocation">
+                                    <span class="header__show-info">Location</span>
+                                    <span class="header__show-info bold">{{event.location.city}}</span>
+                                </span>
+                                <span v-else>
+                                    <span class="header__show-info">Location</span>
+                                    <span class="header__show-info bold">Anywhere</span>
+                                </span>
+                            </div>
+                        </a>
+                        <a href="#dates">
+                            <div class="item">
+                                <img src="/storage/website-files/calendar.png" alt="">
+                                <span v-if="event.showtype=='s'">
+                                    <span class="header__show-info">Shows</span>
+                                    <span v-if="remaining && remaining.length > 1 ? remaining.length : ''" class="header__show-info bold">{{ remaining.length }} dates left</span>
+                                    <span v-else-if="remaining && remaining.length == 1 ? remaining.length : ''" class="header__show-info bold">{{ remaining.length }} date left</span>
+                                    <span v-else class="header__show-info bold">no dates left</span>
+                                </span>
+                                <span v-if="event.showtype=='o'">
+                                    <span class="header__show-info">Shows</span>
+                                    <span class="header__show-info bold">
+                                        <span v-if="event.show_on_going.mon">M</span>
+                                        <span v-else style="color:#bbbbbb;">M</span>
+                                        <span v-if="event.show_on_going.tue">T</span>
+                                        <span v-else style="color:#bbbbbb;">T</span>
+                                        <span v-if="event.show_on_going.wed">W</span>
+                                        <span v-else style="color:#bbbbbb;">W</span>
+                                        <span v-if="event.show_on_going.thu">T</span>
+                                        <span v-else style="color:#bbbbbb;">T</span>
+                                        <span v-if="event.show_on_going.fri">F</span>
+                                        <span v-else style="color:#bbbbbb;">F</span>
+                                        <span v-if="event.show_on_going.sat">S</span>
+                                        <span v-else style="color:#bbbbbb;">S</span>
+                                        <span v-if="event.show_on_going.sun">S</span>
+                                        <span v-else style="color:#bbbbbb;">S</span>
+                                    </span>
+                                </span>
+                                <span v-if="event.showtype=='a'">
+                                    <span class="header__show-info">Show Days</span>
+                                    <span class="header__show-info bold">Any Time</span>
+                                </span>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -110,43 +118,37 @@
             </div>
         </section>
 
-        <!-- Reviews -->
-        <section v-if="event.eventreviews ? event.eventreviews.length : null" class=" event-show grey event-show-review">
-            <div class="content grid two-panel">
-                <div class="left">
-                   <div class="event-title">
-                        <h2>Show Reviews</h2>
-                    </div>
-                </div>
-                <div class="event-show-review__right">
-                    <div class="box" v-for="review in event.eventreviews">
-                        <a rel="noreferrer" target="_blank" :href="review.url">
-                            <div class="event-show-review__right--image">
-                                <img width="33px" height="33px" :src="review.image_path" alt="">
-                            </div>
-                            <div class="event-show-review__right--name">
-                                <h4>{{review.reviewer_name}}</h4>
+        <!-- Tickets -->
+        <section id="tickets" class="event-show grid two-panel grey">
+            <div class="event-title">
+                <h2>Tickets</h2>
+            </div>
+            <div class="right">
+                <div class="event-show__tickets">
+                    <div class="event-show__tickets--grid">
+                        <a :href="eventUrl" rel="noreferrer noopener" target="_blank" v-for="ticket in tickets" :key="ticket.name">
+                            <div class="event-show__ticket" @mouseover="hover = ticket" @mouseleave="hover = null">
+                                <div>
+                                     <div class="event-show__ticket--name">
+                                        <p>{{ticket.name}}</p>
+                                    </div>
+                                    <div class="event-show__ticket--price">
+                                        <p>${{ticket.ticket_price}}</p>
+                                    </div>
+                                </div>
+                                <div class="event-show__ticket--description">
+                                    <p>{{ticket.description}}</p>
+                                </div>
                             </div>
                         </a>
-                        <div class="review">
-                            <a rel="noreferrer" target="_blank" :href="review.url">                 
-                                <i 
-                                style="white-space: pre-wrap;" 
-                                v-if="showMore !== 'review'" 
-                                class="text">{{review.review.substring(0,300)}}<span 
-                                    class="show-text" 
-                                    v-if="review.review.length >= 200">... Read More
-                                    </span>
-                                </i>
-                            </a>
-                        </div>
                     </div>
                 </div>
             </div>
         </section>
+        <load-more @intersect="intersected"></load-more>
 
         <!-- Dates -->
-        <section v-if="event.showtype == 's'" class="grid event-show two-panel">
+        <section id="dates" v-if="event.showtype == 's'" class="grid event-show two-panel">
             <div class="event-title">
                 <h2>Show Dates</h2>
             </div>
@@ -189,7 +191,7 @@
         </section>
 
         <!-- Dates On Going -->
-        <section v-if="event.showtype == 'o'" class="grid event-show two-panel">
+        <section id="dates" v-if="event.showtype == 'o'" class="grid event-show two-panel">
             <div class="event-title">
                 <h2>Show Times</h2>
             </div>
@@ -247,7 +249,7 @@
         </section>
 
         <!-- Dates Always -->
-        <section v-if="event.showtype == 'a'" class="grid event-show two-panel">
+        <section id="dates" v-if="event.showtype == 'a'" class="grid event-show two-panel">
             <div class="event-title">
                 <h2>Show Times</h2>
             </div>
@@ -334,6 +336,41 @@
             </div>
         </section>
 
+        <!-- Reviews -->
+        <section v-if="event.eventreviews ? event.eventreviews.length : null" class=" event-show grey event-show-review">
+            <div class="content grid two-panel">
+                <div class="left">
+                   <div class="event-title">
+                        <h2>Show Reviews</h2>
+                    </div>
+                </div>
+                <div class="event-show-review__right">
+                    <div class="box" v-for="review in event.eventreviews">
+                        <a rel="noreferrer" target="_blank" :href="review.url">
+                            <div class="event-show-review__right--image">
+                                <img width="33px" height="33px" :src="review.image_path" alt="">
+                            </div>
+                            <div class="event-show-review__right--name">
+                                <h4>{{review.reviewer_name}}</h4>
+                            </div>
+                        </a>
+                        <div class="review">
+                            <a rel="noreferrer" target="_blank" :href="review.url">                 
+                                <i 
+                                style="white-space: pre-wrap;" 
+                                v-if="showMore !== 'review'" 
+                                class="text">{{review.review.substring(0,300)}}<span 
+                                    class="show-text" 
+                                    v-if="review.review.length >= 200">... Read More
+                                    </span>
+                                </i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Organizer -->
         <section class="grid event-show two-panel">
             <div class="left">
@@ -366,7 +403,7 @@
         </section>
 
         <!-- location -->
-        <section v-if="bar && event.hasLocation" class="section event-show location">
+        <section id="location" v-if="bar && event.hasLocation" class="section event-show location">
             <div>
                 <div class="event-title">
                     <h2>Location</h2>
@@ -421,7 +458,7 @@
         </section>
 
         <!-- No Location -->
-        <section class="event-show grid two-panel" v-if="!event.hasLocation">
+        <section id="location" class="event-show grid two-panel" v-if="!event.hasLocation">
             <div class="event-title">
                 <h2>What you will need</h2>
             </div>
@@ -578,7 +615,7 @@
             handleScroll (event) {
                 const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
                 // if (window.pageYOffset < 300) { this.hasIntersected = false; };
-                if (currentScrollPosition > 60 && this.hasIntersected) {
+                if (currentScrollPosition > 60) {
                     return this.bar = true;
                 }
                 return this.bar = false;
