@@ -29,6 +29,7 @@ class LocationController extends Controller
      */
     public function create(Event $event)
     {
+        // if ($event->status < 1) { abort(403); }
         $event->load('location', 'remotelocations');
         $remote = RemoteLocation::where('admin', true)->orWhere('user_id', auth()->user()->id)->get();
         return view('create.location', compact('event', 'remote'));
@@ -59,6 +60,11 @@ class LocationController extends Controller
             Location::storeRemoteLocation($request, $event);
         } else {
             Location::storeEventLocation($request, $event);
+        }
+
+        //Checks to see if location has been created then updates status to 2
+        if ($event->status < 3 && !$event->isLive() && ( $event->location_latlon || !$event->hasLocation )) {
+            $event->update([ 'status' => '2' ]);
         }
 
     }

@@ -24,13 +24,7 @@ class TicketStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 
-                [
-                    'required',
-                    // Rule::unique('tickets')->where(function ($query) {
-                    //     return $query->where('shows', 1);
-                    // })
-                ]
+            'ticketUrl' => 'required',
         ];
     }
 }

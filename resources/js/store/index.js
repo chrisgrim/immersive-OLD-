@@ -20,6 +20,7 @@ state: {
     map: false,
     mobile: true,
     searchtype: 'Immersive Online',
+    save: 'ttis',
   },
   
 mutations: {
@@ -34,6 +35,9 @@ mutations: {
     },
     searchtype (state, searchtype) {
         state.searchtype = searchtype
+    },
+    saveevent (state, save) {
+        state.save = save
     },
   },
   

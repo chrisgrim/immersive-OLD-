@@ -55,8 +55,14 @@ section.ticket-section {
     position: relative;
 }
 .ticket-box__element {
-    grid-template-columns: 15rem auto 15rem 2rem;
+    grid-template-columns: 15rem auto 15rem 2rem 2rem;
     grid-column-gap: 1rem;
+}
+input#select-box {
+    width: 2rem;
+    height: 2rem;
+    display: inline-block;
+    margin: 1.3rem 1rem 1rem 1rem;
 }
 .ticket-box__add-button {
     position: absolute;

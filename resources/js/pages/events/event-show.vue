@@ -133,7 +133,7 @@
                                         <p>{{ticket.name}}</p>
                                     </div>
                                     <div class="event-show__ticket--price">
-                                        <p>${{ticket.ticket_price}}</p>
+                                        <p>{{ticket.ticket_price == 0.00 ? 'Free' : `$${ticket.ticket_price}`}}</p>
                                     </div>
                                 </div>
                                 <div class="event-show__ticket--description">
@@ -280,7 +280,7 @@
                     </div>
                     <ul class="info">
                         <li>
-                            <p>{{event.advisories.ageRestriction}}</p>
+                            <p>{{event.age_limits ? event.age_limits.name : event.advisories.ageRestriction}}</p>
                         </li>
                         <li v-for="item in event.content_advisories">
                             <p>{{item.advisories}}</p>
@@ -489,7 +489,7 @@
             <div class="event-get-tickets">
                 <a :href="eventUrl" rel="noreferrer noopener" target="_blank">
                     <button class="event-bottom-bar__button">
-                        Get Tickets
+                        {{loadevent.call_to_action ? loadevent.call_to_action : 'Get Tickets'}}
                     </button>
                 </a>
             </div>

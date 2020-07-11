@@ -87,6 +87,13 @@
         }
     }
 }
+.validation-error.image {
+    margin: 0;
+    top: 65%;
+    left: 50%;
+    width: 20rem;
+    margin-left: -10rem;
+}
 
 @media (max-width: 768px) {
     .field {

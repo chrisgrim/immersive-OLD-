@@ -15,7 +15,8 @@ class MakeImage extends Model
     */
     public static function saveImage($request, $value, $width, $height, $type)
     {
-        ini_set('memory_limit','512M');
+        // Image::configure(array('driver' => 'imagick'));
+        
         $name = $value->name ? $value->name : substr(md5(microtime()),rand(0,26),7);
         //      either new-titles or 69sjj3s
         $rand = substr(md5(microtime()),rand(0,26),7);
@@ -53,7 +54,7 @@ class MakeImage extends Model
     */
     public static function updateImage($request, $value, $width, $height, $type)
     {
-        ini_set('memory_limit','512M');
+        // Image::configure(array('driver' => 'imagick'));
 
         $rand = substr(md5(microtime()),rand(0,26),7);
         //   54fwdee
@@ -90,6 +91,8 @@ class MakeImage extends Model
     */
     public static function renameImage($value, $slug, $type, $request)
     {
+        // Image::configure(array('driver' => 'imagick'));
+
         $name = $slug ? $slug : $request->slug;
         
         $dir = pathinfo($value->largeImagePath, PATHINFO_DIRNAME);
@@ -120,8 +123,8 @@ class MakeImage extends Model
     */
     public static function saveNewImage($request, $value, $width, $height, $type)
     {
-
-        ini_set('memory_limit','512M');
+        // Image::configure(array('driver' => 'imagick'));
+        // ini_set('memory_limit','512M');
         if (strlen(pathinfo($value->largeImagePath, PATHINFO_DIRNAME)) > 7) {
 
             $dir = pathinfo($value->largeImagePath, PATHINFO_DIRNAME);

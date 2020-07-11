@@ -105,7 +105,7 @@
                                         <p>{{ticket.name}}</p>
                                     </div>
                                     <div class="event-show__ticket--price">
-                                        <p>${{ticket.ticket_price}}</p>
+                                        <p>{{ticket.ticket_price == 0.00 ? 'Free' : `$${ticket.ticket_price}`}}</p>
                                     </div>
                                 </div>
                                 <div class="event-show__ticket--description">
@@ -253,7 +253,7 @@
                     </div>
                     <ul class="info">
                         <li>
-                            <p>{{event.advisories.ageRestriction}}</p>
+                            <p>{{event.age_limits ? event.age_limits.name : event.advisories.ageRestriction}}</p>
                         </li>
                         <li v-for="item in event.content_advisories">
                             <p>{{item.advisories}}</p>
@@ -484,6 +484,10 @@
                 : '';
             },
 
+            navSubmit() {
+                return this.$store.state.save
+            },
+
             eventUrl() {
                 if (this.loadevent.ticketUrl) {
                     return this.loadevent.ticketUrl;
@@ -627,6 +631,11 @@
         watch: {
             dates() {
                 this.$refs.datePicker ? this.$refs.datePicker.fp.jumpToDate(new Date()) : ''
+            },
+            
+            navSubmit() {
+                console.log('test');
+                this.onBack(this.navSubmit);
             }
         },
 

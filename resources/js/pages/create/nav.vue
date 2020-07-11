@@ -8,9 +8,6 @@
                     </a>
                 </div>
             </div>
-            <div class="nav-back">
-                <button class="nav-back-button"> Save and Exit </button>
-            </div>
         </div>
         <div v-if="isOrganizer" class="create-nav-guide">
             <h3>Submit your Organization</h3>
@@ -21,93 +18,96 @@
 
 
         <div v-if="!isOrganizer" class="grid create-menu">
-            <a :href="`/create-event/${this.event.slug}/title`">
+            <div style="cursor:pointer" @click="urlClick('title', '0')">
                 <NavMenuItem 
                 :active="{active : url == `/create-event/${this.event.slug}/title`}" 
                 name="Title" 
-                :iconstatus="this.event.name ? 'completed' : 'uncomplete'">
+                :iconstatus="this.event.status >= 1 || this.event.status == 'p' || this.event.status == 'e' ? 'completed' : 'uncomplete'">
                 </NavMenuItem>
-            </a>
-            <a :href="`/create-event/${this.event.slug}/location`">
+            </div>
+            <div style="cursor:pointer" @click="urlClick('location', '1')">
                 <NavMenuItem 
                 :active="{active : url == `/create-event/${this.event.slug}/location`}" 
                 name="Location" 
-                :iconstatus="this.event.location_latlon || !this.event.hasLocation ? 'completed' : 'uncomplete'">
+                :iconstatus="this.event.status >= 2 || this.event.status == 'p' || this.event.status == 'e' ? 'completed' : this.event.status >= 1 ? 'uncomplete' : 'locked'">
                 </NavMenuItem>
-            </a>
-            <a :href="`/create-event/${this.event.slug}/category`">
+            </div>
+            <div style="cursor:pointer" @click="urlClick('category', '2')">
                 <NavMenuItem 
                 :active="{active : url == `/create-event/${this.event.slug}/category`}" 
                 name="Category" 
-                :iconstatus="this.event.category_id ? 'completed' : 'uncomplete'">
+                :iconstatus="this.event.status >= 3 || this.event.status == 'p' || this.event.status == 'e' ? 'completed' : this.event.status >= 2 ? 'uncomplete' : 'locked'">
                 </NavMenuItem>
-            </a>
-            <a :href="`/create-event/${this.event.slug}/shows`">
+            </div>
+            <div style="cursor:pointer" @click="urlClick('shows', '3')">
                 <NavMenuItem 
                 :active="{active : url == `/create-event/${this.event.slug}/shows`}" 
                 name="Dates and Times" 
-                :iconstatus="this.event.show_times ? 'completed' : 'uncomplete'">
+                :iconstatus="this.event.status >= 4 || this.event.status == 'p' || this.event.status == 'e' ? 'completed' : this.event.status >= 3 ? 'uncomplete' : 'locked'">
                 </NavMenuItem>
-            </a>
-            <a :href="`/create-event/${this.event.slug}/tickets`">
+            </div>
+            <div style="cursor:pointer" @click="urlClick('tickets', '4')">
                 <NavMenuItem 
                 :active="{active : url == `/create-event/${this.event.slug}/tickets`}" 
                 name="Tickets" 
-                :iconstatus="this.event.price_range ? 'completed' : 'uncomplete'">
+                :iconstatus="this.event.status >= 5 || this.event.status == 'p' || this.event.status == 'e' ? 'completed' : this.event.status >= 4 ? 'uncomplete' : 'locked'">
                 </NavMenuItem>
-            </a>
-            <a :href="`/create-event/${this.event.slug}/description`">
+            </div>
+            <div style="cursor:pointer" @click="urlClick('description', '5')">
                 <NavMenuItem 
                 :active="{active : url == `/create-event/${this.event.slug}/description`}" 
                 name="Description" 
-                :iconstatus="this.event.description ? 'completed' : 'uncomplete'">
+                :iconstatus="this.event.status >= 6 || this.event.status == 'p' || this.event.status == 'e' ? 'completed' : this.event.status >= 5 ? 'uncomplete' : 'locked'">
                 </NavMenuItem>
-            </a>
-            <a :href="`/create-event/${this.event.slug}/advisories`">
+            </div>
+            <div style="cursor:pointer" @click="urlClick('advisories', '6')">
                 <NavMenuItem 
                 :active="{active : url == `/create-event/${this.event.slug}/advisories`}" 
                 name="Advisories" 
-                :iconstatus="this.event.advisories_id ? 'completed' : 'uncomplete'">
+                :iconstatus="this.event.status >= 7 || this.event.status == 'p' || this.event.status == 'e' ? 'completed' : this.event.status >= 6 ? 'uncomplete' : 'locked'">
                 </NavMenuItem>
-            </a>
-            <a :href="`/create-event/${this.event.slug}/images`">
+            </div>
+            <div style="cursor:pointer" @click="urlClick('images', '7')">
                 <NavMenuItem 
                 :active="{active : url == `/create-event/${this.event.slug}/images`}" 
                 name="Image" 
-                :iconstatus="this.event.largeImagePath ? 'completed' : 'uncomplete'">
+                :iconstatus="this.event.status >= 8 || this.event.status == 'p' || this.event.status == 'e' ? 'completed' : this.event.status >= 7 ? 'uncomplete' : 'locked'">
                 </NavMenuItem>
-            </a>
-            <a v-if="cantReview" :href="canReview">
+            </div>
+            <div v-if="cantReview" style="cursor:pointer" @click="urlClick('review', '8')">
                 <NavMenuItem 
                 :active="{active : url == `/create-event/${this.event.slug}/review`}" 
                 name="Final Review" 
-                :iconstatus="'locked'">
+                :iconstatus="this.event.status >= 8 || this.event.status == 'p' || this.event.status == 'e' ? 'uncomplete' : 'locked'">
                 </NavMenuItem>
-            </a>
+            </div>
            
         </div>
+        <div style="position: relative;
+    background: #fb5050;
+    top: 1rem;
+    left: 0px;
+    padding: 1rem;
+    border-radius: 1rem;
+    white-space: pre-wrap;
+    color: white;
+    font-size: 1rem;">Our site is still in Beta. Please take note of any bugs you encounter and email them to support@everythingimmersive.com
+    
+    We really appreciate your help improving our site!</div>
         
     </nav>
 </template>
 
 <script>
     import NavMenuItem  from './components/nav-menu-item.vue'
-
     export default {
         props: ['event', 'user'],
-
         components: { NavMenuItem },
-
         computed: {
-
             backUrl() {
                 return this.user.hasCreatedOrganizers  ? '/create-event/edit' : '/'
             },
-            canReview() {
-                return this.readyToSubmit ? `/create-event/${this.event.slug}/review` : '#'
-            }
         },
-
         data() {
             return {
                 onOrganizer: false,
@@ -124,15 +124,19 @@
                 isNotReview: window.location.pathname == `/create-event/${this.event.slug}/review` ? false : true,
                 isOrganizer: window.location.pathname == `/organizer/create` ? true : false,
                 readyToSubmit: false,
-                cantReview: this.event.status !== 'p' ? true : false,
+                cantReview: this.event.status == 'p' || this.event.status == 'e' ? false : true,
             }
         },
-
         methods: {
-
             handleResize() {
                 this.pageHeight = `min-height:${window.innerHeight}px`;
             },
+
+            urlClick(value, loc) {
+                if (this.event.status >= loc) {
+                    this.$store.commit('saveevent', value);
+                }
+            },
 
             toggleBodyClass(addRemoveClass, className) {
                 const el = document.querySelector(".create-body");
@@ -144,35 +148,24 @@
             },
 
             checkSubmissionStatus() {
-                this.event.status !== 'p' &&
-                this.event.status !== 'e' &&
-                this.event.organizer_id && 
-                this.event.name && 
-                (this.event.location_latlon || !this.event.hasLocation) && 
-                this.event.category_id &&
-                this.event.show_times &&
-                this.event.price_range &&
-                this.event.description &&
-                this.event.largeImagePath &&
-                this.event.advisories_id
-                ? this.readyToSubmit = true : false;
+                this.event.status >= '8' ? this.readyToSubmit = true : false;
             },
 
+            checkOld() {
+                this.event.status == 'd' ? alert("Our submission process has changed. Please start at the event title section and re-save each section. Your data isn't lost, it just needs to be saved in a new format. Sorry for any inconvenience.") : ''
+            },
         },
-
         destroyed() {
             window.removeEventListener('resize', this.handleResize);
         },
-
         mounted() {
             let data = window.location.pathname;
+            this.checkOld();
         },
-
         created() {
             window.addEventListener('resize', this.handleResize)
             this.handleResize();
             this.checkSubmissionStatus();
         }
     }
-
 </script>

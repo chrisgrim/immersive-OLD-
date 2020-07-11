@@ -29,7 +29,6 @@ class AdvisoryStoreRequest extends FormRequest
             'contactAdvisories' => 'required',
             // 'mobilityAdvisory' => 'required',
             // 'contentAdvisory' => 'required',
-            'ageRestriction' => 'required'
         ];
     }
 }

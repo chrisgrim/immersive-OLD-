@@ -186,6 +186,7 @@ if(document.getElementById("header")){
 if(document.getElementById("create")){
 	const create = new Vue({
     	el: '#create',
+        store,
 	});
 };
 if(document.getElementById("admin")){

@@ -9,6 +9,7 @@ use App\ContactLevel;
 use App\InteractiveLevel;
 use App\ContentAdvisory;
 use App\MobilityAdvisory;
+use App\AgeLimit;
 use Illuminate\Http\Request;
 use App\Http\Requests\AdvisoryStoreRequest;
 
@@ -32,12 +33,14 @@ class AdvisoriesController extends Controller
      */
     public function create(Event $event)
     {
+        // if ($event->status < 6) { abort(403); }
         $event->load('contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'advisories', 'interactive_level');
         $contactAdvisories = ContactLevel::all();
         $contentAdvisories = ContentAdvisory::where('admin', true)->orWhere('user_id', auth()->user()->id)->get();
         $mobilityAdvisories = MobilityAdvisory::where('admin', true)->orWhere('user_id', auth()->user()->id)->get();
         $interactiveLevels = InteractiveLevel::get();
-        return view('create.advisories', compact('event', 'contactAdvisories', 'contentAdvisories', 'mobilityAdvisories', 'interactiveLevels'));
+        $agelimit = AgeLimit::all();
+        return view('create.advisories', compact('event', 'contactAdvisories', 'contentAdvisories', 'mobilityAdvisories', 'interactiveLevels', 'agelimit'));
     }
 
     /**
@@ -55,7 +58,14 @@ class AdvisoriesController extends Controller
         $event->update([
             'advisories_id' => $event->advisories->id,
             'interactive_level_id' => $request->interactiveLevel['id'],
+            'age_limits_id' => $request->age['id'],
         ]);
+
+        //Checks to see if advisories has been selected then updates status to 7
+        if ( $event->status < 8 && !$event->isLive() && $event->contactlevels()->exists() && $event->interactive_level()->exists() && $event->contentadvisories()->exists() && $event->mobilityadvisories()->exists() && $event->advisories_id ) {
+            $event->update([ 'status' => '7' ]);
+        }
+
     }
 
     /**
@@ -71,6 +81,7 @@ class AdvisoriesController extends Controller
             'contentPivots' => $event->contentadvisories()->get(),
             'mobilityPivots' => $event->mobilityadvisories()->get(),
             'interactivePivots' => $event->interactive_level()->first(),
+            'age' => $event->age_limits()->first(),
         ));
     }
 }

@@ -7,7 +7,7 @@ use App\Event;
 use App\Show;
 use App\ShowOnGoing;
 use Carbon\Carbon;
-use App\Http\Requests\ShowStoreRequest;
+use App\Http\Requests\TicketStoreRequest;
 
 class TicketsController extends Controller
 {
@@ -26,6 +26,7 @@ class TicketsController extends Controller
      */
     public function create(Event $event)
     {
+        // if ($event->status < 4) { abort(403); }
         $event->load('showOnGoing','shows.tickets');
         return view('create.ticket', compact('event'));
     }
@@ -36,7 +37,7 @@ class TicketsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Event $event)
+    public function store(TicketStoreRequest $request, Event $event)
     {
         // goes through each show attached to the event
         foreach( $event->shows as $show) {
@@ -113,8 +114,13 @@ class TicketsController extends Controller
         $event->update([
             'price_range' => $pricerange,
             'ticketUrl' => $request->ticketUrl,
+            'call_to_action' => $request->callAction,
         ]);
 
+        //Checks to see if category has been selected then updates status to 3
+        if ( $event->status < 6 && !$event->isLive() && $event->price_range && $event->ticketUrl ) {
+            $event->update([ 'status' => '5' ]);
+        }
 
         $event = $event->fresh();
         $event->searchable();

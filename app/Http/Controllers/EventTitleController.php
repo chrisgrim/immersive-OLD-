@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Event;
 use Illuminate\Http\Request;
+use App\Http\Requests\TitleStoreRequest;
 
 class EventTitleController extends Controller
 {
@@ -46,20 +47,25 @@ class EventTitleController extends Controller
      * @param  \App\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function updateTitle(Request $request, Event $event)
+    public function updateTitle(TitleStoreRequest $request, Event $event)
     {
-        $this->authorize('update', $event);
-
         $event->update([ 
             'name' => $request->name,
-            'tag_line' => $request->tagLine
+            'tag_line' => $request->tagLine,
         ]);
+
+        //Checks to see if category has been selected then updates status to 3
+        if ($event->status < 2 && !$event->isLive() && $event->name) {
+            $event->update([ 'status' => '1' ]);
+        }
         
         if($request->reSubmitEvent){
             $event->update([
-                'status' => 'd',
+                'status' => '8',
                 'approved' => false
             ]);
         };
+
+
     }
 }

@@ -158,6 +158,7 @@ class EventController extends Controller
      */
     public function review(Event $event)
     {
+        if ($event->status < 8) { abort(403); }
         $this->authorize('finalize', $event);
         $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'advisories', 'showOnGoing', 'remotelocations', 'timezone');
         $tickets = $event->shows()->first()->tickets()->orderBy('ticket_price')->get();

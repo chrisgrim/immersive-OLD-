@@ -23,6 +23,7 @@ class DescriptionController extends Controller
      */
     public function create(Event $event)
     {
+        // if ($event->status < 5) { abort(403); }
         $event->load('genres');
         $tags = Genre::where('admin', true)->orWhere('user_id', auth()->user()->id)->get();
         return view('create.description', compact('event', 'tags'));
@@ -51,5 +52,10 @@ class DescriptionController extends Controller
     public function store(DescriptionStoreRequest $request, Event $event)
     {  
         $event->storeDescription($request, $event);
+
+        //Checks to see if description has been sgored then updates status to 6
+        if ( $event->status < 7 && !$event->isLive() && $event->genres()->exists() && $event->description ) {
+            $event->update([ 'status' => '6' ]);
+        }
     }
 }

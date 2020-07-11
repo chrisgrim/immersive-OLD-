@@ -49,7 +49,7 @@
                 tag-placeholder="Add this as new tag" 
                 placeholder="Type here to create your own" 
                 label="name"
-                :close-on-select="true"
+                :close-on-select="false"
                 track-by="id" 
                 :options="tagOptions" 
                 :multiple="true" 
@@ -68,13 +68,13 @@
         </section>
         
         <div class="event-create__submit-button">
-            <button :disabled="disabled" @click.prevent="onSubmit('exit')" class="nav-back-button"> Save and Exit </button>
+            <button :disabled="disabled" @click.prevent="onBackInitial()" class="nav-back-button"> Your events </button>
         </div>
         <div class="create-button__back">
             <button :disabled="disabled" class="create" @click.prevent="onBack('tickets')"> Back </button>
         </div>
         <div class="create-button__forward">
-            <button :disabled="disabled" class="create" @click.prevent="onSubmit()"> Save and continue </button>
+            <button :disabled="disabled" class="create" @click.prevent="onSubmit('advisories')"> Save and continue </button>
         </div>
         
     </div>
@@ -96,6 +96,10 @@
         computed: {
             endpoint() {
                 return `/create-event/${this.event.slug}/description`
+            },
+
+            navSubmit() {
+                return this.$store.state.save
             },
         },
 
@@ -121,10 +125,11 @@
             },
 
 			onSubmit(value) {
+                if (!this.$v.$anyDirty && this.event.status != 5) {return this.onForward(value)};
                 if (this.checkVuelidate()) { return false };
 				axios.patch(this.endpoint, this.group)
                 .then(res => { 
-                    value == 'exit' ? this.onBackInitial() : this.onForward('advisories');
+                    value == 'exit' ? this.onBackInitial() : this.onForward(value);
                 })
                 .catch(err => { this.onErrors(err) });
 			},
@@ -161,6 +166,14 @@
         watch: {
             tagName(){
                 return this.group.genre = this.tagName.map(a => a.name);
+            },
+
+            navSubmit() {
+                if (this.event.status < 6 && !this.$v.$anyDirty) {
+                    this.onBack(this.navSubmit);
+                } else {
+                    this.onSubmit(this.navSubmit);
+                }
             }
         },
 

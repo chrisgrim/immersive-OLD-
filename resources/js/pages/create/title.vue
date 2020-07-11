@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="field">
-                <label>Project tag line (Stand out from the other events with a great tag line!)</label>
+                <label>Project tag line (optional)</label>
                 <input 
                 type="text" 
                 v-model="title.tagLine"
@@ -45,13 +45,13 @@
 
         <section></section>
         <div class="event-create__submit-button">
-            <button :disabled="disabled" @click.prevent="onSubmit('exit')" class="nav-back-button"> Save and Exit </button>
+            <button :disabled="disabled" @click.prevent="onBackInitial()" class="nav-back-button"> Your events </button>
         </div>
         <div class="create-button__back">
             <button :disabled="disabled" class="create" @click.prevent="onBackInitial()"> Back </button>
         </div>
         <div class="create-button__forward">
-            <button :disabled="disabled" class="create" @click.prevent="onSubmit()"> Save and continue </button>
+            <button :disabled="disabled" class="create" @click.prevent="onSubmit('location')"> Save and continue </button>
         </div>
         
         <modal v-if="modal" @close="modal = false">
@@ -86,6 +86,10 @@
                 return `/create-event/${this.event.slug}/title`
             },
 
+            navSubmit() {
+                return this.$store.state.save
+            },
+
         },
 
 		data() {
@@ -116,9 +120,10 @@
 	        },
 
 			onSubmit(value) {
+                if (this.event.status != 0 && !this.$v.$anyDirty) {return this.onForward(value)};
                 if (this.checkVuelidate()) { return false };
 				axios.patch( this.endpoint, this.title )
-				.then(res => { value == 'exit' ? this.onBackInitial() : this.onForward('location') })
+				.then(res => { value == 'exit' ? this.onBackInitial() : this.onForward(value) })
             	.catch(err => { this.onErrors(err) });
 			},
 
@@ -141,6 +146,11 @@
             this.onLoad();
         },
 
+        watch: {
+            navSubmit() {
+                this.onSubmit(this.navSubmit);
+            }
+        },
 
 		validations: {
             title: {

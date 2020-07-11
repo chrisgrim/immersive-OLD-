@@ -30,7 +30,7 @@ class Event extends Model
     * @var array
     */
 	protected $fillable = [
-    	'slug', 'user_id', 'timezone_id', 'category_id','interactive_level_id','organizer_id','description','name','largeImagePath','thumbImagePath','advisories_id', 'organizer_id', 'location_latlon', 'closingDate','websiteUrl','ticketUrl','show_times','price_range', 'status','tag_line', 'hasLocation', 'showtype', 'embargo_date', 'remote_description', 'published_at'
+    	'slug', 'user_id', 'timezone_id', 'category_id','interactive_level_id','organizer_id','description','name','largeImagePath','thumbImagePath','advisories_id', 'organizer_id', 'location_latlon', 'closingDate','websiteUrl','ticketUrl','show_times','price_range', 'status','tag_line', 'hasLocation', 'showtype', 'embargo_date', 'remote_description', 'published_at', 'call_to_action', 'age_limits_id'
     ];
 
     /**
@@ -38,7 +38,7 @@ class Event extends Model
     *
     * @var array
     */
-    protected $with = ['favorites', 'priceranges', 'shows'];
+    protected $with = ['favorites', 'priceranges', 'shows','age_limits'];
 
     /**
     * The accessors to append to the model's array form.
@@ -104,6 +104,15 @@ class Event extends Model
     */
     public function isPublished() {
         return $this->status == 'p';
+    }
+
+    /**
+    * Determines which events are published for Laravel Scout
+    *
+    * @return bool
+    */
+    public function isLive() {
+        return $this->status == 'p' || $this->status == 'e';
     }
 
     /**
@@ -248,6 +257,16 @@ class Event extends Model
     }
 
     /**
+     * Each event can belong to many shows
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+     */
+    public function age_limits() 
+    {
+        return $this->belongsTo(AgeLimit::class);
+    }
+
+    /**
      * Each event can belong to one interactive level
      *
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
@@ -317,7 +336,8 @@ class Event extends Model
         $event = Event::create([
             'user_id' => auth()->id(),
             'slug' => rand(),
-            'organizer_id' => $request->id
+            'organizer_id' => $request->id,
+            'status' => '0',
         ]);
         $event->location()->Create();
         $event->advisories()->Create();

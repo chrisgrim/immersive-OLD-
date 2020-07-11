@@ -4,33 +4,36 @@
             <div class="title">
                 <h2>Immersive Categories</h2>
             </div>
-            <multiselect 
-            v-show="categories.length > 0" 
-            v-model="selectedCategory" 
-            placeholder="Select Category"
-            label="name" 
-            track-by="name" 
-            deselectLabel=''
-            :allow-empty="false"  
-            :options="categoryOptions" 
-            open-direction="bottom"
-            @input="$v.selectedCategory.$touch"
-            :class="{ active: active == 'category','error': $v.selectedCategory.$error}"
-            @click="active = 'category'"
-            @blur="active = null" 
-            >
-                <template slot="option" slot-scope="props">
-                    <div class="option__desc">
-                        <span class="option__title">{{ props.option.name }}</span>
-                    </div>
-                </template>
-            </multiselect>
-            <input type="hidden" name="category" v-model="selectedCategory">
-            <div v-if="$v.selectedCategory.$error" class="validation-error">
-                <p class="error" v-if="!$v.selectedCategory.required">Please select your event's category</p>
-            </div>
-            <div>
-                <p v-text="this.selectedCategory ? selectedCategory.description : ''"></p>
+            <div class="field">
+                <multiselect 
+                v-show="categories.length > 0" 
+                v-model="selectedCategory" 
+                placeholder="Select Category"
+                label="name" 
+                track-by="name" 
+                deselectLabel=''
+                :allow-empty="false"  
+                :options="categoryOptions" 
+                open-direction="bottom"
+                @input="$v.selectedCategory.$touch"
+                :class="{ active: active == 'category','error': $v.selectedCategory.$error}"
+                @click="active = 'category'"
+                @blur="active = null" 
+                >
+                    <template slot="option" slot-scope="props">
+                        <div class="option__desc">
+                            <span class="option__title">{{ props.option.name }}</span>
+                        </div>
+                    </template>
+                </multiselect>
+                <input type="hidden" name="category" v-model="selectedCategory">
+                <div v-if="$v.selectedCategory.$error" class="validation-error">
+                    <p class="error" v-if="!$v.selectedCategory.required">Please select your event's category</p>
+                </div>
+
+                <div>
+                    <p v-text="this.selectedCategory ? selectedCategory.description : ''"></p>
+                </div>
             </div>
         </section>
 
@@ -42,13 +45,13 @@
         </section>
        
         <div class="event-create__submit-button">
-            <button :disabled="disabled" @click.prevent="onSubmit('exit')" class="nav-back-button"> Save and Exit </button>
+            <button :disabled="disabled" @click.prevent="onBackInitial()" class="nav-back-button"> Your events </button>
         </div>
         <div class="create-button__back">
             <button :disabled="disabled" class="create" @click.prevent="onBack('location')"> Back </button>
         </div>
         <div class="create-button__forward">
-            <button :disabled="disabled" class="create" @click.prevent="onSubmit()"> Save and Continue </button>
+            <button :disabled="disabled" class="create" @click.prevent="onSubmit('shows')"> Save and Continue </button>
         </div>
     </div>
 </template>
@@ -71,6 +74,9 @@
                 return `/create-event/${this.event.slug}/category`
             },
 
+            navSubmit() {
+                return this.$store.state.save
+            },
         },
 
 		data() {
@@ -87,15 +93,17 @@
 
 		methods: {
 			onSubmit(value) {
+                if (!this.$v.$anyDirty && this.event.status != 2) {return this.onForward(value)};
                 if (this.checkVuelidate()) { return false };
 				axios.patch(this.endpoint, this.selectedCategory)
 				.then(res => {  
-                    value == 'exit' ? this.onBackInitial() : this.onForward('shows');
+                    value == 'exit' ? this.onBackInitial() : this.onForward(value);
                 })
                 .catch(err => {
                     this.onErrors(err);
                 });
 			},
+
 
             handleResize() {
                 this.pageHeight = `height:calc(${window.innerHeight}px - 7rem)`;
@@ -123,6 +131,16 @@
             this.handleResize();
             this.onLoad();
             this.selectCategoryType();
+        },
+
+        watch: {
+            navSubmit() {
+                if (this.event.status < 3 && !this.$v.$anyDirty) {
+                    this.onBack(this.navSubmit);
+                } else {
+                    this.onSubmit(this.navSubmit);
+                }
+            }
         },
 
         destroyed() {

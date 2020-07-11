@@ -5,29 +5,40 @@
                 <div class="title">
                     <h2>Dates and Times</h2>
                 </div>
+                <input style="opacity:0;position:absolute;top:0;" autofocus />
                 <div class="show-type-selection">
                     <div class="field">
-                        <label class="area">Select the type of operating hours</label>
+                        <label class="area">Select physical interaction level with guests</label>
                         <multiselect 
                         v-model="showType" 
-                        :show-labels="false"
-                        :options="showTypeOptions"
-                        :class="{ active: active == 'type','error': $v.$error }"
-                        placeholder="Show hours type" 
+                        :options="showTypeOptions" 
+                        :multiple="false" 
+                        placeholder="Show hours type"
                         open-direction="bottom"
-                        :allowEmpty = "false"
+                        :allowEmpty="false"
+                        :show-labels="false"
+                        :class="{ active: active == 'type','error': $v.$error }"
                         @select="dates = []"
                         @click="active = 'type'"
-                        @blur="active = null">
+                        @blur="active = null"
+                        label="name" 
+                        track-by="id" 
+                        :preselect-first="false">
+                        <template slot="option" slot-scope="props">
+                            <div class="option__desc">
+                                <div class="option__title--interaction">{{ props.option.name }}</div>
+                                <div class="option__small-interaction">{{ props.option.description }}</div>
+                            </div>
+                        </template>
                         </multiselect>
                     </div>
                 </div>
                 
                 <!-- Limited Run (Specific Dates) -->
-                <div v-show="showType == 'Limited Run (Specific Dates)'" class="specific-show-dates">
+                <div v-show="showType.id == 1" class="specific-show-dates">
                     <section class="event-enter-showdates">
                         <div class="field">
-                            <label> Select all show dates</label>
+                            <label> Select each individual show date</label>
                             <div class="calendar desktop">
                                 <flat-pickr
                                     v-model="dates"
@@ -50,6 +61,9 @@
                             </div>
                             <div v-if="$v.dates.$error" class="validation-error">
                                 <p class="error" v-if="!$v.dates.required">Please add at least 1 show date</p>
+                            </div>
+                            <div>
+                                <label v-if="dateArray && dates">( {{dateArray.length}} dates selected )</label>
                             </div>
                         </div>
                     </section>
@@ -99,7 +113,7 @@
                     </section>
                     <section>
                         <div class="field">
-                            <label> Does the event have a specific embargo date? (date you would like it to appear on EI) </label>
+                            <label> Does the event have a specific embargo date? <br> (i.e. The date you would like it to first appear on EI) </label>
                             <div id="cover">
                                 <input v-model="showEmbargoDate" type="checkbox" id="checkbox">
                                 <div id="bar"></div>
@@ -125,7 +139,7 @@
                 </div>
            
                 <!-- Open Ended (Weekly) Dates -->
-                <div v-show="showType == 'Open Ended (Weekly)'" class="ongoing-show-dates">
+                <div v-show="showType.id == 2" class="ongoing-show-dates">
                     <section class="event-enter-showdates">
                         <div class="field">
                             <label> Select show days</label>
@@ -237,7 +251,7 @@
                     </section>
                     <section>
                         <div class="field">
-                            <label> Does the event have a specific embargo date? (date you would like it to appear on EI) </label>
+                            <label> Does the event have a specific embargo date? <br> (i.e. The date you would like it to first appear on EI) </label>
                             <div id="cover">
                                 <input v-model="showEmbargoDate" type="checkbox" id="checkbox">
                                 <div id="bar"></div>
@@ -262,7 +276,7 @@
                     </section>
                 </div>
                 
-                <div v-show="showType == 'On Demand (Any Time)'" class="everyday-show-dates">
+                <div v-show="showType.id == 3" class="everyday-show-dates">
                     <section class="event-enter-showtimes">
                         <div class="field">
                             <label> Show Times</label>
@@ -286,7 +300,7 @@
                     </section>
                     <section class="event-enter-showdates">
                         <div class="field" style="margin-top:6rem">
-                            <label> Does the event have a specific embargo date? (date you would like it to appear on EI) </label>
+                            <label> Does the event have a specific embargo date? <br> (i.e. The date you would like it to first appear on EI) </label>
                             <div id="cover">
                                 <input v-model="showEmbargoDate" type="checkbox" id="checkbox">
                                 <div id="bar"></div>
@@ -314,13 +328,13 @@
         </section>
         
          <div class="event-create__submit-button">
-            <button :disabled="disabled" @click.prevent="onSubmit('exit')" class="nav-back-button"> Save and Exit </button>
+            <button :disabled="disabled" @click.prevent="onBackInitial()" class="nav-back-button"> Your events </button>
         </div>
         <div class="create-button__back">
             <button :disabled="disabled" class="create" @click.prevent="onBack('category')"> Back </button>
         </div>
         <div class="create-button__forward">
-            <button :disabled="disabled" class="create" @click.prevent="onSubmit()"> Save and continue </button>
+            <button :disabled="disabled" class="create" @click.prevent="onSubmit('tickets')"> Save and continue </button>
         </div>
 
     </div>
@@ -347,6 +361,10 @@ export default {
     computed: {
         endpoint() {
             return `/create-event/${this.event.slug}/shows`
+        },
+
+        navSubmit() {
+            return this.$store.state.save
         },
 
         dateArray() {
@@ -376,11 +394,11 @@ export default {
             return {
                 'dates': Array.isArray(this.dates) ? this.dates : this.dateArray,
                 'showtimes': this.showTimes,
-                'shows': this.showType == 'Limited Run (Specific Dates)' ? true : false,
+                'shows': this.showType.id == '1' ? true : false,
                 'embargo_date' : this.showEmbargoDate ? this.embargoDate : null,
-                'week': this.week && this.showType == 'On Demand (Any Time)' ? _.mapValues(this.week, () => true) : this.week,
-                'onGoing' : this.showType == 'Open Ended (Weekly)' && this.weeklyOngoing ? true : false,
-                'always': this.showType == 'On Demand (Any Time)' || !this.weeklyOngoing ? true : false,
+                'week': this.week && this.showType.id == '3' ? _.mapValues(this.week, () => true) : this.week,
+                'onGoing' : this.showType.id == '2' && this.weeklyOngoing ? true : false,
+                'always': this.showType.id == '3' || !this.weeklyOngoing ? true : false,
                 'start_date': this.startDate ? this.startDate : null,
                 'timezone': this.timezone,
             }
@@ -391,7 +409,7 @@ export default {
     data() {
         return {
             eventUrl:`/create-event/${this.event.slug}`,
-            showType: this.event.showtype ? this.event.showtype : 's',
+            showType: [],
             dates: this.event.shows ? this.event.shows.map(a => a.date) : '',
             startDate: '',
             embargoDate: this.event.embargo_date ? this.event.embargo_date : '',
@@ -407,8 +425,10 @@ export default {
             placeholders: 'Please provide a brief description of show times. For example:' + '\n' + '\n' + '“Doors at 7, Show at 8.”' + '\n' + '“Two shows an hour from 8-10.”',
             placeholdero: 'Please provide a brief description of weekly show times. For example:' + '\n' + '\n' + '10:00PM shows on Monday & Tuesday.' + '\n' + '12:00PM on Wednesday and Thursday.',
             placeholdera: 'Please provide a brief description of daily times. For example:' + '\n' + '\n' + 'Show begins everyday at 12PM.' + '\n' + 'Enjoy at any time.',
-            showType: '',
-            showTypeOptions: ['Limited Run (Specific Dates)', 'Open Ended (Weekly)', 'On Demand (Any Time)'],
+            showTypeOptions: [
+                {   id: 1,   name: 'Limited Run (Specific Dates)', description:'Select limited run if you have specific show dates.'}, 
+                {   id: 2, name: 'Open Ended (Weekly)', description:'Select open ended if your show has no end date in the next 6 months.'}, 
+                {   id: 3, name: 'On Demand (Any Time)', description:'Select on demand if our show is available at any time.'}],
             exit: false,
             showStartDate: this.event.show_on_going ? true : false,
             timezone: this.event.timezone ? this.event.timezone : '',
@@ -477,15 +497,15 @@ export default {
         },
 
         onLoad() {
-            if (this.event.showtype == 'a') { return this.showType = 'On Demand (Any Time)'};
-            if (this.event.showtype == 'o') { return this.showType = 'Open Ended (Weekly)'};
-            if (this.event.showtype == 's') { return this.showType = 'Limited Run (Specific Dates)'};
             axios.get(this.onFetch('shows'))
             .then(res => {
                 res.data.dates ? this.dates = res.data.dates : '';
                 res.data.week ? this.week = res.data.week : '';
                 res.data.showTimes ? this.showTimes = res.data.showTimes : '';
             });
+            if (this.event.showtype == 'a') { return this.showType = this.showTypeOptions[2]};
+            if (this.event.showtype == 'o') { return this.showType = this.showTypeOptions[1]};
+            if (this.event.showtype == 's') { return this.showType = this.showTypeOptions[0]};
         },
 
         onSubmit(value) {
@@ -493,7 +513,7 @@ export default {
             axios.post(this.endpoint, this.submitObject)
             .then(res => {  
                 console.log(res.data);
-                value == 'exit' || this.exit == true ? this.onBackInitial() : this.onForward('tickets');
+                value == 'exit' || this.exit == true ? this.onBackInitial() : this.onForward(value);
             })
             .catch(err => { this.onErrors(err) });
         },
@@ -502,6 +522,16 @@ export default {
             return this.dates.length ? this.startDate = this.dates[0] : '';
         },
 
+    },
+
+    watch: {
+        navSubmit() {
+            if (this.event.status < 4 && this.$v.$invalid) {
+                this.onBack(this.navSubmit);
+            } else {
+                this.onSubmit(this.navSubmit);
+            }
+        }
     },
 
     mounted() {
@@ -517,17 +547,17 @@ export default {
         },
         dates: {
             ifDates() { 
-                return this.showType == 'Limited Run (Specific Dates)' ? this.dates.length ? true : false : true
+                return this.showType.id == '1' ? this.dates.length ? true : false : true
             },
         },
         week: {
             ifWeekly() {
-                return this.showType == 'Open Ended (Weekly)' ? this.week.mon == 1 || this.week.tue == 1 || this.week.wed == 1 || this.week.thu == 1 || this.week.fri == 1 || this.week.sat == 1 || this.week.sun == 1  ? true : false : true
+                return this.showType.id == '2' ? this.week.mon == 1 || this.week.tue == 1 || this.week.wed == 1 || this.week.thu == 1 || this.week.fri == 1 || this.week.sat == 1 || this.week.sun == 1  ? true : false : true
             }
         },
         timezone: {
             ifOnDemand() {
-                return this.showType == 'On Demand (Any Time)' ? true : (this.timezone ? true : false)
+                return this.showType.id == '3' ? true : (this.timezone ? true : false)
             }
         }
 	},

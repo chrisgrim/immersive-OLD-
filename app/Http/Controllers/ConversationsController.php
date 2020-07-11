@@ -23,7 +23,7 @@ class ConversationsController extends Controller
      */
     public function index()
     {
-        $conversations = auth()->user()->conversations()->withTrashed()->get();
+        $conversations = auth()->user()->conversations()->get();
         return view('messages.index', compact('conversations'));
     }
 

@@ -15,10 +15,10 @@
             <div class="card-price">
                 <p>{{ event.price_range }}</p>
             </div>
-             <div class="card-inprogress" v-if="event.status == 'd'">
+             <div class="card-inprogress" v-if="inProgress">
                 <p><b>In Progress</b></p>
             </div>
-            <div class="card-inprogress" v-if="event.status == 'n'">
+            <div class="card-inprogress" v-if="event.status == 'n' || event.status == '9'">
                 <p><b>Needs Changes</b></p>
             </div>
              <div class="card-inprogress" v-if="event.status == 'e'">
@@ -39,6 +39,12 @@
             user: { type:String }
         },
 
+        computed: {
+            inProgress() {
+                return this.progress.includes(this.event.status) ? true : false;
+            }
+        },
+
         data() {
             return {
                 divBackground: `background-image: url('${this.event.thumbImagePath ? /storage/ + this.event.thumbImagePath : '/storage/default-avatar/default.jpg'}')`,
@@ -47,6 +53,7 @@
                 isModified: '',
                 isDisabled: false,
                 imageWidth: '',
+                progress: ['0','1','2','3','4','5','6','7','8','9','d'],
             }
         },
 
@@ -63,25 +70,25 @@
                 if (this.event.status == 'n') {
                     return this.url = `/create-event/${this.event.slug}/title`;
                 }
-                if (this.event.largeImagePath) {
+                if (this.event.status == '7') {
                     return this.url = `/create-event/${this.event.slug}/images`;
                 }
-                if (this.event.advisories) {
+                if (this.event.status == '6') {
                     return this.url = `/create-event/${this.event.slug}/images`;
                 }
-                if (this.event.description) {
+                if (this.event.status == '5') {
                     return this.url = `/create-event/${this.event.slug}/advisories`;
                 }
-                if (this.event.show_times) {
+                if (this.event.status == '4') {
                     return this.url = `/create-event/${this.event.slug}/description`;
                 }
-                if (this.event.category_id) {
+                if (this.event.status == '3') {
                     return this.url = `/create-event/${this.event.slug}/shows`;
                 }
-                if (this.event.location_latlon) {
+                if (this.event.status == '2') {
                     return this.url = `/create-event/${this.event.slug}/category`;
                 }
-                if (this.event.name) {
+                if (this.event.status == '1') {
                     return this.url = `/create-event/${this.event.slug}/location`;
                 }
                 return this.url = `/create-event/${this.event.slug}/title`;

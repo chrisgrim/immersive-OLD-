@@ -73,7 +73,7 @@ class AdminAreaEventsController extends Controller
 
         Event::where('id', $event)
                 ->update([
-                    'status' => 'd',
+                    'status' => '8',
                 ]);
     }
 }

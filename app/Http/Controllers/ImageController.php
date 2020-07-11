@@ -22,6 +22,7 @@ class ImageController extends Controller
      */
     public function create(Event $event)
     {
+        // if ($event->status < 7) { abort(403); }
         return view('create.image', compact('event'));
     }
 
@@ -33,11 +34,18 @@ class ImageController extends Controller
      */
     public function store(Request $request, Event $event)
     {
-        if ($event->status == 'd') {
+        if (!$event->isLive()) {
             MakeImage::saveNewImage($request, $event, 1280, 720, 'event');
         } else {
             MakeImage::updateImage($request, $event, 1280, 720, 'event');
         }
+
+        //Checks to see if category has been selected then updates status to 3
+        if (!$event->isLive() && $event->largeImagePath) {
+            $event->update([ 'status' => '8' ]);
+        }
+
+        return $event;
 
     }
 }

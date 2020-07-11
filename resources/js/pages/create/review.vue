@@ -20,6 +20,12 @@
 
         props: ['event'],
 
+        computed: {
+            navSubmit() {
+                return this.$store.state.save
+            },
+        },
+
         data() {
             return {
                 name: '',
@@ -45,6 +51,13 @@
             goBack() {
                 window.location.href = `${this.eventUrl}/images`;
             },
+        },
+
+         watch: {
+            navSubmit() {
+                console.log('test');
+                this.onBack(this.navSubmit);
+            }
         },
     };
 

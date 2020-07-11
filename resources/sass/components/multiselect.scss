@@ -122,7 +122,6 @@
     }
 }
 
-
 .multiselect__option {
     white-space: inherit !important;
 }
@@ -131,6 +130,7 @@
     margin: 0rem 0rem 1rem 0rem;
 }
 .multiselect--active {
+    z-index: 100 !important;
     & .multiselect__tags {
         border: 1px solid rgb(0, 132, 137) !important;
         border-top-left-radius: 5px !important;
@@ -146,4 +146,14 @@
     & .multiselect__tag {
         background: #008489;
     }
+}
+
+.multiselect__option--selected.multiselect__option--highlight {
+    background: $default-color;
+    color: #fff;
+}
+.multiselect__option--highlight {
+    background: #3fa9ad;
+    outline: none;
+    color: #fff;
 }

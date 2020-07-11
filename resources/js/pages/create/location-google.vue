@@ -120,13 +120,13 @@
             </div>
         </section>
         <div class="event-create__submit-button">
-            <button :disabled="disabled" @click.prevent="onSubmit('exit')" class="nav-back-button"> Save and Exit </button>
+            <button :disabled="disabled" @click.prevent="onBackInitial()" class="nav-back-button"> Your events </button>
         </div>
 		<div class="create-button__back">
             <button :disabled="disabled" class="create" @click.prevent="onBack('title')"> Back </button>
         </div>
         <div class="create-button__forward">
-            <button :disabled="disabled" class="create" @click.prevent="onSubmit()"> Save and Continue </button>
+            <button :disabled="disabled" class="create" @click.prevent="onSubmit('category')"> Save and Continue </button>
         </div>
     </div>
 </template>
@@ -167,6 +167,10 @@
 
             corsEndpoint() {
                 return `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/geocode/json?address=${this.location.postal_code ? this.location.postal_code : this.location.city}&key=AIzaSyBxpUKfSJMC4_3xwLU73AmH-jszjexoriw`
+            },
+
+            navSubmit() {
+                return this.$store.state.save
             },
 
 		},
@@ -221,7 +225,7 @@
             onNormalSubmit(value) {
                 axios.patch( this.endpoint, this.hasLocation ? this.location : this.remoteLocationArray )
                 .then(res => {  
-                    value == 'exit' ? this.onBackInitial() : this.onForward('category');
+                    value == 'exit' ? this.onBackInitial() : this.onForward(value);
                 })
                 .catch(err => {
                     this.onErrors(err);
@@ -278,6 +282,16 @@
             this.handleResize();
         },
 
+        watch: {
+            navSubmit() {
+                if (this.event.status < 2 && this.$v.$invalid) {
+                    this.onBack(this.navSubmit);
+                } else {
+                    this.onSubmit(this.navSubmit);
+                }
+            }
+        },
+
         mounted() {
             this.autocomplete = new google.maps.places.Autocomplete(
                 (this.$refs.autocomplete),
@@ -292,6 +306,9 @@
         },
 
 		validations: {
+            description: {
+
+            },
 			location: {
 			 	latitude: {
                     ifLocation() { 
@@ -310,9 +327,5 @@
                 }
             },
 		},
-			
-};
-
-
-
+    };
 </script>

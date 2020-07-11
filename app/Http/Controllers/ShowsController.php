@@ -28,6 +28,7 @@ class ShowsController extends Controller
      */
     public function create(Event $event)
     {
+        // if ($event->status < 3) { abort(403); }
         $event->load('showOnGoing','shows.tickets','timezone');
         $timezones = Timezone::all()->sortBy('offset')->values();
         return view('create.show', compact('event', 'timezones'));
@@ -56,6 +57,12 @@ class ShowsController extends Controller
         }
 
         Show::updateEvent($request, $event);
+
+        //Checks to see if dates have been added then updates status to 4
+        if ($event->status < 5 && !$event->isLive() && $event->closingDate && $event->show_times && $event->showtype && $event->closingDate) {
+            $event->update([ 'status' => '4' ]);
+        }
+
         $event = $event->fresh();
         $event->searchable();
     }

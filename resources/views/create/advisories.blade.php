@@ -3,7 +3,7 @@
 @section('created')
     <div class="create-body">
         @include('create.nav')
-        <create-advisories :event="{{$event}}" :loadcontact="{{$contactAdvisories}}" :loadcontent="{{$contentAdvisories}}" :loadmobility="{{$mobilityAdvisories}}" :loadinteractive="{{$interactiveLevels}}"></create-advisories>
+        <create-advisories :event="{{$event}}" :agelimit="{{$agelimit}}" :loadcontact="{{$contactAdvisories}}" :loadcontent="{{$contentAdvisories}}" :loadmobility="{{$mobilityAdvisories}}" :loadinteractive="{{$interactiveLevels}}"></create-advisories>
     </div>
 @endsection
 

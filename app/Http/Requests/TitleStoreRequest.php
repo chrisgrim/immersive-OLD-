@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class TitleUpdateRequest extends FormRequest
+class TitleStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,11 +25,7 @@ class TitleUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 
-                ['required',
-                    Rule::unique('events')
-                    ->ignore($this->id)
-            ]
+            'name' => 'required|max:500|min:1'
         ];
     }
 }

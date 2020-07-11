@@ -41,7 +41,7 @@ class PublishEventsCommand extends Command
     {
         $events = Event::whereNotNull('embargo_date')->get();
         foreach ($events as $event) {
-            if ($event->embargo_date <= Carbon::now() ) {
+            if ($event->embargo_date <= Carbon::now() && $event->status == 'e' ) {
                 $event->update([
                     'status' => 'p',
                 ]);

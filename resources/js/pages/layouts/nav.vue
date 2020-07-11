@@ -16,7 +16,7 @@
                     </div>
                     <div class="nav-menu-item" v-if="user && !user.hasCreatedOrganizers">
                         <a class="menu-link" href="/events/create">
-                            <div>Create Event</div>
+                            <div>Submit Your Experience</div>
                         </a>
                     </div>
                     <div class="nav-menu-item" v-if="user && user.hasCreatedOrganizers">

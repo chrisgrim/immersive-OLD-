@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Event;
 use App\MakeImage;
+use Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Http\Requests\CategoryStoreRequest;
@@ -20,6 +21,7 @@ class CategoryController extends Controller
     {
         $this->middleware(['auth', 'verified'])->except('show');
         $this->middleware('admin')->except('show', 'select', 'fetch', 'add');
+        $this->middleware('can:update,event')->only('add','fetch','select');
     }
     /**
      * Display a listing of the resource.
@@ -113,6 +115,7 @@ class CategoryController extends Controller
      */
     public function select(Event $event)
     {
+        // if ($event->status < 2) { abort(403); }
         $categories = Category::all();
         $event->load('category');
         return view('create.category', compact('event','categories'));
@@ -137,5 +140,10 @@ class CategoryController extends Controller
     public function add(Request $request, Event $event)
     {
         $event->update([ 'category_id' => request('id') ]);
+
+        //Checks to see if category has been selected then updates status to 3
+        if ($event->status < 4 && !$event->isLive() && $event->category_id) {
+            $event->update([ 'status' => '3' ]);
+        }
     }
 }

@@ -4,6 +4,7 @@
             <div class="title">
                 <h2>Physical Contact Advisories</h2>
             </div>
+            <input style="opacity:0;position:absolute;top:0;" autofocus />
             <div class="field">
                 <label class="area">Select physical interaction level with guests</label>
                 <multiselect 
@@ -12,6 +13,7 @@
                 :multiple="true" 
                 placeholder="Choose all that apply"
                 open-direction="bottom"
+                :close-on-select="false"
                 :show-labels="false"
                 :class="{ active: active == 'contact','error': $v.contactAdvisories.$error }"
                 @click="active = 'contact'"
@@ -65,6 +67,7 @@
                 <multiselect 
                 v-model="contentAdvisories" 
                 :show-labels="false"
+                :close-on-select="false"
                 :options="contentAdvisoryOptions"
                 :class="{ active: active == 'content','error': $v.contentAdvisories.$error }"
                 :multiple="true" 
@@ -80,25 +83,27 @@
                 track-by="id">
                 </multiselect>
                 <div v-if="$v.contentAdvisories.$error" class="validation-error">
-                    <p class="error" v-if="!$v.contentAdvisories.required">Must enter a mobility advisory </p>
+                    <p class="error" v-if="!$v.contentAdvisories.required">Must enter a content advisory </p>
                 </div>
             </div>
             <div class="field">
                 <label>Age restriction</label>
                 <multiselect 
-                v-model="advisories.ageRestriction" 
-                :options="ageOptions"
+                v-model="age" 
+                :options="agelimit"
                 :show-labels="false"
                 placeholder="Select the appropriate age group"
                 open-direction="bottom"
-                :class="{ active: active == 'age','error': $v.advisories.ageRestriction.$error }"
+                track="id"
+                label="name"
+                :class="{ active: active == 'age','error': $v.age.$error }"
                 @click="active = 'age'"
                 @blur="active = null"
-                @input="$v.advisories.ageRestriction.$touch"
+                @input="$v.age.$touch"
                 :preselect-first="false">
                 </multiselect>
-                <div v-if="$v.advisories.ageRestriction.$error" class="validation-error">
-                    <p class="error" v-if="!$v.advisories.ageRestriction.required">Required</p>
+                <div v-if="$v.age.$error" class="validation-error">
+                    <p class="error" v-if="!$v.age.required">Required</p>
                 </div>
             </div>
         </section>
@@ -124,6 +129,7 @@
                 :options="mobilityAdvisoryOptions" 
                 :multiple="true" 
                 :show-labels="false"
+                :close-on-select="false"
                 tag-placeholder="Add this as new tag"
                 :taggable="true" 
                 tag-position="bottom"
@@ -155,6 +161,7 @@
                 :multiple="false" 
                 placeholder="Select your events interaction level"
                 open-direction="bottom"
+                :allowEmpty="false"
                 :show-labels="false"
                 :class="{ active: active == 'interactive','error': $v.interactiveLevel.$error }"
                 @click="active = 'interactive'"
@@ -171,7 +178,7 @@
                 </template>
                 </multiselect>
                 <div v-if="$v.interactiveLevel.$error" class="validation-error">
-                    <p class="error" v-if="!$v.interactiveLevel.required">Must choose at least one contact level </p>
+                    <p class="error" v-if="!$v.interactiveLevel.required">Must choose at least one interaction level </p>
                 </div>
             </div>
             <div class="field">
@@ -195,13 +202,13 @@
         </section>
 
         <div class="event-create__submit-button">
-            <button :disabled="disabled" @click.prevent="onSubmit('exit')" class="nav-back-button"> Save and Exit </button>
+            <button :disabled="disabled" @click.prevent="onBackInitial()" class="nav-back-button"> Your events </button>
         </div>
         <div class="create-button__back">
             <button :disabled="disabled" class="create" @click.prevent="onBack('description')"> Back </button>
         </div>
         <div class="create-button__forward">
-            <button :disabled="disabled" class="create" @click.prevent="onSubmit()"> Save and continue </button>
+            <button :disabled="disabled" class="create" @click.prevent="onSubmit('images')"> Save and continue </button>
         </div>
     </div>
 </template>
@@ -218,11 +225,15 @@
 
         components: { Multiselect },
 
-		props: ['event', 'loadcontact', 'loadcontent', 'loadmobility', 'loadinteractive'],
+		props: ['event', 'loadcontact', 'loadcontent', 'loadmobility', 'loadinteractive', 'agelimit'],
 
         computed: {
             endpoint() {
                 return `/create-event/${this.event.slug}/advisories`
+            },
+
+            navSubmit() {
+                return this.$store.state.save
             },
 
             submitObject() {
@@ -232,6 +243,7 @@
                     contentAdvisory : this.contentAdvisories.map(a => a.advisories),
                     mobilityAdvisory : this.mobilityAdvisories.map(a => a.mobilities),
                     interactiveLevel : this.interactiveLevel,
+                    age: this.age,
                 }
             }
         },
@@ -248,7 +260,7 @@
                 mobilityAdvisories: this.event.mobility_advisories ? this.event.mobility_advisories : '',
                 interactiveLevel: this.event.interactivelevel ? this.event.interactivelevel : '',
                 active: null,
-                ageOptions: ['All Ages', '12+', '16+', '18+', '21+'],
+                age:'',
                 disabled: false,
                 serverErrors: [],
 			}
@@ -285,11 +297,11 @@
             },
 
 			onSubmit(value) {
+                console.log(this.submitObject);
 				if (this.checkVuelidate()) { return false };
 				axios.patch(this.endpoint, this.submitObject)
 				.then(res => { 
-                    // console.log(res.data);
-                    value == 'exit' ? this.onBackInitial() : this.onForward('images');
+                    value == 'exit' ? this.onBackInitial() : this.onForward(value);
                 })
 				.catch(err => {
                     this.onErrors(err);
@@ -312,9 +324,20 @@
                     res.data.contentPivots ? this.contentAdvisories = res.data.contentPivots : '';
                     res.data.mobilityPivots ? this.mobilityAdvisories = res.data.mobilityPivots : '';
                     res.data.interactivePivots ? this.interactiveLevel = res.data.interactivePivots : '';
+                    res.data.age ? this.age = res.data.age : '';
                 });
             },
 		},
+
+        watch: {
+            navSubmit() {
+                if (this.event.status < 7 && this.$v.$invalid) {
+                    this.onBack(this.navSubmit);
+                } else {
+                    this.onSubmit(this.navSubmit);
+                }
+            }
+        },
 
         created() {
             this.onLoad();
@@ -322,6 +345,9 @@
 
 
         validations: {
+            age: {
+                required
+            },
         	contactAdvisories: {
         		required
         	},
@@ -335,13 +361,13 @@
                 required
             },
 			advisories: {
-			   	ageRestriction: {
-			       required,
-			   	},
                 sexualDescription: {
                     ifSexual() {
                         return this.advisories.sexual ? this.advisories.sexualDescription ? true : false : true
                     }
+                },
+                wheelchairReady: {
+                    required,
                 },
                 audience: {
                     required,

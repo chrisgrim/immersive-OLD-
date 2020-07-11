@@ -195,7 +195,7 @@
                 return organizer => organizer.thumbImagePath ? this.webp ? `background-image:url('/storage/${organizer.thumbImagePath}')` : `background-image:url('/storage/${organizer.thumbImagePath.slice(0, -4)}jpg')` : `background:${organizer.hexColor}`
             },
             status() {
-                return event => event.status!=='r' ? true : false;
+                return event => event.status !== 'r' ? true : false;
             },
             canView() {
                 return event => event.status == 'p' ? true : false;

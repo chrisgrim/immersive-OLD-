@@ -55,6 +55,10 @@ return [
         'id' => env('ANALYTICS_ID'),
     ],
 
+    'hotjar' => [
+        'id' => env('HOTJAR_ID'),
+    ],
+
 
 
 ];

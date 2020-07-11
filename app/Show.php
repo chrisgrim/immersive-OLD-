@@ -161,7 +161,7 @@ class Show extends Model
             'embargo_date' => $request->embargo_date,
             'closingDate' => $lastDate,
             'showtype' => $request->shows ? 's' : ($request->onGoing ? 'o' : 'a'),
-            'timezone_id' => $request->timezone['id'],
+            'timezone_id' => $request->timezone ? $request->timezone['id'] : null,
         ]);
     }
 }

@@ -9,7 +9,7 @@
 @section('content')
     <div id="bodyArea">
         <div class="approve">
-            <event-show :loadevent="{{$event}}">
+            <event-show :tickets="{{$tickets}}" :loadevent="{{$event}}">
         </div>
         <div class="admin-approval__space">
             

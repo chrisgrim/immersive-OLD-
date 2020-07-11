@@ -3,13 +3,13 @@
         <section class="">
             <div class="listing-details-block">
                 <div class="title">
-                    <h2>Tickets</h2>
+                    <h2>Pricing</h2>
                 </div>
                 <section v-if="event.show_times" class="event-enter-tickets">
                     <div class="field cost">
                         <div class="event-tickets__add">
                             <div class="field">
-                                <label class="area">Add new tickets</label>
+                                <label class="area">Select ticket type</label>
                                 <multiselect 
                                 v-model="selected" 
                                 :show-labels="false"
@@ -17,11 +17,11 @@
                                 :resetAfter="true"
                                 :multiple="false"
                                 :options="ticketOptions"
-                                :class="{ active: active == 'newTicket'}"
-                                tag-placeholder="Add this as new tag"
+                                :class="{ active: active == 'newTicket', 'error': $v.tickets.$error}"
+                                tag-placeholder="Add this as new ticket"
                                 :taggable="true"
                                 tag-position="bottom"
-                                placeholder="Type here to create your own" 
+                                placeholder="Ticket type (type here to create your own)" 
                                 open-direction="bottom"
                                 @tag="addTag"
                                 label="name" 
@@ -30,6 +30,9 @@
                                 @click="active = 'newTicket'"
                                 @blur="active = null">
                                 </multiselect>
+                                <div v-if="$v.tickets.$error" class="validation-error">
+                                    <p class="error" v-if="!$v.tickets.required">Enter at least one ticket type (Select or Type)</p>
+                                </div>
                             </div>
                         </div>
                         <div v-if="tickets.length" class="create-shows__ticket-box">
@@ -43,6 +46,9 @@
                                 <div>
                                      <label>Ticket Price (USD)</label>
                                 </div>
+                                <div>
+                                     <label>Free?</label>
+                                </div>
                             </div>
 
                             <div v-for="(v, index) in $v.tickets.$each.$iter" class="ticket-box__element grid">
@@ -51,7 +57,6 @@
                                     v-model="v.name.$model" 
                                     class="create-input"  
                                     name="name"
-                                    :disabled="locked.includes(v.name.$model) ? true : false"
                                     :class="{ active: active == `${v.name.$model}name`,'error': v.name.$error }"
                                     @click="active = `${v.name.$model}name`; tempErrorName = false"
                                     @blur="active = null"
@@ -74,9 +79,9 @@
                                     :class="{ active: active == `${v.name.$model}des` }"
                                     />
                                 </div>
-                                <div v-if="v.name.$model == 'Free' || v.name.$model == 'PWYC'" class="field">
+                                <div v-if="v.free.$model" class="field">
                                     <div  class="free-ticket__field">
-                                        
+                                        Free
                                     </div>
                                 </div>
                                 <div v-else class="field">
@@ -100,26 +105,51 @@
                                     </div>
                                 </div>
                                 <div class="field">
+                                    <div >
+                                        <input v-model="v.free.$model" type="checkbox" id="select-box">
+                                    </div>
+                                </div>
+                                <div class="field">
                                     <button @click.prevent="deleteRow(index, v)" class="delete-circle">X</button>
                                 </div>
                             </div>
                         </div>
-                        <div class="field">   
-                            <label>Ticket Link (required)</label>
-                            <input 
-                            type="text" 
-                            v-model="ticketUrl"
-                            :class="{ active: active == 'ticket','error': $v.ticketUrl.$error }"
-                            @click="active = 'ticket'"
-                            @blur="active = null"
-                            @input="$v.ticketUrl.$touch"
-                            placeholder="Leave blank if using organizer website url"
-                            />
-                            <div v-if="$v.ticketUrl.$error" class="validation-error">
-                                <p class="error" v-if="!$v.ticketUrl.url"> Must be a url (https://...)</p>
-                                <p class="error" v-if="!$v.ticketUrl.required">Please enter a URL</p>
-                            </div>
-                        </div>
+                        <div style="width:50%">
+                            <div class="field">
+                                <label>Choose your button text (your link for tickets or ticket info)</label>
+                                <multiselect 
+                                v-model="callAction" 
+                                :options="callActionOptions"
+                                :show-labels="false"
+                                :allowEmpty="false"
+                                placeholder="Select call to action"
+                                open-direction="bottom"
+                                :class="{ active: active == 'call' }"
+                                @click="active = 'call'"
+                                @blur="active = null"
+                                :preselect-first="false">
+                                </multiselect>
+                                <div v-if="$v.callAction.$error" class="validation-error">
+                                    <p class="error" v-if="!$v.callAction.required">Must have call to action</p>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>Button link (required)</label>
+                                <input 
+                                type="text" 
+                                v-model="ticketUrl"
+                                :class="{ active: active == 'ticket','error': $v.ticketUrl.$error }"
+                                @click="active = 'ticket'"
+                                @blur="active = null"
+                                @input="$v.ticketUrl.$touch"
+                                placeholder=""
+                                />
+                                <div v-if="$v.ticketUrl.$error" class="validation-error">
+                                    <p class="error" v-if="!$v.ticketUrl.url"> Must be a url (https://...)</p>
+                                    <p class="error" v-if="!$v.ticketUrl.required">Please enter a URL</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </section>
                 <section v-else>
@@ -129,13 +159,13 @@
         </section>
         
          <div class="event-create__submit-button">
-            <button :disabled="disabled" @click.prevent="onSubmit('exit')" class="nav-back-button"> Save and Exit </button>
+            <button :disabled="disabled" @click.prevent="onBackInitial()" class="nav-back-button"> Your events </button>
         </div>
         <div class="create-button__back">
             <button :disabled="disabled" class="create" @click.prevent="onBack('category')"> Back </button>
         </div>
         <div class="create-button__forward">
-            <button :disabled="disabled" class="create" @click.prevent="onSubmit()"> Save and continue </button>
+            <button :disabled="disabled" class="create" @click.prevent="onSubmit('description')"> Save and continue </button>
         </div>
 
     </div>
@@ -162,28 +192,34 @@ export default {
         endpoint() {
             return `/create-event/${this.event.slug}/tickets`
         },
+
+        navSubmit() {
+            return this.$store.state.save
+        },
+
         submitObject() {
             return {
                 'tickets': this.tickets,
                 'ticketUrl': this.ticketUrl,
+                'callAction': this.callAction,
             }
         },
-
-
     },
 
     data() {
         return {
-            tickets: this.event.shows.length && this.event.shows[0].tickets.length ? this.event.shows[0].tickets : [],
+            tickets: [],
             money: this.initializeMoneyObject(),
             ticketOptions: [
-                { id:'', name: 'VIP', ticket_price: '', description: ''},
-                { id:'', name: 'Student', ticket_price: '', description: ''},
-                { id:'', name: 'General', ticket_price: '', description: ''},
-                { id:'', name: 'Free', ticket_price: '', description: ''},
-                { id:'', name: 'PWYC', ticket_price: '', description: ''},
+                { id:'', name: 'General', ticket_price: '', description: '', free:''},
+                { id:'', name: 'Student', ticket_price: '', description: '', free:''},
+                { id:'', name: 'Senior', ticket_price: '', description: '', free:''},
+                { id:'', name: 'VIP', ticket_price: '', description: '', free:''},
+                { id:'', name: 'Pay What You Can', ticket_price: '', description: '', free:''},
             ],
-            locked: ['VIP','Student','General','Free','PWYC'],
+            callAction: this.event.call_to_action,
+            callActionOptions: ['Get Tickets', 'Sign Up', 'Download','Details'],
+            locked: ['VIP','Student','General','PWYC'],
             disabled: false,
             active: null,
             modal: false,
@@ -214,13 +250,13 @@ export default {
                 id: '',
                 name: '',
                 show_id: '',
+                free: false,
                 ticket_amount: '',
                 ticket_price: '',
             }
         },
 
         deleteRow(index, v) {
-            this.ticketOptions.push({name: v.name.$model,ticket_price:0.00, description: '', });
             this.$delete(this.tickets, index) ;
         },
 
@@ -230,6 +266,7 @@ export default {
                 description: '',
                 id: '',
                 ticket_price:0.00,
+                free: false
             }
             this.tickets.push(val);
             this.selected = '';
@@ -239,7 +276,17 @@ export default {
         onLoad() {
             axios.get(this.onFetch('tickets'))
             .then(res => {
-                res.data.tickets ? this.tickets = res.data.tickets[0].tickets : '';
+                // console.log(res.data.tickets[0].tickets);
+                for (var i = 0; i < res.data.tickets[0].tickets.length; i++) {
+                    console.log(res.data.tickets[0].tickets[i].name);
+                    this.tickets.push({
+                        name: res.data.tickets[0].tickets[i].name,
+                        description: res.data.tickets[0].tickets[i].description,
+                        ticket_price: res.data.tickets[0].tickets[i].ticket_price,
+                        free: res.data.tickets[0].tickets[i].ticket_price == 0.00 ? true : false,
+                    })
+                }
+                // res.data.tickets ? this.tickets = res.data.tickets[0].tickets : '';
                 res.data.ticketUrl ? this.ticketUrl = res.data.ticketUrl : '';
             });
         },
@@ -248,23 +295,24 @@ export default {
             let free = ['free', 'pwyc'];
             let previous = [];
             for (var i = 0; i < this.tickets.length; i++) {
-                if (!free.includes(this.tickets[i].name.toLowerCase())) {
-                    if (this.tickets[i].ticket_price == 0.00) {
-                        this.tempErrorPrice = true;
+                if (this.tickets[i].ticket_price == 0.00 && this.tickets[i].free != true) {
+                    this.tempErrorPrice = true;
                         return false;
-                    }
+                }
+                if (this.tickets[i].free) {
+                    this.tickets[i].ticket_price = 0.00;
                 }
                 if (previous.includes(this.tickets[i].name.toLowerCase())) {
                     this.tempErrorName = true;
                     return false;
                 }
                 previous.push(this.tickets[i].name.toLowerCase())
-            }
 
+            }
             if (this.checkVuelidate()) { return false };
             axios.post(this.endpoint, this.submitObject)
             .then(res => {  
-                value == 'exit' || this.exit == true ? this.onBackInitial() : this.onForward('description');
+                value == 'exit' || this.exit == true ? this.onBackInitial() : this.onForward(value);
             })
             .catch(err => { this.onErrors(err) });
         },
@@ -274,7 +322,9 @@ export default {
             const tag = {
                 name: newTag,
                 description: '',
-                ticket_price: '',
+                id: '',
+                ticket_price:0.00,
+                free: false
             }
             this.ticketOptions.push(tag)
             this.tickets.push(tag)
@@ -282,11 +332,24 @@ export default {
 
     },
 
+    watch: {
+        navSubmit() {
+            if (this.event.status < 5 && this.$v.$invalid) {
+                this.onBack(this.navSubmit);
+            } else {
+                this.onSubmit(this.navSubmit);
+            }
+        }
+    },
+
     mounted() {
         this.onLoad();
     },
 
     validations: {
+        callAction: {
+            required
+        },
         ticketUrl: {
            url,
            required,
@@ -297,6 +360,9 @@ export default {
                 name: {
                     required,
                     maxLength: maxLength(30),
+                },
+                free: {
+
                 },
                 ticket_price: {
                     required,

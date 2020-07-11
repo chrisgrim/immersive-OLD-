@@ -128,7 +128,8 @@ class AdminAreaController extends Controller
     public function showApproval(Event $event)
     {
         $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'eventreviews', 'staffpick', 'advisories', 'showOnGoing','interactive_level', 'remotelocations', 'timezone');
-        return view('adminArea.showapproval',compact('event'));
+        $tickets = $event->shows()->first()->tickets()->orderBy('ticket_price')->get();
+        return view('adminArea.showapproval',compact('event','tickets'));
     }
 
      /**
@@ -182,7 +183,7 @@ class AdminAreaController extends Controller
         Mail::to($event->user)->send(new ModeratorComments($ModeratorComment));
 
         $event->update([
-            'status' => 'n',
+            'status' => '9',
         ]);
     }
 
