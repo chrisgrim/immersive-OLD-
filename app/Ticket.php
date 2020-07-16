@@ -22,4 +22,43 @@ class Ticket extends Model
     {
         return $this->morphTo();
     }
+
+    /**
+     * Gets the price Range
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+     */
+    public static function getPriceRange($array, $types)
+    {
+        if(in_array('s', $types)) {
+            $type = 's';
+        }
+        if(in_array('f', $types)) {
+            $type = 'f';
+        }
+        if(in_array('p', $types)) {
+            $type = 'p';
+        }
+        rsort($array);
+        if ($type == 'f') {
+            $first = 'Free';
+        }
+        if ($type == 'p') {
+            $first = 'PWYC';
+        }
+        if ($type == 's') {
+            $first = '$'. last($array);
+        }
+        if (sizeof($array) > 1) {
+            if (in_array('s', $types)) {
+                return $pricerange = $first . ' - ' . '$' . $array[0];
+            } else {
+                return $pricerange = $first;
+            }
+        } else {
+            return $pricerange = $first;
+        }
+    }
+
+
 }

@@ -428,7 +428,8 @@ export default {
                 required
             },
             ticketUrl: {
-                required
+                required,
+                url,
             },
             tickets: {
                 required

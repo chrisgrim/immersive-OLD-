@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Event;
 use App\Show;
 use App\ShowOnGoing;
+use App\Ticket;
 use Carbon\Carbon;
 use App\Http\Requests\TicketStoreRequest;
 
@@ -74,43 +75,11 @@ class TicketsController extends Controller
             ]);
             $array[] = $ticket['ticket_price'];
             $name[] = $ticket['name'];
+            $types[] = $ticket['type']['type'];
         }
 
-        // Using the array create a string called price range for the user to see
-        if (in_array("PWYC", $name)) {
-            rsort($array);
-            if (last($array) == 0) {
-                $first = 'PWYC';
-            } else {
-                $first = '$'. last($array);
-            }
-            if (sizeof($array) > 1) {
-                if ($array[0] == 0) {
-                    $pricerange = $first;
-                } else {
-                     $pricerange = $first . ' - ' . '$' . $array[0];
-                }
-            } else {
-                $pricerange = $first;
-            }
-        } else {
-            rsort($array);
-            if (last($array) == 0) {
-                $first = 'Free';
-            } else {
-                $first = '$'. last($array);
-            }
-            if (sizeof($array) > 1) {
-                if ($array[0] == 0) {
-                    $pricerange = $first;
-                } else {
-                     $pricerange = $first . ' - ' . '$' . $array[0];
-                }
-            } else {
-                $pricerange = $first;
-            }
-        }
-        
+        $pricerange = Ticket::getPriceRange($array, $types);
+
 
         // Add price range string to event
         $event->update([
