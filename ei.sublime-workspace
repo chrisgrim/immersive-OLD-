@@ -526,24 +526,6 @@
 				"buffer_size": 6540,
 				"line_ending": "Unix"
 			}
-		},
-		{
-			"file": "resources/js/pages/adminArea/admin-organizer.vue",
-			"settings":
-			{
-				"buffer_size": 7133,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "resources/js/app.js",
-			"settings":
-			{
-				"buffer_size": 9015,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
 		}
 	],
 	"build_system": "",
@@ -605,17 +587,30 @@
 		"/Users/chrisgrim/code/ei/resources/js/mixins",
 		"/Users/chrisgrim/code/ei/resources/js/pages",
 		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea",
+		"/Users/chrisgrim/code/ei/resources/js/pages/messages",
 		"/Users/chrisgrim/code/ei/resources/sass",
 		"/Users/chrisgrim/code/ei/resources/sass/events",
+		"/Users/chrisgrim/code/ei/resources/views",
+		"/Users/chrisgrim/code/ei/resources/views/events",
 		"/Users/chrisgrim/code/ei/routes"
 	],
 	"file_history":
 	[
+		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/admin-organizer.vue",
+		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-edit.vue",
+		"/Users/chrisgrim/code/ei/.env",
+		"/Users/chrisgrim/code/ei/app/Organizer.php",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/OrganizerController.php",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/AdminOrganizerController.php",
+		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-show.vue",
+		"/Users/chrisgrim/code/ei/resources/views/events/show.blade.php",
+		"/Users/chrisgrim/code/ei/resources/js/pages/create/title.vue",
+		"/Users/chrisgrim/code/ei/resources/js/app.js",
+		"/Users/chrisgrim/code/ei/webpack.js.mix.js",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/tickets.vue",
 		"/Users/chrisgrim/code/ei/resources/sass/events/event-show.scss",
 		"/Users/chrisgrim/code/ei/database/migrations/2020_07_13_171418_add_type_to_tickets_table.php",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/review-event.vue",
-		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-show.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/image.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/advisories.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/shows.vue",
@@ -638,11 +633,9 @@
 		"/Users/chrisgrim/code/ei/app/MakeImage.php",
 		"/Users/chrisgrim/code/ei/app/Ticket.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/EventController.php",
-		"/Users/chrisgrim/code/ei/resources/js/app.js",
 		"/Users/chrisgrim/code/ei/config/image.php",
 		"/Users/chrisgrim/code/ei/resources/js/mixins/form-validation-mixin.js",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/category.vue",
-		"/Users/chrisgrim/code/ei/resources/js/pages/create/title.vue",
 		"/Users/chrisgrim/code/ei/app/Console/Commands/PublishEventsCommand.php",
 		"/Users/chrisgrim/code/ei/resources/sass/slowlayout.scss",
 		"/Users/chrisgrim/code/ei/resources/sass/events/event-edit.scss",
@@ -663,21 +656,18 @@
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/AdminAreaController.php",
 		"/Users/chrisgrim/code/ei/app/Http/Requests/TicketStoreRequest.php",
 		"/Users/chrisgrim/code/ei/routes/web.php",
-		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-edit.vue",
 		"/Users/chrisgrim/code/ei/app/User.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/ConversationsController.php",
 		"/Users/chrisgrim/code/ei/app/Conversation.php",
 		"/Users/chrisgrim/code/ei/resources/views/adminArea/showapproval.blade.php",
 		"/Users/chrisgrim/code/ei/resources/views/create/index.blade.php",
 		"/Users/chrisgrim/code/ei/config/services.php",
-		"/Users/chrisgrim/code/ei/.env",
 		"/Users/chrisgrim/code/ei/resources/js/store/index.js",
 		"/Users/chrisgrim/code/ei/app/Http/Middleware/IsModerator.php",
 		"/Users/chrisgrim/code/ei/app/Http/Kernel.php",
 		"/Users/chrisgrim/code/ei/resources/js/pages/messages/message-show.vue",
 		"/Users/chrisgrim/code/ei/app/Http/Middleware/IsAdmin.php",
 		"/Users/chrisgrim/code/ei/resources/views/create/review.blade.php",
-		"/Users/chrisgrim/code/ei/resources/views/events/show.blade.php",
 		"/Users/chrisgrim/code/ei/resources/views/events/index.blade.php",
 		"/Users/chrisgrim/code/ei/resources/js/pages/events/components/index-item.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/nav.vue",
@@ -733,12 +723,7 @@
 		"/Users/chrisgrim/code/ei/app/ShowOnGoing.php",
 		"/Users/chrisgrim/code/ei/database/migrations/2020_06_17_000108_add_published_at_to_events_table.php",
 		"/Users/chrisgrim/code/ei/database/migrations/2020_06_16_235840_add_published_at_to_events_table.php",
-		"/Users/chrisgrim/code/ei/database/migrations/2020_06_16_235426_add_published_at_to_events_table.php",
-		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-map-search.vue",
-		"/Users/chrisgrim/code/ei/resources/sass/events/event-maps.scss",
-		"/Users/chrisgrim/code/ei/app/Message.php",
-		"/Users/chrisgrim/code/ei/resources/sass/messages/messages-show.scss",
-		"/Users/chrisgrim/code/ei/app/ModeratorComment.php"
+		"/Users/chrisgrim/code/ei/database/migrations/2020_06_16_235426_add_published_at_to_events_table.php"
 	],
 	"find":
 	{
@@ -863,6 +848,15 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"import(",
+			"assets/an",
+			" import(",
+			"import(",
+			" import(",
+			"('",
+			"chunks",
+			"/* webpackChunkName: \"assets/favorite\" */",
+			"\"js",
 			"ticket",
 			"ticket-price",
 			"$v.$touch",
@@ -981,16 +975,7 @@
 			"what you",
 			"/api/admin/search/events",
 			"admin/events/fetch",
-			"asyncGenerateEventList",
-			"eventList",
-			"loadEvents",
-			"searchevents",
-			"search",
-			"price_range",
-			"dateFormat",
-			"dateArray",
-			"dates",
-			"remaining"
+			"asyncGenerateEventList"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -1008,7 +993,7 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -1036,69 +1021,7 @@
 							"syntax": "Packages/PHP/PHP.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 1088.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "resources/js/pages/adminArea/admin-organizer.vue",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 7133,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4122,
-								4122
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/Vuejs Complete Package/vue.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 2625.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "resources/js/app.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 9015,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2995,
-								2995
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 1616.0,
+						"translation.y": 712.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,

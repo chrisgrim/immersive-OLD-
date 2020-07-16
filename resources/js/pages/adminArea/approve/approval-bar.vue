@@ -20,6 +20,9 @@
                     </div>
                 </div>
             </div>
+            <div class="admin-approve-url">
+                <a rel="noreferrer noopener" target="_blank" :href="loadevent.ticketUrl">{{loadevent.ticketUrl}}</a>
+            </div>
             <div class="buttons">
                 <button :class="{bspin : dis}" :disabled="dis" class="create" @click.prevent="goBack()"> Go Back </button>
                 <button :class="{bspin : dis}" :disabled="dis" class="create" @click.prevent="rejected()"> Reject </button>
