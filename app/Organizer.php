@@ -84,7 +84,8 @@ class Organizer extends Model
     public function pastEvents()
     {
         return $this->hasMany(Event::class)
-                    ->whereDate('closingDate', '<', Carbon::today())->where('status', 'p');
+                    ->whereDate('closingDate', '<', Carbon::today())
+                    ->orderBy('created_at', 'ASC');
     }
 
     /**

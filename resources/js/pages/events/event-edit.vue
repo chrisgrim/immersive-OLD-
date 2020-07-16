@@ -34,7 +34,7 @@
                                 </div>
                             </button>
                         </div>
-                        <div v-for="(event, index) in organizer.in_progress_events" :key="event.id" v-if="index < 10" class="edit-event__element">
+                        <div v-for="(event, index) in limitEvents(organizer.in_progress_events)" :key="event.id" class="edit-event__element">
                             <div class="edit-event__buttons">
                                 <a v-if="canView(event)" :href="`/events/${event.slug}`"><button class="edit-event__sub-button">View</button></a>
                                 <a v-if="status(event)" :href="`/create-event/${event.slug}/title`"><button class="edit-event__sub-button">Edit</button></a>
@@ -132,7 +132,7 @@
                         </modal>
                     </tab>
                     <tab title="Past Events" :id="organizer.id + 1" class="event-edit-eventlist grid">
-                        <div :key="event.id" v-for="(event, index) in organizer.past_events" v-if="index < 4" class="edit-event__element">
+                        <div :key="event.id" v-for="(event, index) in limitEvents(organizer.past_events)" class="edit-event__element">
                             <div class="edit-event__buttons">
                                 <a v-if="status(event)" :href="`/events/${event.slug}`"><button class="edit-event__sub-button">View</button></a>
                                 <button v-if="status(event)" @click.prevent="showModal(event, 'delete')" class="edit-event__sub-button">Delete</button>
@@ -184,10 +184,14 @@
                 url: '',
                 activeItem: '',
                 webp: false,
+                limit: 8,
 			}
 		},
 
         computed: {
+            limitEvents() {
+                return event => event ? event.slice(0,this.limit) : event
+            },
             getUrl(event) {
                 return this.events.in_progress_events;
             },
@@ -207,12 +211,7 @@
 			deleteRow(index) {
 				axios.delete(`/events/${this.selectedModal.slug}`)
 	            .then(res => {
-                    // console.log(res);
                     location.reload();
-	                // this.events = response.data;
-	                // this.selectedModal = '';
-	                // this.modal = '';
-                 //    this.loadEvents();
 	            })
 	            .catch(errorResponse => { 
 	            	errorResponse.response.data.errors 

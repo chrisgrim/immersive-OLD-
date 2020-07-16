@@ -128,14 +128,10 @@
 
             deleteOrg(index) {
                 axios.delete(`/organizer/${this.selectedModal.slug}`)
-                .then(response => {
-                    this.events = response.data;
-                    this.selectedModal = '';
-                    this.modal = '';
-                    this.onLoad();
+                .then(res => {
+                   location.reload();
                 })
-                .catch(errorResponse => { 
-                    errorResponse.response.data.errors 
+                .catch(err => { 
                 });
             },
 
@@ -147,7 +143,6 @@
             onLoad() {
                 axios.post('/admin/organizer/fetch', this.pagination)
                 .then(res => {
-                    console.log(res.data);
                     this.initOrganizers = res.data;
                 })
                 .catch(error => { this.serverErrors = error.res.data.errors; });
