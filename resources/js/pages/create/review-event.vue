@@ -104,7 +104,13 @@
                                      <div class="event-show__ticket--name">
                                         <p>{{ticket.name}}</p>
                                     </div>
-                                    <div class="event-show__ticket--price">
+                                    <div v-if="ticket.type == 'f'" class="event-show__ticket--price">
+                                        <p>Free</p>
+                                    </div>
+                                    <div v-else-if="ticket.type == 'p'" class="event-show__ticket--price">
+                                        <p>Pay what you can</p>
+                                    </div>
+                                    <div v-else class="event-show__ticket--price">
                                         <p>{{ticket.ticket_price == 0.00 ? 'Free' : `$${ticket.ticket_price}`}}</p>
                                     </div>
                                 </div>
@@ -582,8 +588,11 @@
 
             onSubmit() {
                 this.disabled = true;
-                axios.get(`/create-event/${this.event.slug}/submit`);
-                window.location.href = `/create-event/${this.event.slug}/thankyou`;
+                axios.get(`/create-event/${this.event.slug}/submit`)
+                .then(res => {
+                   window.location.href = `/create-event/${this.event.slug}/thankyou`;
+                })
+                .catch(err => { this.onErrors(err) });
             },
 
             handleScroll (event) {

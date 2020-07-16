@@ -63,7 +63,7 @@ class LocationController extends Controller
         }
 
         //Checks to see if location has been created then updates status to 2
-        if ($event->status < 3 && !$event->isLive() && ( $event->location_latlon || !$event->hasLocation )) {
+        if ($event->status < 3 && $event->isInProgress() && ( $event->location_latlon || !$event->hasLocation )) {
             $event->update([ 'status' => '2' ]);
         }
 

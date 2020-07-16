@@ -87,7 +87,8 @@ class Show extends Model
                 ],
                 [
                     'description' => $ticket['description'],
-                    'ticket_price' => str_replace('$', '', $ticket['ticket_price'])
+                    'ticket_price' => str_replace('$', '', $ticket['ticket_price']),
+                    'type' => $ticket['type']
                 ]);
             }
         }
@@ -131,7 +132,8 @@ class Show extends Model
                     ],
                     [
                         'description' => $ticket['description'],
-                        'ticket_price' => str_replace('$', '', $ticket['ticket_price'])
+                        'ticket_price' => str_replace('$', '', $ticket['ticket_price']),
+                        'type' => $ticket['type']
                     ]);
                 }
             }

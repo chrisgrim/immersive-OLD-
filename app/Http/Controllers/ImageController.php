@@ -34,14 +34,14 @@ class ImageController extends Controller
      */
     public function store(Request $request, Event $event)
     {
-        if (!$event->isLive()) {
+        if ($event->isInProgress()) {
             MakeImage::saveNewImage($request, $event, 1280, 720, 'event');
         } else {
             MakeImage::updateImage($request, $event, 1280, 720, 'event');
         }
 
         //Checks to see if category has been selected then updates status to 3
-        if (!$event->isLive() && $event->largeImagePath) {
+        if ($event->isInProgress() && $event->largeImagePath) {
             $event->update([ 'status' => '8' ]);
         }
 

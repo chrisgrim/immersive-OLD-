@@ -22,63 +22,63 @@
                 <NavMenuItem 
                 :active="{active : url == `/create-event/${this.event.slug}/title`}" 
                 name="Title" 
-                :iconstatus="this.event.status >= 1 || this.event.status == 'p' || this.event.status == 'e' ? 'completed' : 'uncomplete'">
+                :iconstatus="this.event.status >= 1 || isCompleted ? 'completed' : 'uncomplete'">
                 </NavMenuItem>
             </div>
             <div style="cursor:pointer" @click="urlClick('location', '1')">
                 <NavMenuItem 
                 :active="{active : url == `/create-event/${this.event.slug}/location`}" 
                 name="Location" 
-                :iconstatus="this.event.status >= 2 || this.event.status == 'p' || this.event.status == 'e' ? 'completed' : this.event.status >= 1 ? 'uncomplete' : 'locked'">
+                :iconstatus="this.event.status >= 2 || isCompleted ? 'completed' : this.event.status >= 1 ? 'uncomplete' : 'locked'">
                 </NavMenuItem>
             </div>
             <div style="cursor:pointer" @click="urlClick('category', '2')">
                 <NavMenuItem 
                 :active="{active : url == `/create-event/${this.event.slug}/category`}" 
                 name="Category" 
-                :iconstatus="this.event.status >= 3 || this.event.status == 'p' || this.event.status == 'e' ? 'completed' : this.event.status >= 2 ? 'uncomplete' : 'locked'">
+                :iconstatus="this.event.status >= 3 || isCompleted ? 'completed' : this.event.status >= 2 ? 'uncomplete' : 'locked'">
                 </NavMenuItem>
             </div>
             <div style="cursor:pointer" @click="urlClick('shows', '3')">
                 <NavMenuItem 
                 :active="{active : url == `/create-event/${this.event.slug}/shows`}" 
                 name="Dates and Times" 
-                :iconstatus="this.event.status >= 4 || this.event.status == 'p' || this.event.status == 'e' ? 'completed' : this.event.status >= 3 ? 'uncomplete' : 'locked'">
+                :iconstatus="this.event.status >= 4 || isCompleted ? 'completed' : this.event.status >= 3 ? 'uncomplete' : 'locked'">
                 </NavMenuItem>
             </div>
             <div style="cursor:pointer" @click="urlClick('tickets', '4')">
                 <NavMenuItem 
                 :active="{active : url == `/create-event/${this.event.slug}/tickets`}" 
-                name="Tickets" 
-                :iconstatus="this.event.status >= 5 || this.event.status == 'p' || this.event.status == 'e' ? 'completed' : this.event.status >= 4 ? 'uncomplete' : 'locked'">
+                name="Pricing" 
+                :iconstatus="this.event.status >= 5 || isCompleted ? 'completed' : this.event.status >= 4 ? 'uncomplete' : 'locked'">
                 </NavMenuItem>
             </div>
             <div style="cursor:pointer" @click="urlClick('description', '5')">
                 <NavMenuItem 
                 :active="{active : url == `/create-event/${this.event.slug}/description`}" 
                 name="Description" 
-                :iconstatus="this.event.status >= 6 || this.event.status == 'p' || this.event.status == 'e' ? 'completed' : this.event.status >= 5 ? 'uncomplete' : 'locked'">
+                :iconstatus="this.event.status >= 6 || isCompleted ? 'completed' : this.event.status >= 5 ? 'uncomplete' : 'locked'">
                 </NavMenuItem>
             </div>
             <div style="cursor:pointer" @click="urlClick('advisories', '6')">
                 <NavMenuItem 
                 :active="{active : url == `/create-event/${this.event.slug}/advisories`}" 
                 name="Advisories" 
-                :iconstatus="this.event.status >= 7 || this.event.status == 'p' || this.event.status == 'e' ? 'completed' : this.event.status >= 6 ? 'uncomplete' : 'locked'">
+                :iconstatus="this.event.status >= 7 || isCompleted ? 'completed' : this.event.status >= 6 ? 'uncomplete' : 'locked'">
                 </NavMenuItem>
             </div>
             <div style="cursor:pointer" @click="urlClick('images', '7')">
                 <NavMenuItem 
                 :active="{active : url == `/create-event/${this.event.slug}/images`}" 
                 name="Image" 
-                :iconstatus="this.event.status >= 8 || this.event.status == 'p' || this.event.status == 'e' ? 'completed' : this.event.status >= 7 ? 'uncomplete' : 'locked'">
+                :iconstatus="this.event.status >= 8 || isCompleted ? 'completed' : this.event.status >= 7 ? 'uncomplete' : 'locked'">
                 </NavMenuItem>
             </div>
             <div v-if="cantReview" style="cursor:pointer" @click="urlClick('review', '8')">
                 <NavMenuItem 
                 :active="{active : url == `/create-event/${this.event.slug}/review`}" 
                 name="Final Review" 
-                :iconstatus="this.event.status >= 8 || this.event.status == 'p' || this.event.status == 'e' ? 'uncomplete' : 'locked'">
+                :iconstatus="this.event.status >= 8 || isCompleted ? 'uncomplete' : 'locked'">
                 </NavMenuItem>
             </div>
            
@@ -106,6 +106,9 @@
         computed: {
             backUrl() {
                 return this.user.hasCreatedOrganizers  ? '/create-event/edit' : '/'
+            },
+            isCompleted() {
+                return this.event.status == 'p' || this.event.status == 'e' || this.event.status == 'r' ? true : false
             },
         },
         data() {

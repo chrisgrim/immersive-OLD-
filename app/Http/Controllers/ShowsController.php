@@ -59,7 +59,7 @@ class ShowsController extends Controller
         Show::updateEvent($request, $event);
 
         //Checks to see if dates have been added then updates status to 4
-        if ($event->status < 5 && !$event->isLive() && $event->closingDate && $event->show_times && $event->showtype && $event->closingDate) {
+        if ($event->status < 5 && $event->isInProgress() && $event->closingDate && $event->show_times && $event->showtype && $event->closingDate) {
             $event->update([ 'status' => '4' ]);
         }
 

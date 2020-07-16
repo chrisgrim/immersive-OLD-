@@ -55,7 +55,7 @@ class EventTitleController extends Controller
         ]);
 
         //Checks to see if category has been selected then updates status to 3
-        if ($event->status < 2 && !$event->isLive() && $event->name) {
+        if ($event->status < 2 && $event->isInProgress() && $event->name) {
             $event->update([ 'status' => '1' ]);
         }
         

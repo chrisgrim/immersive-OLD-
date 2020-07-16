@@ -1,46 +1,50 @@
 <template>
-	<div class="event-create__location grid">
-		<section class="event-enter-location">
+    <div class="event-create__location grid">
+        <section class="event-enter-location">
             <div class="title">
                 <h2>Location</h2>
             </div>
             <div class="field">
                 <label> Does your event have a physical location? </label>
                 <div id="cover">
-                    <input v-model="hasLocation" type="checkbox" id="checkbox">
+                    <input  @input="$v.select.$touch" v-model="hasLocation" type="checkbox" id="checkbox">
                     <div id="bar"></div>
                     <div id="knob">
                         <p v-if="hasLocation">Yes</p>
                         <p v-else>No</p>
                     </div>
                 </div>
-            </div>
+            </div>
             <div v-show="hasLocation">
                 <div class="field">
                     <label> Is your location hidden? </label>
                     <div id="cover">
-                        <input v-model="location.hiddenLocationToggle" type="checkbox" id="checkbox">
+                        <input  @input="$v.location.hiddenLocationToggle.$touch" v-model="location.hiddenLocationToggle" type="checkbox" id="checkbox">
                         <div id="bar"></div>
                         <div id="knob">
                             <p v-if="location.hiddenLocationToggle">Yes</p>
                             <p v-else="location.hiddenLocationToggle">No</p>
                         </div>
                     </div>
-                </div>
-                <div class="field" v-if="location.hiddenLocationToggle">
+                </div>
+                <div class="field" v-if="location.hiddenLocationToggle">
                     <label> We still need your address so that users searching for this event can see the general area. They will not see the specific street address. </label>
                      <label> Please enter how participants will be notified of the location. (Required) </label>
-                    <textarea 
-                    v-model.trim="location.hiddenLocation" 
-                    rows="4" 
-                    :class="{ active: active == 'hidden'}"
-                    required 
-                    autofocus
+                    <textarea 
+                    v-model.trim="location.hiddenLocation" 
+                    rows="4" 
+                    :class="{ active: active == 'hidden', 'error': $v.location.hiddenLocation.$error }"
+                    required 
+                    autofocus
                     placeholder="...the night before you will receieve an email containing the location..."
                     @click="active = 'hidden'"
                     @blur="active = null"
+                    @input="$v.location.hiddenLocation.$touch"
                     />
-                </div>
+                    <div v-if="$v.location.hiddenLocation.$error" class="validation-error">
+                        <p class="error" v-if="!$v.location.hiddenLocation.ifHidden">Please let our readers know how they will be informed</p>
+                    </div>
+                </div>
                 <div class="field">
                     <label> Event Location </label>
                     <input 
@@ -74,6 +78,7 @@
                     :taggable="true" 
                     tag-position="bottom"
                     :class="{ active: active == 'remote','error': $v.remoteLocations.$error}"
+                    @input="$v.remoteLocations.$touch"
                     @tag="addTag"
                     @click="active = 'remote'"
                     @blur="active = null"
@@ -91,6 +96,7 @@
                     placeholder="eg. Sign on 10 minutes early..."
                     :class="{ active: active == 'description'}"
                     @click="active = 'description'"
+                    @input="$v.description.$touch"
                     @blur="active = null" 
                     rows="8"></textarea>
                 </div>
@@ -122,62 +128,52 @@
         <div class="event-create__submit-button">
             <button :disabled="disabled" @click.prevent="onBackInitial()" class="nav-back-button"> Your events </button>
         </div>
-		<div class="create-button__back">
+        <div class="create-button__back">
             <button :disabled="disabled" class="create" @click.prevent="onBack('title')"> Back </button>
         </div>
         <div class="create-button__forward">
             <button :disabled="disabled" class="create" @click.prevent="onSubmit('category')"> Save and Continue </button>
         </div>
-    </div>
+    </div>
 </template>
 
 <script>
     import CubeSpinner  from '../layouts/loading.vue'
     import googleLocationMixin from './components/google-location-mixin'
     import formValidationMixin from '../../mixins/form-validation-mixin'
-	import Multiselect from 'vue-multiselect'
-	import { required, minLength, requiredIf } from 'vuelidate/lib/validators'
-	import {LMap, LTileLayer, LMarker} from 'vue2-leaflet'
+    import Multiselect from 'vue-multiselect'
+    import { required, minLength, requiredIf } from 'vuelidate/lib/validators'
+    import {LMap, LTileLayer, LMarker} from 'vue2-leaflet'
     import _ from 'lodash'
-
-	export default {
-		props: ['event', 'remote'],
-
+    export default {
+        props: ['event', 'remote'],
         mixins: [googleLocationMixin, formValidationMixin],
-
-		components: { Multiselect, LMap, LTileLayer, LMarker, CubeSpinner },
-
-		computed: {
-			locationPlaceholder() {
-				return this.location.postal_code || this.location.city ? (this.location.home ? this.location.home + ' ' : '') 
+        components: { Multiselect, LMap, LTileLayer, LMarker, CubeSpinner },
+        computed: {
+            locationPlaceholder() {
+                return this.location.postal_code || this.location.city ? (this.location.home ? this.location.home + ' ' : '') 
                 + (this.location.street ? this.location.street + ', ' : '') 
                 + (this.location.city ? this.location.city + ', ' : '') 
                 + (this.location.country ? this.location.country : '') 
                 : 'Enter full address ';
-			},
-
+            },
             remoteLocationArray() {
                 let data; 
                 return data = {remote: this.remoteLocations.map(a => a.name), description: this.description};
             },
-
             endpoint() {
                 return `/create-event/${this.event.slug}/location`
             },
-
             corsEndpoint() {
                 return `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/geocode/json?address=${this.location.postal_code ? this.location.postal_code : this.location.city}&key=AIzaSyBxpUKfSJMC4_3xwLU73AmH-jszjexoriw`
             },
-
             navSubmit() {
                 return this.$store.state.save
             },
-
-		},
-
-		data() {
-			return {
-				location: this.initializeLocationObject(),
+        },
+        data() {
+            return {
+                location: this.initializeLocationObject(),
                 map: this.initializeMapObject(),
                 active: null,
                 disabled: false,
@@ -188,25 +184,23 @@
                 description: this.event.remote_description ? this.event.remote_description : '',
                 serverErrors: [],
                 loading: false,
-			}
-		},
-
-		methods: {
-			initializeLocationObject() {
-				return {
-					street:  '',
-	                city:  '',
-	               	region: '',
-	                country: '',
-	               	postal_code: '',
-	                hiddenLocation: '',
-	 				hiddenLocationToggle: 0,
-	                latitude: '',
-	               	longitude: '',
+            }
+        },
+        methods: {
+            initializeLocationObject() {
+                return {
+                    street:  '',
+                    city:  '',
+                    region: '',
+                    country: '',
+                    postal_code: '',
+                    hiddenLocation: '',
+                    hiddenLocationToggle: 0,
+                    latitude: '',
+                    longitude: '',
                     home: '',
-				}
-			},
-
+                }
+            },
             initializeMapObject() {
                 return {
                     zoom:14,
@@ -216,22 +210,20 @@
                     allowZoom: false,
                 }
             },
-			
-			onSubmit(value) {
-				if (this.checkVuelidate()) { return false };
+            
+            onSubmit(value) {
+                if (this.checkVuelidate()) { return false };
                 return this.location.hiddenLocationToggle && this.hasLocation ? this.onCorsSubmit(value) : this.onNormalSubmit(value);
-			},
-
+            },
             onNormalSubmit(value) {
                 axios.patch( this.endpoint, this.hasLocation ? this.location : this.remoteLocationArray )
-                .then(res => {  
+                .then(res => {  
                     value == 'exit' ? this.onBackInitial() : this.onForward(value);
                 })
                 .catch(err => {
                     this.onErrors(err);
                 });
             },
-
             onCorsSubmit(value) {
                 this.loading = true;
                 axios.get(this.corsEndpoint)
@@ -239,7 +231,7 @@
                     this.location.latitude = res.data.results[0].geometry.location.lat;
                     this.location.longitude = res.data.results[0].geometry.location.lng;
                 })
-                .then(res => {  
+                .then(res => {  
                     axios.patch (this.endpoint, this.location )     
                     value == 'exit' ? this.onBackInitial() : this.onForward('category');
                 })
@@ -247,18 +239,15 @@
                     this.onErrors(err);
                 });
             },
-
             updateEventFields(input) {
                 if ((input !== null) && (typeof input === "object") && (input.id !== null)) {
                     this.location = _.pick(input, _.intersection( _.keys(this.location), _.keys(input) ));
                 };
                 this.location.latitude ? this.map.center = L.latLng(this.location.latitude, this.location.longitude) : '';
             },
-
             handleResize() {
                 this.pageHeight = `height:calc(${window.innerHeight}px - 7rem)`;
             },
-
             addTag (newTag) {
                 const tag = {
                     name: newTag,
@@ -267,21 +256,19 @@
                 this.remoteLocationOptions.push(tag)
                 this.remoteLocations.push(tag)
             },
-
             onLoad() {
                 axios.get(this.onFetch('location'))
                 .then(res => {
                     this.updateEventFields(res.data.location);
                 });
             },
-		},
-	
+        },
+    
         created() {
             this.onLoad();
             window.addEventListener('resize', this.handleResize)
             this.handleResize();
         },
-
         watch: {
             navSubmit() {
                 if (this.event.status < 2 && this.$v.$invalid) {
@@ -291,7 +278,6 @@
                 }
             }
         },
-
         mounted() {
             this.autocomplete = new google.maps.places.Autocomplete(
                 (this.$refs.autocomplete),
@@ -300,32 +286,41 @@
             this.autocomplete.addListener('place_changed', this.setPlace);
             this.updateEventFields(this.event.location);
         },
-
         destroyed() {
             window.removeEventListener('resize', this.handleResize);
         },
-
-		validations: {
+        validations: {
             description: {
 
             },
-			location: {
-			 	latitude: {
+            location: {
+                latitude: {
                     ifLocation() { 
                         return this.hasLocation ? this.location.latitude ? true : false : true
                     },
-			 	},
+                },
                 city: {
                     ifLocation() { 
                         return this.hasLocation ? this.location.city ? true : false : true
                     },
+                },
+                hiddenLocationToggle: {
+
+                },
+                hiddenLocation: {
+                    ifHidden() {
+                        return this.location.hiddenLocationToggle ? this.location.hiddenLocation ? true : false : true
+                    }
                 }
-			},
+            },
             remoteLocations: {
                 ifNoLocation() {
                     return !this.hasLocation ? this.remoteLocations.length ? true : false : true
                 }
             },
-		},
+            select: {
+
+            }
+        },
     };
 </script>

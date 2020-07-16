@@ -29,7 +29,7 @@
                     }
             },
             "image":"/storage/{{$event->largeImagePath}}",
-            "description": "{{$event->description}}",
+            "description": "{{$event->tag_line ? $event->tag_line : $event->description}}",
             "offers": {
                 "@type": "Offer",
                 "url": "{{$event->ticketUrl}}",
@@ -64,7 +64,7 @@
                     "url": "{{$event->websiteUrl ? $event->websiteUrl : ($event->ticketUrl ? $event->ticketUrl : Request::url())}}"
                 },
             "image":"/storage/{{$event->largeImagePath}}",
-            "description": "{{$event->description}}",
+            "description": "{{$event->tag_line ? $event->tag_line : $event->description}}",
             "offers": {
                 "@type": "Offer",
                 "url": "{{$event->ticketUrl ? $event->ticketUrl : ($event->websiteUrl ? $event->websiteUrl : Request::url())}}",
@@ -84,11 +84,11 @@
     
     <title>{{$event->name}}</title>
     <link rel="canonical" href="{{url()->current()}}">
-    <meta name="description" content="{{$event->tag_line}}"/>
+    <meta name="description" content="{{$event->tag_line ? $event->tag_line : $event->description}}"/>
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="event" />
     <meta property="og:title" content="{{$event->title}}" />
-    <meta property="og:description" content="{{$event->description}}" />
+    <meta property="og:description" content="{{$event->tag_line ? $event->tag_line : $event->description}}" />
     <meta property="og:url" content="{{url()->current()}}" />
     <meta property="og:site_name" content="{{config('app.name')}}" />
     <meta property="article:publisher" content="https://www.facebook.com/webfxinc" />
@@ -101,7 +101,7 @@
     <meta property="og:image:width" content="1280" />
     <meta property="og:image:height" content="720" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:description" content="{{$event->description}}" />
+    <meta name="twitter:description" content="{{$event->tag_line ? $event->tag_line : $event->description}}" />
     <meta name="twitter:title" content="{{$event->name}}" />
     <meta name="twitter:site" content="@everythingimmersive" />
     <meta name="twitter:image" content="{{ url('/') }}/storage/{{$event->largeImagePath}}" />

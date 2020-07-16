@@ -4,6 +4,82 @@
 		"selected_items":
 		[
 			[
+				"des",
+				"description"
+			],
+			[
+				"hi",
+				"hiddenLocation"
+			],
+			[
+				"hid",
+				"hiddenLocationToggle"
+			],
+			[
+				"ag",
+				"ageRestriction"
+			],
+			[
+				"sex",
+				"sexualDescription"
+			],
+			[
+				"Wheel",
+				"wheelchairReady"
+			],
+			[
+				"de",
+				"descriptionLength"
+			],
+			[
+				"name",
+				"nameEmpty"
+			],
+			[
+				"pri",
+				"priceLength"
+			],
+			[
+				"nam",
+				"nameEmpty"
+			],
+			[
+				"price",
+				"priceEmpty"
+			],
+			[
+				"pric",
+				"priceLength"
+			],
+			[
+				"eror",
+				"errorPrice"
+			],
+			[
+				"error",
+				"errorPrice"
+			],
+			[
+				"va",
+				"validator"
+			],
+			[
+				"tick",
+				"ticketTypeOptions"
+			],
+			[
+				"ib",
+				"initializeTicketObject"
+			],
+			[
+				"rem",
+				"remotelocations"
+			],
+			[
+				"hiddenlo",
+				"hiddenLocationToggle"
+			],
+			[
 				"load",
 				"loading"
 			],
@@ -72,10 +148,6 @@
 				"ticketUrl"
 			],
 			[
-				"tick",
-				"ticketUrl"
-			],
-			[
 				"if",
 				"ifOnDemand"
 			],
@@ -100,16 +172,8 @@
 				"background\tproperty"
 			],
 			[
-				"rem",
-				"remaining"
-			],
-			[
 				"time",
 				"timezone"
-			],
-			[
-				"pri",
-				"pricerange"
 			],
 			[
 				"defau",
@@ -134,10 +198,6 @@
 			[
 				"to",
 				"toLowerCase"
-			],
-			[
-				"price",
-				"ticket_price"
 			],
 			[
 				"sel",
@@ -360,10 +420,6 @@
 				"background-position\tproperty"
 			],
 			[
-				"sex",
-				"sexualDescription"
-			],
-			[
 				"text-a",
 				"text-align\tproperty"
 			],
@@ -456,110 +512,35 @@
 				"contactAdvisories"
 			],
 			[
-				"des",
-				"description"
-			],
-			[
 				"gen",
 				"genreName"
-			],
-			[
-				"fre",
-				"freeTicket"
-			],
-			[
-				"date",
-				"dateArray"
-			],
-			[
-				"em",
-				"embargoDate"
-			],
-			[
-				"z",
-				"z-index\tproperty"
-			],
-			[
-				"long",
-				"longitude"
-			],
-			[
-				"hi",
-				"hiddenLocationToggle"
-			],
-			[
-				"lo",
-				"location"
-			],
-			[
-				"remote",
-				"remoteLocationArray"
-			],
-			[
-				"server",
-				"serverErrors"
-			],
-			[
-				"disa",
-				"disabled"
-			],
-			[
-				"tag",
-				"tagLine"
-			],
-			[
-				"req",
-				"request"
-			],
-			[
-				"su",
-				"submitAlways"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "resources/js/pages/create/shows.vue",
+			"file": "routes/web.php",
 			"settings":
 			{
-				"buffer_size": 26652,
+				"buffer_size": 6540,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "resources/js/pages/adminArea/admin-organizer.vue",
+			"settings":
+			{
+				"buffer_size": 7133,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "resources/js/pages/events/event-show.vue",
+			"file": "resources/js/app.js",
 			"settings":
 			{
-				"buffer_size": 33757,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "resources/js/pages/create/review-event.vue",
-			"settings":
-			{
-				"buffer_size": 31882,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "resources/js/pages/create/nav.vue",
-			"settings":
-			{
-				"buffer_size": 7692,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "resources/js/pages/create/tickets.vue",
-			"settings":
-			{
-				"buffer_size": 16014,
+				"buffer_size": 9015,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -618,60 +599,64 @@
 		"/Users/chrisgrim/code/ei/app",
 		"/Users/chrisgrim/code/ei/app/Http",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers",
-		"/Users/chrisgrim/code/ei/app/Http/Requests",
 		"/Users/chrisgrim/code/ei/database",
 		"/Users/chrisgrim/code/ei/resources",
 		"/Users/chrisgrim/code/ei/resources/js",
 		"/Users/chrisgrim/code/ei/resources/js/mixins",
 		"/Users/chrisgrim/code/ei/resources/js/pages",
-		"/Users/chrisgrim/code/ei/resources/js/pages/create",
-		"/Users/chrisgrim/code/ei/resources/js/pages/events",
+		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea",
 		"/Users/chrisgrim/code/ei/resources/sass",
-		"/Users/chrisgrim/code/ei/resources/views",
-		"/Users/chrisgrim/code/ei/resources/views/create"
+		"/Users/chrisgrim/code/ei/resources/sass/events",
+		"/Users/chrisgrim/code/ei/routes"
 	],
 	"file_history":
 	[
-		"/Users/chrisgrim/code/ei/app/Event.php",
-		"/Users/chrisgrim/code/ei/resources/js/mixins/form-validation-mixin.js",
-		"/Users/chrisgrim/code/ei/resources/js/pages/create/category.vue",
-		"/Users/chrisgrim/code/ei/resources/js/pages/create/shows.vue",
-		"/Users/chrisgrim/code/ei/resources/js/pages/create/location-google.vue",
-		"/Users/chrisgrim/code/ei/resources/js/pages/create/title.vue",
+		"/Users/chrisgrim/code/ei/resources/js/pages/create/tickets.vue",
+		"/Users/chrisgrim/code/ei/resources/sass/events/event-show.scss",
+		"/Users/chrisgrim/code/ei/database/migrations/2020_07_13_171418_add_type_to_tickets_table.php",
+		"/Users/chrisgrim/code/ei/resources/js/pages/create/review-event.vue",
+		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-show.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/image.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/advisories.vue",
-		"/Users/chrisgrim/code/ei/resources/js/pages/create/description.vue",
-		"/Users/chrisgrim/code/ei/resources/js/pages/create/tickets.vue",
+		"/Users/chrisgrim/code/ei/resources/js/pages/create/shows.vue",
+		"/Users/chrisgrim/code/ei/resources/js/pages/create/location-google.vue",
 		"/Users/chrisgrim/code/ei/sftp-config.json",
+		"/Users/chrisgrim/code/ei/resources/sass/create/shows.scss",
+		"/Users/chrisgrim/code/ei/resources/js/pages/create/nav.vue",
+		"/Users/chrisgrim/code/ei/app/Event.php",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/DescriptionController.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/AdvisoriesController.php",
+		"/Users/chrisgrim/code/ei/app/Policies/EventPolicy.php",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/ImageController.php",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/ShowsController.php",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/TicketsController.php",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/CategoryController.php",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/LocationController.php",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/EventTitleController.php",
+		"/Users/chrisgrim/code/ei/app/Show.php",
+		"/Users/chrisgrim/code/ei/resources/js/pages/create/description.vue",
+		"/Users/chrisgrim/code/ei/app/MakeImage.php",
+		"/Users/chrisgrim/code/ei/app/Ticket.php",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/EventController.php",
+		"/Users/chrisgrim/code/ei/resources/js/app.js",
+		"/Users/chrisgrim/code/ei/config/image.php",
+		"/Users/chrisgrim/code/ei/resources/js/mixins/form-validation-mixin.js",
+		"/Users/chrisgrim/code/ei/resources/js/pages/create/category.vue",
+		"/Users/chrisgrim/code/ei/resources/js/pages/create/title.vue",
 		"/Users/chrisgrim/code/ei/app/Console/Commands/PublishEventsCommand.php",
 		"/Users/chrisgrim/code/ei/resources/sass/slowlayout.scss",
 		"/Users/chrisgrim/code/ei/resources/sass/events/event-edit.scss",
 		"/Users/chrisgrim/code/ei/app/AgeLimit.php",
 		"/Users/chrisgrim/code/ei/resources/views/create/advisories.blade.php",
 		"/Users/chrisgrim/code/ei/app/Http/Requests/AdvisoryStoreRequest.php",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/TicketsController.php",
 		"/Users/chrisgrim/code/ei/database/migrations/2020_07_09_224536_add_age_limits_id_to_events.php",
 		"/Users/chrisgrim/code/ei/database/migrations/2020_07_09_224029_create_age_limits_table.php",
 		"/Users/chrisgrim/code/ei/database/migrations/2020_07_09_222030_add_call_to_action_to_events.php",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/ShowsController.php",
-		"/Users/chrisgrim/code/ei/app/Show.php",
-		"/Users/chrisgrim/code/ei/resources/js/pages/create/review-event.vue",
 		"/Users/chrisgrim/code/ei/resources/sass/create/image.scss",
 		"/Users/chrisgrim/code/ei/resources/js/pages/layouts/nav.vue",
-		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-show.vue",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/EventTitleController.php",
 		"/Users/chrisgrim/code/ei/resources/sass/components/multiselect.scss",
-		"/Users/chrisgrim/code/ei/resources/js/pages/create/nav.vue",
 		"/Users/chrisgrim/code/ei/app/Http/Requests/TitleStoreRequest.php",
-		"/Users/chrisgrim/code/ei/resources/sass/create/shows.scss",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/LocationController.php",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/ImageController.php",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/CategoryController.php",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/EventController.php",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/DescriptionController.php",
 		"/Users/chrisgrim/code/ei/resources/sass/create/layout.scss",
-		"/Users/chrisgrim/code/ei/app/Policies/EventPolicy.php",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/review.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/events/components/event-edit-item.vue",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/AdminAreaEventsController.php",
@@ -682,17 +667,13 @@
 		"/Users/chrisgrim/code/ei/app/User.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/ConversationsController.php",
 		"/Users/chrisgrim/code/ei/app/Conversation.php",
-		"/Users/chrisgrim/code/ei/config/image.php",
 		"/Users/chrisgrim/code/ei/resources/views/adminArea/showapproval.blade.php",
-		"/Users/chrisgrim/code/ei/app/MakeImage.php",
 		"/Users/chrisgrim/code/ei/resources/views/create/index.blade.php",
 		"/Users/chrisgrim/code/ei/config/services.php",
 		"/Users/chrisgrim/code/ei/.env",
-		"/Users/chrisgrim/code/ei/resources/js/app.js",
 		"/Users/chrisgrim/code/ei/resources/js/store/index.js",
 		"/Users/chrisgrim/code/ei/app/Http/Middleware/IsModerator.php",
 		"/Users/chrisgrim/code/ei/app/Http/Kernel.php",
-		"/Users/chrisgrim/code/ei/resources/sass/events/event-show.scss",
 		"/Users/chrisgrim/code/ei/resources/js/pages/messages/message-show.vue",
 		"/Users/chrisgrim/code/ei/app/Http/Middleware/IsAdmin.php",
 		"/Users/chrisgrim/code/ei/resources/views/create/review.blade.php",
@@ -727,7 +708,6 @@
 		"/Users/chrisgrim/code/ei/resources/js/pages/events/components/filter-remote.vue",
 		"/Users/chrisgrim/Library/Application Support/Sublime Text 3/Packages/User/SFTP.errors.log",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/organizer.vue",
-		"/Users/chrisgrim/code/ei/app/Ticket.php",
 		"/Users/chrisgrim/code/ei/resources/views/create/ticket.blade.php",
 		"/Users/chrisgrim/code/ei/resources/sass/adminarea/nav.scss",
 		"/Users/chrisgrim/code/ei/resources/js/store/mutations.js",
@@ -758,8 +738,7 @@
 		"/Users/chrisgrim/code/ei/resources/sass/events/event-maps.scss",
 		"/Users/chrisgrim/code/ei/app/Message.php",
 		"/Users/chrisgrim/code/ei/resources/sass/messages/messages-show.scss",
-		"/Users/chrisgrim/code/ei/app/ModeratorComment.php",
-		"/Users/chrisgrim/code/ei/resources/views/adminArea/stats.blade.php"
+		"/Users/chrisgrim/code/ei/app/ModeratorComment.php"
 	],
 	"find":
 	{
@@ -884,6 +863,40 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"ticket",
+			"ticket-price",
+			"$v.$touch",
+			"wheel",
+			"wheelchairReady",
+			"this.event.advisories",
+			"age",
+			"this.event.status == 'p' || this.event.status == 'e'",
+			"this.tickets[i]",
+			"organizer",
+			"name",
+			"price",
+			"lodash",
+			"errorPrice",
+			"name",
+			"na,e",
+			"name",
+			"items",
+			"        // ini_set('memory_limit','512M');\n",
+			"        // Image::configure(array('driver' => 'imagick'));\n",
+			"ini_set('gd.jpeg_ignore_warning', 1);",
+			"// Image::configure(array('driver' => 'imagick'));",
+			"touch",
+			"toch",
+			"1024",
+			"res.data.tickets[0].tickets[i]",
+			"ticket",
+			"free",
+			"call",
+			"free",
+			"review",
+			"call_to_action",
+			"$v.showTimes.$touch",
+			"<div",
 			"ticketUrl",
 			"validation",
 			"validation-error",
@@ -977,41 +990,7 @@
 			"dateFormat",
 			"dateArray",
 			"dates",
-			"remaining",
-			"[],\n",
-			"timezeone",
-			"event.timezone.description",
-			"showTimes",
-			"p",
-			"audience",
-			"400",
-			"isreview",
-			"class=\"st0\"",
-			"v-if",
-			"span",
-			"2",
-			"test",
-			"},",
-			"margin: 2rem 0rem 1rem 0rem;",
-			".field",
-			".field input",
-			".field",
-			"input",
-			"maxprice",
-			"minValue",
-			"startswith",
-			"value.name",
-			"name",
-			"test",
-			"'ticket'",
-			"test",
-			"'description'",
-			"{",
-			"dirty",
-			"showTimes",
-			"group.description",
-			"price",
-			"ticket_price"
+			"remaining"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -1029,109 +1008,16 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 2,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "resources/js/pages/create/shows.vue",
+					"file": "routes/web.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 26652,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								16794,
-								16794
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/Vuejs Complete Package/vue.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "resources/js/pages/events/event-show.vue",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 33757,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								15485,
-								15570
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/Vuejs Complete Package/vue.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "resources/js/pages/create/review-event.vue",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 31882,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								13496,
-								13496
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/Vuejs Complete Package/vue.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 5681.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "resources/js/pages/create/nav.vue",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 7692,
+						"buffer_size": 6540,
 						"regions":
 						{
 						},
@@ -1147,30 +1033,30 @@
 							"incomplete_sync": null,
 							"remote_loading": false,
 							"synced": false,
-							"syntax": "Packages/Vuejs Complete Package/vue.tmLanguage"
+							"syntax": "Packages/PHP/PHP.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 3290.0,
+						"translation.y": 1088.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "resources/js/pages/create/tickets.vue",
+					"buffer": 1,
+					"file": "resources/js/pages/adminArea/admin-organizer.vue",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 16014,
+						"buffer_size": 7133,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								8173,
-								8173
+								4122,
+								4122
 							]
 						],
 						"settings":
@@ -1181,10 +1067,41 @@
 							"syntax": "Packages/Vuejs Complete Package/vue.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 2625.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "resources/js/app.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9015,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2995,
+								2995
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 1616.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
 					"type": "text"
 				}
 			]

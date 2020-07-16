@@ -34,16 +34,24 @@
             </div>
             <div class="field">
                 <label> Is there sexual content? </label>
-                <div id="cover">
-                    <input v-model="advisories.sexual" type="checkbox" id="checkbox">
-                    <div id="bar"></div>
-                    <div id="knob">
-                        <p v-if="advisories.sexual">Yes</p>
-                        <p v-else="advisories.sexual">No</p>
-                    </div>
-                </div>
+                <multiselect 
+                v-model="advisories.sexual" 
+                :options="options"
+                :show-labels="false"
+                placeholder="Choose one"
+                label="name"
+                open-direction="bottom"
+                :class="{ active: active == 'sexual','error': $v.advisories.sexual.$error }"
+                @click="active = 'sexual'"
+                @blur="active = null"
+                @input="$v.advisories.sexual.$touch"
+                :preselect-first="false">
+                </multiselect>
+                <div v-if="$v.advisories.sexual.$error" class="validation-error">
+                    <p class="error" v-if="!$v.advisories.sexual.required">Required</p>
+                </div>
             </div>
-            <div v-if="advisories.sexual">
+            <div v-if="advisories.sexual && advisories.sexual.type">
                 <div class="field">
                     <label class="area"> Explain more about the sexual content </label>
                     <textarea 
@@ -74,11 +82,12 @@
                 tag-placeholder="Add this as new tag"
                 :taggable="true" 
                 tag-position="bottom"
-                placeholder="Type here to create your own" 
+                placeholder="Select from list or enter your own" 
                 open-direction="bottom"
                 @tag="addContentTag"
                 @click="active = 'content'"
-                @blur="active = null"
+                @blur="active = null"
+                @input="$v.contactAdvisories.$touch"
                 label="advisories"
                 track-by="id">
                 </multiselect>
@@ -113,15 +122,23 @@
             </div>
             <div class="field">
                 <label> Is the Event Wheel Chair Accessible? </label>
-                <div id="cover">
-                    <input v-model="advisories.wheelchairReady" type="checkbox" id="checkbox">
-                    <div id="bar"></div>
-                    <div id="knob">
-                        <p v-if="advisories.wheelchairReady">Yes</p>
-                        <p v-else="advisories.wheelchairReady">No</p>
-                    </div>
-                </div>
-            </div>
+                <multiselect 
+                v-model="advisories.wheelchairReady" 
+                :options="options"
+                :show-labels="false"
+                placeholder="Choose one"
+                label="name"
+                open-direction="bottom"
+                :class="{ active: active == 'wheel','error': $v.advisories.wheelchairReady.$error }"
+                @click="active = 'wheel'"
+                @blur="active = null"
+                @input="$v.advisories.wheelchairReady.$touch"
+                :preselect-first="false">
+                </multiselect>
+                <div v-if="$v.advisories.wheelchairReady.$error" class="validation-error">
+                    <p class="error" v-if="!$v.advisories.wheelchairReady.required">Required</p>
+                </div>
+            </div>
             <div class="field">
                 <label class="area">Select any mobility restrictions</label>
                 <multiselect 
@@ -133,7 +150,7 @@
                 tag-placeholder="Add this as new tag"
                 :taggable="true" 
                 tag-position="bottom"
-                placeholder="Type here to create your own" 
+                placeholder="Select from list or enter your own" 
                 open-direction="bottom"
                 :class="{ active: active == 'mobility','error': $v.mobilityAdvisories.$error }"
                 @tag="addMobilityTag"
@@ -159,7 +176,7 @@
                 v-model="interactiveLevel" 
                 :options="interactiveLevelOptions" 
                 :multiple="false" 
-                placeholder="Select your events interaction level"
+                placeholder="Select your event's interaction level"
                 open-direction="bottom"
                 :allowEmpty="false"
                 :show-labels="false"
@@ -238,7 +255,14 @@
 
             submitObject() {
                 return {
-                    advisories: this.advisories,
+                    advisories: {
+                        contactAdvisories: this.advisories.contactAdvisories,
+                        sexual: this.advisories.sexual.type,
+                        sexualDescription: this.advisories.sexualDescription,
+                        wheelchairReady: this.advisories.wheelchairReady.type,
+                        ageRestriction: this.advisories.ageRestriction,
+                        audience: this.advisories.audience,
+                    },
                     contactAdvisory :   this.contactAdvisories.map(a => a.id),
                     contentAdvisory : this.contentAdvisories.map(a => a.advisories),
                     mobilityAdvisory : this.mobilityAdvisories.map(a => a.mobilities),
@@ -260,6 +284,7 @@
                 mobilityAdvisories: this.event.mobility_advisories ? this.event.mobility_advisories : '',
                 interactiveLevel: this.event.interactivelevel ? this.event.interactivelevel : '',
                 active: null,
+                options: [{ name: 'Yes', type: true },{ name: 'No', type: false }],
                 age:'',
                 disabled: false,
                 serverErrors: [],
@@ -270,9 +295,9 @@
 			initializeAdvisoriesObject() {
 				return {
 					contactAdvisories: this.event.advisories ? this.event.advisories.contactAdvisories : '',
-					sexual: this.event.advisories.sexual ? this.event.advisories.sexual : false,
+					sexual: [],
 					sexualDescription: this.event.advisories ? this.event.advisories.sexualDescription : '',
-					wheelchairReady: this.event.advisories.wheelchairReady ? this.event.advisories.wheelchairReady : false,
+					wheelchairReady: [],
 					ageRestriction: this.event.advisories ? this.event.advisories.ageRestriction : '',
                     audience: this.event.advisories ? this.event.advisories.audience : '',
 				}
@@ -297,7 +322,6 @@
             },
 
 			onSubmit(value) {
-                console.log(this.submitObject);
 				if (this.checkVuelidate()) { return false };
 				axios.patch(this.endpoint, this.submitObject)
 				.then(res => { 
@@ -312,8 +336,12 @@
                 if ((input !== null) && (typeof input === "object") && (input.id !== null)) {
                     this.advisories = _.pick(input, _.intersection( _.keys(this.advisories), _.keys(input) ));
                 }
-                this.advisories.wheelchairReady ? '' : this.advisories.wheelchairReady = false;
-                this.advisories.sexual ? '' : this.advisories.sexual = false;
+                if (this.advisories.wheelchairReady != null) {
+                    this.advisories.wheelchairReady ? this.advisories.wheelchairReady = { name: 'Yes', type: true } : this.advisories.wheelchairReady = { name: 'No', type: false };
+                }
+                if (this.advisories.sexual != null) {
+                    this.advisories.sexual ? this.advisories.sexual = { name: 'Yes', type: true } : this.advisories.sexual = { name: 'No', type: false };
+                }
             },
 
             onLoad() {
@@ -363,7 +391,7 @@
 			advisories: {
                 sexualDescription: {
                     ifSexual() {
-                        return this.advisories.sexual ? this.advisories.sexualDescription ? true : false : true
+                        return this.advisories.sexual.type ? this.advisories.sexualDescription ? true : false : true
                     }
                 },
                 wheelchairReady: {
@@ -371,6 +399,9 @@
                 },
                 audience: {
                     required,
+                },
+                sexual: {
+                    required
                 }
 			},	
 		},

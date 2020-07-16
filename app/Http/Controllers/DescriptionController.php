@@ -54,7 +54,7 @@ class DescriptionController extends Controller
         $event->storeDescription($request, $event);
 
         //Checks to see if description has been sgored then updates status to 6
-        if ( $event->status < 7 && !$event->isLive() && $event->genres()->exists() && $event->description ) {
+        if ( $event->status < 7 && $event->isInProgress() && $event->genres()->exists() && $event->description ) {
             $event->update([ 'status' => '6' ]);
         }
     }

@@ -9,7 +9,7 @@
                     <div class="field cost">
                         <div class="event-tickets__add">
                             <div class="field">
-                                <label class="area">Select ticket type</label>
+                                <label class="area">Let our users know your ticket pricing</label>
                                 <multiselect 
                                 v-model="selected" 
                                 :show-labels="false"
@@ -21,10 +21,11 @@
                                 tag-placeholder="Add this as new ticket"
                                 :taggable="true"
                                 tag-position="bottom"
-                                placeholder="Ticket type (type here to create your own)" 
+                                placeholder="Ticket class (type here to create your own)" 
                                 open-direction="bottom"
                                 @tag="addTag"
-                                label="name" 
+                                label="name"
+                                @input="$v.selected.$touch"
                                 track-by="name"
                                 @select="pushTicket"
                                 @click="active = 'newTicket'"
@@ -38,79 +39,99 @@
                         <div v-if="tickets.length" class="create-shows__ticket-box">
                             <div class="ticket-box__element grid">
                                 <div>
-                                     <label>Ticket Type</label>
+                                    <label>Ticket Class</label>
                                 </div>
                                 <div>
-                                     <label>Ticket Description (optional)</label>
+                                    <label>Ticket Description (optional)</label>
                                 </div>
                                 <div>
-                                     <label>Ticket Price (USD)</label>
+                                    <label>Type (free, etc...)</label>
                                 </div>
                                 <div>
-                                     <label>Free?</label>
+                                    <label>Ticket Price ($)</label>
                                 </div>
                             </div>
 
-                            <div v-for="(v, index) in $v.tickets.$each.$iter" class="ticket-box__element grid">
+                            <div v-for="(ticket, index) in tickets" class="ticket-box__element grid">
                                 <div class="field">
                                     <input 
-                                    v-model="v.name.$model" 
+                                    v-model="ticket.name" 
                                     class="create-input"  
                                     name="name"
-                                    :class="{ active: active == `${v.name.$model}name`,'error': v.name.$error }"
-                                    @click="active = `${v.name.$model}name`; tempErrorName = false"
+                                    @input="$v.selected.$touch"
+                                    :class="{ active: active == `name${index}`, error: ticket.errors.nameLength || ticket.errors.nameEmpty || ticket.errors.nameRepeat}"
+                                    @click="active = `name${index}`"
+                                    @keydown="reset"
                                     @blur="active = null"
                                     placeholder="ex: General, VIP, Student"
                                     />
-                                    <div v-if="v.name.$error" class="validation-error">
-                                        <p class="error" v-if="!v.name.required">Must enter a ticket name</p>
-                                        <p class="error" v-if="!v.name.maxLength">Name is too Long</p>
-                                    </div>
-                                    <div v-if="tempErrorName" class="validation-error">
-                                        <p class="error">Cant have same name</p>
+                                    <div v-if="ticket.errors.nameLength || ticket.errors.nameRepeat || ticket.errors.nameEmpty" class="validation-error">
+                                        <p v-if="ticket.errors.nameLength" class="error">Name is too long</p>
+                                        <p v-if="ticket.errors.nameRepeat" class="error">No duplicate names</p>
+                                        <p v-if="ticket.errors.nameEmpty" class="error">Name is required</p>
                                     </div>
                                 </div>
                                 <div class="field">
                                     <input 
-                                    v-model="v.description.$model"
-                                    @click="active = `${v.name.$model}des`"
+                                    v-model="ticket.description"
+                                    @input="reset"
+                                    @click="active = `description${index}`"
+                                    :class="{ active: active == `description${index}`, error: ticket.errors.descriptionLength}"
                                     @blur="active = null"
                                     placeholder="optional"
-                                    :class="{ active: active == `${v.name.$model}des` }"
                                     />
+                                    <div v-if="ticket.errors.descriptionLength"  class="validation-error">
+                                        <p v-if="ticket.errors.descriptionLength" class="error">Description is too long</p>
+                                    </div>
                                 </div>
-                                <div v-if="v.free.$model" class="field">
+                                <div class="field">
+                                    <multiselect 
+                                    v-model="ticket.type" 
+                                    :options="ticketTypeOptions"
+                                    track-by="type"
+                                    label="name"
+                                    :allowEmpty="false"
+                                    :show-labels="false"
+                                    open-direction="bottom"
+                                    class="ticket-type-selection"
+                                    :searchable="false"
+                                    :class="{ active: active == 'type' }"
+                                    @click="active = 'type'"
+                                    @blur="active = null"
+                                    @input="$v.selected.$touch"
+                                    :preselect-first="false">
+                                    </multiselect>
+                                </div>
+                                <div v-if="ticket.type.type == 'f'" class="field">
                                     <div  class="free-ticket__field">
                                         Free
                                     </div>
                                 </div>
+                                <div v-else-if="ticket.type.type == 'p'" class="field">
+                                    <div  class="free-ticket__field">
+                                        PWYC
+                                    </div>
+                                </div>
                                 <div v-else class="field">
                                     <input 
-                                    v-model="v.ticket_price.$model"
+                                    v-model="ticket.ticket_price"
                                     v-money="money"
-                                    @click="active = `${v.name.$model}price`; tempErrorPrice = false"
+                                    :class="{ active: active == `price${index}`, error: ticket.errors.priceLength || ticket.errors.priceEmpty }"
+                                    @click="active = `price${index}`"
                                     @blur="active = null"
+                                    @keyup="reset"
                                     placeholder="$0.00"
                                     v-bind="money"
-                                    :class="{ active: active == `${v.name.$model}price`,'error': v.$error, 'error' : tempErrorPrice }"
                                     @keydown="$event.key === '-' ? $event.preventDefault() : null"
                                     style="text-align: right" 
                                     />
-                                    <div v-if="v.$error" class="validation-error">
-                                        <p class="error" v-if="!v.ticket_price.maxLength">Please enter an amount under $10,000</p>
-                                        <p class="error" v-if="!v.ticket_price.required">Please enter a price</p>
-                                    </div>
-                                    <div v-if="tempErrorPrice" class="validation-error">
-                                        <p class="error">Please enter a price</p>
-                                    </div>
+                                    <div v-if="ticket.errors.priceLength || ticket.errors.priceEmpty" class="validation-error">
+                                        <p v-if="ticket.errors.priceEmpty" class="error">Can't be zero</p>
+                                        <p v-if="ticket.errors.priceLength" class="error">Price is too big</p>
+                                    </div>
                                 </div>
                                 <div class="field">
-                                    <div >
-                                        <input v-model="v.free.$model" type="checkbox" id="select-box">
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <button @click.prevent="deleteRow(index, v)" class="delete-circle">X</button>
+                                    <button @click.prevent="deleteRow(index, ticket)" class="delete-circle">X</button>
                                 </div>
                             </div>
                         </div>
@@ -126,7 +147,8 @@
                                 open-direction="bottom"
                                 :class="{ active: active == 'call' }"
                                 @click="active = 'call'"
-                                @blur="active = null"
+                                @blur="active = null"
+                                @input="$v.callAction.$touch"
                                 :preselect-first="false">
                                 </multiselect>
                                 <div v-if="$v.callAction.$error" class="validation-error">
@@ -140,8 +162,8 @@
                                 v-model="ticketUrl"
                                 :class="{ active: active == 'ticket','error': $v.ticketUrl.$error }"
                                 @click="active = 'ticket'"
+                                @input="$v.ticketUrl.$touch"
                                 @blur="active = null"
-                                @input="$v.ticketUrl.$touch"
                                 placeholder=""
                                 />
                                 <div v-if="$v.ticketUrl.$error" class="validation-error">
@@ -211,15 +233,20 @@ export default {
             tickets: [],
             money: this.initializeMoneyObject(),
             ticketOptions: [
-                { id:'', name: 'General', ticket_price: '', description: '', free:''},
-                { id:'', name: 'Student', ticket_price: '', description: '', free:''},
-                { id:'', name: 'Senior', ticket_price: '', description: '', free:''},
-                { id:'', name: 'VIP', ticket_price: '', description: '', free:''},
-                { id:'', name: 'Pay What You Can', ticket_price: '', description: '', free:''},
+                { id:'', name: 'General', ticket_price: '', description: '', type:this.initializeTypeObject()},
+                { id:'', name: 'Student', ticket_price: '', description: '', type:this.initializeTypeObject()},
+                { id:'', name: 'Senior', ticket_price: '', description: '', type:this.initializeTypeObject()},
+                { id:'', name: 'VIP', ticket_price: '', description: '', type:this.initializeTypeObject()},
+                { id:'', name: 'Free', ticket_price: '', description: '', type: {name: 'free',type:'f'}},
+                { id:'', name: 'PWYC', ticket_price: '', description: '', type: {name: 'pwyc',type:'p'}},
+            ],
+            ticketTypeOptions: [
+                { name: 'normal', type:'s'},
+                { name: 'free', type:'f'},
+                { name: 'pwyc', type:'p'},
             ],
             callAction: this.event.call_to_action,
             callActionOptions: ['Get Tickets', 'Sign Up', 'Download','Details'],
-            locked: ['VIP','Student','General','PWYC'],
             disabled: false,
             active: null,
             modal: false,
@@ -227,7 +254,7 @@ export default {
             exit: false,
             selected: '',
             tempErrorName: false,
-            tempErrorPrice: false,
+            temperrors: false,
             ticketUrl: this.event.ticketUrl ? this.event.ticketUrl : '',
         }
     },
@@ -250,9 +277,35 @@ export default {
                 id: '',
                 name: '',
                 show_id: '',
-                free: false,
+                type: this.initializeTypeObject(),
                 ticket_amount: '',
                 ticket_price: '',
+                errors: this.initializeErrorObject(),
+            }
+        },
+
+        initializeTypeObject() {
+            return {
+                name: 'normal',
+                type:'s',
+            }
+        },
+
+
+        initializeErrorObject() {
+            return {
+                priceLength: false,
+                priceEmpty: false,
+                nameLength: false,
+                nameEmpty: false,
+                nameRepeat: false,
+                descriptionLength:false,
+                // { name:'priceLength', type:'price', hasError: false},
+                // { name:'priceEmpty', type:'price', hasError: false},
+                // { name:'nameEmpty', type:'name', hasError: false},
+                // { name:'nameLength', type:'name', hasError: false},
+                // { name: 'nameRepeat', type:'name', hasError: false }, 
+                // { name: 'descriptionLength', type:'description', hasError: false }, 
             }
         },
 
@@ -266,44 +319,66 @@ export default {
                 description: '',
                 id: '',
                 ticket_price:0.00,
-                free: false
+                type: value.type,
+                errors: this.initializeErrorObject()
             }
             this.tickets.push(val);
             this.selected = '';
             _.remove(this.ticketOptions, {name: value.name});
         },
 
+        reset() {
+            _.forEach(this.tickets, (ticket) => {ticket.errors = {priceLength: false,priceEmpty: false,nameLength: false, nameEmpty: false, nameRepeat: false, descriptionLength:false};
+            })
+            this.$v.selected.$touch();
+        },
+
         onLoad() {
             axios.get(this.onFetch('tickets'))
             .then(res => {
-                // console.log(res.data.tickets[0].tickets);
                 for (var i = 0; i < res.data.tickets[0].tickets.length; i++) {
-                    console.log(res.data.tickets[0].tickets[i].name);
+                    let tic = res.data.tickets[0].tickets[i];
                     this.tickets.push({
-                        name: res.data.tickets[0].tickets[i].name,
-                        description: res.data.tickets[0].tickets[i].description,
-                        ticket_price: res.data.tickets[0].tickets[i].ticket_price,
-                        free: res.data.tickets[0].tickets[i].ticket_price == 0.00 ? true : false,
+                        name: tic.name,
+                        description: tic.description,
+                        ticket_price: tic.ticket_price,
+                        type: _.find(this.ticketTypeOptions, { 'type': tic.type }),
+                        errors: this.initializeErrorObject()
                     })
                 }
-                // res.data.tickets ? this.tickets = res.data.tickets[0].tickets : '';
                 res.data.ticketUrl ? this.ticketUrl = res.data.ticketUrl : '';
             });
         },
 
         onSubmit(value) {
-            let free = ['free', 'pwyc'];
             let previous = [];
             for (var i = 0; i < this.tickets.length; i++) {
-                if (this.tickets[i].ticket_price == 0.00 && this.tickets[i].free != true) {
-                    this.tempErrorPrice = true;
+                let tic = this.tickets[i];
+                if (tic.ticket_price == 0.00 && tic.type.type == 's') {
+                    tic.errors.priceEmpty = true;
                         return false;
                 }
-                if (this.tickets[i].free) {
-                    this.tickets[i].ticket_price = 0.00;
+                if (tic.ticket_price.length > 7 && tic.type.type == 's') {
+                    tic.errors.priceLength = true;
+                        return false;
+                }
+                if (tic.type.type == 'f' || tic.type.type == 'p') {
+                    tic.ticket_price = 0.00;
+                }
+                if (tic.name.length > 18) {
+                    tic.errors.nameLength = true;
+                        return false;
+                }
+                if (tic.name.length == 0) {
+                    tic.errors.nameEmpty = true;
+                        return false;
+                }
+                if (tic.description && tic.description.length > 50) {
+                    tic.errors.descriptionLength = true;
+                        return false;
                 }
                 if (previous.includes(this.tickets[i].name.toLowerCase())) {
-                    this.tempErrorName = true;
+                    this.tickets[i].errors.nameRepeat = true;
                     return false;
                 }
                 previous.push(this.tickets[i].name.toLowerCase())
@@ -318,13 +393,13 @@ export default {
         },
 
         addTag (newTag) {
-            
             const tag = {
                 name: newTag,
                 description: '',
                 id: '',
                 ticket_price:0.00,
-                free: false
+                errors: this.initializeErrorObject(),
+                type: this.initializeTypeObject(),
             }
             this.ticketOptions.push(tag)
             this.tickets.push(tag)
@@ -339,40 +414,60 @@ export default {
             } else {
                 this.onSubmit(this.navSubmit);
             }
-        }
+        },
+
     },
 
     mounted() {
         this.onLoad();
     },
 
-    validations: {
-        callAction: {
-            required
-        },
-        ticketUrl: {
-           url,
-           required,
-        },
-        tickets: {
-            required,
-            $each: {
-                name: {
-                    required,
-                    maxLength: maxLength(30),
-                },
-                free: {
+    validations () {
+        return {
+            callAction: {
+                required
+            },
+            ticketUrl: {
+                required
+            },
+            tickets: {
+                required
+            },
+            selected: {
 
-                },
-                ticket_price: {
-                    required,
-                    maxLength: maxLength(7),
-                },
-                description: {
-                   maxLength: maxLength(60),
-                },
             }
-        },
-    }
+        }
+    },
+
+    // validations: {
+    //     callAction: {
+    //         required
+    //     },
+    //     ticketUrl: {
+    //        url,
+    //        required,
+    //     },
+    //     tickets: {
+    //         required,
+    //         $each: {
+    //             name: {
+    //                 required,
+    //                 maxLength: maxLength(30),
+    //             },
+    //             type: {
+    //                 type: {
+    //                     required
+    //                 }
+    //             },
+    //             ticket_price: {
+    //                 required,
+    //                 maxLength: maxLength(7),
+    //             },
+    //             description: {
+    //                maxLength: maxLength(60),
+    //             },
+    //         }
+    //     },
+    // }
 }  
 </script>

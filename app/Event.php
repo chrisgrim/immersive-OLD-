@@ -111,8 +111,8 @@ class Event extends Model
     *
     * @return bool
     */
-    public function isLive() {
-        return $this->status == 'p' || $this->status == 'e';
+    public function isInProgress() {
+        return $this->status != 'r' && $this->status != 'p' && $this->status != 'e';
     }
 
     /**

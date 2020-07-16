@@ -112,7 +112,7 @@
                 <div class="event-show__description">
                     <p style="white-space: pre-wrap;" class="text">{{ descriptionText }}<span class="show-text" 
                         v-if="!fullDescription" @click="fullDescription = !fullDescription">... Show More</span>
-                        <span class="show-text"v-if="fullDescription && event.description.length >= 400" @click="fullDescription = !fullDescription">... Show Less </span>
+                        <span class="show-text" v-if="fullDescription && event.description.length >= 400" @click="fullDescription = !fullDescription">... Show Less </span>
                     </p>
                 </div>
             </div>
@@ -132,7 +132,13 @@
                                      <div class="event-show__ticket--name">
                                         <p>{{ticket.name}}</p>
                                     </div>
-                                    <div class="event-show__ticket--price">
+                                    <div v-if="ticket.type == 'f'" class="event-show__ticket--price">
+                                        <p>Free</p>
+                                    </div>
+                                    <div v-else-if="ticket.type == 'p'" class="event-show__ticket--price">
+                                        <p>Pay what you can</p>
+                                    </div>
+                                    <div v-else class="event-show__ticket--price">
                                         <p>{{ticket.ticket_price == 0.00 ? 'Free' : `$${ticket.ticket_price}`}}</p>
                                     </div>
                                 </div>
@@ -184,7 +190,7 @@
                     <p>{{event.timezone ? event.timezone.description : ''}}</p>
                     <p style="white-space: pre-wrap;" class="text">{{ showtimesText }}<span class="show-text" 
                         v-if="!fullShowtimes" @click="fullShowtimes = !fullShowtimes">... Show More</span>
-                        <span class="show-text"v-if="fullShowtimes && event.show_times.length >= 160" @click="fullShowtimes = !fullShowtimes">... Show Less </span>
+                        <span class="show-text" v-if="fullShowtimes && event.show_times.length >= 160" @click="fullShowtimes = !fullShowtimes">... Show Less </span>
                     </p>
                 </div>
             </div>
@@ -395,7 +401,7 @@
                 </a>
                 <div style="white-space: pre-wrap;" v-if="event.organizer.description" class="description">
                     <span style="white-space: pre-wrap;" class="text">{{organizerText}}<span class="show-text" v-if="!fullOrganizer" @click="fullOrganizer = !fullOrganizer">... Show More</span>
-                        <span class="show-text" v-else @click="fullOrganizer = !fullOrganizer">... Show Less </span>
+                        <span class="show-text" v-if="fullOrganizer && event.organizer.description.length >= 160" @click="fullOrganizer = !fullOrganizer">... Show Less </span>
                     </span>
                 </div>
                 <ContactOrganizer :user="user" :loadorganizer="event.organizer"></ContactOrganizer>
@@ -468,7 +474,7 @@
                         <h3>{{location.name}}</h3>
                         <p>{{location.description}}</p>
                     </div>
-                    <div v-if="event.remote_description">
+                    <div style="white-space: pre-wrap;" v-if="event.remote_description">
                         <p>{{event.remote_description}}</p>
                     </div>
                 </div>

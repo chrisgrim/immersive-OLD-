@@ -32,6 +32,6 @@ class EventPolicy
      */
     public function finalize(User $user, Event $event)
     {
-        return ( $event->status !== 'p' || $event->status !== 'r' ) && $event->user_id == $user->id && $event->status >= 8 || $user->type == 'a';
+        return $event->status != 'p' && $event->status != 'r' && $event->status != 'e' && $event->user_id == $user->id && $event->status >= 8 || $user->type == 'a';
     }
 }

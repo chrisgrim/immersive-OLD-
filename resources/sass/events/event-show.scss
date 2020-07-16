@@ -98,7 +98,7 @@ section.event-show {
     border-bottom: 1px solid #ebebeb;
     position: relative;
     & p {
-        line-height: 3rem;
+        line-height: 2.2rem;
     }
 }
 section .event-title {
@@ -157,13 +157,13 @@ section .event-title {
 }
 
 .event-show__ticket--price p {
-    font-size: 2.5rem;
+    font-size: 1.5rem;
     font-weight: 300;
     line-height: auto
 }
 
 .event-show__ticket--description p{
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 300;
     margin: 0;
     padding: 0;

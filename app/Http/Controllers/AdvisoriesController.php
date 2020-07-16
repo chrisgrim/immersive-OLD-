@@ -62,7 +62,7 @@ class AdvisoriesController extends Controller
         ]);
 
         //Checks to see if advisories has been selected then updates status to 7
-        if ( $event->status < 8 && !$event->isLive() && $event->contactlevels()->exists() && $event->interactive_level()->exists() && $event->contentadvisories()->exists() && $event->mobilityadvisories()->exists() && $event->advisories_id ) {
+        if ( $event->status < 8 && $event->isInProgress() && $event->contactlevels()->exists() && $event->interactive_level()->exists() && $event->contentadvisories()->exists() && $event->mobilityadvisories()->exists() && $event->advisories_id ) {
             $event->update([ 'status' => '7' ]);
         }
 

@@ -8,6 +8,7 @@ use App\Category;
 use App\Organizer;
 use App\StaffPick;
 use Session;
+use Log;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
@@ -167,9 +168,12 @@ class EventController extends Controller
 
     public function submitEvent(Event $event) 
     {
+        Log::info('User is trying to Submit Event');
         $this->authorize('finalize', $event);
+        Log::info('User was authorized');
         $event->update(['status' => 'r',]);
         $event->finalizeEvent($event);
+        Log::info('User was able to submit event');
     }
 
     public function thanks(Event $event)

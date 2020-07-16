@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="field">
-                <label>Project tag line (optional)</label>
+                <label>Project tag line (optional but recommended)</label>
                 <input 
                 type="text" 
                 v-model="title.tagLine"
@@ -34,7 +34,7 @@
                 @input="$v.title.tagLine.$touch()"
                 @click="active = 'tag'"
                 @blur="active = 'null'"
-                placeholder="Quick, one sentence line to get the audience hooked!"
+                placeholder="Quick blurb describing the event to get the audience hooked!"
                 />
                 <div v-if="$v.title.tagLine.$error" class="validation-error">
                     <p class="error" v-if="!$v.title.tagLine.maxLength">The tag line is too long.</p>

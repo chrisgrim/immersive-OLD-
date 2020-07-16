@@ -23,13 +23,13 @@
                     </div>
                     <div style="margin-top:1rem;">
                         <p>Must be at least 800 x 450</p>
-                        <p>Needs to be under 6mb</p>
+                        <p>Needs to be under 10mb</p>
                     </div>
                 </label>
                 <div>
                     <div v-if="$v.imageFile.$error" class="validation-error image">
                         <p class="error" v-if="!$v.imageFile.required">The image is required</p>
-                        <p class="error" v-if="!$v.imageFile.fileSize">The image file size is over 6mb</p>
+                        <p class="error" v-if="!$v.imageFile.fileSize">The image file size is over 10mb</p>
                         <p class="error" v-if="!$v.imageFile.fileType">The image needs to be a JPG, PNG or GIF</p>
                         <p class="error" v-if="!$v.imageFile.imageRatio">The image needs to be at least 800 x 450</p>
                     </div>
@@ -155,7 +155,7 @@
             imageFile: {
                 required,
                 fileSize() { 
-                    return this.imageFile ? this.imageFile.file.size < 6291456 : true 
+                    return this.imageFile ? this.imageFile.file.size < 10485760 : true 
                 },
                 fileType() {
                     return this.imageFile ? ['image/jpeg','image/png','image/gif'].includes(this.imageFile.file.type) : true

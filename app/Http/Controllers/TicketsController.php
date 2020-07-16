@@ -51,13 +51,15 @@ class TicketsController extends Controller
             $show->tickets()->whereNotIn('name', $ticketname)->delete();
 
             //  goes through and updates or creates new tickets for each show 
+
             foreach ($request->tickets as $ticket) {
                  $show->tickets()->updateOrCreate([
                     'name' => $ticket['name'],
                 ],
                 [
                     'description' => $ticket['description'],
-                    'ticket_price' => str_replace('$', '', $ticket['ticket_price'])
+                    'ticket_price' => str_replace('$', '', $ticket['ticket_price']),
+                    'type' => $ticket['type']['type']
                 ]);
             }
         };
@@ -118,7 +120,7 @@ class TicketsController extends Controller
         ]);
 
         //Checks to see if category has been selected then updates status to 3
-        if ( $event->status < 6 && !$event->isLive() && $event->price_range && $event->ticketUrl ) {
+        if ( $event->status < 6 && $event->isInProgress() && $event->price_range && $event->ticketUrl ) {
             $event->update([ 'status' => '5' ]);
         }
 

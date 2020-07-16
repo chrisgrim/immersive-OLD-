@@ -8,7 +8,7 @@
                 <input style="opacity:0;position:absolute;top:0;" autofocus />
                 <div class="show-type-selection">
                     <div class="field">
-                        <label class="area">Select physical interaction level with guests</label>
+                        <label> Select all show dates</label>
                         <multiselect 
                         v-model="showType" 
                         :options="showTypeOptions" 
@@ -22,7 +22,8 @@
                         @click="active = 'type'"
                         @blur="active = null"
                         label="name" 
-                        track-by="id" 
+                        track-by="id"
+                        @input="$v.showType.$touch"
                         :preselect-first="false">
                         <template slot="option" slot-scope="props">
                             <div class="option__desc">
@@ -45,7 +46,7 @@
                                     :config="calendarConfig"
                                     ref="datePicker"                                              
                                     class="form-control"
-                                    placeholder="Select date"               
+                                    placeholder="Select date"   
                                     name="dates">
                                 </flat-pickr>
                             </div>
@@ -55,7 +56,7 @@
                                     :config="mobileCalendarConfig"
                                     ref="datePicker"                                              
                                     class="form-control"
-                                    placeholder="Select date"               
+                                    placeholder="Select date"        
                                     name="dates">
                                 </flat-pickr>
                             </div>
@@ -63,7 +64,7 @@
                                 <p class="error" v-if="!$v.dates.required">Please add at least 1 show date</p>
                             </div>
                             <div>
-                                <label v-if="dateArray && dates">( {{dateArray.length}} dates selected )</label>
+                                <label v-if="dateArray && dates">({{dateArray.length}} dates selected)</label>
                             </div>
                         </div>
                     </section>
@@ -78,7 +79,8 @@
                             @click="active = 'timezone'"
                             @blur="active = null"
                             label="description" 
-                            placeholder="Select timezone" 
+                            placeholder="Select timezone"
+                            @input="$v.timezone.$touch"
                             :options="timezones" 
                             :allow-empty="false">
                                 <template slot="singleLabel" slot-scope="{ option }">
@@ -115,7 +117,7 @@
                         <div class="field">
                             <label> Does the event have a specific embargo date? <br> (i.e. The date you would like it to first appear on EI) </label>
                             <div id="cover">
-                                <input v-model="showEmbargoDate" type="checkbox" id="checkbox">
+                                <input @input="$v.showEmbargoDate.$touch" v-model="showEmbargoDate" type="checkbox" id="checkbox">
                                 <div id="bar"></div>
                                 <div id="knob">
                                     <p v-if="showEmbargoDate">Yes</p>
@@ -144,7 +146,7 @@
                         <div class="field">
                             <label> Select show days</label>
                             <div class="week-calendar grid">
-                                <div 
+                                <div
                                 class="week-calendar__day" 
                                 :class="{ active: week.mon }" 
                                 @click="addWeekDay('mon')">
@@ -199,7 +201,8 @@
                                     :config="embargoCalendarConfig"
                                     ref="datePicker"                                              
                                     class="form-control"
-                                    placeholder="Select date"               
+                                    @change="$v.$touch"
+                                    placeholder="Select date"    
                                     name="dates">
                                 </flat-pickr>
                             </div>
@@ -215,7 +218,8 @@
                             :class="{ active: active == 'timezone','error': $v.timezone.$error }"
                             @click="active = 'timezone'"
                             @blur="active = null"
-                            label="description" 
+                            label="description"
+                            @input="$v.timezone.$touch"
                             placeholder="Select timezone" 
                             :options="timezones" 
                             :allow-empty="false">
@@ -253,7 +257,7 @@
                         <div class="field">
                             <label> Does the event have a specific embargo date? <br> (i.e. The date you would like it to first appear on EI) </label>
                             <div id="cover">
-                                <input v-model="showEmbargoDate" type="checkbox" id="checkbox">
+                                <input @input="$v.showEmbargoDate.$touch" v-model="showEmbargoDate" type="checkbox" id="checkbox">
                                 <div id="bar"></div>
                                 <div id="knob">
                                     <p v-if="showEmbargoDate">Yes</p>
@@ -302,7 +306,7 @@
                         <div class="field" style="margin-top:6rem">
                             <label> Does the event have a specific embargo date? <br> (i.e. The date you would like it to first appear on EI) </label>
                             <div id="cover">
-                                <input v-model="showEmbargoDate" type="checkbox" id="checkbox">
+                                <input @input="$v.showEmbargoDate.$touch" v-model="showEmbargoDate" type="checkbox" id="checkbox">
                                 <div id="bar"></div>
                                 <div id="knob">
                                     <p v-if="showEmbargoDate">Yes</p>
@@ -367,6 +371,10 @@ export default {
             return this.$store.state.save
         },
 
+        setInput() {
+
+        },
+
         dateArray() {
         	if(!Array.isArray(this.dates) && this.dates.includes(",")) {
         		return this.dates.split(",");
@@ -428,7 +436,7 @@ export default {
             showTypeOptions: [
                 {   id: 1,   name: 'Limited Run (Specific Dates)', description:'Select limited run if you have specific show dates.'}, 
                 {   id: 2, name: 'Open Ended (Weekly)', description:'Select open ended if your show has no end date in the next 6 months.'}, 
-                {   id: 3, name: 'On Demand (Any Time)', description:'Select on demand if our show is available at any time.'}],
+                {   id: 3, name: 'On Demand (Any Time)', description:'Select on demand if your show is available at any time.'}],
             exit: false,
             showStartDate: this.event.show_on_going ? true : false,
             timezone: this.event.timezone ? this.event.timezone : '',
@@ -462,7 +470,7 @@ export default {
 
         initializeEmbargoCalendarObject() {
             return {
-                // minDate: "today",
+                minDate: "today",
                 maxDate: new Date().fp_incr(180),
                 mode: "single",
                 inline: true,
@@ -492,6 +500,7 @@ export default {
         },
 
         addWeekDay(day) {
+            this.$v.week.$touch();
             this.showStartDate = true;
             this.week[day] = !this.week[day];
         },
@@ -512,14 +521,14 @@ export default {
          	if (this.checkVuelidate()) { return false };
             axios.post(this.endpoint, this.submitObject)
             .then(res => {  
-                console.log(res.data);
+                // console.log(res.data);
                 value == 'exit' || this.exit == true ? this.onBackInitial() : this.onForward(value);
             })
             .catch(err => { this.onErrors(err) });
         },
 
         setStartDate() {
-            return this.dates.length ? this.startDate = this.dates[0] : '';
+            // return this.dates.length ? this.startDate = this.dates[0] : '';
         },
 
     },
@@ -531,7 +540,7 @@ export default {
             } else {
                 this.onSubmit(this.navSubmit);
             }
-        }
+        },
     },
 
     mounted() {
@@ -541,6 +550,9 @@ export default {
     },
 
     validations: {
+        showType: {
+
+        },
         showTimes: {
             required,
             maxLength: maxLength(1000)
@@ -559,7 +571,10 @@ export default {
             ifOnDemand() {
                 return this.showType.id == '3' ? true : (this.timezone ? true : false)
             }
-        }
+        },
+        showEmbargoDate: {
+
+        },
 	},
 }  
 </script>

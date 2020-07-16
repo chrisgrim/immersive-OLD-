@@ -142,7 +142,7 @@ class CategoryController extends Controller
         $event->update([ 'category_id' => request('id') ]);
 
         //Checks to see if category has been selected then updates status to 3
-        if ($event->status < 4 && !$event->isLive() && $event->category_id) {
+        if ($event->status < 4 && $event->isInProgress() && $event->category_id) {
             $event->update([ 'status' => '3' ]);
         }
     }
