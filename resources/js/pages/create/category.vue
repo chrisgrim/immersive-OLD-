@@ -1,6 +1,6 @@
 <template>
-	<div class="event-create__category grid">
-        <section class="event-enter-category">
+	<div :class="{ showcat: selectedCategory}" class="event-create__category grid">
+        <section :class="{ showcat: selectedCategory}" class="event-enter-category">
             <div class="title">
                 <h2>Immersive Categories</h2>
             </div>
@@ -37,7 +37,7 @@
             </div>
         </section>
 
-        <section v-if="selectedCategory"  class="event-show-category__image" :style="pageHeight">
+        <section :class="{ showcat: selectedCategory}" v-if="selectedCategory" class="event-show-category__image" :style="pageHeight">
             <picture>       
                 <source type="image/webp" :srcset="`/storage/${selectedCategory.largeImagePath}`"> 
                 <img :src="`/storage/${selectedCategory.largeImagePath.slice(0, -4)}jpg}`">
@@ -106,7 +106,11 @@
 
 
             handleResize() {
-                this.pageHeight = `height:calc(${window.innerHeight}px - 7rem)`;
+                if (window.innerWidth > 1050) {
+                    this.pageHeight = `height:calc(${window.innerHeight}px - 7rem)`;
+                } else {
+                    this.pageHeight = `height:calc(${window.innerHeight/2}px - 7rem)`;
+                }
             },
 
             onLoad() {

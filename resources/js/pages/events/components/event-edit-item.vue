@@ -16,7 +16,7 @@
                 <p>{{ event.price_range }}</p>
             </div>
              <div class="card-inprogress" v-if="inProgress">
-                <p><b>In Progress</b></p>
+                <p><b>Your Draft</b></p>
             </div>
             <div class="card-inprogress" v-if="event.status == 'n' || event.status == '9'">
                 <p><b>Needs Changes</b></p>

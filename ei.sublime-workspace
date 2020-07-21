@@ -526,6 +526,23 @@
 				"buffer_size": 6540,
 				"line_ending": "Unix"
 			}
+		},
+		{
+			"file": "resources/js/pages/events/event-show.vue",
+			"settings":
+			{
+				"buffer_size": 34296,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "resources/js/pages/layouts/nav.vue",
+			"settings":
+			{
+				"buffer_size": 13516,
+				"line_ending": "Unix"
+			}
 		}
 	],
 	"build_system": "",
@@ -586,16 +603,30 @@
 		"/Users/chrisgrim/code/ei/resources/js",
 		"/Users/chrisgrim/code/ei/resources/js/mixins",
 		"/Users/chrisgrim/code/ei/resources/js/pages",
-		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea",
-		"/Users/chrisgrim/code/ei/resources/js/pages/messages",
+		"/Users/chrisgrim/code/ei/resources/js/pages/layouts",
 		"/Users/chrisgrim/code/ei/resources/sass",
+		"/Users/chrisgrim/code/ei/resources/sass/adminarea",
+		"/Users/chrisgrim/code/ei/resources/sass/adminarea/approval",
 		"/Users/chrisgrim/code/ei/resources/sass/events",
 		"/Users/chrisgrim/code/ei/resources/views",
 		"/Users/chrisgrim/code/ei/resources/views/events",
+		"/Users/chrisgrim/code/ei/resources/views/layouts",
 		"/Users/chrisgrim/code/ei/routes"
 	],
 	"file_history":
 	[
+		"/Users/chrisgrim/code/ei/resources/js/pages/layouts/nav-search.vue",
+		"/Users/chrisgrim/code/ei/sftp-config.json",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/TicketsController.php",
+		"/Users/chrisgrim/code/ei/resources/js/pages/create/tickets.vue",
+		"/Users/chrisgrim/code/ei/app/Ticket.php",
+		"/Users/chrisgrim/code/ei/resources/sass/adminarea/approval/show.scss",
+		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/approve/approval-bar.vue",
+		"/Users/chrisgrim/code/ei/resources/views/layouts/footer.blade.php",
+		"/Users/chrisgrim/code/ei/resources/views/layouts/meta.blade.php",
+		"/Users/chrisgrim/code/ei/resources/views/events/show.blade.php",
+		"/Users/chrisgrim/code/ei/resources/views/events/search.blade.php",
+		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-index.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/admin-organizer.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-edit.vue",
 		"/Users/chrisgrim/code/ei/.env",
@@ -603,11 +634,9 @@
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/OrganizerController.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/AdminOrganizerController.php",
 		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-show.vue",
-		"/Users/chrisgrim/code/ei/resources/views/events/show.blade.php",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/title.vue",
 		"/Users/chrisgrim/code/ei/resources/js/app.js",
 		"/Users/chrisgrim/code/ei/webpack.js.mix.js",
-		"/Users/chrisgrim/code/ei/resources/js/pages/create/tickets.vue",
 		"/Users/chrisgrim/code/ei/resources/sass/events/event-show.scss",
 		"/Users/chrisgrim/code/ei/database/migrations/2020_07_13_171418_add_type_to_tickets_table.php",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/review-event.vue",
@@ -615,7 +644,6 @@
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/advisories.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/shows.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/location-google.vue",
-		"/Users/chrisgrim/code/ei/sftp-config.json",
 		"/Users/chrisgrim/code/ei/resources/sass/create/shows.scss",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/nav.vue",
 		"/Users/chrisgrim/code/ei/app/Event.php",
@@ -624,14 +652,12 @@
 		"/Users/chrisgrim/code/ei/app/Policies/EventPolicy.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/ImageController.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/ShowsController.php",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/TicketsController.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/CategoryController.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/LocationController.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/EventTitleController.php",
 		"/Users/chrisgrim/code/ei/app/Show.php",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/description.vue",
 		"/Users/chrisgrim/code/ei/app/MakeImage.php",
-		"/Users/chrisgrim/code/ei/app/Ticket.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/EventController.php",
 		"/Users/chrisgrim/code/ei/config/image.php",
 		"/Users/chrisgrim/code/ei/resources/js/mixins/form-validation-mixin.js",
@@ -671,14 +697,12 @@
 		"/Users/chrisgrim/code/ei/resources/views/events/index.blade.php",
 		"/Users/chrisgrim/code/ei/resources/js/pages/events/components/index-item.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/nav.vue",
-		"/Users/chrisgrim/code/ei/resources/views/layouts/meta.blade.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/ReviewEventsController.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/SearchController.php",
 		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/admin-events.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/admin-event-reviews.vue",
 		"/Users/chrisgrim/code/ei/composer.json",
 		"/Users/chrisgrim/code/ei/database/migrations/2019_08_21_172519_create_events_table.php",
-		"/Users/chrisgrim/code/ei/resources/js/pages/layouts/nav-search.vue",
 		"/Users/chrisgrim/code/ei/database/migrations/2020_06_28_210727_alter_table_events_change_show_times.php",
 		"/Users/chrisgrim/Downloads/laravel-2020-06-26.log",
 		"/Users/chrisgrim/code/ei/resources/sass/nav/navbar.scss",
@@ -687,7 +711,6 @@
 		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-online-search.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/profile/profile-index.vue",
 		"/Users/chrisgrim/code/ei/app/AdminArea.php",
-		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/approve/approval-bar.vue",
 		"/Users/chrisgrim/code/ei/app/Timezone.php",
 		"/Users/chrisgrim/code/ei/resources/views/create/show.blade.php",
 		"/Users/chrisgrim/code/ei/database/migrations/2020_06_25_222733_add_timezone_id_to_events_table.php",
@@ -704,7 +727,6 @@
 		"/Users/chrisgrim/code/ei/resources/js/store/actions.js",
 		"/Users/chrisgrim/code/ei/resources/js/store/getters.js",
 		"/Users/chrisgrim/code/ei/resources/js/store/state.js",
-		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-index.vue",
 		"/Users/chrisgrim/code/ei/resources/views/events/searchonline.blade.php",
 		"/Users/chrisgrim/code/ei/app/EventRemoteSearchRule.php",
 		"/Users/chrisgrim/code/ei/app/Scopes/DateScope.php",
@@ -720,10 +742,7 @@
 		"/Users/chrisgrim/code/ei/resources/js/pages/organizers/organizer-show.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/layouts/footer.vue",
 		"/Users/chrisgrim/code/ei/config/app.php",
-		"/Users/chrisgrim/code/ei/app/ShowOnGoing.php",
-		"/Users/chrisgrim/code/ei/database/migrations/2020_06_17_000108_add_published_at_to_events_table.php",
-		"/Users/chrisgrim/code/ei/database/migrations/2020_06_16_235840_add_published_at_to_events_table.php",
-		"/Users/chrisgrim/code/ei/database/migrations/2020_06_16_235426_add_published_at_to_events_table.php"
+		"/Users/chrisgrim/code/ei/app/ShowOnGoing.php"
 	],
 	"find":
 	{
@@ -848,6 +867,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"id=\"location",
 			"import(",
 			"assets/an",
 			" import(",
@@ -974,8 +994,7 @@
 			"showtimes",
 			"what you",
 			"/api/admin/search/events",
-			"admin/events/fetch",
-			"asyncGenerateEventList"
+			"admin/events/fetch"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -993,7 +1012,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -1024,7 +1043,69 @@
 						"translation.y": 712.0,
 						"zoom_level": 1.0
 					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "resources/js/pages/events/event-show.vue",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 34296,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6371,
+								6371
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/Vuejs Complete Package/vue.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 2090.0,
+						"zoom_level": 1.0
+					},
 					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "resources/js/pages/layouts/nav.vue",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 13516,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								12858,
+								12881
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/Vuejs Complete Package/vue.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 4885.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
 					"type": "text"
 				}
 			]

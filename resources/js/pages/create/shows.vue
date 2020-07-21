@@ -40,7 +40,7 @@
                     <section class="event-enter-showdates">
                         <div class="field">
                             <label> Select each individual show date</label>
-                            <div class="calendar desktop">
+                            <div class="calendar desktopshow">
                                 <flat-pickr
                                     v-model="dates"
                                     :config="calendarConfig"
@@ -50,7 +50,7 @@
                                     name="dates">
                                 </flat-pickr>
                             </div>
-                            <div class="calendar mobile">
+                            <div class="calendar mobileshow">
                                 <flat-pickr
                                     v-model="dates"
                                     :config="mobileCalendarConfig"

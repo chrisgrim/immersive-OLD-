@@ -9,13 +9,14 @@ class Conversation extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['opener_id', 'receiver_id'];
+    protected $fillable = ['opener_id', 'receiver_id', 'event_id','user_one','user_two'];
+    
     /**
     * The relations to eager load on every query. I am adding shows here because I need to filter by dates for the search
     *
     * @var array
     */
-    protected $with = ['messages', 'users', 'modmessages'];
+    protected $with = ['messages'];
 
     /**
      * This Conversation has many Messages
@@ -29,14 +30,33 @@ class Conversation extends Model
     }
 
     /**
-     * This Conversation has many event notices
+     * This Conversation belongs to an Event
      *
-     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
-
-    public function modmessages()
+    public function event()
     {
-        return $this->hasMany(ModeratorComment::class)->orderBy('updated_at', 'DESC');
+        return $this->belongsTo(Event::class);
+    }
+
+    /*
+     * make a relation between first user from conversation
+     *
+     * return collection
+     * */
+    public function userone()
+    {
+        return $this->belongsTo('App\User',  'user_one');
+    }
+
+    /*
+     * make a relation between first user from conversation
+     *
+     * return collection
+     * */
+    public function usertwo()
+    {
+        return $this->belongsTo('App\User',  'user_two');
     }
 
     /**

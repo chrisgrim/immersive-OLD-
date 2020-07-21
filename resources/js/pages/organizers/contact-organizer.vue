@@ -106,6 +106,7 @@
                 if (this.checkVuelidate()) { return false };
                 axios.post(this.endPoint, {message:this.message})
                 .then(res => {
+                    console.log(res.data);
                     this.isModalVisible = false;
                     this.message = '';
                     this.disabled = false;

@@ -12,6 +12,7 @@ use App\ModeratorComment;
 use App\Conversation;
 use Carbon\Carbon;
 use App\Mail\ModeratorComments;
+use App\Mail\EventChanges;
 use App\Mail\EventApproved;
 use App\Mail\EventRejected;
 use Illuminate\Support\Facades\Storage;
@@ -115,7 +116,7 @@ class AdminAreaController extends Controller
      */
     public function approval()
     {
-        $events = Event::where('status', 'r')->get();
+        $events = Event::where('status', 'r')->with('organizer')->get();
         return view('adminArea.approval',compact('events'));
     }
 
@@ -153,18 +154,24 @@ class AdminAreaController extends Controller
                 'slug' => $slug,
                 'published_at' => Carbon::now()->format('Y-m-d H:i:s'),
             ]);
-            Message::eventnotification($event, 'Thanks, your event has been approved and will be displayed on your chosen date.', $slug);
+            if(auth()->id() != $event->user->id ) {
+                Message::eventnotification($event, 'Thanks, your event has been approved and will be displayed on your chosen date.', $slug);
+            }
+            
         } else {
             $event->update([
                 'status' => 'p',
                 'slug' => $slug,
                 'published_at' => Carbon::now()->format('Y-m-d H:i:s'),
             ]);
-            Message::eventnotification($event, 'Thanks, your event has been approved!', $slug);
+            if(auth()->id() != $event->user->id ) {
+                Message::eventnotification($event, 'Thanks, your event has been approved!', $slug);
+            }
         }
 
-
-        Mail::to($event->user)->send(new EventApproved($event));
+        if(auth()->id() != $event->user->id ) {
+            Mail::to($event->user)->send(new EventApproved($event));
+        }
 
         AdminArea::storeAirtable($event);
 
@@ -178,10 +185,10 @@ class AdminAreaController extends Controller
      */
     public function fail(Request $request, Event $event)
     {
-        $ModeratorComment = Message::eventnotification($event, 'denied', $request)->load('event');
-
-        Mail::to($event->user)->send(new ModeratorComments($ModeratorComment));
-
+        if(auth()->id() != $event->user->id ) {
+            $Message = Message::eventnotification($event, 'denied', $request);
+            Mail::to($event->user)->send(new EventChanges($Message, $event));
+        }
         $event->update([
             'status' => '9',
         ]);
@@ -195,9 +202,10 @@ class AdminAreaController extends Controller
      */
     public function reject(Request $request, Event $event)
     {
-        $ModeratorComment = Message::eventnotification($event, 'denied', $request)->load('event');
-
-        Mail::to($event->user)->send(new EventRejected($event));
+        if(auth()->id() != $event->user->id ) {
+            Message::eventnotification($event, 'denied', $request)->load('event');
+            Mail::to($event->user)->send(new EventRejected($event));
+        }
 
         $event->delete();
     }

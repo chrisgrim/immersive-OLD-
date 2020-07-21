@@ -135,14 +135,24 @@ class Event extends Model
     }
 
 
+    // *
+    // * Each event has multiple comments
+    // *
+    // * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+    
+    // public function moderatorcomments() 
+    // {
+    //     return $this->hasMany(ModeratorComment::class);
+    // }
+
     /**
-    * Each event has multiple comments
+    * Each event has a conversation
     *
     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
     */
-    public function moderatorcomments() 
+    public function conversation() 
     {
-        return $this->hasMany(ModeratorComment::class);
+        return $this->hasOne(Conversation::class);
     }
 
     /**

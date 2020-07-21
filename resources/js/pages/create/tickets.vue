@@ -37,7 +37,7 @@
                             </div>
                         </div>
                         <div v-if="tickets.length" class="create-shows__ticket-box">
-                            <div class="ticket-box__element grid">
+                            <div class="ticket-box__element labels grid">
                                 <div>
                                     <label>Ticket Class</label>
                                 </div>
@@ -48,7 +48,7 @@
                                     <label>Type (free, etc...)</label>
                                 </div>
                                 <div>
-                                    <label>Ticket Price ($)</label>
+                                    <label>Ticket Price</label>
                                 </div>
                             </div>
 
@@ -78,7 +78,7 @@
                                     @click="active = `description${index}`"
                                     :class="{ active: active == `description${index}`, error: ticket.errors.descriptionLength}"
                                     @blur="active = null"
-                                    placeholder="optional"
+                                    placeholder="description (optional)"
                                     />
                                     <div v-if="ticket.errors.descriptionLength"  class="validation-error">
                                         <p v-if="ticket.errors.descriptionLength" class="error">Description is too long</p>
@@ -113,6 +113,7 @@
                                     </div>
                                 </div>
                                 <div v-else class="field">
+                                    <div class="c-ticket-currency">$</div>
                                     <input 
                                     v-model="ticket.ticket_price"
                                     v-money="money"
@@ -135,7 +136,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div style="width:50%">
+                        <div class="c-ticklet-button">
                             <div class="field">
                                 <label>Choose your button text (your link for tickets or ticket info)</label>
                                 <multiselect 

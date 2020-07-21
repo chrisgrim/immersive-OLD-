@@ -12,13 +12,5 @@
                 <span style="font-family: 'Sen', sans-serif;color: #6d6d6d;"><p>Sorry! Your event {{$name}} is not the right fit for Everything Immersive</p></span>
             </div>
         </div>
-        <div style="
-            width: 40%;
-            margin: auto;
-            ">
-            <div style="text-align: center;max-width: 650px;margin: auto;padding: 0rem 1rem;">
-                <img style="width:100%;border-radius:.3rem;" src="https://everythingimmersive.com/storage/{{$image}}" alt="">
-            </div>
-        </div>
     </div>
 </body>

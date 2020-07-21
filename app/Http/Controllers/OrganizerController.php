@@ -136,26 +136,22 @@ class OrganizerController extends Controller
     }
 
     public function message(Request $request, Organizer $organizer, User $user)
-    {        
-        $conversation = DB::table('conversation_user as a')
-                ->join('conversation_user as b', 'a.id', '<','b.id')
-                ->where(function($q) use ($user, $organizer){
-                $q->where([['a.user_id','=',$user->id],['b.user_id','=',$organizer->user->id]])
-                ->orWhere([['a.user_id','=',$organizer->user->id],['b.user_id','=',$user->id]]);
-            })
-            ->whereColumn('a.conversation_id','b.conversation_id')
-            ->first();
-            
-        if($conversation) {
+    {   
+        $ids = [$organizer->user->id, $user->id];
+
+        $conversation = Conversation::all()->whereIn('user_one', $ids)->whereIn('user_two', $ids)->whereNull('event_id')->first();
+
+        if ($conversation) {
             Message::create([
-                'conversation_id' => $conversation->conversation_id,
+                'conversation_id' => $conversation->id,
                 'user_id' => $user->id,
                 'message' => $request->message
             ]);
+
         } else {
             if( $user->id == $organizer->user->id ) {return false;};
             $ids = [$user->id, $organizer->user->id];
-            $conversation = Conversation::create();
+            $conversation = Conversation::create(['user_one' => $user->id, 'user_two' => $organizer->user->id,]);
             $conversation->users()->sync($ids);
             Message::create([
                 'conversation_id' => $conversation->id,
@@ -165,13 +161,15 @@ class OrganizerController extends Controller
         }
 
 
+
+        $conversation->touch();
+
         $attributes = [
             'email' => $user->email,
             'body' => $request->message,
             'organizer-name' => $organizer->name,
             'name' => $user->name,
         ];
-
 
         if($organizer->email) {
             $dest = $organizer->email;

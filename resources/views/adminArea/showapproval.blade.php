@@ -10,6 +10,9 @@
     <div id="bodyArea">
         <div class="approve">
             <event-show :tickets="{{$tickets}}" :loadevent="{{$event}}">
+        </div> 
+        <div class="org">
+            <organizer-show :loadorganizer="{{ $event->organizer }}"></organizer-show> 
         </div>
         <div class="admin-approval__space">
             

@@ -1,14 +1,14 @@
 <?php
 
 use App\User;
-use App\ModeratorComment;
+use App\Message;
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
 {
-    protected $fillable = ['message', 'user_id', 'conversation_id'];
+    protected $fillable = ['message', 'user_id', 'conversation_id','is_seen', 'deleted_from_sender','deleted_from_receiver'];
 
     /**
     * The relations to eager load on every query. I am adding shows here because I need to filter by dates for the search
@@ -38,6 +38,16 @@ class Message extends Model
     }
 
     /**
+    * Each message can belongs to one Event
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+    */
+    public function event() 
+    {
+        return $this->belongsTo(Event::class)->withTrashed();
+    }
+
+    /**
      * This message belongs to a conversation
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -50,29 +60,30 @@ class Message extends Model
     public static function eventnotification($event, $status, $request) 
     {
 
-        if($event->moderatorcomments()->count()) {
-
-            $conversation = Conversation::find($event->moderatorcomments()->first()->conversation_id);
+        if($event->conversation()->count()) {
+            $conversation = $event->conversation()->first();
             $conversation->touch();
-            $ModeratorComment = ModeratorComment::create([
+            $message = Message::create([
                 'conversation_id' => $conversation->id,
-                'event_id' => $event->id,
-                'comments' => $status == 'denied' ? $request->comments : $status,
+                'message' => $status == 'denied' ? $request->message : $status,
                 'user_id' => auth()->id(),
             ]);
         } else {
             $ids = [$event->user_id, auth()->id()];
-            $conversation = Conversation::create();
+            $conversation = Conversation::create([
+                'event_id' => $event->id, 
+                'user_one' => auth()->id(), 
+                'user_two' => $event->user_id 
+            ]);
             $conversation->users()->sync($ids);
-            $ModeratorComment = ModeratorComment::create([
+            $message = Message::create([
                 'conversation_id' => $conversation->id,
-                'event_id' => $event->id,
-                'comments' => $status == 'denied' ? $request->comments : $status,
+                'message' => $status == 'denied' ? $request->message : $status,
                 'user_id' => auth()->id(),
             ]);
         };
 
         $event->user->update(['unread' => 'e']);
-        return $ModeratorComment;
+        return $message;
     }
 }

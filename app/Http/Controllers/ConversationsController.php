@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Conversation;
 use App\Message;
+use App\Event;
 use App\ModeratorComment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -23,8 +24,8 @@ class ConversationsController extends Controller
      */
     public function index()
     {
-        $conversations = auth()->user()->conversations()->get();
-        return view('messages.index', compact('conversations'));
+        $messages = auth()->user()->conversations()->with('users')->paginate(10);
+        return view('messages.index', compact('messages'));
     }
 
     /**
@@ -36,6 +37,7 @@ class ConversationsController extends Controller
     public function show(Conversation $conversation)
     {
         $this->authorize('update', $conversation);
+        $conversation = $conversation->load('event');
         auth()->user()->update(['unread' => null]);
         return view('messages.show', compact('conversation'));
     }
@@ -52,41 +54,26 @@ class ConversationsController extends Controller
         $this->authorize('update', $conversation);
         $receiver = $conversation->users->where('id', '!=' , auth()->id())->first();
 
-        if ($request->type == 'message') {
-            $message = Message::Create([
-                'user_id' => auth()->id(),
-                'message' => $request->message,
-                'conversation_id' => $conversation->id
-            ]);
-            $attributes = [
-                'email' => $receiver ? $receiver->email : '',
-                'body' => $request->message,
-                'name' => auth()->user()->name,
-            ];
-            $receiver ? $receiver->update(['unread' => 'm']) : '';
-        };
+        $ModeratorComment = Message::create([
+            'conversation_id' => $conversation->id,
+            'message' => $request->message,
+            'user_id' => auth()->id(),
+        ]);
+        $attributes = [
+            'email' => $receiver ? $receiver->email : '',
+            'body' => $request->message,
+            'name' => auth()->user()->name,
+        ];
 
-        if ($request->type == 'event') {
-            $ModeratorComment = ModeratorComment::create([
-                'conversation_id' => $conversation->id,
-                'event_id' => $conversation->modmessages[0]->event_id,
-                'comments' => $request->message,
-                'user_id' => auth()->id(),
-            ]);
-            $attributes = [
-                'email' => $receiver ? $receiver->email : '',
-                'body' => $request->message,
-                'name' => auth()->user()->name,
-            ];
+        if ($request->type == 'message') {
+            $receiver ? $receiver->update(['unread' => 'm']) : '';
+        } else {
             $receiver ? $receiver->update(['unread' => 'e']) : '';
         }
 
         $conversation->touch();
 
-        
         $receiver ? Mail::to($receiver->email)->send(new NewMessage($attributes)) : '';
-        
-        
         
     }
 
@@ -95,8 +82,18 @@ class ConversationsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function fetch()
+    public function fetchmessages()
     {
-        return auth()->user()->conversations()->get();
+        return auth()->user()->conversations()->with('users')->paginate(10);
+    }
+
+    /**
+     * Get Messages From Database
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function fetcheventmessages()
+    {
+        return auth()->user()->eventconversations()->with('users', 'event')->paginate(10);
     }
 }

@@ -18,6 +18,9 @@
                         <div class="card-title">
                             <h3>{{ event.name }}</h3>
                         </div>
+                        <div class="card-title">
+                            <h3>new event by {{ event.organizer.name }}</h3>
+                        </div>
                         <div class="card-price">
                             <h4>{{ event.price_range }}</h4>
                         </div>

@@ -15,19 +15,14 @@
             type="text">
         </div>
         <div class="list" v-for="(organizer, index) in organizers">
-            <div v-if="!changeName">
-                <span @mouseover="showEdit = true">
-                    {{organizer.name}}
-                </span>
-                <button v-if="showEdit" @click="changeName = true" class="default">Edit</button>
+            <div class="edit">
+                <a :href="`/organizer/${organizer.slug}/edit`">
+                    <button class="default">Edit Organizer</button>
+                </a>
             </div>
-            <input 
-            v-if="changeName"
-            type="text" 
-            v-model="organizer.name" 
-            placeholder="Organization"
-            @blur="onSaveName(organizer)"
-            />
+            <div>
+                {{organizer.name}}
+            </div>
             <div>
                 {{organizer.user.email}}
             </div>
@@ -106,7 +101,6 @@
                 newOwner: 'bob',
                 user: '',
                 users:[],
-                changeName: false,
                 showEdit: false,
                 pagination: {paginate:10},
 

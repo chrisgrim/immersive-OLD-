@@ -16,8 +16,13 @@
 }
 
 .event-tickets__add {
-    width: 50%;
+    width: 100%;
     padding: 1rem 0rem;
+    max-width: 70rem;
+}
+.c-ticklet-button {
+    width: 100%;
+    max-width: 70rem;
 }
 
 .event-create-tab__section {
@@ -158,6 +163,40 @@ button.delete-circle {
 }
 .calendar .flatpickr-days {
     width: 602px !important;
+}
+.calendar.desktopshow {
+    display: inline-block;
+}
+.calendar.mobileshow {
+    display: none;
+}
+.c-ticket-currency {
+    position: absolute;
+    left: 4%;
+    top: 1.4rem;
+    z-index: 1;
+}
+
+@media (max-width: 1050px) { 
+    .calendar.desktopshow {
+        display: none;
+    }
+    .calendar.mobileshow {
+        display: inline-block;
+    }
+    .calendar.mobileshow .flatpickr-calendar.inline {
+        width: 301px !important;
+    }
+    .calendar.mobileshow .flatpickr-rContainer {
+        width: 301px !important;
+    }
+    .ticket-box__element {
+        grid-template-columns: 1fr 1fr;
+        grid-column-gap: .2rem;
+    }
+    .ticket-box__element.labels {
+        display: none;
+    }
 }
 
 @media (max-width: 768px) {

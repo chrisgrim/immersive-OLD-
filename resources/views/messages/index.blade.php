@@ -12,7 +12,7 @@
 
 @section('content')
     <div id="bodyArea">
-        <message-index :conversations="{{$conversations}}" :loaduser="{{ auth()->user() }}"></message-index> 
+        <message-index :loaduser="{{ auth()->user() }}"></message-index> 
     </div>
 @endsection
 

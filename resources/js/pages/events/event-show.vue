@@ -40,19 +40,17 @@
                                 </span>
                             </div>
                         </a>
-                        <a href="#location">
-                            <div class="item">
-                                <img src="/storage/website-files/location.png" alt="">
-                                <span v-if="event.hasLocation">
-                                    <span class="header__show-info">Location</span>
-                                    <span class="header__show-info bold">{{event.location.city}}</span>
-                                </span>
-                                <span v-else>
-                                    <span class="header__show-info">Location</span>
-                                    <span class="header__show-info bold">Anywhere</span>
-                                </span>
-                            </div>
-                        </a>
+                        <div class="item">
+                            <img src="/storage/website-files/location.png" alt="">
+                            <span v-if="event.hasLocation">
+                                <span class="header__show-info">Location</span>
+                                <span class="header__show-info bold">{{event.location.city}}</span>
+                            </span>
+                            <span v-else>
+                                <span class="header__show-info">Location</span>
+                                <span class="header__show-info bold">Anywhere</span>
+                            </span>
+                        </div>
                         <a href="#dates">
                             <div class="item">
                                 <img src="/storage/website-files/calendar.png" alt="">
@@ -93,8 +91,8 @@
             <div class="header-right">
                 <div class="header-right__image">
                     <picture>
-                        <source type="image/webp" :srcset="`/storage/${event.largeImagePath}`"> 
-                        <img :src="`/storage/${event.largeImagePath.slice(0, -4)}jpg`" :alt="`${event.name} Immersive Event`">
+                        <source type="image/webp" :srcset="`/storage/${isMobile ? event.thumbImagePath : event.largeImagePath}`"> 
+                        <img :src="`/storage/${isMobile ? event.thumbImagePath.slice(0, -4) : event.largeImagePath.slice(0, -4)}jpg`" :alt="`${event.name} Immersive Event`">
                     </picture>
                 </div>
                 <div class="desktop">
@@ -597,6 +595,7 @@
                 fullDescription: this.loadevent.description.length <= 400 ? true : false,
                 hover: null,
                 hasIntersected: false,
+                isMobile: window.innerWidth < 768 ? true : false,
 
             }
         },

@@ -40,7 +40,8 @@ Route::POST('/vuex/search', 'SearchController@filterIndex');
 
 //Get Messages from database
 Route::GET('/messages', 'ConversationsController@index');
-Route::GET('/conversations/fetch', 'ConversationsController@fetch');
+Route::GET('/conversations/fetch/messages', 'ConversationsController@fetchmessages');
+Route::GET('/conversations/fetch/eventmessages', 'ConversationsController@fetcheventmessages');
 Route::GET('/conversations/{conversation}', 'ConversationsController@show');
 Route::POST('/conversations/{conversation}', 'ConversationsController@update');
 

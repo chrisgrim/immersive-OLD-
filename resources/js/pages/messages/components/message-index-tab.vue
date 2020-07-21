@@ -33,12 +33,12 @@
             <div v-else class="message-index__card grid">
                 <div class="message-index__image">
                     <picture>
-                        <source type="image/webp" :srcset="`/storage/${conversation.modmessages[0].event.thumbImagePath}`"> 
-                        <img :src="`/storage/${conversation.modmessages[0].event.thumbImagePath.slice(0, -4)}jpg`" alt="message image">
+                        <source type="image/webp" :srcset="`/storage/${conversation.event.thumbImagePath}`"> 
+                        <img :src="`/storage/${conversation.event.thumbImagePath.slice(0, -4)}jpg`" alt="message image">
                     </picture>
                 </div>
                 <div class="message-index__name">
-                    <p><b>{{conversation.modmessages[0].event.name}}</b></p>
+                    <p><b>{{conversation.event.name}}</b></p>
                     <div v-if="firstMessage(index)" v-for="(message, index) in conversation.modmessages" class="desktop">
                         <p><span>{{ new Date(message.updated_at) | dateFormat('MMM DD, YYYY')}}</span></p>
                     </div>
@@ -85,7 +85,7 @@
                 return index => index == 0 ? true : false;
             },
             isMessage() {
-                return this.conversation.messages.length ? true : false
+                return this.conversation.event ? false : true
             }
         },
 

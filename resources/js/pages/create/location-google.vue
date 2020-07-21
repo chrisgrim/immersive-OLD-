@@ -1,6 +1,6 @@
 <template>
-    <div class="event-create__location grid">
-        <section class="event-enter-location">
+    <div :class="{ remote: !hasLocation, showmap: location.latitude && hasLocation}" class="event-create__location grid">
+        <section :class="{ showmap: location.latitude && hasLocation}" class="event-enter-location">
             <div class="title">
                 <h2>Location</h2>
             </div>
@@ -103,7 +103,7 @@
             </div>
             <CubeSpinner :loading="loading"></CubeSpinner>
         </section>
-        <section class="event-show-location" :style="pageHeight">
+        <section :class="{ showmap: location.latitude && hasLocation}" class="event-show-location" :style="pageHeight">
             <div v-if="map.center && hasLocation" class="event-create-map">
                 <div class="zoom">
                     <div class="zoom__in">
@@ -246,7 +246,11 @@
                 this.location.latitude ? this.map.center = L.latLng(this.location.latitude, this.location.longitude) : '';
             },
             handleResize() {
-                this.pageHeight = `height:calc(${window.innerHeight}px - 7rem)`;
+                if (window.innerWidth > 1050) {
+                    this.pageHeight = `height:calc(${window.innerHeight}px - 7rem)`;
+                } else {
+                    this.pageHeight = `height:calc(${window.innerHeight/2.5}px - 7rem)`;
+                }
             },
             addTag (newTag) {
                 const tag = {

@@ -20,7 +20,7 @@ class ModeratorComment extends Model
     *
     * @var array
     */
-    protected $with = ['event', 'user'];
+    protected $with = ['user'];
 
     /**
     * Each comment belongs to one Event

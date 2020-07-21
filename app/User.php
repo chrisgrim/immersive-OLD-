@@ -96,14 +96,34 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Message::class);
     }
 
+     /**
+     * The User can send many messages
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function modmessages()
+    {
+        return $this->hasMany(ModeratorComment::class);
+    }
+
     /**
-     * The User can recieve many messages
+     * The User belongs to many conversations
      *
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
     public function conversations()
     {
-        return $this->belongsToMany(Conversation::class)->orderBy('updated_at', 'DESC');
+        return $this->belongsToMany(Conversation::class)->orderBy('updated_at', 'DESC')->whereNull('event_id');
+    }
+
+    /**
+     * The User belongs to many conversations
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function eventconversations()
+    {
+        return $this->belongsToMany(Conversation::class)->orderBy('updated_at', 'DESC')->whereNotNull('event_id');
     }
 
     /**

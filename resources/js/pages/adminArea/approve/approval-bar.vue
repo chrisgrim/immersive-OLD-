@@ -24,6 +24,7 @@
                 <a rel="noreferrer noopener" target="_blank" :href="loadevent.ticketUrl">{{loadevent.ticketUrl}}</a>
             </div>
             <div class="buttons">
+                <button :class="{bspin : dis}" :disabled="dis" class="create" @click.prevent="organizer()"> Organizer </button>
                 <button :class="{bspin : dis}" :disabled="dis" class="create" @click.prevent="goBack()"> Go Back </button>
                 <button :class="{bspin : dis}" :disabled="dis" class="create" @click.prevent="rejected()"> Reject </button>
                 <button :class="{bspin : dis}" :disabled="dis" class="create" @click.prevent="makeEdits()"> Make Edits Yourself </button>
@@ -73,11 +74,10 @@
                 if (this.$v.$invalid) { return false };
                 this.dis = true;
                 let data = {
-                    comments: this.comments
+                    message: this.comments
                 };
                 axios.post(`/unapprove/${this.event.slug}`, data)
                 .then(res => { 
-                    console.log(res.data)
                     this.dis = false;
                     window.location.href = '/finish/events';
                 })
@@ -93,7 +93,7 @@
                 if (this.$v.$invalid) { return false };
                 this.dis = true;
                 let data = {
-                    comments: this.comments
+                    message: this.comments
                 };
                 axios.post(`/reject/${this.event.slug}`, data)
                 .then(res => { 
@@ -109,6 +109,10 @@
 
             makeEdits() {
                 window.location.href = `/create-event/${this.event.slug}/title`
+            },
+
+            organizer() {
+                window.location.href = `/organizer/${this.event.organizer.slug}/edit`
             },
 
             goBack() {

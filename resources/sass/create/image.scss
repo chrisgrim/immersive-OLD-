@@ -6,7 +6,7 @@
 
 .event-create__image {
     padding-top: 9rem;
-    width:90%;
+    width:100%;
 }
 
 .event-create-image {
@@ -91,7 +91,12 @@
 .fileinput {
   display: none !important;
 }
-
+@media (max-width: 1130px) { 
+    .image-loader {
+        width: 400px;
+        height: 225px;
+    }
+}
 @media (max-width: 768px) { 
     .image-loader {
         width: 100%;

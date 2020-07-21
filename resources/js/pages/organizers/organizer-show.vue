@@ -45,7 +45,7 @@
                 <p>{{organizer.description}}</p>
             </div>
             <ContactOrganizer :user="user" :loadorganizer="organizer"></ContactOrganizer>
-            <div class="organizer-show-events" v-if="loadorganizer.events.length">
+            <div class="organizer-show-events" v-if="loadorganizer.events && loadorganizer.events.length">
                 <h2>Events by {{organizer.name}}</h2>
                 <div class="grid organizer-show__event-list">
                     <div v-for="event in loadorganizer.events">
