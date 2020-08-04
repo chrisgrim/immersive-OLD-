@@ -12,7 +12,7 @@
                 </div>
             </header>
             <section class="event-online-search-filter">
-                <SearchFilter :events="searchedevents" :maxprice="maxprice" :categories="categories"></SearchFilter>
+                <SearchFilter :events="searchedevents" :maxprice="maxprice" :tags="tags" :categories="categories"></SearchFilter>
             </section>
         </div>
     </div>
@@ -26,7 +26,7 @@
 
     export default {
 
-        props: ['searchedevents', 'categories', 'user', 'maxprice'],
+        props: ['searchedevents', 'categories', 'user', 'maxprice', 'tags'],
 
         components: { SearchFilter, SearchItem },
 

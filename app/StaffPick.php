@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Scopes\CreatedAtScope;
 
 class StaffPick extends Model
 {
@@ -12,7 +13,7 @@ class StaffPick extends Model
     * @var array
     */
     protected $fillable = [
-        'start_date','event_id', 'user_id', 'end_date', 'rank'
+        'start_date','event_id', 'user_id', 'end_date', 'rank', 'comments'
     ];
 
      /**
@@ -21,6 +22,16 @@ class StaffPick extends Model
     * @var array
     */
     protected $with = ['event'];
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::addGlobalScope(new CreatedAtScope);
+    }
 
     /**
     * Each Staff Pick hasOne one event

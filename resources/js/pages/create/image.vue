@@ -161,7 +161,7 @@
                     return this.imageFile ? ['image/jpeg','image/png','image/gif'].includes(this.imageFile.file.type) : true
                 },
                 imageRatio() {
-                    return this.imageFile ? this.imageFile.width > 800 && this.imageFile.height > 450 : true 
+                    return this.imageFile ? this.imageFile.width >= 800 && this.imageFile.height >= 450 : true 
                 }
             },
         },

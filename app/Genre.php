@@ -40,7 +40,9 @@ class Genre extends Model
     {
         return [
             "id" => $this->id,
-            "name" => $this->name ,
+            "name" => $this->name,
+            "admin" => $this->admin,
+            "rank" => $this->rank,
         ];
     }
     
@@ -66,6 +68,9 @@ class Genre extends Model
             ],
             'name' => [
                 'type' => 'search_as_you_type',
+            ],
+            'admin' => [
+                'type' => 'text',
             ],
         ]
     ];

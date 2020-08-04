@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\StaffPick;
 use App\Event;
+use App\User;
 use App\EventSearchRule;
 use App\Http\Requests\StaffPickRequest;
 use Illuminate\Http\Request;
@@ -27,7 +28,17 @@ class StaffPicksController extends Controller
      */
     public function index()
     {
-        return StaffPick::all();
+        return StaffPick::paginate(10);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function userpicks(User $user)
+    {
+        return StaffPick::where('user_id', $user->id)->paginate(10);
     }
 
     /**
@@ -37,7 +48,9 @@ class StaffPicksController extends Controller
      */
     public function create()
     {
-        return view('adminArea.staffpicks');
+        $ids = StaffPick::all()->pluck('user_id');
+        $users = User::find($ids);
+        return view('adminArea.staffpicks', compact('users'));
     }
 
     /**
@@ -47,11 +60,6 @@ class StaffPicksController extends Controller
      */
     public function fetch(Request $request)
     {
-        // if($request->keywords) {
-        //     return $events = Event::search($request->keywords)
-        //         ->rule(EventSearchRule::class)
-        //         ->get();
-        // }
         return Event::all()
             ->where('status', 'p')
             ->take(10);
@@ -63,19 +71,20 @@ class StaffPicksController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StaffPickRequest $request)
+    public function store(Request $request)
     {
-        $validated = $request->validated();
         StaffPick::Create(
             [
-            'event_id' => $request->event_id,
+            'event_id' => $request->event_id['id'],
             'user_id' => auth()->id(),
+            'comments' => $request->comments,
             'rank' => $request->rank ? $request->rank : 5,
             'start_date' => $request->dates[0],
             'end_date' => $request->dates[1]
             ]
         );
     }
+
 
     /**
      * Display the specified resource.
@@ -109,6 +118,7 @@ class StaffPicksController extends Controller
     public function update(Request $request, StaffPick $staffpick)
     {
         if($request->rank) { $staffpick->update(['rank' => $request->rank]); return '';}
+        if($request->comments) { $staffpick->update(['comments' => $request->comments]); return '';}
         $staffpick->update(
             [
             'start_date' => $request->start_date,

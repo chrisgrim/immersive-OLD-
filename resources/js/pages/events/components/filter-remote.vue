@@ -9,7 +9,7 @@
             <!-- Category Search -->
             <div class="e-search-filter__item">
                 <div class="e-search-filter__button" ref="cat">
-                    <button @click="show('category')" class="filter">
+                    <button @click="show('category')" :class="{ active:category }" class="filter">
                         <p v-if="!category">Categories</p>
                         <p v-if="category">{{category.name}}</p>
                     </button>
@@ -67,7 +67,7 @@
             <!-- Date Search -->
             <div class="e-search-filter__item">
                 <div class="e-search-filter__button" ref="dates">
-                    <button @click="show('dates')" class="filter">
+                    <button @click="show('dates')" :class="{ active : datesFormatted.length }" class="filter">
                         <p v-if="!datesFormatted.length">Dates</p>
                         <p v-if="datesFormatted.length">{{datesFormatted[0]}}{{ datesFormatted[1] ? ' to ' + datesFormatted[1] : ''}} </p>
                     </button>
@@ -91,7 +91,7 @@
             <!-- Price Search -->
             <div class="e-search-filter__item">
                 <div class="e-search-filter__button" ref="price">
-                    <button @click="show('price')" class="filter">
+                    <button @click="show('price')" :class="{ active : !showPrice }" class="filter">
                         <p v-if="!showPrice && price[0] == 0">{{' Up to ' + '$' + price[1]}}</p>
                         <p v-if="!showPrice && price[0] != 0">{{'$' + price[0]}}{{' to ' + '$' + price[1]}}</p>
                         <p v-if="showPrice">Price</p>
@@ -118,6 +118,32 @@
                             <button v-if="showPrice" @click="active = null" class="pop-box__cancel">Cancel</button>
                             <button v-if="!showPrice" @click="price = [options.min, options.max]" class="pop-box__cancel">clear</button>
                             <button @click="submitNew" class="pop-box__submit">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Tag Search -->
+            <div class="e-search-filter__item">
+                <div class="e-search-filter__button" ref="tag">
+                    <button @click="show('tag')" :class="{ active : tag }" class="filter">
+                        <p v-if="!tag">Tags</p>
+                        <p v-if="tag">{{tag.name}}</p>
+                    </button>
+                    <div v-if="active === 'tag'" class="e-search-filter__pop-box">
+                        <div class="e-search-filter__pop-box--category">
+                            <multiselect 
+                            v-model="tag"
+                            label="name"
+                            :options="tags" 
+                            placeholder="Tags"
+                            @select="submitTag"
+                            open-direction="bottom"
+                            :preselect-first="false">
+                            </multiselect>
+                        </div>
+                        <div class="e-search-filter__pop-box--footer">
+                            <button v-if="tag" @click="clearTag()" class="pop-box__cancel">clear</button>
+                            <button v-if="!tag" @click="active = null;" class="pop-box__cancel">Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -242,7 +268,7 @@
 
     export default {
 
-        props:['categories','maxprice', 'events'],
+        props:['categories','maxprice', 'events', 'tags'],
 
         components: { flatPickr, Multiselect, VueSlider, LoadMore },
 
@@ -255,6 +281,7 @@
             submitObject() {
                 return {
                     category: this.category ? this.category : null,
+                    tag: this.tag ? this.tag : null,
                     dates: this.datesSubmit.length ? this.datesSubmit : null,
                     price: !this.showPrice ? this.price : null,
                 }
@@ -272,6 +299,7 @@
                 configmobile: this.initializeConfigObject(),
                 active: '',
                 category: '',
+                tag: '',
                 price: [0, this.maxprice],
                 hasPrice: false,
                 options: { min: 0, max: this.maxprice  },
@@ -342,6 +370,12 @@
                 this.submitNew();
             },
 
+            submitTag(value) {
+                this.$store.commit('searchtype', value.name)
+                this.tag = value;
+                this.submitNew();
+            },
+
             submitMobile() {
                 this.submitNew();
                 this.showFilters = false;
@@ -351,6 +385,15 @@
                 this.category = '';
                 this.page = 1;
                 this.eventList = [];
+                this.$store.commit('searchtype', 'Immersive Theater')
+                this.onSubmit();
+            },
+
+            clearTag() {
+                this.tag = '';
+                this.page = 1;
+                this.eventList = [];
+                this.category ? this.$store.commit('searchtype', this.category.name) : this.$store.commit('searchtype', 'Immersive Theater')
                 this.onSubmit();
             },
 
@@ -383,9 +426,10 @@
             onClickOutside(event) {
                 if (this.active == null) {return false};
                 let cat =  this.$refs.cat;
+                let tag =  this.$refs.tag;
                 let dates =  this.$refs.dates;
                 let price =  this.$refs.price;
-                if (!cat || cat.contains(event.target) || !dates || dates.contains(event.target) || !price || price.contains(event.target)) return;
+                if (!cat || cat.contains(event.target) || !tag || tag.contains(event.target) || !dates || dates.contains(event.target) || !price || price.contains(event.target)) return;
                 this.active = null;
                 this.submitNew();
             },
@@ -394,6 +438,11 @@
                 if (this.searchcategory) {
                     this.category = this.categories.find(element => element.id == this.id);
                     this.$store.commit('searchtype', this.category.name)
+                    this.submitNew();
+                }
+                if (this.searchtag) {
+                    this.tag = this.tags.find(element => element.id == this.id);
+                    this.$store.commit('searchtype', this.tag.name)
                     this.submitNew();
                 }
             },

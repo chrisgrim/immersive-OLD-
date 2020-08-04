@@ -28,6 +28,8 @@ Route::RESOURCE('interactivelevels', 'InteractiveLevelController');
 
 
 
+
+
 // ----------   Search Page -------
 
 Route::POST('/search/storedata', 'SearchController@searchDatastore');
@@ -63,6 +65,11 @@ Route::GET('/admin/boneyard', 'AdminAreaEventsController@boneyard');
 Route::POST('/admin/events/fetch', 'AdminAreaEventsController@fetch');
 Route::POST('/admin/boneyard/fetch', 'AdminAreaEventsController@boneyardFetch');
 Route::POST('/admin/boneyard/{event}', 'AdminAreaEventsController@resurrect');
+Route::POST('/staffpicks/userpicks/{user}', 'StaffPicksController@userpicks');
+
+Route::GET('/admin/search/genres', 'GenresController@searchgenres');
+
+
 
 
 //Organizer 

@@ -1,23 +1,47 @@
-#admin {
-    & .picks {
-        & .new {
-            display: grid;
-            grid-template-columns: auto auto;
-            margin: 4rem 0rem;
-            & .content {
-                padding:4rem;
-            }
-        }
-        & .list {
-            & .image img{
-                width:10rem;
-            }
-        }
-        & img.option__image {
-            width: 10rem;
-        }
-        & .listing {
-            margin:4rem 0;
-        }
-    }
+
+.c-staffpicks__new {
+    width: 100%;
+    max-width:70rem;
 }
+
+.c-staffpicks__new--dates {
+    height:38rem;
+}
+.c-staffpicks__new--dates input.form-control.input {
+    display: none;
+}
+
+.c-staffpicks__new--dates .flatpickr-calendar.inline {
+    float: left;
+}
+.c-staffpicks__new--image {
+    width: 5rem;
+}
+.c-staffpicks__list--image {
+    width: 10rem;
+}
+.c-staffpicks__list {
+    margin-top: 15rem;
+}
+.c-staffpicks__list--filter {
+    width:100%;
+    max-width: 30rem;
+}
+.c-staffpicks__list--grid-top {
+    width: 100%;
+    padding: 1rem;
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: 14rem 1fr 8rem 18rem 2rem !important;
+    justify-items: center;
+    position: relative;
+    align-items: center;
+}
+.c-staffpicks__list--grid {
+    grid-template-columns: 14rem 1fr 8rem 18rem 2rem !important;
+}
+.c-staffpicks__list--name {
+    font-size: 1.2rem;
+}
+
+

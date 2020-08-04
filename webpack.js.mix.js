@@ -14,7 +14,7 @@ const mix = require('laravel-mix');
 require('laravel-mix-merge-manifest');
 
 mix.js('resources/js/app.js', 'public/assets')
-    .extract(['vue','vuelidate','leaflet','vuelidate-error-extractor','vue-cookies'])
+    .extract(['vue','leaflet','vuelidate-error-extractor','vue-cookies'])
     .mergeManifest()
     .webpackConfig({
     output: {

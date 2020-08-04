@@ -83,13 +83,19 @@ class Event extends Model
             'priceranges' => $this->pricerangesSelect,
             'category_id' => $this->category_id,
             'location_latlon' => $this->location_latlon,
-            'shows' => $this->showsSelect
+            'shows' => $this->showsSelect,
+            'genres' => $this->genreSelect,
         ];
     }
 
     public function showsSelect()
     {
         return $this->hasMany(Show::class)->select('date');
+    }
+
+    public function genreSelect()
+    {
+        return $this->belongsToMany(Genre::class)->select('name');
     }
 
     public function pricerangesSelect()

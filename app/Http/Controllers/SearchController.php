@@ -58,7 +58,8 @@ class SearchController extends Controller
                         ->with(['location', 'organizer'])
                         ->get();
         $categories = Category::all();
-        return view('events.searchonline',compact('searchedevents', 'categories', 'maxprice'));
+        $tags = Genre::where('admin', 1)->orderBy('rank', 'desc')->get();
+        return view('events.searchonline',compact('searchedevents', 'categories', 'maxprice', 'tags'));
     }
 
     public function filterIndex(Request $request)
@@ -93,10 +94,27 @@ class SearchController extends Controller
         if ($request->keywords) {
             $category = Category::search($request->keywords)
             ->rule(CategorySearchRule::class)
-            ->take(10)
+            ->orderBy('rank', 'desc')
+            ->take(5)
             ->get();
         } else {
             $category = Category::search('*')
+            ->orderBy('rank', 'desc')
+            ->take(5)
+            ->get();
+        }
+
+        if ($request->keywords) {
+            $tag = Genre::search($request->keywords)
+            ->rule(GenreSearchRule::class)
+            ->where('admin', 1)
+            ->orderBy('rank', 'desc')
+            ->take(10)
+            ->get();
+        } else {
+            $tag = Genre::search('*')
+            ->where('admin', 1)
+            ->orderBy('rank', 'desc')
             ->take(10)
             ->get();
         }
@@ -104,48 +122,38 @@ class SearchController extends Controller
         if ($request->keywords) {
             $remote = RemoteLocation::search($request->keywords)
             ->rule(RemoteLocationSearchRule::class)
-            ->take(10)
+            ->take(5)
             ->get();
         } else {
             $remote = RemoteLocation::search('*')
-            ->take(10)
+            ->take(5)
             ->get();
         }
         
-        // if ($request->keywords) {
-        //     $tag = Genre::search($request->keywords)
-        //     ->rule(GenreSearchRule::class)
-        //     ->take(10)
-        //     ->get();
-        // } else {
-        //     $tag = Genre::search('*')
-        //     ->take(10)
-        //     ->get();
-        // }
 
         if ($request->keywords) {
             $event = Event::search($request->keywords)
                 ->rule(EventSearchRule::class)
-                ->take(10)
+                ->take(5)
                 ->get();
         } else {
             $event = Event::search('*')
-            ->take(10)
+            ->take(5)
             ->get();
         }
 
         if ($request->keywords) {
             $organizer = Organizer::search($request->keywords)
                 ->rule(OrganizerSearchRule::class)
-                ->take(10)
+                ->take(5)
                 ->get();
         } else {
             $organizer = Organizer::search('*')
-            ->take(10)
+            ->take(5)
             ->get();
         }
 
-        $concatdata = $category->concat($remote)->concat($event)->concat($organizer);
+        $concatdata = $category->concat($tag)->concat($remote)->concat($event)->concat($organizer);
 
         if ($concatdata->count() > 8) {
             return [
@@ -244,8 +252,8 @@ class SearchController extends Controller
 
     public function searchRemote(Request $request)
     {
-        if ($request->category || $request->dates || $request->price ) {
-            return $events =  Event::search('a')
+        if ($request->category || $request->dates || $request->price || $request->tag ) {
+            return $events = Event::search('a')
             ->rule(EventRemoteSearchRule::class)
             ->with(['location', 'organizer'])
             ->orderBy('published_at', 'desc')

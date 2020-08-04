@@ -140,12 +140,17 @@
             },
 
             addTag (newTag) {
+                if (this.validateText(newTag)) { alert('No urls as tags') ;return false };
                 const tag = {
                     name: newTag,
                     id: newTag.substring(0, 0) + Math.floor((Math.random() * 10000000))
                 }
                 this.tagOptions.push(tag)
                 this.tagName.push(tag)
+            },
+
+            validateText(str) {
+                return str && str.startsWith("http") || str && str.startsWith("@") ? true : false
             },
 
             onLoad() {

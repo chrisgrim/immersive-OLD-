@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Genre;
+use App\GenreSearchRule;
 use Illuminate\Http\Request;
 
 class GenresController extends Controller
@@ -24,7 +25,7 @@ class GenresController extends Controller
      */
     public function index()
     {
-        return Genre::where('admin', true)->get();
+        return Genre::orderBy('name')->paginate(40);
     }
 
     /**
@@ -58,6 +59,25 @@ class GenresController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function searchgenres(Request $request)
+    {
+        if ($request->keywords) {
+            $genres = Genre::search($request->keywords)
+                ->rule(GenreSearchRule::class)
+                ->get();
+             if ($genres->count()) {
+                return $genres;  
+            }
+        }
+        return Genre::orderBy('name')->limit(40)->get();
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function show($id)
     {
         //
@@ -83,18 +103,12 @@ class GenresController extends Controller
      */
     public function update(Request $request, Genre $genre)
     {
-        if ($request->rank) {
-            return $genre->update([
-                'rank' => $request->rank,
-                'user_id' => auth()->user()->id
-            ]);
-        }
-        if ($request->genre) {
-            $genre->update([
-                'name' => strtolower($request->name),
-                'user_id' => auth()->user()->id,
-            ]);
-        }
+        $genre->update([
+            'rank' => $request['rank'],
+            'name' => strtolower($request['name']),
+            'user_id' => auth()->user()->id,
+            'admin' => $request['admin'],
+        ]);
     }
 
     /**

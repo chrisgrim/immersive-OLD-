@@ -52,6 +52,8 @@ class DescriptionController extends Controller
     public function store(DescriptionStoreRequest $request, Event $event)
     {  
         $event->storeDescription($request, $event);
+        $event = $event->fresh();
+        $event->searchable();
 
         //Checks to see if description has been sgored then updates status to 6
         if ( $event->status < 7 && $event->isInProgress() && $event->genres()->exists() && $event->description ) {
