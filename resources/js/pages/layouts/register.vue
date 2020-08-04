@@ -71,7 +71,8 @@
         </div>
         <div v-else class="login-information">
             <div class="login-information__title">
-                <h3>Everything Immersive</h3>
+                <h3 v-if="!createEvent">Everything Immersive</h3>
+                <h3 v-else>Register now to submit your experience to Everything Immersive</h3>
             </div>
             <div class="field">
                 <input 
@@ -219,6 +220,7 @@
                 alerts: [],
                 disabled: false,
                 isLogin: location.pathname == '/login' ? true : false,
+                createEvent: new URL(window.location.href).searchParams.get("create"),
             }
         },
 

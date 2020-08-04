@@ -302,7 +302,7 @@
                 tag: '',
                 price: [0, this.maxprice],
                 hasPrice: false,
-                options: { min: 0, max: this.maxprice  },
+                options: { min: 0, max: this.maxprice },
                 showFilters: false,
                 mobile: window.innerWidth < 768,
                 searchcategory: new URL(window.location.href).searchParams.get("category"),
@@ -335,7 +335,6 @@
                 this.active = null;
                 axios.post(`/api/search/remote?page=${this.page}`, this.submitObject)
                 .then(res => {
-                    console.log(res.data);
                     res.data.current_page == 1 ? this.eventList = res.data.data : this.eventList = this.eventList.concat(res.data.data);
                     this.pagination = res.data;
                     this.page = res.data.current_page + 1;

@@ -45,7 +45,7 @@
                     </div>
 
                     <div class="nav-menu-item" v-if="!user">
-                        <a class="menu-link" href="/register">
+                        <a class="menu-link" href="/register?create=true">
                             <div>Submit Your Experience</div>
                         </a>
                     </div>

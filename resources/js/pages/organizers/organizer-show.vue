@@ -44,7 +44,7 @@
             <div style="white-space: pre-line;" class="organizer-show-info__description">
                 <p>{{organizer.description}}</p>
             </div>
-            <ContactOrganizer :user="user" :loadorganizer="organizer"></ContactOrganizer>
+            <!-- <ContactOrganizer :user="user" :loadorganizer="organizer"></ContactOrganizer> -->
             <div class="organizer-show-events" v-if="loadorganizer.events && loadorganizer.events.length">
                 <h2>Events by {{organizer.name}}</h2>
                 <div class="grid organizer-show__event-list">

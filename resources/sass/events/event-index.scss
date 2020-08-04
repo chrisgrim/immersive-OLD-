@@ -178,9 +178,9 @@ button.contributer--button {
     .event-index-eventlist {
         height: 100%;
         overflow-y: auto;
-        white-space: nowrap;
         overflow-x: scroll;
         scrollbar-width: none;
+        grid-column-gap: 1.4rem !important;
         display: -webkit-box!important;
         display: flex!important;
     }
@@ -201,6 +201,9 @@ button.contributer--button {
     }
     .index-contributers {
         padding:3.2rem 2rem 4rem 2rem;
+    }
+    .card {
+        max-width: 70vw;
     }
 }
 

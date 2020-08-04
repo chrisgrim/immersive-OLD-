@@ -1,5 +1,5 @@
 <template>
-    <div class="event-create-start grid" :style="map">
+    <div class="event-create-start grid" :style="pageHeight">
         <nav class="start-content__nav">
             <div class="nav-logo">
                 <a href="/">
@@ -11,9 +11,13 @@
             <div class="start-content__text">
                 <h2>Hi, {{user.name}}</h2>
                 <p>We're excited you are listing your event on Everything Immersive!</p> 
-                <p>It takes only a few minutes to complete. At the end of the process your event will be reviewed by EI. The first step is to let us know about your organization.</p>
+                <br>
+                <ul>
+                    <li>The first step is to create your organization on EI.</li>
+                    <li>The second step is creating the event for that organization.</li>
+                </ul>
             </div>
-            <a href="/organizer/create"><button class="event-start-button">Create Organizer</button></a>
+            <a href="/organizer/create"><button class="event-start-button">Create Organization</button></a>
         </div>
         <div class="login-image">
             <picture>
@@ -26,9 +30,6 @@
 </template>
 
 <script>
-
-
-    
     export default {
 
         props: ['user'],
@@ -53,8 +54,6 @@
         destroyed() {
             window.removeEventListener('resize', this.handleResize)
         },
-
-       
 
     }
 </script>

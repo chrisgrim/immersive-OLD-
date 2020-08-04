@@ -44,8 +44,12 @@ class SearchController extends Controller
 
     public function onlinesearch(Request $request)
     {
+        $liveEvents = Event::where('status', 'p')
+            ->with('priceranges')
+            ->whereDate('closingDate', '>=', date("Y-m-d"))
+            ->get();
 
-        foreach (Event::where('status', 'p')->with('priceranges')->get() as $event) {
+        foreach ($liveEvents as $event) {
             foreach ($event->priceranges as $price) {
                 $array[] = $price['price'];
             }

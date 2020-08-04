@@ -391,7 +391,7 @@
 			advisories: {
                 sexualDescription: {
                     ifSexual() {
-                        return this.advisories.sexual.type ? this.advisories.sexualDescription ? true : false : true
+                        return this.advisories.sexual && this.advisories.sexual.type ? this.advisories.sexualDescription ? true : false : true
                     }
                 },
                 wheelchairReady: {

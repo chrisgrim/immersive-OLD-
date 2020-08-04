@@ -5,7 +5,7 @@
                 <h2>Description</h2>
             </div>
             <div class="field">
-                <label class="area"> Describe your event to our readers </label>
+                <label class="area"> Describe your event to our readers <span v-if="event.hasLocation">(include covid 19 information)</span> </label>
                 <textarea 
                 type="text"
                 name="description" 
@@ -62,8 +62,9 @@
                 @blur="active = null"
                 ></multiselect>
                 <div v-if="$v.tagName.$error" class="validation-error">
-                    <p class="error" v-if="!$v.tagName.required">Must select at least one Tag</p>
-                </div>
+                    <p class="error" v-if="!$v.tagName.required">Must select at least one Tag</p>
+                    <p class="error" v-if="!$v.tagName.maxLength">No more than 10 tags</p>
+                </div>
             </div>
         </section>
         
@@ -83,7 +84,7 @@
 <script>
     import formValidationMixin from '../../mixins/form-validation-mixin'
     import Multiselect from 'vue-multiselect'
-    import { required, url } from 'vuelidate/lib/validators'
+    import { required, url, maxLength } from 'vuelidate/lib/validators'
     import _ from 'lodash'
 
 	export default {
@@ -185,7 +186,8 @@
 
         validations: {
             tagName: {
-                required
+                required,
+                maxLength: maxLength(10)
             },
             group : {
                 description: {

@@ -302,6 +302,16 @@
                         </li>
                     </ul>
                 </div>
+                <div class="grid two-panel">
+                    <div class="title">
+                        <h3>Tags</h3>
+                    </div>
+                    <ul class="info">
+                        <div v-for="item in event.genres">
+                            <p>{{item.name}}</p>
+                        </div>
+                    </ul>
+                </div>
                 <div class="grid two-panel" v-if="event.advisories.sexual">
                     <div class="title">
                         <h3>Sexual Advisories</h3>

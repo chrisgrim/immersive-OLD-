@@ -30,7 +30,7 @@ class EventRemoteSearchRule extends SearchRule
                             'priceranges.price' =>
                             [
                                 'gte' => Request::get('price')[0],
-                                'lte' => Request::get('price')[1],
+                                'lte' => Request::get('price')[1] > 250 ? 9999 : Request::get('price')[1],
                             ]
                         ]
                     ],
@@ -92,7 +92,7 @@ class EventRemoteSearchRule extends SearchRule
                             'priceranges.price' =>
                             [
                                 'gte' => Request::get('price')[0],
-                                'lte' => Request::get('price')[1],
+                                'lte' => Request::get('price')[1] > 250 ? 9999 : Request::get('price')[1],
                             ]
                         ]
                     ],
@@ -148,7 +148,7 @@ class EventRemoteSearchRule extends SearchRule
                             'priceranges.price' =>
                             [
                                 'gte' => Request::get('price')[0],
-                                'lte' => Request::get('price')[1],
+                                'lte' => Request::get('price')[1] > 250 ? 9999 : Request::get('price')[1],
                             ]
                         ]
                     ],
@@ -213,7 +213,7 @@ class EventRemoteSearchRule extends SearchRule
                             'priceranges.price' =>
                             [
                                 'gte' => Request::get('price')[0],
-                                'lte' => Request::get('price')[1],
+                                'lte' => Request::get('price')[1] > 250 ? 9999 : Request::get('price')[1],
                             ]
                         ]
                     ],
@@ -294,7 +294,7 @@ class EventRemoteSearchRule extends SearchRule
                             'priceranges.price' =>
                             [
                                 'gte' => Request::get('price')[0],
-                                'lte' => Request::get('price')[1],
+                                'lte' => Request::get('price')[1] > 250 ? 9999 : Request::get('price')[1],
                             ]
                         ]
                     ],
@@ -427,7 +427,7 @@ class EventRemoteSearchRule extends SearchRule
                             'priceranges.price' =>
                             [
                                 'gte' => Request::get('price')[0],
-                                'lte' => Request::get('price')[1],
+                                'lte' => Request::get('price')[1] > 250 ? 9999 : Request::get('price')[1],
                             ]
                         ]
                     ],
@@ -459,7 +459,7 @@ class EventRemoteSearchRule extends SearchRule
                             'priceranges.price' =>
                             [
                                 'gte' => Request::get('price')[0],
-                                'lte' => Request::get('price')[1],
+                                'lte' => Request::get('price')[1] > 250 ? 9999 : Request::get('price')[1],
                             ]
                         ]
                     ],
@@ -617,7 +617,7 @@ class EventRemoteSearchRule extends SearchRule
                             'priceranges.price' =>
                             [
                                 'gte' => Request::get('price')[0],
-                                'lte' => Request::get('price')[1],
+                                'lte' => Request::get('price')[1] > 250 ? 9999 : Request::get('price')[1],
                             ]
                         ]
                     ],

@@ -367,10 +367,12 @@ class Event extends Model
     */
     public function deleteEvent($event) 
     {
-        if ($event->moderatorcomments()->exists()) {
-            Conversation::find($event->moderatorcomments()->first()->conversation_id)->delete();
+        if ($event->user_id == auth()->id()) {
+            if ($event->conversation()->exists()) {
+                $event->conversation()->first()->delete();
+            }
+            $event->delete();
         }
-        $event->delete();
     }
 
     /**

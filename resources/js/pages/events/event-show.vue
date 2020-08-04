@@ -283,11 +283,11 @@
                         <h3>Content Advisories</h3>
                     </div>
                     <ul class="info">
-                        <li>
-                            <p>{{event.age_limits ? event.age_limits.name : event.advisories.ageRestriction}}</p>
-                        </li>
                         <li v-for="item in event.content_advisories">
                             <p>{{item.advisories}}</p>
+                        </li>
+                        <li>
+                            <p>{{event.age_limits ? event.age_limits.name : event.advisories.ageRestriction}}</p>
                         </li>
                     </ul>
                 </div>
@@ -325,6 +325,17 @@
                                 <span class="show-text"v-if="fullAdvisories && event.advisories.audience.length >= 160" @click="fullAdvisories = !fullAdvisories">... Show Less </span>
                             </p>
                         </li>
+                    </ul>
+                </div>
+                <div class="grid two-panel">
+                    <div class="title">
+                        <h3>Tags</h3>
+                    </div>
+                    <ul class="info">
+                        <div v-for="item in event.genres">
+                            <a v-if="item.admin == 1" :href="`/index/search-online?tag=${item.name}&id=${item.id}`"><b>{{item.name}}</b></a>
+                            <p v-else>{{item.name}}</p>
+                        </div>
                     </ul>
                 </div>
                 <div class="grid two-panel" v-if="event.advisories.sexual">
@@ -402,7 +413,7 @@
                         <span class="show-text" v-if="fullOrganizer && event.organizer.description.length >= 160" @click="fullOrganizer = !fullOrganizer">... Show Less </span>
                     </span>
                 </div>
-                <ContactOrganizer :user="user" :loadorganizer="event.organizer"></ContactOrganizer>
+                <!-- <ContactOrganizer :user="user" :loadorganizer="event.organizer"></ContactOrganizer>  -->
             </div>
         </section>
 

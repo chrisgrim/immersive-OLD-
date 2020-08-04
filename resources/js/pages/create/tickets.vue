@@ -16,7 +16,7 @@
                                 :hide-selected="true"
                                 :resetAfter="true"
                                 :multiple="false"
-                                :options="ticketOptions"
+                                :options="ticketOptionslive"
                                 :class="{ active: active == 'newTicket', 'error': $v.tickets.$error}"
                                 tag-placeholder="Add this as new ticket"
                                 :taggable="true"
@@ -256,6 +256,7 @@ export default {
             selected: '',
             tempErrorName: false,
             temperrors: false,
+            ticketOptionslive: [],
             ticketUrl: this.event.ticketUrl ? this.event.ticketUrl : '',
         }
     },
@@ -325,7 +326,7 @@ export default {
             }
             this.tickets.push(val);
             this.selected = '';
-            _.remove(this.ticketOptions, {name: value.name});
+
         },
 
         reset() {
@@ -335,6 +336,7 @@ export default {
         },
 
         onLoad() {
+            this.checkTickets();
             axios.get(this.onFetch('tickets'))
             .then(res => {
                 for (var i = 0; i < res.data.tickets[0].tickets.length; i++) {
@@ -406,6 +408,15 @@ export default {
             this.tickets.push(tag)
         },
 
+        checkTickets() {
+            this.ticketOptionslive = [];
+            let selected = this.tickets.map(a => a.name);
+            for (var i = 0; i < this.ticketOptions.length; i++) {
+                let name = this.ticketOptions[i].name;
+                selected.includes(name) ? '' : this.ticketOptionslive.push(this.ticketOptions[i]);
+            }
+        }
+
     },
 
     watch: {
@@ -417,9 +428,13 @@ export default {
             }
         },
 
+        tickets() {
+            this.checkTickets();
+        }
+
     },
 
-    mounted() {
+    created() {
         this.onLoad();
     },
 

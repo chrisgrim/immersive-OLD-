@@ -13,7 +13,7 @@
             </div>
         </div>
         <div class="create-nav-guide">
-            <h3>Submit your Organization</h3>
+            <h3>Add your Organization</h3>
         </div>
         
     </nav>

@@ -5,7 +5,7 @@
         </div>
         <div class="listing-details-block">
             <tabs>
-                <tab v-if="conversations && conversations.length" title="Messages" :notification="user.unread=='m'" :active="true" class="tab-events">
+                <tab v-if="conversations && conversations.length" title="Messages" :notification="user.unread=='m'"  class="tab-events">
                     <div>
                         <div v-for="conversation in conversations">
                             <MessageIndexTab :conversation="conversation" :loaduser="loaduser"></MessageIndexTab>
@@ -13,7 +13,7 @@
                     </div>
                     <load-more @intersect="intersected('message')"></load-more> 
                 </tab>
-                <tab v-if="eventConversations && eventConversations.length" title="Events" :notification="user.unread=='e'" class="tab-events">
+                <tab v-if="eventConversations && eventConversations.length" title="Events" :notification="user.unread=='e'" class="tab-events" :active="true">
                     <div>
                         <div v-for="conversation in eventConversations">
                             <MessageIndexTab :conversation="conversation" :loaduser="loaduser"></MessageIndexTab> 
