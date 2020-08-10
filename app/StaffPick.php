@@ -21,7 +21,7 @@ class StaffPick extends Model
     *
     * @var array
     */
-    protected $with = ['event'];
+    protected $with = ['event', 'user'];
 
     /**
      * The "booted" method of the model.

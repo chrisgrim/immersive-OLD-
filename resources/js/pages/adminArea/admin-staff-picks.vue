@@ -88,7 +88,7 @@
                     required 
                     autofocus></textarea>
                     <div v-if="$v.comments.$error" class="validation-error">
-                        <p class="error" v-if="!$v.comments.ifSexual">Please describe the sexual content </p>
+                        <p class="error" v-if="!$v.comments.required">Comment is required </p>
                     </div>
                 </div>
             </div>
@@ -108,6 +108,26 @@
                     </div>
                 </div>
             </div>
+            <div v-if="event" class="c-staffpicks__new--dates lockedcalendar">
+                <div class="field">
+                    <label class="area"> {{event ? event.name : ''}} Show Dates
+                    </label>
+                    <flat-pickr
+                        v-model="showDates"
+                        v-if="event && event.showtype != 'a'"
+                        :config="eventConfig"                                         
+                        placeholder="Select date"               
+                        name="dates">
+                    </flat-pickr>
+                    <div v-else>
+                        Shows are every day for {{event.name}}
+                    </div>
+                   <div v-if="$v.dates.$error" class="validation-error">
+                        <p class="error" v-if="!$v.dates.required">Please add at least 1 show date</p>
+                    </div>
+                </div>
+            </div>
+            <button @click="checkDates">check</button>
             <br>
             <br>
             <button @click.prevent="savePick">Add staff pick</button>
@@ -151,6 +171,7 @@
             <div class="c-staffpicks__list--grid-top">
                 <p>event</p>
                 <p>comments</p>
+                <p>user</p>
                 <p>rank</p>
                 <p>dates</p>
             </div>
@@ -172,6 +193,9 @@
                     @blur="addComment(pick)"
                     required 
                     autofocus></textarea>
+                </div>
+                <div class="field">
+                    <label>{{pick.user.name}}</label>
                 </div>
                 <div class="rank">
                    <multiselect 
@@ -249,6 +273,7 @@
                 add: false,
                 dates: [],
                 listDates: [],
+                showDates:[],
                 rank: '',
                 active: '',
                 rankOptions: ['1', '2', '3', '4', '5'],
@@ -260,8 +285,9 @@
                 listDatesFormatted: [],
                 selectedModal: '',
                 modal: '',
-                config: this.initializeAdvisoriesObject('new'),
-                pickConfig: this.initializeAdvisoriesObject('list'),
+                config: this.initializeDateObject('new'),
+                pickConfig: this.initializeDateObject('list'),
+                eventConfig: this.initializeDateObject('event'),
                 pagination: '',
                 paginationUser: '',
                 page: 2,
@@ -277,14 +303,14 @@
                 });
             },
 
-            initializeAdvisoriesObject(val) {
+            initializeDateObject(val) {
                 return {
                     minDate: "today",
                     altFormat:'M d',
                     altInput: true,
-                    mode: "range",
-                    inline: val == 'new' ? true : false,
-                    showMonths: 2,
+                    mode: val == 'event' ? 'multiple' : 'range',
+                    inline: val == 'list' ? false : true,
+                    showMonths: 1,
                     dateFormat: 'Y-m-d H:i:s',
                     onClose:  val == 'new' ? [this.dateFunc()] : [this.listDateFunc()], 
                 }
@@ -338,6 +364,7 @@
             savePick() {
                 this.$v.$touch();
                 if (this.$v.$invalid) { return false }
+                if (this.checkDates()) {alert('pick date must overlap show date');return false}
                 axios.post('/staffpicks', this.submitObject)
                 .then(response => { 
                     location.reload();
@@ -346,6 +373,17 @@
                     console.log(error.response.data.errors);
                     this.serverErrors = error.response.data.errors;
                 });
+            },
+
+            checkDates() {
+                let from = new Date(this.datesSubmit[0]);
+                let to = new Date(this.datesSubmit[1]);
+
+                var result = [];
+                this.showDates.forEach(date => result.push(new Date(date) >= from && new Date(date) <= to));
+                return result.includes(true) ? false : true;
+
+
             },
 
             deletePick(pick) {
@@ -409,6 +447,12 @@
 
         created() {
             this.loadPicks()
+        },
+
+        watch: {
+            event() {
+                this.showDates = this.event.shows.map(a => a.date);;
+            }
         },
 
         validations: {
