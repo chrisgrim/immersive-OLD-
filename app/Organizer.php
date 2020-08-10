@@ -21,7 +21,7 @@ class Organizer extends Model
     * @var array
     */
     protected $fillable = [
-    	'user_id','name','website','slug','description','rating','largeImagePath','thumbImagePath','instagramHandle','twitterHandle','facebookHandle', 'email'
+    	'user_id','name','website','slug','description','rating','largeImagePath','thumbImagePath','instagramHandle','twitterHandle','facebookHandle', 'email', 'status'
     ];
 
     /**
@@ -36,6 +36,25 @@ class Organizer extends Model
             "name" => $this->name ,
             // "email" => $this->email,
         ];
+    }
+
+    /**
+    * What events should be searchable for scout elastic search
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+    */
+    public function shouldBeSearchable()
+    {
+        return $this->isPublished();
+    }
+
+    /**
+    * Determines which events are published for Laravel Scout
+    *
+    * @return bool
+    */
+    public function isPublished() {
+        return $this->status == 'p';
     }
 
     /**

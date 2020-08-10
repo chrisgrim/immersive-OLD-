@@ -140,7 +140,9 @@
                     name="dates">
                 </flat-pickr>
                 <div class="event-show__showtimes--specific">
-                    <p>Show Details:</p>
+                    <div class="event-show__dates--details">
+                        <h3>Show Details</h3>
+                    </div>
                     <p>{{event.timezone ? event.timezone.description : ''}}</p>
                     <p style="white-space: pre-wrap;" class="text">{{ showtimesText }}<span class="show-text" 
                         v-if="!fullShowtimes" @click="fullShowtimes = !fullShowtimes">... Show More</span>
@@ -158,7 +160,9 @@
                     name="dates">
                 </flat-pickr>
                 <div class="event-show__showtimes--specific">
-                    <p>Show Details:</p>
+                    <div class="event-show__dates--details">
+                        <h3>Show Details</h3>
+                    </div>
                     <p>{{event.timezone ? event.timezone.description : ''}}</p>
                     <p style="white-space: pre-wrap;" class="text">{{ showtimesText }}<span class="show-text" 
                         v-if="!fullShowtimes" @click="fullShowtimes = !fullShowtimes">... Show More</span>
@@ -216,7 +220,9 @@
                     </div>
                 </div>
                 <div class="event-show__showtimes--ongoing">
-                    <p>Show Details:</p>
+                   <div class="event-show__dates--details">
+                        <h3>Show Details</h3>
+                    </div>
                     <p>{{event.timezone ? event.timezone.description : ''}}</p>
                     <p style="white-space: pre-wrap;" class="text">{{ showtimesText }}<span class="show-text" 
                         v-if="!fullShowtimes" @click="fullShowtimes = !fullShowtimes">... Show More</span>
@@ -235,7 +241,9 @@
                 <div></div>
                 <h3>Anytime</h3>
                 <div class="event-show__showtimes--specific">
-                    <p>Show Details:</p>
+                    <div class="event-show__dates--details">
+                        <h3>Show Details</h3>
+                    </div>
                     <p>{{event.timezone ? event.timezone.description : ''}}</p>
                     <p style="white-space: pre-wrap;" class="text">{{ showtimesText }}<span class="show-text" 
                         v-if="!fullShowtimes" @click="fullShowtimes = !fullShowtimes">... Show More</span>
@@ -378,7 +386,7 @@
                     </div>
                 </a>
                 <a :href="`/organizer/${event.organizer.slug}`">
-                    <div class="name">
+                    <div class="event-show__organizer--name">
                         <h3>{{event.organizer.name}}</h3>
                     </div>
                 </a>
@@ -452,8 +460,8 @@
             </div>
             <div class="right">
                 <div>
-                    <div v-for="location in event.remotelocations">
-                        <h3>{{location.name}}</h3>
+                    <div class="event-show__remote--type" v-for="location in event.remotelocations">
+                        <h3 class="event-show__remote--name">{{location.name}}</h3>
                         <p>{{location.description}}</p>
                     </div>
                     <div v-if="event.remote_description">

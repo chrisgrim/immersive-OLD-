@@ -17,6 +17,15 @@
                 </button>
             </a>
 
+            <a href="/finish/organizers">
+                <button :class="{active: active == 'orgApprove'}" class="admin-menu__item" >
+                    <div v-if="user.needsOrgApproval" class="admin-menu__notification">
+                        <p>{{user.needsOrgApproval}}</p>
+                    </div>
+                    Approve Organizers
+                </button>
+            </a>
+
             <a v-if="admin" href="/admin/events">
             <button :class="{active: active == 'events'}" class="admin-menu__item" >
                 Edit Events
@@ -130,6 +139,7 @@
                 path == '/admin/organizer' ? this.active = 'organizers' : '';
                 path == '/reviewevents/create' ? this.active = 'reviews' : '';
                 path == '/staffpicks/create' ? this.active = 'picks' : '';
+                path == '/finish/organizers' ? this.active = 'orgApprove' : '';
                 path == '/finish/events' ? this.active = 'approve' : '';
             }
         },

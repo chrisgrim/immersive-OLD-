@@ -12,7 +12,7 @@ class ContentAdvisory extends Model
     *
     * @var array
     */
-    protected $fillable = [ 'advisories','admin', 'user_id', 'rank' ];
+    protected $fillable = [ 'advisories','admin', 'user_id', 'rank', 'slug' ];
 
     /**
      * The "booted" method of the model.
@@ -45,13 +45,14 @@ class ContentAdvisory extends Model
         if ($request->has('contentAdvisory')) {
             foreach ($request['contentAdvisory'] as $content) {
                 ContentAdvisory::firstOrCreate([
-                    'advisories' => strtolower($content)
+                    'slug' => strtolower($content)
                 ],
                 [
                     'user_id' => auth()->user()->id,
+                    'advisories' => $content
                 ]);
             };
-            $newSync = ContentAdvisory::all()->whereIn('advisories', array_map('strtolower', $request['contentAdvisory']));
+            $newSync = ContentAdvisory::all()->whereIn('slug', array_map('strtolower', $request['contentAdvisory']));
             $event->contentadvisories()->sync($newSync);
         };
     }

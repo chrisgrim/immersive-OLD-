@@ -48,7 +48,7 @@
                 </div>
             </div>
 
-            <div v-if="isMessage">
+            <div >
                 <div v-if="firstMessage(index)" v-for="(message, index) in conversation.messages" class="message-index__message desktop">
                     <p><span>{{ message.message }}</span></p>
                 </div>
@@ -57,14 +57,7 @@
                 </div>
             </div>
 
-            <div v-else>
-                <div v-if="firstMessage(index)" v-for="(message, index) in conversation.modmessages" class="message-index__message desktop">
-                    <p><span>{{ message.comments  }}</span></p>
-                </div>
-                <div v-if="firstMessage(index)" v-for="(message, index) in conversation.modmessages" class="message-index__mdates mobile">
-                    <p><span>{{ new Date(message.updated_at) | dateFormat('MMM DD, YYYY')}}</span></p>
-                </div>
-            </div> 
+
 
         </div>
     </a>

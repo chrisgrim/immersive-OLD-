@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\AdminArea;
 use App\Event;
 use App\Category;
+use App\Organizer;
 use App\User;
 use App\MakeImage;
 use App\Message;
@@ -121,6 +122,18 @@ class AdminAreaController extends Controller
     }
 
     /**
+     * Org Approval Page
+     *
+     * @param  \App\AdminArea  $adminArea
+     * @return \Illuminate\Http\Response
+     */
+    public function orgApproval()
+    {
+        $organizers = Organizer::where('status', 'r')->get();
+        return view('adminArea.orgapproval',compact('organizers'));
+    }
+
+    /**
      * Individual events on approval pages
      *
      * @param  \App\AdminArea  $adminArea
@@ -133,6 +146,18 @@ class AdminAreaController extends Controller
         return view('adminArea.showapproval',compact('event','tickets'));
     }
 
+    /**
+     * Individual events on approval pages
+     *
+     * @param  \App\AdminArea  $adminArea
+     * @return \Illuminate\Http\Response
+     */
+    public function showOrgApproval(Organizer $organizer)
+    {
+        $organizer = $organizer->load('user');
+        return view('adminArea.showorgapproval',compact('organizer'));
+    }
+
      /**
      * Approve Event
      *
@@ -142,7 +167,11 @@ class AdminAreaController extends Controller
     public function success(Event $event)
     {
         
-        $event = $event->load('user', 'timezone');
+        $event = $event->load('user', 'timezone','organizer');
+
+        if ($event->organizer->status != 'p') {
+            $event->organizer->update(['status' => 'p']);
+        }
         
         $slug = Event::finalSlug($event);
         
@@ -175,6 +204,17 @@ class AdminAreaController extends Controller
 
         AdminArea::storeAirtable($event);
 
+    }
+
+     /**
+     * Approve Event
+     *
+     * @param  \App\AdminArea  $adminArea
+     * @return \Illuminate\Http\Response
+     */
+    public function orgSuccess(Organizer $organizer)
+    {
+        $organizer->update(['status' => 'p']);
     }
 
     /**

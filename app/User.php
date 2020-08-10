@@ -63,7 +63,7 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array
      */
-    protected $appends = ['hasCreatedOrganizers', 'needsApproval','hasMessages', 'hexColor'];
+    protected $appends = ['hasCreatedOrganizers', 'needsApproval', 'needsOrgApproval','hasMessages', 'hexColor'];
 
     /**
      * User can have many events
@@ -218,6 +218,16 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getNeedsApprovalAttribute()
     {
         return $this->isAdmin() ? Event::where('status', 'r')->count() : null;
+    }
+
+        /**
+    * Creates a new event
+    *
+    * @return count of events needing approval
+    */
+    public function getNeedsOrgApprovalAttribute()
+    {
+        return $this->isAdmin() ? Organizer::where('status', 'r')->count() : null;
     }
 
     public function getGravatar()

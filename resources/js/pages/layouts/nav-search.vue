@@ -43,7 +43,7 @@
                                 <path class="st0" d="M20.5,7.5"/>
                                 <circle class="st0" cx="12.1" cy="7.2" r="2.4"/>
                             </svg>
-                            <svg v-if="props.option.status == 'p'" viewBox="0 0 24 24" fill="currentColor" fill-opacity="0" stroke="currentColor" stroke-width="1.5" focusable="false" aria-hidden="true" role="presentation" stroke-linecap="round" stroke-linejoin="round" style="height: 24px; width: 24px; display: inline-block; overflow: visible;">
+                            <svg v-if="props.option.call_to_action" viewBox="0 0 24 24" fill="currentColor" fill-opacity="0" stroke="currentColor" stroke-width="1.5" focusable="false" aria-hidden="true" role="presentation" stroke-linecap="round" stroke-linejoin="round" style="height: 24px; width: 24px; display: inline-block; overflow: visible;">
                                <path d="M8.6,19.4h6.9c2.8,0,5-2.2,5-5V7.5c0-2.8-2.2-5-5-5H8.6c-2.8,0-5,2.2-5,5v6.9C3.6,17.2,5.8,19.4,8.6,19.4z"/>
                                 <line x1="3.6" y1="7.5" x2="20.5" y2="7.5"/>
                                 <line x1="8.6" y1="2.5" x2="8.6" y2="1.2"/>
@@ -111,7 +111,7 @@ export default {
             this.searchBoxInput.type == 'r' ? window.location.href = `/index/search-online?remote=${this.searchBoxInput.name}&id=${this.searchBoxInput.id}` : '';
             this.searchBoxInput.type == 't' ? window.location.href = `/index/search-online?tag=${this.searchBoxInput.name}&id=${this.searchBoxInput.id}` : '';
             this.searchBoxInput.type == 'o' ? window.location.href = `/organizer/${this.searchBoxInput.slug}` : '';
-            this.searchBoxInput.status == 'p' ? window.location.href = `/events/${this.searchBoxInput.slug}` : '';
+            this.searchBoxInput.call_to_action ? window.location.href = `/events/${this.searchBoxInput.slug}` : '';
             this.searchBoxInput.latitude ? this.globalSearch() : '';
 
         },

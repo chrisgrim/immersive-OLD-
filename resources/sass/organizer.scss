@@ -9,13 +9,13 @@
     min-height: 100vh;
     overflow: auto;
 }
-.organizer-show-image {
+.organizer-show__image {
     width: 100%;
     background: black;
     position: relative;
     height: 100%
 }
-.organizer-show-image__media {
+.organizer-show__image--media {
     position: absolute;
     height: 30rem;
     width: 30rem;
@@ -29,22 +29,22 @@
         background: white;
     }
 }
-.organizer-show-info {
+.organizer-show__info {
     width: 100%;
     position: relative;
-    padding: 10rem 10rem 0rem 25rem;
-    overflow: hidden;
+    padding: 18rem 10rem 0rem 25rem;
 }
-.organizer-show-info__name h2 {
+.organizer-show__info--name {
+    margin-bottom: 3rem;
+}
+.organizer-show__info--name h2 {
     font-size: 9rem;
     margin-bottom: 1rem;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
 }
-.organizer-show-info__contact {
-    grid-template-columns: auto auto auto auto;
-    width: 61%;
+.organizer-show__info--contact {
+    grid-template-columns: repeat( auto-fit, minmax(10rem, 1fr) );
+    /*grid-template-columns: auto auto auto auto;*/
+    width: 100%;
     border-bottom: 1px solid #c3c3c3;
 }
 img.organizer-info-contact__image {
@@ -81,32 +81,58 @@ img.organizer-info-contact__image {
     }
 }
 .organizer-show__event-list {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat( auto-fit, minmax(20rem, 1fr) );
+    /*grid-template-columns: repeat(2, 1fr);*/
     margin: 1rem 0rem;
 }
 
+@media (max-width: 1125px) {
+    .organizer-show {
+        grid-template-columns: 15rem 1fr;
+    }
+    .organizer-show__image--media {
+        height: 20rem;
+        width: 20rem;
+        margin: 15rem -10rem 0rem 0rem;
+    }
+    .organizer-show__info {
+        padding: 18rem 10rem 0rem 15rem;
+    }
+}
 
 @media (max-width: 768px) {
     .organizer-show {
         grid-template-columns: 1fr;
+        height: 100%;
         padding: 10rem 2rem 6rem 2rem;
     }
-    .organizer-show-image__media {
+    .organizer-show__event-list {
+        height: 100%;
+        overflow-y: auto;
+        overflow-x: scroll;
+        scrollbar-width: none;
+        grid-column-gap: 1.4rem !important;
+        display: -webkit-box!important;
+        display: flex!important;
+    }
+    .organizer-show__image--media {
         position: relative;
         height: 20rem;
         width: 20rem;
         margin: 0;
     }
-    .organizer-show-image {
+    .organizer-show__image {
         background: white;
     }
-    .organizer-show-info {
+    .organizer-show__info {
         padding: 0;
     }
-    .organizer-show-info__name h2 {
-        font-size: 4rem;
+    .organizer-show__info--name h2 {
+        font-size: 4rem !important;
+        line-height: inherit !important;
     }
 }
+
 
 
 

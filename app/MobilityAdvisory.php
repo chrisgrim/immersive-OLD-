@@ -12,7 +12,7 @@ class MobilityAdvisory extends Model
     *
     * @var array
     */
-    protected $fillable = [ 'mobilities','admin', 'user_id', 'rank' ];
+    protected $fillable = [ 'mobilities','admin', 'user_id', 'rank', 'slug' ];
 
     /**
      * The "booted" method of the model.
@@ -45,13 +45,14 @@ class MobilityAdvisory extends Model
         if ($request->has('mobilityAdvisory')) {
             foreach ($request['mobilityAdvisory'] as $content) {
                 MobilityAdvisory::firstOrCreate([
-                    'mobilities' => strtolower($content)
+                    'slug' => strtolower($content)
                 ],
                 [
                     'user_id' => auth()->user()->id,
+                    'mobilities' => $content
                 ]);
             };
-            $newSync = MobilityAdvisory::all()->whereIn('mobilities', array_map('strtolower', $request['mobilityAdvisory']));
+            $newSync = MobilityAdvisory::all()->whereIn('slug', array_map('strtolower', $request['mobilityAdvisory']));
             $event->mobilityadvisories()->sync($newSync);
         };
     }

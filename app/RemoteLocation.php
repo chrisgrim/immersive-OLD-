@@ -18,7 +18,7 @@ class RemoteLocation extends Model
     * @var array
     */
     protected $fillable = [
-        'name','admin', 'user_id', 'rank', 'description'
+        'name','admin', 'user_id', 'rank', 'description', 'slug'
     ];
 
     /**

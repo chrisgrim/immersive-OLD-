@@ -145,7 +145,6 @@
                 };
                 axios.patch(`/contentadvisories/${advisory.id}`, data)
                 .then(response => { 
-                    console.log(response.data)
                     this.loadContentAdvisories()
                 })
                 .catch(error => { 

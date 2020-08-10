@@ -60,6 +60,7 @@ class OrganizerController extends Controller
     {  
         $organizer = Organizer::Create($request->except(['image', 'user_id']) + ['user_id' => auth()->id()]);
         $request->image ? MakeImage::saveImage($request, $organizer, 600, 600, 'organizer') : null;
+        $organizer->update(['status' => 'r']);
     }
 
     /**
@@ -70,6 +71,7 @@ class OrganizerController extends Controller
      */
     public function show(Organizer $organizer)
     {
+        if($organizer->status !== 'p') { return redirect('/');}
         $organizer->load(['events' => function ($query) {
             $query->where('status', 'p');
         }]);

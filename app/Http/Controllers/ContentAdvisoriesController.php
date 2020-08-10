@@ -91,7 +91,8 @@ class ContentAdvisoriesController extends Controller
         }
         if ($request->advisories) {
             return $contentadvisory->update([
-                'advisories' => strtolower($request->advisories),
+                'advisories' => $request->advisories,
+                'slug' => strtolower($request->advisories),
                 'user_id' => auth()->user()->id
             ]);
         }

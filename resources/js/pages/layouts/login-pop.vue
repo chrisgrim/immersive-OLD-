@@ -6,7 +6,7 @@
                     <svg aria-hidden="true" role="presentation" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 4; overflow: visible;"><path d="m6 6 20 20"></path><path d="m26 6-20 20"></path></svg>
                 </div>
                 <div class="login-information__title">
-                    <h3>Hello There!</h3>
+                    <h3>Login</h3>
                 </div>
                 <div class="">
                     <div class="field">
@@ -54,8 +54,8 @@
                     <div class="field">
                         <button type="submit" :disabled="disabled" class="login-button" @click="onSubmit"> Sign In </button>
                     </div>
-                     <div class="login-information__switch">
-                        <p>Don't have an account? <button class="switch_login" @click.prevent="onPageSwitch">Join Now</button></p>
+                    <div class="login-information__switch">
+                        <p style="display:inline-block">Don't have an account?</p><button class="switch_login" @click.prevent="onPageSwitch">Join Now</button>
                     </div>
                 </div>
             </div>
@@ -65,7 +65,7 @@
                     <svg aria-hidden="true" role="presentation" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 4; overflow: visible;"><path d="m6 6 20 20"></path><path d="m26 6-20 20"></path></svg>
                 </div>
                 <div class="login-information__title">
-                    <h3>Sign Up!</h3>
+                    <h3>Create Account</h3>
                 </div>
                 <div class="">
                     <div class="field">
@@ -141,8 +141,8 @@
                     <div class="field">
                         <button type="submit" :disabled="disabled" class="save" @click="onSubmit"> Register </button>
                     </div>
-                   <div class="login-information__switch">
-                        <p>Already have an account? <button class="switch_login"  @click.prevent="onPageSwitch">Sign In Now</button></p>
+                    <div class="login-information__switch">
+                        <p style="display:inline-block">Already have an account?</p><button class="switch_login" @click.prevent="onPageSwitch">Sign In</button>
                     </div>
                 </div>
             </div>
@@ -211,7 +211,7 @@
             onClickOutside(event) {
                 let arr =  this.$refs.myDiv;
                 if (!arr || arr.contains(event.target)) return;
-                this.$emit('close', false)
+                this.$emit('close', false);
             },
 
             onSubmit() {

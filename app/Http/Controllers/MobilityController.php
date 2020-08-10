@@ -69,7 +69,8 @@ class MobilityController extends Controller
         }
         if ($request->mobilities) {
              $mobility->update([
-                'mobilities' => strtolower($request->mobilities),
+                'mobilities' => $request->mobilities,
+                'slug' => strtolower($request->mobilities),
                 'user_id' => auth()->user()->id
             ]);
         }

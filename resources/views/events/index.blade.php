@@ -12,6 +12,7 @@
             "postalCode":"94952",
             "streetAddress":"600 East D St"
             },
+        "description": "Your resource for immersive and interactive theatre, art, virtual reality, escape rooms, dance and more.",
         "logo":"https://everythingimmersive.com/storage/website-files/ei-logo.png",
         "name":"Everything Immersive",
         "sameAs":[
@@ -43,7 +44,7 @@
     <meta name="twitter:site" content="@everythingimmersive" />
     <meta name="twitter:image" content="{{ url('/') }}/storage/website-files/ei-logo.png" />
     <meta name="twitter:creator" content="@everythingimmersive" />
-    <link href="{{ mix('/assets/app-lite.css') }}" rel="stylesheet">
+    <link href="{{ mix('/assets/app-lite.css') }}" rel="stylesheet" media="print" onload="this.media='all'; this.onload=null;">
 @endsection 
 
 @section('nav')

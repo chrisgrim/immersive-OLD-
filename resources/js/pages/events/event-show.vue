@@ -166,7 +166,9 @@
                     name="dates">
                 </flat-pickr>
                 <div class="event-show__showtimes--specific">
-                    <p>Show Details:</p>
+                    <div class="event-show__dates--details">
+                        <h3>Show Details</h3>
+                    </div>
                     <p>{{event.timezone ? event.timezone.description : ''}}</p>
                     <p style="white-space: pre-wrap;" class="text">{{ showtimesText }}<span class="show-text" 
                         v-if="!fullShowtimes" @click="fullShowtimes = !fullShowtimes">... Show More</span>
@@ -184,7 +186,9 @@
                     name="dates">
                 </flat-pickr>
                 <div class="event-show__showtimes--specific">
-                    <p>Show Details:</p>
+                    <div class="event-show__dates--details">
+                        <h3>Show Details</h3>
+                    </div>
                     <p>{{event.timezone ? event.timezone.description : ''}}</p>
                     <p style="white-space: pre-wrap;" class="text">{{ showtimesText }}<span class="show-text" 
                         v-if="!fullShowtimes" @click="fullShowtimes = !fullShowtimes">... Show More</span>
@@ -242,7 +246,9 @@
                     </div>
                 </div>
                 <div class="event-show__showtimes--ongoing">
-                    <p>Show Details:</p>
+                    <div class="event-show__dates--details">
+                        <h3>Show Details</h3>
+                    </div>
                     <p>{{event.timezone ? event.timezone.description : ''}}</p>
                     <p style="white-space: pre-wrap;" class="text">{{ showtimesText }}<span class="show-text" 
                         v-if="!fullShowtimes" @click="fullShowtimes = !fullShowtimes">... Show More</span>
@@ -260,7 +266,9 @@
             <div class="right">
                 <h3>Anytime</h3>
                 <div class="event-show__showtimes--specific">
-                    <p>Show Details:</p>
+                    <div class="event-show__dates--details">
+                        <h3>Show Details</h3>
+                    </div>
                     <p>{{event.timezone ? event.timezone.description : ''}}</p>
                     <p style="white-space: pre-wrap;" class="text">{{ showtimesText }}<span class="show-text" 
                         v-if="!fullShowtimes" @click="fullShowtimes = !fullShowtimes">... Show More</span>
@@ -366,7 +374,7 @@
                                 <img width="33px" height="33px" :src="review.image_path" alt="">
                             </div>
                             <div class="event-show-review__right--name">
-                                <h4>{{review.reviewer_name}}</h4>
+                                </span><h4>{{review.reviewer_name}}'s Review</h4>
                             </div>
                         </a>
                         <div class="review">
@@ -374,9 +382,8 @@
                                 <i 
                                 style="white-space: pre-wrap;" 
                                 v-if="showMore !== 'review'" 
-                                class="text">{{review.review.substring(0,300)}}<span 
-                                    class="show-text" 
-                                    v-if="review.review.length >= 200">... Read More
+                                class="text">{{review.review.substring(0,300)}}...<span 
+                                    class="show-text"> Read More
                                     </span>
                                 </i>
                             </a>
@@ -395,7 +402,7 @@
             </div>
             <div class="right">
                 <a :href="`/organizer/${event.organizer.slug}`">
-                    <div class="event-show-organizer-image">
+                    <div class="event-show__organizer--image">
                         <div :style="event.organizer.thumbImagePath ? organizerImage : `background:${event.organizer.hexColor}`" class="img">
                             <div class="organizer-icon-text event-show" v-if="!event.organizer.thumbImagePath">
                                 <span>{{event.organizer.name.charAt(0)}}</span>
@@ -404,7 +411,7 @@
                     </div>
                 </a>
                 <a :href="`/organizer/${event.organizer.slug}`">
-                    <div class="name">
+                    <div class="event-show__organizer--name">
                         <h3>{{event.organizer.name}}</h3>
                     </div>
                 </a>
@@ -478,14 +485,15 @@
                 <h2>What you will need</h2>
             </div>
             <div class="right">
-                <div>
-                    <div v-for="location in event.remotelocations">
-                        <h3>{{location.name}}</h3>
-                        <p>{{location.description}}</p>
+                <div class="event-show__remote--area">
+                    <div class="event-show__remote--type" v-for="location in event.remotelocations">
+                        <h4 class="event-show__remote--name">{{location.name}}</h4>
+                        <p class="event-show__remote--description">{{location.description}}</p>
                     </div>
-                    <div style="white-space: pre-wrap;" v-if="event.remote_description">
-                        <p>{{event.remote_description}}</p>
-                    </div>
+                </div>
+                <div class="event-show__remote--userinfo" style="white-space: pre-wrap;" v-if="event.remote_description">
+                    <h4>Show Specific</h4>
+                    <p>{{event.remote_description}}</p>
                 </div>
             </div>
         </section>

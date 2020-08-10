@@ -18,7 +18,7 @@ class Genre extends Model
     * @var array
     */
 	protected $fillable = [
-    	'name','admin', 'user_id', 'rank'
+    	'name','admin', 'user_id', 'rank', 'slug'
     ];
 
     /**
@@ -70,6 +70,9 @@ class Genre extends Model
                 'type' => 'search_as_you_type',
             ],
             'admin' => [
+                'type' => 'text',
+            ],
+            'slug' => [
                 'type' => 'text',
             ],
         ]

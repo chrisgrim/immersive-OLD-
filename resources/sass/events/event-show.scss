@@ -191,6 +191,7 @@ section .event-title {
 }
 
 .show-week-calendar {
+    margin-bottom: 1rem;
     grid-template-columns: repeat(7,1fr);
     border: 1px solid #ebebeb;
     border-radius: 5px;
@@ -212,10 +213,10 @@ section .event-title {
     }
 }
 
-.event-show-organizer-image {
+.event-show__organizer--image {
     width:10rem;
     height: 10rem;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.5rem;
     & .img {
         width: 100%;
         height: 100%;
@@ -244,7 +245,41 @@ section .event-title {
     overflow: hidden;
     word-break: break-word;
     hyphens: auto
+}
 
+.event-show__remote--name {
+    margin-bottom: 1rem;
+}
+.event-show__remote--description {
+    font-size: 1.4rem;
+    line-height: inherit !important;
+}
+.event-show__remote--userinfo {
+    width: 100%;
+    border: 1px solid #ccbebe;
+    background: #ececec;
+    padding: 2rem;
+    border-radius: 1rem;
+    max-width: 45rem;
+}
+.event-show__organizer--name{
+    margin-bottom: 1rem;
+}
+.event-show__dates--details {
+    margin-bottom: 1rem;
+}
+.event-show__remote--area {
+    display: grid;
+    grid-gap: 2rem;
+    grid-template-columns: repeat( auto-fit, minmax(20rem, 1fr) );
+    max-width: 45rem;
+    margin-bottom: 2rem;
+}
+.event-show__remote--type {
+    width: 100%;
+    border: 1px solid #ccbebe;
+    border-radius: 1rem;
+    padding: 2rem;
 }
 
 .show-heart-location {
@@ -343,6 +378,12 @@ button.event-bottom-bar__button {
         font-weight: 400;
         font-size: 18px;
         line-height: 24px;
+    }
+}
+
+@media (max-width: 1050px) {
+    .two-panel {
+        grid-template-columns: 27rem 1fr;
     }
 }
 

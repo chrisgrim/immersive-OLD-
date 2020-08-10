@@ -45,6 +45,12 @@
             },
         },
 
+        computed: {
+            approvedOrg() {
+                return this.loadevent.organizer.status == 'p' ? true : false;
+            }
+        },
+
         data() {
             return {
                 event: this.loadevent,
@@ -59,7 +65,6 @@
                 this.dis = true;
                 axios.post(`/approve/${this.event.slug}`)
                 .then(res => { 
-                    // console.log(res.data);
                     window.location.href = '/finish/events';
                 })
                 .catch(error => {   
