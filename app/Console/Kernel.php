@@ -25,6 +25,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('ei:publish-embargoed')->dailyAt('01:55');
+        $schedule->command('ei:check-unfinished')->dailyAt('01:45');
     }
 
     /**

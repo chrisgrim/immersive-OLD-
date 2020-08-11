@@ -146,8 +146,9 @@
                     name: newTag,
                     id: newTag.substring(0, 0) + Math.floor((Math.random() * 10000000))
                 }
-                this.tagOptions.push(tag)
-                this.tagName.push(tag)
+                this.tagOptions.push(tag);
+                this.tagName.push(tag);
+                this.$v.tagName.$touch();
             },
 
             validateText(str) {

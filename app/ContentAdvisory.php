@@ -45,14 +45,14 @@ class ContentAdvisory extends Model
         if ($request->has('contentAdvisory')) {
             foreach ($request['contentAdvisory'] as $content) {
                 ContentAdvisory::firstOrCreate([
-                    'slug' => strtolower($content)
+                    'slug' => str_slug($content)
                 ],
                 [
                     'user_id' => auth()->user()->id,
                     'advisories' => $content
                 ]);
             };
-            $newSync = ContentAdvisory::all()->whereIn('slug', array_map('strtolower', $request['contentAdvisory']));
+            $newSync = ContentAdvisory::all()->whereIn('slug', array_map('str_slug', $request['contentAdvisory']));
             $event->contentadvisories()->sync($newSync);
         };
     }

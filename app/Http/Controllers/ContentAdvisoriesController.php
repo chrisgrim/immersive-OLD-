@@ -46,7 +46,8 @@ class ContentAdvisoriesController extends Controller
     public function store(Request $request)
     {
         ContentAdvisory::create([
-            'advisories' => strtolower($request->advisories),
+            'advisories' => $request->advisories,
+            'slug' => str_slug($request->advisories),
             'admin' => true,
             'user_id' => auth()->user()->id
         ]);
@@ -92,7 +93,7 @@ class ContentAdvisoriesController extends Controller
         if ($request->advisories) {
             return $contentadvisory->update([
                 'advisories' => $request->advisories,
-                'slug' => strtolower($request->advisories),
+                'slug' => str_slug($request->advisories),
                 'user_id' => auth()->user()->id
             ]);
         }

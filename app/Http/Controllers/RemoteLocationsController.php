@@ -48,7 +48,7 @@ class RemoteLocationsController extends Controller
     {
         RemoteLocation::create([
             'name' => $request->name,
-            'slug' => strtolower($request->name),
+            'slug' => str_slug($request->name),
             'description' => $request->description,
             'admin' => true,
             'user_id' => auth()->user()->id
@@ -88,7 +88,7 @@ class RemoteLocationsController extends Controller
     {
         if ($request->name) {
             $remotelocation->update([
-                'slug' => strtolower($request->name),
+                'slug' => str_slug($request->name),
                 'name' => $request->name,
                 'user_id' => auth()->user()->id,
             ]);

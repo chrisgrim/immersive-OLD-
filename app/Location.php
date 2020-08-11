@@ -54,7 +54,7 @@ class Location extends Model
     {
         foreach ($request->remote as $loc) {
             RemoteLocation::firstOrCreate([
-                'slug' => strtolower($loc)
+                'slug' => str_slug($loc)
             ],
             [
                 'name' => $loc,
@@ -62,7 +62,7 @@ class Location extends Model
             ]);
         };
         
-        $newSync = RemoteLocation::all()->whereIn('slug',  array_map('strtolower', $request['remote']));
+        $newSync = RemoteLocation::all()->whereIn('slug',  array_map('str_slug', $request['remote']));
         $event->remotelocations()->sync($newSync);
 
         $event->update([

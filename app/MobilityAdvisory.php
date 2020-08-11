@@ -45,14 +45,14 @@ class MobilityAdvisory extends Model
         if ($request->has('mobilityAdvisory')) {
             foreach ($request['mobilityAdvisory'] as $content) {
                 MobilityAdvisory::firstOrCreate([
-                    'slug' => strtolower($content)
+                    'slug' => str_slug($content)
                 ],
                 [
                     'user_id' => auth()->user()->id,
                     'mobilities' => $content
                 ]);
             };
-            $newSync = MobilityAdvisory::all()->whereIn('slug', array_map('strtolower', $request['mobilityAdvisory']));
+            $newSync = MobilityAdvisory::all()->whereIn('slug', array_map('str_slug', $request['mobilityAdvisory']));
             $event->mobilityadvisories()->sync($newSync);
         };
     }

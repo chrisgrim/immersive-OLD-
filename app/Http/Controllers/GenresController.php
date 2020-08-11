@@ -48,7 +48,7 @@ class GenresController extends Controller
     {
         Genre::create([
             'name' => $request->name,
-            'slug' => strtolower($request->name),
+            'slug' => str_slug($request->name),
             'admin' => true,
             'user_id' => auth()->user()->id
         ]);
@@ -107,7 +107,7 @@ class GenresController extends Controller
         $genre->update([
             'rank' => $request['rank'],
             'name' => $request['name'],
-            'slug' => strtolower($request['name']),
+            'slug' => str_slug($request['name']),
             'user_id' => auth()->user()->id,
             'admin' => $request['admin'],
         ]);

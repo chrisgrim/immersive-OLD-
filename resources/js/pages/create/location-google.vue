@@ -253,6 +253,7 @@
                 }
             },
             addTag (newTag) {
+                if (this.validateText(newTag)) { alert('No urls as tags') ;return false };
                 const tag = {
                     name: newTag,
                     id: newTag.substring(0, 0) + Math.floor((Math.random() * 10000000))
@@ -265,6 +266,9 @@
                 .then(res => {
                     this.updateEventFields(res.data.location);
                 });
+            },
+            validateText(str) {
+                return str && str.startsWith("http") ? true : false
             },
         },
     

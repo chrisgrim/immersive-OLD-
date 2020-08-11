@@ -26,7 +26,7 @@
                     @open="loadEvents"
                     @search-change="loadEvents"
                     :show-no-results="false"
-                    @input="$v.event.$touch"
+                    @input="addShowDates"
                     :allow-empty="false">
                         <template slot="option" slot-scope="props">
                             <div class="option__desc">
@@ -127,7 +127,6 @@
                     </div>
                 </div>
             </div>
-            <button @click="checkDates">check</button>
             <br>
             <br>
             <button @click.prevent="savePick">Add staff pick</button>
@@ -379,11 +378,19 @@
                 let from = new Date(this.datesSubmit[0]);
                 let to = new Date(this.datesSubmit[1]);
 
-                var result = [];
-                this.showDates.forEach(date => result.push(new Date(date) >= from && new Date(date) <= to));
+                let result = [];
+                for (var i = 0; i <  this.event.shows.length; i++) {
+                    let date = this.event.shows[i].date;
+                    result.push(new Date(date) >= from && new Date(date) <= to);
+                }
+                // this.showDates.forEach(date => result.push(new Date(date) >= from && new Date(date) <= to));
                 return result.includes(true) ? false : true;
+            },
 
-
+            addShowDates(event) {
+                this.$v.event.$touch
+                this.showDates = event.shows.map(a => a.date);
+                console.log(this.showDates);
             },
 
             deletePick(pick) {
@@ -447,12 +454,6 @@
 
         created() {
             this.loadPicks()
-        },
-
-        watch: {
-            event() {
-                this.showDates = this.event.shows.map(a => a.date);;
-            }
         },
 
         validations: {
