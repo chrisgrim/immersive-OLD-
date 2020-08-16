@@ -375,6 +375,7 @@
             },
 
             checkDates() {
+                if (this.event.showtype == 'a' ) {return false;}
                 let from = new Date(this.datesSubmit[0]);
                 let to = new Date(this.datesSubmit[1]);
 

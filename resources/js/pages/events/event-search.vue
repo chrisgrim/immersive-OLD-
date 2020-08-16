@@ -13,7 +13,7 @@
                     <!-- Date Search -->
                     <div class="e-search-filter__item">
                         <div class="e-search-filter__button" ref="dates">
-                            <button @click="show('dates')" class="filter">
+                            <button @click="show('dates')" :class="{ active : datesFormatted.length }" class="filter">
                                 <p v-if="showDates">Dates</p>
                                 <p v-else>{{datesFormatted[0]}}{{ datesFormatted[1] ? ' to ' + datesFormatted[1] : ''}} </p>
                             </button>
@@ -38,7 +38,7 @@
                     <!-- Category Search -->
                     <div class="e-search-filter__item">
                         <div class="e-search-filter__button" ref="cat">
-                            <button @click="show('category')" class="filter">
+                            <button @click="show('category')" :class="{ active:category }" class="filter">
                                 <p v-if="!category">Categories</p>
                                 <p v-if="category">{{category.name}}</p>
                             </button>
@@ -65,7 +65,7 @@
                     <!-- Price Search -->
                     <div class="e-search-filter__item">
                         <div class="e-search-filter__button" ref="price">
-                            <button @click="show('price')" class="filter">
+                            <button @click="show('price')" :class="{ active : !showPrice }" class="filter">
                                 <p v-if="!showPrice && price[0] == 0">{{' Up to ' + '$' + price[1]}}</p>
                                 <p v-if="!showPrice && price[0] != 0">{{'$' + price[0]}}{{' to ' + '$' + price[1]}}</p>
                                 <p v-if="showPrice">Price</p>
@@ -91,6 +91,33 @@
                                     <button v-if="showPrice" @click="active = null" class="pop-box__cancel">Cancel</button>
                                     <button v-if="!showPrice" @click="price = [options.min, options.max]" class="pop-box__cancel">clear</button>
                                     <button @click="submit" class="pop-box__submit">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                     <!-- Tag Search -->
+                    <div class="e-search-filter__item">
+                        <div class="e-search-filter__button" ref="tag">
+                            <button @click="show('tag')" :class="{ active : tag }" class="filter">
+                                <p v-if="!tag">Tags</p>
+                                <p v-if="tag">{{tag.name}}</p>
+                            </button>
+                            <div v-if="active === 'tag'" class="e-search-filter__pop-box">
+                                <div class="e-search-filter__pop-box--category">
+                                    <multiselect 
+                                    v-model="tag"
+                                    label="name"
+                                    :options="tags" 
+                                    placeholder="Tags"
+                                    @select="submitTag"
+                                    open-direction="bottom"
+                                    :preselect-first="false">
+                                    </multiselect>
+                                </div>
+                                <div class="e-search-filter__pop-box--footer">
+                                    <button v-if="tag" @click="clearTag()" class="pop-box__cancel">clear</button>
+                                    <button v-if="!tag" @click="active = null;" class="pop-box__cancel">Cancel</button>
                                 </div>
                             </div>
                         </div>
@@ -208,7 +235,7 @@
 
         components: { flatPickr, Multiselect, VueSlider, searchItem },
 
-        props:['searchedevents','categories','user'],
+        props:['searchedevents','categories','user', 'tags', 'maxprice'],
 
         computed: {
             showPrice() {
@@ -222,10 +249,12 @@
                 return {
                     results: this.results,
                     mapboundary: this.boundaries,
-                    category: this.category,
+                    category: this.category.id,
                     dates: this.datesSubmit,
                     price: this.hasPrice ? this.price : '',
-                    loc: this.boundaries ? '' : {lat: new URL(window.location.href).searchParams.get("lat"), lng: new URL(window.location.href).searchParams.get("lng")}
+                    tag: this.tag ? this.tag.name : null,
+                    lat: this.boundaries ? '' : new URL(window.location.href).searchParams.get("lat"),
+                    lng: this.boundaries ? '' : new URL(window.location.href).searchParams.get("lng"),
                 }
             },
 
@@ -236,6 +265,7 @@
                 eventList: this.searchedevents,
                 active: null,
                 category: '',
+                tag: '',
                 showMap: true,
                 price: [0,0],
                 boundaries: '',
@@ -246,6 +276,7 @@
                 results: '',
                 searchedCity: new URL(window.location.href).searchParams.get("name"),
                 searchedCategory: new URL(window.location.href).searchParams.get("category"),
+                searchtag: new URL(window.location.href).searchParams.get("tag"),
                 config: this.initializeConfigObject(),
                 configmobile: this.initializeConfigObject(),
                 options: { min: 0, max: 500 },
@@ -286,6 +317,17 @@
                 this.submit();
             },
 
+            submitTag(value) {
+                this.$store.commit('searchtype', value.name)
+                this.tag = value;
+                this.submit();
+            },
+
+            clearTag() {
+                this.tag = '';
+                this.submit();
+            },
+
             mapSearch(value) {
                 this.boundaries = value;
                 this.submit();
@@ -323,12 +365,11 @@
                 this.active = null;
                 console.log(this.data);
                 axios.post('/api/search/mapboundary', this.data)
-                .then(response => {
-                    this.eventList = response.data;
-                    console.log(response.data);
+                .then(res => {
+                    this.eventList = res.data;
                 })
-                .catch(errorResponse => { 
-                   console.log(errorResponse.data);
+                .catch(err => { 
+                   
                 });
             },
 
@@ -372,14 +413,14 @@
                     el.classList.remove(className);
                 }
             },
-            
 
             onClickOutside(event) {
-                console.log('test');
+                if (this.active == null) {return false};
                 let cat =  this.$refs.cat;
+                let tag =  this.$refs.tag;
                 let dates =  this.$refs.dates;
                 let price =  this.$refs.price;
-                if (!cat || cat.contains(event.target) || !dates || dates.contains(event.target) || !price || price.contains(event.target)) return;
+                if (!cat || cat.contains(event.target) || !tag || tag.contains(event.target) || !dates || dates.contains(event.target) || !price || price.contains(event.target)) return;
                 this.active = null;
                 this.submit();
             },

@@ -253,6 +253,7 @@
                 <vue-event-index :event="event"></vue-event-index>
             </div>
         </div>
+        <button @click="onSubmit">Load More: There are  {{this.pagination.last_page}} pages. Current Page: {{this.pagination.current_page}}</button>
         <load-more @intersect="intersected"></load-more>
       
 
@@ -280,8 +281,8 @@
 
             submitObject() {
                 return {
-                    category: this.category ? this.category : null,
-                    tag: this.tag ? this.tag : null,
+                    category: this.category ? this.category.id : null,
+                    tag: this.tag ? this.tag.name : null,
                     dates: this.datesSubmit.length ? this.datesSubmit : null,
                     price: !this.showPrice ? this.price : null,
                 }
@@ -314,6 +315,7 @@
                 page: 2,
                 pagination:'',
                 hasFilter: false,
+                loadMore: false,
             }
         },
 
@@ -333,11 +335,13 @@
 
             onSubmit() {
                 this.active = null;
+                this.loadMore = false;
                 axios.post(`/api/search/remote?page=${this.page}`, this.submitObject)
                 .then(res => {
                     res.data.current_page == 1 ? this.eventList = res.data.data : this.eventList = this.eventList.concat(res.data.data);
                     this.pagination = res.data;
                     this.page = res.data.current_page + 1;
+                    this.loadMore = true;
                 })
                 .catch(errorResponse => { 
                    console.log(errorResponse.data);
@@ -345,10 +349,9 @@
             },
 
             intersected() {
-                console.log('intersected');
-                if( this.pagination.last_page < this.page ) {return false};
+                if (!this.loadMore) {return false;}
+                if (this.pagination.last_page < this.page ) {return false};
                 this.onSubmit();
-     
             },
 
             show(type) {

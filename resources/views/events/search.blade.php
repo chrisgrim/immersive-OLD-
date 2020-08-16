@@ -17,7 +17,7 @@
 
 @section('content')
     <div id="bodyArea">
-        <search-listing user="{{ auth()->id() }}" :categories="{{ $categories }}" :searchedevents="{{ $searchedevents }}">
+        <search-listing user="{{ auth()->id() }}" :tags="{{ $tags }}" :searchedevents="{{ $searchedevents }}" :categories="{{ $categories }}" :searchedevents="{{ $searchedevents }}">
     </div>
 @endsection
 

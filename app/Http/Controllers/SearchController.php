@@ -9,6 +9,7 @@ use App\Date;
 use App\User;
 use App\Organizer;
 use App\CityList;
+use App\SearchData;
 use App\RemoteLocation;
 use App\OrganizerSearchRule;
 use App\CityListSearchRule;
@@ -31,38 +32,30 @@ class SearchController extends Controller
 {
     public function index(Request $request)
     {
-        $searchedevents = Event::search('*')
-            ->where('closingDate', '>=', 'now/d')
-            ->whereGeoDistance('location_latlon', [floatval($request->lng), floatval($request->lat)], '40km')
-            ->with(['location', 'organizer'])
-            ->get(); 
-
+        $maxprice = Event::getMostExpensive();
         $categories = Category::all();
+        $tags = Genre::where('admin', 1)->orderBy('rank', 'desc')->get();
 
-        return view('events.search',compact('searchedevents', 'categories'));
+        $searchedevents =  Event::search('a')
+            ->rule(EventMapSearchRule::class)
+            ->with(['location', 'organizer'])
+            ->take(10)
+            ->get();
+
+        return view('events.search',compact('searchedevents', 'categories', 'maxprice', 'tags'));
     }
 
     public function onlinesearch(Request $request)
     {
-        $liveEvents = Event::where('status', 'p')
-            ->with('priceranges')
-            ->whereDate('closingDate', '>=', date("Y-m-d"))
-            ->get();
+        $maxprice = Event::getMostExpensive();
+        $categories = Category::all();
+        $tags = Genre::where('admin', 1)->orderBy('rank', 'desc')->get();
 
-        foreach ($liveEvents as $event) {
-            foreach ($event->priceranges as $price) {
-                $array[] = $price['price'];
-            }
-        }
-        // get an array of all the prices from published events
-        $maxprice =  ceil(max($array));
-        //  get the max price of that array
         $searchedevents = Event::limit(12)
                         ->where('status', 'p')
                         ->with(['location', 'organizer'])
                         ->get();
-        $categories = Category::all();
-        $tags = Genre::where('admin', 1)->orderBy('rank', 'desc')->get();
+
         return view('events.searchonline',compact('searchedevents', 'categories', 'maxprice', 'tags'));
     }
 
@@ -95,67 +88,42 @@ class SearchController extends Controller
 
     public function searchNav(Request $request)
     {
-        if ($request->keywords) {
-            $category = Category::search($request->keywords)
-            ->rule(CategorySearchRule::class)
-            ->orderBy('rank', 'desc')
-            ->take(5)
-            ->get();
-        } else {
-            $category = Category::search('*')
-            ->orderBy('rank', 'desc')
-            ->take(5)
-            ->get();
+        if (!$request->keywords) {
+            $category = Category::search('*')->orderBy('rank', 'desc')->take(5)->get();
+            $tag = Genre::search('*')->where('admin', 1)->orderBy('rank', 'desc')->take(10)->get();
+            $remote = RemoteLocation::search('*')->take(5)->get();
+            return [
+                'data' => $category->concat($tag)->concat($remote),
+            ];
         }
 
-        if ($request->keywords) {
-            $tag = Genre::search($request->keywords)
-            ->rule(GenreSearchRule::class)
-            ->where('admin', 1)
-            ->orderBy('rank', 'desc')
-            ->take(10)
-            ->get();
-        } else {
-            $tag = Genre::search('*')
-            ->where('admin', 1)
-            ->orderBy('rank', 'desc')
-            ->take(10)
-            ->get();
-        }
+        $category = Category::search($request->keywords)
+        ->rule(CategorySearchRule::class)
+        ->orderBy('rank', 'desc')
+        ->take(5)
+        ->get();
 
-        if ($request->keywords) {
-            $remote = RemoteLocation::search($request->keywords)
-            ->rule(RemoteLocationSearchRule::class)
-            ->take(5)
-            ->get();
-        } else {
-            $remote = RemoteLocation::search('*')
-            ->take(5)
-            ->get();
-        }
+        $tag = Genre::search($request->keywords)
+        ->rule(GenreSearchRule::class)
+        ->where('admin', 1)
+        ->orderBy('rank', 'desc')
+        ->take(10)
+        ->get();
+
+        $remote = RemoteLocation::search($request->keywords)
+        ->rule(RemoteLocationSearchRule::class)
+        ->take(5)
+        ->get();
         
-
-        if ($request->keywords) {
-            $event = Event::search($request->keywords)
-                ->rule(EventSearchRule::class)
-                ->take(5)
-                ->get();
-        } else {
-            $event = Event::search('*')
+        $event = Event::search($request->keywords)
+            ->rule(EventSearchRule::class)
             ->take(5)
             ->get();
-        }
 
-        if ($request->keywords) {
-            $organizer = Organizer::search($request->keywords)
-                ->rule(OrganizerSearchRule::class)
-                ->take(5)
-                ->get();
-        } else {
-            $organizer = Organizer::search('*')
+        $organizer = Organizer::search($request->keywords)
+            ->rule(OrganizerSearchRule::class)
             ->take(5)
             ->get();
-        }
 
         $concatdata = $category->concat($tag)->concat($remote)->concat($event)->concat($organizer);
 
@@ -165,17 +133,10 @@ class SearchController extends Controller
             ];
         }
 
-        if ($request->keywords) {
-            $city = CityList::search($request->keywords)
-            ->rule(CityListSearchRule::class)
-            ->orderBy('population', 'desc')
-            ->get();
-        } else {
-            $city = CityList::search('*')
-            ->orderBy('population', 'desc')
-            ->take(10)
-            ->get();
-        }
+        $city = CityList::search($request->keywords)
+        ->rule(CityListSearchRule::class)
+        ->orderBy('population', 'desc')
+        ->get();
 
         return [
             'data' => $concatdata->concat($city),
@@ -256,6 +217,19 @@ class SearchController extends Controller
 
     public function searchRemote(Request $request)
     {
+        if ($request->category) {
+             SearchData::create([
+                'search_term' => Category::find($request->category)->name,
+                'search_type' => 'category'
+            ]);
+        }
+        if ($request->tag) {
+            SearchData::create([
+                'search_term' => $request->tag,
+                'search_type' => 'tag'
+            ]);
+        }
+
         if ($request->category || $request->dates || $request->price || $request->tag ) {
             return $events = Event::search('a')
             ->rule(EventRemoteSearchRule::class)

@@ -314,11 +314,11 @@
                         <h3>Mobility Advisories</h3>
                     </div>
                     <ul class="info">
-                        <li>
-                            <p>Event is <span v-if="!event.advisories.wheelchairReady">not</span> wheelchair accessible.</p>
-                        </li>
                         <li v-for="item in event.mobility_advisories">
                             <p>{{item.mobilities}}</p>
+                        </li>
+                        <li>
+                            <p>Event is <span v-if="!event.advisories.wheelchairReady">not</span> wheelchair accessible.</p>
                         </li>
                     </ul>
                 </div>

@@ -5,7 +5,7 @@
                 <h2>Description</h2>
             </div>
             <div class="field">
-                <label class="area"> Describe your event to our readers <span v-if="event.hasLocation">(include covid 19 information)</span> </label>
+                <label class="area"> Describe your event to our readers <span v-if="event.hasLocation"><b>(Please include COVID-19 precaution information)</b></span> </label>
                 <textarea 
                 type="text"
                 name="description" 

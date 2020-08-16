@@ -43,34 +43,34 @@ class ForgotFinishEventsCommand extends Command
      */
     public function handle()
     {
-        //Get list of organizers created in last 7 days
-        $organizers = Organizer::where('created_at', '>=', Carbon::now()->subDays(7))->get();
+        // //Get list of organizers created in last 7 days
+        // $organizers = Organizer::where('created_at', '>=', Carbon::now()->subDays(7))->get();
 
-        foreach ($organizers as $organizer) {
-            // if the number of days passed since creation is over 5 then return those organizers
-            if ($organizer->created_at->diff(Carbon::now())->days > 5 ) {
-                // get the list of organizers that have not created an event
-                if(!$organizer->events()->exists()){
-                    //this is organizers who we need to message. Get organizer user and make sure we havent already messaged them from previous event
-                    if ($organizer->user->reminder < 1 ) {
-                        $attributes = [
-                            'organizer' => $organizer->name,
-                            'name' => $event->user->name,
-                        ];
-                        Mail::to('chgrim@gmail.com')->send(new OrganizerReminder($attributes));
-                        // Mail::to($event->user->email)->send(new OrganizerReminder($attributes));
-                        // $event->user->update(['reminder' => 1]);
-                    }
-                }
-            }
-        }
+        // foreach ($organizers as $organizer) {
+        //     // if the number of days passed since creation is over 5 then return those organizers
+        //     if ($organizer->created_at->diff(Carbon::now())->days > 5 ) {
+        //         // get the list of organizers that have not created an event
+        //         if(!$organizer->events()->exists()){
+        //             //this is organizers who we need to message. Get organizer user and make sure we havent already messaged them from previous event
+        //             if ($organizer->user->reminder < 1 ) {
+        //                 $attributes = [
+        //                     'organizer' => $organizer->name,
+        //                     'name' => $event->user->name,
+        //                 ];
+        //                 Mail::to('chgrim@gmail.com')->send(new OrganizerReminder($attributes));
+        //                 // Mail::to($event->user->email)->send(new OrganizerReminder($attributes));
+        //                 // $event->user->update(['reminder' => 1]);
+        //             }
+        //         }
+        //     }
+        // }
 
-         //Get list of events created in last 7 days
-        $events = Event::where('created_at', '>=', Carbon::now()->subDays(7))->get();
+         //Get list of events created in last 24 hours
+        $events = Event::where('created_at', '>=', Carbon::now()->subHours(24))->get();
 
         foreach ($events as $event) {
-            // if the number of days passed since creation is over 5 then return those events
-            if ($event->created_at->diff(Carbon::now())->days > 5 ) {
+            // if the number of hours passed since creation is over 23 then return those events
+            if ($event->created_at->diff(Carbon::now())->h > 23 ) {
                 // get the list of events that are not published
                 if( $event->status != 'p' && $event->status != 'n' && $event->status != 'r' && $event->status != 'e'){
                     //these are the events who we need to message. Get Event user and make sure we havent already messaged them from previous event
@@ -86,6 +86,5 @@ class ForgotFinishEventsCommand extends Command
                 }
             }
         }
-
     }
 }

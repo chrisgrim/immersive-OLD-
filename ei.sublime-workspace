@@ -529,10 +529,10 @@
 			}
 		},
 		{
-			"file": "resources/sass/organizer.scss",
+			"file": "resources/views/events/show.blade.php",
 			"settings":
 			{
-				"buffer_size": 6197,
+				"buffer_size": 6628,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -589,27 +589,31 @@
 	[
 		"/Users/chrisgrim/code/ei",
 		"/Users/chrisgrim/code/ei/app",
-		"/Users/chrisgrim/code/ei/app/Console",
 		"/Users/chrisgrim/code/ei/app/Http",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers",
 		"/Users/chrisgrim/code/ei/database",
 		"/Users/chrisgrim/code/ei/resources",
 		"/Users/chrisgrim/code/ei/resources/js",
 		"/Users/chrisgrim/code/ei/resources/js/pages",
-		"/Users/chrisgrim/code/ei/resources/js/pages/create",
-		"/Users/chrisgrim/code/ei/resources/sass"
+		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea",
+		"/Users/chrisgrim/code/ei/resources/sass",
+		"/Users/chrisgrim/code/ei/resources/views",
+		"/Users/chrisgrim/code/ei/resources/views/events"
 	],
 	"file_history":
 	[
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/MobilityController.php",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/GenresController.php",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/RemoteLocationsController.php",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/ContentAdvisoriesController.php",
+		"/Users/chrisgrim/code/ei/resources/sass/organizer.scss",
 		"/Users/chrisgrim/code/ei/app/ContentAdvisory.php",
 		"/Users/chrisgrim/code/ei/app/Event.php",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/description.vue",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/DescriptionController.php",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/ContentAdvisoriesController.php",
 		"/Users/chrisgrim/code/ei/app/MobilityAdvisory.php",
 		"/Users/chrisgrim/code/ei/app/Location.php",
 		"/Users/chrisgrim/code/ei/database/migrations/2020_08_11_162414_make_genres_advisories_not_unique_table.php",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/GenresController.php",
 		"/Users/chrisgrim/code/ei/app/Console/Kernel.php",
 		"/Users/chrisgrim/code/ei/resources/js/routes.js",
 		"/Users/chrisgrim/code/ei/database/migrations/2020_08_10_215044_add_reminder_to_users_table.php",
@@ -629,8 +633,6 @@
 		"/Users/chrisgrim/code/ei/app/StaffPick.php",
 		"/Users/chrisgrim/code/ei/database/migrations/2020_08_10_183947_remove_unique_on_events_on_staff_picks_table.php",
 		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/admin-content-advisories.vue",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/MobilityController.php",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/RemoteLocationsController.php",
 		"/Users/chrisgrim/code/ei/app/RemoteLocation.php",
 		"/Users/chrisgrim/code/ei/database/migrations/2020_08_10_042854_add_slug_to_remote_locations_table.php",
 		"/Users/chrisgrim/code/ei/database/migrations/2020_08_07_052511_add_slug_to_genres_table.php",
@@ -642,7 +644,6 @@
 		"/Users/chrisgrim/code/ei/app/AdminArea.php",
 		"/Users/chrisgrim/code/ei/app/Genre.php",
 		"/Users/chrisgrim/code/ei/resources/js/pages/organizers/organizer-show.vue",
-		"/Users/chrisgrim/code/ei/resources/sass/organizer.scss",
 		"/Users/chrisgrim/code/ei/resources/sass/events/event-index.scss",
 		"/Users/chrisgrim/code/ei/resources/sass/events/event-show.scss",
 		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-show.vue",
@@ -1031,7 +1032,7 @@
 							"syntax": "Packages/PHP/PHP.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 2411.0,
+						"translation.y": 161.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
@@ -1039,19 +1040,19 @@
 				},
 				{
 					"buffer": 1,
-					"file": "resources/sass/organizer.scss",
+					"file": "resources/views/events/show.blade.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6197,
+						"buffer_size": 6628,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1885,
-								1885
+								325,
+								325
 							]
 						],
 						"settings":
@@ -1059,10 +1060,10 @@
 							"incomplete_sync": null,
 							"remote_loading": false,
 							"synced": false,
-							"syntax": "Packages/CSS/CSS.sublime-syntax"
+							"syntax": "Packages/Laravel Blade Highlighter/blade.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 1310.0,
+						"translation.y": 100.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,

@@ -7,7 +7,7 @@
         {
             "@context": "https://schema.org",
             "@type": "Event",
-            "name": "{{$event->name}}",
+            "name": "{{$event->name}} {{$event->tag_line ? '- ' . \Illuminate\Support\Str::limit($event->tag_line, 80) : '- ' . \Illuminate\Support\Str::limit($event->description, 80)}}",
              @if($event->shows->isEmpty())
             "startDate":{{ \Carbon\Carbon::parse($event->created_at)->toIso8601String()}},
             @else
@@ -50,7 +50,7 @@
         {
             "@context": "https://schema.org",
             "@type": "Event",
-            "name": "{{$event->name}}",
+            "name": "{{$event->name}} {{$event->tag_line ? '- ' . \Illuminate\Support\Str::limit($event->tag_line, 80) : '- ' . \Illuminate\Support\Str::limit($event->description, 80)}}",
             @if($event->shows->isEmpty())
             "startDate":{{ \Carbon\Carbon::parse($event->created_at)->toIso8601String()}},
             @else

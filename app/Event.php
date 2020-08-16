@@ -343,6 +343,23 @@ class Event extends Model
     }
 
     /**
+    * Finds all the current live events
+    *
+    * @return a collection of the live events with priceranges attached
+    */
+
+    public static function getMostExpensive()
+    {
+        return Event::where('status', 'p')
+            ->with('priceranges')
+            ->whereDate('closingDate', '>=', date("Y-m-d"))
+            ->get()
+            ->map(function($event) { return $event->priceranges->pluck('price');})
+            ->flatten()
+            ->max();;
+    }
+
+    /**
     * Creates a new event
     *
     * @return Nothing
