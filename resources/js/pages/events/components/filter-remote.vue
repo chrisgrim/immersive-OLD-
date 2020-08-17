@@ -253,7 +253,6 @@
                 <vue-event-index :event="event"></vue-event-index>
             </div>
         </div>
-        <button @click="onSubmit">Load More: There are  {{this.pagination.last_page}} pages. Current Page: {{this.pagination.current_page}}</button>
         <load-more @intersect="intersected"></load-more>
       
 

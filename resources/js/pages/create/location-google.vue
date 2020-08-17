@@ -165,7 +165,7 @@
                 return `/create-event/${this.event.slug}/location`
             },
             corsEndpoint() {
-                return `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/geocode/json?address=${this.location.postal_code ? this.location.postal_code : this.location.city}&key=AIzaSyBxpUKfSJMC4_3xwLU73AmH-jszjexoriw`
+                return `https://maps.googleapis.com/maps/api/geocode/json?address=${this.location.postal_code ? this.location.postal_code : this.location.city}&key=AIzaSyBxpUKfSJMC4_3xwLU73AmH-jszjexoriw`
             },
             navSubmit() {
                 return this.$store.state.save
@@ -213,9 +213,6 @@
             
             onSubmit(value) {
                 if (this.checkVuelidate()) { return false };
-                return this.location.hiddenLocationToggle && this.hasLocation ? this.onCorsSubmit(value) : this.onNormalSubmit(value);
-            },
-            onNormalSubmit(value) {
                 axios.patch( this.endpoint, this.hasLocation ? this.location : this.remoteLocationArray )
                 .then(res => {  
                     value == 'exit' ? this.onBackInitial() : this.onForward(value);
@@ -224,27 +221,14 @@
                     this.onErrors(err);
                 });
             },
-            onCorsSubmit(value) {
-                this.loading = true;
-                axios.get(this.corsEndpoint)
-                .then(res => {
-                    this.location.latitude = res.data.results[0].geometry.location.lat;
-                    this.location.longitude = res.data.results[0].geometry.location.lng;
-                })
-                .then(res => {  
-                    axios.patch (this.endpoint, this.location )     
-                    value == 'exit' ? this.onBackInitial() : this.onForward('category');
-                })
-                .catch(err => {
-                    this.onErrors(err);
-                });
-            },
+
             updateEventFields(input) {
                 if ((input !== null) && (typeof input === "object") && (input.id !== null)) {
                     this.location = _.pick(input, _.intersection( _.keys(this.location), _.keys(input) ));
                 };
                 this.location.latitude ? this.map.center = L.latLng(this.location.latitude, this.location.longitude) : '';
             },
+
             handleResize() {
                 if (window.innerWidth > 1050) {
                     this.pageHeight = `height:calc(${window.innerHeight}px - 7rem)`;
@@ -252,6 +236,7 @@
                     this.pageHeight = `height:calc(${window.innerHeight/2.5}px - 7rem)`;
                 }
             },
+
             addTag (newTag) {
                 if (this.validateText(newTag)) { alert('No urls as tags') ;return false };
                 const tag = {
@@ -261,12 +246,14 @@
                 this.remoteLocationOptions.push(tag)
                 this.remoteLocations.push(tag)
             },
+
             onLoad() {
                 axios.get(this.onFetch('location'))
                 .then(res => {
                     this.updateEventFields(res.data.location);
                 });
             },
+
             validateText(str) {
                 return str && str.startsWith("http") ? true : false
             },
@@ -284,8 +271,9 @@
                 } else {
                     this.onSubmit(this.navSubmit);
                 }
-            }
+            },
         },
+
         mounted() {
             this.autocomplete = new google.maps.places.Autocomplete(
                 (this.$refs.autocomplete),
@@ -294,9 +282,11 @@
             this.autocomplete.addListener('place_changed', this.setPlace);
             this.updateEventFields(this.event.location);
         },
+
         destroyed() {
             window.removeEventListener('resize', this.handleResize);
         },
+
         validations: {
             description: {
 

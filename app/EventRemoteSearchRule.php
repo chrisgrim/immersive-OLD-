@@ -25,7 +25,11 @@ class EventRemoteSearchRule extends SearchRule
 
         if (!Request::get('dates')) {
             $array['must'][] = [
-                Arr::add([], 'range.closingDate.gte', 'now/d'),
+                'range' => [
+                    'closingDate' => [
+                        'gte' => 'now/d',
+                    ],
+                ],
             ];
         }
 
@@ -54,42 +58,30 @@ class EventRemoteSearchRule extends SearchRule
 
         if (Request::get('dates')) {
             $array['should'][] = [
-                Arr::add([], 'bool.must.match.showtype', 'a'),
-                Arr::add([], 'bool.should.range', [
-                    'shows.date' => [
-                        'gte' => Request::get('dates')[0],
-                        'lte' => Request::get('dates')[1],
-                    ],
-                ]),
+                'bool' => 
+                    [
+                        'must' => ['match' => ['showtype' => 'a']]
+                    ]
             ];
         }
-
-        // if (Request::get('dates')) {
-        //     $array['should'][] = [
-        //         [
-        //             'bool' => 
-        //             [
-        //                 'must' => ['match' => ['showtype' => 'a']]
-        //             ]
-        //         ],
-        //         [
-        //             'bool' => 
-        //             [
-        //                 'should' => 
-        //                 [
-        //                     'range' => 
-        //                     [
-        //                         'shows.date' => 
-        //                         [
-        //                             'gte' => Request::get('dates')[0],
-        //                             'lte' => Request::get('dates')[1],
-        //                         ]
-        //                     ]
-        //                 ]
-        //             ]
-        //         ],
-        //     ];
-        // }
+        if (Request::get('dates')) {
+            $array['should'][] = [
+                'bool' => 
+                    [
+                        'should' => 
+                        [
+                            'range' => 
+                            [
+                                'shows.date' => 
+                                [
+                                    'gte' => Request::get('dates')[0],
+                                    'lte' => Request::get('dates')[1],
+                                ]
+                            ]
+                        ]
+                    ]
+            ];
+        }
         
         if (Request::get('dates')) {
             $array['minimum_should_match'] = 1;

@@ -377,7 +377,7 @@
             </div>
             <div class="right">
                 <a :href="`/organizer/${event.organizer.slug}`">
-                    <div class="event-show-organizer-image">
+                    <div class="event-show__organizer--image">
                         <div :style="event.organizer.thumbImagePath ? organizerImage : `background:${event.organizer.hexColor}`" class="img">
                             <div class="organizer-icon-text event-show" v-if="!event.organizer.thumbImagePath">
                                 <span>{{event.organizer.name.charAt(0)}}</span>
@@ -433,7 +433,7 @@
                         <div style="width:100%;height:400px">
                             <l-map :zoom="zoom" :center="center" :options="{ scrollWheelZoom: allowZoom, zoomControl: allowZoom }">
                             <l-tile-layer :url="url"></l-tile-layer>
-                            <l-marker :lat-lng="center">
+                            <l-marker :lat-lng="center" v-if="!event.location.hiddenLocationToggle">
                                 <l-popup>
                                     <div class="show-pop">
                                         <a rel="noreferrer" target="_blank" :href="`http://maps.google.com/maps?q=${event.location.home}+${event.location.street},+${event.location.city},+${event.location.region}`">

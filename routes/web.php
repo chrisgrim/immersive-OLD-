@@ -69,6 +69,7 @@ Route::POST('/admin/events/fetch', 'AdminAreaEventsController@fetch');
 Route::POST('/admin/boneyard/fetch', 'AdminAreaEventsController@boneyardFetch');
 Route::POST('/admin/boneyard/{event}', 'AdminAreaEventsController@resurrect');
 Route::POST('/staffpicks/userpicks/{user}', 'StaffPicksController@userpicks');
+Route::POST('/admin/data', 'SearchDataController@create');
 
 Route::GET('/admin/search/genres', 'GenresController@searchgenres');
 

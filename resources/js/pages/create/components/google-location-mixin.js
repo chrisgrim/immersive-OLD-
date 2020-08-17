@@ -1,7 +1,6 @@
 export default {
     methods: {
 
-
         setPlace() {
             let place = this.autocomplete.getPlace();
             this.map.center = L.latLng(place.geometry.location.lat(), place.geometry.location.lng());
