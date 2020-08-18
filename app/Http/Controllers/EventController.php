@@ -30,6 +30,10 @@ class EventController extends Controller
      */
     public function index(Event $event)
     {
+        $staffpicks = StaffPick::whereDate('start_date', '<=', date("Y-m-d"))
+            ->whereDate('end_date', '>=', date("Y-m-d"))
+            ->orderBy('rank')
+            ->first();
         $events = Event::where('closingDate', '>=', Carbon::yesterday()->endOfDay())
             ->where('status', 'p')
             ->limit(12)
@@ -38,7 +42,7 @@ class EventController extends Controller
         $categories = Category::where('remote', 1)
             // ->orderBy('rank', 'desc')
             ->get();
-        return view('events.index',compact('events', 'categories'));
+        return view('events.index',compact('events', 'categories', 'staffpicks'));
     }
 
      /**

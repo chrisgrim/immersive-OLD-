@@ -166,6 +166,10 @@ Vue.component('vue-event-index', () => import(/* webpackChunkName: "assets/eii" 
 Vue.component('vue-event-edit-listing-item', () => import(/* webpackChunkName: "assets/edi" */ './pages/events/components/event-edit-item.vue'));
 Vue.component('vue-event-online-search', () => import(/* webpackChunkName: "assets/eos" */ './pages/events/event-online-search.vue'));
 
+//Staffpicks
+Vue.component('vue-staffpicks-show', () => import(/* webpackChunkName: "assets/ssp" */ './pages/staffpicks/staffpicks-show.vue'));
+
+
 //Login z
 Vue.component('login-pop', () => import(/* webpackChunkName: "assets/llp" */ './pages/layouts/login-pop.vue'));
 Vue.component('vue-register', () => import(/* webpackChunkName: "assets/lr" */ './pages/layouts/register.vue'));

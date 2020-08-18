@@ -83,7 +83,7 @@ export default {
             ],
             isLoading: false,
             search: this.initializeSearchObject(),
-            placeholder: new URL(window.location.href).searchParams.get("name") ? new URL(window.location.href).searchParams.get("name") : window.innerWidth < 768 ? 'Search' : 'Search by event type, city or event',
+            placeholder: new URL(window.location.href).searchParams.get("name") ? new URL(window.location.href).searchParams.get("name") : window.innerWidth < 768 ? 'Search' : 'Search by event name, category, location, or tag',
             type: '',
         }
     },

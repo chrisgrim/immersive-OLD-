@@ -23,7 +23,7 @@
                             <img src="/storage/website-files/location.png" alt="">
                             <span v-if="event.hasLocation">
                                 <span class="header__show-info">Location</span>
-                                <span class="header__show-info bold">{{event.location.city}}</span>
+                                <span class="header__show-info bold">{{event.location.city}}<span v-if="event.location.region">, {{event.location.region}}</span></span>
                             </span>
                             <span v-else>
                                 <span class="header__show-info">Location</span>
@@ -399,13 +399,14 @@
         </section>
 
         <!-- Location -->
-        <section v-if="bar && event.hasLocation" class="section event-show location">
+        <section id="location" v-if="event.hasLocation" class="section event-show location">
             <div>
                 <div class="event-title">
                     <h2>Location</h2>
                 </div>
                 <div class="text" v-if="event.location.hiddenLocationToggle">
                     <a rel="noreferrer" target="_blank" :href="`http://maps.google.com/maps?q=${event.location.city},+${event.location.region}`">
+                        <b><p v-if="event.location.venue">{{event.location.venue}}</p></b>
                         <p>{{event.location.city}}, {{event.location.region}}</p>
                         <br>
                         <p>{{event.location.hiddenLocation}}</p>
@@ -413,6 +414,7 @@
                 </div>
                 <div class="text" v-else="event.location.hiddenLocationToggle">
                     <a rel="noreferrer" target="_blank" :href="`http://maps.google.com/maps?q=${event.location.home}+${event.location.street},+${event.location.city},+${event.location.region}`">
+                        <b><p v-if="event.location.venue">{{event.location.venue}}</p></b>
                         <p>{{locationPlaceholder}}</p>  
                     </a>
                 </div>
@@ -433,7 +435,7 @@
                         <div style="width:100%;height:400px">
                             <l-map :zoom="zoom" :center="center" :options="{ scrollWheelZoom: allowZoom, zoomControl: allowZoom }">
                             <l-tile-layer :url="url"></l-tile-layer>
-                            <l-marker :lat-lng="center" v-if="!event.location.hiddenLocationToggle">
+                            <l-marker :lat-lng="center" v-if="!event.location.hiddenLocationToggle && event.location.street">
                                 <l-popup>
                                     <div class="show-pop">
                                         <a rel="noreferrer" target="_blank" :href="`http://maps.google.com/maps?q=${event.location.home}+${event.location.street},+${event.location.city},+${event.location.region}`">
@@ -454,22 +456,24 @@
         </section>
 
         <!-- No Location -->
-        <section class="event-show grid two-panel" v-if="!event.hasLocation">
+        <section id="location" class="event-show grid two-panel" v-if="!event.hasLocation">
             <div class="event-title">
                 <h2>What you will need</h2>
             </div>
             <div class="right">
-                <div>
+                <div class="event-show__remote--area">
                     <div class="event-show__remote--type" v-for="location in event.remotelocations">
-                        <h3 class="event-show__remote--name">{{location.name}}</h3>
-                        <p>{{location.description}}</p>
+                        <h4 class="event-show__remote--name">{{location.name}}</h4>
+                        <p class="event-show__remote--description">{{location.description}}</p>
                     </div>
-                    <div v-if="event.remote_description">
-                        <p>{{event.remote_description}}</p>
-                    </div>
+                </div>
+                <div class="event-show__remote--userinfo" style="white-space: pre-wrap;" v-if="event.remote_description">
+                    <h4>Additional Instructions</h4>
+                    <p>{{event.remote_description}}</p>
                 </div>
             </div>
         </section>
+
         <div>
             <div class="create-button__back">
                 <button :disabled="disabled" class="create review" @click.prevent="onBack('images')"> Back </button>

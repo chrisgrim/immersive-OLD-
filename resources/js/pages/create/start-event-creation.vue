@@ -10,12 +10,7 @@
         <div class="start-content">
             <div class="start-content__text">
                 <h2>Hi, {{user.name}}</h2>
-                <p>We're excited you are listing your event on Everything Immersive!</p> 
-                <br>
-                <ul>
-                    <li>The first step is to create your organization on EI.</li>
-                    <li>The second step is creating the event for that organization.</li>
-                </ul>
+                <p>We're excited you are listing your event on Everything Immersive! Our process has you create your organization first and then events for that organizer. We <b>don't sell tickets</b> on EI, but provide an easy way for thousands of users to discover immersive events like yours.</p>
             </div>
             <a href="/organizer/create"><button class="event-start-button">Create Organization</button></a>
         </div>

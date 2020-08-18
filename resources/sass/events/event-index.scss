@@ -206,6 +206,78 @@ button.contributer--button {
         max-width: 70vw;
     }
 }
+.staffpicks__banner {
+    background-color: #4392cb;
+background-image: linear-gradient(135deg, #4392cb 0%, #1e225e 100%);
+    padding-bottom: 7rem !important;
+}
+.staffpicks__selection {
+    display: inline-grid;
+    grid-template-columns:1fr 20rem;
+    grid-gap: 3rem;
+}
+.staffpicks__selection--main {
+    background: white;
+    display: inline-grid;
+    grid-template-columns: 40% 60%;
+    border: 1px solid white;
+    border-radius: 1rem;
+    padding: 3rem;
+}
+.staffpicks__selection--loadmore {
+    background: white;
+    border: 1px solid white;
+    border-radius: 1rem;
+    padding: 2rem;
+    text-align: center;
+}
+.banner-title__staffpicks{
+    margin: 2rem 0rem;
+    & h3{
+        color:white;
+    }
+}
+.staffpicks__title {
+    position: relative;
+    margin-left:3rem;
+    & h4 {
+        color:black;
+    }
+}
+.staffpicks__user {
+    position: absolute;
+    margin-left: 1.3rem;
+    margin-top: 2.6rem;
+    & img {
+        width:5rem;
+        border-radius: 5rem;
+    }
+}
+.staffpicks__user--name {
+    display: inline-block;
+    vertical-align: top;
+    & p {
+        color:black;
+    }
+}
+.staffpicks__summary {
+    border: 1px solid #ccbebe;
+    background: #ececec;
+    border-radius: 1rem;
+    padding: 3rem 4rem 3rem 4rem;
+    margin: 5rem 0rem 0rem 3rem;
+    & p {
+        color: black;
+        font-size: 1.4rem;
+        line-height: inherit;
+    }
+}
+.staffpicks__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 1rem;
+}
 
 @media (min-width: 768px) {
     .eventlist__element {

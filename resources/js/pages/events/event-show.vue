@@ -40,17 +40,19 @@
                                 </span>
                             </div>
                         </a>
-                        <div class="item">
-                            <img src="/storage/website-files/location.png" alt="">
-                            <span v-if="event.hasLocation">
-                                <span class="header__show-info">Location</span>
-                                <span class="header__show-info bold">{{event.location.city}}</span>
-                            </span>
-                            <span v-else>
-                                <span class="header__show-info">Location</span>
-                                <span class="header__show-info bold">Anywhere</span>
-                            </span>
-                        </div>
+                        <a href="#location">
+                            <div class="item">
+                                <img src="/storage/website-files/location.png" alt="">
+                                <span v-if="event.hasLocation">
+                                    <span class="header__show-info">Location</span>
+                                    <span class="header__show-info bold">{{event.location.city}}<span v-if="event.location.region">, {{event.location.region}}</span></span>
+                                </span>
+                                <span v-else>
+                                    <span class="header__show-info">Location</span>
+                                    <span class="header__show-info bold">Anywhere</span>
+                                </span>
+                            </div>
+                        </a>
                         <a href="#dates">
                             <div class="item">
                                 <img src="/storage/website-files/calendar.png" alt="">
@@ -425,13 +427,14 @@
         </section>
 
         <!-- location -->
-        <section id="location" v-if="bar && event.hasLocation" class="section event-show location">
+        <section id="location" v-if="event.hasLocation" class="section event-show location">
             <div>
                 <div class="event-title">
                     <h2>Location</h2>
                 </div>
                 <div class="text" v-if="event.location.hiddenLocationToggle">
                     <a rel="noreferrer" target="_blank" :href="`http://maps.google.com/maps?q=${event.location.city},+${event.location.region}`">
+                        <b><p v-if="event.location.venue">{{event.location.venue}}</p></b>
                         <p>{{event.location.city}}, {{event.location.region}}</p>
                         <br>
                         <p>{{event.location.hiddenLocation}}</p>
@@ -439,6 +442,7 @@
                 </div>
                 <div class="text" v-else="event.location.hiddenLocationToggle">
                     <a rel="noreferrer" target="_blank" :href="`http://maps.google.com/maps?q=${event.location.home}+${event.location.street},+${event.location.city},+${event.location.region}`">
+                        <b><p v-if="event.location.venue">{{event.location.venue}}</p></b>
                         <p>{{locationPlaceholder}}</p>  
                     </a>
                 </div>
@@ -459,7 +463,7 @@
                         <div style="width:100%;height:400px">
                             <l-map :zoom="zoom" :center="center" :options="{ scrollWheelZoom: allowZoom, zoomControl: allowZoom }">
                             <l-tile-layer :url="url"></l-tile-layer>
-                            <l-marker :lat-lng="center" v-if="!event.location.hiddenLocationToggle">
+                            <l-marker :lat-lng="center" v-if="!event.location.hiddenLocationToggle && event.location.street">
                                 <l-popup>
                                     <div class="show-pop">
                                         <a rel="noreferrer" target="_blank" :href="`http://maps.google.com/maps?q=${event.location.home}+${event.location.street},+${event.location.city},+${event.location.region}`">
@@ -492,7 +496,7 @@
                     </div>
                 </div>
                 <div class="event-show__remote--userinfo" style="white-space: pre-wrap;" v-if="event.remote_description">
-                    <h4>Show Specific</h4>
+                    <h4>Additional Instructions</h4>
                     <p>{{event.remote_description}}</p>
                 </div>
             </div>

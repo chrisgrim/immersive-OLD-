@@ -73,7 +73,8 @@ Route::POST('/admin/data', 'SearchDataController@create');
 
 Route::GET('/admin/search/genres', 'GenresController@searchgenres');
 
-
+//staffpicks
+Route::GET('/staffpicks/current', 'StaffPicksController@show');
 
 
 //Organizer 

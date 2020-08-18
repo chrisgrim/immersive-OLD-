@@ -46,6 +46,20 @@
                     </div>
                 </div>
                 <div class="field">
+                    <label> Venue name (optional) </label>
+                    <input 
+                    v-model="location.venue" 
+                    placeholder="Venue name"
+                    :class="{ active: active == 'venue', 'error': $v.location.venue.$error }"
+                    @click="active = 'venue'"
+                    @blur="active = null"
+                    type="text"
+                    />
+                    <div v-if="$v.location.$error" class="validation-error">
+                        <p class="error" v-if="$v.location.venue.$error">No longer than 40 characters</p>
+                    </div>
+                </div> 
+                <div class="field">
                     <label> Event Location </label>
                     <input 
                     ref="autocomplete" 
@@ -88,12 +102,12 @@
                     </div>
                 </div>
                 <div class="field">
-                    <label class="area"> Helpful remote location event suggestions (optional) </label>
+                    <label class="area"> Additional instructions or suggestions (optional) </label>
                     <textarea 
                     type="text"
                     name="description" 
                     v-model="description" 
-                    placeholder="eg. Sign on 10 minutes early..."
+                    placeholder="eg. Sign into Zoom 10 minutes early... "
                     :class="{ active: active == 'description'}"
                     @click="active = 'description'"
                     @input="$v.description.$touch"
@@ -142,7 +156,7 @@
     import googleLocationMixin from './components/google-location-mixin'
     import formValidationMixin from '../../mixins/form-validation-mixin'
     import Multiselect from 'vue-multiselect'
-    import { required, minLength, requiredIf } from 'vuelidate/lib/validators'
+    import { required, minLength, requiredIf, maxLength } from 'vuelidate/lib/validators'
     import {LMap, LTileLayer, LMarker} from 'vue2-leaflet'
     import _ from 'lodash'
     export default {
@@ -199,6 +213,7 @@
                     latitude: '',
                     longitude: '',
                     home: '',
+                    venue: '',
                 }
             },
             initializeMapObject() {
@@ -304,6 +319,9 @@
                 },
                 hiddenLocationToggle: {
 
+                },
+                venue: {
+                    maxLength: maxLength(40)
                 },
                 hiddenLocation: {
                     ifHidden() {

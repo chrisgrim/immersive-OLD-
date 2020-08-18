@@ -8,6 +8,7 @@ use App\User;
 use App\EventSearchRule;
 use App\Http\Requests\StaffPickRequest;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class StaffPicksController extends Controller
 {
@@ -18,7 +19,7 @@ class StaffPicksController extends Controller
     */
     public function __construct()
     {
-        $this->middleware('moderator')->except('fetch');
+        $this->middleware('moderator')->except('fetch', 'show');
     }
     
     /**
@@ -92,9 +93,17 @@ class StaffPicksController extends Controller
      * @param  \App\StaffPick  $staffPick
      * @return \Illuminate\Http\Response
      */
-    public function show(StaffPick $staffPick)
+    public function show(Request $request)
     {
-        //
+        $thursday = Carbon::now()->startOfWeek()->addDays(3); 
+        $wednesday = Carbon::now()->startOfWeek()->addDays(9); 
+        $week = $thursday->format('D') . ' ' .  $thursday->format('d') . ' to ' . $wednesday->format('D') . ' ' .  $wednesday->format('d');
+
+        $staffpicks = StaffPick::whereDate('start_date', '<=', date("Y-m-d"))
+            ->whereDate('end_date', '>=', date("Y-m-d"))
+            ->orderBy('rank')
+            ->get();
+        return view('staffpicks.show', compact('staffpicks', 'week'));
     }
 
     /**

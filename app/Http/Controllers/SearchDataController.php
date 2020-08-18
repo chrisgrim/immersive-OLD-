@@ -9,10 +9,11 @@ class SearchDataController extends Controller
 {
     public function create(Request $request)
     {
-        $array = [];
-        $data = SearchData::where('search_type', $request->type)->get();
-        $counts = $data->groupBy('search_term')->map->count()->toArray();
-        return $counts;
+        return $categorySearches = \App\SearchData::where('search_type', $request->type)
+            ->selectRaw('count(*) as count, search_term as name') 
+            ->groupBy('search_term') 
+            ->orderByRaw('count(*) desc')
+            ->get();
 
         return SearchData::where('search_type', $request->type)->limit(40)->get();
     }

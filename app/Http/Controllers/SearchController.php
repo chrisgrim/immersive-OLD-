@@ -217,18 +217,7 @@ class SearchController extends Controller
 
     public function searchRemote(Request $request)
     {
-        // if ($request->category) {
-        //      SearchData::create([
-        //         'search_term' => Category::find($request->category)->name,
-        //         'search_type' => 'category'
-        //     ]);
-        // }
-        // if ($request->tag) {
-        //     SearchData::create([
-        //         'search_term' => $request->tag,
-        //         'search_type' => 'tag'
-        //     ]);
-        // }
+        // SearchData::storeSearch($request);
 
         if ($request->category || $request->dates || $request->price || $request->tag ) {
             return $events = Event::search('a')

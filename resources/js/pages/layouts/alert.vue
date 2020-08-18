@@ -8,7 +8,7 @@
                     </div>
                     <img style="width: 10rem" src="/storage/website-files/email-logo.png" alt="">
                     <h3>Thanks for submitting your event</h3>
-                    <p>Events take 1-3 business days to review.</p>
+                    <p>Events take 1-3 business days to review. Once approved, you use the dashboard to update your event at any time.</p>
                 </div>
             </div>
         </div>

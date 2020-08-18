@@ -59,14 +59,13 @@
 @section('content')
     <div id="bodyArea">
         @if ( session()->exists( 'verifiy' )) 
-           <vue-email-verify 
-            :user="{{auth()->user()}}" 
-            message="verify">
-            </vue-email-verify>
+           <vue-email-verify :user="{{auth()->user()}}" message="verify"></vue-email-verify>
         @endif
-        <event-index 
-        :events="{{$events}}" 
-        :categories="{{$categories}}"/>	
+        @if($staffpicks)
+            <event-index :events="{{$events}}" :categories="{{$categories}}" :staffpicks="{{$staffpicks}}"/>
+        @else
+            <event-index :events="{{$events}}" :categories="{{$categories}}"/>
+        @endif
     </div>
 @endsection
 

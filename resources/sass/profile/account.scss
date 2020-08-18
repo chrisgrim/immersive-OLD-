@@ -16,6 +16,12 @@
     margin: 5rem 0;
     grid-gap: 1rem;
     grid-auto-columns: 1fr;
+    & h2 {
+        margin:2rem 0rem;
+    }
+    & h3 {
+        margin:1.5rem 0rem;
+    }
 }
 .account-index__element {
     border: 1px solid #d4d4d4;

@@ -39,7 +39,7 @@
                     <l-tile-layer :url="url" :attribution="attribution" />
                     <l-marker-cluster>
                         <l-marker 
-                        v-for="event in events" 
+                        v-for="event in eventsWithLoc"
                         :key="event.id" 
                         :lat-lng="event.location_latlon">
                             <l-icon class-name="icons"><p>{{event.price_range}}</p></l-icon>
@@ -113,6 +113,11 @@
                     lng: new URL(window.location.href).searchParams.get("lng") ? new URL(window.location.href).searchParams.get("lng") : '',
                 }
             },
+            eventsWithLoc() {
+                return this.events.filter(function (event) {
+                    return event.location.street;
+                })
+            }
         }, 
 
         data() {

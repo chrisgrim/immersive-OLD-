@@ -9,13 +9,45 @@
                     <nav-search></nav-search>
                 </div>
             </header>
-            
-             <section class="announcement padded">
-                <div class="header-title__announcement">
-                    <h3>Read The 2020 Immersive Entertainment Industry Annual Report</h3>
-                    <p>Discover The Strength of Immersive Entertainment!</p>
-                    <br>
-                    <p><a href="/storage/website-files/documents/2020 Immersive Entertainment Industry Annual Report.pdf"><button class="black">Check out the report here</button></a></p>
+
+            <section id="latestevents" class="padded staffpicks__banner" v-if="staffpicks">
+                <div class="banner-title__staffpicks">
+                    <h3>This Week's Staff Picks</h3>
+                </div>
+                <div class="staffpicks__selection">
+                    <a :href="`/events/${staffpicks.event.slug}`">
+                        <div class="staffpicks__selection--main">
+                            <div class="staffpicks__image">
+                                <picture>
+                                    <source type="image/webp" :srcset="`/storage/${staffpicks.event.thumbImagePath}`"> 
+                                    <img :src="`/storage/${staffpicks.event.thumbImagePath.slice(0, -4)}jpg`" :alt="`${staffpicks.event.name} Immersive Event`">
+                                </picture>
+                            </div>
+                            <div>
+                                <div class="staffpicks__title">
+                                    <h4>{{staffpicks.event.name}}</h4>
+                                    <p>{{staffpicks.event.organizer.name}}</p>
+                                </div>
+                                <div class="staffpicks__user">
+                                    <picture>
+                                        <source type="image/webp" :srcset="`/storage/${staffpicks.user.thumbImagePath}`"> 
+                                        <img :src="`/storage/${staffpicks.user.thumbImagePath.slice(0, -4)}jpg`" :alt="`${staffpicks.user.name} Immersive Event`">
+                                    </picture>
+                                    <div class="staffpicks__user--name">
+                                        <p>{{staffpicks.user.name}}</p>
+                                    </div>
+                                </div>
+                                <div class="staffpicks__summary">
+                                    <p>" {{staffpicks.comments}} "</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="/staffpicks/current">
+                        <div class="staffpicks__selection--loadmore">
+                            <h3>Check out the rest of the picks here.</h3>
+                        </div>
+                    </a>
                 </div>
             </section>
             
@@ -32,6 +64,15 @@
                     <a href="/index/search-online">
                         <button class="default"> See More Events</button>
                     </a>
+                </div>
+            </section>
+
+            <section class="announcement padded">
+                <div class="header-title__announcement">
+                    <h3>Read The 2020 Immersive Entertainment Industry Annual Report</h3>
+                    <p>Discover The Strength of Immersive Entertainment!</p>
+                    <br>
+                    <p><a href="/storage/website-files/documents/2020 Immersive Entertainment Industry Annual Report.pdf"><button class="black">Check out the report here</button></a></p>
                 </div>
             </section>
 
@@ -83,7 +124,7 @@
 
         components: { Multiselect, catitem, SearchFilter, LoadMore },
 
-        props:['events', 'categories'],
+        props:['events', 'categories', 'staffpicks'],
 
         computed: {
             user () {

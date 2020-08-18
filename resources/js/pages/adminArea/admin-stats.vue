@@ -11,11 +11,27 @@
         <div>
             number of events: {{eventcount}}
         </div>
-        <template>
-            <div>
-              <apexchart width="500" type="bar" :options="options" :series="series"></apexchart>
-            </div>
-        </template>
+        <br>
+        <div>
+            <h3>User Searches</h3>
+        </div>
+        <div>
+            <multiselect 
+                v-model="searchType"
+                placeholder="Search by type"
+                :allowEmpty="false"
+                :options="searchOptions" 
+                tag-position="bottom"
+                :class="{ active: active == 'type' }"
+                @input="onLoad"
+                @click="active = 'type'"
+                @blur="active = null"
+                >
+            </multiselect>
+        </div>
+        <div>
+          <apexchart width="500" type="bar" :options="options" :series="series"></apexchart>
+        </div>
          
     </div>
 </template>
@@ -23,32 +39,39 @@
 <script>
     import VueApexCharts from 'vue-apexcharts'
     import { required } from 'vuelidate/lib/validators';
+    import Multiselect from 'vue-multiselect'
+    Vue.use(VueApexCharts)
     Vue.component('apexchart', VueApexCharts)
 
 
     export default {
-        props: ['eventcount', 'usercount',],
+        props: ['eventcount', 'usercount'],
+
+        components: { Multiselect },
+
+        computed: {
+            submitObject() {
+                return {type : this.searchType}
+            }
+        },
 
         data() {
             return {
+                searchOptions: ['tag', 'category'],
+                searchType: 'category',
+                active: '',
                 options: {
                     chart: {
                       id: 'vuechart-example'
                     },
                     xaxis: {
-                      categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
+                      categories: []
                     }
                 },
                 series: [{
                     name: 'series-1',
-                    data: [30, 40, 45, 50, 49, 60, 70, 91]
+                    data: []
                 }],
-            }
-        },
-
-        computed: {
-            submitObject() {
-                return {type : 'category'}
             }
         },
 
@@ -56,13 +79,19 @@
             onLoad() {
                 axios.post('/admin/data', this.submitObject)
                 .then(res => {
-                    // this.options.xaxis.categories = Object.keys(res.data);
                     console.log(res.data);
+                    this.options = {
+                        xaxis: {
+                          categories: res.data.map(name => name.name.substring(0, 20)),
+                        }
+                    }
+                    this.series = [{data: res.data.map(name => name.count), name: res.data.map(name => name.name.substring(0, 20))}]
+                    console.log(res.data.map(name => name.name));
                 })
                 .catch(err => {
 
                 });
-            }
+            },
                 
         },
 
