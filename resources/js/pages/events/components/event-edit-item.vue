@@ -18,7 +18,7 @@
              <div class="card-inprogress" v-if="inProgress">
                 <p><b>Your Draft</b></p>
             </div>
-            <div class="card-inprogress" v-if="event.status == 'n' || event.status == '9'">
+            <div class="card-inprogress" v-if="event.status == 'n'">
                 <p><b>Needs Changes</b></p>
             </div>
              <div class="card-inprogress" v-if="event.status == 'e'">
@@ -53,7 +53,7 @@
                 isModified: '',
                 isDisabled: false,
                 imageWidth: '',
-                progress: ['0','1','2','3','4','5','6','7','8','9','d'],
+                progress: ['0','1','2','3','4','5','6','7','8','n','d'],
             }
         },
 

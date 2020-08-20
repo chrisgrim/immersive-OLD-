@@ -108,7 +108,7 @@
                 return this.user.hasCreatedOrganizers  ? '/create-event/edit' : '/'
             },
             isCompleted() {
-                return this.event.status == 'p' || this.event.status == 'e' || this.event.status == 'r' ? true : false
+                return this.event.status == 'p' || this.event.status == 'e' || this.event.status == 'r' || this.event.status == 'n' ? true : false
             },
         },
         data() {

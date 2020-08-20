@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\View\View;
 use Laravel\Cashier\Billable;
+use DB;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -207,7 +208,10 @@ class User extends Authenticatable implements MustVerifyEmail
     */
     public function getHasMessagesAttribute()
     {
-        return $this->conversations()->count() ? true : false;    
+        return DB::table('conversations')
+            ->where('user_one', $this->id)
+            ->orWhere('user_two', $this->id)
+            ->count() ? true : false;
     }
 
     /**

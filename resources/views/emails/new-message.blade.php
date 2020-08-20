@@ -8,7 +8,7 @@
                 <h2 style="font-family: 'Secular One', sans-serif;font-size: 3rem;">EI.</h2>
             </div>
             <div style="text-align: center;margin-bottom: 1.4rem;">
-                <span style="font-family: 'Sen', sans-serif;color: #6d6d6d;"><p>You have recieved a message</p></span>
+                <span style="font-family: 'Sen', sans-serif;color: #6d6d6d;"><p>You have received a message</p></span>
             </div>
         </div>
         <div style="

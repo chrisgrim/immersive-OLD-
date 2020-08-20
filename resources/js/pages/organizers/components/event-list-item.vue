@@ -8,11 +8,13 @@
                     <img :src="`/storage/${event.thumbImagePath.slice(0, -4)}jpg`" :alt="`${event.name} Immersive Event`">
                 </picture>
             </div>
-            <div class="card-title">
-                <h3>{{ event.name }}</h3>
-            </div>
-            <div class="card-organizer">
-                <h4>{{ event.price_range }}</h4> 
+            <div class="card-content">
+                <div class="card-title">
+                    <h3>{{ event.name }}</h3>
+                </div>
+                <div class="card-organizer">
+                    <h4>{{ event.price_range }}</h4> 
+                </div>
             </div>
         </a>
     </div>

@@ -25,6 +25,9 @@ class ConversationsController extends Controller
      */
     public function index()
     {
+
+        // $events = Event::where('status', 'p')->whereDate('created_at', '>=', date('Y-m-d H:i:s',strtotime('-14 days')) )->with('genres')->get();
+        // return view('emails.newsletter', compact('events'));
         $messages = auth()->user()->conversations()->with('users')->paginate(10);
         return view('messages.index', compact('messages'));
     }

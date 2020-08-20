@@ -314,7 +314,7 @@
                 page: 2,
                 pagination:'',
                 hasFilter: false,
-                loadMore: false,
+                loadMore: true,
             }
         },
 
@@ -348,6 +348,8 @@
             },
 
             intersected() {
+                // console.log(this.loadMore);
+                // console.log(this.pagination);
                 if (!this.loadMore) {return false;}
                 if (this.pagination.last_page < this.page ) {return false};
                 this.onSubmit();

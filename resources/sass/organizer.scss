@@ -6,14 +6,21 @@
     grid-template-columns: 25rem 1fr;
     width:100%;
     margin: auto;
-    min-height: 100vh;
     overflow: auto;
 }
 .organizer-show__image {
     width: 100%;
-    background: black;
     position: relative;
     height: 100%
+}
+.organizer-show__background {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 25rem;
+    height: 100%;
+    background-color: black;
+    z-index: -1;
 }
 .organizer-show__image--media {
     position: absolute;
@@ -73,16 +80,16 @@ img.organizer-info-contact__image {
     padding: 0 0 3rem 0;
     border-bottom: 1px solid #c3c3c3;
 }
-.organizer-show-events {
+.organizer-show__events {
     padding: 2rem 0rem 4rem 0rem;
+    margin-left: 45rem;
     & h2 {
         font-size: 1.6rem;
         font-weight: 500;
     }
 }
 .organizer-show__event-list {
-    grid-template-columns: repeat( auto-fit, minmax(20rem, 31rem) );
-    /*grid-template-columns: repeat(2, 1fr);*/
+    grid-template-columns: repeat(3, 1fr);
     margin: 1rem 0rem;
 }
 
@@ -97,6 +104,12 @@ img.organizer-info-contact__image {
     }
     .organizer-show__info {
         padding: 18rem 10rem 0rem 15rem;
+    }
+    .organizer-show__background {
+        width: 15rem;
+    }
+    .organizer-show__events {
+        margin-left:15rem;
     }
 }
 
@@ -131,125 +144,11 @@ img.organizer-info-contact__image {
         font-size: 4rem !important;
         line-height: inherit !important;
     }
-}
-
-
-
-
-
-
-
-/*#bodyArea.org {
-    padding: 0rem;
-}
-.show{
-    max-width: 100%;
-    margin: auto;
-    & .organizer {
-        display: grid;
-        grid-template-columns: .23fr .76fr;
-        & .left {
-            width:100%;
-            background: black;
-            position: relative;
-            & .image {
-                position: absolute;
-                height: 30rem;
-                width: 30rem;
-                right:0;
-                margin: 15rem -15rem 0rem 0rem;
-                & img {
-                    width:100%;
-                    border-radius: 50%;
-                    height: 100%;
-                    object-fit: cover;
-                }
-            }
-        }
-        & .right {
-            width:100%;
-            position: relative;
-            padding: 10rem 10rem 0rem 25rem;
-            & .name {
-                & h2 {
-                    font-size: 9rem;
-                    margin-bottom: 1rem;
-                }
-            }
-            & .info {
-                display: grid;
-                grid-template-columns: auto auto auto auto;
-                width: 61%;
-                border-bottom: 1px solid #c3c3c3;
-                & img {
-                    width: 1.4rem;
-                    margin-bottom: 0.7rem;
-                }
-                & .des {
-                    margin: 0px;
-                    word-wrap: break-word;
-                    font-size: 1.4rem;
-                    font-weight: 300;
-                    line-height: 1.2857142857rem;
-                    color: #484848;
-                    display: block;
-                    margin-bottom: 0.5rem;
-                }
-            }
-            & .descrip {
-                color: #676767;
-                margin: 2rem 0rem;
-            }
-            & .modal {
-                width: 34rem;
-                & .modal-body {
-                    text-align: left;
-                    & textarea {
-                        width: 100%;
-                        margin-top: 1.5rem;
-                        border-radius: .4rem;
-                    }
-                }
-                & .modal-footer {
-                    padding: 1rem 5rem 5rem 5rem;
-                }
-                & .btn {
-                    margin: 0rem;
-                    min-width: 100px;
-                    &.sub {
-                        margin:0rem;
-                    }
-                }
-            }
-            & .contact {
-                margin-bottom: 5rem;
-            }
-        }
+    .organizer-show__background {
+        background: 0;
     }
-}*/
-/*@media (max-width: 768px) {
-    .show {
-        & .organizer {
-            display: inline-block;
-            margin: 10rem 2rem 5rem 2rem;
-            & .left {
-                background: white;
-                & .image {
-                    height: 15rem;
-                    width: 15rem;
-                    position: relative;
-                    margin: 0;
-                }
-            }
-            & .right {
-                padding:0rem;
-                & .name h2 {
-                    font-size: 2.4rem;
-                }
-                & .modal {
-                    width:100%;
-                }
-            }
-        }
+    .organizer-show__events {
+        padding:0rem 2rem 4rem 2rem !important;
+        margin-left:0;
     }
-}*/
+}

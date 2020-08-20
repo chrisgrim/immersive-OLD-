@@ -655,6 +655,11 @@
                 }
             },
 
+            // jumpDate() {
+            //     console.log('jump');
+            //     this.$refs.datePicker.fp.jumpToDate('2020-08-12');
+            // },
+
             canUseWebP() {
                 let webp = (document.createElement('canvas').toDataURL('image/webp').indexOf('data:image/webp') == 0);
                 if (this.loadevent.organizer.thumbImagePath && webp) {
@@ -674,13 +679,6 @@
                 }
                 return this.titleFontSize = `font-size:5rem;line-height:5rem`
             },
-
-        },
-
-        watch: {
-            dates() {
-                this.$refs.datePicker ? this.$refs.datePicker.fp.jumpToDate(new Date()) : ''
-            }
         },
 
         mounted() {
@@ -688,12 +686,13 @@
             this.canUseWebP();
             this.breadcrumbs();
             this.getTitleFontSize();
+
         },
         created () {
             window.addEventListener('scroll', this.handleScroll);
         },
         destroyed () {
             window.removeEventListener('scroll', this.handleScroll);
-        }
+        },
     };
 </script>

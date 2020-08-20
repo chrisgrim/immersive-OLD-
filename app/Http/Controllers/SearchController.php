@@ -217,7 +217,7 @@ class SearchController extends Controller
 
     public function searchRemote(Request $request)
     {
-        // SearchData::storeSearch($request);
+        SearchData::storeSearch($request);
 
         if ($request->category || $request->dates || $request->price || $request->tag ) {
             return $events = Event::search('a')

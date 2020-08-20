@@ -31,6 +31,6 @@ class NewMessage extends Mailable
     {
         return $this->view('emails.new-message')
                     ->from('admin@everythingimmersive.com')
-                    ->subject('You have recieved a message');
+                    ->subject('You have received a message');
     }
 }

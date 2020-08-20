@@ -44,7 +44,7 @@
     <div class="create-button__back">
         <button :disabled="disabled" class="create" @click.prevent="onBack('advisories')"> Back </button>
     </div>
-    <div class="create-button__forward">
+    <div class="create-button__forward" v-if="eventPublished">
         <button :disabled="readySubmit" class="create" @click.prevent="onForward('review')"> Final Review </button>
     </div>
 
@@ -86,6 +86,9 @@
             },
             readySubmit() {
                 return this.readyToSubmit && this.imageAdded ? false : true;
+            },
+            eventPublished() {
+                return this.event.status == 'p' || this.event.status == 'e' ? false : true;
             }
 
         },

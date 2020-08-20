@@ -230,7 +230,7 @@ class AdminAreaController extends Controller
             Mail::to($event->user)->send(new EventChanges($Message, $event));
         }
         $event->update([
-            'status' => '9',
+            'status' => 'n',
         ]);
     }
 

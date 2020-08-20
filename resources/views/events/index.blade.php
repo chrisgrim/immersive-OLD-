@@ -26,6 +26,7 @@
         "url":"https://everythingimmersive.com"}
     </script>
     <title>{{config('app.name')}}</title>
+    <meta name="description" content="Your resource for immersive and interactive theatre, art, virtual reality, escape rooms, dance and more.">
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="{{config('app.name')}}" />
