@@ -35,19 +35,75 @@ p    {margin:1rem 0rem;font-family: 'Helvetica', sans-serif;color:#060606;font-s
                 </div>
                 <div class="event-body__details">
                     <p>
-                        <span>September 11–12, 18 — 19;</span>
+                        <span>
+                            @if($event->showtype == 's')
+                                @foreach($event->shows as $show)
+                                    {{ \Carbon\Carbon::parse($show->date)->format('j M') }}@if(!$loop->last),@endif
+                                @endforeach
+                                ;
+                            @elseif($event->showtype == 'o')
+                                Every
+                                @if($event->show_on_going->mon)
+                                    Monday
+                                @endif
+                                @if($event->show_on_going->tue)
+                                    Tuesday
+                                @endif
+                                @if($event->show_on_going->wed)
+                                    Wednesday
+                                @endif
+                                @if($event->show_on_going->thu)
+                                    Thursday
+                                @endif
+                                @if($event->show_on_going->fri)
+                                    Friday
+                                @endif
+                                @if($event->show_on_going->sat)
+                                    Saturday
+                                @endif
+                                @if($event->show_on_going->sun)
+                                    Sunday
+                                @endif
+                                ;
+                            @elseif($event->showtype == 'a')
+                                Available anytime;
+                            @endif
+                        </span>
                         @if($event->hasLocation)
-                            {{$event->location->home . ' ' . $event->location->street}}, {{$event->location->city}},{{$event->location->postal_code}}, {{$event->location->region}}, {{$event->location->country}}
+                            @if($event->location->home)
+                                {{$event->location->home . ' '}}
+                            @endif
+                            @if($event->location->street)
+                                {{$event->location->street . ','}}
+                            @endif
+                            @if($event->location->city)
+                                {{$event->location->city . ','}}
+                            @endif
+                            @if($event->location->postal_code)
+                                {{$event->location->postal_code . ','}} 
+                            @endif
+                            @if($event->location->region)
+                                {{$event->location->region. ','}} 
+                            @endif
+                            @if($event->location->country)
+                                {{$event->location->country}}
+                            @endif
+                            ;
+
                         @else
-                            Check out the event virtually
+                            <span>showing on  
+                            @foreach($event->remotelocations as $remote)
+                                {{$remote->name}}@if(!$loop->last),@endif
+                            @endforeach
+                            ;</span>
                         @endif
-                            
+                        <br>
                         <span>{{$event->price_range}};</span>
                         <br>
                         <span>Tags: 
                             @if($event->genres)
                                 @foreach($event->genres as $genre)
-                                    #{{$genre->name}}, 
+                                    #{{$genre->name}}@if(!$loop->last),@endif
                                 @endforeach
                             @endif
                         </span>

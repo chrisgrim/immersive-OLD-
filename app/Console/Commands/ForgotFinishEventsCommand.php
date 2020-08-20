@@ -9,6 +9,7 @@ use App\Mail\OrganizerReminder;
 use Illuminate\Support\Facades\Mail;
 use App\Event;
 use App\Organizer;
+use App\Mail\Newsletter;
 
 class ForgotFinishEventsCommand extends Command
 {
@@ -65,7 +66,7 @@ class ForgotFinishEventsCommand extends Command
         //     }
         // }
 
-         //Get list of events created in last 24 hours
+        //Get list of events created in last 24 hours
         $events = Event::where('created_at', '>=', Carbon::now()->subHours(24))->get();
 
         foreach ($events as $event) {
@@ -86,5 +87,10 @@ class ForgotFinishEventsCommand extends Command
                 }
             }
         }
+
+        $events = Event::where('status', 'p')->whereDate('created_at', '>=', date('Y-m-d H:i:s',strtotime('-14 days')) )->with('genres')->get();
+        Mail::to('chgrim@gmail.com')->send(new Newsletter($events));
+        Mail::to('noah@noproscenium.com')->send(new Newsletter($events));
+        Mail::to('kathryn@noproscenium.com')->send(new Newsletter($events));
     }
 }
