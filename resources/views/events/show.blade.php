@@ -87,11 +87,11 @@
     <meta name="description" content="{{$event->tag_line ? $event->tag_line : $event->description}}"/>
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="event" />
-    <meta property="og:title" content="{{$event->title}}" />
+    <meta property="og:title" content="{{$event->name}}" />
     <meta property="og:description" content="{{$event->tag_line ? $event->tag_line : $event->description}}" />
     <meta property="og:url" content="{{url()->current()}}" />
     <meta property="og:site_name" content="{{config('app.name')}}" />
-    <meta property="article:publisher" content="https://www.facebook.com/webfxinc" />
+    <meta property="article:publisher" content="https://www.everythingimmersive.com" />
     <meta property="article:section" content="Events" />
     <meta property="article:published_time" content="{{$event->created_at}}" />
     <meta property="article:modified_time" content="{{$event->updated_at}}" />

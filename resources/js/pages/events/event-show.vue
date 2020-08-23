@@ -600,7 +600,8 @@
                     mode: "multiple",
                     inline: true,
                     showMonths: 2,
-                    dateFormat: 'Y-m-d H:i:s',    
+                    dateFormat: 'Y-m-d H:i:s',
+                    disable: [],
                 },
                 configMob: {
                     // minDate: "today",
@@ -608,7 +609,8 @@
                     mode: "multiple",
                     inline: true,
                     showMonths: 1,
-                    dateFormat: 'Y-m-d H:i:s',    
+                    dateFormat: 'Y-m-d H:i:s',
+                    disable: [], 
                 },
                 searchUrl: '',
                 titleFontSize: '',
@@ -628,9 +630,12 @@
                 if(this.event.shows) {
                     this.event.shows.forEach(event=> {
                         if (this.$dayjs().subtract(1, 'day').format('YYYY-MM-DD 23:59:00') < event.date) {
-                            this.remaining.push(event.date)
+                            this.remaining.push(event.date);
+                        } else {
+                            this.config.disable.push(event.date);
+                            this.configMob.disable.push(event.date);
                         }
-                        this.dates.push(event.date)
+                        this.dates.push(event.date);
                     });
                 }
             },
@@ -655,11 +660,6 @@
                 }
             },
 
-            // jumpDate() {
-            //     console.log('jump');
-            //     this.$refs.datePicker.fp.jumpToDate('2020-08-12');
-            // },
-
             canUseWebP() {
                 let webp = (document.createElement('canvas').toDataURL('image/webp').indexOf('data:image/webp') == 0);
                 if (this.loadevent.organizer.thumbImagePath && webp) {
@@ -672,12 +672,12 @@
             
             getTitleFontSize() {
                 if (this.event.name.length > 70) {
-                   return this.titleFontSize = `font-size:3rem;line-height:3rem`
+                   return this.titleFontSize = `font-size:3.2rem;line-height:3rem`
                 }
                 if (this.event.name.length > 40) {
-                    return this.titleFontSize = `font-size:4rem;line-height:4rem`
+                    return this.titleFontSize = `font-size:3.5rem;line-height:4rem`
                 }
-                return this.titleFontSize = `font-size:5rem;line-height:5rem`
+                return this.titleFontSize = `font-size:4.5rem;line-height:5rem`
             },
         },
 

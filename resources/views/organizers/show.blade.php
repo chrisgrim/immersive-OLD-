@@ -6,7 +6,7 @@
         "@context":"http://schema.org",
         "@type":"Organization",
         "description": "{{$organizer->description}}",
-        "name":"{{$organizer->name}}",
+        "name": "{{$organizer->name}} {{ '- ' . \Illuminate\Support\Str::limit($organizer->description, 80)}}",
         "sameAs":[
             @if ($organizer->instagramHandle)
             "https://www.instagram.com/{{$organizer->instagramHandle}}"

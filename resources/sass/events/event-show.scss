@@ -214,6 +214,11 @@ section .event-title {
     }
 }
 
+.lockedcalendar .flatpickr-day.flatpickr-disabled {
+    background: #cecece;
+    color: rgb(8 8 8 / 79%);
+}
+
 .event-show__organizer--image {
     width:10rem;
     height: 10rem;

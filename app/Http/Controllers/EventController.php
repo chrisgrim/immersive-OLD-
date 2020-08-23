@@ -172,9 +172,7 @@ class EventController extends Controller
 
     public function submitEvent(Event $event) 
     {
-        Log::info('User is trying to Submit Event');
         $this->authorize('finalize', $event);
-        Log::info('User was authorized');
         $event->update(['status' => 'r',]);
         $event->finalizeEvent($event);
         Log::info('User was able to submit event');
