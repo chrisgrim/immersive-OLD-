@@ -13,6 +13,9 @@
 
 Route::GET('/', 'EventController@index')->name('home');
 
+Route::GET('/event-sitemap.xml', 'SitemapController@event_sitemap');
+Route::GET('/organizer-sitemap.xml', 'SitemapController@organizer_sitemap');
+
 Auth::routes(['verify' => true]);
 
 Route::RESOURCE('events', 'EventController');

@@ -20,11 +20,17 @@ class CitiesImport implements ToModel, WithHeadingRow, WithProgressBar, WithChun
     */
     public function model(array $row)
     {
+        if ($row['country'] == 'US') {
+            $name = $row['city'] . ', ' . $row['state_id'];
+        } else {
+            $name = $row['city'];
+        }
         return new CityList([
-            'name' => $row['city'] . ', ' . $row['state_id'],
+            'name' => $name,
             'latitude' => $row['lat'],
             'longitude' => $row['lng'],
-            'population' => $row['population']
+            'population' => $row['population'],
+            'country' => $row['country'],
         ]);
     }
     public function batchSize(): int

@@ -39,7 +39,7 @@ class ImportExcel extends Command
     public function handle()
     {
         $this->output->title('Starting import');
-        (new CitiesImport)->withOutput($this->output)->import(storage_path('uscities.xlsx'));
+        (new CitiesImport)->withOutput($this->output)->import(storage_path('cities5000.xlsx'));
         $this->output->success('Import successful');
     }
 }

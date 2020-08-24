@@ -26,8 +26,9 @@ class CityList extends Model
     {
         return [
             "id" => $this->id,
-            "name" => $this->name ,
+            "name" => $this->name,
             "population" => $this->population,
+            "rank" => $this->rank,
         ];
     }
 
@@ -41,6 +42,9 @@ class CityList extends Model
                 'type' => 'search_as_you_type',
             ],
             'population' => [
+                'type' => 'integer',
+            ],
+            'rank' => [
                 'type' => 'integer',
             ],
             // 'latitude' => [

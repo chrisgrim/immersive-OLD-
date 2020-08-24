@@ -148,6 +148,7 @@ class SearchController extends Controller
         if ($request->keywords) {
             $city = CityList::search($request->keywords)
             ->rule(CityListSearchRule::class)
+            ->orderBy('rank', 'desc')
             ->orderBy('population', 'desc')
             ->get();
         } else {
