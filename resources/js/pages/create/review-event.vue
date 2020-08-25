@@ -565,20 +565,22 @@
                 bar: false,
                 lastScrollPosition: 0,
                 config: {
-                    minDate: "today",
+                    // minDate: "today",
                     maxDate: new Date().fp_incr(180),
                     mode: "multiple",
                     inline: true,
                     showMonths: 2,
-                    dateFormat: 'Y-m-d H:i:s',    
+                    dateFormat: 'Y-m-d H:i:s',
+                    disable: [],
                 },
                 configMob: {
-                    minDate: "today",
+                    // minDate: "today",
                     maxDate: new Date().fp_incr(180),
                     mode: "multiple",
                     inline: true,
                     showMonths: 1,
-                    dateFormat: 'Y-m-d H:i:s',    
+                    dateFormat: 'Y-m-d H:i:s',
+                    disable: [], 
                 },
                 searchUrl: '',
                 disabled: false,
@@ -596,9 +598,12 @@
                 if(this.event.shows) {
                     this.event.shows.forEach(event=> {
                         if (this.$dayjs().subtract(1, 'day').format('YYYY-MM-DD 23:59:00') < event.date) {
-                            this.remaining.push(event.date)
+                            this.remaining.push(event.date);
+                        } else {
+                            this.config.disable.push(event.date);
+                            this.configMob.disable.push(event.date);
                         }
-                        this.dates.push(event.date)
+                        this.dates.push(event.date);
                     });
                 }
             },

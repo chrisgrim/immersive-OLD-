@@ -90,12 +90,17 @@ export default {
 
     methods: {
 
-        generateSearchList (query) {
-            axios.get('/api/search/navbar/content', { params: { keywords: query } })
-            .then(res => {
-                console.log(res.data);
-                this.searchBoxOptions = res.data.data;
-            });
+        async generateSearchList (query) {
+            if (!query) {
+                this.searchBoxOptions = this.$store.state.presearch
+            } else {
+                try {
+                    let {data} = await axios.get('/api/search/navbar/content', { params: { keywords: query } })
+                    this.searchBoxOptions = data.data;
+                } catch(err) {
+                  console.log(err)
+                }
+            }
         },
 
         initializeSearchObject() {

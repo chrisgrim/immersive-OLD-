@@ -8,37 +8,44 @@
                 <div class="index-nav-search">
                     <nav-search></nav-search>
                 </div>
+                <div class="event-index__categories" v-if="mobile">
+                    <a v-for="(category, index) in categories" :href="`/index/search-online?category=${category.name}&id=${category.id}`">
+                        <div class="event-index__categories--item clean-box">
+                                <h4>{{category.name}}</h4>
+                        </div>
+                    </a>
+                </div>
             </header>
 
-            <section id="latestevents" class="padded staffpicks__banner" v-if="staffpicks">
+            <section id="latestevents" class="padded staffpicks__banner" v-if="staffpick">
                 <div class="banner-title__staffpicks">
                     <h3>This Week's Staff Picks</h3>
                 </div>
                 <div class="staffpicks__selection">
-                    <a :href="`/events/${staffpicks.event.slug}`">
+                    <a :href="`/events/${staffpick.event.slug}`">
                         <div class="staffpicks__selection--main">
                             <div class="staffpicks__image">
                                 <picture>
-                                    <source type="image/webp" :srcset="`/storage/${staffpicks.event.thumbImagePath}`"> 
-                                    <img :src="`/storage/${staffpicks.event.thumbImagePath.slice(0, -4)}jpg`" :alt="`${staffpicks.event.name} Immersive Event`">
+                                    <source type="image/webp" :srcset="`/storage/${staffpick.event.thumbImagePath}`"> 
+                                    <img :src="`/storage/${staffpick.event.thumbImagePath.slice(0, -4)}jpg`" :alt="`${staffpicks.event.name} Immersive Event`">
                                 </picture>
                             </div>
                             <div>
                                 <div class="staffpicks__title">
-                                    <h4>{{staffpicks.event.name}}</h4>
-                                    <p>{{staffpicks.event.organizer.name}}</p>
+                                    <h4>{{staffpick.event.name}}</h4>
+                                    <p>{{staffpick.event.organizer.name}}</p>
                                 </div>
                                 <div class="staffpicks__user">
                                     <picture>
-                                        <source type="image/webp" :srcset="`/storage/${staffpicks.user.thumbImagePath}`"> 
-                                        <img :src="`/storage/${staffpicks.user.thumbImagePath.slice(0, -4)}jpg`" :alt="`${staffpicks.user.name} Immersive Event`">
+                                        <source type="image/webp" :srcset="`/storage/${staffpick.user.thumbImagePath}`"> 
+                                        <img :src="`/storage/${staffpick.user.thumbImagePath.slice(0, -4)}jpg`" :alt="`${staffpicks.user.name} Immersive Event`">
                                     </picture>
                                     <div class="staffpicks__user--name">
-                                        <p>{{staffpicks.user.name}}</p>
+                                        <p>{{staffpick.user.name}}</p>
                                     </div>
                                 </div>
                                 <div class="staffpicks__summary">
-                                    <p>" {{staffpicks.comments}} "</p>
+                                    <p>" {{staffpick.comments}} "</p>
                                 </div>
                             </div>
                         </div>
@@ -51,18 +58,38 @@
                 </div>
             </section>
             
-            <section id="latestevents" class="padded event-list">
+            <section id="latestevents" class="padded event-list" v-cloak>
+                <div class="header-title">
+                    <h3>Playing this weekend</h3>
+                </div>   
+                <div class="event-index-eventlist grid">
+                    <div v-for="(event, index) in weekend" class="eventlist__element">
+                        <vue-event-index :event="event"></vue-event-index>
+                    </div>
+                    <a :href="`/index/search-online?start=${weekendDates[0]}&end=${weekendDates[1]}`">
+                        <button class="event-index__button--more"> > </button>
+                    </a>
+                </div>
+                <div class="header-title">
+                    <h3>Horror Events</h3>
+                </div>   
+                <div class="event-index-eventlist grid">
+                    <div v-for="(event, index) in horror" class="eventlist__element">
+                        <vue-event-index :event="event"></vue-event-index>
+                    </div>
+                    <a href="/index/search-online?tag=horror&id=8">
+                        <button class="event-index__button--more"> > </button>
+                    </a>
+                </div>
                 <div class="header-title">
                     <h3>Latest events</h3>
                 </div>   
                 <div class="event-index-eventlist grid">
-                    <div v-for="(event, index) in eventList" class="eventlist__element">
+                    <div v-for="(event, index) in events" class="eventlist__element">
                         <vue-event-index :event="event"></vue-event-index>
                     </div>
-                </div>
-                <div class="see-more-events">
                     <a href="/index/search-online">
-                        <button class="default"> See More Events</button>
+                        <button class="event-index__button--more"> > </button>
                     </a>
                 </div>
             </section>
@@ -103,10 +130,6 @@
                     </div>
                 </div>
             </section>
-            
-            
-
-
         </div>
     </div>
 </template>
@@ -124,7 +147,7 @@
 
         components: { Multiselect, catitem, SearchFilter, LoadMore },
 
-        props:['events', 'categories', 'staffpicks'],
+        props:['categories'],
 
         computed: {
             user () {
@@ -134,21 +157,39 @@
 
         data() {
             return {
-                eventList: this.events ? this.events : [],
+                events: [],
+                weekend: [],
+                horror: [],
+                staffpick: '',
                 value: '',
                 list: [],
                 price: '',
                 eventName: '',
                 location: [],
-
+                weekendDates: [],
+                mobile: window.innerWidth > 768 ? true : false,
             }
         },
 
         methods: {
-
-            
-
+            async onLoad() {
+                try {
+                    let {data} = await axios.get('/index/fetch')
+                    this.events = data.events;
+                    this.staffpick = data.staffpick;
+                    this.weekend = data.weekend;
+                    this.horror = data.horror;
+                    this.weekendDates = data.weekenddates
+                } catch(err) {
+                  console.log(err)
+                }
+            }
         },
+
+        mounted() { 
+            this.onLoad()
+            this.$store.dispatch("getContent"); 
+        }
 
     };
 </script>

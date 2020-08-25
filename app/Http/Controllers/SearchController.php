@@ -153,6 +153,7 @@ class SearchController extends Controller
             ->get();
         } else {
             $city = CityList::search('*')
+            ->orderBy('rank', 'desc')
             ->orderBy('population', 'desc')
             ->take(10)
             ->get();

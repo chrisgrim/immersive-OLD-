@@ -19,9 +19,9 @@ class EventController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'verified'])->except('index','show', 'fetch');
+        $this->middleware(['auth', 'verified'])->except('index','show', 'fetch','indexfetch');
         $this->middleware('can:update,event')
-        ->except(['index','create','show','editEvents','store','fetchEditEvents','fetch', 'thanks']);
+        ->except(['index','create','show','editEvents','store','fetchEditEvents','fetch', 'thanks','indexfetch']);
     }
     /**
      * Display a listing of the resource.
@@ -30,21 +30,60 @@ class EventController extends Controller
      */
     public function index(Event $event)
     {
-        $staffpicks = StaffPick::whereDate('start_date', '<=', date("Y-m-d"))
+        // $online = Event::where('status', 'p')
+        //         ->where('hasLocation', false)
+        //         ->limit(4)
+        //         ->with('organizer')
+        //         ->get();
+
+        // return $online->pluck('id');
+        $categories = Category::orderBy('rank', 'desc')
+            ->limit(6)
+            ->get();
+        return view('events.index', compact('categories'));
+    }
+    /**
+     * Fetch event index data
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexfetch(Event $event)
+    {
+        $start = Carbon::parse('this friday')->startOfDay()->format('Y-m-d H:i:s');
+        $end = Carbon::parse('this sunday')->startOfDay()->format('Y-m-d H:i:s');
+        $weekend = Event::search('*')
+            ->where('closingDate', '>=', 'now/d')
+            ->whereBetween('shows.date', [$start,$end])
+            ->orderBy('published_at', 'desc')
+            ->with(['location', 'organizer'])
+            ->take(4)
+            ->get();
+        $horror = Event::search('*')
+            ->where('closingDate', '>=', 'now/d')
+            ->where('genres.name', 'horror')
+            ->orderBy('published_at', 'desc')
+            ->with(['location', 'organizer'])
+            ->take(4)
+            ->get();
+        $staffpick = StaffPick::whereDate('start_date', '<=', date("Y-m-d"))
             ->whereDate('end_date', '>=', date("Y-m-d"))
             ->orderBy('rank')
             ->first();
         $events = Event::where('closingDate', '>=', Carbon::yesterday()->endOfDay())
             ->where('status', 'p')
-            ->limit(12)
+            ->whereNotIn('id', $weekend->pluck('id')->concat($horror->pluck('id')))
+            ->limit(4)
             ->with('organizer')
             ->get();
-        $categories = Category::where('remote', 1)
-            // ->orderBy('rank', 'desc')
-            ->get();
-        return view('events.index',compact('events', 'categories', 'staffpicks'));
-    }
 
+        return response()->json([
+            'staffpick' => $staffpick, 
+            'events' => $events, 
+            'weekend' => $weekend,
+            'horror' => $horror,
+            'weekenddates' => [$start, $end],
+        ]);
+    }
      /**
      * Fetch the events
      *

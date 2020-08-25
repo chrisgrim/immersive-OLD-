@@ -79,6 +79,8 @@ Route::GET('/admin/search/genres', 'GenresController@searchgenres');
 //staffpicks
 Route::GET('/staffpicks/current', 'StaffPicksController@show');
 
+//Event Index Page
+Route::GET('/index/fetch', 'EventController@indexfetch');
 
 //Organizer 
 Route::POST('/organizer/{organizer}/patch', 'OrganizerController@update');

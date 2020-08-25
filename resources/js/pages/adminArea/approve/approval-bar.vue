@@ -20,6 +20,9 @@
                     </div>
                 </div>
             </div>
+            <div class="admin-approve-similar-name" v-if="exists">
+                <a rel="noreferrer noopener" target="_blank" :href="`/events/${exists.slug}`">An event named {{exists.name}} already exists</a>
+            </div>
             <div class="admin-approve-url">
                 <a rel="noreferrer noopener" target="_blank" :href="loadevent.ticketUrl">{{loadevent.ticketUrl}}</a>
             </div>
@@ -39,11 +42,7 @@
     import { required } from 'vuelidate/lib/validators';
 
     export default {
-        props: {
-            loadevent: {
-                type:Object,
-            },
-        },
+        props: ['loadevent', 'exists'],
 
         computed: {
             approvedOrg() {

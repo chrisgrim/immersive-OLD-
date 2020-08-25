@@ -21,7 +21,10 @@ state: {
     mobile: true,
     searchtype: 'Immersive Online',
     save: 'ttis',
+    presearch: [],
   },
+
+
   
 mutations: {
     adduser (state, user) {
@@ -36,9 +39,22 @@ mutations: {
     searchtype (state, searchtype) {
         state.searchtype = searchtype
     },
+    presearch (state, presearch) {
+        state.presearch = presearch
+    },
     saveevent (state, save) {
         state.save = save
     },
-  },
+},
+actions: {
+    async getContent ({ commit }) {
+        try {
+            let {data} = await axios.get('/api/search/navbar/content')
+            commit('presearch', data.data)
+        } catch(err) {
+          console.log(err)
+        }
+    }
+},
   
 });

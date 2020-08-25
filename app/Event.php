@@ -30,7 +30,7 @@ class Event extends Model
     * @var array
     */
 	protected $fillable = [
-    	'slug', 'user_id', 'timezone_id', 'category_id','interactive_level_id','organizer_id','description','name','largeImagePath','thumbImagePath','advisories_id', 'organizer_id', 'location_latlon', 'closingDate','websiteUrl','ticketUrl','show_times','price_range', 'status','tag_line', 'hasLocation', 'showtype', 'embargo_date', 'remote_description', 'published_at', 'call_to_action', 'age_limits_id'
+    	'slug', 'user_id', 'timezone_id', 'category_id','interactive_level_id','organizer_id','description','name','largeImagePath','thumbImagePath','advisories_id', 'organizer_id', 'location_latlon', 'closingDate','websiteUrl','ticketUrl','show_times','price_range', 'status','tag_line', 'hasLocation', 'showtype', 'embargo_date', 'remote_description', 'published_at', 'call_to_action', 'age_limits_id', 'rank'
     ];
 
     /**
@@ -79,6 +79,7 @@ class Event extends Model
             'name' => $this->name,
             'published_at' => $this->published_at,
             'showtype' => $this->showtype,
+            'rank' => $this->rank,
             'closingDate' => $this->closingDate,
             'priceranges' => $this->pricerangesSelect,
             'category_id' => $this->category_id,
@@ -118,7 +119,7 @@ class Event extends Model
     * @return bool
     */
     public function isInProgress() {
-        return $this->status != 'r' && $this->status != 'p' && $this->status != 'e';
+        return $this->status != 'r' && $this->status != 'p' && $this->status != 'e' && $this->status != 'n';
     }
 
     /**
@@ -472,6 +473,9 @@ class Event extends Model
             ],
             'name' => [
                 'type' => 'search_as_you_type',
+            ],
+            'rank' => [
+                'type' => 'integer',
             ],
             'shows' => [
                 'properties' => [

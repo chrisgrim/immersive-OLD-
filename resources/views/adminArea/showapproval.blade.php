@@ -17,6 +17,10 @@
         <div class="admin-approval__space">
             
         </div>
-        <approval-bar :loadevent="{{$event}}">
+        @if($eventExists)
+            <approval-bar :loadevent="{{$event}}" :exists="{{$eventExists}}">
+        @else 
+            <approval-bar :loadevent="{{$event}}" exists="{{$eventExists}}">
+        @endif
     </div>
 @endsection

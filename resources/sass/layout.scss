@@ -204,6 +204,13 @@ button.default-border {
     }
 }
 
+.clean-box {
+    width: 100%;
+    border: 1px solid #ccbebe;
+    border-radius: 1rem;
+    padding: 2rem;
+}
+
 
 @media (max-width: 768px) {
     html { font-size: 62.5%; font-family: 'Montserrat', sans-serif; height:100%;} 

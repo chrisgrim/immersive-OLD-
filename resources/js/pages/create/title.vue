@@ -16,13 +16,14 @@
                 v-model="title.name" 
                 placeholder=" "
                 :class="{ active: active == 'name','error': $v.title.name.$error }"
-                @input="$v.title.name.$touch()"
+                @input="cleanErr"
                 @click="active = 'name'"
                 @blur="active = 'null'"
                  />
                 <div v-if="$v.title.name.$error" class="validation-error">
                     <p class="error" v-if="!$v.title.name.required">Please add a title.</p>
                     <p class="error" v-if="!$v.title.name.maxLength">The title is too long.</p>
+                    <p class="error" v-if="!$v.title.name.serverFailed">You already have event with this name. Please edit that event instead of creating a new one.</p>
                 </div>
             </div>
             <div class="field">
@@ -123,8 +124,11 @@
                 if (this.event.status != 0 && !this.$v.$anyDirty) {return this.onForward(value)};
                 if (this.checkVuelidate()) { return false };
 				axios.patch( this.endpoint, this.title )
-				.then(res => { value == 'exit' ? this.onBackInitial() : this.onForward(value) })
-            	.catch(err => { this.onErrors(err) });
+				.then(res => { 
+                    value == 'exit' ? this.onBackInitial() : this.onForward(value) 
+                })
+            	.catch(err => { 
+                    this.onErrors(err) });
 			},
 
             onReSubmit() {
@@ -140,6 +144,11 @@
                     res.data.tag_line ? this.title.tagLine = res.data.tag_line : '';
                 });
             },
+
+            cleanErr() {
+                this.serverErrors = [];
+                this.$v.title.name.$touch();
+            }
 		},
 
         created() {
@@ -149,7 +158,7 @@
         watch: {
             navSubmit() {
                 this.onSubmit(this.navSubmit);
-            }
+            },
         },
 
 		validations: {

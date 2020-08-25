@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Event;
+use Response;
 use Illuminate\Http\Request;
 use App\Http\Requests\TitleStoreRequest;
 
@@ -49,6 +50,11 @@ class EventTitleController extends Controller
      */
     public function updateTitle(TitleStoreRequest $request, Event $event)
     {
+        $eventExists = Event::where('slug', str_slug($request->name))->where('user_id', auth()->id())->first();
+        if ($eventExists && $eventExists->id != $event->id) {
+            return Response::json(['errors' => (object)array('name' => 'same name')], 404); 
+        }
+
         $event->update([ 
             'name' => $request->name,
             'tag_line' => $request->tagLine,

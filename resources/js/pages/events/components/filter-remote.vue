@@ -248,7 +248,7 @@
         </div>
 
         
-        <div class="event-index-eventlist grid">
+        <div class="event-search__eventlist grid">
             <div v-for="(event, index) in eventList" class="eventlist__element">
                 <vue-event-index :event="event"></vue-event-index>
             </div>
@@ -265,6 +265,7 @@
     import VueSlider from 'vue-slider-component'
     import 'vue-slider-component/theme/antd.css'
     import LoadMore  from '../../../components/LoadMore.js'
+    import dayjs from 'dayjs'
 
     export default {
 
@@ -307,6 +308,7 @@
                 mobile: window.innerWidth < 768,
                 searchcategory: new URL(window.location.href).searchParams.get("category"),
                 searchtag: new URL(window.location.href).searchParams.get("tag"),
+                searchdates: new URL(window.location.href).searchParams.get("start") ? [new URL(window.location.href).searchParams.get("start"), new URL(window.location.href).searchParams.get("end")] : '',
                 searchremote: new URL(window.location.href).searchParams.get("remote"),
                 id: new URL(window.location.href).searchParams.get("id"),
                 searchBoxInput: [],
@@ -446,6 +448,12 @@
                 if (this.searchtag) {
                     this.tag = this.tags.find(element => element.id == this.id);
                     this.$store.commit('searchtype', this.tag.name)
+                    this.submitNew();
+                }
+                if (this.searchdates) {
+                    this.dates = this.searchdates;
+                    this.datesSubmit = this.searchdates.map(date => dayjs(date).format("YYYY-MM-DD HH:mm:ss"));
+                    this.datesFormatted = this.searchdates.map(date => dayjs(date).format("MMM D"));
                     this.submitNew();
                 }
             },
