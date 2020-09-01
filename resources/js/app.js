@@ -153,7 +153,6 @@ Vue.component('category-show', () => import(/* webpackChunkName: "assets/cs" */ 
 
 //Organizers
 Vue.component('organizer-show', () => import(/* webpackChunkName: "assets/os" */  './pages/organizers/organizer-show.vue'));
-Vue.component('organizer-show-events', () => import(/* webpackChunkName: "assets/eli" */  './pages/organizers/components/event-list-item.vue'));
 
 //Events
 Vue.component('event-show', () => import(/* webpackChunkName: "assets/es" */ './pages/events/event-show.vue'));

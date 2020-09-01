@@ -139,10 +139,8 @@
                 <button v-if="showMap" class="close-map" @click="showMap=false">
                     <svg viewBox="0 0 12 12" role="presentation" aria-hidden="true" focusable="false" style="height: 14px; width: 14px; display: block; fill: currentcolor;"><path d="m11.5 10.5c.3.3.3.8 0 1.1s-.8.3-1.1 0l-4.4-4.5-4.5 4.5c-.3.3-.8.3-1.1 0s-.3-.8 0-1.1l4.5-4.5-4.4-4.5c-.3-.3-.3-.8 0-1.1s.8-.3 1.1 0l4.4 4.5 4.5-4.5c.3-.3.8-.3 1.1 0s .3.8 0 1.1l-4.5 4.5z" fill-rule="evenodd"></path></svg>
                 </button>
-                <div class="event-search-list grid" :class="{ maphidden: !showMap}"> 
-                    <div v-for="(event, index) in eventList" class="eventlist__element">
-                        <search-item :user="user" :event="event"></search-item>
-                    </div>
+                <div class="event-search-list" :class="{ maphidden: !showMap}"> 
+                    <vue-event-index :events="eventList"></vue-event-index>
                     <button v-if="eventList.length >14" @click="loadMoreEvents">Load More</button>
                 </div>
             </section>
@@ -228,12 +226,11 @@
     import Multiselect from 'vue-multiselect'
     import VueSlider from 'vue-slider-component'
     import 'vue-slider-component/theme/antd.css'
-    import searchItem  from '../events/components/search-item.vue'
 
 
     export default {
 
-        components: { flatPickr, Multiselect, VueSlider, searchItem },
+        components: { flatPickr, Multiselect, VueSlider },
 
         props:['searchedevents','categories','user', 'tags', 'maxprice'],
 
@@ -283,6 +280,9 @@
                 shift: '',
                 showFilters: false,
                 mobile: window.innerWidth < 768,
+                name: new URL(window.location.href).searchParams.get("name"),
+                startLat: new URL(window.location.href).searchParams.get("lat"),
+                startLng: new URL(window.location.href).searchParams.get("lng"),
                 
             }
         },

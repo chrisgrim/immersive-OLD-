@@ -48,6 +48,9 @@
                                     <label>Type (free, etc...)</label>
                                 </div>
                                 <div>
+                                    
+                                </div>
+                                <div>
                                     <label>Ticket Price</label>
                                 </div>
                             </div>
@@ -102,6 +105,23 @@
                                     :preselect-first="false">
                                     </multiselect>
                                 </div>
+                                <div v-if="ticket.type.type == 'f' || ticket.type.type == 'p'"></div>
+                                <div v-else class="field">
+                                    <multiselect 
+                                    v-model="currency" 
+                                    :options="ticketCurrencyOptions"
+                                    :allowEmpty="false"
+                                    :show-labels="false"
+                                    open-direction="bottom"
+                                    class="ticket-type-selection"
+                                    :searchable="false"
+                                    :class="{ active: active == 'currency' }"
+                                    @click="active = 'currency'"
+                                    @blur="active = null"
+                                    @input="$v.selected.$touch"
+                                    :preselect-first="false">
+                                    </multiselect>
+                                </div>
                                 <div v-if="ticket.type.type == 'f'" class="field">
                                     <div  class="free-ticket__field">
                                         Free
@@ -113,7 +133,6 @@
                                     </div>
                                 </div>
                                 <div v-else class="field">
-                                    <div class="c-ticket-currency">$</div>
                                     <input 
                                     v-model="ticket.ticket_price"
                                     v-money="money"
@@ -246,6 +265,8 @@ export default {
                 { name: 'free', type:'f'},
                 { name: 'pwyc', type:'p'},
             ],
+            currency: '$',
+            ticketCurrencyOptions: ['$', '£' ,'AU', 'R$', 'C$', '¥', '€', '₹', 'Rp','₽', '₩'],
             callAction: this.event.call_to_action,
             callActionOptions: ['Get Tickets', 'Sign Up', 'Download','Details'],
             disabled: false,
@@ -283,6 +304,7 @@ export default {
                 ticket_amount: '',
                 ticket_price: '',
                 errors: this.initializeErrorObject(),
+                currency: this.currency,
             }
         },
 
@@ -322,7 +344,8 @@ export default {
                 id: '',
                 ticket_price:0.00,
                 type: value.type,
-                errors: this.initializeErrorObject()
+                errors: this.initializeErrorObject(),
+                currency: this.currency
             }
             this.tickets.push(val);
             this.selected = '';
@@ -341,10 +364,12 @@ export default {
             .then(res => {
                 for (var i = 0; i < res.data.tickets[0].tickets.length; i++) {
                     let tic = res.data.tickets[0].tickets[i];
+                    this.currency = tic.currency;
                     this.tickets.push({
                         name: tic.name,
                         description: tic.description,
                         ticket_price: tic.ticket_price,
+                        currency: tic.currency,
                         type: _.find(this.ticketTypeOptions, { 'type': tic.type }),
                         errors: this.initializeErrorObject()
                     })
@@ -357,6 +382,7 @@ export default {
             let previous = [];
             for (var i = 0; i < this.tickets.length; i++) {
                 let tic = this.tickets[i];
+                tic.currency = this.currency;
                 if (tic.ticket_price == 0.00 && tic.type.type == 's') {
                     tic.errors.priceEmpty = true;
                         return false;
@@ -403,6 +429,7 @@ export default {
                 ticket_price:0.00,
                 errors: this.initializeErrorObject(),
                 type: this.initializeTypeObject(),
+                currency: '$'
             }
             this.ticketOptions.push(tag)
             this.tickets.push(tag)

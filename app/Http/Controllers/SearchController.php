@@ -32,7 +32,7 @@ class SearchController extends Controller
 {
     public function index(Request $request)
     {
-        $maxprice = Event::getMostExpensive();
+        $maxprice = ceil(Event::getMostExpensive());
         $categories = Category::all();
         $tags = Genre::where('admin', 1)->orderBy('rank', 'desc')->get();
 
@@ -47,12 +47,13 @@ class SearchController extends Controller
 
     public function onlinesearch(Request $request)
     {
-        $maxprice = Event::getMostExpensive();
+        $maxprice = ceil(Event::getMostExpensive());
         $categories = Category::all();
         $tags = Genre::where('admin', 1)->orderBy('rank', 'desc')->get();
 
         $searchedevents = Event::limit(12)
                         ->where('status', 'p')
+                        ->whereDate('closingDate', '>=', date("Y-m-d"))
                         ->with(['location', 'organizer'])
                         ->get();
 
@@ -229,6 +230,7 @@ class SearchController extends Controller
             ->paginate(12);
         } else {
             return $events = Event::where('status', 'p')
+                ->whereDate('closingDate', '>=', date("Y-m-d"))
                 ->with(['location', 'organizer'])
                 ->paginate(12);
         }

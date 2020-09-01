@@ -15,49 +15,14 @@
                         <a :href="`/organizer/${organizer.slug}/edit`">
                             <button class="edit-organizer">Edit</button>
                         </a>
-                        <button v-if="!organizer.in_progress_events.length || organizer.past_events.length" @click.prevent="showModal(organizer, 'deleteOrg')" class="edit-organizer">Delete</button>
+                        <button v-if="!organizer.in_progress_events.length && !organizer.past_events.length" @click.prevent="showModal(organizer, 'deleteOrg')" class="edit-organizer">Delete</button>
                         <button @click.prevent="showOrganizer(organizer)" class="preview-organizer">Preview Organizer</button>
                     </div>
                 </div>
                 <div class="listing-details-block">
                 <tabs>
-                    <tab title="Current Events" :active="true" :id="organizer.id" class="event-edit-eventlist grid">
-                        <div class="add-new-event-card">
-                            <button @click.prevent="newEvent(organizer)" class="new-event__button">
-                                <div class="new-event__center">
-                                    <div>
-                                        <svg class="b" height="32" width="32" viewBox="0 0 24 24" aria-label="Add an Event" role="img"><path d="M24 12c0-6.627-5.372-12-12-12C5.373 0 0 5.373 0 12s5.373 12 12 12c6.628 0 12-5.373 12-12zm-10.767 3.75a1.25 1.25 0 0 1-2.5 0v-3.948l-1.031 1.031a1.25 1.25 0 0 1-1.768-1.768L12 7l4.066 4.065a1.25 1.25 0 0 1-1.768 1.768l-1.065-1.065v3.982z"></path></svg>
-                                    </div>
-                                     <div>
-                                        <p>Add New Event</p>
-                                    </div>
-                                </div>
-                            </button>
-                        </div>
-                        <div v-for="(event, index) in limitEvents(organizer.in_progress_events)" :key="event.id" class="edit-event__element">
-                            <div class="edit-event__buttons">
-                                <a v-if="canView(event)" :href="`/events/${event.slug}`"><button class="edit-event__sub-button">View</button></a>
-                                <a v-if="status(event)" :href="`/create-event/${event.slug}/title`"><button class="edit-event__sub-button">Edit</button></a>
-                                <button v-if="status(event)" @click.prevent="showModal(event, 'delete')" class="edit-event__sub-button">Delete</button>
-                                <button v-if="false" @click.prevent="showModal(event, 'addreview')" class="edit-event__sub-button">Add Review</button>
-                            </div>
-                            <vue-event-edit-listing-item :user="user" :event="event"></vue-event-edit-listing-item>
-                            
-                        </div> 
-                        <modal v-if="modal == 'delete'" @close="modal = null">
-                            <div slot="header">
-                                <div class="circle del">
-                                    <p>X</p>
-                                </div>
-                            </div>
-                            <div slot="body"> 
-                                <h3>Are you sure?</h3>
-                                <p>You are deleting your {{selectedModal.name}} event.</p>
-                            </div>
-                            <div slot="footer">
-                                <button class="btn del" @click="deleteRow()">Delete</button>
-                            </div>
-                        </modal>
+                    <tab title="Current Events" :active="true" :id="organizer.id" class="event-edit__eventlist">
+                        <vue-event-edit-listing-item :user="user" :events="limitEvents(organizer.in_progress_events)"></vue-event-edit-listing-item>
                         <modal v-if="modal == 'deleteOrg'" @close="modal = null">
                             <div slot="header">
                                 <div class="circle del">
@@ -66,7 +31,7 @@
                             </div>
                             <div slot="body"> 
                                 <h3>Are you sure?</h3>
-                                <p>You are deleting your {{selectedModal.name}} event.</p>
+                                <p>You are deleting your {{selectedModal.name}} organizer.</p>
                             </div>
                             <div slot="footer">
                                 <button class="btn del" @click="deleteOrg()">Delete</button>
@@ -131,20 +96,8 @@
                             </div>
                         </modal>
                     </tab>
-                    <tab title="Past Events" :id="organizer.id + 1" class="event-edit-eventlist grid">
-                        <div :key="event.id" v-for="(event, index) in limitEvents(organizer.past_events)" class="edit-event__element">
-                            <div class="edit-event__buttons">
-                                <a v-if="status(event)" :href="`/events/${event.slug}`"><button class="edit-event__sub-button">View</button></a>
-                                <button v-if="status(event)" @click.prevent="showModal(event, 'delete')" class="edit-event__sub-button">Delete</button>
-                            </div>
-                            <vue-event-edit-listing-item :user="user" :loadurl="'/events/' + event.slug" :event="event"></vue-event-edit-listing-item>
-                        </div> 
-                        <modal v-if="modal == 'delete'" @close="modal = null">
-                                <div slot="header">Ready to Delete?</div>
-                                <div slot="body"> Are you sure you want to delete event {{selectedModal.name}}</div>
-                                <div slot="footer">
-                                <button @click="deleteRow()">Yes</button></div>
-                        </modal>
+                    <tab title="Past Events" :id="organizer.id + 1" class="event-edit__eventlist">
+                        <vue-event-edit-listing-item :events="limitEvents(organizer.past_events)"></vue-event-edit-listing-item>
                     </tab>
                 </tabs>
                 </div>
@@ -153,7 +106,6 @@
         <div>
            <div class="new-organization">
                 <div class="new-organization__title">
-                    
                     <a href="/organizer/create">
                         <button class="preview-organizer">Add another organization</button>
                     </a>
@@ -167,11 +119,7 @@
     import { required, url, maxLength } from 'vuelidate/lib/validators'
 	export default {
 
-        props: {
-            user: {
-                type:String
-            }
-        }, 
+        props: ['user'],
 
 		data() {
 			return {
@@ -198,25 +146,9 @@
             organizerStyle() {
                 return organizer => organizer.thumbImagePath ? this.webp ? `background-image:url('/storage/${organizer.thumbImagePath}')` : `background-image:url('/storage/${organizer.thumbImagePath.slice(0, -4)}jpg')` : `background:${organizer.hexColor}`
             },
-            status() {
-                return event => event.status !== 'r' ? true : false;
-            },
-            canView() {
-                return event => event.status == 'p' ? true : false;
-            }
         },
 
 		methods: {
-			//deletes a ticket row or clears the first one
-			deleteRow(index) {
-				axios.delete(`/events/${this.selectedModal.slug}`)
-	            .then(res => {
-                    location.reload();
-	            })
-	            .catch(errorResponse => { 
-	            	errorResponse.response.data.errors 
-	            });
-			},
 
             deleteOrg(index) {
                 axios.delete(`/organizer/${this.selectedModal.slug}`)
@@ -249,7 +181,6 @@
             },
 
 			showModal(event, arr) {
-                console.log(event);
 				this.selectedModal = event;
 			    this.modal = arr;
 			},

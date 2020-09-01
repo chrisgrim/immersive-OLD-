@@ -60,10 +60,13 @@ section.ticket-section {
     position: relative;
 }
 .ticket-box__element {
-    grid-template-columns: 15rem auto 13rem 12rem 2rem;
+    grid-template-columns: 15rem auto 13rem 6rem 12rem 2rem;
     grid-column-gap: 1rem;
+    grid-gap:0rem !important;
 }
-
+.ticket-box__element .field {
+    padding: 0rem 1rem 0rem 0rem;
+}
 .ticket-type-selection .multiselect__select {
     display: none;
 }
@@ -169,12 +172,6 @@ button.delete-circle {
 }
 .calendar.mobileshow {
     display: none;
-}
-.c-ticket-currency {
-    position: absolute;
-    left: 4%;
-    top: 1.4rem;
-    z-index: 1;
 }
 
 @media (max-width: 1050px) { 

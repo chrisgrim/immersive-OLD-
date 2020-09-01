@@ -26,6 +26,9 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('ei:publish-embargoed')->dailyAt('01:55');
         $schedule->command('ei:check-unfinished')->hourly();
+        $schedule->command('ei:send-newsletter')->weeklyOn(3, '8:00');
+        $schedule->command('ei:send-newsletter')->weeklyOn(6, '8:00');
+        $schedule->command('ei:send-katnewsletter')->weeklyOn(1, '8:00');
     }
 
     /**

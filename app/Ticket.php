@@ -11,7 +11,7 @@ class Ticket extends Model
     *
     * @var array
     */
-	protected $fillable = ['name','ticket_price','ticket_id', 'ticket_type', 'description','type'];
+	protected $fillable = ['name','ticket_price','ticket_id', 'ticket_type', 'description','type', 'currency'];
     
 	/**
      * Ticket Belongs to the Show Model
@@ -28,7 +28,7 @@ class Ticket extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
-    public static function getPriceRange($array, $types)
+    public static function getPriceRange($array, $types, $currency)
     {
         if(in_array('s', $types)) {
             $type = 's';
@@ -47,11 +47,11 @@ class Ticket extends Model
             $first = 'PWYC';
         }
         if ($type == 's') {
-            $first = '$'. last($array);
+            $first = $currency. last($array);
         }
         if (sizeof($array) > 1) {
             if (in_array('s', $types)) {
-                return $pricerange = $first . ' - ' . '$' . $array[0];
+                return $pricerange = $first . ' - ' . $currency . $array[0];
             } else {
                 return $pricerange = $first;
             }

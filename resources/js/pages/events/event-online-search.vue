@@ -21,14 +21,13 @@
 
 <script>
     import SearchFilter  from './components/filter-remote.vue'
-    import SearchItem  from './components/search-item.vue'
     
 
     export default {
 
         props: ['searchedevents', 'categories', 'user', 'maxprice', 'tags'],
 
-        components: { SearchFilter, SearchItem },
+        components: { SearchFilter },
 
         computed: {
 

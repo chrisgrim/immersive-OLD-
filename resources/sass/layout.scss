@@ -31,6 +31,13 @@ select {
     overflow: hidden;
 }
 
+.top-banner {
+    background: #3bb6d2;
+    padding: .6rem;
+    text-align: center;
+    color: white;
+}
+
 
 .container {
     width:90%;
@@ -166,6 +173,11 @@ textarea {
     border-radius: 50%;
     right: -.7rem;
     top: 2.4rem;
+}
+
+.slider-button {
+    border-radius: 5rem;
+    background: white;
 }
 
 .hearted {

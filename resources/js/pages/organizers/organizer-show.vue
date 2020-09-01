@@ -53,11 +53,7 @@
 
         <section class="padded organizer-show__events" v-if="loadorganizer.events && loadorganizer.events.length">
             <h2>Events by {{organizer.name}}</h2>
-            <div class="grid organizer-show__event-list">
-                <div v-for="event in loadorganizer.events" class="eventlist__element">
-                    <organizer-show-events :event="event"></organizer-show-events>
-                </div>
-            </div>
+            <vue-event-index :events="loadorganizer.events"></vue-event-index>
         </section>
         <div class="organizer-show__background">
         </div>

@@ -2,12 +2,7 @@
     <div class="show-content">
         <nav class="event-show mobile">
             <div class="back">
-                <a v-if="searchUrl" :href="searchUrl">
-                    <div class="event-show-nav__back-arrow">
-                        <svg aria-label="Back" role="img" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 4; overflow: visible;"><g fill="none"><path d="m20 28-11.29289322-11.2928932c-.39052429-.3905243-.39052429-1.0236893 0-1.4142136l11.29289322-11.2928932"></path></g></svg>
-                    </div>
-                </a>
-                <a v-else href="/">
+                <a @click="goBack()">
                     <div class="event-show-nav__back-arrow">
                         <svg aria-label="Back" role="img" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 4; overflow: visible;"><g fill="none"><path d="m20 28-11.29289322-11.2928932c-.39052429-.3905243-.39052429-1.0236893 0-1.4142136l11.29289322-11.2928932"></path></g></svg>
                     </div>
@@ -45,7 +40,7 @@
                                 <img src="/storage/website-files/location.png" alt="">
                                 <span v-if="event.hasLocation">
                                     <span class="header__show-info">Location</span>
-                                    <span class="header__show-info bold">{{event.location.city}}<span v-if="event.location.region">, {{event.location.region}}</span></span>
+                                    <span class="header__show-info bold"><span v-if="event.location.city">{{event.location.city}}, </span><span v-if="event.location.region">{{event.location.region}}</span></span>
                                 </span>
                                 <span v-else>
                                     <span class="header__show-info">Location</span>
@@ -139,7 +134,7 @@
                                         <p>Pay what you can</p>
                                     </div>
                                     <div v-else class="event-show__ticket--price">
-                                        <p>{{ticket.ticket_price == 0.00 ? 'Free' : `$${ticket.ticket_price}`}}</p>
+                                        <p>{{ticket.ticket_price == 0.00 ? 'Free' : `${ticket.currency} ${ticket.ticket_price}`}}</p>
                                     </div>
                                 </div>
                                 <div class="event-show__ticket--description">
@@ -435,7 +430,7 @@
                 <div class="text" v-if="event.location.hiddenLocationToggle">
                     <a rel="noreferrer" target="_blank" :href="`http://maps.google.com/maps?q=${event.location.city},+${event.location.region}`">
                         <b><p v-if="event.location.venue">{{event.location.venue}}</p></b>
-                        <p>{{event.location.city}}, {{event.location.region}}</p>
+                        <p><span v-if="event.location.city">{{event.location.city}},</span> <span v-if="event.location.region">{{event.location.region}}</span></p>
                         <br>
                         <p>{{event.location.hiddenLocation}}</p>
                     </a>
@@ -612,7 +607,6 @@
                     dateFormat: 'Y-m-d H:i:s',
                     disable: [], 
                 },
-                searchUrl: '',
                 titleFontSize: '',
                 fullOrganizer: this.loadevent.organizer.description.length <= 160 ? true : false,
                 fullAdvisories: this.loadevent.advisories.audience.length <= 160 ? true : false,
@@ -654,12 +648,6 @@
                 return this.bar = false;
             },
 
-            breadcrumbs() {
-                if (new URL(window.location.href).searchParams.get("name")) {
-                    this.searchUrl = `/index/search?name=${new URL(window.location.href).searchParams.get("name")}&lat=${new URL(window.location.href).searchParams.get("lat")}&lng=${new URL(window.location.href).searchParams.get("lng")}`
-                }
-            },
-
             canUseWebP() {
                 let webp = (document.createElement('canvas').toDataURL('image/webp').indexOf('data:image/webp') == 0);
                 if (this.loadevent.organizer.thumbImagePath && webp) {
@@ -679,12 +667,15 @@
                 }
                 return this.titleFontSize = `font-size:4.5rem;line-height:5rem`
             },
+
+            goBack() {
+                window.history.back();
+            }
         },
 
         mounted() {
             this.getDates();
             this.canUseWebP();
-            this.breadcrumbs();
             this.getTitleFontSize();
 
         },

@@ -247,12 +247,11 @@
             </div>
         </div>
 
-        
-        <div class="event-search__eventlist grid">
-            <div v-for="(event, index) in eventList" class="eventlist__element">
-                <vue-event-index :event="event"></vue-event-index>
+        <section v-cloak>
+            <div class="padded-width">
+                <vue-event-index :events="eventList"></vue-event-index>
             </div>
-        </div>
+        </section>
         <load-more @intersect="intersected"></load-more>
       
 

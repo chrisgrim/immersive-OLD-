@@ -66,7 +66,7 @@
             </div> 
             -->
             <div class="login-information__switch">
-                <p>Don't have an account? <button @click.prevent="onPageSwitch" class="switch_login">Join Now</button></p>
+                <p>Don't have an account? <button @click.prevent="onPageSwitch" class="switch_login">Join now for free</button></p>
             </div>
         </div>
         <div v-else class="login-information">
@@ -147,7 +147,7 @@
                 </div>
             </div>
             <div class="field">
-                <button type="submit" :disabled="disabled" class="login-button" @click="onSubmit"> Register </button>
+                <button type="submit" :disabled="disabled" class="login-button" @click="onSubmit"> Register (Free)</button>
             </div>
              <!--
             <div class="login-information__line">

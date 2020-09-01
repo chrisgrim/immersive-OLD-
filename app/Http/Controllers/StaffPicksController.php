@@ -99,8 +99,10 @@ class StaffPicksController extends Controller
         $wednesday = Carbon::now()->startOfWeek()->addDays(9); 
         $week = $thursday->format('D') . ' ' .  $thursday->format('d') . ' to ' . $wednesday->format('D') . ' ' .  $wednesday->format('d');
 
-        $staffpicks = StaffPick::whereDate('start_date', '<=', date("Y-m-d"))
-            ->whereDate('end_date', '>=', date("Y-m-d"))
+        $staffpicks = StaffPick::where(function($query) use ($thursday, $wednesday){
+                $query->whereDate('start_date', '>=', $thursday)
+                        ->whereDate('end_date', '<=', $wednesday);
+            })
             ->orderBy('rank')
             ->get();
         return view('staffpicks.show', compact('staffpicks', 'week'));

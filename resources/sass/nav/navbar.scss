@@ -63,6 +63,7 @@
 
 .nav-logo {
     display: inline-block;
+    position: relative;
     & h3 {
         color:#404040;
         font-family: "Open Sans", sans-serif;
@@ -70,6 +71,13 @@
         font-weight: 800;
         letter-spacing: .2rem;
         margin: 0;
+    }
+    & p {
+        position: absolute;
+        color: red;
+        top: .8rem;
+        font-weight: 900;
+        left: 2.5rem;
     }
 }
 p.mobile-nav-footer__text {
@@ -267,9 +275,10 @@ ul.sub-dropdown{
     display: none;
 }
 
-@media (max-width: 1024px) { 
+/* Extra large devices (large laptops and desktops, 1200px and up) --------------------------------- */
+@media screen and (max-width: 1200px) {
     .nav {
-        padding: 0rem 1rem;
+        padding: 0rem 4rem;
     }
     .nav-search__content {
         width:100%;

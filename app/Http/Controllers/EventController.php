@@ -30,17 +30,18 @@ class EventController extends Controller
      */
     public function index(Event $event)
     {
-        // $online = Event::where('status', 'p')
-        //         ->where('hasLocation', false)
-        //         ->limit(4)
-        //         ->with('organizer')
-        //         ->get();
-
-        // return $online->pluck('id');
-        $categories = Category::orderBy('rank', 'desc')
-            ->limit(6)
+        $thursday = Carbon::now()->startOfWeek()->addDays(3); 
+        $wednesday = Carbon::now()->startOfWeek()->addDays(9); 
+        $staffpicks = StaffPick::where(function($query) use ($thursday, $wednesday){
+                $query->whereDate('start_date', '>=', $thursday)
+                        ->whereDate('end_date', '<=', $wednesday);
+            })
+            ->orderBy('rank')
             ->get();
-        return view('events.index', compact('categories'));
+        $categories = Category::orderBy('rank', 'desc')
+            ->limit(14)
+            ->get();
+        return view('events.index', compact('categories', 'staffpicks'));
     }
     /**
      * Fetch event index data
@@ -49,39 +50,33 @@ class EventController extends Controller
      */
     public function indexfetch(Event $event)
     {
-        $start = Carbon::parse('this friday')->startOfDay()->format('Y-m-d H:i:s');
-        $end = Carbon::parse('this sunday')->startOfDay()->format('Y-m-d H:i:s');
+        $start = Carbon::now()->startOfWeek()->addDays(4);
+        $end = Carbon::now()->startOfWeek()->addDays(6);
         $weekend = Event::search('*')
             ->where('closingDate', '>=', 'now/d')
-            ->whereBetween('shows.date', [$start,$end])
+            ->whereBetween('shows.date', [$start->format('Y-m-d H:i:s'),$end->format('Y-m-d H:i:s')])
             ->orderBy('published_at', 'desc')
-            ->with(['location', 'organizer'])
+            ->with(['location'])
             ->take(4)
             ->get();
         $horror = Event::search('*')
             ->where('closingDate', '>=', 'now/d')
             ->where('genres.name', 'horror')
             ->orderBy('published_at', 'desc')
-            ->with(['location', 'organizer'])
+            ->with(['location'])
             ->take(4)
             ->get();
-        $staffpick = StaffPick::whereDate('start_date', '<=', date("Y-m-d"))
-            ->whereDate('end_date', '>=', date("Y-m-d"))
-            ->orderBy('rank')
-            ->first();
         $events = Event::where('closingDate', '>=', Carbon::yesterday()->endOfDay())
             ->where('status', 'p')
             ->whereNotIn('id', $weekend->pluck('id')->concat($horror->pluck('id')))
             ->limit(4)
-            ->with('organizer')
             ->get();
 
         return response()->json([
-            'staffpick' => $staffpick, 
             'events' => $events, 
             'weekend' => $weekend,
             'horror' => $horror,
-            'weekenddates' => [$start, $end],
+            'weekenddates' => [$start->format('Y-m-d'), $end->format('Y-m-d')],
         ]);
     }
      /**
@@ -93,7 +88,6 @@ class EventController extends Controller
         return $events = Event::where('closingDate', '>=', Carbon::yesterday()->endOfDay())
             ->where('status', 'p')
             ->orderBy('published_at', 'desc')
-            ->with('organizer')
             ->paginate(4);
     }   
 
@@ -153,7 +147,7 @@ class EventController extends Controller
     public function show(Event $event)
     {
         if($event->status !== 'p') { return redirect('/');}
-        $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'eventreviews', 'staffpick', 'advisories', 'showOnGoing','interactive_level', 'remotelocations', 'timezone','genres');
+        $event->load('category', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'eventreviews', 'staffpick', 'advisories', 'showOnGoing','interactive_level', 'remotelocations', 'timezone','genres');
         $tickets = $event->shows()->first()->tickets()->orderBy('ticket_price')->get();
         return view('events.show', compact('event', 'tickets'));
     }
@@ -166,7 +160,6 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        $event->load('organizer');
         return view('create.organizer',compact('event'));
     }
 
@@ -204,7 +197,7 @@ class EventController extends Controller
     {
         if (is_numeric($event->status) && $event->status < 8) { abort(403); }
         $this->authorize('finalize', $event);
-        $event->load('category', 'organizer', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'advisories', 'showOnGoing', 'remotelocations', 'timezone', 'genres');
+        $event->load('category', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'advisories', 'showOnGoing', 'remotelocations', 'timezone', 'genres');
         $tickets = $event->shows()->first()->tickets()->orderBy('ticket_price')->get();
         return view('create.review', compact('event', 'tickets'));
     }

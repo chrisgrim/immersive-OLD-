@@ -1,53 +1,77 @@
 <template>
-    <div :class="{ 'dis': isDisabled, black : color=='black' }" class="card" >
-        <favorite :inputclass="showEventClass" :event="event"></favorite>
-        <a :href="url" class="url">
-            <div class="card-image" :style="`width:${imageWidth}px`">
-                <picture>
-                    <source type="image/webp" :srcset="`/storage/${event.thumbImagePath}`"> 
-                    <img :src="`/storage/${event.thumbImagePath.slice(0, -4)}jpg`" :alt="`${event.name} Immersive Event`">
-                </picture>
+    <div class="event-index__eventlist" ref="list">
+        <div class="event-index__eventlist--middle vertical">
+            <div v-for="(event, index) in events" class="eventlist__element" :style="`width:${width}`">
+                <div :class="{ 'dis': isDisabled, black : color=='black' }" class="card" >
+                    <div itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                        <meta :content="event.name" itemprop="name">
+                        <meta :content="`https://www.everythingimmersive.com/events/${event.slug}`" itemprop="url">
+                        <a :href="url(event)" class="card-url"></a>
+                        <div class="card-image__top">
+                            <div class="card-image__middle" style="padding-top: 65%;">
+                                <div class="card-image">
+                                    <picture>
+                                        <source type="image/webp" :srcset="`/storage/${event.thumbImagePath}`"> 
+                                        <img style="object-fit:cover" loading="lazy" class="card-image__img" :src="`/storage/${event.thumbImagePath.slice(0, -4)}jpg`" :alt="`${event.name} Immersive Event`">
+                                    </picture>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-title" >
+                                <h3 :class="{ black : color=='black' }">{{ event.name }}</h3>
+                            </div>
+                            <div class="card-organizer">
+                                <h3 :class="{ black : color=='black' }">{{ event.organizer.name }}</h3>
+                            </div>
+                            <div class="card-price">
+                                <h4 :class="{ black : color=='black' }">{{ event.price_range }}</h4>
+                            </div>
+                        </div>
+                        <favorite v-if="canFavorite" :inputclass="showEventClass" :event="event"></favorite>
+                    </div>
+                </div>
             </div>
-            <div class="card-content">
-                <div class="card-title" >
-                    <h3 :class="{ black : color=='black' }">{{ event.name }}</h3>
-                </div>
-                <div class="card-organizer">
-                    <h3 :class="{ black : color=='black' }">{{ event.organizer.name }}</h3>
-                </div>
-                <div class="card-price">
-                    <h4 :class="{ black : color=='black' }">{{ event.price_range }}</h4>
-                </div>
-            </div>
-        </a>
+        </div>
     </div>
 </template>
 
 <script>
     export default {
-        props:['event', 'loadurl', 'color'],
+        props:['events', 'loadurl', 'color', 'favorite'],
+
+        computed: {
+            url() {
+                return event => this.loadurl == 'admin' ? `/finish/events/${event.slug}` : `/events/${event.slug}`
+            }
+        },
 
         data() {
             return {
                 showEventClass: 'heart',
-                url: this.loadurl ? this.loadurl : '/events/' + this.event.slug,
                 isDisabled: false,
-                imageWidth: '',
+                canFavorite: this.favorite == 'hidden' ? false : true,
+                width: '',
             }
         },
 
         methods: {
-            handleResize() {
-                if (window.innerWidth < 768) {
-                    this.imageWidth = window.innerWidth/1.4;
+            divWidth() {
+                console.log(this.$refs.list.clientWidth);
+                if (this.$refs.list.clientWidth > 1000) {
+                    return this.width = '25%'
                 }
+                if (this.$refs.list.clientWidth > 600) {
+                    return this.width = '33.3333%'
+                }
+                return this.width = '41%';
             }
         },
 
         mounted() {
-            window.addEventListener('resize', this.handleResize);
-            this.handleResize();
+            this.divWidth();
         }
+
 
     };
 </script>

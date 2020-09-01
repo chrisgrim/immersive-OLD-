@@ -59,7 +59,8 @@ class TicketsController extends Controller
                 ],
                 [
                     'description' => $ticket['description'],
-                    'ticket_price' => str_replace('$', '', $ticket['ticket_price']),
+                    'currency' => $ticket['currency'],
+                    'ticket_price' => $ticket['ticket_price'],
                     'type' => $ticket['type']['type']
                 ]);
             }
@@ -73,12 +74,13 @@ class TicketsController extends Controller
             $event->priceranges()->Create([
                 'price' => $ticket['ticket_price']
             ]);
+            $currency = $ticket['currency'];
             $array[] = $ticket['ticket_price'];
             $name[] = $ticket['name'];
             $types[] = $ticket['type']['type'];
         }
 
-        $pricerange = Ticket::getPriceRange($array, $types);
+        $pricerange = Ticket::getPriceRange($array, $types, $currency);
 
 
         // Add price range string to event

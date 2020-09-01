@@ -9,8 +9,6 @@ use App\Mail\OrganizerReminder;
 use Illuminate\Support\Facades\Mail;
 use App\Event;
 use App\Organizer;
-use App\Mail\Newsletter;
-use Log;
 
 class ForgotFinishEventsCommand extends Command
 {
@@ -88,12 +86,5 @@ class ForgotFinishEventsCommand extends Command
                 }
             }
         }
-
-        // $events = Event::where('status', 'p')->whereDate('created_at', '>=', date('Y-m-d H:i:s',strtotime('-14 days')) )->with('genres')->get();
-        // Mail::to('chgrim@gmail.com')->send(new Newsletter($events));
-        // Mail::to('noah@noproscenium.com')->send(new Newsletter($events));
-        // Mail::to('kathryn@noproscenium.com')->send(new Newsletter($events));
-        // Mail::to('le.fairweather@gmail.com')->send(new Newsletter($events));
-        // Log::info('Sent Newsletter');
     }
 }

@@ -5,6 +5,7 @@
                 <div class="nav-logo" :class="{ active: bar }">
                     <a href="/">
                         <h3>EI</h3>
+                        <p>(Beta)</p>
                     </a>
                 </div>
                 <div  class="nav-search" :class="{ fullmap: fullmap }">
@@ -16,7 +17,7 @@
                     </div>
                     <div class="nav-menu-item" v-if="user && !user.hasCreatedOrganizers">
                         <a class="menu-link" href="/events/create">
-                            <div>Submit Your Experience</div>
+                            <div>Submit Your Experience (Free)</div>
                         </a>
                     </div>
                     <div class="nav-menu-item" v-if="user && user.hasCreatedOrganizers">
@@ -46,7 +47,7 @@
 
                     <div class="nav-menu-item" v-if="!user">
                         <a class="menu-link" href="/register?create=true">
-                            <div>Submit Your Experience</div>
+                            <div>Submit Your Experience (Free)</div>
                         </a>
                     </div>
                 </div>
@@ -57,10 +58,7 @@
             <div v-if="onClassType">
                 <div class="nav-search mobile">
                     <div class="nav-backarrow" v-if="onclass">
-                        <a v-if="url && onclass=='show'" :href="url">
-                            <svg aria-label="Back" role="img" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="display: inline-block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 4; overflow: visible;"><g fill="none"><path d="m20 28-11.29289322-11.2928932c-.39052429-.3905243-.39052429-1.0236893 0-1.4142136l11.29289322-11.2928932"></path></g></svg>
-                        </a>
-                        <a v-else href="/">
+                        <a @click="goBack()">
                             <svg aria-label="Back" role="img" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="display: inline-block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 4; overflow: visible;"><g fill="none"><path d="m20 28-11.29289322-11.2928932c-.39052429-.3905243-.39052429-1.0236893 0-1.4142136l11.29289322-11.2928932"></path></g></svg>
                         </a>
                     </div>
@@ -173,18 +171,11 @@
                 bar: true,
                 lastScrollPosition: 0,
                 mobileDevice: false,
-                url: '',
                 page: this.onclass
 			};
 		},
 
 		methods: {
-
-            breadcrumbs() {
-                if (new URL(window.location.href).searchParams.get("name")) {
-                    this.url = `/index/search?name=${new URL(window.location.href).searchParams.get("name")}&lat=${new URL(window.location.href).searchParams.get("lat")}&lng=${new URL(window.location.href).searchParams.get("lng")}`
-                }
-            },
 
             handleScroll (event) {
                 const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
@@ -202,11 +193,14 @@
                 window.innerWidth < 768 ? this.mobileDevice = true : false;
                 window.innerWidth > 768 ? this.mobileDevice = false : true;
             },
+
+            goBack() {
+                window.history.back();
+            }
 		},
 
         mounted() {
             this.$store.commit('adduser', this.user);
-            this.breadcrumbs();
         },
 
         created () {

@@ -10,10 +10,11 @@ use Illuminate\Database\Eloquent\Model;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Scopes\PublishedScope;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Event extends Model
+class Event extends Model implements Auditable
 {
-    use Searchable, Favoritable, SoftDeletes;
+    use Searchable, Favoritable, SoftDeletes, \OwenIt\Auditing\Auditable;
 
     protected $indexConfigurator = EventIndexConfigurator::class;
 
@@ -38,7 +39,7 @@ class Event extends Model
     *
     * @var array
     */
-    protected $with = ['favorites', 'priceranges', 'shows','age_limits'];
+    protected $with = ['favorites', 'priceranges', 'shows','age_limits', 'organizer'];
 
     /**
     * The accessors to append to the model's array form.
@@ -357,7 +358,7 @@ class Event extends Model
             ->get()
             ->map(function($event) { return $event->priceranges->pluck('price');})
             ->flatten()
-            ->max();;
+            ->max();
     }
 
     /**

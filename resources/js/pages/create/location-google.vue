@@ -314,7 +314,7 @@
                 },
                 city: {
                     ifLocation() { 
-                        return this.hasLocation ? this.location.city ? true : false : true
+                        return this.hasLocation ? this.location.city || this.location.country ? true : false : true
                     },
                 },
                 hiddenLocationToggle: {

@@ -62,7 +62,11 @@
         @if ( session()->exists( 'verifiy' )) 
            <vue-email-verify :user="{{auth()->user()}}" message="verify"></vue-email-verify>
         @endif
-        <event-index :categories="{{$categories}}"/>
+        @if($staffpicks)
+            <event-index :categories="{{$categories}}" :staffpicks="{{$staffpicks}}"/>
+        @else
+            <event-index :categories="{{$categories}}"/>
+        @endif
     </div>
 @endsection
 

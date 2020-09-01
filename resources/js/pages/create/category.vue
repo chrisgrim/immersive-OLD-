@@ -40,7 +40,7 @@
         <section :class="{ showcat: selectedCategory}" v-if="selectedCategory" class="event-show-category__image" :style="pageHeight">
             <picture>       
                 <source type="image/webp" :srcset="`/storage/${selectedCategory.largeImagePath}`"> 
-                <img :src="`/storage/${selectedCategory.largeImagePath.slice(0, -4)}jpg}`">
+                <img :src="`/storage/${selectedCategory.largeImagePath.slice(0, -4)}jpg`">
             </picture>
         </section>
        

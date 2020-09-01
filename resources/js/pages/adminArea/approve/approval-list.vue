@@ -5,27 +5,9 @@
             <p>These are the events that need approval</p>
         </div>
         
-        <section class="">
-            <div class="event-index-eventlist grid">
-                <div v-for="(event, index) in events" class="eventlist__element">
-                    <a :href="`/finish/events/${event.slug}`" class="url">
-                        <div class="card-image" :style="`width:${imageWidth}px`">
-                            <picture>
-                                <source type="image/webp" :srcset="`/storage/${event.thumbImagePath}`"> 
-                                <img :src="`/storage/${event.thumbImagePath.slice(0, -4)}jpg`" :alt="`${event.name} Immersive Event`">
-                            </picture>
-                        </div>
-                        <div class="card-title">
-                            <h3>{{ event.name }}</h3>
-                        </div>
-                        <div class="card-title">
-                            <h3>new event by {{ event.organizer.name }}</h3>
-                        </div>
-                        <div class="card-price">
-                            <h4>{{ event.price_range }}</h4>
-                        </div>
-                    </a>
-                </div>
+        <section>
+            <div class="padded-width">
+                <vue-event-index favorite="hidden" loadurl="admin" :events="events"></vue-event-index>
             </div>
         </section>
     </div>

@@ -23,7 +23,7 @@
                             <img src="/storage/website-files/location.png" alt="">
                             <span v-if="event.hasLocation">
                                 <span class="header__show-info">Location</span>
-                                <span class="header__show-info bold">{{event.location.city}}<span v-if="event.location.region">, {{event.location.region}}</span></span>
+                                <span class="header__show-info bold"><span v-if="event.location.city">{{event.location.city}}, </span><span v-if="event.location.region">{{event.location.region}}</span></span>
                             </span>
                             <span v-else>
                                 <span class="header__show-info">Location</span>
@@ -111,7 +111,7 @@
                                         <p>Pay what you can</p>
                                     </div>
                                     <div v-else class="event-show__ticket--price">
-                                        <p>{{ticket.ticket_price == 0.00 ? 'Free' : `$${ticket.ticket_price}`}}</p>
+                                        <p>{{ticket.ticket_price == 0.00 ? 'Free' : `${ticket.currency} ${ticket.ticket_price}`}}</p>
                                     </div>
                                 </div>
                                 <div class="event-show__ticket--description">
@@ -407,7 +407,7 @@
                 <div class="text" v-if="event.location.hiddenLocationToggle">
                     <a rel="noreferrer" target="_blank" :href="`http://maps.google.com/maps?q=${event.location.city},+${event.location.region}`">
                         <b><p v-if="event.location.venue">{{event.location.venue}}</p></b>
-                        <p>{{event.location.city}}, {{event.location.region}}</p>
+                        <p><span v-if="event.location.city">{{event.location.city}},</span> <span v-if="event.location.region">{{event.location.region}}</span></p>
                         <br>
                         <p>{{event.location.hiddenLocation}}</p>
                     </a>
