@@ -95,6 +95,13 @@ class TicketsController extends Controller
             $event->update([ 'status' => '5' ]);
         }
 
+        if($request->reSubmitEvent) {
+            $event->update([
+                'status' => '8',
+                'approved' => false
+            ]);
+        }
+
         $event = $event->fresh();
         $event->searchable();
     }

@@ -73,6 +73,20 @@ button.admin-menu__item {
         color: white;
     }
 }
+.admin-top-menu {
+    position: relative;
+}
+.admin-submenu {
+    position: relative;
+    width: 100%;
+    background: #3a3a3a;
+    left: 3rem;
+    overflow: hidden;
+    border-radius: 1rem;
+}
+.admin-submenu .admin-menu__item {
+    margin:0;
+}
 
 
 

@@ -39,12 +39,12 @@
                     <l-tile-layer :url="url" :attribution="attribution" />
                     <l-marker-cluster>
                         <l-marker 
-                        v-for="event in eventsWithLoc"
+                        v-for="event in events"
                         :key="event.id" 
                         :lat-lng="event.location_latlon">
                             <l-icon class-name="icons"><p>{{event.price_range}}</p></l-icon>
                             <l-popup>
-                                <popup-content :data="event" />
+                                <popup-content :data="event"/>
                             </l-popup>
                         </l-marker>
                     </l-marker-cluster>

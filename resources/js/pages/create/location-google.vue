@@ -1,5 +1,6 @@
 <template>
     <div :class="{ remote: !hasLocation, showmap: location.latitude && hasLocation}" class="event-create__location grid">
+
         <section :class="{ showmap: location.latitude && hasLocation}" class="event-enter-location">
             <div class="title">
                 <h2>Location</h2>
@@ -28,7 +29,6 @@
                     </div>
                 </div>
                 <div class="field" v-if="location.hiddenLocationToggle">
-                    <label> We still need your address so that users searching for this event can see the general area. They will not see the specific street address. </label>
                      <label> Please enter how participants will be notified of the location. (Required) </label>
                     <textarea 
                     v-model.trim="location.hiddenLocation" 
@@ -61,6 +61,7 @@
                 </div> 
                 <div class="field">
                     <label> Event Location </label>
+                    <label v-if="location.hiddenLocationToggle"> Please enter a full address. This will NOT appear in your event description, but will aid users in finding events near them. If you do not have an exact address, please enter the closest zip code. <br> <b>Note:</b> If you <i>just</i> enter a major city, your event will overlap with others on map view. Be as specific as possible.</label>
                     <input 
                     ref="autocomplete" 
                     :placeholder="locationPlaceholder"
@@ -117,37 +118,52 @@
             </div>
             <CubeSpinner :loading="loading"></CubeSpinner>
         </section>
-        <section :class="{ showmap: location.latitude && hasLocation}" class="event-show-location" :style="pageHeight">
-            <div v-if="map.center && hasLocation" class="event-create-map">
-                <div class="zoom">
-                    <div class="zoom__in">
-                        <button @click.prevent="map.zoom += 1">
-                            <svg viewBox="0 0 16 16" height="16" width="16" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M7 1a1 1 0 0 1 2 0v14a1 1 0 1 1-2 0V1z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"></path></svg>
-                        </button>
+
+        <section style="width:100%">
+            <div :class="{ showmap: location.latitude && hasLocation}" class="event-show-location" :style="pageHeight">
+                <div v-if="map.center && hasLocation" class="event-create-map">
+                    <div class="zoom">
+                        <div class="zoom__in">
+                            <button @click.prevent="map.zoom += 1">
+                                <svg viewBox="0 0 16 16" height="16" width="16" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M7 1a1 1 0 0 1 2 0v14a1 1 0 1 1-2 0V1z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"></path></svg>
+                            </button>
+                        </div>
+                        <div class="zoom__out">
+                            <button @click.prevent="map.zoom -= 1">
+                                <svg viewBox="0 0 16 16" height="16" width="16" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"></path></svg>
+                            </button>
+                        </div>
                     </div>
-                    <div class="zoom__out">
-                        <button @click.prevent="map.zoom -= 1">
-                            <svg viewBox="0 0 16 16" height="16" width="16" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"></path></svg>
-                        </button>
-                    </div>
+                    <div :style="pageHeight" style="width:100%;">
+                        <l-map :zoom="map.zoom" :center="map.center" :options="{ scrollWheelZoom: map.allowZoom, zoomControl: map.allowZoom }">
+                        <l-tile-layer :url="map.url"></l-tile-layer>
+                        <l-marker :lat-lng="map.center"></l-marker>
+                        </l-map>
+                    </div>  
                 </div>
-                <div :style="pageHeight" style="width:100%;">
-                    <l-map :zoom="map.zoom" :center="map.center" :options="{ scrollWheelZoom: map.allowZoom, zoomControl: map.allowZoom }">
-                    <l-tile-layer :url="map.url"></l-tile-layer>
-                    <l-marker :lat-lng="map.center"></l-marker>
-                    </l-map>
-                </div>  
             </div>
         </section>
         <div class="event-create__submit-button">
             <button :disabled="disabled" @click.prevent="onBackInitial()" class="nav-back-button"> Your events </button>
         </div>
-        <div class="create-button__back">
-            <button :disabled="disabled" class="create" @click.prevent="onBack('title')"> Back </button>
+        <div v-if="!approved">
+            <div class="create-button__back">
+                <button :disabled="disabled" class="create" @click.prevent="onBack('title')"> Back </button>
+            </div>
+            <div class="create-button__forward">
+                <button :disabled="disabled" class="create" @click.prevent="onSubmit('category')"> Save and Continue </button>
+            </div>
         </div>
-        <div class="create-button__forward">
-            <button :disabled="disabled" class="create" @click.prevent="onSubmit('category')"> Save and Continue </button>
+        <div v-else>
+            <div class="create-button__forward">
+                <button :disabled="disabled" class="create" @click.prevent="save()"> Save </button>
+            </div>
         </div>
+        <transition name="slide-fade">
+            <div v-if="updated" class="updated-notifcation">
+                <p>Your event has been updated.</p>
+            </div>
+        </transition>
     </div>
 </template>
 
@@ -198,6 +214,8 @@
                 description: this.event.remote_description ? this.event.remote_description : '',
                 serverErrors: [],
                 loading: false,
+                updated: false,
+                approved: this.event.status == 'p' || this.event.status == 'e' ? true : false,
             }
         },
         methods: {
@@ -237,6 +255,20 @@
                 });
             },
 
+            save(value) {
+                if (this.checkVuelidate()) { return false };
+                axios.patch( this.endpoint, this.hasLocation ? this.location : this.remoteLocationArray )
+                .then(res => {  
+                    this.onLoad();
+                    this.disabled = false;
+                    this.updated = true;
+                    setTimeout(() => this.updated = false, 3000);
+                })
+                .catch(err => {
+                    this.onErrors(err);
+                });
+            },
+
             updateEventFields(input) {
                 if ((input !== null) && (typeof input === "object") && (input.id !== null)) {
                     this.location = _.pick(input, _.intersection( _.keys(this.location), _.keys(input) ));
@@ -248,7 +280,7 @@
                 if (window.innerWidth > 1050) {
                     this.pageHeight = `height:calc(${window.innerHeight}px - 7rem)`;
                 } else {
-                    this.pageHeight = `height:calc(${window.innerHeight/2.5}px - 7rem)`;
+                    this.pageHeight = `height:calc(${window.innerHeight/1.5}px - 7rem)`;
                 }
             },
 

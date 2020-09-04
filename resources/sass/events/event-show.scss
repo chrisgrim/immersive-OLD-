@@ -387,6 +387,15 @@ button.event-bottom-bar__button {
     }
 }
 
+.event-show__adminedit {
+    position: absolute;
+    top: 4.5rem;
+    right: 12rem;
+    background: white;
+    padding: 1.6rem 1rem;
+    border-radius: .5rem;
+}
+
 @media (max-width: 1050px) {
     .two-panel {
         grid-template-columns: 27rem 1fr;

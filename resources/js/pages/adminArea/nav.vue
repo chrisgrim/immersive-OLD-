@@ -61,36 +61,44 @@
                 Tags
             </button>
             </a>
-            
-            <a v-if="admin" href="/contactlevels/create">
-            <button :class="{active: active == 'contact'}" class="admin-menu__item" >
-                Contact Levels
-            </button>
-            </a>
 
-            <a v-if="admin" href="/remotelocations/create">
-            <button :class="{active: active == 'remote'}" class="admin-menu__item" >
-                Remote Locations
-            </button>
-            </a>
+            <div class="admin-top-menu" v-if="admin">
+                <button @click="advisories = !advisories" class="admin-menu__item" >
+                    Advisories
+                </button>
+            </div>
 
-            <a v-if="admin" href="/contentadvisories/create">
-            <button :class="{active: active == 'content'}" class="admin-menu__item" >
-                Content Advisories
-            </button>
-            </a>
+            <div class="admin-submenu" v-if="advisories">
+                <a href="/contactlevels/create">
+                <button :class="{active: active == 'contact'}" class="admin-menu__item" >
+                    Contact Levels
+                </button>
+                </a>
 
-            <a v-if="admin" href="/mobilities/create">
-            <button :class="{active: active == 'mobilities'}" class="admin-menu__item" >
-                Mobility Advisories
-            </button>
-            </a>
+                <a href="/remotelocations/create">
+                <button :class="{active: active == 'remote'}" class="admin-menu__item" >
+                    Remote Locations
+                </button>
+                </a>
 
-            <a v-if="admin" href="/interactivelevels/create">
-            <button :class="{active: active == 'interactive'}" class="admin-menu__item" >
-                Interactive Levels
-            </button>
-            </a>
+                <a href="/contentadvisories/create">
+                <button :class="{active: active == 'content'}" class="admin-menu__item" >
+                    Content Advisories
+                </button>
+                </a>
+
+                <a href="/mobilities/create">
+                <button :class="{active: active == 'mobilities'}" class="admin-menu__item" >
+                    Mobility Advisories
+                </button>
+                </a>
+
+                <a href="/interactivelevels/create">
+                <button :class="{active: active == 'interactive'}" class="admin-menu__item" >
+                    Interactive Levels
+                </button>
+                </a>
+            </div>
 
             <a href="/reviewevents/create">
             <button :class="{active: active == 'reviews'}" class="admin-menu__item" >
@@ -120,6 +128,7 @@
                 admin: this.loaduser.type == 'a' ? true : false,
                 mod: this.loaduser.type == 'm' ? true : false,
                 active: '',
+                advisories: false,
             };
         },
 
@@ -141,6 +150,10 @@
                 path == '/staffpicks/create' ? this.active = 'picks' : '';
                 path == '/finish/organizers' ? this.active = 'orgApprove' : '';
                 path == '/finish/events' ? this.active = 'approve' : '';
+
+                if (this.active == 'contact' || this.active == 'remote' || this.active == 'mobilities' || this.active == 'interactive' || this.active == 'interactive') {
+                    this.advisories = true;
+                }
             }
         },
 

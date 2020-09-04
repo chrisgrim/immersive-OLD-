@@ -82,7 +82,7 @@
         </script>
     @endif
     
-    <title>{{$event->name}}</title>
+    <title>{{$event->name}} {{$event->tag_line ? '- ' . \Illuminate\Support\Str::limit($event->tag_line, 80) : '- ' . \Illuminate\Support\Str::limit($event->description, 80)}} </title>
     <link rel="canonical" href="{{url()->current()}}">
     <meta name="description" content="{{$event->tag_line ? $event->tag_line : $event->description}}"/>
     <meta property="og:locale" content="en_US" />

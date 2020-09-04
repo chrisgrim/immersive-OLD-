@@ -417,7 +417,7 @@ class Event extends Model implements Auditable
     */
     public static function finalSlug($event) 
     {
-        if(Event::withTrashed()->where('slug', '=', str_slug($event->name))->exists()){
+        if(Event::withTrashed()->where('slug', '=', str_slug($event->name))->where('id', '!=', $event->id)->exists()){
             $slug = str_slug($event->name) . '-' . substr(md5(microtime()),rand(0,26),5);
             if(Event::where('slug', '=', $slug)->exists()){
                 return str_slug($event->name) . '-' . rand(1,50000);

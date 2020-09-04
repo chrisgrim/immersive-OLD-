@@ -435,7 +435,7 @@
                         <div style="width:100%;height:400px">
                             <l-map :zoom="zoom" :center="center" :options="{ scrollWheelZoom: allowZoom, zoomControl: allowZoom }">
                             <l-tile-layer :url="url"></l-tile-layer>
-                            <l-marker :lat-lng="center" v-if="!event.location.hiddenLocationToggle && event.location.street">
+                            <l-marker :lat-lng="center">
                                 <l-popup>
                                     <div class="show-pop">
                                         <a rel="noreferrer" target="_blank" :href="`http://maps.google.com/maps?q=${event.location.home}+${event.location.street},+${event.location.city},+${event.location.region}`">

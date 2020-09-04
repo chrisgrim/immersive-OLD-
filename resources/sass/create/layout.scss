@@ -187,6 +187,30 @@ button.create[disabled]{
     top: 1.2rem;
 }
 
+.updated-notifcation {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    padding: 2rem;
+    background: $default-color;
+    border-radius: 1rem;
+    z-index: 2000;
+}
+.updated-notifcation p {
+    color:white;
+}
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}
+
 @media (max-width: 768px) { 
     .create-menu {
         grid-template-columns: 8rem 1fr !important;

@@ -4,7 +4,7 @@
             <div class="event-index__eventlist--middle vertical">
                 <div class="eventlist__element edit" :style="`width:${width}`">
                     <div class="card new">
-                        <a href="/new/event" class="card-url"></a>
+                        <div @click.prevent="newEvent(organizer)" class="card-url"></div>
                         <div class="card-image__top">
                             <div class="card-details">
                                 <div class="card-details__content new">
@@ -26,7 +26,7 @@
                         <div itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
                             <meta :content="event.name" itemprop="name">
                             <meta :content="`https://www.everythingimmersive.com/events/${event.slug}`" itemprop="url">
-                            <a :href="url(event)" class="card-url"></a>
+                            <a :href="`/create-event/${event.slug}/title`" class="card-url"></a>
                             <div class="card-image__top">
                                 <div class="card-details" v-if="inProgress(event)">
                                     <div class="card-details__content">
@@ -97,14 +97,11 @@
 
 <script>
     export default {
-        props: ['events', 'loadurl'],
+        props: ['events', 'loadurl', 'organizer'],
 
         computed: {
             inProgress() {
                 return event => this.progress.includes(event.status) ? true : false;
-            },
-            url() {
-                return event => event.status == 'p' || event.status == 'e' ? `/events/${event.slug}` : `/create-event/${event.slug}/title`;
             },
             status() {
                 return event => event.status !== 'r' ? true : false;
@@ -154,7 +151,15 @@
                     return this.width = '33.3333%'
                 }
                 return this.width = '41%';
-            }
+            },
+
+            newEvent(organizer) {
+                axios.post(`/events`, organizer)
+                .then(response => { 
+                    window.location.href = `/create-event/${response.data.slug}/title`; 
+                })
+                .catch(error => { this.serverErrors = error.response.data.errors; });
+            },
         },
 
         mounted() {

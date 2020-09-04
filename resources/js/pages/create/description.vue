@@ -67,16 +67,27 @@
                 </div>
             </div>
         </section>
-        
         <div class="event-create__submit-button">
             <button :disabled="disabled" @click.prevent="onBackInitial()" class="nav-back-button"> Your events </button>
         </div>
-        <div class="create-button__back">
-            <button :disabled="disabled" class="create" @click.prevent="onBack('tickets')"> Back </button>
+        <div v-if="!approved">
+            <div class="create-button__back">
+                <button :disabled="disabled" class="create" @click.prevent="onBack('tickets')"> Back </button>
+            </div>
+            <div class="create-button__forward">
+                <button :disabled="disabled" class="create" @click.prevent="onSubmit('advisories')"> Save and continue </button>
+            </div>
         </div>
-        <div class="create-button__forward">
-            <button :disabled="disabled" class="create" @click.prevent="onSubmit('advisories')"> Save and continue </button>
+        <div v-else>
+            <div class="create-button__forward">
+                <button :disabled="disabled" class="create" @click.prevent="save()"> Save </button>
+            </div>
         </div>
+        <transition name="slide-fade">
+            <div v-if="updated" class="updated-notifcation">
+                <p>Your event has been updated.</p>
+            </div>
+        </transition>
         
     </div>
 </template>
@@ -112,6 +123,8 @@
                 disabled: false,
                 serverErrors: [],
                 active: null,
+                updated: false,
+                approved: this.event.status == 'p' || this.event.status == 'e' ? true : false,
 			}
 		},
 
@@ -134,6 +147,18 @@
                 })
                 .catch(err => { this.onErrors(err) });
 			},
+
+            save(value) {
+                if (this.checkVuelidate()) { return false };
+                axios.patch(this.endpoint, this.group)
+                .then(res => { 
+                    this.onLoad();
+                    this.disabled = false;
+                    this.updated = true;
+                    setTimeout(() => this.updated = false, 3000);
+                })
+                .catch(err => { this.onErrors(err) });
+            },
 
             onToggle(arr) {
                 this.active = arr;

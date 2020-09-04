@@ -142,6 +142,23 @@ class SearchController extends Controller
         return [
             'data' => $concatdata->concat($city),
         ];
+
+        // if ($request->keywords) {
+        //     $city = CityList::search($request->keywords)
+        //     ->rule(CityListSearchRule::class)
+        //     ->orderBy('rank', 'desc')
+        //     ->orderBy('population', 'desc')
+        //     ->get();
+        // } else {
+        //     $city = CityList::search('*')
+        //     ->orderBy('rank', 'desc')
+        //     ->orderBy('population', 'desc')
+        //     ->take(10)
+        //     ->get();
+        // }
+        // return [
+        //     'data' => $city,
+        // ];
     }
 
     public function searchLocation(Request $request)
@@ -165,9 +182,7 @@ class SearchController extends Controller
                 'data' => $city,
             ];
         }
-
     }
-
 
     public function searchUsers(Request $request)
     {

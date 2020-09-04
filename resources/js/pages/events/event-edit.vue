@@ -22,7 +22,7 @@
                 <div class="listing-details-block">
                 <tabs>
                     <tab title="Current Events" :active="true" :id="organizer.id" class="event-edit__eventlist">
-                        <vue-event-edit-listing-item :user="user" :events="limitEvents(organizer.in_progress_events)"></vue-event-edit-listing-item>
+                        <vue-event-edit-listing-item :organizer="organizer" :user="user" :events="limitEvents(organizer.in_progress_events)"></vue-event-edit-listing-item>
                         <modal v-if="modal == 'deleteOrg'" @close="modal = null">
                             <div slot="header">
                                 <div class="circle del">

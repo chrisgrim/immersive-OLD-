@@ -143,7 +143,7 @@ class AdminAreaController extends Controller
     {
         $event->load('category', 'location', 'contentAdvisories', 'contactLevels', 'mobilityAdvisories', 'eventreviews', 'staffpick', 'advisories', 'showOnGoing','interactive_level', 'remotelocations', 'timezone', 'genres');
         $tickets = $event->shows()->first()->tickets()->orderBy('ticket_price')->get();
-        $eventExists = Event::where('slug', str_slug($event->name))->first();
+        $eventExists = Event::where('slug', str_slug($event->name))->where('id', '!=', $event->id)->first();
         return view('adminArea.showapproval',compact('event', 'tickets', 'eventExists'));
     }
 

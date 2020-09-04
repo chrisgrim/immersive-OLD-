@@ -181,9 +181,9 @@
                                 type="text" 
                                 v-model="ticketUrl"
                                 :class="{ active: active == 'ticket','error': $v.ticketUrl.$error }"
-                                @click="active = 'ticket'"
+                                @click="checkStatus"
                                 @input="$v.ticketUrl.$touch"
-                                @blur="active = null"
+                                @blur="active = null"
                                 placeholder=""
                                 />
                                 <div v-if="$v.ticketUrl.$error" class="validation-error">
@@ -199,17 +199,41 @@
                 </section>
             </div>
         </section>
-        
-         <div class="event-create__submit-button">
+        <div class="event-create__submit-button">
             <button :disabled="disabled" @click.prevent="onBackInitial()" class="nav-back-button"> Your events </button>
         </div>
-        <div class="create-button__back">
-            <button :disabled="disabled" class="create" @click.prevent="onBack('category')"> Back </button>
+        <div v-if="!approved">
+            <div class="create-button__back">
+                <button :disabled="disabled" class="create" @click.prevent="onBack('category')"> Back </button>
+            </div>
+            <div class="create-button__forward">
+                <button :disabled="disabled" class="create" @click.prevent="onSubmit('description')"> Save and continue </button>
+            </div>
         </div>
-        <div class="create-button__forward">
-            <button :disabled="disabled" class="create" @click.prevent="onSubmit('description')"> Save and continue </button>
+        <div v-else>
+            <div class="create-button__forward">
+                <button :disabled="disabled" class="create" @click.prevent="save()"> Save </button>
+            </div>
         </div>
-
+        <modal v-if="modal" @close="modal = false">
+            <div slot="header">
+                <div class="circle del">
+                    <p>?</p>
+                </div>
+            </div>
+            <div slot="body"> 
+                <h3>Changing the event URL?</h3>
+                <p>Editing the event url will require the event to be reapproved.</p>
+            </div>
+            <div slot="footer">
+                <button class="btn del" @click="onReSubmit()">Change</button>
+            </div>
+        </modal>
+        <transition name="slide-fade">
+            <div v-if="updated" class="updated-notifcation">
+                <p>Your event has been updated.</p>
+            </div>
+        </transition>
     </div>
 </template>
 
@@ -244,6 +268,7 @@ export default {
                 'tickets': this.tickets,
                 'ticketUrl': this.ticketUrl,
                 'callAction': this.callAction,
+                'reSubmitEvent': this.reSubmit,
             }
         },
     },
@@ -279,6 +304,9 @@ export default {
             temperrors: false,
             ticketOptionslive: [],
             ticketUrl: this.event.ticketUrl ? this.event.ticketUrl : '',
+            updated: false,
+            approved: this.event.status == 'p' || this.event.status == 'e' ? true : false,
+            reSubmit: false,
         }
     },
 
@@ -378,7 +406,7 @@ export default {
             });
         },
 
-        onSubmit(value) {
+        customCheck() {
             let previous = [];
             for (var i = 0; i < this.tickets.length; i++) {
                 let tic = this.tickets[i];
@@ -411,8 +439,12 @@ export default {
                     return false;
                 }
                 previous.push(this.tickets[i].name.toLowerCase())
-
             }
+            return true;
+        },
+
+        onSubmit(value) {
+            if (!this.customCheck()) {return false};
             if (this.checkVuelidate()) { return false };
             axios.post(this.endpoint, this.submitObject)
             .then(res => {  
@@ -441,6 +473,35 @@ export default {
             for (var i = 0; i < this.ticketOptions.length; i++) {
                 let name = this.ticketOptions[i].name;
                 selected.includes(name) ? '' : this.ticketOptionslive.push(this.ticketOptions[i]);
+            }
+        },
+
+        onReSubmit() {
+            this.reSubmit = true;
+            this.approved = false;
+            this.modal = false;
+        },
+
+        save(value) {
+            if (!this.customCheck()) {return false};
+            if (this.checkVuelidate()) { return false };
+            console.log('test');
+            axios.post(this.endpoint, this.submitObject)
+            .then(res => {  
+                this.reSubmit == true ? location.reload() : '';
+                this.tickets = [];
+                this.onLoad();
+                this.disabled = false;
+                this.updated = true;
+                setTimeout(() => this.updated = false, 3000);
+            })
+            .catch(err => { this.onErrors(err) });
+        },
+
+        checkStatus() {
+            this.active = 'ticket'
+            if ((this.event.status == 'p' || this.event.status == 'e') && this.reSubmit == false) {
+                this.modal = true;
             }
         }
 

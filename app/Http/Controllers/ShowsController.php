@@ -42,7 +42,6 @@ class ShowsController extends Controller
      */
     public function store(Request $request, Event $event)
     {
-
         if($request->onGoing) {
             ShowOnGoing::saveNewShowOnGoing($request, $event, $request->start_date);
             Show::saveNewShows($request, $event);
@@ -61,6 +60,13 @@ class ShowsController extends Controller
         //Checks to see if dates have been added then updates status to 4
         if ($event->status < 5 && $event->isInProgress() && $event->closingDate && $event->show_times && $event->showtype && $event->closingDate) {
             $event->update([ 'status' => '4' ]);
+        }
+        //Check if they changed the dates after published
+        if($request->reSubmitEvent) {
+            $event->update([
+                'status' => '8',
+                'approved' => false
+            ]);
         }
 
         $event = $event->fresh();

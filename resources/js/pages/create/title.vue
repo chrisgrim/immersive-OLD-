@@ -44,17 +44,22 @@
             
         </section>
 
-        <section></section>
         <div class="event-create__submit-button">
             <button :disabled="disabled" @click.prevent="onBackInitial()" class="nav-back-button"> Your events </button>
         </div>
-        <div class="create-button__back">
-            <button :disabled="disabled" class="create" @click.prevent="onBackInitial()"> Back </button>
+        <div v-if="!approved">
+            <div class="create-button__back">
+                <button :disabled="disabled" class="create" @click.prevent="onBackInitial()"> Back </button>
+            </div>
+            <div class="create-button__forward">
+                <button :disabled="disabled" class="create" @click.prevent="onSubmit('location')"> Save and continue </button>
+            </div>
         </div>
-        <div class="create-button__forward">
-            <button :disabled="disabled" class="create" @click.prevent="onSubmit('location')"> Save and continue </button>
+        <div v-else>
+            <div class="create-button__forward">
+                <button :disabled="disabled" class="create" @click.prevent="save()"> Save </button>
+            </div>
         </div>
-        
         <modal v-if="modal" @close="modal = false">
             <div slot="header">
                 <div class="circle del">
@@ -69,6 +74,11 @@
                 <button class="btn del" @click="onReSubmit()">Change</button>
             </div>
         </modal>
+        <transition name="slide-fade">
+            <div v-if="updated" class="updated-notifcation">
+                <p>Your event has been updated.</p>
+            </div>
+        </transition>
     </div>
 </template>
 
@@ -102,6 +112,7 @@
                 modal: false,
                 approved: this.event.status == 'p' || this.event.status == 'e' ? true : false,
                 serverErrors: '',
+                updated: false,
 			}
 		},
 
@@ -148,7 +159,21 @@
             cleanErr() {
                 this.serverErrors = [];
                 this.$v.title.name.$touch();
-            }
+            },
+
+            save(value) {
+                if (this.checkVuelidate()) { return false };
+                axios.patch( this.endpoint, this.title )
+                .then(res => {
+                    this.reSubmit == true ? location.reload() : '';
+                    this.onLoad();
+                    this.disabled = false;
+                    this.updated = true;
+                    setTimeout(() => this.updated = false, 3000);
+                })
+                .catch(err => { 
+                    this.onErrors(err) });
+            },
 		},
 
         created() {

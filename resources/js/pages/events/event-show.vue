@@ -93,6 +93,13 @@
                     </picture>
                 </div>
                 <div class="desktop">
+                    <div v-if="user && user.type == 'a'" class="event-show__adminedit">
+                        <a :href="`/create-event/${event.slug}/title`">
+                            <div>
+                                Edit
+                            </div>
+                        </a>
+                    </div>
                     <favorite :user="user" :inputclass="showEventClass" :event="event"></favorite>
                 </div>
             </div>
@@ -438,7 +445,16 @@
                 <div class="text" v-else="event.location.hiddenLocationToggle">
                     <a rel="noreferrer" target="_blank" :href="`http://maps.google.com/maps?q=${event.location.home}+${event.location.street},+${event.location.city},+${event.location.region}`">
                         <b><p v-if="event.location.venue">{{event.location.venue}}</p></b>
-                        <p>{{locationPlaceholder}}</p>  
+                        <p>
+                            <span v-if="event.location.home">{{event.location.home}}</span> 
+                            <span v-if="event.location.street">{{event.location.street}}</span> 
+                        </p>
+                        <p>
+                            <span v-if="event.location.city">{{event.location.city}}</span> 
+                            <span v-if="event.location.region">{{event.location.region}}</span>
+                            <span v-if="event.location.country">{{event.location.country}}</span>
+                            <span v-if="event.location.postal_code">{{event.location.postal_code}}</span>
+                        </p>  
                     </a>
                 </div>
                 <div class="event-show-map">
@@ -458,13 +474,20 @@
                         <div style="width:100%;height:400px">
                             <l-map :zoom="zoom" :center="center" :options="{ scrollWheelZoom: allowZoom, zoomControl: allowZoom }">
                             <l-tile-layer :url="url"></l-tile-layer>
-                            <l-marker :lat-lng="center" v-if="!event.location.hiddenLocationToggle && event.location.street">
+                            <l-marker :lat-lng="center">
                                 <l-popup>
                                     <div class="show-pop">
                                         <a rel="noreferrer" target="_blank" :href="`http://maps.google.com/maps?q=${event.location.home}+${event.location.street},+${event.location.city},+${event.location.region}`">
                                             <div class="info">
                                                 <div class="name">
-                                                    {{locationPlaceholder}} 
+                                                   <p>
+                                                        <span v-if="event.location.home">{{event.location.home}}</span> 
+                                                        <span v-if="event.location.street">{{event.location.street}}</span> 
+                                                        <span v-if="event.location.city">{{event.location.city}}</span> 
+                                                        <span v-if="event.location.region">{{event.location.region}}</span>
+                                                        <span v-if="event.location.country">{{event.location.country}}</span>
+                                                        <span v-if="event.location.postal_code">{{event.location.postal_code}}</span>
+                                                    </p>  
                                                 </div>
                                             </div>
                                         </a>

@@ -23,7 +23,7 @@ class CitiesImport implements ToModel, WithHeadingRow, WithProgressBar, WithChun
         if ($row['country'] == 'US') {
             $name = $row['city'] . ', ' . $row['state_id'];
         } else {
-            $name = $row['city'];
+            $name = $row['city'] . ', ' . $row['country'];;
         }
         return new CityList([
             'name' => $name,

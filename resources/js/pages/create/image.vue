@@ -37,16 +37,22 @@
             </div>
         </div>
     </section>
-
     <div class="event-create__submit-button">
         <button :disabled="disabled" @click.prevent="onBackInitial()" class="nav-back-button"> Your events </button>
     </div>
-    <div class="create-button__back">
-        <button :disabled="disabled" class="create" @click.prevent="onBack('advisories')"> Back </button>
+    <div v-if="!approved">
+        <div class="create-button__back">
+            <button :disabled="disabled" class="create" @click.prevent="onBack('advisories')"> Back </button>
+        </div>
+        <div class="create-button__forward">
+            <button :disabled="readySubmit" class="create" @click.prevent="onForward('review')"> Final Review </button>
+        </div>
     </div>
-    <div class="create-button__forward" v-if="eventPublished">
-        <button :disabled="readySubmit" class="create" @click.prevent="onForward('review')"> Final Review </button>
-    </div>
+    <transition name="slide-fade">
+        <div v-if="updated" class="updated-notifcation">
+            <p>Your event has been updated.</p>
+        </div>
+    </transition>
 
 </div>
 
@@ -103,6 +109,8 @@
                 imageFile: '',
                 formData: new FormData(),
                 imageAdded: this.event.largeImagePath ? true : false,
+                updated: false,
+                approved: this.event.status == 'p' || this.event.status == 'e' ? true : false,
             };
         },
 
@@ -122,6 +130,7 @@
                 this.formData.append('image', this.imageFile.file);
                 axios.post(this.endpoint, this.formData)
                 .then(res => {
+                    if (this.approved) {this.updated = true;setTimeout(() => this.updated = false, 3000)};
                     res.data.status >= 8 ? this.readyToSubmit = true : false;
                     this.imageAdded = true;
                     this.onToggle();

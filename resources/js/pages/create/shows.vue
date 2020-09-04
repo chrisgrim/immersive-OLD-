@@ -21,6 +21,7 @@
                         @select="dates = []"
                         @click="active = 'type'"
                         @blur="active = null"
+                        @open="checkStatus"
                         label="name" 
                         track-by="id"
                         @input="$v.showType.$touch"
@@ -330,17 +331,41 @@
                 </div>
             </div>
         </section>
-        
-         <div class="event-create__submit-button">
+        <div class="event-create__submit-button">
             <button :disabled="disabled" @click.prevent="onBackInitial()" class="nav-back-button"> Your events </button>
         </div>
-        <div class="create-button__back">
-            <button :disabled="disabled" class="create" @click.prevent="onBack('category')"> Back </button>
+        <div v-if="!published">
+            <div class="create-button__back">
+                <button :disabled="disabled" class="create" @click.prevent="onBack('category')"> Back </button>
+            </div>
+            <div class="create-button__forward">
+                <button :disabled="disabled" class="create" @click.prevent="onSubmit('tickets')"> Save and continue </button>
+            </div>
         </div>
-        <div class="create-button__forward">
-            <button :disabled="disabled" class="create" @click.prevent="onSubmit('tickets')"> Save and continue </button>
+        <div v-else>
+            <div class="create-button__forward">
+                <button :disabled="disabled" class="create" @click.prevent="save()"> Save </button>
+            </div>
         </div>
-
+        <transition name="slide-fade">
+            <div v-if="updated" class="updated-notifcation">
+                <p>Your event has been updated.</p>
+            </div>
+        </transition>
+        <modal v-if="modal" @close="modal = false">
+            <div slot="header">
+                <div class="circle del">
+                    <p>?</p>
+                </div>
+            </div>
+            <div slot="body"> 
+                <h3>Changing the type of dates?</h3>
+                <p>Changing the show run type will require the event to be reapproved.</p>
+            </div>
+            <div slot="footer">
+                <button class="btn del" @click="onReSubmit()">Change</button>
+            </div>
+        </modal>
     </div>
 </template>
 
@@ -371,8 +396,8 @@ export default {
             return this.$store.state.save
         },
 
-        setInput() {
-
+        published() {
+            return this.event.status == 'p' || this.event.status == 'e' ? true : false;
         },
 
         dateArray() {
@@ -409,6 +434,7 @@ export default {
                 'always': this.showType.id == '3' || !this.weeklyOngoing ? true : false,
                 'start_date': this.startDate ? this.startDate : null,
                 'timezone': this.timezone,
+                'reSubmitEvent': this.reSubmitEvent,
             }
         },
 
@@ -440,6 +466,9 @@ export default {
             exit: false,
             showStartDate: this.event.show_on_going ? true : false,
             timezone: this.event.timezone ? this.event.timezone : '',
+            updated: false,
+            modal: false,
+            reSubmitEvent: false,
 
         }
     },
@@ -521,14 +550,34 @@ export default {
          	if (this.checkVuelidate()) { return false };
             axios.post(this.endpoint, this.submitObject)
             .then(res => {  
-                // console.log(res.data);
                 value == 'exit' || this.exit == true ? this.onBackInitial() : this.onForward(value);
             })
             .catch(err => { this.onErrors(err) });
         },
 
-        setStartDate() {
-            // return this.dates.length ? this.startDate = this.dates[0] : '';
+        save(value) {
+            if (this.checkVuelidate()) { return false };
+            axios.post(this.endpoint, this.submitObject)
+            .then(res => {  
+                if (this.reSubmitEvent == true) {return location.reload()};
+                this.onLoad();
+                this.disabled = false;
+                this.updated = true;
+                setTimeout(() => this.updated = false, 3000);
+            })
+            .catch(err => { this.onErrors(err) });
+        },
+
+        checkStatus() {
+            if ((this.event.status == 'p' || this.event.status == 'e') && this.reSubmitEvent == false) {
+                this.modal = true;
+            }
+        },
+
+        onReSubmit() {
+            this.reSubmitEvent = true;
+            this.approved = false;
+            this.modal = false;
         },
 
     },
@@ -541,11 +590,11 @@ export default {
                 this.onSubmit(this.navSubmit);
             }
         },
+
     },
 
     mounted() {
     	this.onLoad();
-        this.setStartDate();
         setTimeout(() => this.$refs.datePicker.fp.jumpToDate(new Date()), 100);
     },
 

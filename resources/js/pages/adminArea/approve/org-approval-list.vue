@@ -16,12 +16,16 @@
                                     <meta :content="`https://www.everythingimmersive.com/events/${organizer.slug}`" itemprop="url">
                                     <a :href="`/finish/organizers/${organizer.slug}`" class="card-url"></a>
                                     <div class="card-image__top">
-                                        <div class="card-image__middle" style="padding-top: 65%;">
+                                        <div class="card-image__middle" v-if="organizer.thumbImagePath" style="padding-top: 65%;">
                                             <div class="card-image">
                                                 <picture>
                                                     <source type="image/webp" :srcset="`/storage/${organizer.thumbImagePath}`"> 
                                                     <img style="object-fit:cover" loading="lazy" class="card-image__img" :src="`/storage/${organizer.thumbImagePath.slice(0, -4)}jpg`" :alt="`${organizer.name} Immersive Event`">
                                                 </picture>
+                                            </div>
+                                        </div>
+                                        <div class="card-image__middle empty" style="padding-top: 64.3%;" v-else>
+                                            <div class="card-image">
                                             </div>
                                         </div>
                                     </div>
