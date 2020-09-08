@@ -185,7 +185,11 @@
             },
 
             submitObject() {
-                return {message: this.message, type:this.isMessage ? 'message' : 'event' };
+                return {
+                    message: this.message, 
+                    type:this.isMessage ? 'message' : 'event',
+                    event: this.loadmessages.event ? this.loadmessages.event : ''
+                };
             },
 
             url() {

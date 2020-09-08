@@ -45,7 +45,7 @@
             <button :disabled="disabled" class="create" @click.prevent="onBack('advisories')"> Back </button>
         </div>
         <div class="create-button__forward">
-            <button :disabled="readySubmit" class="create" @click.prevent="onForward('review')"> Final Review </button>
+            <button :disabled="readySubmit" class="create" @click.prevent="onForward('review')"> Review </button>
         </div>
     </div>
     <transition name="slide-fade">

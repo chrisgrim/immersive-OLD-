@@ -126,6 +126,7 @@ Vue.component('admin-contact-level', () => import(/* webpackChunkName: "assets/a
 Vue.component('admin-genres', () => import(/* webpackChunkName: "assets/ag" */ './pages/adminArea/admin-genres.vue'));
 Vue.component('vue-admin-events', () => import(/* webpackChunkName: "assets/ae" */ './pages/adminArea/admin-events.vue'));
 Vue.component('vue-admin-boneyard', () => import(/* webpackChunkName: "assets/ab" */ './pages/adminArea/admin-boneyard.vue'));
+Vue.component('vue-admin-purgatory', () => import(/* webpackChunkName: "assets/apg" */ './pages/adminArea/admin-purgatory.vue'));
 Vue.component('vue-admin-stats', () => import(/* webpackChunkName: "assets/as" */ './pages/adminArea/admin-stats.vue'));
 Vue.component('admin-event-reviews', () => import(/* webpackChunkName: "assets/aer" */ './pages/adminArea/admin-event-reviews.vue'));
 Vue.component('admin-staff-picks', () => import(/* webpackChunkName: "assets/ap" */ './pages/adminArea/admin-staff-picks.vue'));

@@ -58,6 +58,7 @@ Route::GET('/finish/organizers', 'AdminAreaController@orgApproval');
 Route::GET('/finish/organizers/{organizer}', 'AdminAreaController@showOrgApproval');
 Route::POST('/approve/{event}', 'AdminAreaController@success');
 Route::POST('/approve/org/{organizer}', 'AdminAreaController@orgSuccess');
+Route::POST('/delete/org/{organizer}', 'AdminAreaController@orgDelete');
 Route::POST('/reject/{event}', 'AdminAreaController@reject');
 Route::POST('/unapprove/{event}', 'AdminAreaController@fail');
 Route::GET('/master/userlist', 'UserMasterController@index');
@@ -71,6 +72,8 @@ Route::GET('/admin/boneyard', 'AdminAreaEventsController@boneyard');
 Route::POST('/admin/events/fetch', 'AdminAreaEventsController@fetch');
 Route::POST('/admin/boneyard/fetch', 'AdminAreaEventsController@boneyardFetch');
 Route::POST('/admin/boneyard/{event}', 'AdminAreaEventsController@resurrect');
+Route::GET('/admin/purgatory', 'AdminAreaEventsController@purgatory');
+Route::POST('/admin/purgatory/fetch', 'AdminAreaEventsController@purgatoryFetch');
 Route::POST('/staffpicks/userpicks/{user}', 'StaffPicksController@userpicks');
 Route::POST('/admin/data', 'SearchDataController@create');
 

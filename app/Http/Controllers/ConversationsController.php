@@ -63,8 +63,10 @@ class ConversationsController extends Controller
         ]);
         $attributes = [
             'email' => $receiver ? $receiver->email : '',
+            'receiver' => $receiver ? $receiver->name : '',
             'body' => $request->message,
             'name' => auth()->user()->name,
+            'event' => $request->event ? $request->event['name'] : null
         ];
 
         if ($request->type == 'message') {

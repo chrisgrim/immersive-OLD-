@@ -38,6 +38,12 @@
             </button>
             </a>
 
+            <a v-if="admin" href="/admin/purgatory">
+            <button :class="{active: active == 'purgatory'}" class="admin-menu__item" >
+                Purgatory
+            </button>
+            </a>
+
             <a v-if="admin" href="/master/userlist">
             <button :class="{active: active == 'users'}" class="admin-menu__item" >
                 Edit Users
@@ -66,6 +72,9 @@
                 <button @click="advisories = !advisories" class="admin-menu__item" >
                     Advisories
                 </button>
+                <div class="menu__sub-menu--arrow">
+                    &#9660;
+                </div>
             </div>
 
             <div class="admin-submenu" v-if="advisories">
@@ -145,6 +154,7 @@
                 path == '/master/userlist' ? this.active = 'users' : '';
                 path == '/admin/events' ? this.active = 'events' : '';
                 path == '/admin/boneyard' ? this.active = 'boneyard' : '';
+                path == '/admin/purgatory' ? this.active = 'purgatory' : '';
                 path == '/admin/organizer' ? this.active = 'organizers' : '';
                 path == '/reviewevents/create' ? this.active = 'reviews' : '';
                 path == '/staffpicks/create' ? this.active = 'picks' : '';

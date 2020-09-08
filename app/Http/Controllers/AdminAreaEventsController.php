@@ -28,14 +28,34 @@ class AdminAreaEventsController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource in Boneyard.
      *
      * @return \Illuminate\Http\Response
      */
     public function boneyard()
     {
-        $events = Event::onlyTrashed()->whereNotNull('name')->limit(10)->get();
+        $events = Event::onlyTrashed()
+                ->whereNotNull('name')
+                ->orderByDESC('created_at')
+                ->limit(10)
+                ->get();
         return view('adminArea.boneyard', compact('events'));
+    }
+
+/**
+     * Display a listing of the resource in Purgatory.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function purgatory()
+    {
+        $events = Event::where('status', '!=', 'p')
+                ->where('status', '!=', 'e')
+                ->whereNotNull('name')
+                ->orderByDESC('created_at')
+                ->limit(10)
+                ->get();
+        return view('adminArea.purgatory', compact('events'));
     }
 
     /**
@@ -57,6 +77,21 @@ class AdminAreaEventsController extends Controller
     {
         return Event::onlyTrashed()
                 ->whereNotNull('name')
+                ->orderByDESC('created_at')
+                ->paginate(10);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function purgatoryFetch(Request $request)
+    {
+        return Event::where('status', '!=', 'p')
+                ->where('status', '!=', 'e')
+                ->whereNotNull('name')
+                ->orderByDESC('created_at')
                 ->paginate(10);
     }
 
@@ -71,9 +106,8 @@ class AdminAreaEventsController extends Controller
                 ->where('id', $event)
                 ->restore();
 
-        Event::where('id', $event)
-                ->update([
-                    'status' => '8',
-                ]);
+        if (false) {
+            Event::where('id', $event)->update(['status' => '8']);
+        }
     }
 }

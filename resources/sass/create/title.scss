@@ -14,6 +14,17 @@ button.editTitle {
     font-family: "Montserrat", sans-serif;
 }
 
+.event-create__intro p {
+    font-size: 1.5rem;
+    line-height: inherit;
+    margin-bottom: 1.4rem;
+}
+.event-create__intro li {
+    font-size: 1.5rem;
+    color: black;
+    margin-bottom: .8rem;
+}
+
 @media (max-width: 768px) { 
     .event-create__title {
         padding: 5rem 2rem 4rem 2rem;

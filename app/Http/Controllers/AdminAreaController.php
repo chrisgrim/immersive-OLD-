@@ -208,7 +208,7 @@ class AdminAreaController extends Controller
     }
 
      /**
-     * Approve Event
+     * Approve Organization
      *
      * @param  \App\AdminArea  $adminArea
      * @return \Illuminate\Http\Response
@@ -216,6 +216,22 @@ class AdminAreaController extends Controller
     public function orgSuccess(Organizer $organizer)
     {
         $organizer->update(['status' => 'p']);
+    }
+
+     /**
+     * Delete Organization
+     *
+     * @param  \App\AdminArea  $adminArea
+     * @return \Illuminate\Http\Response
+     */
+    public function orgDelete(Organizer $organizer)
+    {
+        if ($organizer->events) {
+            foreach ($organizer->events as $event) {
+                $event->delete();
+            }
+        }
+        $organizer->delete();
     }
 
     /**

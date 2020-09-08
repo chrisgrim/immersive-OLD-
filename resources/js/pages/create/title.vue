@@ -1,6 +1,31 @@
 <template>
 	<div class="event-create__title">
-        <section class="event-create">
+        <section class="event-create__intro" v-if="newEvent">
+            <div>
+                <h4>Hi There,</h4>
+                <br>
+                <p>We’re excited that you're sharing your work with us so we can share it with the world!</p>
+                <p>Before we get started, make sure you have the following close at hand:</p>
+
+                <ul>
+                    <li><b>Your ticket site link.</b> (We don't provide ticketing services, we just help people discover your work.) </li>
+                   <li><b>An image for your event.</b> It's best if it is horizontal, doesn't have text on it, and has dimensions of at least 800 x 450  and is under 10mb in size.</li>
+                    <li><b>Text describing your event.</b> </li>
+                    <li>If it's an in-person event, text describing your <b>COVID-19 policies and protocols.</b> </li>
+                    <li><b>Your ticket price options.</b> We support multiple ticket types, including Pay What You Can, and many common currencies.</li> 
+                    <li>Be prepared to answer questions about <b>accessibility, content advisories, the nature of physical contact</b> at the event (if any), and the <b>nature of interaction</b> at the event.</li>
+                </ul>
+                <br>
+                <p>Once you’ve entered everything, smash that “Submit” button. We’ll get back to you with questions if we need anything cleared up!</p>
+                <p>Best,<br>
+                    Noah Nelson<br>
+                    Publisher<br>
+                    Everything Immersive & No Proscenium
+                </p>
+            </div>
+        </section>
+
+        <section class="event-create" v-else>
             <div class="title">
                 <h2>Title</h2>
             </div>
@@ -47,7 +72,7 @@
         <div class="event-create__submit-button">
             <button :disabled="disabled" @click.prevent="onBackInitial()" class="nav-back-button"> Your events </button>
         </div>
-        <div v-if="!approved">
+        <div v-if="!approved && !newEvent">
             <div class="create-button__back">
                 <button :disabled="disabled" class="create" @click.prevent="onBackInitial()"> Back </button>
             </div>
@@ -55,9 +80,14 @@
                 <button :disabled="disabled" class="create" @click.prevent="onSubmit('location')"> Save and continue </button>
             </div>
         </div>
-        <div v-else>
+        <div v-if="approved && !newEvent">
             <div class="create-button__forward">
                 <button :disabled="disabled" class="create" @click.prevent="save()"> Save </button>
+            </div>
+        </div>
+        <div v-if="newEvent">
+            <div class="create-button__forward">
+                <button :disabled="disabled" class="create" @click.prevent="newEvent = false"> Continue </button>
             </div>
         </div>
         <modal v-if="modal" @close="modal = false">
@@ -90,7 +120,7 @@
 
         mixins: [formValidationMixin],
 
-		props: ['event'],
+		props: ['event', 'new'],
 
         computed: {
             endpoint() {
@@ -113,11 +143,11 @@
                 approved: this.event.status == 'p' || this.event.status == 'e' ? true : false,
                 serverErrors: '',
                 updated: false,
+                newEvent: this.new,
 			}
 		},
 
 		methods: {
-
             initializeTitleObject() {
                 return {
                     name: this.event.name ? this.event.name : '',

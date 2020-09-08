@@ -2,7 +2,7 @@
     <div class="admin-events">
         <div class="">
             <div class="admin-events__title">
-                <h1>Boneyard</h1>
+                <h1>Purgatory</h1>
             </div>
         </div>
         <div class="field">
@@ -21,7 +21,9 @@
                     {{event.name}}
                 </div>
             <div>
-                <button @click="resurrect(event)">Resurrect</button>
+                <a target="_blank" :href="`/create-event/${event.slug}/title`">
+                    <button>Edit</button>
+                </a>
             </div>
         </div>
         <div class="pagination-button">
@@ -55,7 +57,7 @@
         methods: {
 
             asyncGenerateEventList(eventList) {
-                axios.get('/api/admin/search/boneyard', { params: { keywords: eventList } })
+                axios.get('/api/admin/search/purgatory', { params: { keywords: eventList } })
                 .then(res => {
                     console.log(res.data);
                     this.events = res.data;
@@ -63,7 +65,7 @@
             },
 
             loadMore() {
-                axios.post(`/admin/boneyard/fetch?page=${this.page}`)
+                axios.post(`/admin/purgatory/fetch?page=${this.page}`)
                 .then(res => {  
                     console.log(res.data);
                     this.events = this.events.concat(res.data.data);
@@ -74,13 +76,7 @@
                     this.onErrors(err);
                 });
             },
-
-            resurrect(event) {
-                axios.post(`/admin/boneyard/${event.id}`)
-                .then(res => {
-                    location.reload()
-                });
-            }   
+ 
         },
 
     }
