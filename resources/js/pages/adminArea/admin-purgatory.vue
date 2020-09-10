@@ -22,7 +22,8 @@
                 </div>
             <div>
                 <a target="_blank" :href="`/create-event/${event.slug}/title`">
-                    <button>Edit</button>
+                    <button v-if="event.status == 'r'"> Event In Review </button>
+                    <button v-else> Edit </button>
                 </a>
             </div>
         </div>
