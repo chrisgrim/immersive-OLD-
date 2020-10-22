@@ -1,61 +1,72 @@
 <template>
-	<div class="nav-dropdown" :style="`background:${user.hexColor}`" ref="dropdown">
-        <button @click="toggle" class="dropdown-image">
+    <div 
+        class="nav-dropdown" 
+        :style="`background:${user.hexColor}`" 
+        ref="dropdown">
+        <button 
+            @click="toggle" 
+            class="nav-dropdown--icon">
             <label v-if="user.largeImagePath">
                 <picture>
-                    <source height="28" width="28" type="image/webp" :srcset="`/storage/${user.thumbImagePath}`"> 
-                    <img height="28" width="28" :src="`/storage/${user.thumbImagePath.slice(0, -4)}jpg`" :alt="user.name + `'s account`">
+                    <source 
+                        height="28" 
+                        width="28" 
+                        type="image/webp" 
+                        :srcset="`/storage/${user.thumbImagePath}`"> 
+                    <img 
+                        height="28" 
+                        width="28" 
+                        :src="`/storage/${user.thumbImagePath.slice(0, -4)}jpg`" 
+                        :alt="user.name + `'s account`">
                 </picture>
             </label>
             <div v-else-if="user.gravatar">
-                <img :src="user.gravatar" height="28" width="28" :alt="user.name + `'s account`">
+                <img 
+                    :src="user.gravatar" 
+                    height="28" 
+                    width="28" 
+                    :alt="user.name + `'s account`">
             </div>
-            <div v-else="user.largeImagePath" class="dropdown-button-text">
-                <h2>{{userName.charAt(0)}}</h2>
+            <div 
+                v-else 
+                class="nav-dropdown__guest">
+                <h2>
+                    {{ userName.charAt(0) }}
+                </h2>
             </div>
         </button>
-
-		<ul v-show='onToggle' class="sub-dropdown" >
-			<li>
-				<a :href="'/users/'+ url">
-					Profile
-				</a>
-			</li>
+        <ul 
+            v-show="onToggle" 
+            class="sub-dropdown">
+            <li>
+                <a :href="'/users/'+ url">
+                    Profile
+                </a>
+            </li>
             <li>
                 <a href="/account-settings">
                     Account
                 </a>
             </li>
-			<li v-if="user && user.type == 'a' || user && user.type == 'm'">
-				<a href="/admin/dashboard">
-					Admin Dashboard
-				</a>
-			</li>
-			 <li>
-			 	<a href="#" @click.prevent="logout()">
-			 		Logout
-			 	</a>
-			 </li>
-			
-		</ul>
-	</div>
+            <li v-if="isModerator">
+                <a href="/admin/dashboard">
+                    Admin Dashboard
+                </a>
+            </li>
+            <li>
+                <a 
+                    href="#" 
+                    @click.prevent="logout()">
+                    Logout
+                </a>
+            </li>
+        </ul>
+    </div>
 </template>
 
 <script>
-	import ImageUpload from './image-upload.vue';
-
 	export default {
-		props: {
-            user: {
-                type:Object
-            },
-            screenwidth: {
-                type:Boolean
-            }
-        },
-
-		components: { ImageUpload },
-
+        props: ['user', 'screenwidth'],
 
 		data() {
 			return {
@@ -63,6 +74,7 @@
 				userName: this.user.name,
 				url: this.user.id,
 				onToggle:false,
+                isModerator: this.user && this.user.type == 'a' || this.user && this.user.type == 'm'
 			};
 		},
 
@@ -70,14 +82,13 @@
 		methods: {
 			logout(){
 				axios.post('/logout').
-					then(response => {
-						if (response.status === 302 || 401) {
+					then(res => {
+						if (res.status === 302 || res.status === 401) {
 							window.location.href = '/';
 						} else {
 						// throw error and go to catch block
 						}
-					}).catch(error => {
-				});
+					});
             }, 
 
             toggle() {
@@ -98,7 +109,7 @@
             document.addEventListener("click", this.onClickOutside);
         },
 
-        beforeDestroy() {
+        beforeUnmount() {
             document.removeEventListener("click", this.onClickOutside);
         }
 	}

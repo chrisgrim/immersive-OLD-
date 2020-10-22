@@ -111,10 +111,10 @@
 
 @section('nav')
     @auth
-        <vue-nav onclass="show" :user= "{{auth()->user()}}"></vue-nav>
+        <vue-nav navtype="show" :user= "{{auth()->user()}}"></vue-nav>
     @endauth
     @guest
-        <vue-nav onclass="show"></vue-nav>
+        <vue-nav navtype="show"></vue-nav>
     @endguest
 @endsection
 

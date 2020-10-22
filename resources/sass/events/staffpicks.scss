@@ -1,7 +1,5 @@
 .staffpicks__banner {
-    background-color: #4392cb;
-    background-image: linear-gradient(135deg, #4392cb 0%, #1e225e 100%);
-    padding-bottom: 7rem !important;
+    background-color: black;
     position: relative;
 }
 
@@ -57,9 +55,13 @@
 .banner-title__staffpicks{
     margin: 2rem 0rem;
     display: grid;
-    grid-template-columns: 1fr 10rem 4rem 4rem;
+    grid-template-columns: 1fr auto;
     & h3{
         color:white;
+    }
+    & p{
+        color:white;
+        font-size:1.4rem;
     }
 }
 .staffpicks__title {
@@ -70,9 +72,6 @@
     }
 }
 .staffpicks__user {
-    position: absolute;
-    right: 2rem;
-    margin-top: -2.5rem;
     & img {
         width:5rem;
         border-radius: 5rem;

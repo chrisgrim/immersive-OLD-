@@ -13,7 +13,19 @@
         <script src="{{ mix('/assets/manifest.js') }}" defer></script>
         <script src="{{ mix('/assets/vendor.js') }}" defer></script>
         <script src="{{ mix('/assets/app.js') }}" defer></script>
-        <link href="https://fonts.googleapis.com/css?family=Playfair+Display:ital@1|Open+Sans:800|Roboto:400,700|Montserrat:300,400,500,600" rel="stylesheet" media="print" onload="this.media='all'; this.onload=null;">
+        <link
+            rel="preload"
+            href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600&display=swap"
+            as="style"
+            onload="this.onload=null;this.rel='stylesheet'"
+        />
+        <noscript>
+            <link
+                href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600&display=swap"
+                rel="stylesheet"
+                type="text/css"
+            />
+        </noscript>
         <script async src="https://www.googletagmanager.com/gtag/js?id={{Config::get('services.analytics.id')}}"></script>
         <script>
           window.dataLayer = window.dataLayer || [];

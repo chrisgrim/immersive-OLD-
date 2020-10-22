@@ -7,17 +7,7 @@
         "@type":"Organization",
         "description": "{{$organizer->description}}",
         "name": "{{$organizer->name}} {{ '- ' . \Illuminate\Support\Str::limit($organizer->description, 80)}}",
-        "sameAs":[
-            @if ($organizer->instagramHandle)
-            "https://www.instagram.com/{{$organizer->instagramHandle}}"
-            @endif
-            @if ($organizer->facebookHandle)
-            ,"https://www.facebook.com/{{$organizer->facebookHandle}}"
-            @endif
-            @if ($organizer->twitterHandle)
-            ,"https://www.twitter.com/{{$organizer->twitterHandle}}"
-            @endif
-        ],
+        "sameAs": @json($organizer->getHandles()),
         @if ($organizer->website) 
             "url":"{{$organizer->website}}",
         @else 
@@ -25,6 +15,8 @@
         @endif
         @if ($organizer->largeImagePath) 
             "logo":"{{ url('/') }}/storage/{{$organizer->largeImagePath}}"}
+        @else
+            "logo":"{{ url('/') }}/storage/website-files/schema-organizer.png"}
         @endif
     </script>
 
@@ -59,10 +51,10 @@
 
 @section('nav')
     @auth
-        <vue-nav onclass="org" :user= "{{auth()->user()}}"></vue-nav>
+        <vue-nav navtype="org" :user= "{{auth()->user()}}"></vue-nav>
     @endauth
     @guest
-        <vue-nav onclass="org"></vue-nav>
+        <vue-nav navtype="org"></vue-nav>
     @endguest
 @endsection
 

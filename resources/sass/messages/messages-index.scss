@@ -1,11 +1,10 @@
-/*------------------------------------*\
+/* ------------------------------------*\
   #Message- Index Page
-\*------------------------------------*/
+\*------------------------------------ */
 
 .message-index {
     width: 100%;
     margin: auto;
-    padding: 8rem 0rem;
 }
 
 .message-index__element {
@@ -22,8 +21,9 @@
     grid-template-columns: 7rem 1fr;
     -webkit-box-align: start;
     align-items: start;
-    grid-column-gap: 0rem;
+    grid-column-gap: 0;
 }
+
 .message-index__image {
     position: relative;
     width: 5rem;
@@ -49,6 +49,7 @@
         user-select: none; 
     }
 }
+
 .message-index__user-noimage {
     position: absolute;
     width: 12rem;
@@ -66,6 +67,7 @@
         font-size: 1.5rem;
     }
 }
+
 .message-index__message {
     padding-top: 1.3rem;
     padding-left: 1rem;
@@ -73,17 +75,18 @@
         font-size: 1.5rem;
     }
 }
+
 .message-index__message.mobile {
     padding: 0;
 }
-
 
 .message-index__event {
     grid-template-columns: 7rem 1fr;
     -webkit-box-align: start;
     align-items: start;
-    grid-column-gap: 0rem;
+    grid-column-gap: 0;
 }
+
 .message-index__mdates {
     margin-top: 1.23rem;
     & p {
@@ -92,173 +95,12 @@
     }
 }
 
-@media (max-width: 768px) { 
+@media (max-width: 768px) {
     .message-index {
         padding: 3rem 2rem;
     }
+
     .message-index__element {
         width: 100%;
     }
 }
-
-
-
-
-
-
-
-/*.messages {
-    max-width: 100%;
-    margin: auto;
-    & .title {
-        width:100%;
-        margin:auto;
-        margin-top:5rem;
-        border-bottom:1px solid black;
-    }
-    & #grid {
-        display: inherit;
-    }
-    & .row {
-        display: grid;
-        grid-template-columns: 30rem 1fr;
-        padding: 2rem 0;
-        border-bottom: 1px solid #cecece;
-        grid-gap: 1rem;
-            & p {
-                font-size: 1.5rem;
-                & span {
-                    font-size: 1.4rem;
-                }
-            }
-            & .user {
-                display: grid;
-                grid-template-columns: 7rem 1fr;
-                align-items: start;
-                & .name {
-                    padding-top: 1.3rem;
-                    padding-left: 1rem;
-                }
-            }
-            & .event {
-            display: grid;
-            grid-template-columns: 7rem 1fr;
-            align-items: start;
-            & .message-image {
-                width:5rem;
-                height:5rem;
-                margin: 1rem auto;
-                & img {
-                    width:100%;
-                    border-radius: 50%;
-                    object-fit: cover;
-                    height: 100%;
-                }
-            }
-            & .name {
-                padding-top: 1.3rem;
-                padding-left: 1rem;
-            }
-        }
-        & .message {
-            padding-top: 1.3rem;
-            padding-left: 1rem;
-        }
-    }
-    .tab-events {
-        margin: 0rem auto 5rem auto;
-    }
-}
-.chat {
-    margin: auto;
-    padding-top: 5rem;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    width: 72%;
-    grid-gap: 4rem;
-    & .ebox {
-        width: 40rem;
-        border:1px solid #c7c7c7;
-        & img {
-            width:100%;
-        }
-        & .cont {
-            padding: 0rem 1rem;
-        }
-    }
-    & .row {
-        display: grid;
-        grid-template-columns: 1fr auto;
-        margin: 4rem 0rem;
-        grid-gap: 4rem;
-        &.inv {
-            grid-template-columns: auto 1fr;
-        }
-        &.submit {
-            margin: 0rem;
-        }
-        & b {
-            font-size: 1.3rem;
-        }
-        & .field {
-            & .text {
-                margin-bottom: -.5rem;
-                border: 1px solid #c3c3c3;
-                padding: 1.3rem;
-                & textarea {
-                    width: 100%;
-                    border: none;
-                }
-                & .date {
-                    font-size: 1.4rem;
-                    font-weight: 300;
-                    margin-top: .5rem;
-                    color: dimgrey;
-                }
-            }
-            & .bottom {
-                background-color: #d4d4d4;
-                padding: 2rem;
-                text-align: right;
-            }
-        }
-        & .image {
-            width:7rem;
-            height:7rem;
-            margin: 0rem auto;
-            & img {
-                width:100%;
-                border-radius: 50%;
-            }
-        }
-    }
-}
-.user-message {
-    position: relative;
-    width: 5rem;
-    height: 5rem;
-    border-radius: 50%;
-    margin: 1rem auto;
-    & .icontext {
-        position: absolute;
-        width: 12rem;
-        z-index: 10;
-        left: 50%;
-        margin-left: -6.1rem;
-        margin-top: .9rem;
-        text-align: center;
-    }
-    & h2 {
-        z-index: 10;
-        color: white;
-        font-size: 2.7rem;
-        text-transform: uppercase;
-        margin: 0;
-
-    }
-    & img {
-        width:100%;
-        height: 100%;
-        border-radius: 50%
-    }
-}*/

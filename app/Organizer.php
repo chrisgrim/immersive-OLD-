@@ -57,6 +57,20 @@ class Organizer extends Model
         return $this->status == 'p';
     }
 
+    public function getHandles(){
+        $result = [];
+        if ($this->instagramHandle) {
+            array_push($result, "https://www.instagram.com/{$this->instagramHandle}");
+        }
+        if ($this->facebookHandle) {
+            array_push($result, "https://www.facebook.com/{$this->facebookHandle}");
+        }
+        if ($this->twitterHandle) {
+            array_push($result, "https://www.twitter.com/{$this->twitterHandle}");
+        }
+        return $result;
+    }
+
     /**
      * The accessors to append to the model's array form.
      *

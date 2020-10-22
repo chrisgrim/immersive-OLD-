@@ -7,7 +7,7 @@
 @endsection
 
 @section('nav')
-    <vue-nav onclass="entry"></vue-nav>
+    <vue-nav navtype="entry"></vue-nav>
 @endsection 
 
 @section('content')

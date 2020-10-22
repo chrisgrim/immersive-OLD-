@@ -8,7 +8,7 @@
 
 @section('nav')
     @auth
-        <vue-nav onclass="favorited" :user= "{{auth()->user()}}"></vue-nav>
+        <vue-nav navtype="favorited" :user= "{{auth()->user()}}"></vue-nav>
     @endauth
     @guest
         <vue-nav></vue-nav>

@@ -142,7 +142,6 @@
                             <div class="add-organzation-image__card" :class="{ over: hasImage, load: isLoading }">
                                 <div class="add-organzation-image__dotted">
                                     <div class="add-organzation-image__text">
-                                        
                                          <div>
                                             <div v-if="!hasImage">
                                                 <h4>Click to upload organization image (optional)</h4>
@@ -158,7 +157,7 @@
                             </div>
                             <CubeSpinner :loading="isLoading"></CubeSpinner>
                         </label>
-                        <div>
+                        <div class="field">
                             <div v-if="$v.imageFile.$error" class="validation-error">
                                 <p class="error" v-if="!$v.imageFile.fileSize">The Image is too large</p>
                                 <p class="error" v-if="!$v.imageFile.fileType">The Image needs to be a JPG, PNG or GIF</p>
@@ -214,7 +213,13 @@ export default {
         },
 
         displayImage() {
-            return `backgroundImage: url('${this.imageFile.src ? this.imageFile.src : (this.loadorganizer ? '/storage/' + this.loadorganizer.largeImagePath : '')}')`
+            if (this.imageFile.src) {
+                if (!this.$v.imageFile.$invalid) {
+                    return `backgroundImage: url('${this.imageFile.src}')`
+                }
+            } else {
+                return `backgroundImage: url('${(this.loadorganizer ? '/storage/' + this.loadorganizer.largeImagePath : '')}')`
+            }
         },
 
         endPoint() {
@@ -268,11 +273,10 @@ export default {
             this.modal = false;
         },
 
-
         onImageUpload(image) {
             this.imageFile = image; 
             this.$v.imageFile.$touch();
-            if (this.$v.imageFile.$invalid) { return false };
+            if (this.$v.imageFile.$invalid) { return false; };
             this.formData.append('image', this.imageFile.file);
         },
 

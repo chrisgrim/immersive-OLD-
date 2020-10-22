@@ -57,14 +57,13 @@
 
         methods: {
             divWidth() {
-                console.log(this.$refs.list.clientWidth);
                 if (this.$refs.list.clientWidth > 1000) {
                     return this.width = '25%'
                 }
                 if (this.$refs.list.clientWidth > 600) {
-                    return this.width = '33.3333%'
+                    return this.width = '33%'
                 }
-                return this.width = '41%';
+                return this.width = '90%';
             }
         },
 

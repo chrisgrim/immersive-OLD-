@@ -7,7 +7,7 @@
 @endsection
 
 @section('nav')
-    <admin-nav onclass="a" :loaduser="{{auth()->user()}}"></admin-nav>
+    <admin-nav navtype="a" :loaduser="{{auth()->user()}}"></admin-nav>
 @endsection
 
 @section('content')

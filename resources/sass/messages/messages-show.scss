@@ -1,13 +1,12 @@
-/*------------------------------------*\
+/* ------------------------------------*\
   #Message- Show Page
-\*------------------------------------*/
-
+\*------------------------------------ */
 
 .messages-show {
     margin: auto;
-    padding-top: 7rem;
     width: 72%;
 }
+
 .messages-show-content {
     grid-template-columns: auto 1fr;
     grid-column-gap: 4rem;
@@ -15,10 +14,12 @@
         grid-template-columns: 1fr;
     }
 }
+
 .messages-show-event {
     width: 40rem;
     border: 1px solid #c7c7c7;
 }
+
 .messages-show-event__image {
     & img {
         width:100%;

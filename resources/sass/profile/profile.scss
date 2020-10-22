@@ -1,14 +1,14 @@
-/*------------------------------------*\
+/* ------------------------------------*\
   #Profile Section- User Profile Page
-\*------------------------------------*/
-
+\*------------------------------------ */
 
 .user-profile {
     width: 72%;
     margin: auto;
-    padding-top: 11em;
+    padding-top: 7rem;
     grid-template-columns: 0.33fr 0.66fr;
 }
+
 .user-profile-image {
     width: 11rem;
     height: 11rem;

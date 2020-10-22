@@ -24,18 +24,24 @@
             </div>
             <span>&#183;</span>
             <div class="footer-element">
-                <a rel="noreferrer noopener" target="_blank" href="https://www.facebook.com/groups/everythingimmersive">
+                <a 
+                    rel="noreferrer noopener" 
+                    target="_blank" 
+                    href="https://www.facebook.com/groups/everythingimmersive">
                     <p>Join us on Facebook.</p>
                 </a>
             </div>
-            <div class="footer-element" style="float:right">
-                <a target="_blank" href="https://likelyrain.com/">
+            <div 
+                class="footer-element" 
+                style="float:right">
+                <a 
+                    target="_blank" 
+                    href="https://likelyrain.com/">
                     <p>Site by Likely Rain.</p>
                 </a>
             </div>
         </div> 
     </div>
-
 </template>
 
 <script>

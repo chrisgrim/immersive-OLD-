@@ -74,6 +74,9 @@ class StaffPicksController extends Controller
      */
     public function store(Request $request)
     {
+        //increment value of event
+        Event::find($request->event_id['id'])->increment('rank',3);
+
         StaffPick::Create(
             [
             'event_id' => $request->event_id['id'],
@@ -146,6 +149,9 @@ class StaffPicksController extends Controller
      */
     public function destroy(StaffPick $staffpick)
     {
+        if ($staffpick->event->rank > 3) {
+            $staffpick->event->decrement('rank',3);
+        }
         $staffpick->delete();
     }
 }

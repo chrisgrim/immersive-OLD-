@@ -1,17 +1,19 @@
 <template>
-  <div class="pop">
-    <a :href="`/events/${data.slug}?name=${name}&lat=${lat}&lng=${lng}`">
-        <div 
-        class="back" 
-        :style="image">
-        </div>
-        <div class="info">
-            <div class="name">
-                {{ data.name }}
+    <div class="pop">
+        <a :href="`/events/${data.slug}?name=${name}&lat=${lat}&lng=${lng}`">
+            <div 
+                class="back" 
+                :style="image" />
+            <div class="info">
+                <div class="name">
+                    {{ data.name }}
+                </div>
+                <div class="">
+                    {{ data.category ? data.category.name : '' }}
+                </div>
             </div>
-        </div>
-    </a>
-  </div>
+        </a>
+    </div>
 </template>
 
 <script>

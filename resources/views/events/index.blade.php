@@ -50,10 +50,10 @@
 
 @section('nav')
     @auth
-        <vue-nav onclass="homepage" :user= "{{auth()->user()}}"></vue-nav>
+        <vue-nav navtype="homepage" :user= "{{auth()->user()}}"></vue-nav>
     @endauth
     @guest
-        <vue-nav onclass="homepage"></vue-nav>
+        <vue-nav navtype="homepage"></vue-nav>
     @endguest
 @endsection
 

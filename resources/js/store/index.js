@@ -22,6 +22,11 @@ state: {
     searchtype: 'Immersive Online',
     save: 'ttis',
     presearch: [],
+    bounds:'',
+    filter: false,
+    mobilelocation: false,
+    mobiledates: false,
+    dates: '',
   },
 
 
@@ -32,6 +37,9 @@ mutations: {
     },
     showmap (state, map) {
         state.map = map
+    },
+    storeMapBounds (state, bounds) {
+        state.bounds = bounds
     },
     ismobile (state, mobile) {
         state.mobile = mobile
@@ -44,6 +52,18 @@ mutations: {
     },
     saveevent (state, save) {
         state.save = save
+    },
+    onfilter (state, filter) {
+        state.filter = filter
+    },
+    showlocation (state, mobilelocation) {
+        state.mobilelocation = mobilelocation
+    },
+    showdates (state, mobiledates) {
+        state.mobiledates = mobiledates
+    },
+    displaydates (state, dates) {
+        state.dates = dates
     },
 },
 actions: {

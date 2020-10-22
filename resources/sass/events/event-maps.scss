@@ -1,25 +1,30 @@
-/*------------------------------------*\
-  #Event- Event Maps 
-\*------------------------------------*/
+/* ------------------------------------*\
+  #Event- Event Maps
+\*------------------------------------ */
 
-.e-search-map {
-    display: inline-block;
-    position: relative;
-}
-.e-search-map-container {
-    overflow: hidden;
-    width: 57rem;
-    height: 100vh;
-    padding-top: 7rem;
-    margin-top: -7rem;
-    position: sticky;
+.search__map--container {
+    bottom: auto;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    left: 0px;
+    position: fixed;
+    right: 0px;
     top: 0px;
-    & .zoom {
-        margin: 9.4rem 2.4rem;
-    }
+    height: 100vh;
 }
-.e-search-map-container__update-box {
-    right: 17rem;
+
+.search__map {
+    overflow: hidden;
+    width: calc(100vw - 85.5rem);
+    position: sticky;
+    top: 0;
+}
+
+.search__map--update-box {
+    right: 2rem;
     top: 0;
     border-radius: 1rem;
     width: 23rem;
@@ -27,7 +32,8 @@
     margin-top: 9.4rem;
     height: 4.3rem;
     grid-template-columns: 4.4rem auto;
-    grid-gap: 0rem !important;
+    display: grid;
+    grid-gap: 0 !important;
     align-items: center;
     position: fixed;
     z-index: 900;
@@ -42,12 +48,12 @@
     }
 }
 
-.e-search-map-container__update-box--checkbox {
+.search__map--checkbox {
     width: 2.4rem;
     height: 2.4rem;
     background: #f64747;
     position: relative;
-    border-radius: .5rem;
+    border-radius: 0.5rem;
     display: inline-block;
     margin: 1rem;
     input:checked + .check {
@@ -65,8 +71,36 @@
     }
     input[type="checkbox"] {
         -webkit-appearance: none;
-        appearance: none;   
+        appearance: none;
     }
+}
+
+.search__map .leaflet-top {
+    position: fixed;
+    top: -1.5rem;
+    display: none;
+}
+
+.search__map .leaflet-touch .leaflet-bar {
+    border: 0;
+    border-radius: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.16) 0 4px 24px, rgba(0, 0, 0, 0.04) 0 0 0 1px !important;
+}
+
+.search__map .leaflet-touch .leaflet-bar a:first-child {
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+}
+
+.search__map .leaflet-touch .leaflet-bar a:last-child {
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}
+
+.search__map .leaflet-touch .leaflet-bar a {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
 }
 
 .zoom {
@@ -79,6 +113,8 @@
     border-radius: 1rem;
     &.search {
         position: fixed;
+        right: 26rem;
+        top: 7rem;
     }
 }
 .zoom__in button {
@@ -100,28 +136,96 @@
     }
 }
 
-button.close-map {
-    position: fixed;
-    top: 9.3rem;
-    right: 50rem;
-    z-index: 900;
-    background: #fff;
-    padding: 1.5rem;
-    border-radius: 50%;
-    box-shadow: 0 4px 24px rgba(0,0,0,.16),0 0 0 1px rgba(0,0,0,.04)!important;
+.search__map--header {
+    width: 100%;
+    padding: 2rem;
+    position: absolute;
+    z-index: 401;
+}
+
+.search__map--location {
+    width: 100%;
+    background: white;
+    border: 1px solid black;
+    border-radius: 5rem;
+    padding-top: 0.2rem;
+}
+
+.search__map--city {
+    font-weight: 600;
+    font-size: 1.4rem;
+    display: inline-block;
+    width: 42%;
+    text-align: center;
+    vertical-align: top;
+}
+
+.search__map--city button {
+    border: 0;
+    padding: 0.5rem;
+    background: 0;
+    width: 35vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 1.4rem;
+    font-weight: 500;
+    line-height: 3rem;
+    -webkit-transform: scale(0.9, 1); /* Safari and Chrome */
+    -moz-transform: scale(0.9, 1); /* Firefox */
+    -ms-transform: scale(0.9, 1); /* IE 9 */
+    -o-transform: scale(0.9, 1); /* Opera */
+    transform: scale(0.9, 1); /* W3C */
+}
+
+.search__map--dates {
+    font-weight: 600;
+    font-size: 1.4rem;
+    display: inline-block;
+    width: 42%;
+    text-align: center;
+    vertical-align: top;
+}
+
+.search__map--dates button{
+    border: 0;
+    padding: 0.5rem;
+    background: 0;
+    width: 35vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 1.4rem;
+    font-weight: 500;
+    line-height: 3rem;
+    -webkit-transform: scale(0.9, 1); /* Safari and Chrome */
+    -moz-transform: scale(0.9, 1); /* Firefox */
+    -ms-transform: scale(0.9, 1); /* IE 9 */
+    -o-transform: scale(0.9, 1); /* Opera */
+    transform: scale(0.9, 1); /* W3C */
+}
+
+.search__map--config {
+    display: inline-block;
+    width: 10%
+}
+
+.search__map--config button{
+    border: 0;
+    padding: 0.4rem;
+    background: 0;
 }
 
 button.mobile-map-close {
     position: fixed;
-    top: 2.4rem;
-    left: 2.4rem;
+    top: 10.4rem;
+    right: 2.4rem;
     z-index: 900;
     background: #fff;
     padding: 1.5rem;
     border-radius: 50%;
-    box-shadow: 0 4px 24px rgba(0,0,0,.16),0 0 0 1px rgba(0,0,0,.04)!important;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.04) !important;
 }
-
 
 .event-create-map {
     position: relative;
@@ -131,36 +235,55 @@ button.mobile-map-close {
     position: relative;
 }
 
-@media (max-width: 768px) {
+.leaflet-control-zoom {
+    position: absolute;
+    top: 10rem;
+    left: 2rem;
+}
 
-    .e-search-map {
-        width: 100%;
-        grid-column: 1;
-        grid-row: 1;
+@media (min-width: 768px) {
+    .search__map .leaflet-left {
+        left: 86rem;
+    }
+
+    .search__map .leaflet-top {
+        display: inline-block;
+    }
+
+    .search__map--container {
         display: inline-block;
         position: relative;
-        padding:0;
     }
-    .e-search-map-container {
+}
+
+@media (max-width: 768px) {
+    .leaflet-control-zoom {
+        top: 2rem;
+        left: 2rem;
+    }
+
+    .search__map {
         position: fixed;
         overflow: hidden;
         width: 100%;
         padding-top: 0;
         margin-top: 0;
     }
-    .e-search-map-container__update-box {
+
+    .search__map--update-box {
         display: inline-block;
-        right:0;
-        left:50%;
+        right: 0;
+        left: 50%;
         width: 13rem;
         border-radius: 5rem;
         margin-left: -6.5rem;
         padding: 0;
-        margin-top: 2.4rem;
+        margin-top: 9rem;
         svg {
-            padding-top: .3rem;
+            padding-top: 0.3rem;
         }
     }
+
     .event-search-map-container .zoom {
         margin: 2.4rem 2.4rem;
     }

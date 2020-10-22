@@ -1,5 +1,7 @@
 <template>
-    <nav class="admin-nav" :class="onclass">
+    <nav 
+        class="admin-nav" 
+        :class="navtype">
         <a href="/">
             <button class="admin-home-icon">Home</button>
         </a>
@@ -7,69 +9,109 @@
             <h3>Admin Area</h3>
         </div>
         <div class="admin-menu">
-
             <a href="/finish/events">
-                <button :class="{active: active == 'approve'}" class="admin-menu__item" >
-                    <div v-if="user.needsApproval" class="admin-menu__notification">
-                        <p>{{user.needsApproval}}</p>
+                <button 
+                    :class="{active: active == 'approve'}" 
+                    class="admin-menu__item">
+                    <div 
+                        v-if="user.needsApproval" 
+                        class="admin-menu__notification">
+                        <p>
+                            {{ user.needsApproval }}
+                        </p>
                     </div>
                     Approve Events
                 </button>
             </a>
 
             <a href="/finish/organizers">
-                <button :class="{active: active == 'orgApprove'}" class="admin-menu__item" >
-                    <div v-if="user.needsOrgApproval" class="admin-menu__notification">
-                        <p>{{user.needsOrgApproval}}</p>
+                <button 
+                    :class="{active: active == 'orgApprove'}" 
+                    class="admin-menu__item">
+                    <div 
+                        v-if="user.needsOrgApproval" 
+                        class="admin-menu__notification">
+                        <p>
+                            {{ user.needsOrgApproval }}
+                        </p>
                     </div>
                     Approve Organizers
                 </button>
             </a>
-
-            <a v-if="admin" href="/admin/events">
-            <button :class="{active: active == 'events'}" class="admin-menu__item" >
-                Edit Events
-            </button>
+            <a 
+                v-if="admin" 
+                href="/admin/events">
+                <button 
+                    :class="{active: active == 'events'}" 
+                    class="admin-menu__item">
+                    Edit Events
+                </button>
             </a>
             
-            <a v-if="admin" href="/admin/boneyard">
-            <button :class="{active: active == 'boneyard'}" class="admin-menu__item" >
-                Boneyard
-            </button>
+            <a 
+                v-if="admin" 
+                href="/admin/boneyard">
+                <button 
+                    :class="{active: active == 'boneyard'}" 
+                    class="admin-menu__item">
+                    Boneyard
+                </button>
             </a>
 
-            <a v-if="admin" href="/admin/purgatory">
-            <button :class="{active: active == 'purgatory'}" class="admin-menu__item" >
-                Purgatory
-            </button>
+            <a 
+                v-if="admin" 
+                href="/admin/purgatory">
+                <button 
+                    :class="{active: active == 'purgatory'}" 
+                    class="admin-menu__item">
+                    Purgatory
+                </button>
             </a>
 
-            <a v-if="admin" href="/master/userlist">
-            <button :class="{active: active == 'users'}" class="admin-menu__item" >
-                Edit Users
-            </button>
+            <a 
+                v-if="admin" 
+                href="/master/userlist">
+                <button 
+                    :class="{active: active == 'users'}" 
+                    class="admin-menu__item">
+                    Edit Users
+                </button>
             </a>
 
             <a href="/admin/organizer">
-            <button :class="{active: active == 'organizers'}" class="admin-menu__item" >
-                Edit Organizers
-            </button>
+                <button 
+                    :class="{active: active == 'organizers'}" 
+                    class="admin-menu__item">
+                    Edit Organizers
+                </button>
             </a>
 
-            <a v-if="admin" href="/categories/create">
-            <button :class="{active: active == 'categories'}" class="admin-menu__item">
-                Categories
-            </button>
+            <a 
+                v-if="admin" 
+                href="/categories/create">
+                <button 
+                    :class="{active: active == 'categories'}" 
+                    class="admin-menu__item">
+                    Categories
+                </button>
             </a>
             
-            <a v-if="admin" href="/genres/create">
-            <button :class="{active: active == 'tags'}" class="admin-menu__item" >
-                Tags
-            </button>
+            <a 
+                v-if="admin" 
+                href="/genres/create">
+                <button 
+                    :class="{active: active == 'tags'}" 
+                    class="admin-menu__item">
+                    Tags
+                </button>
             </a>
 
-            <div class="admin-top-menu" v-if="admin">
-                <button @click="advisories = !advisories" class="admin-menu__item" >
+            <div 
+                v-if="admin"
+                class="admin-top-menu">
+                <button 
+                    @click="advisories = !advisories" 
+                    class="admin-menu__item">
                     Advisories
                 </button>
                 <div class="menu__sub-menu--arrow">
@@ -77,50 +119,65 @@
                 </div>
             </div>
 
-            <div class="admin-submenu" v-if="advisories">
+            <div 
+                v-if="advisories" 
+                class="admin-submenu">
                 <a href="/contactlevels/create">
-                <button :class="{active: active == 'contact'}" class="admin-menu__item" >
-                    Contact Levels
-                </button>
+                    <button 
+                        :class="{active: active == 'contact'}" 
+                        class="admin-menu__item">
+                        Contact Levels
+                    </button>
                 </a>
 
                 <a href="/remotelocations/create">
-                <button :class="{active: active == 'remote'}" class="admin-menu__item" >
-                    Remote Locations
-                </button>
+                    <button 
+                        :class="{active: active == 'remote'}" 
+                        class="admin-menu__item">
+                        Remote Locations
+                    </button>
                 </a>
 
                 <a href="/contentadvisories/create">
-                <button :class="{active: active == 'content'}" class="admin-menu__item" >
-                    Content Advisories
-                </button>
+                    <button 
+                        :class="{active: active == 'content'}" 
+                        class="admin-menu__item">
+                        Content Advisories
+                    </button>
                 </a>
 
                 <a href="/mobilities/create">
-                <button :class="{active: active == 'mobilities'}" class="admin-menu__item" >
-                    Mobility Advisories
-                </button>
+                    <button 
+                        :class="{active: active == 'mobilities'}" 
+                        class="admin-menu__item">
+                        Mobility Advisories
+                    </button>
                 </a>
 
                 <a href="/interactivelevels/create">
-                <button :class="{active: active == 'interactive'}" class="admin-menu__item" >
-                    Interactive Levels
-                </button>
+                    <button 
+                        :class="{active: active == 'interactive'}" 
+                        class="admin-menu__item">
+                        Interactive Levels
+                    </button>
                 </a>
             </div>
 
             <a href="/reviewevents/create">
-            <button :class="{active: active == 'reviews'}" class="admin-menu__item" >
-                Event Reviews
-            </button>
+                <button 
+                    :class="{active: active == 'reviews'}" 
+                    class="admin-menu__item">
+                    Event Reviews
+                </button>
             </a>
 
             <a href="/staffpicks/create">
-            <button :class="{active: active == 'picks'}" class="admin-menu__item" >
-                Picks Of The Week
-            </button>
+                <button 
+                    :class="{active: active == 'picks'}" 
+                    class="admin-menu__item">
+                    Picks Of The Week
+                </button>
             </a>
-
         </div>
     </nav>
 </template>
@@ -129,7 +186,7 @@
 
     export default {
 
-        props: ['loaduser', 'onclass'],
+        props: ['loaduser', 'navtype'],
 
         data() {
             return {

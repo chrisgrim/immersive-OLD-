@@ -1,23 +1,23 @@
 @extends('layouts.master')
 
 @section('meta')
-    <title>Search Online Events</title>
+    <title>Search Events</title>
     <link href="{{ mix('/assets/app-lite.css') }}" rel="stylesheet">
     <link href="{{ mix('/assets/app.css') }}" rel="stylesheet">
 @endsection 
 
 @section('nav')
     @auth
-        <vue-nav onclass="onlinesearch" :user= "{{auth()->user()}}"></vue-nav>
+        <vue-nav navtype="searchpage" :user= "{{auth()->user()}}"></vue-nav>
     @endauth
     @guest
-        <vue-nav onclass="onlinesearch"></vue-nav>
+        <vue-nav navtype="searchpage"></vue-nav>
     @endguest
 @endsection
 
 @section('content')
     <div id="bodyArea">
-        <vue-event-online-search user="{{ auth()->id() }}" :maxprice="{{ $maxprice }}" :categories="{{ $categories }}" :tags="{{ $tags }}" :searchedevents="{{ $searchedevents }}"></vue-event-online-search>
+        <search-listing user="{{ auth()->id() }}" :tags="{{ $tags }}" :onlineevents="{{ $onlineevents->toJson() }}" :categories="{{ $categories }}" :maxprice="{{ $maxprice }}">
     </div>
 @endsection
 

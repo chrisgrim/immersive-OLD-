@@ -36,6 +36,7 @@ class EventController extends Controller
                         ->whereDate('end_date', '<=', $wednesday);
             })
             ->orderBy('rank')
+            ->limit(4)
             ->get();
         $categories = Category::orderBy('rank', 'desc')
             ->limit(14)

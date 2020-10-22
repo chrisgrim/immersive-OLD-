@@ -1,453 +1,383 @@
 <template>
-    <div class="event-search" style="min-height: calc(100vh - 7rem);position:relative;">
-        <div class="event-search__container grid" :class="{ maphidden: !showMap}">
-            <section class="e-search-filter" :style="shift">
-                <div class="title">
-                    <h2>{{category ? category.name : 'Immersive'}} in {{searchedCity}}</h2>
-                </div>
-                <div v-if="mobile" class="e-search-filter__row">
-                    <button @click="showFilters=true" class="filter">Filters</button>
-                </div>
-                <div v-if="!mobile" class="e-search-filter__row grid">
-
-                    <!-- Date Search -->
-                    <div class="e-search-filter__item">
-                        <div class="e-search-filter__button" ref="dates">
-                            <button @click="show('dates')" :class="{ active : datesFormatted.length }" class="filter">
-                                <p v-if="showDates">Dates</p>
-                                <p v-else>{{datesFormatted[0]}}{{ datesFormatted[1] ? ' to ' + datesFormatted[1] : ''}} </p>
-                            </button>
-                            <div class="e-search-filter__pop-box" v-if="active == 'dates'">
-                                <div>
-                                    <flat-pickr
-                                        v-model="dates"
-                                        :config="config"                                         
-                                        placeholder="Select date"               
-                                        name="dates">
-                                    </flat-pickr>
-                                </div>
-                                <div class="e-search-filter__pop-box--footer">
-                                    <button v-if="showDates" @click="active = null" class="pop-box__cancel">Cancel</button>
-                                    <button v-else @click="datesFormatted = []; datesSubmit = []; dates = [];" class="pop-box__cancel">clear</button>
-                                    <button @click="submit" class="pop-box__submit">Save</button>
-                                </div>
-                            </div>
+    <div class="event-search">
+        <div
+            v-if="url.lat && mobile"
+            class="event-search__container">
+            <event-map-search
+                @onhidemap="fullMap"
+                :user="user"
+                :events="eventList.data" />
+            <section 
+                class="event__filter"
+                @click="showEvents"
+                :style="`margin-top: ${shiftDown}vh;`">
+                <div class="greyBar" />
+                <EventFilter
+                    @locationevents="updateEvents"
+                    @onlineevents="updateOnlineEvents"
+                    :page="pagination"
+                    :onlinepage="onlinePagination"
+                    :events="searchedevents" 
+                    :onlineevents="onlineevents" 
+                    :maxprice="maxprice" 
+                    :tags="tags" 
+                    :categories="categories" />
+                <div class="event-search-list">
+                    <div 
+                        v-if="eventList.data && eventList.data.length" 
+                        class="event__results">
+                        <div class="event__results--title">
+                            <p style="display:inline-block;font-size:1.4rem;font-weight:500">
+                                {{ eventList.total }} 
+                                <span v-if="eventList.total > 1">
+                                    events.
+                                </span>
+                                <span v-else>
+                                    event.                       
+                                </span>
+                            </p>
                         </div>
-                    </div>
-
-                    <!-- Category Search -->
-                    <div class="e-search-filter__item">
-                        <div class="e-search-filter__button" ref="cat">
-                            <button @click="show('category')" :class="{ active:category }" class="filter">
-                                <p v-if="!category">Categories</p>
-                                <p v-if="category">{{category.name}}</p>
-                            </button>
-                            <div v-if="active === 'category'" class="e-search-filter__pop-box">
-                                <div class="e-search-filter__pop-box--category">
-                                    <multiselect 
-                                    v-model="category"
-                                    label="name"
-                                    :options="categories" 
-                                    placeholder="Categories"
-                                    @select="submitCat"
-                                    open-direction="bottom"
-                                    :preselect-first="false">
-                                    </multiselect>
-                                </div>
-                                <div class="e-search-filter__pop-box--footer">
-                                    <button v-if="category" @click="clearCat" class="pop-box__cancel">clear</button>
-                                    <button v-if="!category" @click="active = null;" class="pop-box__cancel">Cancel</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Price Search -->
-                    <div class="e-search-filter__item">
-                        <div class="e-search-filter__button" ref="price">
-                            <button @click="show('price')" :class="{ active : !showPrice }" class="filter">
-                                <p v-if="!showPrice && price[0] == 0">{{' Up to ' + '$' + price[1]}}</p>
-                                <p v-if="!showPrice && price[0] != 0">{{'$' + price[0]}}{{' to ' + '$' + price[1]}}</p>
-                                <p v-if="showPrice">Price</p>
-                            </button>
-                            <div v-if="active === 'price'" class="e-search-filter__pop-box">
-                                <div class="e-search-filter__pop-box--price">
-                                    <vue-slider
-                                    v-model="price" 
-                                    v-bind="options"
-                                    :enable-cross="false" />
-                                    <div class="price-box__amount">
-                                        <div class="price-box__amount--info">
-                                            <label> Min </label>
-                                            <input type="text"v-model="price[0]">
+                        <div>
+                            <a 
+                                :href="`/events/${event.slug}`" 
+                                v-for="(event) in eventList.data" 
+                                :key="event.id"
+                                class="event__horizontal-card">
+                                <div class="event__horizontal-card--element">
+                                    <div class="event__horizontal-card--image">
+                                        <div class="event__horizontal-card--lock" />                              
+                                        <picture>
+                                            <source 
+                                                type="image/webp" 
+                                                :srcset="`/storage/${event.thumbImagePath}`"> 
+                                            <img 
+                                                style="object-fit:cover" 
+                                                loading="lazy" 
+                                                :src="`/storage/${event.thumbImagePath.slice(0, -4)}jpg`" 
+                                                :alt="`${event.name} Immersive Event`">
+                                        </picture>
+                                    </div>
+                                    <div class="event__horizontal-card--content">
+                                        <div>
+                                            <div class="event__horizontal-card--category">
+                                                {{ event.category ? event.category.name : '' }}
+                                            </div>
+                                            <div class="event__horizontal-card--heart">
+                                                <favorite 
+                                                    inputclass="heart visible" 
+                                                    :event="event" />
+                                            </div>
                                         </div>
-                                        <div class="price-box__amount--info">
-                                            <label> Max </label>
-                                            <input type="text"v-model="price[1]">
+                                        <div class="event__horizontal-card--title">
+                                            {{ event.name }}
+                                        </div>
+                                        <div class="event__horizontal-card--tagline">
+                                            {{ event.tag_line }}
+                                        </div>
+                                        <ul class="event__horizontal-card--tags">
+                                            <li 
+                                                v-for="(itemTag, index) in eventTags(event)" 
+                                                :key="itemTag.id" >
+                                                {{ itemTag.name }}<span v-if="index != '2'">•</span>
+                                            </li>
+                                        </ul>
+                                        <div class="event__horizontal-card--price">
+                                            {{ fixedprice(event) }}
                                         </div>
                                     </div>
                                 </div>
-                                <div class="e-search-filter__pop-box--footer">
-                                    <button v-if="showPrice" @click="active = null" class="pop-box__cancel">Cancel</button>
-                                    <button v-if="!showPrice" @click="price = [options.min, options.max]" class="pop-box__cancel">clear</button>
-                                    <button @click="submit" class="pop-box__submit">Save</button>
-                                </div>
-                            </div>
+                            </a>
+                        </div>
+                        <div>
+                            <pagination
+                                :list="eventList"
+                                :limit="2"
+                                @selectpage="selectPage" />
                         </div>
                     </div>
-
-                     <!-- Tag Search -->
-                    <div class="e-search-filter__item">
-                        <div class="e-search-filter__button" ref="tag">
-                            <button @click="show('tag')" :class="{ active : tag }" class="filter">
-                                <p v-if="!tag">Tags</p>
-                                <p v-if="tag">{{tag.name}}</p>
-                            </button>
-                            <div v-if="active === 'tag'" class="e-search-filter__pop-box">
-                                <div class="e-search-filter__pop-box--category">
-                                    <multiselect 
-                                    v-model="tag"
-                                    label="name"
-                                    :options="tags" 
-                                    placeholder="Tags"
-                                    @select="submitTag"
-                                    open-direction="bottom"
-                                    :preselect-first="false">
-                                    </multiselect>
-                                </div>
-                                <div class="e-search-filter__pop-box--footer">
-                                    <button v-if="tag" @click="clearTag()" class="pop-box__cancel">clear</button>
-                                    <button v-if="!tag" @click="active = null;" class="pop-box__cancel">Cancel</button>
-                                </div>
-                            </div>
+                    <div 
+                        class="event__results--title" 
+                        v-else>
+                        <p style="display:inline-block;font-size:1.4rem;font-weight:500">
+                            {{ eventList.total }} 
+                            <span v-if="eventList.total > 1">
+                                events.
+                            </span>
+                            <span v-else>
+                                event.                       
+                            </span>
+                        </p>
+                        <p>
+                            There are no events that fit your search filters,<br> check out some online events below
+                        </p>
+                    </div>
+                    <div 
+                        class="event-search-list" 
+                        v-if="!mobile">
+                        <div class="title">
+                            <h3>Check out <span> {{ $store.state.searchtype }} </span> online events</h3>
+                        </div>
+                        <template v-if="onlineEventList.data">
+                            <vue-event-index :events="onlineEventList.data" />
+                        </template>
+                        <div>
+                            <pagination 
+                                :list="onlineEventList"
+                                :limit="2"
+                                @selectpage="selectOnlinePage" />
                         </div>
                     </div>
-                    <div class="e-search-filter__item--showmap" v-if="!showMap">
-                        <div class="field">
-                            <label> Show Map </label>
-                            <div id="cover">
-                                <input v-model="showMap" type="checkbox" id="checkbox">
-                                <div id="bar"></div>
-                                <div id="knob">
-                                    <p v-if="showMap">Yes</p>
-                                    <p v-else="showMap">No</p>
+                    <div>
+                        <div class="title">
+                            <h2>Online events</h2>
+                        </div>
+                        <vue-event-index :events="onlineEventList.data" />
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div
+            v-if="url.lat && !mobile"
+            class="event-search__container">
+            <section 
+                class="event__filter" 
+                :style="`margin-top: ${shiftDown}vh;`">
+                <EventFilter
+                    @locationevents="updateEvents"
+                    @onlineevents="updateOnlineEvents"
+                    :page="pagination"
+                    :onlinepage="onlinePagination"
+                    :events="searchedevents" 
+                    :onlineevents="onlineevents" 
+                    :maxprice="maxprice" 
+                    :tags="tags" 
+                    :categories="categories" />
+                <div class="event-search-list">
+                    <div 
+                        v-if="eventList.data && eventList.data.length" 
+                        class="event__results">
+                        <div class="event__results--title">
+                            <h3 style="display:inline-block">
+                                Results for {{ url.city }}
+                            </h3>
+                            <p style="display:inline-block;font-size:1.4rem;font-weight:500">
+                                {{ eventList.total }} in person events.
+                            </p>
+                        </div>
+                        <div>
+                            <a 
+                                :href="`/events/${event.slug}`" 
+                                v-for="(event) in eventList.data" 
+                                :key="event.id"
+                                class="event__horizontal-card">
+                                <div class="event__horizontal-card--element">
+                                    <div class="event__horizontal-card--image">
+                                        <div class="event__horizontal-card--lock" />                              
+                                        <picture>
+                                            <source 
+                                                type="image/webp" 
+                                                :srcset="`/storage/${event.thumbImagePath}`"> 
+                                            <img 
+                                                style="object-fit:cover" 
+                                                loading="lazy" 
+                                                :src="`/storage/${event.thumbImagePath.slice(0, -4)}jpg`" 
+                                                :alt="`${event.name} Immersive Event`">
+                                        </picture>
+                                    </div>
+                                    <div class="event__horizontal-card--content">
+                                        <div>
+                                            <div class="event__horizontal-card--category">
+                                                {{ event.category ? event.category.name : '' }}
+                                            </div>
+                                            <div class="event__horizontal-card--heart">
+                                                <favorite 
+                                                    inputclass="heart visible" 
+                                                    :event="event" />
+                                            </div>
+                                        </div>
+                                        <div class="event__horizontal-card--title">
+                                            {{ event.name }}
+                                        </div>
+                                        <div class="event__horizontal-card--tagline">
+                                            {{ event.tag_line }}
+                                        </div>
+                                        <ul class="event__horizontal-card--tags">
+                                            <li 
+                                                v-for="(itemTag, index) in eventTags(event)" 
+                                                :key="itemTag.id" >
+                                                {{ itemTag.name }}<span v-if="index != '2'">•</span>
+                                            </li>
+                                        </ul>
+                                        <div class="event__horizontal-card--price">
+                                            {{ fixedprice(event) }}
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div> 
-                </div>           
-                <button v-if="showMap" class="close-map" @click="showMap=false">
-                    <svg viewBox="0 0 12 12" role="presentation" aria-hidden="true" focusable="false" style="height: 14px; width: 14px; display: block; fill: currentcolor;"><path d="m11.5 10.5c.3.3.3.8 0 1.1s-.8.3-1.1 0l-4.4-4.5-4.5 4.5c-.3.3-.8.3-1.1 0s-.3-.8 0-1.1l4.5-4.5-4.4-4.5c-.3-.3-.3-.8 0-1.1s.8-.3 1.1 0l4.4 4.5 4.5-4.5c.3-.3.8-.3 1.1 0s .3.8 0 1.1l-4.5 4.5z" fill-rule="evenodd"></path></svg>
-                </button>
-                <div class="event-search-list" :class="{ maphidden: !showMap}"> 
-                    <vue-event-index :events="eventList"></vue-event-index>
-                    <button v-if="eventList.length >14" @click="loadMoreEvents">Load More</button>
+                            </a>
+                        </div>
+                        <div>
+                            <pagination
+                                :list="eventList"
+                                :limit="2"
+                                @selectpage="selectPage" />
+                        </div>
+                    </div>
+                    <div class="event__results--title" v-else>
+                        <h3>
+                            No Results in {{ url.city }}
+                        </h3>
+                        <p>There are no events listed in {{ url.city }} at this time. <br>Try a different city or check out some online events.</p>
+                    </div>
+                    <div style="border-bottom:1px solid #d6d6d6;margin: 0 0 3rem 0;" />
+                    <div 
+                        class="event-search-list" 
+                        v-if="!mobile">
+                        <div class="title">
+                            <h3>Check out <span> {{ $store.state.searchtype }} </span> online events</h3>
+                        </div>
+                        <template v-if="onlineEventList.data">
+                            <vue-event-index :events="onlineEventList.data" />
+                        </template>
+                        <div>
+                            <pagination 
+                                :list="onlineEventList"
+                                :limit="2"
+                                @selectpage="selectOnlinePage" />
+                        </div>
+                    </div>
                 </div>
             </section>
             <event-map-search
-            v-if="showMap"
-            @mapfull="fullMap"
-            @mapCenterUpdated="mapSearch"
-            :user="user"
-            @loadMore="loadMoreEvents"
-            :events="eventList"></event-map-search>
+                @onhidemap="fullMap"
+                :user="user"
+                :events="eventList.data" />
         </div>
-
-        <!-- Mobile Filter List -->
-        <div class="mobile-filter-list" v-show="showFilters">
-            <div class="mobile-filter-list__nav">
-                <button @click="cancelMobile" class="mobile-filter-list__nav--close-button">
-                    <svg viewBox="0 0 12 12" role="presentation" aria-hidden="true" focusable="false" style="height: 14px; width: 14px; display: block; fill: currentcolor;"><path d="m11.5 10.5c.3.3.3.8 0 1.1s-.8.3-1.1 0l-4.4-4.5-4.5 4.5c-.3.3-.8.3-1.1 0s-.3-.8 0-1.1l4.5-4.5-4.4-4.5c-.3-.3-.3-.8 0-1.1s.8-.3 1.1 0l4.4 4.5 4.5-4.5c.3-.3.8-.3 1.1 0s .3.8 0 1.1l-4.5 4.5z" fill-rule="evenodd"></path></svg>
-                </button>
-                <div class="mobile-filter-list__clear">
-                    <button class="mobile-filter-list__clear-button" @click="clearMobile">Clear</button>
+        <div 
+            class="event__filter" 
+            v-if="!url.lat && !mobile">
+            <EventFilter
+                @onlineevents="updateOnlineEvents"
+                :onlinepage="onlinePagination"
+                :onlineevents="onlineevents" 
+                :maxprice="maxprice" 
+                :tags="tags" 
+                :categories="categories" />
+            <div 
+                class="event-search-list" 
+                v-if="!mobile">
+                <div class="title">
+                    <h3>Check out <span> {{ $store.state.searchtype }} </span> online events</h3>
                 </div>
-            </div>
-            <div class="mobile-filter-list__content">
-
-                <!-- Mobile Date Search -->
-                <div class="mobile-filter-list__content--dates">
-                    <h3>Dates</h3>
-                    <flat-pickr
-                        v-model="dates"
-                        :config="configmobile"                                         
-                        placeholder="Select date"               
-                        name="dates">
-                    </flat-pickr>
-                </div>
-                
-                <!-- Mobile Category Search -->
-                <div class="mobile-filter-list__content--categories">
-                    <h3>Categories</h3>
-                    <multiselect 
-                    v-model="category"
-                    label="name"
-                    :options="categories" 
-                    placeholder="Categories"
-                    open-direction="bottom"
-                    :preselect-first="false">
-                    </multiselect>
-                </div>
-                
-                <!-- Mobile Price Search -->
-                <div class="mobile-filter-list__content--prices">
-                    <h3>Prices</h3>
-                    <div class="mobile-filter-list__price-box">
-                        <vue-slider
-                        v-model="price" 
-                        v-bind="options"
-                        :enable-cross="false" />
-                        <div class="price-box__amount">
-                            <div class="price-box__amount--info">
-                                <label> Min </label>
-                                <input type="text"v-model="price[0]">
-                            </div>
-                            <div class="price-box__amount--info">
-                                <label> Max </label>
-                                <input type="text"v-model="price[1]">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="mobile-filter-list__footer">
-                <div class="mobile-filter-list__footer--button">
-                    <button class="mobile-filter-button" @click="filterMobile">Filter</button>
+                <template v-if="onlineEventList.data">
+                    <vue-event-index :events="onlineEventList.data" />
+                </template>
+                <div>
+                    <pagination 
+                        limit="1"
+                        :list="onlineEventList"
+                        @selectpage="selectOnlinePage" />
                 </div>
             </div>
         </div>
-
     </div>
 </template>
 
 <script>
-    import flatPickr from 'vue-flatpickr-component'
-    import 'flatpickr/dist/flatpickr.css'
-    import Multiselect from 'vue-multiselect'
-    import VueSlider from 'vue-slider-component'
-    import 'vue-slider-component/theme/antd.css'
-
+    import EventFilter  from './components/filter.vue'
+    import Pagination  from './components/pagination.vue'
+    import searchBasicsMixin from '../../mixins/search-basics-mixin'
 
     export default {
+        components: { EventFilter, Pagination },
 
-        components: { flatPickr, Multiselect, VueSlider },
+        mixins: [ searchBasicsMixin ],
 
-        props:['searchedevents','categories','user', 'tags', 'maxprice'],
+        props:['searchedevents','onlineevents','categories','user', 'tags', 'maxprice'],
 
         computed: {
-            showPrice() {
-                return this.price[1] == this.options.max && this.price[0] == this.options.min ? true : false;
-            },
-            showDates() {
-                return !this.datesFormatted.length ? true : false;
+            loadedCat() {
+                return this.categories.slice(0,7);
             },
 
-            data() {
-                return {
-                    results: this.results,
-                    mapboundary: this.boundaries,
-                    category: this.category.id,
-                    dates: this.datesSubmit,
-                    price: this.hasPrice ? this.price : '',
-                    tag: this.tag ? this.tag.name : null,
-                    lat: this.boundaries ? '' : new URL(window.location.href).searchParams.get("lat"),
-                    lng: this.boundaries ? '' : new URL(window.location.href).searchParams.get("lng"),
-                }
+            multipleCategory() {
+                return this.categories.filter(cat => cat.checked).map(o => o.id)
             },
 
+            eventTags() {
+                return event => event.genres.slice(0, 3);
+            },
+
+            fixedprice() {
+                return event => event.price_range.replace(/\d+(\.\d{1,2})?/g, dec => parseInt(dec));
+            },
+
+            noResults() {
+                return !this.eventList.data.length
+            },
+           
+            currentOnlinePage () {
+                return this.onlineEventList.current_page;
+            },
         }, 
 
         data() {
             return {
                 eventList: this.searchedevents,
-                active: null,
-                category: '',
-                tag: '',
-                showMap: true,
-                price: [0,0],
-                boundaries: '',
-                datesSubmit: [],
-                datesFormatted: [],
-                hasPrice: false,
-                dates: [],
-                results: '',
-                searchedCity: new URL(window.location.href).searchParams.get("name"),
-                searchedCategory: new URL(window.location.href).searchParams.get("category"),
-                searchtag: new URL(window.location.href).searchParams.get("tag"),
-                config: this.initializeConfigObject(),
-                configmobile: this.initializeConfigObject(),
-                options: { min: 0, max: 500 },
-                shift: '',
-                showFilters: false,
+                onlineEventList: this.onlineevents,
                 mobile: window.innerWidth < 768,
-                name: new URL(window.location.href).searchParams.get("name"),
-                startLat: new URL(window.location.href).searchParams.get("lat"),
-                startLng: new URL(window.location.href).searchParams.get("lng"),
-                
+                shiftDown: window.innerWidth < 768 ? 45 : 0,
+                pagination: 1,
+                onlinePagination: 1,
             }
         },
 
         methods: {
 
-            initializeConfigObject(){
-                return {
-                    // minDate: "today",
-                    altFormat:'M d',
-                    altInput: true,
-                    mode: "range",
-                    inline: true,
-                    showMonths: window.innerWidth < 768 ? 1 : 2,
-                    dateFormat: 'Y-m-d H:i:s',
-                    onClose: [this.dateFunc()], 
-                }
+            updateEvents(value) {
+                this.eventList = value;
+                this.pagination = value.current_page;
             },
 
-            show(type) {
-                this.active === type ? this.active = null : this.active = type;
-                setTimeout(() => document.addEventListener("click", this.onClickOutside), 200);
-            },
-
-            submitCat(value) {
-                this.category = value;
-                this.submit();
-            },
-
-            clearCat() {
-                this.category = '';
-                this.submit();
-            },
-
-            submitTag(value) {
-                this.$store.commit('searchtype', value.name)
-                this.tag = value;
-                this.submit();
-            },
-
-            clearTag() {
-                this.tag = '';
-                this.submit();
-            },
-
-            mapSearch(value) {
-                this.boundaries = value;
-                this.submit();
-            },
-
-            cancelMobile() {
-                this.clearMobile();
-                this.showFilters = false;
-            },
-
-            clearMobile() {
-                this.price = [this.options.min, this.options.max]
-                this.datesFormatted = [];
-                this.datesSubmit = [];
-                this.dates = [];
-                this.category = '';
-            },
-
-            filterMobile() {
-                this.submit();
-                this.showFilters = false;
+            updateOnlineEvents(value) {
+                this.onlineEventList = value;
+                this.onlinePagination = value.current_page;
             },
 
             fullMap(value) {
-                console.log(value);
-                this.shift = `margin-top:${value};`
+                this.shiftDown = value ? 45 : 80;
             },
 
-            loadMoreEvents(value) {
-                this.results = value;
-                this.submit();
+            selectPage (page) {
+                this.pagination = page
             },
 
-            submit() {
-                this.active = null;
-                console.log(this.data);
-                axios.post('/api/search/mapboundary', this.data)
-                .then(res => {
-                    this.eventList = res.data;
-                })
-                .catch(err => { 
-                   
-                });
+            selectOnlinePage (page) {
+                this.onlinePagination = page
             },
 
-            getPriceRange() {
-                let prices = [] 
-                this.eventList.forEach(event=>{ 
-                  event.priceranges.forEach(pricerange=>{ 
-                    prices.push(pricerange.price) 
-                  }) 
-                })
-
-                function compareNumbers(a, b) {
-                  return a - b;
-                }
-
-                let arr = Math.ceil(parseFloat(prices.sort(compareNumbers).slice(-1)[0]));
-                console.log(arr);
-
-                prices.length ? this.price[1] = arr : this.price[1] = 1000;
-                prices.length ? this.options.max = arr : this.options.max = 1000;
+            onLoad() {
+                this.categories.forEach((cat) => cat.checked = false);
             },
 
-            dateFunc() {
-            // Save component this in that
-            const that = this;
-            // return function needed
-            return function(value) {
-                that.datesSubmit = value.map(date => 
-                    this.formatDate(date, "Y-m-d H:i:S"));
-                that.datesFormatted = value.map(date => 
-                    this.formatDate(date, "M d"));
-                }
+            showEvents() {
+                this.conditionalBodyClass(false, 'noscroll')
+                this.shiftDown = 45;
+                this.$store.commit('showmap', false);
             },
 
-            toggleBodyClass(addRemoveClass, className) {
-                const el = document.body;
-
-                if (addRemoveClass === 'addClass') {
-                    el.classList.add(className);
+            conditionalBodyClass(bool, className) {
+                if (bool) {
+                    console.log('no scroll added to page');
+                    document.body.classList.add(className)
                 } else {
-                    el.classList.remove(className);
+                    console.log('no scroll removed from page');
+                    document.body.classList.remove(className)
                 }
-            },
-
-            onClickOutside(event) {
-                if (this.active == null) {return false};
-                let cat =  this.$refs.cat;
-                let tag =  this.$refs.tag;
-                let dates =  this.$refs.dates;
-                let price =  this.$refs.price;
-                if (!cat || cat.contains(event.target) || !tag || tag.contains(event.target) || !dates || dates.contains(event.target) || !price || price.contains(event.target)) return;
-                this.active = null;
-                this.submit();
-            },
-
-            getCategory() {
-                if (this.searchedCategory) {
-                    this.category = this.categories.find(element => element.id == this.searchedCategory);
-                }
-            }
-
-        },
-
-        watch: {
-            price() {
-                this.hasPrice = true;
-            },
-            showFilters() {
-                return this.showFilters ? this.toggleBodyClass('addClass', 'noscroll') : this.toggleBodyClass('removeClass', 'noscroll');
             },
         },
 
         mounted() {
-            this.getCategory();
-        },
-
-        created() {
-            this.getPriceRange();
+            this.onLoad();
         },
 
 

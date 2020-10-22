@@ -7,7 +7,7 @@
 @endsection
 
 @section('nav')
-        <vue-nav onclass="messageshow" :user= "{{auth()->user()}}"></vue-nav>
+        <vue-nav navtype="messageshow" :user= "{{auth()->user()}}"></vue-nav>
 @endsection
 
 @section('content')

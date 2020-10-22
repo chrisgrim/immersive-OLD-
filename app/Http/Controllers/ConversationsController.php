@@ -25,7 +25,7 @@ class ConversationsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    { 
+    {
         $messages = auth()->user()->conversations()->with('users')->paginate(10);
         return view('messages.index', compact('messages'));
     }

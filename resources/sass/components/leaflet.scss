@@ -1,26 +1,34 @@
 .leaflet-control-attribution.leaflet-control {
     opacity: 0;
 }
-.leaflet-marker-icon.icons {
-    height: 100% !important;
-    width: 100% !important;
+
+.leaflet-marker-icon.icons p {
+    overflow-wrap: break-word;
+    white-space: nowrap;
+    font-size: 14px;
+    font-weight: 800;
+    color: inherit;
+    background: white;
+    border-radius: 5rem;
+    border: 2px solid black;
+    display: inline-block;
+    width: 100%;
     text-align: center;
-    margin-left: -2.5rem !important;
-    position: relative;
-    & p {
-        overflow-wrap: break-word;
-        font-size: 14px;
-        font-weight: 800;
-        line-height: 1.28571em;
-        color: inherit;
-        margin: 0.4rem 0rem;
-        background: white;
-        border-radius: 5rem;
-        border: 2px solid black;
-        display: inline-block;
-        padding: .5rem 1rem;
-    }
+    line-height: 2.7rem;
 }
+
+.marker-cluster {
+    background: black;
+    margin: 0.4rem 0;
+    font-size: 14px;
+    border-radius: 5rem;
+    border: 2px solid white;
+    font-weight: 800;
+    color:white;
+    padding: .7rem 0;
+    text-align: center;
+}
+
 div.leaflet-popup {
     &-content {
         margin: 1rem 0rem;
@@ -28,21 +36,20 @@ div.leaflet-popup {
         &-wrapper {
             padding: 0rem;
             width: 20rem;
-            margin-top:50%;
             & .pop {
                 width: 100%;
                 min-height: 16rem;
                 & .back {
-                    height:12rem;
+                    height: 12rem;
                     background-size: cover;
                     background-repeat: no-repeat;
-                    border-radius: .5rem .5rem 0rem 0rem;
+                    border-radius: 0.5rem 0.5rem 0 0;
                 }
                 & .info {
                     padding: 1rem;
                     & .name {
-                        font-family: 'Montserrat', sans-serif; 
-                        color:#484848;
+                        font-family: 'Montserrat', sans-serif;
+                        color: #484848;
                     }
                 }
             }
@@ -53,25 +60,20 @@ div.leaflet-popup {
                     height:12rem;
                     background-size: cover;
                     background-repeat: no-repeat;
-                    border-radius: .5rem .5rem 0rem 0rem;
+                    border-radius: 0.5rem 0.5rem 0 0;
                 }
                 & .info {
                     padding: 1rem;
                     & .name {
-                        font-family: 'Montserrat', sans-serif; 
-                        color:#484848;
+                        font-family: 'Montserrat', sans-serif;
+                        color: #484848;
                     }
                 }
             }
         }
     }
 }
+
 a.leaflet-popup-close-button {
     display: none;
 }
-.leaflet-touch .leaflet-control-attribution, .leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar {
-    display: none;
-}
-
-
-
