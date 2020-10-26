@@ -6,6 +6,17 @@
     position: relative;
 }
 
+.spacer--div {
+    appearance: none;
+    background: transparent;
+    border: 0;
+    display: block;
+    margin: 0;
+    outline: none;
+    width: 100%;
+    z-index: -1;
+}
+
 .event-search__container {
     width: 100%;
     grid-template-columns: 1fr;
@@ -25,11 +36,14 @@ ul.pagination {
 
 .pagination li button {
     border: 0;
-    line-height: 0;
+    font-weight: 500;
+    background: white;
     width: 3rem;
     height: 3rem;
-    border-radius: 5rem;
-    font-weight: 500;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .pagination li.active button {
@@ -64,10 +78,15 @@ ul.pagination {
 /* -----------------Event List------------------------------------ */
 
 .event-search-list {
-    position: relative;
     width: 100%;
+}
+
+.event__results {
     padding: 0 2rem;
-    z-index: 2;
+}
+
+.event__results--online {
+    padding: 2rem;
 }
 
 .mobile-online-events {

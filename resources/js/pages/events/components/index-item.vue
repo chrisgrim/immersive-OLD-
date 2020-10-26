@@ -1,34 +1,69 @@
 <template>
-    <div class="event-index__eventlist" ref="list">
+    <div 
+        class="event-index__eventlist" 
+        ref="list">
         <div class="event-index__eventlist--middle vertical">
-            <div v-for="(event, index) in events" class="eventlist__element" :style="`width:${width}`">
-                <div :class="{ 'dis': isDisabled, black : color=='black' }" class="card" >
-                    <div itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
-                        <meta :content="event.name" itemprop="name">
-                        <meta :content="`https://www.everythingimmersive.com/events/${event.slug}`" itemprop="url">
-                        <a :href="url(event)" class="card-url"></a>
+            <div 
+                v-for="(event) in events"
+                :key="event.id"
+                class="eventlist__element" 
+                :style="`width:${width}`">
+                <div 
+                    :class="{ 'dis': isDisabled, black : color=='black' }" 
+                    class="card">
+                    <div 
+                        itemprop="itemListElement" 
+                        itemscope="" 
+                        itemtype="http://schema.org/ListItem">
+                        <meta 
+                            :content="event.name" 
+                            itemprop="name">
+                        <meta 
+                            :content="`https://www.everythingimmersive.com/events/${event.slug}`" 
+                            itemprop="url">
+                        <a 
+                            :href="url(event)" 
+                            class="card-url" />
                         <div class="card-image__top">
-                            <div class="card-image__middle" style="padding-top: 65%;">
+                            <div 
+                                class="card-image__middle" 
+                                style="padding-top: 65%;">
                                 <div class="card-image">
                                     <picture>
-                                        <source type="image/webp" :srcset="`/storage/${event.thumbImagePath}`"> 
-                                        <img style="object-fit:cover" loading="lazy" class="card-image__img" :src="`/storage/${event.thumbImagePath.slice(0, -4)}jpg`" :alt="`${event.name} Immersive Event`">
+                                        <source 
+                                            type="image/webp" 
+                                            :srcset="`/storage/${event.thumbImagePath}`"> 
+                                        <img 
+                                            style="object-fit:cover" 
+                                            loading="lazy" 
+                                            class="card-image__img" 
+                                            :src="`/storage/${event.thumbImagePath.slice(0, -4)}jpg`" 
+                                            :alt="`${event.name} Immersive Event`">
                                     </picture>
                                 </div>
                             </div>
                         </div>
                         <div class="card-content">
-                            <div class="card-title" >
-                                <h3 :class="{ black : color=='black' }">{{ event.name }}</h3>
+                            <div class="card-title">
+                                <h3 :class="{ black : color=='black' }">
+                                    {{ event.name }}
+                                </h3>
                             </div>
                             <div class="card-organizer">
-                                <h3 :class="{ black : color=='black' }">{{ event.organizer.name }}</h3>
+                                <h3 :class="{ black : color=='black' }">
+                                    {{ event.organizer.name }}
+                                </h3>
                             </div>
                             <div class="card-price">
-                                <h4 :class="{ black : color=='black' }">{{ event.price_range }}</h4>
+                                <h4 :class="{ black : color=='black' }">
+                                    {{ event.price_range }}
+                                </h4>
                             </div>
                         </div>
-                        <favorite v-if="canFavorite" :inputclass="showEventClass" :event="event"></favorite>
+                        <favorite 
+                            v-if="canFavorite" 
+                            :inputclass="showEventClass" 
+                            :event="event" />
                     </div>
                 </div>
             </div>

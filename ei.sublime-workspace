@@ -4,6 +4,66 @@
 		"selected_items":
 		[
 			[
+				"mapse",
+				"mapsearch"
+			],
+			[
+				"filter",
+				"filter__body"
+			],
+			[
+				"ful",
+				"fullMap"
+			],
+			[
+				"mobi",
+				"mobiledates"
+			],
+			[
+				"show",
+				"showfilter"
+			],
+			[
+				"mob",
+				"mobileDates"
+			],
+			[
+				"mo",
+				"mobiledates"
+			],
+			[
+				"in",
+				"inherit\tdisplay"
+			],
+			[
+				"mobil",
+				"mobileLocation"
+			],
+			[
+				"s",
+				"showfilter"
+			],
+			[
+				"sub",
+				"submit"
+			],
+			[
+				"min",
+				"min-height\tproperty"
+			],
+			[
+				"pad",
+				"padding\tproperty"
+			],
+			[
+				"cla",
+				"className"
+			],
+			[
+				"text",
+				"text-align\tproperty"
+			],
+			[
 				"on",
 				"onlineEventList"
 			],
@@ -60,10 +120,6 @@
 				"eventList"
 			],
 			[
-				"pad",
-				"padding-top\tproperty"
-			],
-			[
 				"box",
 				"box-shadow\tproperty"
 			],
@@ -90,10 +146,6 @@
 			[
 				"pric",
 				"priceOptions"
-			],
-			[
-				"sub",
-				"submissionDates"
 			],
 			[
 				"hide",
@@ -138,10 +190,6 @@
 			[
 				"search",
 				"searchedevents"
-			],
-			[
-				"show",
-				"showEvents"
 			],
 			[
 				"texts-",
@@ -432,10 +480,6 @@
 				"conversations"
 			],
 			[
-				"in",
-				"inline-block\tdisplay"
-			],
-			[
 				"lat",
 				"latitude"
 			],
@@ -470,50 +514,6 @@
 			[
 				"pri",
 				"priceLength"
-			],
-			[
-				"nam",
-				"nameEmpty"
-			],
-			[
-				"price",
-				"priceEmpty"
-			],
-			[
-				"eror",
-				"errorPrice"
-			],
-			[
-				"error",
-				"errorPrice"
-			],
-			[
-				"va",
-				"validator"
-			],
-			[
-				"tick",
-				"ticketTypeOptions"
-			],
-			[
-				"ib",
-				"initializeTicketObject"
-			],
-			[
-				"rem",
-				"remotelocations"
-			],
-			[
-				"hiddenlo",
-				"hiddenLocationToggle"
-			],
-			[
-				"callA",
-				"callAction"
-			],
-			[
-				"callAc",
-				"callActionOptions"
 			]
 		]
 	},
@@ -529,28 +529,10 @@
 			}
 		},
 		{
-			"file": "resources/js/pages/events/components/filter.vue",
+			"file": "resources/js/pages/events/event-index.vue",
 			"settings":
 			{
-				"buffer_size": 18553,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "resources/js/store/index.js",
-			"settings":
-			{
-				"buffer_size": 1299,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "app/Http/Controllers/SearchController.php",
-			"settings":
-			{
-				"buffer_size": 9376,
+				"buffer_size": 20708,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -672,37 +654,39 @@
 		"/Users/chrisgrim/code/ei/resources/js/mixins",
 		"/Users/chrisgrim/code/ei/resources/js/pages",
 		"/Users/chrisgrim/code/ei/resources/js/pages/events",
-		"/Users/chrisgrim/code/ei/resources/js/store",
+		"/Users/chrisgrim/code/ei/resources/js/pages/events/components",
+		"/Users/chrisgrim/code/ei/resources/js/pages/read",
 		"/Users/chrisgrim/code/ei/resources/sass",
 		"/Users/chrisgrim/code/ei/resources/sass/events",
-		"/Users/chrisgrim/code/ei/resources/views",
-		"/Users/chrisgrim/code/ei/resources/views/events",
-		"/Users/chrisgrim/code/ei/resources/views/layouts",
+		"/Users/chrisgrim/code/ei/resources/sass/events/components",
 		"/Users/chrisgrim/code/ei/routes"
 	],
 	"file_history":
 	[
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/SearchController.php",
+		"/Users/chrisgrim/code/ei/resources/sass/events/components/search-filters.scss",
+		"/Users/chrisgrim/code/ei/resources/js/pages/events/components/filter.vue",
+		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-index.vue",
 		"/Users/chrisgrim/code/ei/resources/js/mixins/search-basics-mixin.js",
 		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-search.vue",
-		"/Users/chrisgrim/code/ei/resources/js/pages/events/components/filter.vue",
-		"/Users/chrisgrim/code/ei/resources/js/pages/events/components/pagination.vue",
-		"/Users/chrisgrim/code/ei/resources/js/store/index.js",
-		"/Users/chrisgrim/code/ei/resources/sass/events/event-search.scss",
-		"/Users/chrisgrim/code/ei/resources/sass/components/leaflet.scss",
 		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-map-search.vue",
+		"/Users/chrisgrim/code/ei/resources/js/pages/layouts/nav-search.vue",
+		"/Users/chrisgrim/code/ei/resources/js/pages/events/components/mobile-filter-bar.vue",
+		"/Users/chrisgrim/code/ei/resources/js/pages/events/components/pagination.vue",
 		"/Users/chrisgrim/code/ei/resources/sass/events/event-maps.scss",
+		"/Users/chrisgrim/code/ei/resources/sass/events/event-search.scss",
 		"/Users/chrisgrim/code/ei/resources/sass/components/grid.scss",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/SearchController.php",
+		"/Users/chrisgrim/code/ei/resources/js/pages/read/popup-content.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/layouts/nav.vue",
+		"/Users/chrisgrim/code/ei/resources/js/store/index.js",
+		"/Users/chrisgrim/code/ei/resources/sass/components/leaflet.scss",
+		"/Users/chrisgrim/code/ei/resources/sass/events/event-index.scss",
 		"/Users/chrisgrim/code/ei/resources/sass/nav/navbar.scss",
 		"/Users/chrisgrim/code/ei/resources/views/layouts/meta.blade.php",
 		"/Users/chrisgrim/code/ei/resources/sass/events/event-show.scss",
 		"/Users/chrisgrim/code/ei/app/EventRemoteSearchRule.php",
 		"/Users/chrisgrim/code/ei/resources/views/events/searchonline.blade.php",
-		"/Users/chrisgrim/code/ei/resources/js/pages/layouts/nav-search.vue",
 		"/Users/chrisgrim/code/ei/resources/views/events/search.blade.php",
-		"/Users/chrisgrim/code/ei/resources/sass/events/components/search-filters.scss",
-		"/Users/chrisgrim/code/ei/resources/sass/events/event-index.scss",
 		"/Users/chrisgrim/code/ei/resources/sass/components/flatpickr.scss",
 		"/Users/chrisgrim/Library/Application Support/Sublime Text 3/Packages/User/indentation.py",
 		"/Users/chrisgrim/code/ei/resources/sass/components/multiselect.scss",
@@ -737,7 +721,6 @@
 		"/Users/chrisgrim/code/ei/resources/views/adminArea/index.blade.php",
 		"/Users/chrisgrim/Library/Application Support/Sublime Text 3/Packages/User/JumpToScript.py",
 		"/Users/chrisgrim/code/ei/.eslintrc.json",
-		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-index.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/organizer.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/layouts/favorite.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/layouts/modal.vue",
@@ -807,9 +790,7 @@
 		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/approve/approval-bar.vue",
 		"/Users/chrisgrim/Library/Application Support/Sublime Text 3/Packages/User/long_tag_snippet_fixer.py",
 		"/Users/chrisgrim/code/ei/config/audit.php",
-		"/Users/chrisgrim/code/ei/app/AuditDrivers/MyCustomDriver.php",
-		"/Users/chrisgrim/code/ei/app/EventNameSearchRule.php",
-		"/Users/chrisgrim/code/ei/app/GenreSearchRule.php"
+		"/Users/chrisgrim/code/ei/app/AuditDrivers/MyCustomDriver.php"
 	],
 	"find":
 	{
@@ -820,6 +801,8 @@
 		"height": 164.0,
 		"where_history":
 		[
+			"/Users/chrisgrim/code/ei/resources/sass",
+			"/Users/chrisgrim/code/ei/resources/sass/events",
 			"/Users/chrisgrim/code/ei/resources/js/pages",
 			"/Users/chrisgrim/code/ei/resources/sass",
 			"/Users/chrisgrim/code/ei/resources/js",
@@ -945,9 +928,7 @@
 			"/Users/chrisgrim/code/ei/resources/js/components",
 			"/Users/chrisgrim/code/ei/app",
 			"/Users/chrisgrim/code/ei/resources/sass",
-			"/Users/chrisgrim/code/ei",
-			"/Users/chrisgrim/code/ei/resources/sass/events",
-			"/Users/chrisgrim/code/ei/resources/sass"
+			"/Users/chrisgrim/code/ei"
 		]
 	},
 	"find_state":
@@ -955,7 +936,16 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"pagination",
+			"haslocation",
+			"searchType",
+			"searchtype",
+			"searchType",
+			"clearLocation",
+			"search",
+			"mobile",
+			"Mobile",
+			"mobile",
+			"city",
 			"Pagination",
 			"pagination",
 			"Pagination",
@@ -966,123 +956,114 @@
 			"pagination",
 			"Pagination",
 			"pagination",
-			"loadMoreOnlineEvents",
+			"map",
+			"test",
+			"city",
 			"selectOnlinePage",
-			"nextOnlinePage",
-			"prevPageUrl",
-			"eventList",
-			"EventList",
-			"eventList",
-			"searchedevents",
-			"console",
-			"consolke",
-			"online",
-			"console",
-			"page",
-			"store",
-			"onlinePagination",
-			"concat",
-			"priceOptions",
-			"maxprice",
-			"filterChange",
-			"updateEvents",
-			"onlineevents",
+			"filter__body",
+			"template",
+			"body",
+			"important",
+			"closeMap",
+			"            closeMap() {\n                this.$store.commit('showmap', false);\n                this.mobileMap = `height:${window.innerHeight/2}px;`;\n                this.$nextTick(() => this.$refs.map.mapObject.invalidateSize());\n            },",
+			"closeMap",
+			"mapSearch",
+			"fullscreen",
+			"showEvents",
+			"onhidemap",
+			"hideDates",
+			"EventFilter",
+			"event",
+			"'test'",
+			"fullMap",
+			"fullmap",
 			"px",
-			"a",
-			"div",
-			"slot name=\"prev-nav",
-			"searchedevents",
-			"events",
-			"loadmore",
-			";\n",
+			"update",
+			"location",
+			"update",
+			"px",
+			"!important",
+			"shiftDown",
+			"mobile-online-events",
+			"results",
+			"event__filter",
+			"event-index__eventlist",
 			"eventlist",
-			"locationevents",
-			"eventlist",
-			"locationevents",
-			"eventlist",
+			"grey",
+			"event-search-list ",
+			"div style",
+			"style",
+			"32",
+			"128",
+			"0",
+			"event",
+			"popup-content",
+			"popup",
+			"40%",
+			"showFilter",
+			"showfilter",
+			"onfilter",
+			"fullMap",
+			"2rem",
+			"0.8",
+			"scale",
+			"sc",
+			"2,",
+			"mobiledates",
+			"filter__dropdown--footer",
+			"dropdown",
+			"calendarConfigMobile",
+			"mobilelocation",
+			"button",
+			"filter__location",
+			"filter",
+			"showLocation",
+			"mobileLocation",
+			"eventFilter",
+			"showfilter",
 			"store",
 			"save",
-			"nextPageUrl",
-			"nextpageurl",
-			"prevButtonEvents",
-			"data",
-			"computed",
-			"computed.",
-			"delta",
-			"heart",
-			"leaflet-marker",
-			"2px",
-			"px",
-			"leaflet-control-attribution",
-			"noresult",
-			"noresults",
-			"\">",
-			"noResults",
-			"h3",
-			"28",
-			"30",
-			"256",
-			"font-weight",
-			"Roboto",
-			"open sans",
-			"sans",
-			"__cat",
-			"playfair",
-			"searchremote",
-			"remote",
-			"searchedevents",
-			"mapboundary",
-			"event-index__header",
-			"_",
-			"-online",
-			"important",
-			"heart",
-			"px",
-			"rem",
-			"px",
-			"heart",
-			"heard",
-			"filter__body",
-			"event__results--title",
-			"2",
-			"fixedprice",
-			"div",
-			"event__filter--row-grid",
-			"filter",
-			"event-search-list",
-			"mobile-filter ",
-			"event__filter--row",
-			"pageheight",
-			"e-search-map-container",
-			"maphidden",
-			"event-search__eventlist",
-			"event-search-list",
-			"event__horizontal",
-			"card",
-			"card-url",
-			"event__filter--row-grid",
-			"event__horizontal--bar",
-			"event-search__eventlist",
-			"event-search__container ",
-			"event-search-filter",
-			"event-search__filters",
-			"event-filter-button__over",
-			"amt",
-			"filter-list",
-			"e-search__categories",
-			"important",
-			"event__filter",
-			"mapsearch",
-			"value",
-			"this.mapInfo",
-			"value",
-			"mapSearch",
-			"state",
-			"map",
-			"searchType",
+			"filters",
+			"1.3",
+			"500",
+			"64",
 			"mobile",
-			"hasPrice",
-			"showFilters"
+			"leaflet",
+			"leaflet-popup",
+			"popup-content-wrapper",
+			"important",
+			"px",
+			"!important",
+			"desktop",
+			"event-search-list",
+			"event-search",
+			"filter__row",
+			"template",
+			"h4",
+			"event-index__categories--item",
+			"bar",
+			"active",
+			"fullMap",
+			"onhide",
+			"filter__container ",
+			"filter__nav",
+			"nav",
+			"flatpickr-calendar",
+			"showfilters",
+			"button",
+			"categories",
+			"clearMobile",
+			"cancelMobile",
+			"90",
+			"event__results--title",
+			"mobile-filter",
+			"event__filter",
+			"marker-icon",
+			"mobile-map",
+			"control",
+			"zoom",
+			"leaflet-control-zoom",
+			"event__filter"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -1116,7 +1097,7 @@
 						"selection":
 						[
 							[
-								1400,
+								1387,
 								1407
 							]
 						],
@@ -1136,19 +1117,19 @@
 				},
 				{
 					"buffer": 1,
-					"file": "resources/js/pages/events/components/filter.vue",
+					"file": "resources/js/pages/events/event-index.vue",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 18553,
+						"buffer_size": 20708,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								13550,
-								13550
+								15213,
+								15213
 							]
 						],
 						"settings":
@@ -1159,72 +1140,10 @@
 							"syntax": "Packages/Vuejs Complete Package/vue.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 9362.0,
+						"translation.y": 5656.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "resources/js/store/index.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1299,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								537,
-								537
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 255.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "app/Http/Controllers/SearchController.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 9376,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1645,
-								1645
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/PHP/PHP.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
 					"type": "text"
 				}
 			]
@@ -1291,12 +1210,12 @@
 		"selected_items":
 		[
 			[
-				"script",
-				"node_modules/nan/doc/script.md"
+				"",
+				"resources/sass/events/components/search-filters.scss"
 			],
 			[
-				"",
-				"resources/js/pages/events/event-search.vue"
+				"script",
+				"node_modules/nan/doc/script.md"
 			],
 			[
 				"authen",

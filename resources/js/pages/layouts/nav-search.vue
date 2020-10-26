@@ -147,8 +147,9 @@
                                 stroke-linecap="round" 
                                 stroke-linejoin="round" 
                                 style="height: 24px; width: 24px; display: inline-block; overflow: visible;">
-                                <path d="M12.2,2.2c-3.9,0-7.1,3.2-7.1,7.1c0,5.7,6.4,10.9,6.4,10.9c0.4,0.3,1,0.3,1.4,0c0,0,6.4-5.2,6.4-10.9
-                            C19.2,5.4,16.1,2.2,12.2,2.2z M12.1,11.6c-1.5,0-2.7-1.2-2.7-2.7s1.2-2.7,2.7-2.7s2.7,1.2,2.7,2.7S13.6,11.6,12.1,11.6z"/></svg>
+                                <path 
+                                    d="M12.2,2.2c-3.9,0-7.1,3.2-7.1,7.1c0,5.7,6.4,10.9,6.4,10.9c0.4,0.3,1,0.3,1.4,0c0,0,6.4-5.2,6.4-10.9 C19.2,5.4,16.1,2.2,12.2,2.2z M12.1,11.6c-1.5,0-2.7-1.2-2.7-2.7s1.2-2.7,2.7-2.7s2.7,1.2,2.7,2.7S13.6,11.6,12.1,11.6z"/>
+                            </svg>
                         </div>
                         <div style="display:inline-block;float: left;margin-top:.5rem;padding-left:1rem;width: 90%;white-space: nowrap;">
                             {{ props.option.name }}
@@ -176,7 +177,6 @@ export default {
             }
             if (this.searchtype == 'location') {return 'Search by location'}
             if (this.searchtype == 'event') {return 'Search by Event or Organizer'}
-            if (this.searchtype == 'category') {return 'Search by Category or Tag'}
             return 'Search';
         }
     },

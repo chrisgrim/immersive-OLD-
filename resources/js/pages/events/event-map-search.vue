@@ -116,38 +116,7 @@
                 </l-map>
             </div>
         </div>
-        <div class="search__map--header">
-            <div class="search__map--location" >
-                <div class="search__map--city">
-                    <button @click="showLocation">
-                        {{city}}
-                    </button>
-                </div>
-                <div class="search__map--dates">
-                    <button @click="showDates">
-                        <template v-if="$store.state.dates[0]">
-                            {{ $store.state.dates[0] }}{{ $store.state.dates[1] ? ' - ' + $store.state.dates[1] : '' }}
-                        </template>
-                        <template v-else>
-                            Add Dates
-                        </template>
-                    </button>
-                </div>
-                <div class="search__map--config">
-                    <button @click="showFilter">
-                        <svg 
-                            xmlns="http://www.w3.org/2000/svg" 
-                            xmlns:xlink="http://www.w3.org/1999/xlink" 
-                            viewBox="0 0 104 104" 
-                            width="30px" 
-                            height="30px">
-                            <path 
-                                fill="#000000" d="M89,27c0,1.1-0.9,2-2,2H13c-1.1,0-2-0.9-2-2v-2c0-1.1,0.9-2,2-2h74c1.1,0,2,0.9,2,2V27z"/><path fill="#000000" d="M79,43c0,1.1-0.9,2-2,2H23c-1.1,0-2-0.9-2-2v-2c0-1.1,0.9-2,2-2h54c1.1,0,2,0.9,2,2V43z"/><path fill="#000000" d="M71,59c0,1.1-0.9,2-2,2H31c-1.1,0-2-0.9-2-2v-2c0-1.1,0.9-2,2-2h38c1.1,0,2,0.9,2,2V59z"/><path fill="#000000" d="M63,75c0,1.1-0.9,2-2,2H39c-1.1,0-2-0.9-2-2v-2c0-1.1,0.9-2,2-2h22c1.1,0,2,0.9,2,2V75z"/>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
+        <MobileFilterBar />
     </section>
 </template>
 
@@ -157,11 +126,11 @@
     import Vue2LeafletMarkerCluster from 'vue2-leaflet-markercluster'
     import { latLng } from "leaflet"
     import PopupContent from "../read/popup-content"
-
+    import MobileFilterBar  from './components/mobile-filter-bar.vue'
 
     export default {
 
-        components: { LPopup, LMap, LTileLayer, LMarker, 'l-marker-cluster': Vue2LeafletMarkerCluster, PopupContent, LIcon },
+        components: { LPopup, LMap, LTileLayer, LMarker, 'l-marker-cluster': Vue2LeafletMarkerCluster, PopupContent, LIcon, MobileFilterBar },
 
         props: [ 'events', 'user' ],
 
@@ -180,11 +149,13 @@
             fixedprice() {
                 return event => event.price_range.replace(/\d+(\.\d{1,2})?/g, dec => parseInt(dec));
             },
+
             fullMap() {
-                console.log(this.$store.state.map);
-                console.log(this.$store.state.mobilelocation);
-                console.log(this.$store.state.mobiledates);
-                return this.$store.state.map || this.$store.state.mobilelocation || this.$store.state.mobiledates;
+                // console.log(this.$store.state.map);
+                // console.log(this.$store.state.mobilelocation);
+                // console.log(this.$store.state.mobiledates);
+                // console.log(this.$store.state.filter);
+                return this.$store.state.map || this.$store.state.mobilelocation || this.$store.state.mobiledates || this.$store.state.filter;
             },
         }, 
 
@@ -202,20 +173,10 @@
                 desktop: window.innerWidth > 769,
                 pageHeight: `height: 100vh;`,
                 mobileMap : `height:${window.innerHeight/2}px;`,
-                city: new URL(window.location.href).searchParams.get("city"),
             }
         },
 
         methods: {
-            toggleBodyClass(addRemoveClass, className) {
-                const el = document.body;
-
-                if (addRemoveClass === 'addClass') {
-                    el.classList.add(className);
-                } else {
-                    el.classList.remove(className);
-                }
-            },
 
             onMapCenterChanged() {
                 this.$store.commit('storeMapBounds', {bounds: this.currentBounds, center: this.currentCenter, zoom: this.zoom});
@@ -233,35 +194,23 @@
                 this.currentBounds = bounds;
             },
 
-            showFilter() {
-                this.$store.commit('onfilter', true);
-            },
-
-            showLocation() {
-                this.$store.commit('showlocation', true);
-            },
-
-            showDates() {
-                this.$store.commit('showdates', true);
-                this.toggleBodyClass('addClass', 'noscroll');
+            showFilter(value) {
+                this.$store.commit(value, true);
             },
 
             fullscreen() {
-                window.scrollTo(0, 0);
-                this.$emit('onhidemap', false);
                 this.$store.commit('showmap', true);
-                this.mobileMap = `height:${window.innerHeight}px;`;
-                this.$nextTick(() => this.$refs.map.mapObject.invalidateSize());
                 this.mapSearch = false;
-                this.toggleBodyClass('addClass', 'noscroll');
             },
 
-            closeMap() {
-                this.$emit('onhidemap', true);
-                this.$store.commit('showmap', false);
+            tallMap() {
+                this.mobileMap = `height:${window.innerHeight}px;`;
+                this.$nextTick(() => this.$refs.map.mapObject.invalidateSize());
+            },
+
+            shortMap() {
                 this.mobileMap = `height:${window.innerHeight/2}px;`;
                 this.$nextTick(() => this.$refs.map.mapObject.invalidateSize());
-                this.toggleBodyClass('removeClass', 'noscroll');
             },
 
             getBounds() {
@@ -279,13 +228,35 @@
                     lat: parseFloat(new URL(window.location.href).searchParams.get("Clat")),
                     lng: parseFloat(new URL(window.location.href).searchParams.get("Clng"))
                 }
-            }
+            },
+
+            toggleBodyClass(addRemoveClass, className) {
+                const el = document.body;
+
+                if (addRemoveClass === 'addClass') {
+                    el.classList.add(className);
+                } else {
+                    el.classList.remove(className);
+                }
+            },
         },
 
         watch: {
             currentCenter() {
                 this.currentCenter.lat.toString().length > 10 && this.mapSearch ? this.onMapCenterChanged() : '' ;
             },
+
+            fullMap() {
+                window.scrollTo(0, 0);
+                if (this.fullMap) {
+                    this.tallMap();
+                    this.toggleBodyClass('addClass', 'noscroll');
+                } else {
+                    this.shortMap();
+                    this.toggleBodyClass('removeClass', 'noscroll');
+                }
+
+            }
         },
 
         mounted() {

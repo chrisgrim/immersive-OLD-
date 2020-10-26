@@ -7,17 +7,17 @@
     background-color: #fff;
     position: relative;
     display: inline-block;
-    padding: 2rem;
     border-radius: 2rem 2rem 0 0;
     border-top: 1px solid black;
 }
 
 .greyBar {
-    width: 4rem;
+    width: 6rem;
     background: #a7a7a7;
     height: 0.5rem;
     border-radius: 5rem;
     margin: auto;
+    margin-top: 2rem;
 }
 
 .filter__row {
@@ -25,17 +25,31 @@
     text-align: center;
 }
 
-.filter__body {
+.filter__content {
     width: 100%;
-    justify-content: left;
-    align-items: end;
     z-index: 1;
     position: relative;
-    margin: 1.4rem 0;
+    padding: 2rem;
+}
+
+.filter__grid {
+    justify-content: left;
+    align-items: end;
     grid-template-columns: 1fr auto auto;
-    grid-column-gap: 1.4rem !important;
-    display: inline-grid !important;
-    grid-row-gap: 1rem !important;
+    grid-column-gap: 1.4rem;
+    display: inline-grid;
+    width: 100%;
+    height: 4.5rem;
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.filter__block .filter.round {
+    height: 3.5rem;
+}
+
+.filterBar__relative {
+    height:10rem;
 }
 
 .filter__location {
@@ -46,7 +60,7 @@
     height: 100vh;
     background: white;
     padding-top: 2rem;
-    z-index: 1;
+    z-index: 999;
 }
 
 .filter__location--back {
@@ -70,6 +84,30 @@
     padding: 0 1rem;
 }
 
+.filter__location .multiselect__input {
+    color: black;
+    padding: 0 1rem;
+    font-size: 1.4rem !important;
+}
+
+.filter__location .multiselect__select {
+    color: black;
+    padding: 0 1rem;
+    font-size: 1.4rem !important;
+}
+
+.filter__location .multiselect__single {
+    color: black;
+    padding: 0 1rem;
+    font-size: 1.4rem !important;
+}
+
+.filter__location .multiselect__content .option__desc {
+    color: black;
+    font-size: 1.4rem;
+    padding: 0 1rem;
+}
+
 .filter__location button {
     position: absolute;
     z-index: 1;
@@ -88,7 +126,7 @@
     height: 100vh;
     background: white;
     padding-top: 10rem;
-    z-index: 1;
+    z-index: 999;
 }
 
 .filter__dates h3 {
@@ -206,14 +244,17 @@ button.mobile-filter {
 
 .filter__dropdown {
     position: absolute;
-    background: white;
-    border-radius: 5rem;
-    padding: 2rem;
-    margin-top: 2.5rem;
-    margin-left: -0.6rem;
-    box-shadow: rgba(0, 0, 0, 0.15) 0 10px 37px;
-    z-index: 1;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
     right: 0;
+    text-align: center;
+    width: 70%;
+    background: white;
+    padding: 2rem;
+    box-shadow: rgba(0, 0, 0, 0.15) 0 10px 37px;
+    border-radius: 5rem;
+    min-width: 65rem;
 }
 
 .filter__dropdown--grid {
@@ -260,8 +301,7 @@ button.right-half {
     border-left: 0;
 }
 
-.filter__dropdown .flatpickr-input,
-.form-control.input {
+.filter__dropdown .form-control.input {
     display: none;
 }
 
@@ -431,7 +471,6 @@ button.pop-box__submit {
 @media (min-width: 768px) {
     .event__filter {
         box-shadow: 0 4px 24px rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.04) !important;
-        padding: 0 2rem;
         border-radius: 0;
         border: 0;
     }

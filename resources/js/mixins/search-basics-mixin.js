@@ -17,7 +17,7 @@ export default {
                 dates: new URL(window.location.href).searchParams.get("start") ? [new URL(window.location.href).searchParams.get("start"), new URL(window.location.href).searchParams.get("end")] : '',
                 price: new URL(window.location.href).searchParams.get("price0") ? [Number(new URL(window.location.href).searchParams.get("price0")), Number(new URL(window.location.href).searchParams.get("price1"))] : '',
                 remote: new URL(window.location.href).searchParams.get("remote"),
-                mapSearch: new URL(window.location.href).searchParams.get("category"),
+                mapSearch: new URL(window.location.href).searchParams.get("mapsearch"),
             }
         },
         

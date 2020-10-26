@@ -61,11 +61,19 @@ class SearchController extends Controller
             ->with(['location', 'organizer', 'category', 'genres'])
             ->paginate(20);
 
-        $onlineevents =  Event::where('hasLocation', false)
-            ->with(['organizer'])
+        if ($request->price || $request->category || $request->tag || $request->dates ) {
+            $onlineevents = Event::search('a')
+            ->rule(EventRemoteSearchRule::class)
+            ->with(['organizer','category', 'genres'])
+            ->orderBy('published_at', 'desc')
+            ->paginate(6);
+        } else {
+            $onlineevents =  Event::where('hasLocation', false)
+            ->with(['organizer','category', 'genres'])
             ->whereDate('closingDate', '>=', date("Y-m-d"))
             ->orderByDesc('rank')
-            ->paginate(8);
+            ->paginate(6);
+        }
 
         return view('events.search',compact('searchedevents', 'onlineevents', 'categories', 'maxprice', 'tags'));
     }
@@ -76,7 +84,6 @@ class SearchController extends Controller
             ->rule(EventMapSearchRule::class)
             ->with(['location', 'organizer','category', 'genres'])
             ->paginate(20);
-
     }
 
     public function onlinesearch(Request $request)
@@ -85,13 +92,38 @@ class SearchController extends Controller
         $categories = Category::all();
         $tags = Genre::where('admin', 1)->orderBy('rank', 'desc')->get();
 
-        $onlineevents = Event::limit(12)
-                        ->where('status', 'p')
-                        ->whereDate('closingDate', '>=', date("Y-m-d"))
-                        ->with(['location', 'organizer'])
-                        ->paginate(8);
+        if ($request->price || $request->category || $request->tag || $request->dates ) {
+            $onlineevents = Event::search('a')
+            ->rule(EventRemoteSearchRule::class)
+            ->with(['organizer','category', 'genres'])
+            ->orderBy('published_at', 'desc')
+            ->paginate(6);
+        } else {
+            $onlineevents =  Event::where('hasLocation', false)
+            ->with(['organizer','category', 'genres'])
+            ->whereDate('closingDate', '>=', date("Y-m-d"))
+            ->orderByDesc('rank')
+            ->paginate(6);
+        }
 
         return view('events.searchonline',compact('onlineevents', 'categories', 'maxprice', 'tags'));
+    }
+
+    public function searchRemote(Request $request)
+    {
+        if ($request->price || $request->category || $request->tag || $request->dates ) {
+            return  Event::search('a')
+            ->rule(EventRemoteSearchRule::class)
+            ->with(['organizer','category', 'genres'])
+            ->orderBy('published_at', 'desc')
+            ->paginate(6);
+        } else {
+            return Event::where('hasLocation', false)
+            ->with(['organizer','category', 'genres'])
+            ->whereDate('closingDate', '>=', date("Y-m-d"))
+            ->orderByDesc('rank')
+            ->paginate(6);
+        }
     }
 
     public function filterIndex(Request $request)
@@ -256,29 +288,5 @@ class SearchController extends Controller
             ->get();
             return $organizers;
         };
-    }
-
-    public function searchRemote(Request $request)
-    {
-        // SearchData::storeSearch($request);
-
-        return $events = Event::search('a')
-            ->rule(EventRemoteSearchRule::class)
-            ->with(['location', 'organizer'])
-            ->orderBy('published_at', 'desc')
-            ->paginate(8);
-
-        // if ($request->category || $request->dates || $request->price || $request->tag ) {
-        //     return $events = Event::search('a')
-        //     ->rule(EventRemoteSearchRule::class)
-        //     ->with(['location', 'organizer'])
-        //     ->orderBy('published_at', 'desc')
-        //     ->paginate(8);
-        // } else {
-        //     return $events = Event::where('status', 'p')
-        //         ->whereDate('closingDate', '>=', date("Y-m-d"))
-        //         ->with(['location', 'organizer'])
-        //         ->paginate(8);
-        // }
     }    
 }

@@ -29,30 +29,36 @@
         <header class="event-show grid">
             <div class="header-left">
                 <div class="content">   
-                    <a v-if="event.category" :href="`/index/search-online?category=${event.category.name}&id=${event.category.id}`">
-                        <span class="header-left__cat">{{event.category.name}}</span>
+                    <a 
+                        v-if="event.category" 
+                        :href="`/index/search-online?category=${event.category.id}`">
+                        <span class="header-left__cat"> {{ event.category.name }} </span>
                     </a>
-                    <span class="header-left__title"><h1 :style="titleFontSize">{{event.name}}</h1></span>
-                    <span class="header-left__tag"><i>{{event.tag_line}}</i></span>
+                    <span class="header-left__title"><h1 :style="titleFontSize"> {{ event.name }} </h1></span>
+                    <span class="header-left__tag"><i> {{ event.tag_line }} </i></span>
                     <div v-if="event.staffpick">
                         EI Pick of the week!
                     </div>
                     <div class="header-left__details">
                         <a href="#tickets">
                             <div class="item">
-                                <img src="/storage/website-files/price.png" alt="">
+                                <img src="/storage/website-files/price.png">
                                 <span>
-                                    <span class="header__show-info">Price</span>
-                                    <span class="header__show-info bold">{{event.price_range}}</span>
+                                    <span class="header__show-info">
+                                        Price
+                                    </span>
+                                    <span class="header__show-info bold">
+                                        {{ event.price_range }}
+                                    </span>
                                 </span>
                             </div>
                         </a>
                         <a href="#location">
                             <div class="item">
-                                <img src="/storage/website-files/location.png" alt="">
+                                <img src="/storage/website-files/location.png">
                                 <span v-if="event.hasLocation">
                                     <span class="header__show-info">Location</span>
-                                    <span class="header__show-info bold"><span v-if="event.location.city">{{event.location.city}}, </span><span v-if="event.location.region">{{event.location.region}}</span></span>
+                                    <span class="header__show-info bold"><span v-if="event.location.city"> {{ event.location.city }},  </span><span v-if="event.location.region"> {{ event.location.region }} </span></span>
                                 </span>
                                 <span v-else>
                                     <span class="header__show-info">Location</span>
@@ -62,12 +68,18 @@
                         </a>
                         <a href="#dates">
                             <div class="item">
-                                <img src="/storage/website-files/calendar.png" alt="">
+                                <img src="/storage/website-files/calendar.png">
                                 <span v-if="event.showtype=='s'">
                                     <span class="header__show-info">Shows</span>
-                                    <span v-if="remaining && remaining.length > 1 ? remaining.length : ''" class="header__show-info bold">{{ remaining.length }} dates left</span>
-                                    <span v-else-if="remaining && remaining.length == 1 ? remaining.length : ''" class="header__show-info bold">{{ remaining.length }} date left</span>
-                                    <span v-else class="header__show-info bold">no dates left</span>
+                                    <span 
+                                        v-if="remaining && remaining.length > 1 ? remaining.length : ''" 
+                                        class="header__show-info bold">{{ remaining.length }} dates left</span>
+                                    <span 
+                                        v-else-if="remaining && remaining.length == 1 ? remaining.length : ''" 
+                                        class="header__show-info bold">{{ remaining.length }} date left</span>
+                                    <span 
+                                        v-else 
+                                        class="header__show-info bold">no dates left</span>
                                 </span>
                                 <span v-if="event.showtype=='o'">
                                     <span class="header__show-info">Shows</span>
@@ -100,19 +112,28 @@
             <div class="header-right">
                 <div class="header-right__image">
                     <picture>
-                        <source type="image/webp" :srcset="`/storage/${isMobile ? event.thumbImagePath : event.largeImagePath}`"> 
-                        <img :src="`/storage/${isMobile ? event.thumbImagePath.slice(0, -4) : event.largeImagePath.slice(0, -4)}jpg`" :alt="`${event.name} Immersive Event`">
+                        <source 
+                            type="image/webp" 
+                            :srcset="`/storage/${isMobile ? event.thumbImagePath : event.largeImagePath}`"> 
+                        <img 
+                            :src="`/storage/${isMobile ? event.thumbImagePath.slice(0, -4) : event.largeImagePath.slice(0, -4)}jpg`" 
+                            :alt="`${event.name} Immersive Event`">
                     </picture>
                 </div>
                 <div class="desktop">
-                    <div v-if="user && user.type == 'a'" class="event-show__adminedit">
+                    <div 
+                        v-if="user && user.type == 'a'" 
+                        class="event-show__adminedit">
                         <a :href="`/create-event/${event.slug}/title`">
                             <div>
                                 Edit
                             </div>
                         </a>
                     </div>
-                    <favorite :user="user" :inputclass="showEventClass" :event="event"></favorite>
+                    <favorite 
+                        :user="user" 
+                        :inputclass="showEventClass" 
+                        :event="event" />
                 </div>
             </div>
         </header>
@@ -124,40 +145,53 @@
             </div>
             <div class="right">
                 <div class="event-show__description">
-                    <p style="white-space: pre-wrap;" class="text">{{ descriptionText }}<span class="show-text" 
-                        v-if="!fullDescription" @click="fullDescription = !fullDescription">... Show More</span>
-                        <span class="show-text" v-if="fullDescription && event.description.length >= 400" @click="fullDescription = !fullDescription">... Show Less </span>
-                    </p>
+                    <ShowMore 
+                        :text="event.description"
+                        :limit="400" />
                 </div>
             </div>
         </section>
 
         <!-- Tickets -->
-        <section id="tickets" class="event-show grid two-panel grey">
+        <section 
+            id="tickets" 
+            class="event-show grid two-panel grey">
             <div class="event-title">
                 <h2>Tickets</h2>
             </div>
             <div class="right">
                 <div class="event-show__tickets">
                     <div class="event-show__tickets--grid">
-                        <a :href="eventUrl" rel="noreferrer noopener" target="_blank" v-for="ticket in tickets" :key="ticket.name">
-                            <div class="event-show__ticket" @mouseover="hover = ticket" @mouseleave="hover = null">
+                        <a 
+                            :href="eventUrl" 
+                            rel="noreferrer noopener" 
+                            target="_blank" 
+                            v-for="ticket in tickets" 
+                            :key="ticket.name">
+                            <div 
+                                class="event-show__ticket" 
+                                @mouseover="hover = ticket" 
+                                @mouseleave="hover = null">
                                 <div>
-                                     <div class="event-show__ticket--name">
-                                        <p>{{ticket.name}}</p>
-                                    </div>
-                                    <div v-if="ticket.type == 'f'" class="event-show__ticket--price">
+                                    <div class="event-show__ticket--name"><p> {{ ticket.name }} </p></div>
+                                    <div 
+                                        v-if="ticket.type == 'f'" 
+                                        class="event-show__ticket--price">
                                         <p>Free</p>
                                     </div>
-                                    <div v-else-if="ticket.type == 'p'" class="event-show__ticket--price">
+                                    <div 
+                                        v-else-if="ticket.type == 'p'" 
+                                        class="event-show__ticket--price">
                                         <p>Pay what you can</p>
                                     </div>
-                                    <div v-else class="event-show__ticket--price">
-                                        <p>{{ticket.ticket_price == 0.00 ? 'Free' : `${ticket.currency} ${ticket.ticket_price}`}}</p>
+                                    <div 
+                                        v-else 
+                                        class="event-show__ticket--price">
+                                        <p> {{ ticket.ticket_price == 0.00 ? 'Free' : `${ticket.currency} ${ticket.ticket_price}` }} </p>
                                     </div>
                                 </div>
                                 <div class="event-show__ticket--description">
-                                    <p>{{ticket.description}}</p>
+                                    <p> {{ ticket.description }} </p>
                                 </div>
                             </div>
                         </a>
@@ -165,10 +199,12 @@
                 </div>
             </div>
         </section>
-        <load-more @intersect="intersected"></load-more>
 
         <!-- Dates -->
-        <section id="dates" v-if="event.showtype == 's'" class="grid event-show two-panel">
+        <section 
+            id="dates" 
+            v-if="event.showtype == 's'" 
+            class="grid event-show two-panel">
             <div class="event-title">
                 <h2>Show Dates</h2>
             </div>
@@ -179,43 +215,42 @@
                     class="form-control"
                     placeholder="Select date"
                     ref="datePicker"             
-                    name="dates">
-                </flat-pickr>
+                    name="dates" />
                 <div class="event-show__showtimes--specific">
                     <div class="event-show__dates--details">
                         <h3>Show Details</h3>
                     </div>
-                    <p>{{event.timezone ? event.timezone.description : ''}}</p>
-                    <p style="white-space: pre-wrap;" class="text">{{ showtimesText }}<span class="show-text" 
-                        v-if="!fullShowtimes" @click="fullShowtimes = !fullShowtimes">... Show More</span>
-                        <span class="show-text"v-if="fullShowtimes && event.show_times.length >= 160" @click="fullShowtimes = !fullShowtimes">... Show Less </span>
-                    </p>
+                    <p> {{ event.timezone ? event.timezone.description : '' }} </p>
+                    <ShowMore 
+                        :text="event.show_times"
+                        :limit="160" />
                 </div>
             </div>
             <div class="right lockedcalendar mobile">
                 <flat-pickr
                     v-model="dates"
-                    :config="configMob"                                  
+                    :config="config"                                  
                     class="form-control"
                     placeholder="Select date"
                     ref="datePicker"             
-                    name="dates">
-                </flat-pickr>
+                    name="dates" />
                 <div class="event-show__showtimes--specific">
                     <div class="event-show__dates--details">
                         <h3>Show Details</h3>
                     </div>
-                    <p>{{event.timezone ? event.timezone.description : ''}}</p>
-                    <p style="white-space: pre-wrap;" class="text">{{ showtimesText }}<span class="show-text" 
-                        v-if="!fullShowtimes" @click="fullShowtimes = !fullShowtimes">... Show More</span>
-                        <span class="show-text" v-if="fullShowtimes && event.show_times.length >= 160" @click="fullShowtimes = !fullShowtimes">... Show Less </span>
-                    </p>
+                    <p> {{ event.timezone ? event.timezone.description : '' }} </p>
+                    <ShowMore 
+                        :text="event.show_times"
+                        :limit="160" />
                 </div>
             </div>
         </section>
 
         <!-- Dates On Going -->
-        <section id="dates" v-if="event.showtype == 'o'" class="grid event-show two-panel">
+        <section 
+            id="dates" 
+            v-if="event.showtype == 'o'" 
+            class="grid event-show two-panel">
             <div class="event-title">
                 <h2>Show Times</h2>
             </div>
@@ -224,38 +259,38 @@
                     <div class="field">
                         <div class="grid show-week-calendar">
                             <div 
-                            class="show-week-calendar_day" 
-                            :class="{ active: week.mon }" >
+                                class="show-week-calendar_day" 
+                                :class="{ active: week.mon }">
                                 <h4>Mon</h4>
                             </div>
                             <div 
-                            class="show-week-calendar_day"
-                            :class="{ active: week.tue }" >
+                                class="show-week-calendar_day"
+                                :class="{ active: week.tue }">
                                 <h4>Tue</h4>
                             </div>
                             <div 
-                            class="show-week-calendar_day" 
-                            :class="{ active: week.wed }" >
+                                class="show-week-calendar_day" 
+                                :class="{ active: week.wed }">
                                 <h4>Wed</h4>
                             </div>
                             <div 
-                            class="show-week-calendar_day" 
-                            :class="{ active: week.thu }" >
+                                class="show-week-calendar_day" 
+                                :class="{ active: week.thu }">
                                 <h4>Thu</h4>
                             </div>
                             <div 
-                            class="show-week-calendar_day"
-                            :class="{ active: week.fri }" >
+                                class="show-week-calendar_day"
+                                :class="{ active: week.fri }">
                                 <h4>Fri</h4>
                             </div>
                             <div 
-                            class="show-week-calendar_day"
-                            :class="{ active: week.sat }">
+                                class="show-week-calendar_day"
+                                :class="{ active: week.sat }">
                                 <h4>Sat</h4>
                             </div>
                             <div 
-                            class="show-week-calendar_day"
-                            :class="{ active: week.sun }">
+                                class="show-week-calendar_day"
+                                :class="{ active: week.sun }">
                                 <h4>Sun</h4>
                             </div>
                         </div>
@@ -265,17 +300,19 @@
                     <div class="event-show__dates--details">
                         <h3>Show Details</h3>
                     </div>
-                    <p>{{event.timezone ? event.timezone.description : ''}}</p>
-                    <p style="white-space: pre-wrap;" class="text">{{ showtimesText }}<span class="show-text" 
-                        v-if="!fullShowtimes" @click="fullShowtimes = !fullShowtimes">... Show More</span>
-                        <span class="show-text"v-if="fullShowtimes && event.show_times.length >= 160" @click="fullShowtimes = !fullShowtimes">... Show Less </span>
-                    </p>
+                    <p> {{ event.timezone ? event.timezone.description : '' }} </p>
+                    <ShowMore 
+                        :text="event.show_times"
+                        :limit="160" />
                 </div>
             </div>
         </section>
 
         <!-- Dates Always -->
-        <section id="dates" v-if="event.showtype == 'a'" class="grid event-show two-panel">
+        <section 
+            id="dates" 
+            v-if="event.showtype == 'a'" 
+            class="grid event-show two-panel">
             <div class="event-title">
                 <h2>Show Times</h2>
             </div>
@@ -285,11 +322,10 @@
                     <div class="event-show__dates--details">
                         <h3>Show Details</h3>
                     </div>
-                    <p>{{event.timezone ? event.timezone.description : ''}}</p>
-                    <p style="white-space: pre-wrap;" class="text">{{ showtimesText }}<span class="show-text" 
-                        v-if="!fullShowtimes" @click="fullShowtimes = !fullShowtimes">... Show More</span>
-                        <span class="show-text"v-if="fullShowtimes && event.show_times.length >= 160" @click="fullShowtimes = !fullShowtimes">... Show Less </span>
-                    </p>
+                    <p> {{ event.timezone ? event.timezone.description : '' }} </p>
+                    <ShowMore 
+                        :text="event.show_times"
+                        :limit="160" />
                 </div>
             </div>
         </section>
@@ -307,11 +343,13 @@
                         <h3>Content Advisories</h3>
                     </div>
                     <ul class="info">
-                        <li v-for="item in event.content_advisories">
-                            <p>{{item.advisories}}</p>
+                        <li 
+                            v-for="item in event.content_advisories"
+                            :key="item.id">
+                            <p> {{ item.advisories }} </p>
                         </li>
                         <li>
-                            <p>{{event.age_limits ? event.age_limits.name : event.advisories.ageRestriction}}</p>
+                            <p> {{ event.age_limits ? event.age_limits.name : event.advisories.ageRestriction }} </p>
                         </li>
                     </ul>
                 </div>
@@ -320,8 +358,10 @@
                         <h3>Interaction Advisories</h3>
                     </div>
                     <ul class="info">
-                        <li v-for="item in event.contact_levels">
-                            <p>{{item.level}}</p>
+                        <li 
+                            v-for="item in event.contact_levels"
+                            :key="item.id">
+                            <p> {{ item.level }} </p>
                         </li>
                     </ul>
                 </div>
@@ -330,8 +370,10 @@
                         <h3>Mobility Advisories</h3>
                     </div>
                     <ul class="info">
-                        <li v-for="item in event.mobility_advisories">
-                            <p>{{item.mobilities}}</p>
+                        <li 
+                            v-for="item in event.mobility_advisories"
+                            :key="item.id">
+                            <p> {{ item.mobilities }} </p>
                         </li>
                         <li>
                             <p>Event is <span v-if="!event.advisories.wheelchairReady">not</span> wheelchair accessible.</p>
@@ -344,10 +386,9 @@
                     </div>
                     <ul class="audience-role__info">
                         <li>
-                            <p style="white-space: pre-wrap;" class="text">{{ advisoryText }}<span class="show-text" 
-                                v-if="!fullAdvisories" @click="fullAdvisories = !fullAdvisories">... Show More</span>
-                                <span class="show-text"v-if="fullAdvisories && event.advisories.audience.length >= 160" @click="fullAdvisories = !fullAdvisories">... Show Less </span>
-                            </p>
+                            <ShowMore 
+                                :text="event.advisories.audience"
+                                :limit="160" />
                         </li>
                     </ul>
                 </div>
@@ -356,19 +397,25 @@
                         <h3>Tags</h3>
                     </div>
                     <ul class="info">
-                        <div v-for="item in event.genres">
-                            <a v-if="item.admin == 1" :href="`/index/search-online?tag=${item.name}&id=${item.id}`"><b>{{item.name}}</b></a>
-                            <p v-else>{{item.name}}</p>
+                        <div 
+                            v-for="item in event.genres"
+                            :key="item.id">
+                            <a 
+                                v-if="item.admin == 1" 
+                                :href="`/index/search-online?tag=${item.name}&id=${item.id}`"><b> {{ item.name }} </b></a>
+                            <p v-else> {{ item.name }} </p>
                         </div>
                     </ul>
                 </div>
-                <div class="grid two-panel" v-if="event.advisories.sexual">
+                <div 
+                    class="grid two-panel" 
+                    v-if="event.advisories.sexual">
                     <div class="title">
                         <h3>Sexual Advisories</h3>
                     </div>
                     <ul class="info">
                         <li>
-                            <p>{{event.advisories.sexualDescription}}</p>
+                            <p> {{ event.advisories.sexualDescription }} </p>
                         </li>
                     </ul>
                 </div>
@@ -376,30 +423,42 @@
         </section>
 
         <!-- Reviews -->
-        <section v-if="event.eventreviews ? event.eventreviews.length : null" class=" event-show grey event-show-review">
+        <section 
+            v-if="event.eventreviews ? event.eventreviews.length : null" 
+            class=" event-show grey event-show-review">
             <div class="content grid two-panel">
                 <div class="left">
-                   <div class="event-title">
+                    <div class="event-title">
                         <h2>Show Reviews</h2>
                     </div>
                 </div>
                 <div class="event-show-review__right">
-                    <div class="box" v-for="review in event.eventreviews">
-                        <a rel="noreferrer" target="_blank" :href="review.url">
+                    <div 
+                        class="box" 
+                        v-for="review in event.eventreviews"
+                        :key="review.id">
+                        <a 
+                            rel="noreferrer" 
+                            target="_blank" 
+                            :href="review.url">
                             <div class="event-show-review__right--image">
-                                <img width="33px" height="33px" :src="review.image_path" alt="">
+                                <img 
+                                    width="33px" 
+                                    height="33px" 
+                                    :src="review.image_path">
                             </div>
                             <div class="event-show-review__right--name">
-                                </span><h4>{{review.reviewer_name}}'s Review</h4>
+                                <h4> {{ review.reviewer_name }}'s Review</h4>
                             </div>
                         </a>
                         <div class="review">
-                            <a rel="noreferrer" target="_blank" :href="review.url">                 
+                            <a 
+                                rel="noreferrer" 
+                                target="_blank" 
+                                :href="review.url">                 
                                 <i 
-                                style="white-space: pre-wrap;" 
-                                v-if="showMore !== 'review'" 
-                                class="text">{{review.review.substring(0,300)}}...<span 
-                                    class="show-text"> Read More
+                                    style="white-space: pre-wrap;"
+                                    class="text"> {{ review.review.substring(0,300) }}...<span class="show-text"> Read More
                                     </span>
                                 </i>
                             </a>
@@ -419,93 +478,102 @@
             <div class="right">
                 <a :href="`/organizer/${event.organizer.slug}`">
                     <div class="event-show__organizer--image">
-                        <div :style="event.organizer.thumbImagePath ? organizerImage : `background:${event.organizer.hexColor}`" class="img">
-                            <div class="organizer-icon-text event-show" v-if="!event.organizer.thumbImagePath">
-                                <span>{{event.organizer.name.charAt(0)}}</span>
+                        <div 
+                            :style="event.organizer.thumbImagePath ? organizerImage : `background:${event.organizer.hexColor}`" 
+                            class="img">
+                            <div 
+                                class="organizer-icon-text event-show" 
+                                v-if="!event.organizer.thumbImagePath">
+                                <span> {{ event.organizer.name.charAt(0) }} </span>
                             </div>
                         </div>
                     </div>
                 </a>
                 <a :href="`/organizer/${event.organizer.slug}`">
                     <div class="event-show__organizer--name">
-                        <h3>{{event.organizer.name}}</h3>
+                        <h3> {{ event.organizer.name }} </h3>
                     </div>
                 </a>
-                <div style="white-space: pre-wrap;" v-if="event.organizer.description" class="description">
-                    <span style="white-space: pre-wrap;" class="text">{{organizerText}}<span class="show-text" v-if="!fullOrganizer" @click="fullOrganizer = !fullOrganizer">... Show More</span>
-                        <span class="show-text" v-if="fullOrganizer && event.organizer.description.length >= 160" @click="fullOrganizer = !fullOrganizer">... Show Less </span>
-                    </span>
-                </div>
+                <ShowMore 
+                    :text="event.organizer.description"
+                    :limit="160" />
                 <!-- <ContactOrganizer :user="user" :loadorganizer="event.organizer"></ContactOrganizer>  -->
             </div>
         </section>
 
         <!-- location -->
-        <section id="location" v-if="event.hasLocation" class="section event-show location">
+        <section 
+            id="location" 
+            v-if="event.hasLocation" 
+            class="section event-show location">
             <div>
                 <div class="event-title">
                     <h2>Location</h2>
                 </div>
-                <div class="text" v-if="event.location.hiddenLocationToggle">
-                    <a rel="noreferrer" target="_blank" :href="`http://maps.google.com/maps?q=${event.location.city},+${event.location.region}`">
-                        <b><p v-if="event.location.venue">{{event.location.venue}}</p></b>
-                        <p><span v-if="event.location.city">{{event.location.city}},</span> <span v-if="event.location.region">{{event.location.region}}</span></p>
+                <div 
+                    class="text" 
+                    v-if="event.location.hiddenLocationToggle">
+                    <a 
+                        rel="noreferrer" 
+                        target="_blank" 
+                        :href="`http://maps.google.com/maps?q=${event.location.city},+${event.location.region}`">
+                        <b><p v-if="event.location.venue"> {{ event.location.venue }} </p></b>
+                        <p><span v-if="event.location.city"> {{ event.location.city }},</span> <span v-if="event.location.region"> {{ event.location.region }} </span></p>
                         <br>
-                        <p>{{event.location.hiddenLocation}}</p>
+                        <p> {{ event.location.hiddenLocation }} </p>
                     </a>
                 </div>
-                <div class="text" v-else="event.location.hiddenLocationToggle">
-                    <a rel="noreferrer" target="_blank" :href="`http://maps.google.com/maps?q=${event.location.home}+${event.location.street},+${event.location.city},+${event.location.region}`">
-                        <b><p v-if="event.location.venue">{{event.location.venue}}</p></b>
+                <div 
+                    class="text" 
+                    v-else>
+                    <a 
+                        rel="noreferrer" 
+                        target="_blank" 
+                        :href="`http://maps.google.com/maps?q=${event.location.home}+${event.location.street},+${event.location.city},+${event.location.region}`">
+                        <b><p v-if="event.location.venue"> {{ event.location.venue }} </p></b>
                         <p>
-                            <span v-if="event.location.home">{{event.location.home}}</span> 
-                            <span v-if="event.location.street">{{event.location.street}}</span> 
+                            <span v-if="event.location.home"> {{ event.location.home }} </span> 
+                            <span v-if="event.location.street"> {{ event.location.street }} </span> 
                         </p>
                         <p>
-                            <span v-if="event.location.city">{{event.location.city}}</span> 
-                            <span v-if="event.location.region">{{event.location.region}}</span>
-                            <span v-if="event.location.country">{{event.location.country}}</span>
-                            <span v-if="event.location.postal_code">{{event.location.postal_code}}</span>
+                            <span v-if="event.location.city"> {{ event.location.city }}</span> 
+                            <span v-if="event.location.region">{{ event.location.region }}</span>
+                            <span v-if="event.location.country">{{ event.location.country }}</span>
+                            <span v-if="event.location.postal_code">{{ event.location.postal_code }}</span>
                         </p>  
                     </a>
                 </div>
                 <div class="event-show-map">
                     <div v-if="center">
-                        <div class="zoom">
-                            <div class="zoom__in">
-                                <button @click.prevent="zoom += 1">
-                                    <svg viewBox="0 0 16 16" height="16" width="16" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M7 1a1 1 0 0 1 2 0v14a1 1 0 1 1-2 0V1z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"></path></svg>
-                                </button>
-                            </div>
-                            <div class="zoom__out">
-                                <button @click.prevent="zoom -= 1">
-                                    <svg viewBox="0 0 16 16" height="16" width="16" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"></path></svg>
-                                </button>
-                            </div>
-                        </div>
                         <div style="width:100%;height:400px">
-                            <l-map :zoom="zoom" :center="center" :options="{ scrollWheelZoom: allowZoom, zoomControl: allowZoom }">
-                            <l-tile-layer :url="url"></l-tile-layer>
-                            <l-marker :lat-lng="center">
-                                <l-popup>
-                                    <div class="show-pop">
-                                        <a rel="noreferrer" target="_blank" :href="`http://maps.google.com/maps?q=${event.location.home}+${event.location.street},+${event.location.city},+${event.location.region}`">
-                                            <div class="info">
-                                                <div class="name">
-                                                   <p>
-                                                        <span v-if="event.location.home">{{event.location.home}}</span> 
-                                                        <span v-if="event.location.street">{{event.location.street}}</span> 
-                                                        <span v-if="event.location.city">{{event.location.city}}</span> 
-                                                        <span v-if="event.location.region">{{event.location.region}}</span>
-                                                        <span v-if="event.location.country">{{event.location.country}}</span>
-                                                        <span v-if="event.location.postal_code">{{event.location.postal_code}}</span>
-                                                    </p>  
+                            <l-map 
+                                :zoom="zoom" 
+                                :center="center" 
+                                :options="{ scrollWheelZoom: false, zoomControl: true }">
+                                <l-tile-layer :url="url" />
+                                <l-marker :lat-lng="center">
+                                    <l-popup>
+                                        <div class="show-pop">
+                                            <a 
+                                                rel="noreferrer" 
+                                                target="_blank" 
+                                                :href="`http://maps.google.com/maps?q=${event.location.home}+${event.location.street},+${event.location.city},+${event.location.region}`">
+                                                <div class="info">
+                                                    <div class="name">
+                                                        <p>
+                                                            <span v-if="event.location.home">{{ event.location.home }}</span> 
+                                                            <span v-if="event.location.street">{{ event.location.street }}</span> 
+                                                            <span v-if="event.location.city">{{ event.location.city }}</span> 
+                                                            <span v-if="event.location.region">{{ event.location.region }}</span>
+                                                            <span v-if="event.location.country">{{ event.location.country }}</span>
+                                                            <span v-if="event.location.postal_code">{{ event.location.postal_code }}</span>
+                                                        </p>  
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </l-popup>                        
-                            </l-marker>
+                                            </a>
+                                        </div>
+                                    </l-popup>                        
+                                </l-marker>
                             </l-map>
                         </div>  
                     </div>
@@ -514,39 +582,66 @@
         </section>
 
         <!-- No Location -->
-        <section id="location" class="event-show grid two-panel" v-if="!event.hasLocation">
+        <section 
+            id="location" 
+            class="event-show grid two-panel" 
+            v-else>
             <div class="event-title">
                 <h2>What you will need</h2>
             </div>
             <div class="right">
                 <div class="event-show__remote--area">
-                    <div class="event-show__remote--type" v-for="location in event.remotelocations">
-                        <h4 class="event-show__remote--name">{{location.name}}</h4>
-                        <p class="event-show__remote--description">{{location.description}}</p>
+                    <div 
+                        class="event-show__remote--type" 
+                        v-for="location in event.remotelocations"
+                        :key="location.id">
+                        <h4 class="event-show__remote--name">
+                            {{ location.name }}
+                        </h4>
+                        <p class="event-show__remote--description">
+                            {{ location.description }}
+                        </p>
                     </div>
                 </div>
-                <div class="event-show__remote--userinfo" style="white-space: pre-wrap;" v-if="event.remote_description">
+                <div 
+                    class="event-show__remote--userinfo" 
+                    style="white-space: pre-wrap;" 
+                    v-if="event.remote_description">
                     <h4>Additional Instructions</h4>
-                    <p>{{event.remote_description}}</p>
+                    <p>{{ event.remote_description }}</p>
                 </div>
             </div>
         </section>
 
-        <div class="grid event-bottom-bar" :class="{ active: bar }">
+        <div 
+            class="grid event-bottom-bar" 
+            :class="{ active: bar }">
             <div class="event-bottom-bar__name">
                 <picture>
-                    <source height="50" width="50" type="image/webp" :srcset="`/storage/${event.thumbImagePath}`"> 
-                    <img class="event-bottom-bar__img" height="50" width="50" :src="`/storage/${event.thumbImagePath.slice(0, -4)}jpg`" :alt="event.name">
+                    <source 
+                        height="50" 
+                        width="50" 
+                        type="image/webp" 
+                        :srcset="`/storage/${event.thumbImagePath}`"> 
+                    <img 
+                        class="event-bottom-bar__img" 
+                        height="50" 
+                        width="50" 
+                        :src="`/storage/${event.thumbImagePath.slice(0, -4)}jpg`" 
+                        :alt="event.name">
                 </picture>
-                <h4>{{event.name}}</h4>
+                <h4>{{ event.name }}</h4>
             </div>
             <div class="event-price">
-                <h4>{{event.price_range}}</h4>
+                <h4>{{ event.price_range }}</h4>
             </div>
             <div class="event-get-tickets">
-                <a :href="eventUrl" rel="noreferrer noopener" target="_blank">
+                <a 
+                    :href="eventUrl" 
+                    rel="noreferrer noopener" 
+                    target="_blank">
                     <button class="event-bottom-bar__button">
-                        {{loadevent.call_to_action ? loadevent.call_to_action : 'Get Tickets'}}
+                        {{ loadevent.call_to_action ? loadevent.call_to_action : 'Get Tickets' }}
                     </button>
                 </a>
             </div>
@@ -556,16 +651,15 @@
 
 <script>
     import {LMap, LTileLayer, LMarker, LPopup} from 'vue2-leaflet'
-    import format from 'date-fns/format'
     import ContactOrganizer from '../organizers/contact-organizer.vue'
     import flatPickr from 'vue-flatpickr-component'
-    import LoadMore  from '../../components/LoadMore.js'
+    import ShowMore  from './components/show-more.vue'
 
     export default {
 
         props: ['loadevent', 'user', 'tickets'],
 
-        components: { LMap, LTileLayer, LMarker, flatPickr, ContactOrganizer, LPopup, LoadMore},
+        components: { LMap, LTileLayer, LMarker, flatPickr, ContactOrganizer, LPopup, ShowMore},
 
         computed: {
             locationPlaceholder() {
@@ -578,77 +672,31 @@
             },
 
             eventUrl() {
-                if (this.loadevent.ticketUrl) {
-                    return this.loadevent.ticketUrl;
-                }
-                if (this.loadevent.websiteUrl) {
-                    return this.loadevent.websiteUrl;
-                }
-                if (this.loadevent.organizer.website) {
-                    return this.loadevent.organizer.website;
-                }
+                if (this.loadevent.ticketUrl) {return this.loadevent.ticketUrl}
+                if (this.loadevent.websiteUrl) {return this.loadevent.websiteUrl}
+                return this.loadevent.organizer.website;
             },
 
-            organizerText() {
-                return this.fullOrganizer ? this.loadevent.organizer.description : this.loadevent.organizer.description.substring(0,160)
-            },
-
-            advisoryText() {
-                return this.fullAdvisories ? this.loadevent.advisories.audience : this.loadevent.advisories.audience.substring(0,160)
-            },
-
-            showtimesText() {
-                return this.fullShowtimes ? this.loadevent.show_times : this.loadevent.show_times.substring(0,160)
-            },
-
-            descriptionText() {
-                return this.fullDescription ? this.loadevent.description : this.loadevent.description.substring(0,400)
-            },
         },
 
         data() {
             return {
                 event: this.loadevent ? this.loadevent : '',
-                isModalVisible: false,
                 zoom:13,
                 center: this.loadevent.location_latlon,
                 url:'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
                 attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-                allowZoom: false,
                 week: this.loadevent ? this.loadevent.show_on_going : '',
                 showEventClass: 'show-heart-location',
                 showEventMobileClass: 'show-heart-mobile-location',
-                showMore: null,
                 organizerImage: '',
                 dates: [],
                 remaining: [],
                 bar: false,
                 lastScrollPosition: 0,
-                config: {
-                    // minDate: "today",
-                    maxDate: new Date().fp_incr(180),
-                    mode: "multiple",
-                    inline: true,
-                    showMonths: 2,
-                    dateFormat: 'Y-m-d H:i:s',
-                    disable: [],
-                },
-                configMob: {
-                    // minDate: "today",
-                    maxDate: new Date().fp_incr(180),
-                    mode: "multiple",
-                    inline: true,
-                    showMonths: 1,
-                    dateFormat: 'Y-m-d H:i:s',
-                    disable: [], 
-                },
+                config: this.initializeCalendarObject(),
                 titleFontSize: '',
-                fullOrganizer: this.loadevent.organizer.description.length <= 160 ? true : false,
-                fullAdvisories: this.loadevent.advisories.audience.length <= 160 ? true : false,
-                fullShowtimes: this.loadevent.show_times.length <= 160 ? true : false,
-                fullDescription: this.loadevent.description.length <= 400 ? true : false,
                 hover: null,
-                hasIntersected: false,
                 isMobile: window.innerWidth < 768 ? true : false,
 
             }
@@ -662,44 +710,41 @@
                             this.remaining.push(event.date);
                         } else {
                             this.config.disable.push(event.date);
-                            this.configMob.disable.push(event.date);
                         }
                         this.dates.push(event.date);
                     });
                 }
             },
 
-            intersected() {
-                console.log('intersected');
-                return this.hasIntersected = true;
-            },
-
-            handleScroll (event) {
+            handleScroll () {
                 const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-                // if (window.pageYOffset < 300) { this.hasIntersected = false; };
-                if (currentScrollPosition > 60) {
-                    return this.bar = true;
-                }
-                return this.bar = false;
+                return currentScrollPosition > 60 ? this.bar = true : this.bar = false
             },
 
             canUseWebP() {
                 let webp = (document.createElement('canvas').toDataURL('image/webp').indexOf('data:image/webp') == 0);
                 if (this.loadevent.organizer.thumbImagePath && webp) {
                     return this.organizerImage = `background-image:url('/storage/${this.loadevent.organizer.thumbImagePath}')`;
-                };
+                }
                 if (this.loadevent.organizer.thumbImagePath) {
                     return this.organizerImage = `background-image:url('/storage/${this.loadevent.organizer.thumbImagePath.slice(0, -4)}jpg')`;
                 }
             },
+
+            initializeCalendarObject() { 
+                return {
+                    maxDate: new Date().fp_incr(180),
+                    mode: "multiple",
+                    inline: true,
+                    showMonths: window.innerWidth < 768 ? 1 : 2,
+                    dateFormat: 'Y-m-d H:i:s',
+                    disable: [],
+                }
+            },
             
             getTitleFontSize() {
-                if (this.event.name.length > 70) {
-                   return this.titleFontSize = `font-size:3.2rem;line-height:3rem`
-                }
-                if (this.event.name.length > 40) {
-                    return this.titleFontSize = `font-size:3.5rem;line-height:4rem`
-                }
+                if (this.event.name.length > 70) { return this.titleFontSize = `font-size:3.2rem;line-height:3rem` }
+                if (this.event.name.length > 40) { return this.titleFontSize = `font-size:3.5rem;line-height:4rem` }
                 return this.titleFontSize = `font-size:4.5rem;line-height:5rem`
             },
 
@@ -717,7 +762,7 @@
         created () {
             window.addEventListener('scroll', this.handleScroll);
         },
-        destroyed () {
+        unmounted () {
             window.removeEventListener('scroll', this.handleScroll);
         },
     };

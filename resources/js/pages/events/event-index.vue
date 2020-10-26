@@ -31,12 +31,11 @@
                                 class="event-index__bottom-bar" />
                         </div>
                         <div class="event-index__switch-search--tab">
-                            <button @click="searchType = 'category'">
-                                Category or Tag
-                            </button>
-                            <div 
-                                :class="{active: searchType == 'category'}" 
-                                class="event-index__bottom-bar" />
+                            <a href="/index/search-online">
+                                <button>
+                                    Online
+                                </button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -204,51 +203,59 @@
                         ref="list">
                         <div class="event-index__eventlist--middle vertical staff">
                             <div 
-                                v-for="(pick) in staffpicks"
+                                v-for="(pick, index) in staffpicks"
                                 :key="pick.id" 
-                                class="eventlist__element staff" 
+                                class="eventlist__element staff"
+                                :class="{
+                                    back: hoveredIndicesBack.includes(index),
+                                    front: hoveredIndicesFront.includes(index),
+                                    current: index === hoveredIndex
+                                }"
+                                @mouseenter="hoveredIndex = index"
+                                @mouseleave="hoveredIndex = null"
                                 :style="`width:${staffwidth}%`">
                                 <div class="card black staff">
-                                    <a 
-                                        :href="`/events/${pick.event.slug}`" 
-                                        class="card-url" />
-                                    <div 
-                                        class="card-image__top staff" 
-                                        :style="`height:${staffHeight}rem`">
-                                        <div class="card-image__middle staff">
-                                            <div class="card-image">
-                                                <picture>
-                                                    <source 
-                                                        type="image/webp" 
-                                                        :srcset="`/storage/${pick.event.thumbImagePath}`"> 
-                                                    <img 
-                                                        style="object-fit:cover" 
-                                                        loading="lazy" 
-                                                        class="card-image__img staff" 
-                                                        :src="`/storage/${pick.event.thumbImagePath.slice(0, -4)}jpg`" 
-                                                        :alt="`${pick.event.name} Immersive Event`">
-                                                </picture>
+                                    <a :href="`/events/${pick.event.slug}`">
+                                        <div 
+                                            class="card-image__top staff" 
+                                            :style="`height:${staffHeight}rem`">
+                                            <div class="card-image__middle staff">
+                                                <div class="card-image">
+                                                    <picture>
+                                                        <source 
+                                                            type="image/webp" 
+                                                            :srcset="`/storage/${pick.event.thumbImagePath}`"> 
+                                                        <img 
+                                                            style="object-fit:cover" 
+                                                            loading="lazy" 
+                                                            class="card-image__img staff" 
+                                                            :src="`/storage/${pick.event.thumbImagePath.slice(0, -4)}jpg`" 
+                                                            :alt="`${pick.event.name} Immersive Event`">
+                                                    </picture>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </a>
                                     <div class="card-content staff">
-                                        <div class="event-index__staffpicks--title">
-                                            <h3 class="black">
-                                                {{ pick.event.name }}
-                                            </h3>
-                                        </div>
+                                        <a :href="`/events/${pick.event.slug}`">
+                                            <div class="event-index__staffpicks--title">
+                                                <h3 class="black">
+                                                    {{ pick.event.name }}
+                                                </h3>
+                                            </div>
+                                        </a>
                                         <div class="card-description">
-                                            <p class="black">
-                                                {{ pick.comments }}
-                                            </p>
+                                            <ShowMore 
+                                                :text="pick.comments"
+                                                :limit="140" />
                                         </div>
                                         <div class="staffpicks__user index">
                                             <div class="staffpicks__user--name index">
                                                 <p v-if="pick.event.hasLocation">
-                                                    <span><span v-if="pick.event.location.city">{{pick.event.location.city}}, </span><span v-if="pick.event.location.region">{{pick.event.location.region}}</span></span>
+                                                    <span><span v-if="pick.event.location.city">{{ pick.event.location.city }}, </span><span v-if="pick.event.location.region">{{ pick.event.location.region }}</span></span>
                                                 </p>
                                                 <p v-else>
-                                                    <span>Online</span>
+                                                    <span>{{ pick.event.category.name }}</span>
                                                 </p>
                                             </div>
                                         </div>
@@ -260,78 +267,8 @@
                 </div>
             </section>
 
-            <section class="padded event-list event-index__categories">
-                <div class="padded-width">
-                    <div 
-                        @click="showLess('cat')" 
-                        class="index-category__slider-button--left">
-                        <button class="slider-button">
-                            <svg 
-                                aria-hidden="true" 
-                                role="presentation" 
-                                focusable="false" 
-                                viewBox="0 0 32 32" 
-                                xmlns="http://www.w3.org/2000/svg" 
-                                style="display: block; fill: none; height: 12px; width: 12px; stroke: currentcolor; stroke-width: 4; overflow: visible;">
-                                <g fill="none">
-                                    <path d="m20 28-11.29289322-11.2928932c-.39052429-.3905243-.39052429-1.0236893 0-1.4142136l11.29289322-11.2928932" />
-                                </g>
-                            </svg>
-                        </button>
-                    </div>
-                    <div 
-                        class="index-category__slider-button--right" 
-                        @click="showMore('cat')">
-                        <button class="slider-button">
-                            <svg 
-                                aria-hidden="true" 
-                                role="presentation" 
-                                focusable="false" 
-                                viewBox="0 0 32 32" 
-                                xmlns="http://www.w3.org/2000/svg" 
-                                style="display: block; fill: none; height: 12px; width: 12px; stroke: currentcolor; stroke-width: 4; overflow: visible;">
-                                <g fill="none">
-                                    <path d="m12 4 11.2928932 11.2928932c.3905243.3905243.3905243 1.0236893 0 1.4142136l-11.2928932 11.2928932" />
-                                </g>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="event-index__categories--top">
-                        <div 
-                            class="event-index__categories--middle" 
-                            :style="`transform: translateX(${translateCat}%);`">    
-                            <div 
-                                class="event-index__categories--bottom"
-                                :key="category.id"
-                                v-for="(category) in categories">
-                                <a :href="`/index/search-online?category=${category.name}&id=${category.id}`">
-                                    <div 
-                                        class="event-index__categories--item clean-box" 
-                                        style="width: 100%;height:100%">
-                                        <div>
-                                            <h4>
-                                                {{ category.name }}
-                                            </h4>
-                                        </div>
-                                    </div>
-                                </a>  
-                            </div> 
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="announcement padded">
-                <div class="header-title__announcement">
-                    <h3>Read The 2020 Immersive Entertainment Industry Annual Report</h3>
-                    <p>Discover The Strength of Immersive Entertainment!</p>
-                    <br>
-                    <p><a href="/storage/website-files/documents/2020 Immersive Entertainment Industry Annual Report.pdf"><button class="black">Check out the report here</button></a></p>
-                </div>
-            </section>
-
             <section>
-                <div class="padded-width">
+                <div>
                     <div class="index-contributers">
                         <h3>Check out our partners</h3>
                         <div class="contributer-content grid">
@@ -379,15 +316,27 @@
                     </div>
                 </div>
             </section>
+
+            <section class="announcement padded">
+                <div class="header-title__announcement">
+                    <h3>Read The 2020 Immersive Entertainment Industry Annual Report</h3>
+                    <p>Discover The Strength of Immersive Entertainment!</p>
+                    <br>
+                    <p><a href="/storage/website-files/documents/2020 Immersive Entertainment Industry Annual Report.pdf"><button class="black">Check out the report here</button></a></p>
+                </div>
+            </section>
         </div>
     </div>
 </template>
 
 <script>
+    import ShowMore  from './components/show-more.vue'
 
     export default {
 
         props:['categories', 'staffpicks'],
+
+        components: { ShowMore },
 
         computed: {
             user () {
@@ -401,8 +350,21 @@
                     return '40';
                 }
                 return '50';
-            }
+            },
 
+            isHovered() {
+                return this.hoveredIndex !== null;
+            },
+
+            hoveredIndicesBack() {
+                if (! this.isHovered) { return [];}
+                return [this.hoveredIndex - 1];
+            },
+
+            hoveredIndicesFront() {
+                if (! this.isHovered) { return [];}
+                return [this.hoveredIndex + 1];
+            },
         },
 
         data() {
@@ -422,6 +384,9 @@
                 searchType: 'location',
                 staffwidth: window.innerWidth > 768 ? 100 : 90,
                 width: window.innerWidth > 768 ? '33%' : '90%',
+                hover: '',
+                hoverArray: [],
+                hoveredIndex: null,
             }
         },
 
@@ -446,6 +411,14 @@
                 name == 'staff' && this.translateStaff != 0 ? this.translateStaff += 100 : '';
             },
 
+        },
+
+        watch: {
+            hover() {
+                return this.hoverArray = [this.hover - 1, this.hover + 1]
+            },
+            hoverArray() {
+            }
         },
 
         mounted() { 

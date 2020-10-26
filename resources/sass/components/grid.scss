@@ -219,7 +219,7 @@ img.card-image__img.index {
 }
 
 .staff .card-description {
-    padding: 1rem 1rem 3rem 1rem;
+    padding: 1rem;
     border-radius: 0 0 1rem 1rem;
     display: block;
     & p {
@@ -233,6 +233,14 @@ img.card-image__img.index {
     border-radius: 0 0 1rem 1rem;
     margin-bottom: 2rem;
     max-width: 70rem;
+}
+
+.staffpicks__user--name.index {
+    display: inline-block;
+    vertical-align: top;
+    border: 1px solid #6d6d6d;
+    padding: 0 1rem;
+    border-radius: 5rem;
 }
 
 .staffpicks__user--name.index p {
@@ -305,20 +313,41 @@ img.card-image__img.index {
     }
 
     .eventlist__element:first-child .card-image__top.staff {
-        clip-path: polygon(0 0, calc(100% - 50px) 0, calc(100% - 110px) 100%, 0 100%);
+        clip-path: polygon(    0 0   ,   calc(100% - 50px) 0  , calc(100% - 110px) 100%   ,   0 100%);
     }
 
     .eventlist__element:last-child .card-image__top.staff {
-        clip-path: polygon(110px 0, 100% 0, calc(100% - 0px) 100%, 50px 100%);
+        clip-path: polygon(110px 0, 100% 0, 100% 100%, 50px 100%);
     }
 
-    .eventlist__element:hover .card-image__top.staff {
-        clip-path: polygon(60px 0, 100% 0, calc(100% - 60px) 100%, 0 100%);
+    .eventlist__element.current .card-image__top.staff {
+        clip-path: polygon(70px 0, calc(100% - 10px) 0, calc(100% - 70px) 100%, 0 100%);
     }
 
-    .eventlist__element:hover:last-child .card-image__top.staff {
-        clip-path: polygon(60px 0, 100% 0, calc(100% - 0px) 100%, 0px 100%);
+    .eventlist__element:first-child.current .card-image__top.staff {
+        clip-path: polygon(    0 0   ,  calc(100% - 10px) 0  , calc(100% - 70px) 100%   ,   0 100%);
     }
+
+    .eventlist__element:last-child.current .card-image__top.staff {
+        clip-path: polygon(70px 0, 100% 0, 100% 100%, 0px 100%);
+    }
+
+    .eventlist__element:last-child.front .card-image__top.staff {
+        clip-path: polygon(150px 0, 100% 0, 100% 100%, 90px 100%);
+    }
+
+    .eventlist__element.front .card-image__top.staff {
+        clip-path: polygon(150px 0, calc(100% - 50px) 0, calc(100% - 110px) 100%, 90px 100%);
+    }
+
+    .eventlist__element:first-child.back .card-image__top.staff {
+        clip-path: polygon(0 0, calc(100% - 90px) 0, calc(100% - 160px) 100%, 0 100%);
+    }
+
+    .eventlist__element.back .card-image__top.staff {
+        clip-path: polygon(110px 0, calc(100% - 90px) 0, calc(100% - 160px) 100%, 50px 100%);
+    }
+
 }
 
 /* Mobile devices (iphones, 768px and lower) --------------------------------- */

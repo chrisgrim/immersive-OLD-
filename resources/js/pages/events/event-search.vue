@@ -1,143 +1,137 @@
 <template>
     <div class="event-search">
         <div
-            v-if="url.lat && mobile"
+            v-if="hasLocation && mobile"
             class="event-search__container">
             <event-map-search
-                @onhidemap="fullMap"
                 :user="user"
                 :events="eventList.data" />
             <section 
+                class="spacer--div" 
+                style="height:300px" />
+            <section 
                 class="event__filter"
                 @click="showEvents"
-                :style="`margin-top: ${shiftDown}vh;`">
+                :style="shiftDown">
                 <div class="greyBar" />
-                <EventFilter
-                    @locationevents="updateEvents"
-                    @onlineevents="updateOnlineEvents"
-                    :page="pagination"
-                    :onlinepage="onlinePagination"
-                    :events="searchedevents" 
-                    :onlineevents="onlineevents" 
-                    :maxprice="maxprice" 
-                    :tags="tags" 
-                    :categories="categories" />
                 <div class="event-search-list">
-                    <div 
-                        v-if="eventList.data && eventList.data.length" 
-                        class="event__results">
-                        <div class="event__results--title">
+                    <div style="width:100vw">
+                        <div 
+                            v-if="eventList.data && eventList.data.length" 
+                            class="event__results">
+                            <div class="event__results--title">
+                                <p style="display:inline-block;font-size:1.4rem;font-weight:500">
+                                    {{ eventList.total }} immersive<span v-if="eventList.total > 1"> events.</span><span v-else> event.</span>
+                                </p>
+                            </div>
+                            <div>
+                                <a 
+                                    :href="`/events/${event.slug}`" 
+                                    v-for="(event) in eventList.data" 
+                                    :key="event.id"
+                                    class="event__horizontal-card">
+                                    <div class="event__horizontal-card--element">
+                                        <div class="event__horizontal-card--image">
+                                            <div class="event__horizontal-card--lock" />                              
+                                            <picture>
+                                                <source 
+                                                    type="image/webp" 
+                                                    :srcset="`/storage/${event.thumbImagePath}`"> 
+                                                <img 
+                                                    style="object-fit:cover" 
+                                                    loading="lazy" 
+                                                    :src="`/storage/${event.thumbImagePath.slice(0, -4)}jpg`" 
+                                                    :alt="`${event.name} Immersive Event`">
+                                            </picture>
+                                        </div>
+                                        <div class="event__horizontal-card--content">
+                                            <div>
+                                                <div class="event__horizontal-card--category">
+                                                    {{ event.category ? event.category.name : '' }}
+                                                </div>
+                                                <div class="event__horizontal-card--heart">
+                                                    <favorite 
+                                                        inputclass="heart visible" 
+                                                        :event="event" />
+                                                </div>
+                                            </div>
+                                            <div class="event__horizontal-card--title">
+                                                {{ event.name }}
+                                            </div>
+                                            <div class="event__horizontal-card--tagline">
+                                                {{ event.tag_line }}
+                                            </div>
+                                            <ul class="event__horizontal-card--tags">
+                                                <li 
+                                                    v-for="(itemTag, index) in eventTags(event)" 
+                                                    :key="itemTag.id" >
+                                                    {{ itemTag.name }}<span v-if="index != '2'">•</span>
+                                                </li>
+                                            </ul>
+                                            <div class="event__horizontal-card--price">
+                                                {{ fixedprice(event) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div>
+                                <pagination
+                                    :list="eventList"
+                                    :limit="2"
+                                    @selectpage="selectPage" />
+                            </div>
+                        </div>
+                        <div 
+                            class="event__results--title" 
+                            v-else>
                             <p style="display:inline-block;font-size:1.4rem;font-weight:500">
-                                {{ eventList.total }} 
-                                <span v-if="eventList.total > 1">
-                                    events.
-                                </span>
-                                <span v-else>
-                                    event.                       
-                                </span>
+                                No Events
+                            </p>
+                            <p>
+                                There are no events that fit your search filters,<br> check out some online events below
                             </p>
                         </div>
+                        <div 
+                            class="event-search-list" 
+                            v-if="!mobile">
+                            <div class="title">
+                                <h3>Online events</h3>
+                            </div>
+                            <template v-if="onlineEventList.data">
+                                <vue-event-index :events="onlineEventList.data" />
+                            </template>
+                            <div>
+                                <pagination 
+                                    :list="onlineEventList"
+                                    :limit="2"
+                                    @selectpage="selectOnlinePage" />
+                            </div>
+                        </div>
                         <div>
-                            <a 
-                                :href="`/events/${event.slug}`" 
-                                v-for="(event) in eventList.data" 
-                                :key="event.id"
-                                class="event__horizontal-card">
-                                <div class="event__horizontal-card--element">
-                                    <div class="event__horizontal-card--image">
-                                        <div class="event__horizontal-card--lock" />                              
-                                        <picture>
-                                            <source 
-                                                type="image/webp" 
-                                                :srcset="`/storage/${event.thumbImagePath}`"> 
-                                            <img 
-                                                style="object-fit:cover" 
-                                                loading="lazy" 
-                                                :src="`/storage/${event.thumbImagePath.slice(0, -4)}jpg`" 
-                                                :alt="`${event.name} Immersive Event`">
-                                        </picture>
-                                    </div>
-                                    <div class="event__horizontal-card--content">
-                                        <div>
-                                            <div class="event__horizontal-card--category">
-                                                {{ event.category ? event.category.name : '' }}
-                                            </div>
-                                            <div class="event__horizontal-card--heart">
-                                                <favorite 
-                                                    inputclass="heart visible" 
-                                                    :event="event" />
-                                            </div>
-                                        </div>
-                                        <div class="event__horizontal-card--title">
-                                            {{ event.name }}
-                                        </div>
-                                        <div class="event__horizontal-card--tagline">
-                                            {{ event.tag_line }}
-                                        </div>
-                                        <ul class="event__horizontal-card--tags">
-                                            <li 
-                                                v-for="(itemTag, index) in eventTags(event)" 
-                                                :key="itemTag.id" >
-                                                {{ itemTag.name }}<span v-if="index != '2'">•</span>
-                                            </li>
-                                        </ul>
-                                        <div class="event__horizontal-card--price">
-                                            {{ fixedprice(event) }}
-                                        </div>
-                                    </div>
+                            <div class="event__results--online">
+                                <div class="title">
+                                    <h3>Online events</h3>
                                 </div>
-                            </a>
+                                <vue-event-index :events="onlineEventList.data" />
+                            </div>
                         </div>
-                        <div>
-                            <pagination
-                                :list="eventList"
-                                :limit="2"
-                                @selectpage="selectPage" />
-                        </div>
-                    </div>
-                    <div 
-                        class="event__results--title" 
-                        v-else>
-                        <p style="display:inline-block;font-size:1.4rem;font-weight:500">
-                            {{ eventList.total }} 
-                            <span v-if="eventList.total > 1">
-                                events.
-                            </span>
-                            <span v-else>
-                                event.                       
-                            </span>
-                        </p>
-                        <p>
-                            There are no events that fit your search filters,<br> check out some online events below
-                        </p>
-                    </div>
-                    <div 
-                        class="event-search-list" 
-                        v-if="!mobile">
-                        <div class="title">
-                            <h3>Check out <span> {{ $store.state.searchtype }} </span> online events</h3>
-                        </div>
-                        <template v-if="onlineEventList.data">
-                            <vue-event-index :events="onlineEventList.data" />
-                        </template>
-                        <div>
-                            <pagination 
-                                :list="onlineEventList"
-                                :limit="2"
-                                @selectpage="selectOnlinePage" />
-                        </div>
-                    </div>
-                    <div>
-                        <div class="title">
-                            <h2>Online events</h2>
-                        </div>
-                        <vue-event-index :events="onlineEventList.data" />
                     </div>
                 </div>
             </section>
+            <EventFilter
+                @locationevents="updateEvents"
+                @onlineevents="updateOnlineEvents"
+                :page="pagination"
+                :onlinepage="onlinePagination"
+                :events="searchedevents" 
+                :onlineevents="onlineevents" 
+                :maxprice="maxprice" 
+                :tags="tags" 
+                :categories="categories" />
         </div>
         <div
-            v-if="url.lat && !mobile"
+            v-if="hasLocation && !mobile"
             class="event-search__container">
             <section 
                 class="event__filter" 
@@ -221,40 +215,61 @@
                                 :limit="2"
                                 @selectpage="selectPage" />
                         </div>
-                    </div>
-                    <div class="event__results--title" v-else>
-                        <h3>
-                            No Results in {{ url.city }}
-                        </h3>
-                        <p>There are no events listed in {{ url.city }} at this time. <br>Try a different city or check out some online events.</p>
-                    </div>
-                    <div style="border-bottom:1px solid #d6d6d6;margin: 0 0 3rem 0;" />
-                    <div 
-                        class="event-search-list" 
-                        v-if="!mobile">
-                        <div class="title">
-                            <h3>Check out <span> {{ $store.state.searchtype }} </span> online events</h3>
+                        <div style="border-bottom:1px solid #d6d6d6;margin: 0 0 3rem 0;" />
+                        <div 
+                            class="event-search-list" 
+                            v-if="!mobile">
+                            <div class="title">
+                                <h3>Online Events</h3>
+                            </div>
+                            <template v-if="onlineEventList.data">
+                                <vue-event-index :events="onlineEventList.data" />
+                            </template>
+                            <div>
+                                <pagination 
+                                    :list="onlineEventList"
+                                    :limit="2"
+                                    @selectpage="selectOnlinePage" />
+                            </div>
                         </div>
-                        <template v-if="onlineEventList.data">
-                            <vue-event-index :events="onlineEventList.data" />
-                        </template>
-                        <div>
-                            <pagination 
-                                :list="onlineEventList"
-                                :limit="2"
-                                @selectpage="selectOnlinePage" />
+                    </div>
+
+                    <div 
+                        v-else
+                        class="event__results">
+                        <div class="event__results--title">
+                            <h3>
+                                No Results in {{ url.city }}
+                            </h3>
+                            <p>There are no location based events s in {{ url.city }} at this time. <br>Try a different city or check out some online events.</p>
+                        </div>
+                        <div style="border-bottom:1px solid #d6d6d6;margin: 0 0 3rem 0;" />
+                        <div 
+                            class="event-search-list" 
+                            v-if="!mobile">
+                            <div class="title">
+                                <h3>Online Events</h3>
+                            </div>
+                            <template v-if="onlineEventList.data">
+                                <vue-event-index :events="onlineEventList.data" />
+                            </template>
+                            <div>
+                                <pagination 
+                                    :list="onlineEventList"
+                                    :limit="2"
+                                    @selectpage="selectOnlinePage" />
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
             <event-map-search
-                @onhidemap="fullMap"
                 :user="user"
                 :events="eventList.data" />
         </div>
         <div 
             class="event__filter" 
-            v-if="!url.lat && !mobile">
+            v-if="!hasLocation && !mobile">
             <EventFilter
                 @onlineevents="updateOnlineEvents"
                 :onlinepage="onlinePagination"
@@ -262,33 +277,112 @@
                 :maxprice="maxprice" 
                 :tags="tags" 
                 :categories="categories" />
-            <div 
-                class="event-search-list" 
-                v-if="!mobile">
-                <div class="title">
-                    <h3>Check out <span> {{ $store.state.searchtype }} </span> online events</h3>
-                </div>
-                <template v-if="onlineEventList.data">
-                    <vue-event-index :events="onlineEventList.data" />
-                </template>
-                <div>
-                    <pagination 
-                        limit="1"
-                        :list="onlineEventList"
-                        @selectpage="selectOnlinePage" />
+            <div class="event__results">
+                <div class="event-search-list">
+                    <div class="title">
+                        <h3>Online Events</h3>
+                    </div>
+                    <template v-if="onlineEventList.data">
+                        <vue-event-index :events="onlineEventList.data" />
+                    </template>
+                    <div>
+                        <pagination 
+                            :limit="2"
+                            :list="onlineEventList"
+                            @selectpage="selectOnlinePage" />
+                    </div>
                 </div>
             </div>
         </div>
+        <template v-if="mobile && !hasLocation">
+            <div class="filterBar__relative">
+                <MobileFilterBar />
+            </div>
+            <EventFilter
+                @onlineevents="updateOnlineEvents"
+                :onlinepage="onlinePagination"
+                :onlineevents="onlineevents" 
+                :maxprice="maxprice" 
+                :tags="tags" 
+                :categories="categories" />
+            <div class="event-search-list">
+                <div class="event__results">
+                    <div class="title">
+                        <h3>Online Events</h3>
+                    </div>
+                    <template v-if="onlineEventList.data">
+                        <div>
+                            <a 
+                                :href="`/events/${event.slug}`" 
+                                v-for="(event) in onlineEventList.data" 
+                                :key="event.id"
+                                class="event__horizontal-card">
+                                <div class="event__horizontal-card--element">
+                                    <div class="event__horizontal-card--image">
+                                        <div class="event__horizontal-card--lock" />                              
+                                        <picture>
+                                            <source 
+                                                type="image/webp" 
+                                                :srcset="`/storage/${event.thumbImagePath}`"> 
+                                            <img 
+                                                style="object-fit:cover" 
+                                                loading="lazy" 
+                                                :src="`/storage/${event.thumbImagePath.slice(0, -4)}jpg`" 
+                                                :alt="`${event.name} Immersive Event`">
+                                        </picture>
+                                    </div>
+                                    <div class="event__horizontal-card--content">
+                                        <div>
+                                            <div class="event__horizontal-card--category">
+                                                {{ event.category ? event.category.name : '' }}
+                                            </div>
+                                            <div class="event__horizontal-card--heart">
+                                                <favorite 
+                                                    inputclass="heart visible" 
+                                                    :event="event" />
+                                            </div>
+                                        </div>
+                                        <div class="event__horizontal-card--title">
+                                            {{ event.name }}
+                                        </div>
+                                        <div class="event__horizontal-card--tagline">
+                                            {{ event.tag_line }}
+                                        </div>
+                                        <ul class="event__horizontal-card--tags">
+                                            <li 
+                                                v-for="(itemTag, index) in eventTags(event)" 
+                                                :key="itemTag.id" >
+                                                {{ itemTag.name }}<span v-if="index != '2'">•</span>
+                                            </li>
+                                        </ul>
+                                        <div class="event__horizontal-card--price">
+                                            {{ fixedprice(event) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </template>
+                    <div>
+                        <pagination 
+                            :limit="1"
+                            :list="onlineEventList"
+                            @selectpage="selectOnlinePage" />
+                    </div>
+                </div>
+            </div>
+        </template>
     </div>
 </template>
 
 <script>
     import EventFilter  from './components/filter.vue'
     import Pagination  from './components/pagination.vue'
+    import MobileFilterBar  from './components/mobile-filter-bar.vue'
     import searchBasicsMixin from '../../mixins/search-basics-mixin'
 
     export default {
-        components: { EventFilter, Pagination },
+        components: { EventFilter, Pagination, MobileFilterBar },
 
         mixins: [ searchBasicsMixin ],
 
@@ -318,6 +412,14 @@
             currentOnlinePage () {
                 return this.onlineEventList.current_page;
             },
+
+            hasLocation() {
+                return this.url.lat || this.url.mapSearch;
+            },
+
+            fullMap() {
+                return this.$store.state.map || this.$store.state.mobilelocation || this.$store.state.mobiledates || this.$store.state.filter;
+            },
         }, 
 
         data() {
@@ -325,7 +427,7 @@
                 eventList: this.searchedevents,
                 onlineEventList: this.onlineevents,
                 mobile: window.innerWidth < 768,
-                shiftDown: window.innerWidth < 768 ? 45 : 0,
+                shiftDown: `transform: translate3d(0px, 0px, 0px);`,
                 pagination: 1,
                 onlinePagination: 1,
             }
@@ -343,8 +445,8 @@
                 this.onlinePagination = value.current_page;
             },
 
-            fullMap(value) {
-                this.shiftDown = value ? 45 : 80;
+            test() {
+
             },
 
             selectPage (page) {
@@ -360,8 +462,6 @@
             },
 
             showEvents() {
-                this.conditionalBodyClass(false, 'noscroll')
-                this.shiftDown = 45;
                 this.$store.commit('showmap', false);
             },
 
@@ -374,6 +474,12 @@
                     document.body.classList.remove(className)
                 }
             },
+        },
+
+        watch: {
+            fullMap() {
+                this.fullMap ? this.shiftDown = `transform: translate3d(0, calc(var(--vh, 1vh) * 100 + -450px), 0);`  : this.shiftDown = `transform: translate3d(0px, 0px, 0px);` ;
+            }
         },
 
         mounted() {

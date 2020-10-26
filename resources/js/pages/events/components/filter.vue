@@ -1,7 +1,11 @@
 <template>
     <div>
-        <template v-if="!mobile">
-            <div class="filter__body">
+        <div 
+            v-if="!mobile"
+            class="filter__content">
+            <div
+                v-if="hasLocation" 
+                class="filter__grid">
                 <!-- Location Filter -->
                 <div class="filter__location">
                     <div v-if="url.lat">
@@ -32,36 +36,6 @@
                                 Start Date | End Date
                             </template>
                         </button>
-                        <template v-if="active == 'dates'">
-                            <div class="filter__dropdown">
-                                <div>
-                                    <flat-pickr
-                                        v-model="dates"
-                                        :config="calendarConfig"                                         
-                                        placeholder="Select date"               
-                                        name="dates" />
-                                </div>
-                                <div class="filter__dropdown--footer">
-                                    <button 
-                                        v-if="naturalDate.length" 
-                                        @click="naturalDate = []; computerDate = []; dates = [];" 
-                                        class="left-half">
-                                        Reset
-                                    </button>
-                                    <button 
-                                        v-if="!naturalDate.length" 
-                                        @click="active = null" 
-                                        class="left-half">
-                                        Cancel
-                                    </button>
-                                    <button 
-                                        class="right-half" 
-                                        @click="submit()">
-                                        Search
-                                    </button>
-                                </div>
-                            </div>
-                        </template>
                     </div>
                 </div>
                 <!-- Price Filter -->
@@ -73,102 +47,165 @@
                         @drag-end="submit"
                         :enable-cross="false" />
                 </div>
-                <div>
-                    <!-- Category Filter -->
-                    <div class="filter__categories">
-                        <div ref="cat">
-                            <button 
-                                @click="show('category')" 
-                                :class="{ active: category }" 
-                                class="filter round">
-                                <template v-if="category">
-                                    {{ category.name }}
-                                </template>
-                                <template v-else>
-                                    Category
-                                </template>
-                            </button>
-                            <template v-if="active === 'category'">
-                                <div class="filter__dropdown"> 
-                                    <div class="filter__dropdown--grid">
-                                        <div 
-                                            v-for="(cat) in categories" 
-                                            :key="cat.id" 
-                                            class="filter__category--element" 
-                                            @click="submitCat(cat)">
-                                            <button :class="{ active: cat.id == category.id }">
-                                                {{ cat.name }}
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="filter__dropdown--footer">
-                                        <button 
-                                            v-if="category" 
-                                            @click="category = ''" 
-                                            class="filter round">
-                                            clear
-                                        </button>
-                                        <button 
-                                            v-else 
-                                            @click="active = null;" 
-                                            class="filter round">
-                                            Cancel
-                                        </button>
-                                    </div>
-                                </div>
+            </div>
+            <div class="filter__block">
+                <!-- Date Filter -->
+                <div 
+                    v-if="!hasLocation" 
+                    class="filter__categories">
+                    <div ref="dates">
+                        <button 
+                            @click="show('dates')" 
+                            :class="{ active : naturalDate.length }" 
+                            class="filter round">
+                            <template v-if="displayDate">
+                                {{ naturalDate[0] }}{{ naturalDate[1] ? ' | ' + naturalDate[1] : '' }}
                             </template>
-                        </div>
-                    </div>
-                    <!-- Tag Filter -->
-                    <div class="filter__tags">
-                        <div ref="tag">
-                            <button 
-                                @click="show('tag')" 
-                                :class="{ active : tag }" 
-                                class="filter round">
-                                <template v-if="tag">
-                                    {{ tag.name }}
-                                </template>
-                                <template v-else>
-                                    Tags
-                                </template>
-                            </button>
-                            <template v-if="active === 'tag'">
-                                <div class="filter__dropdown">
-                                    <div class="filter__dropdown--grid">
-                                        <div 
-                                            v-for="(item) in tags" 
-                                            :key="item.id" 
-                                            class="filter__category--element" 
-                                            @click="submitTag(item)">
-                                            <div>
-                                                <button :class="{active: item.id == tag.id}">
-                                                    {{ item.name }}
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="filter__openbox--footer">
-                                        <button 
-                                            v-if="tag" 
-                                            @click="tag = ''" 
-                                            class="filter__openbox--button">
-                                            clear
-                                        </button>
-                                        <button 
-                                            v-if="!tag" 
-                                            @click="active = null;" 
-                                            class="filter__openbox--button">
-                                            Cancel
-                                        </button>
-                                    </div>
-                                </div>
+                            <template v-else>
+                                Start Date | End Date
                             </template>
-                        </div>
+                        </button>
                     </div>
                 </div>
+                <!-- Price Filter -->
+                <div 
+                    v-if="!hasLocation" 
+                    class="filter__categories">
+                    <div>
+                        <vue-slider
+                            v-model="price"
+                            tooltip="always"
+                            v-bind="priceOptions"
+                            @drag-end="submit"
+                            :enable-cross="false" />
+                    </div>
+                </div>
+                <!-- Category Filter -->
+                <div class="filter__categories">
+                    <div ref="cat">
+                        <button 
+                            @click="show('category')" 
+                            :class="{ active: category }" 
+                            class="filter round">
+                            <template v-if="category">
+                                {{ category.name }}
+                            </template>
+                            <template v-else>
+                                Categories
+                            </template>
+                        </button>
+                    </div>
+                </div>
+                <!-- Tag Filter -->
+                <div class="filter__tags">
+                    <div ref="tag">
+                        <button 
+                            @click="show('tag')" 
+                            :class="{ active : tag }" 
+                            class="filter round">
+                            <template v-if="tag">
+                                {{ tag.name }}
+                            </template>
+                            <template v-else>
+                                Tags
+                            </template>
+                        </button>
+                    </div>
+                </div>
+                <template v-if="active == 'dates'">
+                    <div class="filter__dates">
+                        <div class="filter__dropdown">
+                            <div>
+                                <flat-pickr
+                                    v-model="dates"
+                                    :config="calendarConfig"                                         
+                                    placeholder="Select date"               
+                                    name="dates" />
+                            </div>
+                            <div class="filter__dropdown--footer">
+                                <button 
+                                    v-if="naturalDate.length" 
+                                    @click="naturalDate = []; computerDate = []; dates = [];" 
+                                    class="left-half">
+                                    Reset
+                                </button>
+                                <button 
+                                    v-if="!naturalDate.length" 
+                                    @click="active = null" 
+                                    class="left-half">
+                                    Cancel
+                                </button>
+                                <button 
+                                    class="right-half" 
+                                    @click="submit()">
+                                    Search
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                <template v-if="active === 'category'">
+                    <div class="filter__dropdown"> 
+                        <div class="filter__dropdown--grid">
+                            <div 
+                                v-for="(cat) in categories" 
+                                :key="cat.id" 
+                                class="filter__category--element" 
+                                @click="submitCat(cat)">
+                                <button :class="{ active: cat.id == category.id }">
+                                    {{ cat.name }}
+                                </button>
+                            </div>
+                        </div>
+                        <div class="filter__dropdown--footer">
+                            <button 
+                                v-if="category" 
+                                @click="category = ''" 
+                                class="filter round">
+                                clear
+                            </button>
+                            <button 
+                                v-else 
+                                @click="active = null;" 
+                                class="filter round">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </template>
+                <template v-if="active === 'tag'">
+                    <div class="filter__dropdown">
+                        <div class="filter__dropdown--grid">
+                            <div 
+                                v-for="(item) in tags" 
+                                :key="item.id" 
+                                class="filter__category--element" 
+                                @click="submitTag(item)">
+                                <div>
+                                    <button :class="{active: item.id == tag.id}">
+                                        {{ item.name }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="filter__openbox--footer">
+                            <button 
+                                v-if="tag" 
+                                @click="tag = ''" 
+                                class="filter__openbox--button">
+                                clear
+                            </button>
+                            <button 
+                                v-if="!tag" 
+                                @click="active = null;" 
+                                class="filter__openbox--button">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </template>
             </div>
-        </template>
+        </div>
 
         <!-- Mobile Filter List -->
         <div 
@@ -389,7 +426,10 @@
             },
             mobileDates() {
                 return this.$store.state.mobiledates;
-            }
+            },
+            hasLocation() {
+                return this.url.lat || this.url.mapSearch;
+            },
             
         },
 
@@ -407,7 +447,7 @@
                 tag: '',
                 onlinePage: 1,
                 onlineList: this.onlineevents,
-                searchType: '',
+                searchType: 'location',
                 mobile: window.innerWidth < 768,
                 boundaries: '',
                 center: '',
@@ -418,14 +458,12 @@
         methods: {
 
             submit() {
-                this.$emit('locationevents', {});
-                this.$emit('onlineevents',{});
                 this.$store.commit('onfilter', false);
-                this.hideDates();
-                this.hideLocation();
+                this.$store.commit('showmap', false);
+                this.$store.commit('showdates', false);
+                this.$store.commit('showlocation', false);
                 this.active = null;
-                console.log(this.active);
-
+                console.log(this.data);
                 axios.all([
                     axios.post(`/api/search/mapboundary?page=1`, this.data),
                     axios.post(`/api/search/remote?page=1`, this.data)
@@ -434,7 +472,7 @@
                     this.$emit('locationevents', data1.data);
                     this.$emit('onlineevents', data2.data);
                     this.onlineList = data2.data;
-                    console.log(this.onlineList.data);
+                    this.onlineList.data.filter(item => console.log(item.name));
                     this.addPushState();
                 }));
             },
@@ -574,15 +612,18 @@
                 this.zoom = this.mapInfo.zoom;
                 return this.submit();
             },
+
             page() {
                 axios.post(`/api/search/mapboundary?page=${this.page}`, this.data)
                 .then(res => {
                     this.$emit('locationevents', res.data);
                 });
             },
+
             onlinepage() {
                 axios.post(`/api/search/remote?page=${this.onlinepage}`, this.data)
                 .then(res => {
+                    console.log(res.data);
                     this.$emit('onlineevents', res.data);
                 });
             },

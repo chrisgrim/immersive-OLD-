@@ -143,6 +143,7 @@
             },
 
             selectPage (page) {
+                window.scrollTo(0, 0);
                 this.$emit('selectpage', page);
             },
 
