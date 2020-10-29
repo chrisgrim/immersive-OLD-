@@ -2,14 +2,12 @@
     <p class="text">
         <span style="white-space: pre-wrap;">{{ adjustedText }}</span>
         <span 
-            class="show-text" 
             v-if="showMore" 
-            @click="showMore = false">... Show More
+            @click="showMore = false">... <span class="show-text"><br>Show More</span>
         </span>
         <span 
-            class="show-text" 
-            v-if="!showMore && this.text.length >= this.limit"
-            @click="showMore = true">... Show Less 
+            v-if="!showMore && this.text.split(' ').length >= this.limit"
+            @click="showMore = true"><span class="show-text"><br>Show Less</span>
         </span>
     </p>
 </template>
@@ -21,15 +19,24 @@ export default {
 
     computed: {
         adjustedText() {
-            return this.text.length >= this.limit && this.showMore ? this.text.substring(0, this.limit) : this.text
+            // return this.text.length >= this.limit && this.showMore ? this.text.substring(0, this.limit) : this.text
+            return this.text.split(' ').length > this.limit && this.showMore ?  this.text.split(' ').slice(0, this.limit).join(' ') : this.text
         },
     },
 
     data() {
         return {
-            showMore: this.text.length >= this.limit ? true : false
+            showMore: this.text.split(' ').length >= this.limit ? true : false
         }
-    }
+    },
+
+    mounted() { 
+        if (this.text.split(' ').length > 100) {
+            console.log('more words');
+        } else {
+            console.log('les words');
+        }
+    },
 
 
 

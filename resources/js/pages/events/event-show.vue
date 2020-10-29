@@ -36,8 +36,10 @@
                     </a>
                     <span class="header-left__title"><h1 :style="titleFontSize"> {{ event.name }} </h1></span>
                     <span class="header-left__tag"><i> {{ event.tag_line }} </i></span>
-                    <div v-if="event.staffpick">
-                        EI Pick of the week!
+                    <div class="header-left__staffpick">
+                        <template v-if="event.staffpick">
+                            Staff Pick
+                        </template>
                     </div>
                     <div class="header-left__details">
                         <a href="#tickets">
@@ -147,7 +149,7 @@
                 <div class="event-show__description">
                     <ShowMore 
                         :text="event.description"
-                        :limit="400" />
+                        :limit="100" />
                 </div>
             </div>
         </section>
@@ -223,7 +225,7 @@
                     <p> {{ event.timezone ? event.timezone.description : '' }} </p>
                     <ShowMore 
                         :text="event.show_times"
-                        :limit="160" />
+                        :limit="20" />
                 </div>
             </div>
             <div class="right lockedcalendar mobile">
@@ -241,7 +243,7 @@
                     <p> {{ event.timezone ? event.timezone.description : '' }} </p>
                     <ShowMore 
                         :text="event.show_times"
-                        :limit="160" />
+                        :limit="20" />
                 </div>
             </div>
         </section>
@@ -303,7 +305,7 @@
                     <p> {{ event.timezone ? event.timezone.description : '' }} </p>
                     <ShowMore 
                         :text="event.show_times"
-                        :limit="160" />
+                        :limit="20" />
                 </div>
             </div>
         </section>
@@ -325,7 +327,7 @@
                     <p> {{ event.timezone ? event.timezone.description : '' }} </p>
                     <ShowMore 
                         :text="event.show_times"
-                        :limit="160" />
+                        :limit="20" />
                 </div>
             </div>
         </section>
@@ -388,7 +390,7 @@
                         <li>
                             <ShowMore 
                                 :text="event.advisories.audience"
-                                :limit="160" />
+                                :limit="30" />
                         </li>
                     </ul>
                 </div>
@@ -496,7 +498,7 @@
                 </a>
                 <ShowMore 
                     :text="event.organizer.description"
-                    :limit="160" />
+                    :limit="50" />
                 <!-- <ContactOrganizer :user="user" :loadorganizer="event.organizer"></ContactOrganizer>  -->
             </div>
         </section>
@@ -551,29 +553,7 @@
                                 :center="center" 
                                 :options="{ scrollWheelZoom: false, zoomControl: true }">
                                 <l-tile-layer :url="url" />
-                                <l-marker :lat-lng="center">
-                                    <l-popup>
-                                        <div class="show-pop">
-                                            <a 
-                                                rel="noreferrer" 
-                                                target="_blank" 
-                                                :href="`http://maps.google.com/maps?q=${event.location.home}+${event.location.street},+${event.location.city},+${event.location.region}`">
-                                                <div class="info">
-                                                    <div class="name">
-                                                        <p>
-                                                            <span v-if="event.location.home">{{ event.location.home }}</span> 
-                                                            <span v-if="event.location.street">{{ event.location.street }}</span> 
-                                                            <span v-if="event.location.city">{{ event.location.city }}</span> 
-                                                            <span v-if="event.location.region">{{ event.location.region }}</span>
-                                                            <span v-if="event.location.country">{{ event.location.country }}</span>
-                                                            <span v-if="event.location.postal_code">{{ event.location.postal_code }}</span>
-                                                        </p>  
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </l-popup>                        
-                                </l-marker>
+                                <l-marker :lat-lng="center" />
                             </l-map>
                         </div>  
                     </div>

@@ -1,13 +1,11 @@
-/*------------------------------------*\
+/* ------------------------------------*\
   #Event- Show Page
-\*------------------------------------*/
+\*------------------------------------ */
 
 .show-content {
     margin: 0 0 10rem 0;
     background: white;
 }
-
-
 
 nav.event-show {
     height: 7rem;
@@ -16,19 +14,22 @@ nav.event-show {
     -webkit-box-align: center;
     align-items: center;
 }
+
 .event-show-nav__back-arrow {
     padding: 2rem 4rem 2rem 3.2rem;
 }
+
 .event-show-nav__favorite {
-    padding: 0rem 3rem;
+    padding: 0 3rem;
 }
+
 header.event-show {
     position: relative;
     width: 100%;
     background-color: #f2f2f2;
-    width: 100%;
     grid-template-columns: 50rem auto;
 }
+
 .header-left {
     height: 100%;
     padding: 5rem 5rem 0 8rem;
@@ -53,8 +54,14 @@ header.event-show {
         }
     }
     &__tag {
-        display: block
+        display: block;
     }
+}
+
+.header-left__staffpick {
+    text-align: center;
+    font-weight: 500;
+    margin: 3rem;
 }
 
 .header-left__details {
@@ -68,6 +75,7 @@ header.event-show {
         margin-bottom: .7rem;
     }
 }
+
 .header__show-info {
     word-wrap: break-word;
     font-size: 1.4rem;
@@ -393,6 +401,44 @@ button.event-bottom-bar__button {
     background: white;
     padding: 1.6rem 1rem;
     border-radius: .5rem;
+}
+
+.event-show-map .leaflet-control-zoom {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .event-show-map .leaflet-top {
+        top: -1.5rem;
+    }
+
+    .event-show-map .leaflet-control-zoom {
+        position: absolute;
+        top: 3rem;
+        display: inherit;
+    }
+
+    .event-show-map .leaflet-touch .leaflet-bar {
+        border: 0;
+        border-radius: 1rem;
+        box-shadow: rgba(0, 0, 0, 0.16) 0 4px 24px, rgba(0, 0, 0, 0.04) 0 0 0 1px !important;
+    }
+
+    .event-show-map .leaflet-touch .leaflet-bar a:first-child {
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;
+    }
+
+    .event-show-map .leaflet-touch .leaflet-bar a:last-child {
+        border-bottom-left-radius: 1rem;
+        border-bottom-right-radius: 1rem;
+    }
+
+    .event-show-map .leaflet-touch .leaflet-bar a {
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+    }
 }
 
 @media (max-width: 1050px) {

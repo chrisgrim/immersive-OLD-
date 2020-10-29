@@ -1,18 +1,29 @@
 <template>
-    <div :class="{ remote: !hasLocation, showmap: location.latitude && hasLocation}" class="event-create__location grid">
-
-        <section :class="{ showmap: location.latitude && hasLocation}" class="event-enter-location">
+    <div 
+        :class="{ remote: !hasLocation, showmap: location.latitude && hasLocation}" 
+        class="event-create__location grid">
+        <section 
+            :class="{ showmap: location.latitude && hasLocation}" 
+            class="event-enter-location">
             <div class="title">
                 <h2>Location</h2>
             </div>
             <div class="field">
                 <label> Does your event have a physical location? </label>
                 <div id="cover">
-                    <input  @input="$v.select.$touch" v-model="hasLocation" type="checkbox" id="checkbox">
-                    <div id="bar"></div>
+                    <input  
+                        @input="$v.select.$touch" 
+                        v-model="hasLocation" 
+                        type="checkbox" 
+                        id="checkbox">
+                    <div id="bar" />
                     <div id="knob">
-                        <p v-if="hasLocation">Yes</p>
-                        <p v-else>No</p>
+                        <p v-if="hasLocation">
+                            Yes
+                        </p>
+                        <p v-else>
+                            No
+                        </p>
                     </div>
                 </div>
             </div>

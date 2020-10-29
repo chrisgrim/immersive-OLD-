@@ -6,25 +6,25 @@
 .login-index {
     grid-template-columns: 40% 60%;
     align-items: center;
-   justify-items: center;
-   padding-top: 7rem;
-   grid-gap: 0 !important;
-   &.popup {
+    justify-items: center;
+    grid-gap: 0 !important;
+    &.popup {
         background: white;
         position: relative;
         margin: auto;
         margin-top: 10%;
         width: 60%;
         overflow-y: auto;
-        padding:0;
+        padding: 0;
     }
 }
 
 .login-information {
-    padding: 1rem 0rem 1rem 0rem;
+    padding: 1rem 0 1rem 0;
     width: 30rem;
     margin: auto;
 }
+
 .login-information__title {
     margin: 6rem 0rem 2rem 0rem;
 }

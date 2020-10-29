@@ -1,23 +1,25 @@
 <template>
-    <div class="login-index grid" :style="pageHeight">
+    <div 
+        class="login-index grid" 
+        :style="pageHeight">
         <div v-if="isLogin" class="login-information">
             <div class="login-information__title">
                 <h3>Everything Immersive</h3>
             </div>
             <div class="field">
                 <input 
-                id="email" 
-                type="email" 
-                class="email" 
-                v-model="user.email" 
-                :class="{ active: active == 'email','error': $v.user.email.$error }"
-                @click="onToggle('email')"
-                @blur="active = null" 
-                @input="$v.user.email.$touch"
-                @keyup.enter="onSubmit"
-                required
-                placeholder="email" 
-                autofocus>
+                    id="email" 
+                    type="email" 
+                    class="email" 
+                    v-model="user.email" 
+                    :class="{ active: active == 'email','error': $v.user.email.$error }"
+                    @click="onToggle('email')"
+                    @blur="active = null" 
+                    @input="$v.user.email.$touch"
+                    @keyup.enter="onSubmit"
+                    required
+                    placeholder="email" 
+                    autofocus>
                 <div v-if="$v.user.email.$error" class="validation-error">
                     <p class="error" v-if="!$v.user.email.serverFailed">The login doesn't match our records</p>
                     <p class="error" v-if="!$v.user.email.required">The email is required</p>
@@ -238,7 +240,7 @@
             },
 
             onSubmit() {
-                if (this.checkVuelidate()) { return false };
+                if (this.checkVuelidate()) { return false }
                 axios.post(this.endPoint, this.submitObject)
                 .then(res => {  
                    this.isLogin ? location.reload() : this.onRegistered();
@@ -249,7 +251,7 @@
             },
 
             onForget() {
-                if (!this.user.email) { return false };
+                if (!this.user.email) { return false }
                 this.disabled = true;
                 axios.post('/password/email', {email:this.user.email})
                 .then(res => {

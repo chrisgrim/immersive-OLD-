@@ -84,9 +84,6 @@
                                             <div class="card-title">
                                                 <h3>Online Only</h3>
                                             </div>
-                                            <div class="card-price">
-                                                <h4>The best online events!</h4>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -116,7 +113,7 @@
                                                             style="object-fit:cover" 
                                                             loading="lazy" 
                                                             class="card-image__img index" 
-                                                            src="/storage/website-files/online-events.jpg" 
+                                                            src="/storage/website-files/horror.jpg" 
                                                             alt="Online Events showing on Everything Immersive">
                                                     </picture>
                                                 </div>
@@ -125,9 +122,6 @@
                                         <div class="card-content index">
                                             <div class="card-title">
                                                 <h3>Horror</h3>
-                                            </div>
-                                            <div class="card-price">
-                                                <h4>The best online events!</h4>
                                             </div>
                                         </div>
                                     </div>
@@ -158,7 +152,7 @@
                                                             style="object-fit:cover" 
                                                             loading="lazy" 
                                                             class="card-image__img index" 
-                                                            src="/storage/website-files/online-events.jpg" 
+                                                            src="/storage/website-files/latest-events.jpg" 
                                                             alt="Online Events showing on Everything Immersive">
                                                     </picture>
                                                 </div>
@@ -167,9 +161,6 @@
                                         <div class="card-content index">
                                             <div class="card-title">
                                                 <h3>All Events</h3>
-                                            </div>
-                                            <div class="card-price">
-                                                <h4>The best online events!</h4>
                                             </div>
                                         </div>
                                     </div>
@@ -247,14 +238,11 @@
                                         <div class="card-description">
                                             <ShowMore 
                                                 :text="pick.comments"
-                                                :limit="140" />
+                                                :limit="20" />
                                         </div>
                                         <div class="staffpicks__user index">
                                             <div class="staffpicks__user--name index">
-                                                <p v-if="pick.event.hasLocation">
-                                                    <span><span v-if="pick.event.location.city">{{ pick.event.location.city }}, </span><span v-if="pick.event.location.region">{{ pick.event.location.region }}</span></span>
-                                                </p>
-                                                <p v-else>
+                                                <p>
                                                     <span>{{ pick.event.category.name }}</span>
                                                 </p>
                                             </div>

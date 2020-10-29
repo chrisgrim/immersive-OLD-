@@ -209,7 +209,7 @@ button.nav-dropdown--icon img {
 }
 
 .nav-dropdown__guest {
-    position: absolute;
+    position: inherit;
     width: 4rem;
     z-index: 10;
     left: 50%;

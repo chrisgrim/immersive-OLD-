@@ -413,6 +413,7 @@
                     tag: this.tag ? this.tag.name : null,
                     lat: this.boundaries ? '' : new URL(window.location.href).searchParams.get("lat"),
                     lng: this.boundaries ? '' : new URL(window.location.href).searchParams.get("lng"),
+                    hasLocation: this.url.lat ? true : false
                 }
             },
             mapInfo() {
@@ -446,7 +447,6 @@
                 category: '',
                 tag: '',
                 onlinePage: 1,
-                onlineList: this.onlineevents,
                 searchType: 'location',
                 mobile: window.innerWidth < 768,
                 boundaries: '',
@@ -458,23 +458,38 @@
         methods: {
 
             submit() {
+                this.reset();
+                this.hasLocation ? this.axiosLoc() : this.axiosOnline();
+            },
+
+            axiosLoc() {
+                axios.all([
+                    axios.post(`/api/search/mapboundary?page=1`, this.data),
+                    axios.post(`/api/search/online?page=1`, this.data)
+                ])
+                .then(axios.spread((data1, data2) => {
+                    this.$emit('locationevents', data1.data);
+                    this.$emit('onlineevents', data2.data);
+                    this.addPushState();
+                }));
+            },
+
+            axiosOnline() {
+                axios.post(`/api/search/online?page=1`, this.data)
+                .then(data => {
+                    console.log(data.data);
+                    this.$emit('onlineevents', data.data);
+                    this.addPushState();
+                })
+                .catch(err => {this.onErrors(err);});
+            },
+
+            reset() {
                 this.$store.commit('onfilter', false);
                 this.$store.commit('showmap', false);
                 this.$store.commit('showdates', false);
                 this.$store.commit('showlocation', false);
                 this.active = null;
-                console.log(this.data);
-                axios.all([
-                    axios.post(`/api/search/mapboundary?page=1`, this.data),
-                    axios.post(`/api/search/remote?page=1`, this.data)
-                ])
-                .then(axios.spread((data1, data2) => {
-                    this.$emit('locationevents', data1.data);
-                    this.$emit('onlineevents', data2.data);
-                    this.onlineList = data2.data;
-                    this.onlineList.data.filter(item => console.log(item.name));
-                    this.addPushState();
-                }));
             },
 
             submitCat(value) {
@@ -588,11 +603,9 @@
 
             conditionalBodyClass(bool, className) {
                 if (bool) {
-                    console.log('no scroll added to page');
                     document.body.classList.add(className)
                     this.$store.commit('showmap', true);
                 } else {
-                    console.log('no scroll removed from page');
                     document.body.classList.remove(className)
                     this.$store.commit('showmap', false);
                 }
@@ -621,15 +634,15 @@
             },
 
             onlinepage() {
-                axios.post(`/api/search/remote?page=${this.onlinepage}`, this.data)
+                axios.post(`/api/search/online?page=${this.onlinepage}`, this.data)
                 .then(res => {
-                    console.log(res.data);
                     this.$emit('onlineevents', res.data);
                 });
             },
 
             '$store.state.filter': function(n) {
-                this.active='mobile';
+                console.log(n);
+                return n ? this.active='mobile' : this.active='';
               }
 
         },

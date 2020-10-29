@@ -32,7 +32,7 @@ Route::POST('search/mapboundary', 'SearchController@searchMapBoundary');
 Route::GET('search/location', 'SearchController@searchLocation');
 
 //IS USED Searches remote events
-Route::POST('search/remote', 'SearchController@searchRemote');
+Route::POST('search/online', 'Search\OnlineSearchController@fetch');
 
 // IS USED Gets pagination for home index page
 Route::POST('index/loadmore', 'EventController@fetch');

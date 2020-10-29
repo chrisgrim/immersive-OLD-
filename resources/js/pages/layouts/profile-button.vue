@@ -56,7 +56,7 @@
             <li>
                 <a 
                     href="#" 
-                    @click.prevent="logout()">
+                    @click="logout()">
                     Logout
                 </a>
             </li>
@@ -83,11 +83,7 @@
 			logout(){
 				axios.post('/logout').
 					then(res => {
-						if (res.status === 302 || res.status === 401) {
-							window.location.href = '/';
-						} else {
-						// throw error and go to catch block
-						}
+                        window.location.href = '/';
 					});
             }, 
 

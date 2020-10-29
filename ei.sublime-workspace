@@ -4,6 +4,30 @@
 		"selected_items":
 		[
 			[
+				"in",
+				"inherit\tdisplay"
+			],
+			[
+				"ax",
+				"axiosOnline"
+			],
+			[
+				"is",
+				"isHovered"
+			],
+			[
+				"hov",
+				"hover"
+			],
+			[
+				"hover",
+				"hoverArray"
+			],
+			[
+				"has",
+				"hasLocation"
+			],
+			[
 				"mapse",
 				"mapsearch"
 			],
@@ -30,10 +54,6 @@
 			[
 				"mo",
 				"mobiledates"
-			],
-			[
-				"in",
-				"inherit\tdisplay"
 			],
 			[
 				"mobil",
@@ -494,26 +514,6 @@
 			[
 				"ag",
 				"ageRestriction"
-			],
-			[
-				"sex",
-				"sexualDescription"
-			],
-			[
-				"Wheel",
-				"wheelchairReady"
-			],
-			[
-				"de",
-				"descriptionLength"
-			],
-			[
-				"name",
-				"nameEmpty"
-			],
-			[
-				"pri",
-				"priceLength"
 			]
 		]
 	},
@@ -523,16 +523,34 @@
 			"file": "routes/web.php",
 			"settings":
 			{
-				"buffer_size": 7621,
+				"buffer_size": 7760,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "resources/js/pages/events/event-index.vue",
+			"file": "app/Http/Controllers/EventController.php",
 			"settings":
 			{
-				"buffer_size": 20708,
+				"buffer_size": 7736,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/Http/Controllers/Search/OnlineSearchController.php",
+			"settings":
+			{
+				"buffer_size": 2454,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/Http/Controllers/SearchController.php",
+			"settings":
+			{
+				"buffer_size": 9414,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -649,49 +667,64 @@
 		"/Users/chrisgrim/code/ei/app",
 		"/Users/chrisgrim/code/ei/app/Http",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/Search",
 		"/Users/chrisgrim/code/ei/resources",
 		"/Users/chrisgrim/code/ei/resources/js",
 		"/Users/chrisgrim/code/ei/resources/js/mixins",
 		"/Users/chrisgrim/code/ei/resources/js/pages",
 		"/Users/chrisgrim/code/ei/resources/js/pages/events",
-		"/Users/chrisgrim/code/ei/resources/js/pages/events/components",
-		"/Users/chrisgrim/code/ei/resources/js/pages/read",
 		"/Users/chrisgrim/code/ei/resources/sass",
-		"/Users/chrisgrim/code/ei/resources/sass/events",
-		"/Users/chrisgrim/code/ei/resources/sass/events/components",
-		"/Users/chrisgrim/code/ei/routes"
+		"/Users/chrisgrim/code/ei/resources/sass/auth",
+		"/Users/chrisgrim/code/ei/resources/sass/nav",
+		"/Users/chrisgrim/code/ei/resources/views"
 	],
 	"file_history":
 	[
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/SearchController.php",
-		"/Users/chrisgrim/code/ei/resources/sass/events/components/search-filters.scss",
-		"/Users/chrisgrim/code/ei/resources/js/pages/events/components/filter.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-index.vue",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/SearchController.php",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/Search/OnlineSearchController.php",
+		"/Users/chrisgrim/code/ei/resources/js/pages/events/components/filter.vue",
+		"/Users/chrisgrim/code/ei/app/EventRemoteSearchRule.php",
+		"/Users/chrisgrim/code/ei/app/EventMapSearchRule.php",
 		"/Users/chrisgrim/code/ei/resources/js/mixins/search-basics-mixin.js",
+		"/Users/chrisgrim/code/ei/resources/js/pages/create/location-google.vue",
+		"/Users/chrisgrim/code/ei/resources/sass/nav/navbar.scss",
+		"/Users/chrisgrim/code/ei/resources/sass/auth/register.scss",
+		"/Users/chrisgrim/code/ei/resources/js/pages/layouts/register.vue",
+		"/Users/chrisgrim/code/ei/resources/sass/events/event-show.scss",
+		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-show.vue",
+		"/Users/chrisgrim/code/ei/resources/js/pages/layouts/profile-button.vue",
+		"/Users/chrisgrim/code/ei/resources/sass/components/sliderbutton.scss",
+		"/Users/chrisgrim/code/ei/resources/js/pages/events/components/show-more.vue",
+		"/Users/chrisgrim/code/ei/routes/api.php",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/StaffPicksController.php",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/EventController.php",
+		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/admin-staff-picks.vue",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/Search/SearchController.php",
+		"/Users/chrisgrim/code/ei/resources/js/pages/events/components/pagination.vue",
+		"/Users/chrisgrim/code/ei/app/Event.php",
+		"/Users/chrisgrim/code/ei/resources/js/pages/events/search-online.vue",
+		"/Users/chrisgrim/code/ei/resources/views/events/searchonline.blade.php",
+		"/Users/chrisgrim/code/ei/resources/js/app.js",
+		"/Users/chrisgrim/code/ei/resources/sass/components/grid.scss",
+		"/Users/chrisgrim/code/ei/resources/sass/events/components/search-filters.scss",
 		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-search.vue",
+		"/Users/chrisgrim/code/ei/resources/sass/events/event-search.scss",
+		"/Users/chrisgrim/code/ei/resources/js/pages/events/components/index-item.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-map-search.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/layouts/nav-search.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/events/components/mobile-filter-bar.vue",
-		"/Users/chrisgrim/code/ei/resources/js/pages/events/components/pagination.vue",
 		"/Users/chrisgrim/code/ei/resources/sass/events/event-maps.scss",
-		"/Users/chrisgrim/code/ei/resources/sass/events/event-search.scss",
-		"/Users/chrisgrim/code/ei/resources/sass/components/grid.scss",
 		"/Users/chrisgrim/code/ei/resources/js/pages/read/popup-content.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/layouts/nav.vue",
 		"/Users/chrisgrim/code/ei/resources/js/store/index.js",
 		"/Users/chrisgrim/code/ei/resources/sass/components/leaflet.scss",
 		"/Users/chrisgrim/code/ei/resources/sass/events/event-index.scss",
-		"/Users/chrisgrim/code/ei/resources/sass/nav/navbar.scss",
 		"/Users/chrisgrim/code/ei/resources/views/layouts/meta.blade.php",
-		"/Users/chrisgrim/code/ei/resources/sass/events/event-show.scss",
-		"/Users/chrisgrim/code/ei/app/EventRemoteSearchRule.php",
-		"/Users/chrisgrim/code/ei/resources/views/events/searchonline.blade.php",
 		"/Users/chrisgrim/code/ei/resources/views/events/search.blade.php",
 		"/Users/chrisgrim/code/ei/resources/sass/components/flatpickr.scss",
 		"/Users/chrisgrim/Library/Application Support/Sublime Text 3/Packages/User/indentation.py",
 		"/Users/chrisgrim/code/ei/resources/sass/components/multiselect.scss",
-		"/Users/chrisgrim/code/ei/resources/js/pages/layouts/profile-button.vue",
-		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-show.vue",
 		"/Users/chrisgrim/code/ei/.stylelintrc.json",
 		"/Users/chrisgrim/code/ei/resources/sass/events/event-edit.scss",
 		"/Users/chrisgrim/code/ei/resources/sass/messages/messages-index.scss",
@@ -733,15 +766,10 @@
 		"/Users/chrisgrim/Library/Application Support/Sublime Text 3/Packages/User/UnusedCssFinder.sublime-settings",
 		"/Users/chrisgrim/code/ei/resources/sass/events/staffpicks.scss",
 		"/Users/chrisgrim/code/ei/resources/js/pages/events/components/filter-remote.vue",
-		"/Users/chrisgrim/code/ei/resources/js/pages/events/components/index-item.vue",
-		"/Users/chrisgrim/code/ei/app/EventMapSearchRule.php",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/EventController.php",
 		"/Users/chrisgrim/code/ei/resources/sass/layout.scss",
 		"/Users/chrisgrim/code/ei/resources/sass/app-lite.scss",
-		"/Users/chrisgrim/code/ei/resources/sass/components/sliderbutton.scss",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/OrganizerController.php",
 		"/Users/chrisgrim/code/ei/app/Organizer.php",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/StaffPicksController.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/ConversationsController.php",
 		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/admin-purgatory.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/admin-boneyard.vue",
@@ -755,13 +783,11 @@
 		"/Users/chrisgrim/code/ei/resources/js/pages/messages/message-show.vue",
 		"/Users/chrisgrim/code/ei/resources/sass/create/title.scss",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/AdminAreaEventsController.php",
-		"/Users/chrisgrim/code/ei/resources/js/app.js",
 		"/Users/chrisgrim/code/ei/resources/views/adminArea/purgatory.blade.php",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/title.vue",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/AdminAreaController.php",
 		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/approve/org-approval-bar.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/image.vue",
-		"/Users/chrisgrim/code/ei/resources/js/pages/create/location-google.vue",
 		"/Users/chrisgrim/code/ei/resources/sass/create/location.scss",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/nav.vue",
 		"/Users/chrisgrim/Library/Application Support/Sublime Text 3/Packages/XML/Snippets/long-tag.sublime-snippet",
@@ -778,19 +804,10 @@
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/category.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/description.vue",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/TicketsController.php",
-		"/Users/chrisgrim/code/ei/app/Event.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/ShowsController.php",
 		"/Users/chrisgrim/code/ei/resources/sass/create/layout.scss",
 		"/Users/chrisgrim/code/ei/resources/sass/components/modal.scss",
-		"/Users/chrisgrim/code/ei/app/Console/Kernel.php",
-		"/Users/chrisgrim/code/ei/app/Console/Commands/ForgotFinishEventsCommand.php",
-		"/Users/chrisgrim/code/ei/app/Console/Commands/NewsletterCommand.php",
-		"/Users/chrisgrim/code/ei/app/Console/Commands/KathNewsCommand.php",
-		"/Users/chrisgrim/code/ei/resources/views/emails/newsletter.blade.php",
-		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/approve/approval-bar.vue",
-		"/Users/chrisgrim/Library/Application Support/Sublime Text 3/Packages/User/long_tag_snippet_fixer.py",
-		"/Users/chrisgrim/code/ei/config/audit.php",
-		"/Users/chrisgrim/code/ei/app/AuditDrivers/MyCustomDriver.php"
+		"/Users/chrisgrim/code/ei/app/Console/Kernel.php"
 	],
 	"find":
 	{
@@ -801,6 +818,14 @@
 		"height": 164.0,
 		"where_history":
 		[
+			"/Users/chrisgrim/code/ei/resources/sass",
+			"/Users/chrisgrim/code/ei/resources",
+			"/Users/chrisgrim/code/ei/resources/sass",
+			"/Users/chrisgrim/code/ei",
+			"/Users/chrisgrim/code/ei/routes",
+			"/Users/chrisgrim/code/ei",
+			"/Users/chrisgrim/code/ei/resources/sass",
+			"/Users/chrisgrim/code/ei/resources/sass/events",
 			"/Users/chrisgrim/code/ei/resources/sass",
 			"/Users/chrisgrim/code/ei/resources/sass/events",
 			"/Users/chrisgrim/code/ei/resources/js/pages",
@@ -920,15 +945,7 @@
 			"/Users/chrisgrim/code/ei/resources/js/components",
 			"/Users/chrisgrim/code/ei/resources/sass",
 			"/Users/chrisgrim/code/ei",
-			"/Users/chrisgrim/code/ei/vendor",
-			"/Users/chrisgrim/code/ei/resources/sass",
-			"/Users/chrisgrim/code/ei/resources/views",
-			"/Users/chrisgrim/code/ei/resources/js",
-			"/Users/chrisgrim/code/ei/resources/sass",
-			"/Users/chrisgrim/code/ei/resources/js/components",
-			"/Users/chrisgrim/code/ei/app",
-			"/Users/chrisgrim/code/ei/resources/sass",
-			"/Users/chrisgrim/code/ei"
+			"/Users/chrisgrim/code/ei/vendor"
 		]
 	},
 	"find_state":
@@ -936,6 +953,124 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"rem",
+			"dropdown",
+			"showmap",
+			".showmap",
+			".showmap #cover",
+			"staffpicks__user--name",
+			"map",
+			"search__map",
+			"leaflet",
+			"ShowMore",
+			"showmore",
+			"showMore",
+			"ShowMore",
+			"header-left",
+			"header-left__tag",
+			"loadusers",
+			"searchUsers",
+			"searchEvents",
+			"searchUsers",
+			"searchLocation",
+			"searchNav",
+			"filterIndex",
+			"onlineevents",
+			"onlineList",
+			"console",
+			"currentOnlinePage",
+			"EventList",
+			"eventList",
+			"EventList",
+			"eventList",
+			"online",
+			"onlinesearchcontroller",
+			"auth",
+			"Request",
+			"request",
+			"Request",
+			"Session",
+			"Carbon",
+			"DB",
+			"RemoteLocationSearchRule",
+			"CategorySearchRule",
+			"EventRemoteSearchRule",
+			"EventMapSearchRule",
+			"DateSearchRule",
+			"GenreSearchRule",
+			"organizer",
+			"Organizer",
+			"EventSearchRule",
+			"OrganizerSearchRule",
+			"RemoteLocation",
+			"SearchData",
+			"CityList",
+			"User",
+			"Date",
+			"date",
+			"Date",
+			"date",
+			"Date",
+			"axios",
+			"6",
+			"dates",
+			"hasLocation",
+			"weekend",
+			"90",
+			"staff",
+			"showClass",
+			"bar",
+			"eventUrl",
+			"isMobile",
+			"configMob",
+			"config",
+			"configMob",
+			"remaining",
+			"dates",
+			"organizerImage",
+			"showMore",
+			"allowZoom",
+			"isModalVisible",
+			"event",
+			"shift",
+			"format",
+			"Format",
+			"format",
+			"ContactOrganizer",
+			"LoadMore",
+			"hasIntersected",
+			"intersected",
+			"Intersected",
+			"intersected",
+			"Intersected",
+			"intersected",
+			"eventUrl",
+			"descriptionText",
+			"showtimesText",
+			"advisoryText",
+			"organizer",
+			"organizerText",
+			"showmore",
+			"organizerText",
+			"400",
+			"descriptionText",
+			"staff",
+			".form-control.input",
+			"block",
+			"dropdown",
+			"filter__grid",
+			"4",
+			"40px",
+			"pagina",
+			"pag",
+			"pagination",
+			"6",
+			"8",
+			"filter__l",
+			"filter location",
+			"h2",
+			"h3",
+			"event",
 			"haslocation",
 			"searchType",
 			"searchtype",
@@ -945,125 +1080,7 @@
 			"mobile",
 			"Mobile",
 			"mobile",
-			"city",
-			"Pagination",
-			"pagination",
-			"Pagination",
-			"pagination",
-			"Pagination",
-			"pagination",
-			"Pagination",
-			"pagination",
-			"Pagination",
-			"pagination",
-			"map",
-			"test",
-			"city",
-			"selectOnlinePage",
-			"filter__body",
-			"template",
-			"body",
-			"important",
-			"closeMap",
-			"            closeMap() {\n                this.$store.commit('showmap', false);\n                this.mobileMap = `height:${window.innerHeight/2}px;`;\n                this.$nextTick(() => this.$refs.map.mapObject.invalidateSize());\n            },",
-			"closeMap",
-			"mapSearch",
-			"fullscreen",
-			"showEvents",
-			"onhidemap",
-			"hideDates",
-			"EventFilter",
-			"event",
-			"'test'",
-			"fullMap",
-			"fullmap",
-			"px",
-			"update",
-			"location",
-			"update",
-			"px",
-			"!important",
-			"shiftDown",
-			"mobile-online-events",
-			"results",
-			"event__filter",
-			"event-index__eventlist",
-			"eventlist",
-			"grey",
-			"event-search-list ",
-			"div style",
-			"style",
-			"32",
-			"128",
-			"0",
-			"event",
-			"popup-content",
-			"popup",
-			"40%",
-			"showFilter",
-			"showfilter",
-			"onfilter",
-			"fullMap",
-			"2rem",
-			"0.8",
-			"scale",
-			"sc",
-			"2,",
-			"mobiledates",
-			"filter__dropdown--footer",
-			"dropdown",
-			"calendarConfigMobile",
-			"mobilelocation",
-			"button",
-			"filter__location",
-			"filter",
-			"showLocation",
-			"mobileLocation",
-			"eventFilter",
-			"showfilter",
-			"store",
-			"save",
-			"filters",
-			"1.3",
-			"500",
-			"64",
-			"mobile",
-			"leaflet",
-			"leaflet-popup",
-			"popup-content-wrapper",
-			"important",
-			"px",
-			"!important",
-			"desktop",
-			"event-search-list",
-			"event-search",
-			"filter__row",
-			"template",
-			"h4",
-			"event-index__categories--item",
-			"bar",
-			"active",
-			"fullMap",
-			"onhide",
-			"filter__container ",
-			"filter__nav",
-			"nav",
-			"flatpickr-calendar",
-			"showfilters",
-			"button",
-			"categories",
-			"clearMobile",
-			"cancelMobile",
-			"90",
-			"event__results--title",
-			"mobile-filter",
-			"event__filter",
-			"marker-icon",
-			"mobile-map",
-			"control",
-			"zoom",
-			"leaflet-control-zoom",
-			"event__filter"
+			"city"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -1090,15 +1107,77 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7621,
+						"buffer_size": 7760,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1387,
-								1407
+								1220,
+								1246
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/PHP/PHP.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 407.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "app/Http/Controllers/EventController.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7736,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								487,
+								487
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/PHP/PHP.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 351.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "app/Http/Controllers/Search/OnlineSearchController.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2454,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1749,
+								1749
 							]
 						],
 						"settings":
@@ -1112,24 +1191,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 1,
-					"file": "resources/js/pages/events/event-index.vue",
+					"buffer": 3,
+					"file": "app/Http/Controllers/SearchController.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 20708,
+						"buffer_size": 9414,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								15213,
-								15213
+								2743,
+								2743
 							]
 						],
 						"settings":
@@ -1137,13 +1216,13 @@
 							"incomplete_sync": null,
 							"remote_loading": false,
 							"synced": false,
-							"syntax": "Packages/Vuejs Complete Package/vue.tmLanguage"
+							"syntax": "Packages/PHP/PHP.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 5656.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 3,
 					"type": "text"
 				}
 			]

@@ -30,6 +30,7 @@ Route::RESOURCE('reviewevents', 'ReviewEventsController');
 Route::RESOURCE('interactivelevels', 'InteractiveLevelController');
 
 
+Route::GET('/hidden/combine-categories', 'EventController@combine');
 
 
 
@@ -39,7 +40,9 @@ Route::POST('/search/storedata', 'SearchController@searchDatastore');
 
 Route::GET('/index/search', 'SearchController@index');
 
-Route::GET('/index/search-online', 'SearchController@onlinesearch');
+Route::GET('/index/search-online', 'Search\OnlineSearchController@index');
+
+Route::GET('/index/search-all', 'SearchController@allsearch');
 // This is the search for vuex
 Route::POST('/vuex/search', 'SearchController@filterIndex');
 

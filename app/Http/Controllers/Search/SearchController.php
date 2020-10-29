@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Search;
 
+use App\Http\Controllers\Controller;
 use App\Event;
 use App\Genre;
 use App\Category;
@@ -25,20 +26,13 @@ use DB;
 use Carbon\Carbon;
 use Session;
 
-
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
     public function index(Request $request)
     {
-        if ($request->price0) {
-            if ($request->price1 >= 100) {
-                $request->request->add(['price' => [$request->price0, 9999]]);
-            } else {
-                $request->request->add(['price' => [$request->price0,$request->price1 ]]);
-            }
-        }
+        if ($request->price0) {$request->request->add(['price' => [$request->price0,$request->price1 ]]);}
         if ($request->start) {$request->request->add(['dates' => [$request->start, $request->end]]);}
         if ($request->mapsearch) {$request->request->add([
             'mapboundary' => [
@@ -88,10 +82,6 @@ class SearchController extends Controller
 
      public function searchMapBoundary(Request $request)
     {
-        if ($request->price[1] >= 100) {
-            $low = $request->price[0];
-            $request->request->add(['price' => [$low, 9999]]);
-        }
         return Event::search('a')
             ->rule(EventMapSearchRule::class)
             ->with(['location', 'organizer','category', 'genres'])
@@ -122,107 +112,6 @@ class SearchController extends Controller
         return view('events.searchonline',compact('onlineevents', 'categories', 'maxprice', 'tags'));
     }
 
-    public function filterIndex(Request $request)
-    {
-
-        //parse the inputted dates into the correct format
-        $start = Carbon::parse($request->start)->startOfDay()->format('Y-m-d H:i:s');
-        $end = Carbon::parse($request->end)->startOfDay()->format('Y-m-d H:i:s');
-
-   
-        $events = Event::search('*')
-            ->where('closingDate', '>=', 'now/d')
-            ->when($request->category_id, function($query) use ($request) {
-                $query->where('category_id', $request->category_id);
-            })
-            ->when($request->longitude, function($query) use ($request) {
-                $query->whereGeoDistance('location_latlon', [floatval($request->longitude), floatval($request->latitude)], '100km');
-            })
-            ->when($request->start, function($query) use ($start, $end) {
-                $query->whereBetween('dates.date', [$start,$end]);
-            })
-            ->with(['location', 'organizer'])
-            ->get(); 
-
-        return response()->json($events);
-
-    }
-
-
-    public function searchNav(Request $request)
-    {
-        if ($request->type == 'category') {
-            if (!$request->keywords) {
-                $category = Category::search('*')->orderBy('rank', 'desc')->take(5)->get();
-                $tag = Genre::search('*')->where('admin', 1)->orderBy('rank', 'desc')->take(10)->get();
-                $remote = RemoteLocation::search('*')->take(5)->get();
-                return [
-                    'data' => $category->concat($tag)->concat($remote),
-                ];
-            }
-
-            $category = Category::search($request->keywords)
-            ->rule(CategorySearchRule::class)
-            ->orderBy('rank', 'desc')
-            ->take(5)
-            ->get();
-
-            $tag = Genre::search($request->keywords)
-            ->rule(GenreSearchRule::class)
-            ->where('admin', 1)
-            ->orderBy('rank', 'desc')
-            ->take(10)
-            ->get();
-
-            // $remote = RemoteLocation::search($request->keywords)
-            // ->rule(RemoteLocationSearchRule::class)
-            // ->take(5)
-            // ->get();
-            $concatdata = $category->concat($tag);
-            return [
-                'data' => $concatdata,
-            ];
-        }
-        
-        if ($request->type == 'event') {
-            if (!$request->keywords) {
-                $event = Event::where('status', 'p')->orderByDesc('rank')->take(5)->get();
-                $organizer = Organizer::where('status', 'p')->orderByDesc('rating')->take(5)->get();
-                return [
-                    'data' => $event->concat($organizer),
-                ];
-            }
-            $event = Event::search($request->keywords)
-            ->rule(EventSearchRule::class)
-            ->take(5)
-            ->get();
-
-            $organizer = Organizer::search($request->keywords)
-            ->rule(OrganizerSearchRule::class)
-            ->take(5)
-            ->get();
-            $concatdata = $event->concat($organizer);
-            return ['data' => $concatdata];
-        }
-
-        if ($request->keywords) {
-            $city = CityList::search($request->keywords)
-            ->rule(CityListSearchRule::class)
-            ->orderBy('rank', 'desc')
-            ->orderBy('population', 'desc')
-            ->get();
-        } else {
-            $city = CityList::search('*')
-            ->orderBy('rank', 'desc')
-            ->orderBy('population', 'desc')
-            ->take(10)
-            ->get();
-        }
-        return [
-            'data' => $city,
-        ];
-    }
-
     public function searchLocation(Request $request)
     {
         if ($request->keywords) {
@@ -244,17 +133,6 @@ class SearchController extends Controller
                 'data' => $city,
             ];
         }
-    }
-
-    public function searchUsers(Request $request)
-    {
-        if ($request->keywords) {
-            return  User::search($request->keywords)
-                    ->rule(UserSearchRule::class)
-                    ->take(10)
-                    ->get();
-        }
-        return User::all();
     }
 
     public function searchEvents(Request $request)

@@ -47,7 +47,11 @@ export default {
                 var mapboundary = `mapsearch=true&NElat=${this.data.mapboundary._northEast.lat}&NElng=${this.data.mapboundary._northEast.lng}&SWlat=${this.data.mapboundary._southWest.lat}&SWlng=${this.data.mapboundary._southWest.lng}&Clat=${this.center.lat}&Clng=${this.center.lng}&zoom=${this.zoom}`;
             }
             let content = `${city ? city : ''}&${lat ? lat : ''}&${lng ? lng : ''}&${category ? category : '' }&${dates ? dates : ''}&${price ? price : ''}&${tag ? tag : '' }&${mapboundary ? mapboundary : ''}`;
-            history.pushState(null, null,`/index/search?${content}`)
+            if (this.data.lat || this.data.mapboundary) {
+                history.pushState(null, null,`/index/search?${content}`)
+            } else {
+                history.pushState(null, null,`/index/search-online?${content}`)
+            }
         },
 
         getPushState() {
@@ -61,9 +65,10 @@ export default {
                 this.city = this.url.city;
             }
             if (this.url.dates) {
+                console.log('getting dates');
                 this.dates = this.url.dates;
-                this.datesSubmit = this.url.dates;
-                this.datesFormatted = this.url.dates.map(date => dayjs(date).format("ddd MMM D"));
+                this.computerDate = this.url.dates;
+                this.naturalDate = this.url.dates.map(date => dayjs(date).format("ddd MMM D"));
                 this.$store.commit('displaydates', this.url.dates.map(date => dayjs(date).format("MMM D")));
             }
             if (this.url.tag) {

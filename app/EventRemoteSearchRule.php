@@ -23,6 +23,10 @@ class EventRemoteSearchRule extends SearchRule
     {
         $array = ['must' => [], 'should' => []];
 
+        $array['must'][] = [
+            'match' => ['hasLocation' => false,]
+        ];
+        
         if (!Request::get('dates')) {
             $array['must'][] = [
                 'range' => [
@@ -38,7 +42,7 @@ class EventRemoteSearchRule extends SearchRule
                 'range' => [
                     'priceranges.price' => [
                         'gte' => Request::get('price')[0],
-                        'lte' => Request::get('price')[1] > 250 ? 9999 : Request::get('price')[1],
+                        'lte' => Request::get('price')[1],
                     ],
                 ],
             ];

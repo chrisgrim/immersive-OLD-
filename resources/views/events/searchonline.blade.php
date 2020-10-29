@@ -17,7 +17,7 @@
 
 @section('content')
     <div id="bodyArea">
-        <search-listing user="{{ auth()->id() }}" :tags="{{ $tags }}" :onlineevents="{{ $onlineevents->toJson() }}" :categories="{{ $categories }}" :maxprice="{{ $maxprice }}">
+        <vue-search-online user="{{ auth()->id() }}" :tags="{{ $tags }}" :onlineevents="{{ $onlineevents->toJson() }}" :categories="{{ $categories }}" :maxprice="{{ $maxprice }}">
     </div>
 @endsection
 

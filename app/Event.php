@@ -87,6 +87,7 @@ class Event extends Model implements Auditable
             'location_latlon' => $this->location_latlon,
             'shows' => $this->showsSelect,
             'genres' => $this->genreSelect,
+            'hasLocation' => $this->hasLocation
         ];
     }
 
@@ -516,11 +517,9 @@ class Event extends Model implements Auditable
                 ]
             ],
            
-            
-            // 'description' => [
-            //     'type' => 'text',
-            //     'analyzer' => 'english'
-            // ],
+            'hasLocation' => [
+                'type' => 'boolean',
+            ],
            
             'category_id' => [
                 'type' => 'integer',

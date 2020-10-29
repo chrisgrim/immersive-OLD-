@@ -20,8 +20,42 @@ class EventController extends Controller
     {
         $this->middleware(['auth', 'verified'])->except('index','show', 'fetch','indexfetch');
         $this->middleware('can:update,event')
-        ->except(['index','create','show','editEvents','store','fetchEditEvents','fetch', 'thanks','indexfetch']);
+        ->except(['index','create','show','editEvents','store','fetchEditEvents','fetch', 'thanks','indexfetch','combine']);
     }
+
+    public function combine() 
+    {
+        $trashedAndNotTrashed = Event::withTrashed()->get();
+        foreach ($trashedAndNotTrashed as $event) {
+            if ($event->category_id == 2) {
+                $event->update([ 
+                    'category_id' => 9,
+                ]);
+            }
+            if ($event->category_id == 11) {
+                $event->update([ 
+                    'category_id' => 10,
+                ]);
+            }
+            if ($event->category_id == 4) {
+                $event->update([ 
+                    'category_id' => 19,
+                ]);
+            }
+            if ($event->category_id == 17) {
+                $event->update([ 
+                    'category_id' => 16,
+                ]);
+            }
+            if ($event->category_id == 15) {
+                $event->update([ 
+                    'category_id' => 5,
+                ]);
+            }
+        }
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -29,8 +63,8 @@ class EventController extends Controller
      */
     public function index(Event $event)
     {
-        $thursday = Carbon::now()->startOfWeek()->addDays(3); 
-        $wednesday = Carbon::now()->startOfWeek()->addDays(9); 
+        $thursday = Carbon::now()->startOfWeek()->subDays(4); 
+        $wednesday = Carbon::now()->startOfWeek()->addDays(2); 
         $staffpicks = StaffPick::where(function($query) use ($thursday, $wednesday){
                 $query->whereDate('start_date', '>=', $thursday)
                         ->whereDate('end_date', '<=', $wednesday);
@@ -39,6 +73,7 @@ class EventController extends Controller
             ->with('event.category')
             ->limit(4)
             ->get();
+
         $categories = Category::orderBy('rank', 'desc')
             ->limit(14)
             ->get();
