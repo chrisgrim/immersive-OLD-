@@ -1,66 +1,108 @@
 <template>
-	<div :class="{ showcat: selectedCategory}" class="event-create__category grid">
-        <section :class="{ showcat: selectedCategory}" class="event-enter-category">
+    <div 
+        :class="{ showcat: selectedCategory}" 
+        class="event-create__category grid">
+        <section 
+            :class="{ showcat: selectedCategory}" 
+            class="event-enter-category">
             <div class="title">
                 <h2>Immersive Categories</h2>
             </div>
             <div class="field">
                 <multiselect 
-                v-show="categories.length > 0" 
-                v-model="selectedCategory" 
-                placeholder="Select Category"
-                label="name" 
-                track-by="name" 
-                deselectLabel=''
-                :allow-empty="false"  
-                :options="categoryOptions" 
-                open-direction="bottom"
-                @input="$v.selectedCategory.$touch"
-                :class="{ active: active == 'category','error': $v.selectedCategory.$error}"
-                @click="active = 'category'"
-                @blur="active = null" 
-                >
-                    <template slot="option" slot-scope="props">
+                    v-show="categories.length > 0" 
+                    v-model="selectedCategory" 
+                    placeholder="Select Category"
+                    label="name" 
+                    track-by="name" 
+                    deselectLabel=''
+                    :allow-empty="false"  
+                    :options="categoryOptions" 
+                    open-direction="bottom"
+                    @input="$v.selectedCategory.$touch"
+                    :class="{ active: active == 'category','error': $v.selectedCategory.$error}"
+                    @click="active = 'category'"
+                    @blur="active = null">
+                    <template 
+                        slot="option" 
+                        slot-scope="props">
                         <div class="option__desc">
                             <span class="option__title">{{ props.option.name }}</span>
                         </div>
                     </template>
                 </multiselect>
-                <input type="hidden" name="category" v-model="selectedCategory">
-                <div v-if="$v.selectedCategory.$error" class="validation-error">
-                    <p class="error" v-if="!$v.selectedCategory.required">Please select your event's category</p>
+                <input 
+                    type="hidden" 
+                    name="category" 
+                    v-model="selectedCategory">
+                <div 
+                    v-if="$v.selectedCategory.$error" 
+                    class="validation-error">
+                    <p 
+                        class="error" 
+                        v-if="!$v.selectedCategory.required">
+                        Please select your event's category
+                    </p>
                 </div>
 
                 <div>
-                    <p v-text="this.selectedCategory ? selectedCategory.description : ''"></p>
+                    <p v-text="this.selectedCategory ? selectedCategory.description : ''" />
                 </div>
             </div>
         </section>
 
-        <section :class="{ showcat: selectedCategory}" v-if="selectedCategory" class="event-show-category__image" :style="pageHeight">
+        <section 
+            :class="{ showcat: selectedCategory}" 
+            v-if="selectedCategory" 
+            class="event-show-category__image" 
+            :style="pageHeight">
             <picture>       
-                <source type="image/webp" :srcset="`/storage/${selectedCategory.largeImagePath}`"> 
+                <source 
+                    type="image/webp" 
+                    :srcset="`/storage/${selectedCategory.largeImagePath}`"> 
                 <img :src="`/storage/${selectedCategory.largeImagePath.slice(0, -4)}jpg`">
             </picture>
         </section>
         <div class="event-create__submit-button">
-            <button :disabled="disabled" @click.prevent="onBackInitial()" class="nav-back-button"> Your events </button>
+            <button 
+                :disabled="disabled" 
+                @click.prevent="onBackInitial()" 
+                class="nav-back-button"> 
+                Your events 
+            </button>
         </div>
         <div v-if="!approved">
             <div class="create-button__back">
-                <button :disabled="disabled" class="create" @click.prevent="onBack('location')"> Back </button>
+                <button 
+                    :disabled="disabled" 
+                    class="create" 
+                    @click.prevent="onBack('location')"> 
+                    Back 
+                </button>
             </div>
             <div class="create-button__forward">
-                <button :disabled="disabled" class="create" @click.prevent="onSubmit('shows')"> Save and Continue </button>
+                <button 
+                    :disabled="disabled" 
+                    class="create" 
+                    @click.prevent="onSubmit('shows')"> 
+                    Save and Continue 
+                </button>
             </div>
         </div>
         <div v-else>
             <div class="create-button__forward">
-                <button :disabled="disabled" class="create" @click.prevent="save()"> Save </button>
+                <button 
+                    :disabled="disabled" 
+                    class="create" 
+                    @click.prevent="save()"> 
+                    Save 
+                </button>
             </div>
         </div>
         <transition name="slide-fade">
-            <div v-if="updated" class="updated-notifcation">
+            <div 
+                v-if="updated" 
+                class="updated-notifcation">
                 <p>Your event has been updated.</p>
             </div>
         </transition>
@@ -131,7 +173,6 @@
                 });
             },
 
-
             handleResize() {
                 if (window.innerWidth > 1050) {
                     this.pageHeight = `height:calc(${window.innerHeight}px - 7rem)`;
@@ -146,22 +187,12 @@
                     this.selectedCategory = res.data;
                 });
             },
-
-            selectCategoryType() {
-
-                if (this.event.hasLocation) {
-                    return this.categoryOptions = this.categories.filter(category => category.remote == 0);
-                } else {
-                    return this.categoryOptions = this.categories.filter(category => category.remote == 1);
-                }
-            }
 		},
 
         created() {
             window.addEventListener('resize', this.handleResize)
             this.handleResize();
             this.onLoad();
-            this.selectCategoryType();
         },
 
         watch: {

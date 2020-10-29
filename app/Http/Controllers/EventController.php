@@ -52,6 +52,11 @@ class EventController extends Controller
                     'category_id' => 5,
                 ]);
             }
+            if ($event->category_id == 14) {
+                $event->update([ 
+                    'category_id' => 13,
+                ]);
+            }
         }
     }
 

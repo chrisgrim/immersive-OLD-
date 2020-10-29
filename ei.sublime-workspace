@@ -532,25 +532,16 @@
 			"file": "app/Http/Controllers/EventController.php",
 			"settings":
 			{
-				"buffer_size": 7736,
+				"buffer_size": 7890,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "app/Http/Controllers/Search/OnlineSearchController.php",
+			"file": "resources/js/pages/create/category.vue",
 			"settings":
 			{
-				"buffer_size": 2454,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "app/Http/Controllers/SearchController.php",
-			"settings":
-			{
-				"buffer_size": 9414,
+				"buffer_size": 6952,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -667,12 +658,11 @@
 		"/Users/chrisgrim/code/ei/app",
 		"/Users/chrisgrim/code/ei/app/Http",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/Search",
 		"/Users/chrisgrim/code/ei/resources",
 		"/Users/chrisgrim/code/ei/resources/js",
 		"/Users/chrisgrim/code/ei/resources/js/mixins",
 		"/Users/chrisgrim/code/ei/resources/js/pages",
-		"/Users/chrisgrim/code/ei/resources/js/pages/events",
+		"/Users/chrisgrim/code/ei/resources/js/pages/create",
 		"/Users/chrisgrim/code/ei/resources/sass",
 		"/Users/chrisgrim/code/ei/resources/sass/auth",
 		"/Users/chrisgrim/code/ei/resources/sass/nav",
@@ -680,9 +670,9 @@
 	],
 	"file_history":
 	[
-		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-index.vue",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/SearchController.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/Search/OnlineSearchController.php",
+		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-index.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/events/components/filter.vue",
 		"/Users/chrisgrim/code/ei/app/EventRemoteSearchRule.php",
 		"/Users/chrisgrim/code/ei/app/EventMapSearchRule.php",
@@ -1098,7 +1088,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -1126,10 +1116,10 @@
 							"syntax": "Packages/PHP/PHP.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 407.0,
+						"translation.y": 539.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
@@ -1138,15 +1128,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7736,
+						"buffer_size": 7890,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								487,
-								487
+								1702,
+								1702
 							]
 						],
 						"settings":
@@ -1157,27 +1147,27 @@
 							"syntax": "Packages/PHP/PHP.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 351.0,
+						"translation.y": 957.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "app/Http/Controllers/Search/OnlineSearchController.php",
+					"file": "resources/js/pages/create/category.vue",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2454,
+						"buffer_size": 6952,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1749,
-								1749
+								640,
+								640
 							]
 						],
 						"settings":
@@ -1185,44 +1175,13 @@
 							"incomplete_sync": null,
 							"remote_loading": false,
 							"synced": false,
-							"syntax": "Packages/PHP/PHP.sublime-syntax"
+							"syntax": "Packages/Vuejs Complete Package/vue.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 708.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "app/Http/Controllers/SearchController.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 9414,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2743,
-								2743
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/PHP/PHP.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
 					"type": "text"
 				}
 			]
