@@ -17,4 +17,11 @@ class SearchDataController extends Controller
 
         return SearchData::where('search_type', $request->type)->limit(40)->get();
     }
+
+    public function store(Request $request)
+    {
+        SearchData::store($request);
+    }
+
+
 }

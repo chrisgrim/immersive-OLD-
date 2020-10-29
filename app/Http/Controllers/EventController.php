@@ -20,46 +20,8 @@ class EventController extends Controller
     {
         $this->middleware(['auth', 'verified'])->except('index','show', 'fetch','indexfetch');
         $this->middleware('can:update,event')
-        ->except(['index','create','show','editEvents','store','fetchEditEvents','fetch', 'thanks','indexfetch','combine']);
+        ->except(['index','create','show','editEvents','store','fetchEditEvents','fetch', 'thanks','indexfetch']);
     }
-
-    public function combine() 
-    {
-        $trashedAndNotTrashed = Event::withTrashed()->get();
-        foreach ($trashedAndNotTrashed as $event) {
-            if ($event->category_id == 2) {
-                $event->update([ 
-                    'category_id' => 9,
-                ]);
-            }
-            if ($event->category_id == 11) {
-                $event->update([ 
-                    'category_id' => 10,
-                ]);
-            }
-            if ($event->category_id == 4) {
-                $event->update([ 
-                    'category_id' => 19,
-                ]);
-            }
-            if ($event->category_id == 17) {
-                $event->update([ 
-                    'category_id' => 16,
-                ]);
-            }
-            if ($event->category_id == 15) {
-                $event->update([ 
-                    'category_id' => 5,
-                ]);
-            }
-            if ($event->category_id == 14) {
-                $event->update([ 
-                    'category_id' => 13,
-                ]);
-            }
-        }
-    }
-
 
     /**
      * Display a listing of the resource.

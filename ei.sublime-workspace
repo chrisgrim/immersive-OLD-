@@ -523,25 +523,36 @@
 			"file": "routes/web.php",
 			"settings":
 			{
-				"buffer_size": 7760,
+				"buffer_size": 7682,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "app/Http/Controllers/EventController.php",
+			"contents": "<?php\n\nnamespace App\\Http\\Controllers;\n\nuse App\\SearchData;\nuse Illuminate\\Http\\Request;\n\nclass SearchDataController extends Controller\n{\n    public function create(Request $request)\n    {\n        return $categorySearches = \\App\\SearchData::where('search_type', $request->type)\n            ->selectRaw('count(*) as count, search_term as name') \n            ->groupBy('search_term') \n            ->orderByRaw('count(*) desc')\n            ->get();\n\n        return SearchData::where('search_type', $request->type)->limit(40)->get();\n    }\n\n    public function store(Request $request)\n    {\n        \n    }\n\n\n}\n",
+			"file": "app/Http/Controllers/SearchDataController.php",
+			"file_size": 538,
+			"file_write_time": 132422472547205045,
 			"settings":
 			{
-				"buffer_size": 7890,
+				"buffer_size": 606,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "resources/js/pages/layouts/nav-search.vue",
+			"settings":
+			{
+				"buffer_size": 11469,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "resources/js/pages/create/category.vue",
+			"file": "app/Http/Controllers/SearchController.php",
 			"settings":
 			{
-				"buffer_size": 6952,
+				"buffer_size": 9242,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -662,17 +673,22 @@
 		"/Users/chrisgrim/code/ei/resources/js",
 		"/Users/chrisgrim/code/ei/resources/js/mixins",
 		"/Users/chrisgrim/code/ei/resources/js/pages",
-		"/Users/chrisgrim/code/ei/resources/js/pages/create",
+		"/Users/chrisgrim/code/ei/resources/js/pages/events",
+		"/Users/chrisgrim/code/ei/resources/js/pages/events/components",
+		"/Users/chrisgrim/code/ei/resources/js/store",
 		"/Users/chrisgrim/code/ei/resources/sass",
 		"/Users/chrisgrim/code/ei/resources/sass/auth",
 		"/Users/chrisgrim/code/ei/resources/sass/nav",
-		"/Users/chrisgrim/code/ei/resources/views"
+		"/Users/chrisgrim/code/ei/routes"
 	],
 	"file_history":
 	[
+		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-index.vue",
+		"/Users/chrisgrim/code/ei/resources/js/store/index.js",
+		"/Users/chrisgrim/code/ei/resources/js/pages/create/category.vue",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/EventController.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/SearchController.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/Search/OnlineSearchController.php",
-		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-index.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/events/components/filter.vue",
 		"/Users/chrisgrim/code/ei/app/EventRemoteSearchRule.php",
 		"/Users/chrisgrim/code/ei/app/EventMapSearchRule.php",
@@ -688,7 +704,6 @@
 		"/Users/chrisgrim/code/ei/resources/js/pages/events/components/show-more.vue",
 		"/Users/chrisgrim/code/ei/routes/api.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/StaffPicksController.php",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/EventController.php",
 		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/admin-staff-picks.vue",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/Search/SearchController.php",
 		"/Users/chrisgrim/code/ei/resources/js/pages/events/components/pagination.vue",
@@ -707,7 +722,6 @@
 		"/Users/chrisgrim/code/ei/resources/sass/events/event-maps.scss",
 		"/Users/chrisgrim/code/ei/resources/js/pages/read/popup-content.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/layouts/nav.vue",
-		"/Users/chrisgrim/code/ei/resources/js/store/index.js",
 		"/Users/chrisgrim/code/ei/resources/sass/components/leaflet.scss",
 		"/Users/chrisgrim/code/ei/resources/sass/events/event-index.scss",
 		"/Users/chrisgrim/code/ei/resources/views/layouts/meta.blade.php",
@@ -791,7 +805,6 @@
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/advisories.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/tickets.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/shows.vue",
-		"/Users/chrisgrim/code/ei/resources/js/pages/create/category.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/description.vue",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/TicketsController.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/ShowsController.php",
@@ -808,6 +821,8 @@
 		"height": 164.0,
 		"where_history":
 		[
+			"/Users/chrisgrim/code/ei",
+			"/Users/chrisgrim/code/ei/resources/js/pages",
 			"/Users/chrisgrim/code/ei/resources/sass",
 			"/Users/chrisgrim/code/ei/resources",
 			"/Users/chrisgrim/code/ei/resources/sass",
@@ -933,9 +948,7 @@
 			"/Users/chrisgrim/code/ei",
 			"/Users/chrisgrim/code/ei/resources/sass",
 			"/Users/chrisgrim/code/ei/resources/js/components",
-			"/Users/chrisgrim/code/ei/resources/sass",
-			"/Users/chrisgrim/code/ei",
-			"/Users/chrisgrim/code/ei/vendor"
+			"/Users/chrisgrim/code/ei/resources/sass"
 		]
 	},
 	"find_state":
@@ -943,6 +956,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"SearchDataController",
+			"searchType",
+			"location",
 			"rem",
 			"dropdown",
 			"showmap",
@@ -1067,10 +1083,7 @@
 			"searchType",
 			"clearLocation",
 			"search",
-			"mobile",
-			"Mobile",
-			"mobile",
-			"city"
+			"mobile"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -1088,7 +1101,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 3,
 			"sheets":
 			[
 				{
@@ -1097,15 +1110,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7760,
+						"buffer_size": 7682,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1220,
-								1246
+								1244,
+								1244
 							]
 						],
 						"settings":
@@ -1116,27 +1129,27 @@
 							"syntax": "Packages/PHP/PHP.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 539.0,
+						"translation.y": 313.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "app/Http/Controllers/EventController.php",
+					"file": "app/Http/Controllers/SearchDataController.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7890,
+						"buffer_size": 606,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1702,
-								1702
+								595,
+								595
 							]
 						],
 						"settings":
@@ -1147,7 +1160,7 @@
 							"syntax": "Packages/PHP/PHP.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 957.0,
+						"translation.y": 241.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
@@ -1155,19 +1168,19 @@
 				},
 				{
 					"buffer": 2,
-					"file": "resources/js/pages/create/category.vue",
+					"file": "resources/js/pages/layouts/nav-search.vue",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6952,
+						"buffer_size": 11469,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								640,
-								640
+								10446,
+								10446
 							]
 						],
 						"settings":
@@ -1178,10 +1191,41 @@
 							"syntax": "Packages/Vuejs Complete Package/vue.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 708.0,
+						"translation.y": 5179.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "app/Http/Controllers/SearchController.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9242,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5107,
+								5107
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/PHP/PHP.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 4789.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
 					"type": "text"
 				}
 			]

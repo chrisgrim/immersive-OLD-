@@ -69,7 +69,7 @@ mutations: {
 actions: {
     async getContent ({ commit }) {
         try {
-            let {data} = await axios.get('/api/search/navbar/content')
+            let {data} = await axios.get('/api/search/navbar/content', { params: { keywords: '', type: 'category' } })
             commit('presearch', data.data)
         } catch(err) {
           console.log(err)

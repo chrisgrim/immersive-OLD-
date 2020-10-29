@@ -30,13 +30,9 @@ Route::RESOURCE('reviewevents', 'ReviewEventsController');
 Route::RESOURCE('interactivelevels', 'InteractiveLevelController');
 
 
-Route::GET('/hidden/combine-categories', 'EventController@combine');
-
-
-
 // ----------   Search Page -------
 
-Route::POST('/search/storedata', 'SearchController@searchDatastore');
+Route::POST('/search/storedata', 'SearchDataController@store');
 
 Route::GET('/index/search', 'SearchController@index');
 

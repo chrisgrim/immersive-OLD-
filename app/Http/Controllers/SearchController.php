@@ -174,10 +174,6 @@ class SearchController extends Controller
             ->take(10)
             ->get();
 
-            // $remote = RemoteLocation::search($request->keywords)
-            // ->rule(RemoteLocationSearchRule::class)
-            // ->take(5)
-            // ->get();
             $concatdata = $category->concat($tag);
             return [
                 'data' => $concatdata,

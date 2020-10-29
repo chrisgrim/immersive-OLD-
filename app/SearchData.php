@@ -18,19 +18,11 @@ class SearchData extends Model
      *
      * @return nothing is returned
      */
-    public static function storeSearch($request)
+    public static function store($request)
     {
-        if ($request->category) {
-             SearchData::create([
-                'search_term' => Category::find($request->category)->name,
-                'search_type' => 'category'
-            ]);
-        }
-        if ($request->tag) {
-            SearchData::create([
-                'search_term' => $request->tag,
-                'search_type' => 'tag'
-            ]);
-        }
+         SearchData::create([
+            'search_term' => $request->name,
+            'search_type' => $request->type
+        ]);
     }
 }

@@ -15,6 +15,14 @@
                     </div>
                     <div class="event-index__switch-search">
                         <div class="event-index__switch-search--tab">
+                            <button @click="searchType = 'category'">
+                                Category/Tag
+                            </button>
+                            <div 
+                                :class="{active: searchType == 'category'}" 
+                                class="event-index__bottom-bar" />
+                        </div>
+                        <div class="event-index__switch-search--tab">
                             <button @click="searchType = 'location'">
                                 Location
                             </button>
@@ -29,13 +37,6 @@
                             <div    
                                 :class="{active: searchType == 'event'}" 
                                 class="event-index__bottom-bar" />
-                        </div>
-                        <div class="event-index__switch-search--tab">
-                            <a href="/index/search-online">
-                                <button>
-                                    Online
-                                </button>
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -369,7 +370,7 @@
                 mobile: window.innerWidth > 768 ? true : false,
                 translateStaff: 0,
                 translateCat: 0,
-                searchType: 'location',
+                searchType: 'category',
                 staffwidth: window.innerWidth > 768 ? 100 : 90,
                 width: window.innerWidth > 768 ? '33%' : '90%',
                 hover: '',
