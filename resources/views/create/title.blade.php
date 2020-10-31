@@ -4,9 +4,9 @@
     <div class="create-body">
         @include('create.nav')
         @if (auth()->user()->events()->count() == 1 && auth()->user()->events()->first()->status == 0 )
-            <create-title :new="true" :event="{{$event}}" /></create-title>	
+            <create-title :newsubmission="true" :event="{{$event}}" /></create-title>	
         @else
-            <create-title :new="false" :event="{{$event}}" /></create-title>
+            <create-title :newsubmission="false" :event="{{$event}}" /></create-title>
         @endif
     </div>
 @endsection

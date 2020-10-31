@@ -25,7 +25,8 @@ class TitleStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:500|min:1'
+            'name' => 'required|max:500|min:1',
+            'tagLine' => 'required'
         ];
     }
 }

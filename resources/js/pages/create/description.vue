@@ -1,5 +1,5 @@
 <template>
-	<div class="event-create__description grid">
+    <div class="event-create__description grid">
         <section class="event-create">
             <div class="title">
                 <h2>Description</h2>
@@ -7,35 +7,34 @@
             <div class="field">
                 <label class="area"> Describe your event to our readers <span v-if="event.hasLocation"><b>(Please include COVID-19 precaution information)</b></span> </label>
                 <textarea 
-                type="text"
-                name="description" 
-                v-model="group.description" 
-                placeholder="eg. Our super scary event will bring your fears to the surface..."
-                :class="{ active: active == 'description','error': $v.group.description.$error }"
-                @input="$v.group.description.$touch"
-                @click="active = 'description'"
-                @blur="active = null" 
-                rows="14"></textarea>
+                    type="text"
+                    name="description" 
+                    v-model="group.description" 
+                    placeholder="eg. Our super scary event will bring your fears to the surface..."
+                    :class="{ active: active == 'description','error': $v.group.description.$error }"
+                    @input="$v.group.description.$touch"
+                    @click="active = 'description'"
+                    @blur="active = null" 
+                    rows="14" />
                 <div v-if="$v.group.description.$error" class="validation-error">
-                    <p class="error" v-if="!$v.group.description.required">Must provide a description</p>
-                </div>
+                    <p class="error" v-if="!$v.group.description.required">Must provide a description</p>
+                </div>
             </div>
             <div class="field">
                 <label>Event Link (Optional)</label>
-                <input 
-                type="text" 
-                v-model="group.websiteUrl"
-                :class="{ active: active == 'website','error': $v.group.websiteUrl.$error }"
-                @click="onToggle('website')"
-                @blur="active = null"
-                @input="$v.group.websiteUrl.$touch"
-                placeholder="Link to a page that has more information about your event"
-                />
+                <input 
+                    type="text" 
+                    v-model="group.websiteUrl"
+                    :class="{ active: active == 'website','error': $v.group.websiteUrl.$error }"
+                    @click="onToggle('website')"
+                    @blur="active = null"
+                    @input="$v.group.websiteUrl.$touch"
+                    placeholder="Link to a page that has more information about your event">
                 <div v-if="$v.group.websiteUrl.$error" class="validation-error">
                     <p class="error" v-if="!$v.group.websiteUrl.url">Must be a url (https://...)</p>
                     <p class="error" v-if="!$v.group.websiteUrl.webNotWorking">One of your urls isn't working</p>
-                </div>
-            </div>
+                </div>
+            </div>
         </section>
 
         <section>
@@ -45,50 +44,38 @@
             <div class="field">
                 <label>Type in or select all show tags. We use these to help people find your event!</label>
                 <multiselect 
-                v-model="tagName"
-                tag-placeholder="Add this as new tag" 
-                placeholder="Type here to create your own" 
-                label="name"
-                :close-on-select="false"
-                track-by="id" 
-                :options="tagOptions" 
-                :multiple="true" 
-                :taggable="true" 
-                tag-position="bottom"
-                :class="{ active: active == 'genre','error': $v.tagName.$error }"
-                @tag="addTag"
-                @input="$v.tagName.$touch"
-                @click="active = 'genre'"
-                @blur="active = null"
-                ></multiselect>
+                    v-model="tagName"
+                    tag-placeholder="Add this as new tag" 
+                    placeholder="Type here to create your own" 
+                    label="name"
+                    :close-on-select="false"
+                    track-by="id" 
+                    :options="tagOptions" 
+                    :multiple="true" 
+                    :taggable="true" 
+                    tag-position="bottom"
+                    :class="{ active: active == 'genre','error': $v.tagName.$error }"
+                    @tag="addTag"
+                    @input="$v.tagName.$touch"
+                    @click="active = 'genre'"
+                    @blur="active = null" />
                 <div v-if="$v.tagName.$error" class="validation-error">
                     <p class="error" v-if="!$v.tagName.required">Must select at least one Tag</p>
                     <p class="error" v-if="!$v.tagName.maxLength">No more than 10 tags</p>
                 </div>
             </div>
         </section>
-        <div class="event-create__submit-button">
-            <button :disabled="disabled" @click.prevent="onBackInitial()" class="nav-back-button"> Your events </button>
-        </div>
-        <div v-if="!approved">
-            <div class="create-button__back">
-                <button :disabled="disabled" class="create" @click.prevent="onBack('tickets')"> Back </button>
-            </div>
-            <div class="create-button__forward">
-                <button :disabled="disabled" class="create" @click.prevent="onSubmit('advisories')"> Save and continue </button>
-            </div>
-        </div>
-        <div v-else>
-            <div class="create-button__forward">
-                <button :disabled="disabled" class="create" @click.prevent="save()"> Save </button>
-            </div>
-        </div>
+        <Submit 
+            @submit="onSubmit"
+            :disabled="disabled" 
+            previous="tickets"
+            next="advisories" 
+            :event="event" />
         <transition name="slide-fade">
             <div v-if="updated" class="updated-notifcation">
                 <p>Your event has been updated.</p>
             </div>
         </transition>
-        
     </div>
 </template>
 
@@ -96,14 +83,15 @@
     import formValidationMixin from '../../mixins/form-validation-mixin'
     import Multiselect from 'vue-multiselect'
     import { required, url, maxLength } from 'vuelidate/lib/validators'
-    import _ from 'lodash'
+    import Submit  from './components/submit-buttons.vue'
 
 	export default {
-        components: { Multiselect },
-
-        mixins: [formValidationMixin],
 
 		props: ['event', 'loadtags'],
+
+        components: { Multiselect, Submit },
+
+        mixins: [formValidationMixin],
 
         computed: {
             endpoint() {
@@ -143,22 +131,10 @@
                 if (this.checkVuelidate()) { return false };
 				axios.patch(this.endpoint, this.group)
                 .then(res => { 
-                    value == 'exit' ? this.onBackInitial() : this.onForward(value);
+                    value == 'save' ? this.save() : this.onForward(value);
                 })
                 .catch(err => { this.onErrors(err) });
 			},
-
-            save(value) {
-                if (this.checkVuelidate()) { return false };
-                axios.patch(this.endpoint, this.group)
-                .then(res => { 
-                    this.onLoad();
-                    this.disabled = false;
-                    this.updated = true;
-                    setTimeout(() => this.updated = false, 3000);
-                })
-                .catch(err => { this.onErrors(err) });
-            },
 
             onToggle(arr) {
                 this.active = arr;

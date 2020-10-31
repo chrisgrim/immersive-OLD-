@@ -31,27 +31,36 @@
                 <div class="field">
                     <label> Is your location hidden? </label>
                     <div id="cover">
-                        <input  @input="$v.location.hiddenLocationToggle.$touch" v-model="location.hiddenLocationToggle" type="checkbox" id="checkbox">
-                        <div id="bar"></div>
+                        <input 
+                            @input="$v.location.hiddenLocationToggle.$touch" 
+                            v-model="location.hiddenLocationToggle" 
+                            type="checkbox" 
+                            id="checkbox">
+                        <div id="bar" />
                         <div id="knob">
-                            <p v-if="location.hiddenLocationToggle">Yes</p>
-                            <p v-else="location.hiddenLocationToggle">No</p>
+                            <p v-if="location.hiddenLocationToggle">
+                                Yes
+                            </p>
+                            <p v-else>
+                                No
+                            </p>
                         </div>
                     </div>
                 </div>
-                <div class="field" v-if="location.hiddenLocationToggle">
-                     <label> Please enter how participants will be notified of the location. (Required) </label>
+                <div 
+                    class="field" 
+                    v-if="location.hiddenLocationToggle">
+                    <label> Please enter how participants will be notified of the location. (Required) </label>
                     <textarea 
-                    v-model.trim="location.hiddenLocation" 
-                    rows="4" 
-                    :class="{ active: active == 'hidden', 'error': $v.location.hiddenLocation.$error }"
-                    required 
-                    autofocus
-                    placeholder="...the night before you will receieve an email containing the location..."
-                    @click="active = 'hidden'"
-                    @blur="active = null"
-                    @input="$v.location.hiddenLocation.$touch"
-                    />
+                        v-model.trim="location.hiddenLocation" 
+                        rows="4" 
+                        :class="{ active: active == 'hidden', 'error': $v.location.hiddenLocation.$error }"
+                        required 
+                        autofocus
+                        placeholder="...the night before you will receieve an email containing the location..."
+                        @click="active = 'hidden'"
+                        @blur="active = null"
+                        @input="$v.location.hiddenLocation.$touch" />
                     <div v-if="$v.location.hiddenLocation.$error" class="validation-error">
                         <p class="error" v-if="!$v.location.hiddenLocation.ifHidden">Please let our readers know how they will be informed</p>
                     </div>
@@ -59,13 +68,12 @@
                 <div class="field">
                     <label> Venue name (optional) </label>
                     <input 
-                    v-model="location.venue" 
-                    placeholder="Venue name"
-                    :class="{ active: active == 'venue', 'error': $v.location.venue.$error }"
-                    @click="active = 'venue'"
-                    @blur="active = null"
-                    type="text"
-                    />
+                        v-model="location.venue" 
+                        placeholder="Venue name"
+                        :class="{ active: active == 'venue', 'error': $v.location.venue.$error }"
+                        @click="active = 'venue'"
+                        @blur="active = null"
+                        type="text">
                     <div v-if="$v.location.$error" class="validation-error">
                         <p class="error" v-if="$v.location.venue.$error">No longer than 40 characters</p>
                     </div>
@@ -74,15 +82,14 @@
                     <label> Event Location </label>
                     <label v-if="location.hiddenLocationToggle"> Please enter a full address. This will NOT appear in your event description, but will aid users in finding events near them. If you do not have an exact address, please enter the closest zip code. <br> <b>Note:</b> If you <i>just</i> enter a major city, your event will overlap with others on map view. Be as specific as possible.</label>
                     <input 
-                    ref="autocomplete" 
-                    :placeholder="locationPlaceholder"
-                    :class="{ active: active == 'location', 'error': $v.location.latitude.$error }"
-                    autocomplete="false"
-                    onfocus="value = ''" 
-                    @click="active = 'location'"
-                    @blur="active = null"
-                    type="text"
-                    />
+                        ref="autocomplete" 
+                        :placeholder="locationPlaceholder"
+                        :class="{ active: active == 'location', 'error': $v.location.latitude.$error }"
+                        autocomplete="false"
+                        onfocus="value = ''" 
+                        @click="active = 'location'"
+                        @blur="active = null"
+                        type="text">
                     <div v-if="$v.location.$error" class="validation-error">
                         <p class="error" v-if="!$v.location.latitude.ifLocation">Please select from the list of locations</p>
                         <p class="error" v-if="!$v.location.city.ifLocation">We couldn't determine the city. Please try again.</p>
@@ -93,22 +100,21 @@
                 <div class="field">
                     <label> What mediums will your remote event be using? </label>
                     <multiselect 
-                    v-model="remoteLocations"
-                    tag-placeholder="Add this as new tag" 
-                    placeholder="Type here to create your own" 
-                    label="name"
-                    :close-on-select="true"
-                    track-by="id" 
-                    :options="remoteLocationOptions" 
-                    :multiple="true" 
-                    :taggable="true" 
-                    tag-position="bottom"
-                    :class="{ active: active == 'remote','error': $v.remoteLocations.$error}"
-                    @input="$v.remoteLocations.$touch"
-                    @tag="addTag"
-                    @click="active = 'remote'"
-                    @blur="active = null"
-                    ></multiselect>
+                        v-model="remoteLocations"
+                        tag-placeholder="Add this as new tag" 
+                        placeholder="Type here to create your own" 
+                        label="name"
+                        :close-on-select="true"
+                        track-by="id" 
+                        :options="remoteLocationOptions" 
+                        :multiple="true" 
+                        :taggable="true" 
+                        tag-position="bottom"
+                        :class="{ active: active == 'remote','error': $v.remoteLocations.$error}"
+                        @input="$v.remoteLocations.$touch"
+                        @tag="addTag"
+                        @click="active = 'remote'"
+                        @blur="active = null" />
                     <div v-if="$v.remoteLocations.$error" class="validation-error">
                         <p class="error" v-if="!$v.remoteLocations.ifNoLocation">Please choose at least one Mobile Location</p>
                     </div>
@@ -116,60 +122,49 @@
                 <div class="field">
                     <label class="area"> Additional instructions or suggestions (optional) </label>
                     <textarea 
-                    type="text"
-                    name="description" 
-                    v-model="description" 
-                    placeholder="eg. Sign into Zoom 10 minutes early... "
-                    :class="{ active: active == 'description'}"
-                    @click="active = 'description'"
-                    @input="$v.description.$touch"
-                    @blur="active = null" 
-                    rows="8"></textarea>
+                        type="text"
+                        name="description" 
+                        v-model="description" 
+                        placeholder="eg. Sign into Zoom 10 minutes early... "
+                        :class="{ active: active == 'description'}"
+                        @click="active = 'description'"
+                        @input="$v.description.$touch"
+                        @blur="active = null" 
+                        rows="8" />
                 </div>
             </div>
-            <CubeSpinner :loading="loading"></CubeSpinner>
+            <CubeSpinner :loading="loading" />
         </section>
 
         <section style="width:100%">
-            <div :class="{ showmap: location.latitude && hasLocation}" class="event-show-location" :style="pageHeight">
-                <div v-if="map.center && hasLocation" class="event-create-map">
-                    <div class="zoom">
-                        <div class="zoom__in">
-                            <button @click.prevent="map.zoom += 1">
-                                <svg viewBox="0 0 16 16" height="16" width="16" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M7 1a1 1 0 0 1 2 0v14a1 1 0 1 1-2 0V1z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"></path></svg>
-                            </button>
-                        </div>
-                        <div class="zoom__out">
-                            <button @click.prevent="map.zoom -= 1">
-                                <svg viewBox="0 0 16 16" height="16" width="16" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"></path></svg>
-                            </button>
-                        </div>
-                    </div>
-                    <div :style="pageHeight" style="width:100%;">
-                        <l-map :zoom="map.zoom" :center="map.center" :options="{ scrollWheelZoom: map.allowZoom, zoomControl: map.allowZoom }">
-                        <l-tile-layer :url="map.url"></l-tile-layer>
-                        <l-marker :lat-lng="map.center"></l-marker>
+            <div 
+                :class="{ showmap: location.latitude && hasLocation}" 
+                class="event-show-location" 
+                :style="pageHeight">
+                <div 
+                    v-if="map.center && hasLocation" 
+                    class="event-create-map">
+                    <div
+                        class="event-show-map"
+                        :style="pageHeight" 
+                        style="width:100%;">
+                        <l-map 
+                            :zoom="map.zoom" 
+                            :center="map.center" 
+                            :options="{ scrollWheelZoom: false, zoomControl: true }">
+                            <l-tile-layer :url="map.url" />
+                            <l-marker :lat-lng="map.center" />
                         </l-map>
                     </div>  
                 </div>
             </div>
         </section>
-        <div class="event-create__submit-button">
-            <button :disabled="disabled" @click.prevent="onBackInitial()" class="nav-back-button"> Your events </button>
-        </div>
-        <div v-if="!approved">
-            <div class="create-button__back">
-                <button :disabled="disabled" class="create" @click.prevent="onBack('title')"> Back </button>
-            </div>
-            <div class="create-button__forward">
-                <button :disabled="disabled" class="create" @click.prevent="onSubmit('category')"> Save and Continue </button>
-            </div>
-        </div>
-        <div v-else>
-            <div class="create-button__forward">
-                <button :disabled="disabled" class="create" @click.prevent="save()"> Save </button>
-            </div>
-        </div>
+        <Submit 
+            @submit="onSubmit"
+            :disabled="disabled" 
+            previous="title"
+            next="category" 
+            :event="event" />
         <transition name="slide-fade">
             <div v-if="updated" class="updated-notifcation">
                 <p>Your event has been updated.</p>
@@ -186,10 +181,12 @@
     import { required, minLength, requiredIf, maxLength } from 'vuelidate/lib/validators'
     import {LMap, LTileLayer, LMarker} from 'vue2-leaflet'
     import _ from 'lodash'
+    import Submit  from './components/submit-buttons.vue'
+
     export default {
         props: ['event', 'remote'],
         mixins: [googleLocationMixin, formValidationMixin],
-        components: { Multiselect, LMap, LTileLayer, LMarker, CubeSpinner },
+        components: { Multiselect, LMap, LTileLayer, LMarker, CubeSpinner, Submit },
         computed: {
             locationPlaceholder() {
                 return this.location.postal_code || this.location.city ? (this.location.home ? this.location.home + ' ' : '') 
@@ -251,7 +248,6 @@
                     center: '',
                     url:'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
                     attribution:'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-                    allowZoom: false,
                 }
             },
             
@@ -259,25 +255,9 @@
                 if (this.checkVuelidate()) { return false };
                 axios.patch( this.endpoint, this.hasLocation ? this.location : this.remoteLocationArray )
                 .then(res => {  
-                    value == 'exit' ? this.onBackInitial() : this.onForward(value);
+                    value == 'save' ? this.save() : this.onForward(value);
                 })
-                .catch(err => {
-                    this.onErrors(err);
-                });
-            },
-
-            save(value) {
-                if (this.checkVuelidate()) { return false };
-                axios.patch( this.endpoint, this.hasLocation ? this.location : this.remoteLocationArray )
-                .then(res => {  
-                    this.onLoad();
-                    this.disabled = false;
-                    this.updated = true;
-                    setTimeout(() => this.updated = false, 3000);
-                })
-                .catch(err => {
-                    this.onErrors(err);
-                });
+                .catch(err => { this.onErrors(err);});
             },
 
             updateEventFields(input) {
@@ -341,7 +321,7 @@
             this.updateEventFields(this.event.location);
         },
 
-        destroyed() {
+        unmounted() {
             window.removeEventListener('resize', this.handleResize);
         },
 

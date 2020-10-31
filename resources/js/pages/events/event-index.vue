@@ -16,7 +16,7 @@
                     <div class="event-index__switch-search">
                         <div class="event-index__switch-search--tab">
                             <button @click="searchType = 'category'">
-                                Category/Tag
+                                Category or Tag
                             </button>
                             <div 
                                 :class="{active: searchType == 'category'}" 

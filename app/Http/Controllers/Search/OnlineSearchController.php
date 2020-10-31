@@ -45,7 +45,7 @@ class OnlineSearchController extends Controller
 
     public function fetch(Request $request)
     {
-        if ($request->price[1] >= 100) {
+        if ($request->price && $request->price[1] >= 100) {
             $low = $request->price[0];
             $request->request->add(['price' => [$low, 9999]]);
         }

@@ -63,42 +63,12 @@
                 <img :src="`/storage/${selectedCategory.largeImagePath.slice(0, -4)}jpg`">
             </picture>
         </section>
-        <div class="event-create__submit-button">
-            <button 
-                :disabled="disabled" 
-                @click.prevent="onBackInitial()" 
-                class="nav-back-button"> 
-                Your events 
-            </button>
-        </div>
-        <div v-if="!approved">
-            <div class="create-button__back">
-                <button 
-                    :disabled="disabled" 
-                    class="create" 
-                    @click.prevent="onBack('location')"> 
-                    Back 
-                </button>
-            </div>
-            <div class="create-button__forward">
-                <button 
-                    :disabled="disabled" 
-                    class="create" 
-                    @click.prevent="onSubmit('shows')"> 
-                    Save and Continue 
-                </button>
-            </div>
-        </div>
-        <div v-else>
-            <div class="create-button__forward">
-                <button 
-                    :disabled="disabled" 
-                    class="create" 
-                    @click.prevent="save()"> 
-                    Save 
-                </button>
-            </div>
-        </div>
+        <Submit 
+            @submit="onSubmit"
+            :disabled="disabled" 
+            previous="location"
+            next="shows" 
+            :event="event" />
         <transition name="slide-fade">
             <div 
                 v-if="updated" 
@@ -110,6 +80,7 @@
 </template>
 
 <script>
+    import Submit  from './components/submit-buttons.vue'
     import formValidationMixin from '../../mixins/form-validation-mixin'
 	import Multiselect from 'vue-multiselect'
 	import { required } from 'vuelidate/lib/validators';
@@ -120,7 +91,7 @@
 
         mixins: [formValidationMixin],
 
-		components: { Multiselect },
+		components: { Multiselect, Submit },
 
         computed: {
             endpoint() {
@@ -148,30 +119,14 @@
 
 		methods: {
 			onSubmit(value) {
-                if (!this.$v.$anyDirty && this.event.status != 2) {return this.onForward(value)};
-                if (this.checkVuelidate()) { return false };
+                if (!this.$v.$anyDirty && this.event.status != 2) {return this.onForward(value)}
+                if (this.checkVuelidate()) { return false }
 				axios.patch(this.endpoint, this.selectedCategory)
 				.then(res => {  
-                    value == 'exit' ? this.onBackInitial() : this.onForward(value);
+                    value == 'save' ? this.save() : this.onForward(value);
                 })
-                .catch(err => {
-                    this.onErrors(err);
-                });
+                .catch(err => {this.onErrors(err);});
 			},
-
-            save(value) {
-                if (this.checkVuelidate()) { return false };
-                axios.patch(this.endpoint, this.selectedCategory)
-                .then(res => {  
-                    this.onLoad();
-                    this.disabled = false;
-                    this.updated = true;
-                    setTimeout(() => this.updated = false, 3000);
-                })
-                .catch(err => {
-                    this.onErrors(err);
-                });
-            },
 
             handleResize() {
                 if (window.innerWidth > 1050) {

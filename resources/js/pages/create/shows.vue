@@ -5,39 +5,47 @@
                 <div class="title">
                     <h2>Dates and Times</h2>
                 </div>
-                <input style="opacity:0;position:absolute;top:0;" autofocus />
+                <input 
+                    style="opacity:0;position:absolute;top:0;" 
+                    autofocus>
                 <div class="show-type-selection">
                     <div class="field">
                         <label> Select all show dates</label>
                         <multiselect 
-                        v-model="showType" 
-                        :options="showTypeOptions" 
-                        :multiple="false" 
-                        placeholder="Show hours type"
-                        open-direction="bottom"
-                        :allowEmpty="false"
-                        :show-labels="false"
-                        :class="{ active: active == 'type','error': $v.$error }"
-                        @select="dates = []"
-                        @click="active = 'type'"
-                        @blur="active = null"
-                        @open="checkStatus"
-                        label="name" 
-                        track-by="id"
-                        @input="$v.showType.$touch"
-                        :preselect-first="false">
-                        <template slot="option" slot-scope="props">
-                            <div class="option__desc">
-                                <div class="option__title--interaction">{{ props.option.name }}</div>
-                                <div class="option__small-interaction">{{ props.option.description }}</div>
-                            </div>
-                        </template>
+                            v-model="showType" 
+                            :options="showTypeOptions" 
+                            :multiple="false" 
+                            placeholder="Show hours type"
+                            open-direction="bottom"
+                            :allowEmpty="false"
+                            :show-labels="false"
+                            :class="{ active: active == 'type','error': $v.$error }"
+                            @select="dates = []"
+                            @click="active = 'type'"
+                            @blur="active = null"
+                            @open="checkStatus"
+                            label="name" 
+                            track-by="id"
+                            @input="$v.showType.$touch"
+                            :preselect-first="false">
+                            <template slot="option" slot-scope="props">
+                                <div class="option__desc">
+                                    <div class="option__title--interaction">
+                                        {{ props.option.name }}
+                                    </div>
+                                    <div class="option__small-interaction">
+                                        {{ props.option.description }}
+                                    </div>
+                                </div>
+                            </template>
                         </multiselect>
                     </div>
                 </div>
                 
                 <!-- Limited Run (Specific Dates) -->
-                <div v-show="showType.id == 1" class="specific-show-dates">
+                <div 
+                    v-show="showType.id == 1" 
+                    class="specific-show-dates">
                     <section class="event-enter-showdates">
                         <div class="field">
                             <label> Select each individual show date</label>
@@ -48,24 +56,22 @@
                                     ref="datePicker"                                              
                                     class="form-control"
                                     placeholder="Select date"   
-                                    name="dates">
-                                </flat-pickr>
+                                    name="dates" />
                             </div>
                             <div class="calendar mobileshow">
                                 <flat-pickr
                                     v-model="dates"
-                                    :config="mobileCalendarConfig"
+                                    :config="calendarConfig"
                                     ref="datePicker"                                              
                                     class="form-control"
                                     placeholder="Select date"        
-                                    name="dates">
-                                </flat-pickr>
+                                    name="dates" />
                             </div>
                             <div v-if="$v.dates.$error" class="validation-error">
                                 <p class="error" v-if="!$v.dates.required">Please add at least 1 show date</p>
                             </div>
                             <div>
-                                <label v-if="dateArray && dates">({{dateArray.length}} dates selected)</label>
+                                <label v-if="dateArray && dates">({{ dateArray.length }} dates selected)</label>
                             </div>
                         </div>
                     </section>
@@ -73,17 +79,17 @@
                         <div class="field">
                             <label> Show Timezone </label>
                             <multiselect 
-                            v-model="timezone" 
-                            deselect-label="Can't remove this value" 
-                            track-by="name"
-                            :class="{ active: active == 'timezone','error': $v.timezone.$error }"
-                            @click="active = 'timezone'"
-                            @blur="active = null"
-                            label="description" 
-                            placeholder="Select timezone"
-                            @input="$v.timezone.$touch"
-                            :options="timezones" 
-                            :allow-empty="false">
+                                v-model="timezone" 
+                                deselect-label="Can't remove this value" 
+                                track-by="name"
+                                :class="{ active: active == 'timezone','error': $v.timezone.$error }"
+                                @click="active = 'timezone'"
+                                @blur="active = null"
+                                label="description" 
+                                placeholder="Select timezone"
+                                @input="$v.timezone.$touch"
+                                :options="timezones" 
+                                :allow-empty="false">
                                 <template slot="singleLabel" slot-scope="{ option }">
                                     <strong>{{ option.description }}</strong>
                                 </template>
@@ -97,17 +103,16 @@
                         <div class="field">
                             <label> Show Times</label>
                             <textarea 
-                            v-model="showTimes"
-                            class="create-input area"
-                            :class="{ active: active == 'times','error': $v.showTimes.$error }"
-                            rows="8" 
-                            :placeholder="placeholders" 
-                            required
-                            @click="active = 'times'"
-                            @blur="active = null"
-                            @input="$v.showTimes.$touch"
-                            autofocus>
-                            </textarea>
+                                v-model="showTimes"
+                                class="create-input area"
+                                :class="{ active: active == 'times','error': $v.showTimes.$error }"
+                                rows="8" 
+                                :placeholder="placeholders" 
+                                required
+                                @click="active = 'times'"
+                                @blur="active = null"
+                                @input="$v.showTimes.$touch"
+                                autofocus />
                             <div v-if="$v.showTimes.$error" class="validation-error">
                                 <p class="error" v-if="!$v.showTimes.required">Please give a brief description of show times</p>
                                 <p class="error" v-if="!$v.showTimes.maxLength">Show time is too long</p>
@@ -118,11 +123,19 @@
                         <div class="field">
                             <label> Does the event have a specific embargo date? <br> (i.e. The date you would like it to first appear on EI) </label>
                             <div id="cover">
-                                <input @input="$v.showEmbargoDate.$touch" v-model="showEmbargoDate" type="checkbox" id="checkbox">
-                                <div id="bar"></div>
+                                <input 
+                                    @input="$v.showEmbargoDate.$touch" 
+                                    v-model="showEmbargoDate" 
+                                    type="checkbox" 
+                                    id="checkbox">
+                                <div id="bar" />
                                 <div id="knob">
-                                    <p v-if="showEmbargoDate">Yes</p>
-                                    <p v-else="showEmbargoDate">No</p>
+                                    <p v-if="showEmbargoDate">
+                                        Yes
+                                    </p>
+                                    <p v-else>
+                                        No
+                                    </p>
                                 </div>
                             </div>
                             <div v-if="showEmbargoDate">
@@ -133,11 +146,10 @@
                                         ref="datePicker"                                              
                                         class="form-control"
                                         placeholder="Select date"               
-                                        name="dates">
-                                    </flat-pickr>
+                                        name="dates" />
                                 </div>
                             </div>
-                        </div>
+                        </div>
                     </section>
                 </div>
            
@@ -148,45 +160,45 @@
                             <label> Select show days</label>
                             <div class="week-calendar grid">
                                 <div
-                                class="week-calendar__day" 
-                                :class="{ active: week.mon }" 
-                                @click="addWeekDay('mon')">
+                                    class="week-calendar__day" 
+                                    :class="{ active: week.mon }" 
+                                    @click="addWeekDay('mon')">
                                     <h4>Mon</h4>
                                 </div>
                                 <div 
-                                class="week-calendar__day"
-                                :class="{ active: week.tue }" 
-                                @click="addWeekDay('tue')">
+                                    class="week-calendar__day"
+                                    :class="{ active: week.tue }" 
+                                    @click="addWeekDay('tue')">
                                     <h4>Tue</h4>
                                 </div>
                                 <div 
-                                class="week-calendar__day" 
-                                :class="{ active: week.wed }" 
-                                @click="addWeekDay('wed')">
+                                    class="week-calendar__day" 
+                                    :class="{ active: week.wed }" 
+                                    @click="addWeekDay('wed')">
                                     <h4>Wed</h4>
                                 </div>
                                 <div 
-                                class="week-calendar__day" 
-                                :class="{ active: week.thu }" 
-                                @click="addWeekDay('thu')">
+                                    class="week-calendar__day" 
+                                    :class="{ active: week.thu }" 
+                                    @click="addWeekDay('thu')">
                                     <h4>Thu</h4>
                                 </div>
                                 <div 
-                                class="week-calendar__day"
-                                :class="{ active: week.fri }" 
-                                @click="addWeekDay('fri')">
+                                    class="week-calendar__day"
+                                    :class="{ active: week.fri }" 
+                                    @click="addWeekDay('fri')">
                                     <h4>Fri</h4>
                                 </div>
                                 <div 
-                                class="week-calendar__day"
-                                :class="{ active: week.sat }"
-                                @click="addWeekDay('sat')">
+                                    class="week-calendar__day"
+                                    :class="{ active: week.sat }"
+                                    @click="addWeekDay('sat')">
                                     <h4>Sat</h4>
                                 </div>
                                 <div 
-                                class="week-calendar__day"
-                                :class="{ active: week.sun }"
-                                @click="addWeekDay('sun')">
+                                    class="week-calendar__day"
+                                    :class="{ active: week.sun }"
+                                    @click="addWeekDay('sun')">
                                     <h4>Sun</h4>
                                 </div>
                             </div>
@@ -204,26 +216,25 @@
                                     class="form-control"
                                     @change="$v.$touch"
                                     placeholder="Select date"    
-                                    name="dates">
-                                </flat-pickr>
+                                    name="dates" />
                             </div>
                         </div>
                     </section>
-                     <section>
+                    <section>
                         <div class="field">
                             <label> Show Timezone </label>
                             <multiselect 
-                            v-model="timezone" 
-                            deselect-label="Can't remove this value" 
-                            track-by="name"
-                            :class="{ active: active == 'timezone','error': $v.timezone.$error }"
-                            @click="active = 'timezone'"
-                            @blur="active = null"
-                            label="description"
-                            @input="$v.timezone.$touch"
-                            placeholder="Select timezone" 
-                            :options="timezones" 
-                            :allow-empty="false">
+                                v-model="timezone" 
+                                deselect-label="Can't remove this value" 
+                                track-by="name"
+                                :class="{ active: active == 'timezone','error': $v.timezone.$error }"
+                                @click="active = 'timezone'"
+                                @blur="active = null"
+                                label="description"
+                                @input="$v.timezone.$touch"
+                                placeholder="Select timezone" 
+                                :options="timezones" 
+                                :allow-empty="false">
                                 <template slot="singleLabel" slot-scope="{ option }">
                                     <strong>{{ option.description }}</strong>
                                 </template>
@@ -237,17 +248,16 @@
                         <div class="field">
                             <label> Show Times</label>
                             <textarea 
-                            v-model="showTimes" 
-                            class="create-input area"
-                            :class="{ active: active == 'times','error': $v.showTimes.$error }"
-                            rows="8" 
-                            :placeholder="placeholdero" 
-                            required
-                            @click="active = 'times'"
-                            @blur="active = null"
-                            @input="$v.showTimes.$touch"
-                            autofocus>
-                            </textarea>
+                                v-model="showTimes" 
+                                class="create-input area"
+                                :class="{ active: active == 'times','error': $v.showTimes.$error }"
+                                rows="8" 
+                                :placeholder="placeholdero" 
+                                required
+                                @click="active = 'times'"
+                                @blur="active = null"
+                                @input="$v.showTimes.$touch"
+                                autofocus />
                             <div v-if="$v.showTimes.$error" class="validation-error">
                                 <p class="error" v-if="!$v.showTimes.required">Please give a brief description of show times</p>
                                 <p class="error" v-if="!$v.showTimes.maxLength">Show time is too long</p>
@@ -258,11 +268,19 @@
                         <div class="field">
                             <label> Does the event have a specific embargo date? <br> (i.e. The date you would like it to first appear on EI) </label>
                             <div id="cover">
-                                <input @input="$v.showEmbargoDate.$touch" v-model="showEmbargoDate" type="checkbox" id="checkbox">
-                                <div id="bar"></div>
+                                <input 
+                                    @input="$v.showEmbargoDate.$touch" 
+                                    v-model="showEmbargoDate" 
+                                    type="checkbox" 
+                                    id="checkbox">
+                                <div id="bar" />
                                 <div id="knob">
-                                    <p v-if="showEmbargoDate">Yes</p>
-                                    <p v-else="showEmbargoDate">No</p>
+                                    <p v-if="showEmbargoDate">
+                                        Yes
+                                    </p>
+                                    <p v-else>
+                                        No
+                                    </p>
                                 </div>
                             </div>
                             <div v-if="showEmbargoDate">
@@ -273,30 +291,30 @@
                                         ref="datePicker"                                              
                                         class="form-control"
                                         placeholder="Select date"               
-                                        name="dates">
-                                    </flat-pickr>
+                                        name="dates" />
                                 </div>
                             </div>
-                        </div>
+                        </div>
                     </section>
                 </div>
                 
-                <div v-show="showType.id == 3" class="everyday-show-dates">
+                <div 
+                    v-show="showType.id == 3" 
+                    class="everyday-show-dates">
                     <section class="event-enter-showtimes">
                         <div class="field">
                             <label> Show Times</label>
                             <textarea 
-                            v-model="showTimes" 
-                            class="create-input area"
-                            :class="{ active: active == 'times','error': $v.showTimes.$error }"
-                            rows="8" 
-                            :placeholder="placeholdera" 
-                            required
-                            @click="active = 'times'"
-                            @blur="active = null"
-                            @input="$v.showTimes.$touch"
-                            autofocus>
-                            </textarea>
+                                v-model="showTimes" 
+                                class="create-input area"
+                                :class="{ active: active == 'times','error': $v.showTimes.$error }"
+                                rows="8" 
+                                :placeholder="placeholdera" 
+                                required
+                                @click="active = 'times'"
+                                @blur="active = null"
+                                @input="$v.showTimes.$touch"
+                                autofocus />
                             <div v-if="$v.showTimes.$error" class="validation-error">
                                 <p class="error" v-if="!$v.showTimes.required">Please give a brief description of show times</p>
                                 <p class="error" v-if="!$v.showTimes.maxLength">Show time is too long</p>
@@ -307,11 +325,19 @@
                         <div class="field" style="margin-top:6rem">
                             <label> Does the event have a specific embargo date? <br> (i.e. The date you would like it to first appear on EI) </label>
                             <div id="cover">
-                                <input @input="$v.showEmbargoDate.$touch" v-model="showEmbargoDate" type="checkbox" id="checkbox">
-                                <div id="bar"></div>
+                                <input 
+                                    @input="$v.showEmbargoDate.$touch" 
+                                    v-model="showEmbargoDate" 
+                                    type="checkbox" 
+                                    id="checkbox">
+                                <div id="bar" />
                                 <div id="knob">
-                                    <p v-if="showEmbargoDate">Yes</p>
-                                    <p v-else="showEmbargoDate">No</p>
+                                    <p v-if="showEmbargoDate">
+                                        Yes
+                                    </p>
+                                    <p v-else>
+                                        No
+                                    </p>
                                 </div>
                             </div>
                             <div v-if="showEmbargoDate">
@@ -322,31 +348,20 @@
                                         ref="datePicker"                                              
                                         class="form-control"
                                         placeholder="Select date"               
-                                        name="dates">
-                                    </flat-pickr>
+                                        name="dates" />
                                 </div>
                             </div>
-                        </div>
+                        </div>
                     </section>
                 </div>
             </div>
         </section>
-        <div class="event-create__submit-button">
-            <button :disabled="disabled" @click.prevent="onBackInitial()" class="nav-back-button"> Your events </button>
-        </div>
-        <div v-if="!published">
-            <div class="create-button__back">
-                <button :disabled="disabled" class="create" @click.prevent="onBack('category')"> Back </button>
-            </div>
-            <div class="create-button__forward">
-                <button :disabled="disabled" class="create" @click.prevent="onSubmit('tickets')"> Save and continue </button>
-            </div>
-        </div>
-        <div v-else>
-            <div class="create-button__forward">
-                <button :disabled="disabled" class="create" @click.prevent="save()"> Save </button>
-            </div>
-        </div>
+        <Submit 
+            @submit="onSubmit"
+            :disabled="disabled" 
+            previous="category"
+            next="tickets" 
+            :event="event" />
         <transition name="slide-fade">
             <div v-if="updated" class="updated-notifcation">
                 <p>Your event has been updated.</p>
@@ -377,6 +392,7 @@
     import flatPickr from 'vue-flatpickr-component'
     import 'flatpickr/dist/flatpickr.css'
     import Multiselect from 'vue-multiselect'
+    import Submit  from './components/submit-buttons.vue'
 
 
 export default {
@@ -384,7 +400,7 @@ export default {
 
     mixins: [formValidationMixin],
 
-    components: { flatPickr, Multiselect},
+    components: { flatPickr, Multiselect, Submit},
 
 
     computed: {
@@ -401,15 +417,15 @@ export default {
         },
 
         dateArray() {
-        	if(!Array.isArray(this.dates) && this.dates.includes(",")) {
-        		return this.dates.split(",");
-        	} else {
-        		if(!Array.isArray(this.dates)) {
+            if(!Array.isArray(this.dates) && this.dates.includes(",")) {
+                return this.dates.split(",");
+            } else {
+                if(!Array.isArray(this.dates)) {
                     return [this.dates];
                 } else {
                     ''
                 }
-        	}
+            }
         },
 
         weeklyOngoing() {
@@ -434,7 +450,7 @@ export default {
                 'always': this.showType.id == '3' || !this.weeklyOngoing ? true : false,
                 'start_date': this.startDate ? this.startDate : null,
                 'timezone': this.timezone,
-                'reSubmitEvent': this.reSubmitEvent,
+                'reSubmitEvent': this.reSubmit,
             }
         },
 
@@ -448,8 +464,7 @@ export default {
             startDate: '',
             embargoDate: this.event.embargo_date ? this.event.embargo_date : '',
             showEmbargoDate: this.event.embargo_date ? true : false,
-	        calendarConfig: this.initializeCalendarObject(),
-            mobileCalendarConfig: this.initializeMobileCalendarObject(),
+            calendarConfig: this.initializeCalendarObject(),
             embargoCalendarConfig: this.initializeEmbargoCalendarObject(),
             week: this.event.show_on_going ? this.event.show_on_going : this.initializeWeekObject(),
             showTimes: this.event.shows.length ? this.event.show_times : '',
@@ -467,8 +482,7 @@ export default {
             showStartDate: this.event.show_on_going ? true : false,
             timezone: this.event.timezone ? this.event.timezone : '',
             updated: false,
-            modal: false,
-            reSubmitEvent: false,
+            reSubmit: false,
 
         }
     },
@@ -477,22 +491,10 @@ export default {
 
         initializeCalendarObject() {
             return {
-                // minDate: "today",
                 maxDate: new Date().fp_incr(180),
                 mode: "multiple",
                 inline: true,
-                showMonths: 2,
-                dateFormat: 'Y-m-d H:i:s',     
-            }
-        },
-
-        initializeMobileCalendarObject() {
-            return {
-                // minDate: "today",
-                maxDate: new Date().fp_incr(180),
-                mode: "multiple",
-                inline: true,
-                showMonths: 1,
+                showMonths: window.innerWidth < 768 ? 1 : 2,
                 dateFormat: 'Y-m-d H:i:s',     
             }
         },
@@ -547,35 +549,22 @@ export default {
         },
 
         onSubmit(value) {
-         	if (this.checkVuelidate()) { return false };
-            axios.post(this.endpoint, this.submitObject)
-            .then(res => {  
-                value == 'exit' || this.exit == true ? this.onBackInitial() : this.onForward(value);
-            })
-            .catch(err => { this.onErrors(err) });
-        },
-
-        save(value) {
             if (this.checkVuelidate()) { return false };
             axios.post(this.endpoint, this.submitObject)
             .then(res => {  
-                if (this.reSubmitEvent == true) {return location.reload()};
-                this.onLoad();
-                this.disabled = false;
-                this.updated = true;
-                setTimeout(() => this.updated = false, 3000);
+                value == 'save' ? this.save() : this.onForward(value);
             })
             .catch(err => { this.onErrors(err) });
         },
 
         checkStatus() {
-            if ((this.event.status == 'p' || this.event.status == 'e') && this.reSubmitEvent == false) {
+            if ((this.event.status == 'p' || this.event.status == 'e') && this.reSubmit == false) {
                 this.modal = true;
             }
         },
 
         onReSubmit() {
-            this.reSubmitEvent = true;
+            this.reSubmit = true;
             this.approved = false;
             this.modal = false;
         },
@@ -594,7 +583,7 @@ export default {
     },
 
     mounted() {
-    	this.onLoad();
+        this.onLoad();
         setTimeout(() => this.$refs.datePicker.fp.jumpToDate(new Date()), 100);
     },
 

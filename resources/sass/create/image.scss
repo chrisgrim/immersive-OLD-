@@ -1,8 +1,7 @@
 
-/*------------------------------------*\
+/* ------------------------------------*\
   #Create Section- Image Page
-\*------------------------------------*/
-
+\*------------------------------------ */
 
 .event-create__image {
     padding-top: 9rem;
@@ -23,6 +22,7 @@
     position: relative;
     text-align: center;
 }
+
 .image-loader__label {
     height: 100%;
     width:100%;
@@ -33,6 +33,7 @@
     border: dashed 2px #dadada;
     background-position: center;
 }
+
 .add-image-button {
     cursor: pointer;
     display: inline-grid;
@@ -45,6 +46,54 @@
     border-radius: .5rem;
     color: white;
     font-size: 1.6rem;
+}
+
+.image-display-example {
+    position: relative;
+    max-width: 800px;
+    margin: auto;
+}
+
+.iphone-example {
+    width: 32%;
+    display: inline-block;
+    position: relative;
+    height: 20rem;
+    margin-bottom: 20rem;
+    margin-top: 5rem;
+}
+
+.computer-example {
+    width: 66%;
+    display: inline-block;
+    position: relative;
+    height: 20rem;
+    margin-top: 5rem;
+    margin-bottom: 20rem;
+}
+
+.image-display-example img.overlay {
+    position: absolute;
+    width: 100%;
+}
+
+.image-display-example .iphone-example img.underlay {
+    position: absolute;
+    top: 100px;
+    width: 200px;
+    left: 17px;
+    height: 185px;
+    object-fit: cover;
+}
+
+.image-display-example .computer-example img.underlay {
+    position: absolute;
+    width: 328px;
+    text-align: right;
+    right: 16px;
+    object-fit: cover;
+    top: 45px;
+    height: 175px;
 }
 
 .image-loader__label-body {
@@ -103,12 +152,6 @@
         height: 200px;
     }
 }
-
-
-
-
-
-
 
 
 /*

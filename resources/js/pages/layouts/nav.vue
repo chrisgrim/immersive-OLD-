@@ -23,7 +23,9 @@
                     </a>
                 </div>
                 <div class="nav-search">
-                    <nav-search v-if="hideSearch" />
+                    <nav-search 
+                        searchtype="event"
+                        v-if="hideSearch" />
                 </div>
                 <div class="nav-menu">
                     <template v-if="user">

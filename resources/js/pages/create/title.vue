@@ -1,6 +1,8 @@
 <template>
-	<div class="event-create__title">
-        <section class="event-create__intro" v-if="newEvent">
+    <div class="event-create__title">
+        <section 
+            class="event-create__intro" 
+            v-if="newEvent">
             <div>
                 <h4>Hi There,</h4>
                 <br>
@@ -9,7 +11,7 @@
 
                 <ul>
                     <li><b>Your ticket site link.</b> (We don't provide ticketing services, we just help people discover your work.) </li>
-                   <li><b>An image for your event.</b> It's best if it is horizontal, doesn't have text on it, and has dimensions of at least 800 x 450  and is under 10mb in size.</li>
+                    <li><b>An image for your event.</b> It's best if it is horizontal, doesn't have text on it, and has dimensions of at least 800 x 450  and is under 10mb in size.</li>
                     <li><b>Text describing your event.</b> </li>
                     <li>If it's an in-person event, text describing your <b>COVID-19 policies and protocols.</b> </li>
                     <li><b>Your ticket price options.</b> We support multiple ticket types, including Pay What You Can, and many common currencies.</li> 
@@ -25,71 +27,67 @@
             </div>
         </section>
 
-        <section class="event-create" v-else>
+        <section 
+            class="event-create" 
+            v-else>
             <div class="title">
                 <h2>Title</h2>
             </div>
-            <div @mouseover="resubmit=true" v-if="approved" class="field">
+            <div 
+                @mouseover="resubmit=true" 
+                v-if="approved" 
+                class="field">
                 <label>Title</label>
-                <p class="create-titlename">{{title.name}}</p>
-                <button class="editTitle" v-if="resubmit" @click.prevent="modal=true">Edit</button>
+                <p class="create-titlename">{{ title.name }}</p>
+                <button 
+                    class="editTitle" 
+                    v-if="resubmit" 
+                    @click.prevent="modal=true">
+                    Edit
+                </button>
             </div>
-            <div v-else="approved" class="field">
+            <div 
+                v-else 
+                class="field">
                 <label>Project name</label>
                 <input
-                type="text" 
-                v-model="title.name" 
-                placeholder=" "
-                :class="{ active: active == 'name','error': $v.title.name.$error }"
-                @input="cleanErr"
-                @click="active = 'name'"
-                @blur="active = 'null'"
-                 />
+                    type="text" 
+                    v-model="title.name" 
+                    placeholder=" "
+                    :class="{ active: active == 'name','error': $v.title.name.$error }"
+                    @input="cleanErr"
+                    @click="active = 'name'"
+                    @blur="active = 'null'">
                 <div v-if="$v.title.name.$error" class="validation-error">
-                    <p class="error" v-if="!$v.title.name.required">Please add a title.</p>
+                    <p class="error" v-if="!$v.title.name.required">Please add a title.</p>
                     <p class="error" v-if="!$v.title.name.maxLength">The title is too long.</p>
                     <p class="error" v-if="!$v.title.name.serverFailed">You already have event with this name. Please edit that event instead of creating a new one.</p>
-                </div>
+                </div>
             </div>
             <div class="field">
-                <label>Project tag line (optional but recommended)</label>
-                <input 
-                type="text" 
-                v-model="title.tagLine"
-                :class="{ active: active == 'tag','error': $v.title.tagLine.$error }"
-                @input="$v.title.tagLine.$touch()"
-                @click="active = 'tag'"
-                @blur="active = 'null'"
-                placeholder="Quick blurb describing the event to get the audience hooked!"
-                />
+                <label>Project tag line (required)</label>
+                <input 
+                    type="text" 
+                    v-model="title.tagLine"
+                    :class="{ active: active == 'tag','error': $v.title.tagLine.$error }"
+                    @input="$v.title.tagLine.$touch()"
+                    @click="active = 'tag'"
+                    @blur="active = 'null'"
+                    placeholder="Quick blurb describing the event to get the audience hooked!">
                 <div v-if="$v.title.tagLine.$error" class="validation-error">
+                    <p class="error" v-if="!$v.title.tagLine.required">Please add a tag line.</p>
                     <p class="error" v-if="!$v.title.tagLine.maxLength">The tag line is too long.</p>
                 </div>
             </div>
-            
         </section>
-
-        <div class="event-create__submit-button">
-            <button :disabled="disabled" @click.prevent="onBackInitial()" class="nav-back-button"> Your events </button>
-        </div>
-        <div v-if="!approved && !newEvent">
-            <div class="create-button__back">
-                <button :disabled="disabled" class="create" @click.prevent="onBackInitial()"> Back </button>
-            </div>
-            <div class="create-button__forward">
-                <button :disabled="disabled" class="create" @click.prevent="onSubmit('location')"> Save and continue </button>
-            </div>
-        </div>
-        <div v-if="approved && !newEvent">
-            <div class="create-button__forward">
-                <button :disabled="disabled" class="create" @click.prevent="save()"> Save </button>
-            </div>
-        </div>
-        <div v-if="newEvent">
-            <div class="create-button__forward">
-                <button :disabled="disabled" class="create" @click.prevent="newEvent = false"> Continue </button>
-            </div>
-        </div>
+        <Submit 
+            :newsubmission="newsubmission"
+            @submit="onSubmit"
+            @newevent="acceptNewEvent"
+            :disabled="disabled" 
+            previous="exit"
+            next="location" 
+            :event="event" />
         <modal v-if="modal" @close="modal = false">
             <div slot="header">
                 <div class="circle del">
@@ -115,12 +113,15 @@
 <script>
 	import formValidationMixin from '../../mixins/form-validation-mixin'
 	import { required, maxLength } from 'vuelidate/lib/validators';
+    import Submit  from './components/submit-buttons.vue'
 
 	export default {
 
         mixins: [formValidationMixin],
 
-		props: ['event', 'new'],
+		props: ['event', 'newsubmission'],
+
+        components: {Submit},
 
         computed: {
             endpoint() {
@@ -156,19 +157,19 @@
                 }
             },
 
-	        clearinput() {
-	        	this.nameActive = true;
-	        	this.serverErrors = [];
-	        },
+            clearinput() {
+                this.nameActive = true;
+                this.serverErrors = [];
+            },
 
 			onSubmit(value) {
                 if (this.event.status != 0 && !this.$v.$anyDirty) {return this.onForward(value)};
                 if (this.checkVuelidate()) { return false };
 				axios.patch( this.endpoint, this.title )
 				.then(res => { 
-                    value == 'exit' ? this.onBackInitial() : this.onForward(value) 
+                    value == 'save' ? this.save() : this.onForward(value);
                 })
-            	.catch(err => { 
+                .catch(err => { 
                     this.onErrors(err) });
 			},
 
@@ -191,19 +192,9 @@
                 this.$v.title.name.$touch();
             },
 
-            save(value) {
-                if (this.checkVuelidate()) { return false };
-                axios.patch( this.endpoint, this.title )
-                .then(res => {
-                    this.reSubmit == true ? location.reload() : '';
-                    this.onLoad();
-                    this.disabled = false;
-                    this.updated = true;
-                    setTimeout(() => this.updated = false, 3000);
-                })
-                .catch(err => { 
-                    this.onErrors(err) });
-            },
+            acceptNewEvent() {
+                this.newEvent = false;
+            }
 		},
 
         created() {
@@ -224,6 +215,7 @@
                     serverFailed(){ return !this.serverErrors['name']; },
                 },
                 tagLine: {
+                    required,
                     maxLength: maxLength(100)
                 }
             }

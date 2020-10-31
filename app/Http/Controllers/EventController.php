@@ -30,8 +30,13 @@ class EventController extends Controller
      */
     public function index(Event $event)
     {
-        $thursday = Carbon::now()->startOfWeek()->subDays(4); 
-        $wednesday = Carbon::now()->startOfWeek()->addDays(2); 
+        if (Carbon::now()->startOfWeek()->addDays(3) >= Carbon::now()) {
+            $thursday = Carbon::now()->startOfWeek()->subDays(4);
+            $wednesday = Carbon::now()->startOfWeek()->addDays(2);
+        } else {
+            $thursday = Carbon::now()->startOfWeek()->addDays(3);
+            $wednesday = Carbon::now()->startOfWeek()->addDays(9);
+        }
         $staffpicks = StaffPick::where(function($query) use ($thursday, $wednesday){
                 $query->whereDate('start_date', '>=', $thursday)
                         ->whereDate('end_date', '<=', $wednesday);

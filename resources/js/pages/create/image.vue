@@ -1,76 +1,109 @@
 <template>
-<div class="event-create__image">
-    <section class="field">
-        <h2 style="text-align:center">Upload Image</h2>
-        <div class="event-create-image">          
-            <div class="image-loader">
-                <label class="image-loader__label" :style="displayImage">
-                    <div class="image-loader__label-body" :class="{ over: hasImage, load: loading }">
-                        <div class="box">
-                            <div class="in">
-                                <div class="add-image-button" v-if="!hasImage && !loading">
-                                    <svg class="b" height="32" width="32" viewBox="0 0 24 24" aria-label="Add an image or video" role="img"><path d="M24 12c0-6.627-5.372-12-12-12C5.373 0 0 5.373 0 12s5.373 12 12 12c6.628 0 12-5.373 12-12zm-10.767 3.75a1.25 1.25 0 0 1-2.5 0v-3.948l-1.031 1.031a1.25 1.25 0 0 1-1.768-1.768L12 7l4.066 4.065a1.25 1.25 0 0 1-1.768 1.768l-1.065-1.065v3.982z"></path></svg>
-                                    Upload Image
-                                </div>
-                                <div class="add-image-button" v-if="hasImage && !loading">
-                                    <svg class="b" height="32" width="32" viewBox="0 0 24 24" aria-label="Add an image or video" role="img"><path d="M24 12c0-6.627-5.372-12-12-12C5.373 0 0 5.373 0 12s5.373 12 12 12c6.628 0 12-5.373 12-12zm-10.767 3.75a1.25 1.25 0 0 1-2.5 0v-3.948l-1.031 1.031a1.25 1.25 0 0 1-1.768-1.768L12 7l4.066 4.065a1.25 1.25 0 0 1-1.768 1.768l-1.065-1.065v3.982z"></path></svg>
-                                    Change Image
+    <div class="event-create__image">
+        <section class="field">
+            <h2 style="text-align:center">Upload Image</h2>
+            <div class="event-create-image">          
+                <div class="image-loader">
+                    <label 
+                        class="image-loader__label" 
+                        :style="displayImage">
+                        <div 
+                            class="image-loader__label-body" 
+                            :class="{ over: hasImage, load: loading }">
+                            <div class="box">
+                                <div class="in">
+                                    <div 
+                                        class="add-image-button" 
+                                        v-if="!hasImage && !loading">
+                                        <svg 
+                                            class="b" 
+                                            height="32" 
+                                            width="32" 
+                                            viewBox="0 0 24 24" 
+                                            aria-label="Add an image or video" 
+                                            role="img">
+                                            <path d="M24 12c0-6.627-5.372-12-12-12C5.373 0 0 5.373 0 12s5.373 12 12 12c6.628 0 12-5.373 12-12zm-10.767 3.75a1.25 1.25 0 0 1-2.5 0v-3.948l-1.031 1.031a1.25 1.25 0 0 1-1.768-1.768L12 7l4.066 4.065a1.25 1.25 0 0 1-1.768 1.768l-1.065-1.065v3.982z" />
+                                        </svg>
+                                        Upload Image (10mb max)
+                                    </div>
+                                    <div 
+                                        class="add-image-button" 
+                                        v-if="hasImage && !loading">
+                                        <svg 
+                                            class="b" 
+                                            height="32" 
+                                            width="32" 
+                                            viewBox="0 0 24 24" 
+                                            aria-label="Add an image or video" 
+                                            role="img">
+                                            <path d="M24 12c0-6.627-5.372-12-12-12C5.373 0 0 5.373 0 12s5.373 12 12 12c6.628 0 12-5.373 12-12zm-10.767 3.75a1.25 1.25 0 0 1-2.5 0v-3.948l-1.031 1.031a1.25 1.25 0 0 1-1.768-1.768L12 7l4.066 4.065a1.25 1.25 0 0 1-1.768 1.768l-1.065-1.065v3.982z" />
+                                        </svg>
+                                        Change Image (10mb max)
+                                    </div>
                                 </div>
                             </div>
+                            <image-upload @loaded="onImageUpload" />
+                            <CubeSpinner :loading="loading" />
                         </div>
-                        <image-upload @loaded="onImageUpload"></image-upload>
-                        <CubeSpinner :loading="loading"></CubeSpinner>
-                    </div>
-                    <div style="margin-top:1rem;">
-                        <p>Must be at least 800 x 450</p>
-                        <p>Needs to be under 10mb</p>
-                    </div>
-                </label>
-                <div>
-                    <div v-if="$v.imageFile.$error" class="validation-error image">
-                        <p class="error" v-if="!$v.imageFile.required">The image is required</p>
-                        <p class="error" v-if="!$v.imageFile.fileSize">The image file size is over 10mb</p>
-                        <p class="error" v-if="!$v.imageFile.fileType">The image needs to be a JPG, PNG or GIF</p>
-                        <p class="error" v-if="!$v.imageFile.imageRatio">The image needs to be at least 800 x 450</p>
+                        <div style="margin-top:1rem;">
+                            <p>Must be at least 800px wide by 450px tall.</p>
+                        </div>
+                    </label>
+                    <div>
+                        <div v-if="$v.imageFile.$error" class="validation-error image">
+                            <p class="error" v-if="!$v.imageFile.required">The image is required</p>
+                            <p class="error" v-if="!$v.imageFile.fileSize">The image file size is over 10mb</p>
+                            <p class="error" v-if="!$v.imageFile.fileType">The image needs to be a JPG, PNG or GIF</p>
+                            <p class="error" v-if="!$v.imageFile.imageRatio">The image needs to be at least 800 x 450</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <div class="event-create__submit-button">
-        <button :disabled="disabled" @click.prevent="onBackInitial()" class="nav-back-button"> Your events </button>
+            <div class="image-display-example">
+                <div class="iphone-example">
+                    <img
+                        class="underlay" 
+                        :src="displayExample">
+                    <img 
+                        class="overlay" 
+                        src="/storage/website-files/iphone-example.png">
+                </div>
+                <div class="computer-example">
+                    <img
+                        class="underlay" 
+                        :src="displayExample">
+                    <img 
+                        class="overlay" 
+                        src="/storage/website-files/computer-example.png">
+                </div>
+            </div>  
+        </section>
+        <Submit 
+            @submit="onSubmit"
+            :disabled="disabled" 
+            :ready="readySubmit"
+            previous="advisories"
+            next="review"
+            :event="event" />
+        <transition name="slide-fade">
+            <div v-if="updated" class="updated-notifcation">
+                <p>Your event has been updated.</p>
+            </div>
+        </transition>
     </div>
-    <div v-if="!approved">
-        <div class="create-button__back">
-            <button :disabled="disabled" class="create" @click.prevent="onBack('advisories')"> Back </button>
-        </div>
-        <div class="create-button__forward">
-            <button :disabled="readySubmit" class="create" @click.prevent="onForward('review')"> Review </button>
-        </div>
-    </div>
-    <transition name="slide-fade">
-        <div v-if="updated" class="updated-notifcation">
-            <p>Your event has been updated.</p>
-        </div>
-    </transition>
-
-</div>
-
 </template>
 
 <script>
-
+    import Submit  from './components/submit-buttons.vue'
     import formValidationMixin from '../../mixins/form-validation-mixin'
     import { required } from 'vuelidate/lib/validators'
     import CubeSpinner  from '../layouts/loading.vue'
-    
-
 
     export default {
 
         mixins: [formValidationMixin],
 
-        components: { CubeSpinner },
+        components: { CubeSpinner, Submit },
         
         props: ['event'],
 
@@ -81,6 +114,10 @@
 
             displayImage() {
                 return `backgroundImage: url('${this.imageFile.src && !this.$v.imageFile.$error ? this.imageFile.src : this.image}')`
+            },
+
+            displayExample() {
+                return `${this.imageFile.src && !this.$v.imageFile.$error ? this.imageFile.src : this.image}`
             },
 
             endpoint() {

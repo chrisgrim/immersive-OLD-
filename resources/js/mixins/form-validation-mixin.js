@@ -17,7 +17,7 @@ export default {
         },
 
         onBack(value) {
-            return window.location.href = `/create-event/${this.event.slug}/${value}`;
+            return value == 'exit' ?  this.onBackInitial() :  window.location.href = `/create-event/${this.event.slug}/${value}`
         },
 
         onFetch(value) {
@@ -34,6 +34,14 @@ export default {
 
         onFinishOrganizer(value) {
             return window.location.href = value;
-        }
+        },
+
+        save() {
+            this.reSubmit == true ? location.reload() : '';
+            this.onLoad();
+            this.disabled = false;
+            this.updated = true;
+            setTimeout(() => this.updated = false, 3000);
+        },
     }
 }
