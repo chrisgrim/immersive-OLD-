@@ -6,10 +6,10 @@
             </div>
         </div>
         <div>
-            number of users: {{usercount}}
+            number of users: {{ usercount }}
         </div>
         <div>
-            number of events: {{eventcount}}
+            number of events: {{ eventcount }}
         </div>
         <br>
         <div>
@@ -25,14 +25,15 @@
                 :class="{ active: active == 'type' }"
                 @input="onLoad"
                 @click="active = 'type'"
-                @blur="active = null"
-                >
-            </multiselect>
+                @blur="active = null" />
         </div>
         <div>
-          <apexchart width="500" type="bar" :options="options" :series="series"></apexchart>
+            <apexchart 
+                width="500" 
+                type="bar" 
+                :options="options" 
+                :series="series" />
         </div>
-         
     </div>
 </template>
 
@@ -57,7 +58,7 @@
 
         data() {
             return {
-                searchOptions: ['tag', 'category'],
+                searchOptions: ['category', 'location', 'event', 'organizer'],
                 searchType: 'category',
                 active: '',
                 options: {
@@ -86,7 +87,6 @@
                         }
                     }
                     this.series = [{data: res.data.map(name => name.count), name: res.data.map(name => name.name.substring(0, 20))}]
-                    console.log(res.data.map(name => name.name));
                 })
                 .catch(err => {
 

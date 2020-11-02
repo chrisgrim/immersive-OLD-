@@ -205,18 +205,14 @@ export default {
                     try {
                         let {data} = await axios.get('/api/search/navbar/content', { params: { keywords: query, type: this.searchtype } })
                         this.searchBoxOptions = data.data;
-                        console.log(data);
                     } catch(err) {
-                      console.log(err)
                     }
                 }
             } else {
                 try {
                     let {data} = await axios.get('/api/search/navbar/content', { params: { keywords: query, type: this.searchtype } })
                     this.searchBoxOptions = data.data;
-                    console.log(data);
                 } catch(err) {
-                  console.log(err)
                 }
             }
         },
@@ -235,7 +231,6 @@ export default {
             if (this.searchBoxInput.call_to_action) { var data = 'event'}
             if (this.searchBoxInput.latitude) { var data = 'location'}
             axios.post('/search/storedata', {type: data, name: this.searchBoxInput.name});
-
 
             this.searchBoxInput.type == 'c' ? window.location.href = `/index/search-online?category=${this.searchBoxInput.id}` : '';
             this.searchBoxInput.type == 'r' ? window.location.href = `/index/search-online?remote=${this.searchBoxInput.name}&id=${this.searchBoxInput.id}` : '';

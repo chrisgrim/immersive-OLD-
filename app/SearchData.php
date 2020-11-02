@@ -20,7 +20,7 @@ class SearchData extends Model
      */
     public static function store($request)
     {
-         SearchData::create([
+        SearchData::create([
             'search_term' => $request->name,
             'search_type' => $request->type
         ]);
