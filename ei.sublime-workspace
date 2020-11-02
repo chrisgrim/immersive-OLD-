@@ -637,24 +637,19 @@
 	"expanded_folders":
 	[
 		"/Users/chrisgrim/code/ei",
-		"/Users/chrisgrim/code/ei/app",
-		"/Users/chrisgrim/code/ei/app/Http",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers",
 		"/Users/chrisgrim/code/ei/resources",
 		"/Users/chrisgrim/code/ei/resources/js",
 		"/Users/chrisgrim/code/ei/resources/js/mixins",
 		"/Users/chrisgrim/code/ei/resources/js/pages",
 		"/Users/chrisgrim/code/ei/resources/js/pages/layouts",
 		"/Users/chrisgrim/code/ei/resources/js/pages/staffpicks",
-		"/Users/chrisgrim/code/ei/resources/sass",
-		"/Users/chrisgrim/code/ei/resources/sass/events",
-		"/Users/chrisgrim/code/ei/resources/sass/nav",
 		"/Users/chrisgrim/code/ei/resources/views",
 		"/Users/chrisgrim/code/ei/resources/views/create",
 		"/Users/chrisgrim/code/ei/routes"
 	],
 	"file_history":
 	[
+		"/Users/chrisgrim/code/ei/resources/js/mixins/test.mixin.js",
 		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/admin-stats.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/layouts/nav-search.vue",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/SearchDataController.php",
@@ -781,8 +776,7 @@
 		"/Users/chrisgrim/code/ei/resources/sass/create/title.scss",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/AdminAreaEventsController.php",
 		"/Users/chrisgrim/code/ei/resources/views/adminArea/purgatory.blade.php",
-		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/approve/org-approval-bar.vue",
-		"/Users/chrisgrim/code/ei/resources/sass/create/location.scss"
+		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/approve/org-approval-bar.vue"
 	],
 	"find":
 	{
