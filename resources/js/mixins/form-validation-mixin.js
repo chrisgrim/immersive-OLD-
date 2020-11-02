@@ -37,11 +37,15 @@ export default {
         },
 
         save() {
-            this.reSubmit == true ? location.reload() : '';
+            this.checkResubmitStatus();
             this.onLoad();
             this.disabled = false;
             this.updated = true;
             setTimeout(() => this.updated = false, 3000);
         },
+
+        checkResubmitStatus() {
+            this.resubmit == true ? location.reload() : '';
+        }
     }
 }

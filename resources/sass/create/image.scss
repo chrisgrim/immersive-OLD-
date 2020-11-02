@@ -55,7 +55,7 @@
 }
 
 .iphone-example {
-    width: 32%;
+    width: 31%;
     display: inline-block;
     position: relative;
     height: 20rem;
@@ -64,7 +64,7 @@
 }
 
 .computer-example {
-    width: 66%;
+    width: 68%;
     display: inline-block;
     position: relative;
     height: 20rem;
@@ -79,21 +79,20 @@
 
 .image-display-example .iphone-example img.underlay {
     position: absolute;
-    top: 100px;
-    width: 200px;
-    left: 17px;
-    height: 185px;
+    top: 107px;
+    width: 212px;
+    left: 19px;
+    height: 197px;
     object-fit: cover;
 }
 
 .image-display-example .computer-example img.underlay {
     position: absolute;
-    width: 328px;
-    text-align: right;
-    right: 16px;
+    width: 323px;
+    left: 205px;
     object-fit: cover;
-    top: 45px;
-    height: 175px;
+    top: 44px;
+    height: 173px;
 }
 
 .image-loader__label-body {
@@ -140,126 +139,46 @@
 .fileinput {
   display: none !important;
 }
+
 @media (max-width: 1130px) { 
     .image-loader {
         width: 400px;
         height: 225px;
     }
+
+    .image-display-example {
+        max-width: 425px;
+    }
+
+    .iphone-example {
+        width: 100%;
+        height:35rem;
+    }
+
+    .computer-example {
+        width: 100%;
+    }
+
+    .image-display-example .iphone-example img.underlay {
+        position: absolute;
+        left: 32px;
+        top: 183px;
+        height: 271px;
+        width: 364px;
+    }
+
+    .image-display-example .computer-example img.underlay {
+        position: absolute;
+        top: 34px;
+        left: 160px;
+        width: 253px;
+        height: 136px;
+    }
 }
+
 @media (max-width: 768px) { 
     .image-loader {
         width: 100%;
         height: 200px;
     }
 }
-
-
-/*
-.prev-box {
-    position: relative;
-}
-.preview {
-  width: 100%;
-  overflow: hidden;
-  display: inline-block;
-  position: absolute;
-  background: red;
-}*/
-
-/*.organization-form .multiselect {
-  .option__desc, .option__image {
-    display: inline-block;
-    vertical-align: middle;
-  }
-  .option__image {
-    max-height: 80px;
-    margin-right: 10px;
-    height: 50px;
-    width: 50px;
-    border-radius: 50%;
-    border: 1px solid #ddd;
-  }
-  .option__title {
-    font-size: 14px;
-  }
-  .option__small {
-    font-size: 12px;
-    // margin-top: 0.75rem;
-    display: block;
-  }
-}*/
-
-/*.image-upload-field {
-  position: relative;
-  margin-bottom: 2rem;
-  padding-top: 3rem;
-}
-.image-upload-wrapper {
-  border: 1px solid #ddd;
-}
-.image-upload-label {
-  top: 1rem;
-  font-size: 1.1rem;
-  color: #b3b5bf;
-}
-.image-upload-wrapper, .image-upload-wrapper img {
-    width: 450px;
-    height: 270px;
-    border-radius: 5px;
-    position: relative;
-    display: block;
-    cursor: pointer;
-    font-size: 110px;
-    transition: width 0.5s ease-in-out;
-    transition: height 0.5s ease-in-out;
-    border: 1px solid black;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center center;
-
-    &.imageloaded {
-        width:100%;
-        font-size: 40px;
-        height: 500px;
-        background-size: cover;
-    }
-}*/
-/*.image-upload-wrapper .image-upload-layover {
-  opacity: 1;
-  top: 0;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 5px;
-  color: #fff;
-  background-color: rgba(0,0,0,0);
-  font-size: 100px;
-  box-sizing: border-box;
-  transition: background-color .3s ease-in-out;
-  transition: font-size .3s ease-in-out;
-}
-.image-upload-wrapper .image-upload-layover:hover {
-  opacity: 0.8;
-  background-color: rgba(0,0,0,.8);
-}
-.image-upload-wrapper .image-upload-layover .text-center {
-  position: relative;
-  opacity: 0;
-  text-align: center;
-  top: 50%;
-  transform: translateY(-50%);
-    &:hover {
-        opacity: 1;
-    }
-}*/
-/*.imgclick {
-  width: 100px;
-  height: 100px;
-  background-size: contain;
-  border-radius: 50px;
-}
-label.imgclick {
-  position: relative;
-  display: block;
-  cursor: pointer;
-}*/

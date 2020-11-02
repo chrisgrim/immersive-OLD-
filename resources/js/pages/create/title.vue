@@ -81,7 +81,7 @@
             </div>
         </section>
         <Submit 
-            :newsubmission="newsubmission"
+            :newsubmission="newEvent"
             @submit="onSubmit"
             @newevent="acceptNewEvent"
             :disabled="disabled" 
@@ -99,7 +99,7 @@
                 <p>Editing the event name will require the event to be reapproved.</p>
             </div>
             <div slot="footer">
-                <button class="btn del" @click="onReSubmit()">Change</button>
+                <button class="btn del" @click="onResubmit()">Change</button>
             </div>
         </modal>
         <transition name="slide-fade">
@@ -144,7 +144,7 @@
                 approved: this.event.status == 'p' || this.event.status == 'e' ? true : false,
                 serverErrors: '',
                 updated: false,
-                newEvent: this.new,
+                newEvent: this.newsubmission,
 			}
 		},
 
@@ -163,8 +163,9 @@
             },
 
 			onSubmit(value) {
-                if (this.event.status != 0 && !this.$v.$anyDirty) {return this.onForward(value)};
-                if (this.checkVuelidate()) { return false };
+
+                if (this.event.status != 0 && !this.$v.$anyDirty) {return this.onForward(value)}
+                if (this.checkVuelidate()) { return false }
 				axios.patch( this.endpoint, this.title )
 				.then(res => { 
                     value == 'save' ? this.save() : this.onForward(value);
@@ -173,7 +174,7 @@
                     this.onErrors(err) });
 			},
 
-            onReSubmit() {
+            onResubmit() {
                 this.title.reSubmitEvent = 'reSubmit';
                 this.approved = false;
                 this.modal = false;

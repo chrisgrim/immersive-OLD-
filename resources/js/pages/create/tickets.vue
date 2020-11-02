@@ -239,7 +239,7 @@
             <div slot="footer">
                 <button 
                     class="btn del" 
-                    @click="onReSubmit()">
+                    @click="onResubmit()">
                     Change
                 </button>
             </div>
@@ -285,7 +285,7 @@ export default {
                 'tickets': this.tickets,
                 'ticketUrl': this.ticketUrl,
                 'callAction': this.callAction,
-                'reSubmitEvent': this.reSubmit,
+                'reSubmitEvent': this.resubmit,
             }
         },
     },
@@ -323,7 +323,7 @@ export default {
             ticketUrl: this.event.ticketUrl ? this.event.ticketUrl : '',
             updated: false,
             approved: this.event.status == 'p' || this.event.status == 'e' ? true : false,
-            reSubmit: false,
+            resubmit: false,
         }
     },
 
@@ -369,12 +369,6 @@ export default {
                 nameEmpty: false,
                 nameRepeat: false,
                 descriptionLength:false,
-                // { name:'priceLength', type:'price', hasError: false},
-                // { name:'priceEmpty', type:'price', hasError: false},
-                // { name:'nameEmpty', type:'name', hasError: false},
-                // { name:'nameLength', type:'name', hasError: false},
-                // { name: 'nameRepeat', type:'name', hasError: false }, 
-                // { name: 'descriptionLength', type:'description', hasError: false }, 
             }
         },
 
@@ -494,15 +488,15 @@ export default {
             }
         },
 
-        onReSubmit() {
-            this.reSubmit = true;
+        onResubmit() {
+            this.resubmit = true;
             this.approved = false;
             this.modal = false;
         },
 
         checkStatus() {
             this.active = 'ticket'
-            if ((this.event.status == 'p' || this.event.status == 'e') && this.reSubmit == false) {
+            if ((this.event.status == 'p' || this.event.status == 'e') && this.resubmit == false) {
                 this.modal = true;
             }
         }

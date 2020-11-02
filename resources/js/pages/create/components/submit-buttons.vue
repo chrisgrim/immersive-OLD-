@@ -8,16 +8,18 @@
                 Your events 
             </button>
         </div>
-        <div v-if="newsubmission">
-            <div class="create-button__forward">
-                <button 
-                    :disabled="disabled" 
-                    class="create" 
-                    @click.prevent="acceptWarning"> 
-                    Continue
-                </button>
-            </div>
+
+        <div 
+            v-if="newsubmission" 
+            class="create-button__forward">
+            <button 
+                :disabled="disabled" 
+                class="create" 
+                @click.prevent="acceptWarning"> 
+                Continue
+            </button>
         </div>
+        
         <div v-else>
             <div v-if="!approved">
                 <div class="create-button__back">

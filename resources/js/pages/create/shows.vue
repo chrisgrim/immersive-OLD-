@@ -378,7 +378,7 @@
                 <p>Changing the show run type will require the event to be reapproved.</p>
             </div>
             <div slot="footer">
-                <button class="btn del" @click="onReSubmit()">Change</button>
+                <button class="btn del" @click="onResubmit()">Change</button>
             </div>
         </modal>
     </div>
@@ -450,7 +450,7 @@ export default {
                 'always': this.showType.id == '3' || !this.weeklyOngoing ? true : false,
                 'start_date': this.startDate ? this.startDate : null,
                 'timezone': this.timezone,
-                'reSubmitEvent': this.reSubmit,
+                'reSubmitEvent': this.resubmit,
             }
         },
 
@@ -482,7 +482,7 @@ export default {
             showStartDate: this.event.show_on_going ? true : false,
             timezone: this.event.timezone ? this.event.timezone : '',
             updated: false,
-            reSubmit: false,
+            resubmit: false,
 
         }
     },
@@ -558,13 +558,13 @@ export default {
         },
 
         checkStatus() {
-            if ((this.event.status == 'p' || this.event.status == 'e') && this.reSubmit == false) {
+            if ((this.event.status == 'p' || this.event.status == 'e') && this.resubmit == false) {
                 this.modal = true;
             }
         },
 
-        onReSubmit() {
-            this.reSubmit = true;
+        onResubmit() {
+            this.resubmit = true;
             this.approved = false;
             this.modal = false;
         },
