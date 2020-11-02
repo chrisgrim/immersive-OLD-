@@ -51,31 +51,34 @@ Route::POST('/conversations/{conversation}', 'ConversationsController@update');
 
 //Admin Area
 Route::GET('/admin/dashboard', 'AdminAreaController@index');
+
+Route::POST('/admin/event/{event}/change-organizer', 'Admin\EventController@changeOrganizer');
 Route::GET('/finish/events', 'AdminAreaController@approval');
 Route::GET('/finish/events/{event}', 'AdminAreaController@showApproval');
-Route::GET('/finish/organizers', 'AdminAreaController@orgApproval');
-Route::GET('/finish/organizers/{organizer}', 'AdminAreaController@showOrgApproval');
 Route::POST('/approve/{event}', 'AdminAreaController@success');
-Route::POST('/approve/org/{organizer}', 'AdminAreaController@orgSuccess');
-Route::POST('/delete/org/{organizer}', 'AdminAreaController@orgDelete');
 Route::POST('/reject/{event}', 'AdminAreaController@reject');
 Route::POST('/unapprove/{event}', 'AdminAreaController@fail');
-Route::GET('/master/userlist', 'UserMasterController@index');
-Route::PATCH('/master/userlist/{user}', 'UserMasterController@update');
-Route::POST('/userlist/fetch', 'UserMasterController@fetch');
-Route::GET('/admin/organizer', 'AdminOrganizerController@index');
-Route::PATCH('/admin/organizer/{organizer}', 'AdminOrganizerController@update');
-Route::POST('/admin/organizer/fetch', 'AdminOrganizerController@fetch');
 Route::GET('/admin/events', 'AdminAreaEventsController@index');
-Route::GET('/admin/boneyard', 'AdminAreaEventsController@boneyard');
 Route::POST('/admin/events/fetch', 'AdminAreaEventsController@fetch');
 Route::POST('/admin/boneyard/fetch', 'AdminAreaEventsController@boneyardFetch');
 Route::POST('/admin/boneyard/{event}', 'AdminAreaEventsController@resurrect');
 Route::GET('/admin/purgatory', 'AdminAreaEventsController@purgatory');
 Route::POST('/admin/purgatory/fetch', 'AdminAreaEventsController@purgatoryFetch');
+
+Route::GET('/finish/organizers', 'AdminAreaController@orgApproval');
+Route::GET('/finish/organizers/{organizer}', 'AdminAreaController@showOrgApproval');
+Route::POST('/approve/org/{organizer}', 'AdminAreaController@orgSuccess');
+Route::POST('/delete/org/{organizer}', 'AdminAreaController@orgDelete');
+Route::GET('/admin/organizer', 'AdminOrganizerController@index');
+Route::PATCH('/admin/organizer/{organizer}', 'AdminOrganizerController@update');
+Route::POST('/admin/organizer/fetch', 'AdminOrganizerController@fetch');
+
+Route::GET('/master/userlist', 'UserMasterController@index');
+Route::PATCH('/master/userlist/{user}', 'UserMasterController@update');
+Route::POST('/userlist/fetch', 'UserMasterController@fetch');
+Route::GET('/admin/boneyard', 'AdminAreaEventsController@boneyard');
 Route::POST('/staffpicks/userpicks/{user}', 'StaffPicksController@userpicks');
 Route::POST('/admin/data', 'SearchDataController@create');
-
 Route::GET('/admin/search/genres', 'GenresController@searchgenres');
 
 //staffpicks

@@ -8,33 +8,46 @@
 
         <div class="field">
             <input 
-            v-model="organizer"
-            placeholder="Filter by organization name" 
-            class="general"
-            @keyup="asyncGenerateOrganizerList(organizer)"
-            type="text">
+                v-model="organizer"
+                placeholder="Filter by organization name" 
+                class="general"
+                @keyup="asyncGenerateOrganizerList(organizer)"
+                type="text">
         </div>
-        <div class="list" v-for="(organizer, index) in organizers">
+        <div 
+            class="list"
+            :key="organizer.id"
+            v-for="(organizer) in organizers">
             <div class="edit">
                 <a :href="`/organizer/${organizer.slug}/edit`">
                     <button class="default">Edit Organizer</button>
                 </a>
             </div>
             <div>
-                {{organizer.name}}
+                {{ organizer.name }}
             </div>
             <div>
-                {{organizer.user.email}}
+                {{ organizer.user.email }}
             </div>
             <div>
                 <button @click.prevent="showModal(organizer, 'changeOrg')">Change Owner</button>
             </div>
-            <button @click.prevent="showModal(organizer, 'deleteOrg')" class="delete-circle"><p>X</p></button>
+            <button 
+                @click.prevent="showModal(organizer, 'deleteOrg')" 
+                class="delete-circle">
+                <p>X</p>
+            </button>
         </div>
         <div class="pagination-button">
-            <button class="default" @click="loadMore">Load more</button>
+            <button 
+                class="default" 
+                @click="loadMore">
+                Load more
+            </button>
         </div>
-        <modal v-if="modal == 'deleteOrg'" @close="modal = null">
+        <modal 
+            v-if="modal == 'deleteOrg'" 
+            @close="modal = null">
             <div slot="header">
                 <div class="circle del">
                     <p>X</p>
@@ -45,10 +58,14 @@
                 <p>You are deleting your {{selectedModal.name}} organization.</p>
             </div>
             <div slot="footer">
-                <button class="btn del" @click="deleteOrg()">Delete</button>
+                <button 
+                    class="btn del" 
+                    @click="deleteOrg()">Delete</button>
             </div>
         </modal>
-        <modal v-if="modal == 'changeOrg'" @close="modal = null">
+        <modal 
+            v-if="modal == 'changeOrg'" 
+            @close="modal = null">
             <div slot="header">
                 <div class="circle sub">
                     <p>!</p>
@@ -57,17 +74,18 @@
             <div slot="body"> 
                 <h3>Change Organizer Owner</h3>
                 <multiselect 
-                v-model="user" 
-                deselect-label="Can't remove this value" 
-                track-by="email" 
-                label="email" 
-                placeholder="Select one" 
-                :options="users"
-                @input="asyncGenerateUserList(user)">
-                </multiselect>
+                    v-model="user" 
+                    deselect-label="Can't remove this value" 
+                    track-by="email" 
+                    label="email" 
+                    placeholder="Select one" 
+                    :options="users"
+                    @search-change="asyncGenerateUserList" />
             </div>
             <div slot="footer">
-                <button class="btn sub" @click="onChangeOwner()">Change Owner</button>
+                <button 
+                    class="btn sub" 
+                    @click="onChangeOwner()">Change Owner</button>
             </div>
         </modal>
     </div>
@@ -84,12 +102,13 @@
         components: { Multiselect },
 
         computed: {
-
+            organizers() {
+                return this.organizerList.length ? this.organizerList : this.initOrganizers 
+            }
         },
 
         data() {
             return {
-                organizer: [],
                 organizerList: [],
                 initOrganizers: [],
                 isModalVisible: false,
@@ -104,12 +123,6 @@
                 showEdit: false,
                 pagination: {paginate:10},
 
-            }
-        },
-
-        computed: {
-            organizers() {
-                return this.organizerList.length ? this.organizerList : this.initOrganizers 
             }
         },
 
@@ -199,7 +212,6 @@
             asyncGenerateOrganizerList(query) {
                 axios.get('/api/search/organizer', { params: { keywords: query } })
                 .then(res => {
-                    console.log(res.data);
                     this.organizerList = res.data;
                 });
             },

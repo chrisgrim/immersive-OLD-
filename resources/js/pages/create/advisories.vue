@@ -167,7 +167,7 @@
                 <h2>Audience Interaction Level</h2>
             </div>
             <div class="field">
-                <label class="area">Select physical interaction level with guests</label>
+                <label class="area">Select physical interaction level with performers</label>
                 <multiselect 
                     v-model="interactiveLevel" 
                     :options="interactiveLevelOptions" 

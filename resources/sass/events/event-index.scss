@@ -264,12 +264,18 @@ button.contributer--button {
     header.padded {
         padding: 2rem 2rem 6rem 2rem;
     }
+
     section.padded {
         padding: 2rem 2rem;
         &.events {
             padding:4rem 0rem;
         }
     }
+
+    section.padded.staffpicks__banner {
+        padding: 2rem 2rem 6rem 2rem;
+    }
+
     .event-index {
         padding-top: 0;
     }

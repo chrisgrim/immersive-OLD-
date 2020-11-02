@@ -725,7 +725,7 @@
             getTitleFontSize() {
                 if (this.event.name.length > 70) { return this.titleFontSize = `font-size:3.2rem;line-height:3rem` }
                 if (this.event.name.length > 40) { return this.titleFontSize = `font-size:3.5rem;line-height:4rem` }
-                return this.titleFontSize = `font-size:4.5rem;line-height:5rem`
+                return this.titleFontSize = `font-size:4rem;line-height:5rem`
             },
 
             goBack() {

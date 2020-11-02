@@ -51,6 +51,9 @@ Route::GET('admin/search/events', 'SearchController@searchEvents');
 // IS USED Admin get list of events
 Route::GET('admin/search/boneyard', 'SearchController@searchBoneyard');
 
+// IS USED Admin get list of events
+Route::GET('admin/search/organizer', 'Admin\SearchController@organizers');
+
 
 
 

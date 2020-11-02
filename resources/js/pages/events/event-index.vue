@@ -332,6 +332,7 @@
                 return this.$store.state.user ? this.$store.state.user : ''
             },
             staffHeight() {
+                if (this.mobile) {return;}
                 if (this.staffpicks.length > 2) {
                     return '25';
                 }
@@ -367,7 +368,7 @@
                 eventName: '',
                 location: [],
                 weekendDates: [],
-                mobile: window.innerWidth > 768 ? true : false,
+                mobile: window.innerWidth < 768 ? true : false,
                 translateStaff: 0,
                 translateCat: 0,
                 searchType: 'category',
