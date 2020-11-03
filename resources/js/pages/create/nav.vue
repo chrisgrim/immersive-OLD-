@@ -107,7 +107,7 @@
         components: { NavMenuItem },
         computed: {
             backUrl() {
-                return this.user.hasCreatedOrganizers  ? '/create-event/edit' : '/'
+                return this.user.hasCreatedOrganizers  ? '/create/events/edit' : '/'
             },
             isCompleted() {
                 return this.event.status == 'p' || this.event.status == 'e' || this.event.status == 'r' || this.event.status == 'n' ? true : false

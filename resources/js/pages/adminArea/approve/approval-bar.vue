@@ -5,16 +5,15 @@
                 <div class="field">
                     <label>Mod Comments</label>
                     <textarea 
-                    type="text"
-                    name="comments" 
-                    v-model="comments" 
-                    placeholder=" "
-                    :class="{ active: commentsActive }"
-                    @click="commentsActive = true"
-                    @blur="commentsActive = false" 
-                    @input="$v.comments.$touch"
-                    rows="8">
-                    </textarea>
+                        type="text"
+                        name="comments" 
+                        v-model="comments" 
+                        placeholder=" "
+                        :class="{ active: commentsActive }"
+                        @click="commentsActive = true"
+                        @blur="commentsActive = false" 
+                        @input="$v.comments.$touch"
+                        rows="8" />
                     <div v-if="$v.comments.$error" class="validation-error">
                         <p class="error" v-if="!$v.comments.required">Be sure to include notes</p>
                     </div>
@@ -62,15 +61,8 @@
         methods: {
             approved() {
                 this.dis = true;
-                axios.post(`/approve/${this.event.slug}`)
-                .then(res => { 
-                    window.location.href = '/finish/events';
-                })
-                .catch(error => {   
-                    console.log(error.response.data);      
-                    this.serverErrors = error.response.data.errors;
-                    this.dis = false;
-                });
+                axios.post(`/admin/event/${this.event.slug}/approve`)
+                .then(window.location.href = '/finish/events');
             },
 
             denied() {

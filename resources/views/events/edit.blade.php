@@ -14,7 +14,6 @@
         <vue-nav></vue-nav>
     @endguest
 @endsection
-
 @section('content')
 	<div id="bodyArea">
         @if ( session()->exists( 'submitted' ))
@@ -22,7 +21,7 @@
             message="submitted">
             </vue-alert>
         @endif
-		<edit-events user="{{auth()->id()}}"/>	
+		<edit-events :organizers="{{$organizers}}" user="{{auth()->id()}}"/>	
 	</div>
 @endsection
 

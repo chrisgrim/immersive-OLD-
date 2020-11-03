@@ -287,7 +287,7 @@ export default {
 
             axios.post(this.endPoint, this.formData)
             .then(res => { 
-                this.onFinishOrganizer('/create-event/edit');
+                this.onFinishOrganizer('/create/events/edit');
             })
             .catch(err => {
                 this.onErrors(err);
@@ -312,7 +312,7 @@ export default {
         },
 
         goBack() {
-            window.location.href = '/create-event/edit';
+            window.location.href = '/create/events/edit';
         },
 
         validateText(str) {

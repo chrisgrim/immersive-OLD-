@@ -13,7 +13,7 @@ export default {
         },
 
         onBackInitial() {
-            return window.location.href = `/create-event/edit/`;
+            return window.location.href = `/create/events/edit`;
         },
 
         onBack(value) {

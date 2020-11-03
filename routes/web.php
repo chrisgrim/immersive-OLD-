@@ -52,6 +52,7 @@ Route::POST('/conversations/{conversation}', 'ConversationsController@update');
 //Admin Area
 Route::GET('/admin/dashboard', 'AdminAreaController@index');
 
+Route::POST('/admin/event/{event}/approve', 'AdminAreaController@success');
 Route::POST('/admin/event/{event}/change-organizer', 'Admin\EventController@changeOrganizer');
 Route::GET('/finish/events', 'AdminAreaController@approval');
 Route::GET('/finish/events/{event}', 'AdminAreaController@showApproval');
@@ -110,8 +111,8 @@ Route::GET('/terms', 'LegalController@terms');
 Route::GET('/disclaimer', 'LegalController@disclaimer');
 
 //Event Creation Process
-Route::GET('/create-event/edit', 'EventController@editEvents');
-Route::GET('/create-event/edit/fetch', 'EventController@fetchEditEvents');
+Route::GET('/create/events/edit', 'Create\EventController@show');
+Route::POST('/create/{organizer}/events/fetch', 'Create\EventController@fetch');
 //Create Title
 Route::GET('/create-event/{event}/title', 'EventTitleController@title');
 Route::GET('/create-event/{event}/title/fetch', 'EventTitleController@fetchTitle');

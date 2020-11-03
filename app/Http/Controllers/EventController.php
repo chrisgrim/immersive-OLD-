@@ -118,17 +118,6 @@ class EventController extends Controller
      * @param  \App\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function editEvents()
-    {
-        return view('events.edit');
-    }
-
-    /**
-     * Loads the users created events
-     *
-     * @param  \App\Event  $event
-     * @return \Illuminate\Http\Response
-     */
     public function fetchEditEvents()
     {
         return Organizer::getOrganizerEvents();

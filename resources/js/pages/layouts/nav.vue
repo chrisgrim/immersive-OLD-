@@ -48,7 +48,7 @@
                             v-if="user.hasCreatedOrganizers">
                             <a 
                                 class="menu-link" 
-                                href="/create-event/edit">
+                                href="/create/events/edit">
                                 <div>Your Events</div>
                             </a>
                         </div>
@@ -177,7 +177,7 @@
                     v-if="user && user.hasCreatedOrganizers">
                     <a 
                         class="menu-link" 
-                        href="/create-event/edit">
+                        href="/create/events/edit">
                         <div class="nav-icon">
                             <svg 
                                 viewBox="0 0 24 24" 

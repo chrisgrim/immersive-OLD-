@@ -26,7 +26,7 @@
 
         computed: {
             backUrl() {
-                return this.user.hasCreatedOrganizers  ? '/create-event/edit' : '/'
+                return this.user.hasCreatedOrganizers  ? '/create/events/edit' : '/'
             },
         },
 

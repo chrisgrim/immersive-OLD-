@@ -129,8 +129,10 @@ class Organizer extends Model
     public function inProgressEvents()
     {
         return $this->hasMany(Event::class)
-                    ->whereDate('closingDate', '>=', Carbon::today())
-                    ->orWhereNull('closingDate')
+                    ->where(function ($query) {
+                        $query->whereDate('closingDate', '>=', Carbon::today())
+                            ->orWhereNull('closingDate');
+                    })
                     ->orderBy('created_at', 'ASC');
     }
 
@@ -142,27 +144,14 @@ class Organizer extends Model
     */
     public static function getOrganizerEvents()
     {
-        $organizers = auth()->user()->organizers->load([
-            'pastEvents' => function ($builder) {
-                $builder->where('user_id', auth()->id());
-            },
-            'inProgressEvents' => function ($builder) {
-                $builder->where('user_id', auth()->id());
-            }
-        ]);
-        $eventsbyorganizer = $organizers->map(function ($organizer) {
-            return [
-                        'id' => $organizer->id,
-                        'name' => $organizer->name,
-                        'slug' => $organizer->slug,
-                        'largeImagePath' => $organizer->largeImagePath,
-                        'thumbImagePath' => $organizer->thumbImagePath,
-                        'past_events' => $organizer->pastEvents,
-                        'in_progress_events' => $organizer->inProgressEvents,
-                        'hexColor' => $organizer->hexColor,
-            ];
-        });
-        return $eventsbyorganizer;
+        $organizers = auth()->user()->organizers()->get();
+
+        foreach ($organizers as $organizer) {
+            $organizer->setRelation('pastEvents', $organizer->pastEvents()->paginate(7));
+            $organizer->setRelation('inProgressEvents', $organizer->inProgressEvents()->paginate(7));
+        }
+
+        return $organizers;
     }
 
     /**
