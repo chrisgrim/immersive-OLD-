@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\ReviewEvent;
 use Illuminate\Http\Request;
 
@@ -24,17 +25,7 @@ class ReviewEventsController extends Controller
      */
     public function index()
     {
-        return ReviewEvent::orderBy('created_at', 'desc')->with('event')->get();
-    }
-
-     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function fetch()
-    {
-        //
+        return ReviewEvent::orderBy('created_at', 'desc')->with('event')->paginate(10);
     }
 
     /**
@@ -56,38 +47,8 @@ class ReviewEventsController extends Controller
      */
     public function store(Request $request)
     {
-        $review = ReviewEvent::create([
-            'user_id' => auth()->id(),
-            'event_id' => $request->event['id'],
-            'organizer_id' => $request->event['organizer_id'],
-            'reviewer_name' => $request->reviewername,
-            'url' => $request->url,
-            'review' => $request->review,
-            'image_path' => $request->image_path,
-            'rank' => $request->rank ? $request->rank : 5
-        ]);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\EventReview  $eventReview
-     * @return \Illuminate\Http\Response
-     */
-    public function show(EventReview $eventReview)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\EventReview  $eventReview
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ReviewEvent $ReviewEvent)
-    {
-        //
+        ReviewEvent::saveReviewEvent($request);
+        return ReviewEvent::orderBy('created_at', 'desc')->with('event')->paginate(10);
     }
 
     /**
@@ -100,7 +61,7 @@ class ReviewEventsController extends Controller
     public function update(Request $request, ReviewEvent $reviewevent)
     {
         $reviewevent->update($request->all());
-        return $reviewevent;
+        return ReviewEvent::orderBy('created_at', 'desc')->with('event')->paginate(10);
     }
 
     /**
@@ -112,5 +73,6 @@ class ReviewEventsController extends Controller
     public function destroy(ReviewEvent $reviewevent)
     {
         $reviewevent->delete();
+        return ReviewEvent::orderBy('created_at', 'desc')->with('event')->paginate(10);
     }
 }

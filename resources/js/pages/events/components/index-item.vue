@@ -77,7 +77,7 @@
 
         computed: {
             url() {
-                return event => this.loadurl == 'admin' ? `/finish/events/${event.slug}` : `/events/${event.slug}`
+                return event => this.loadurl == 'admin' ? `/admin/events/${event.slug}/finalize` : `/events/${event.slug}`
             }
         },
 

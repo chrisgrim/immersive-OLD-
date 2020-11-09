@@ -79,8 +79,7 @@
         methods: {
             onLoad() {
                 axios.post('/admin/data', this.submitObject)
-                .then(res => {
-                    console.log(res.data);
+                .then( res => {
                     this.options = {
                         xaxis: {
                           categories: res.data.map(name => name.name.substring(0, 20)),
@@ -88,9 +87,7 @@
                     }
                     this.series = [{data: res.data.map(name => name.count), name: res.data.map(name => name.name.substring(0, 20))}]
                 })
-                .catch(err => {
-
-                });
+                .catch( err => {});
             },
                 
         },

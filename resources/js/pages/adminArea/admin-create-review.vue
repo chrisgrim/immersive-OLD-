@@ -1,134 +1,127 @@
 <template>
-<div class="rev">
-    <div class="editor">
-        <editor-floating-menu :editor="editor" v-slot="{ commands, isActive, menu }">
-            <div
-            class="editor__floating-menu"
-            :class="{ 'is-active': menu.isActive }"
-            :style="`left: ${menu.left}px; bottom: ${menu.bottom}px;`"
-            >
-                <button
-                  class="menubar__button"
-                  :class="{ 'is-active': isActive.bold() }"
-                  @click="commands.bold"
-                >
-                  B
-                </button>
-                <button
-                  class="menubar__button"
-                  :class="{ 'is-active': isActive.italic() }"
-                  @click="commands.italic"
-                >
-                  /
-                </button>
-                <button
-                  class="menubar__button"
-                  :class="{ 'is-active': isActive.code() }"
-                  @click="commands.code"
-                >
-                  ''
-                </button>
+    <div class="rev">
+        <div class="editor">
+            <editor-floating-menu :editor="editor" v-slot="{ commands, isActive, menu }">
+                <div
+                    class="editor__floating-menu"
+                    :class="{ 'is-active': menu.isActive }"
+                    :style="`left: ${menu.left}px; bottom: ${menu.bottom}px;`">
+                    <button
+                        class="menubar__button"
+                        :class="{ 'is-active': isActive.bold() }"
+                        @click="commands.bold">
+                        B
+                    </button>
+                    <button
+                        class="menubar__button"
+                        :class="{ 'is-active': isActive.italic() }"
+                        @click="commands.italic">
+                        /
+                    </button>
+                    <button
+                        class="menubar__button"
+                        :class="{ 'is-active': isActive.code() }"
+                        @click="commands.code">
+                        ''
+                    </button>
+                    <button
+                        class="menubar__button"
+                        :class="{ 'is-active': isActive.paragraph() }"
+                        @click="commands.paragraph">
+                        p
+                    </button>
 
-                <button
-                  class="menubar__button"
-                  :class="{ 'is-active': isActive.paragraph() }"
-                  @click="commands.paragraph"
-                >
-                  p
-                </button>
-
-                <button
-                  class="menubar__button"
-                  :class="{ 'is-active': isActive.heading({ level: 1 }) }"
-                  @click="commands.heading({ level: 1 })"
-                >
-                  h1
-                </button>
-                 <button
-                  class="menubar__button"
-                  :class="{ 'is-active': isActive.heading({ level: 1 }) }"
-                  @click="commands.heading({ level: 2 })"
-                >
-                  h2
-                </button>
-                 <button
-                  class="menubar__button"
-                  :class="{ 'is-active': isActive.heading({ level: 1 }) }"
-                  @click="commands.heading({ level: 3 })"
-                >
-                  h3
-                </button>
-                <button
-                    class="menubar__button"
-                    @click="showImageModal(commands.image)"
+                    <button
+                        class="menubar__button"
+                        :class="{ 'is-active': isActive.heading({ level: 1 }) }"
+                        @click="commands.heading({ level: 1 })">
+                      h1
+                    </button>
+                     <button
+                      class="menubar__button"
+                      :class="{ 'is-active': isActive.heading({ level: 1 }) }"
+                      @click="commands.heading({ level: 2 })"
                     >
-                    image
-                </button>
-            </div>
-        </editor-floating-menu>
-        <editor-menu-bubble :editor="editor" :keep-in-bounds="keepInBounds" v-slot="{ commands, isActive, menu }">
-            <div
-                class="menububble"
-                :class="{ 'is-active': menu.isActive }"
-                :style="`left: ${menu.left}px; bottom: ${menu.bottom}px;`"
-            >
+                      h2
+                    </button>
+                     <button
+                      class="menubar__button"
+                      :class="{ 'is-active': isActive.heading({ level: 1 }) }"
+                      @click="commands.heading({ level: 3 })"
+                    >
+                      h3
+                    </button>
+                    <button
+                        class="menubar__button"
+                        @click="showImageModal(commands.image)"
+                        >
+                        image
+                    </button>
+                </div>
+            </editor-floating-menu>
+            <editor-menu-bubble :editor="editor" :keep-in-bounds="keepInBounds" v-slot="{ commands, isActive, menu }">
+                <div
+                    class="menububble"
+                    :class="{ 'is-active': menu.isActive }"
+                    :style="`left: ${menu.left}px; bottom: ${menu.bottom}px;`"
+                >
 
-                <button
-                  class="menububble__button"
-                  :class="{ 'is-active': isActive.bold() }"
-                  @click="commands.bold"
-                >
-                  B
-                </button>
-                <button
-                  class="menububble__button"
-                  :class="{ 'is-active': isActive.italic() }"
-                  @click="commands.italic"
-                >
-                  /
-                </button>
-                <button
-                  class="menububble__button"
-                  :class="{ 'is-active': isActive.code() }"
-                  @click="commands.code"
-                >
-                  ''
-                </button>
+                    <button
+                      class="menububble__button"
+                      :class="{ 'is-active': isActive.bold() }"
+                      @click="commands.bold"
+                    >
+                      B
+                    </button>
+                    <button
+                      class="menububble__button"
+                      :class="{ 'is-active': isActive.italic() }"
+                      @click="commands.italic"
+                    >
+                      /
+                    </button>
+                    <button
+                      class="menububble__button"
+                      :class="{ 'is-active': isActive.code() }"
+                      @click="commands.code"
+                    >
+                      ''
+                    </button>
 
-                <button
-                  class="menububble__button"
-                  :class="{ 'is-active': isActive.paragraph() }"
-                  @click="commands.paragraph"
-                >
-                  p
-                </button>
+                    <button
+                      class="menububble__button"
+                      :class="{ 'is-active': isActive.paragraph() }"
+                      @click="commands.paragraph"
+                    >
+                      p
+                    </button>
 
-                <button
-                  class="menububble__button"
-                  :class="{ 'is-active': isActive.heading({ level: 1 }) }"
-                  @click="commands.heading({ level: 1 })"
-                >
-                  h1
-                </button>
-                 <button
-                  class="menububble__button"
-                  :class="{ 'is-active': isActive.heading({ level: 2 }) }"
-                  @click="commands.heading({ level: 2 })"
-                >
-                  h2
-                </button>
-                 <button
-                  class="menububble__button"
-                  :class="{ 'is-active': isActive.heading({ level: 3 }) }"
-                  @click="commands.heading({ level: 3 })"
-                >
-                  h3
-                </button>
-            </div>
-        </editor-menu-bubble>
-        <editor-content class="editor__content" :editor="editor" />
+                    <button
+                      class="menububble__button"
+                      :class="{ 'is-active': isActive.heading({ level: 1 }) }"
+                      @click="commands.heading({ level: 1 })"
+                    >
+                      h1
+                    </button>
+                     <button
+                      class="menububble__button"
+                      :class="{ 'is-active': isActive.heading({ level: 2 }) }"
+                      @click="commands.heading({ level: 2 })"
+                    >
+                      h2
+                    </button>
+                     <button
+                      class="menububble__button"
+                      :class="{ 'is-active': isActive.heading({ level: 3 }) }"
+                      @click="commands.heading({ level: 3 })"
+                    >
+                      h3
+                    </button>
+                </div>
+            </editor-menu-bubble>
+            <editor-content class="editor__content" :editor="editor" />
+        </div>
     </div>
-</div>
 </template>
 
 <script>

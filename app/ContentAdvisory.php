@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Scopes\RankScope;
+use Illuminate\Support\Str;
 
 class ContentAdvisory extends Model
 {
@@ -35,7 +36,7 @@ class ContentAdvisory extends Model
     }
 
     /**
-    *Save advisories and update pivot
+    *Save advisories and updates pivot
     *
     * @param  \Illuminate\Http\Request  $request
     * @param  $event
@@ -45,15 +46,48 @@ class ContentAdvisory extends Model
         if ($request->has('contentAdvisory')) {
             foreach ($request['contentAdvisory'] as $content) {
                 ContentAdvisory::firstOrCreate([
-                    'slug' => str_slug($content)
+                    'slug' => Str::slug($content)
                 ],
                 [
                     'user_id' => auth()->user()->id,
-                    'advisories' => $content
+                    'advisories' => $content,
                 ]);
             };
-            $newSync = ContentAdvisory::all()->whereIn('slug', array_map('str_slug', $request['contentAdvisory']));
+            $newSync = ContentAdvisory::whereIn('slug', collect($request->contentAdvisory)->map(function ($item) {
+                return Str::slug($item); 
+            })->toArray())->get();
             $event->contentadvisories()->sync($newSync);
         };
+    }
+
+    /**
+    *Admin saving a specific advisory
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  $event
+    */
+    public static function saveAdvisory($request)
+    {
+        ContentAdvisory::create([
+            'advisories' => $request->advisories,
+            'slug' => Str::slug($request->advisories),
+            'admin' => true,
+            'user_id' => auth()->user()->id,
+        ]);
+    }
+
+    /**
+     * This updates a ContactLevel type
+     *
+     * @return nothing
+     */
+    public function updateAdvisory($request) 
+    {
+        $this->update([
+            'rank' => $request->rank,
+            'user_id' => auth()->user()->id,
+            'advisories' => $request->advisories,
+            'slug' => Str::slug($request->advisories),
+        ]);
     }
 }

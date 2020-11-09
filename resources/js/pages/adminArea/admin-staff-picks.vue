@@ -5,7 +5,7 @@
                 <h1>Picks of the Week</h1>
                 <div class="add">
                     <button @click.prevent="add = true">
-                        <p>+</p>
+                        <IconSvg type="add" />
                     </button>
                 </div>
             </div>
@@ -27,8 +27,8 @@
                         :options-limit="30" 
                         :limit="5"  
                         track-by="name"
-                        @open="loadEvents"
-                        @search-change="loadEvents"
+                        @open="onSearch"
+                        @search-change="onSearch"
                         :show-no-results="false"
                         @input="addShowDates"
                         :allow-empty="false">
@@ -164,7 +164,7 @@
             </div>
             <br>
             <br>
-            <button @click.prevent="savePick">
+            <button @click.prevent="onSubmit">
                 Add staff pick
             </button>
         </div>
@@ -174,13 +174,13 @@
                 <label>Filter by User</label>
                 <multiselect 
                     v-model="user" 
-                    :options="loadusers" 
+                    :options="loadstaff" 
                     open-direction="bottom"
                     placeholder="filter by user"
                     label="name"
                     track-by="name"
-                    @input="loadUserPicks(user)"
-                    @remove="loadPicks"
+                    @input="onLoad"
+                    @remove="onLoad"
                     :show-no-results="false">
                     <template 
                         slot="option" 
@@ -214,7 +214,7 @@
                 <p>dates</p>
             </div>
             <div 
-                v-for="pick in picks"
+                v-for="pick in picks.data"
                 :key="pick.id"
                 class="list c-staffpicks__list--grid">
                 <div class="image">
@@ -242,7 +242,7 @@
                     <label>{{ pick.user.name }}</label>
                 </div>
                 <div class="rank">
-                   <multiselect 
+                    <multiselect 
                         v-model="pick.rank" 
                         :options="rankOptions"
                         :show-labels="false"
@@ -250,12 +250,12 @@
                         open-direction="bottom"
                         :class="{ active: active == 'rank'}"
                         @click="active = 'rank'"
-                        @input="updatePick(pick, 'rank')"
+                        @input="onUpdate(pick, 'rank')"
                         :preselect-first="false" />
                 </div>
                 <div class="date-s">
                     <flat-pickr
-                        @input="updatePick(pick, 'dates')"
+                        @input="onUpdate(pick, 'dates')"
                         :value="listDates = [pick.start_date, pick.end_date]"
                         :config="pickConfig"                                         
                         placeholder="Select date"               
@@ -264,10 +264,13 @@
                 <button 
                     @click.prevent="showModal(pick, 'delete')" 
                     class="delete-circle">
-                    <p>X</p>
+                    <IconSvg type="delete" />
                 </button>
             </div>
-            <load-more @intersect="intersected()" /> 
+            <pagination 
+                :limit="1"
+                :list="picks"
+                @selectpage="onLoad" />
         </div>
         <modal 
             v-if="modal == 'delete'" 
@@ -284,7 +287,7 @@
             <div slot="footer">
                 <button 
                     class="btn del" 
-                    @click.prevent="deletePick(selectedModal)">
+                    @click.prevent="onDelete(selectedModal)">
                     Delete
                 </button>
             </div>
@@ -293,18 +296,19 @@
 </template>
 
 <script>
-    import LoadMore  from '../../components/LoadMore.js'
     import flatPickr from 'vue-flatpickr-component'
     import 'flatpickr/dist/flatpickr.css'
     import Multiselect from 'vue-multiselect'
     import { required } from 'vuelidate/lib/validators';
     import _ from 'lodash'
+    import Pagination  from '../../components/pagination.vue'
+    import IconSvg from '../../components/Svg-icon'
 
     export default {
 
-        props: ['loadusers'],
+        props: ['loadstaff'],
 
-        components: { flatPickr, Multiselect, LoadMore },
+        components: { flatPickr, Multiselect, Pagination, IconSvg },
 
         computed: {
             submitObject() {
@@ -329,7 +333,7 @@
                 rank: '',
                 active: '',
                 rankOptions: ['1', '2', '3', '4', '5'],
-                user: '',
+                user: null,
                 picks:[],
                 datesSubmit: [],
                 datesFormatted: [],
@@ -340,116 +344,37 @@
                 config: this.initializeDateObject('new'),
                 pickConfig: this.initializeDateObject('list'),
                 eventConfig: this.initializeDateObject('event'),
-                pagination: '',
-                paginationUser: '',
-                page: 2,
             }
         },
 
         methods: {
-            loadEvents (query) {
-                axios.get('/api/admin/search/events', { params: { keywords: query } })
-                .then(res => {
-                    this.events = res.data;
-                });
+            onSearch (query) {
+                axios.get('/api/admin/events/search', { params: { keywords: query } })
+                .then( res => { this.events = res.data });
             },
 
-            initializeDateObject(val) {
-                return {
-                    altFormat:'M d',
-                    altInput: true,
-                    mode: val == 'event' ? 'multiple' : 'range',
-                    inline: val == 'list' ? false : true,
-                    showMonths: 1,
-                    dateFormat: 'Y-m-d H:i:s',
-                    onClose:  val == 'new' ? [this.dateFunc()] : [this.listDateFunc()], 
-                }
+            onLoad(page) {
+                axios.post(`/admin/staffpicks/fetch`, { page: page, user: this.user ? this.user.id : '' })
+                .then( res => { this.picks = res.data })
             },
 
-            intersected() {
-                if( this.pagination.last_page < this.page ) {return false}
-                this.user ? this.loadUserPicks() : this.onLoadMore();
-            },
-
-            onLoadMore() {
-                axios.get(`/staffpicks?page=${this.page}`)
-                .then(res => {
-                    this.picks = this.picks.concat(res.data.data);
-                    this.pagination = res.data;
-                    this.page = res.data.current_page + 1;
-                });
-            },
-
-            showModal(pick, arr) {
-                this.selectedModal = pick;
-                this.modal = arr;
-            },
-
-            loadPicks() {
-                axios.get(`/staffpicks?timestamp=${new Date().getTime()}`)
-                .then(res => {
-                    this.picks = res.data.data;
-                    this.pagination = res.data;
-                    this.page = res.data.current_page + 1;
-                });
-            },
-
-            loadUserPicks() {
-                if(!this.user) {return this.loadPicks()}
-                if (this.user.id != this.paginationUser.id) {this.page = 1};
-                axios.post(`/staffpicks/userpicks/${this.user.id}?page=${this.page}`)
-                .then(res => { 
-                    res.data.current_page == 1 ? this.picks = res.data.data : this.picks = this.picks.concat(res.data.data);
-                    this.pagination = res.data;
-                    this.paginationUser = this.user;
-                    this.page = res.data.current_page + 1;
-                })
-            },
-
-            savePick() {
-                this.$v.$touch();
-                if (this.$v.$invalid) { return false }
-                if (this.checkDates()) {alert('pick date must overlap show date');return false}
-                axios.post('/staffpicks', this.submitObject)
-                .then(response => { 
-                    location.reload();
-                })
-                .catch(error => { 
-                    console.log(error.response.data.errors);
-                    this.serverErrors = error.response.data.errors;
-                });
-            },
-
-            checkDates() {
-                if (this.event.showtype == 'a' ) {return false;}
-                let from = new Date(this.datesSubmit[0]);
-                let to = new Date(this.datesSubmit[1]);
-
-                let result = [];
-                for (var i = 0; i <  this.event.shows.length; i++) {
-                    let date = this.event.shows[i].date;
-                    result.push(new Date(date) >= from && new Date(date) <= to);
-                }
-                // this.showDates.forEach(date => result.push(new Date(date) >= from && new Date(date) <= to));
-                return result.includes(true) ? false : true;
-            },
-
-            addShowDates(event) {
-                this.$v.event.$touch
-                this.showDates = event.shows.map(a => a.date);
-                console.log(this.showDates);
-            },
-
-            deletePick(pick) {
+            onDelete(pick) {
                 axios.delete(`/staffpicks/${pick.id}`)
-                .then(response => { 
-                    this.modal = null;
-                    this.loadPicks();
-                })
-                .catch(error => { this.serverErrors = error.response.data.errors; });
+                .then( res => { this.picks = res.data; this.modal = null })
+                .catch( error => { this.serverErrors = error.response.data.errors; });
             },
 
-            updatePick(pick, arr) {
+            onSubmit() {
+                this.$v.$touch();
+                if (this.$v.$invalid) { return }
+                if (this.checkDates()) {alert('pick date must overlap show date'); return }
+
+                axios.post('/staffpicks', this.submitObject)
+                .then( res => { this.picks = res.data; location.reload() })
+                .catch( error => { this.serverErrors = error.response.data.errors });
+            },
+
+            onUpdate(pick, arr) {
                 if(arr == 'dates' && !this.listDatesSubmit['1']) {return ''};
                 let data = new FormData();
                 data.append('_method', 'PATCH');
@@ -463,10 +388,31 @@
                         location.reload();
                     }
                 })
-                .catch(error => { 
-                    console.log(error.response.data.errors);
-                    this.serverErrors = error.response.data.errors; 
-                });
+                .catch(error => { this.serverErrors = error.response.data.errors });
+            },
+
+            checkDates() {
+                if (this.event.showtype == 'a' ) {return false;}
+                let from = new Date(this.datesSubmit[0]);
+                let to = new Date(this.datesSubmit[1]);
+
+                let result = [];
+                for (var i = 0; i <  this.event.shows.length; i++) {
+                    let date = this.event.shows[i].date;
+                    result.push(new Date(date) >= from && new Date(date) <= to);
+                }
+
+                return result.includes(true) ? false : true;
+            },
+
+            addShowDates(event) {
+                this.$v.event.$touch
+                this.showDates = event.shows.map(a => a.date);
+            },
+
+            showModal(pick, arr) {
+                this.selectedModal = pick;
+                this.modal = arr;
             },
 
             hasServerError(field) {
@@ -493,14 +439,26 @@
                     }
             },
 
+            initializeDateObject(val) {
+                return {
+                    altFormat:'M d',
+                    altInput: true,
+                    mode: val == 'event' ? 'multiple' : 'range',
+                    inline: val == 'list' ? false : true,
+                    showMonths: 1,
+                    dateFormat: 'Y-m-d H:i:s',
+                    onClose:  val == 'new' ? [this.dateFunc()] : [this.listDateFunc()], 
+                }
+            },
+
             addComment(pick) {
-                this.updatePick(pick, 'comments');
+                this.onUpdate(pick, 'comments');
                 this.active = null;
             }
         },
 
         created() {
-            this.loadPicks()
+            this.onLoad()
         },
 
         validations: {

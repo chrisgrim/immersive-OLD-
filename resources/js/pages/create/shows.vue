@@ -405,7 +405,7 @@ export default {
 
     computed: {
         endpoint() {
-            return `/create-event/${this.event.slug}/shows`
+            return `/create/${this.event.slug}/shows`
         },
 
         navSubmit() {
@@ -450,7 +450,7 @@ export default {
                 'always': this.showType.id == '3' || !this.weeklyOngoing ? true : false,
                 'start_date': this.startDate ? this.startDate : null,
                 'timezone': this.timezone,
-                'reSubmitEvent': this.resubmit,
+                'resubmit': this.resubmit,
             }
         },
 
@@ -458,7 +458,7 @@ export default {
 
     data() {
         return {
-            eventUrl:`/create-event/${this.event.slug}`,
+            eventUrl:`/create/${this.event.slug}`,
             showType: [],
             dates: this.event.shows ? this.event.shows.map(a => a.date) : '',
             startDate: '',

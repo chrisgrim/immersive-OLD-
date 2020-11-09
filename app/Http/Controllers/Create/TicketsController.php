@@ -1,13 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Create;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Event;
-use App\Show;
-use App\ShowOnGoing;
 use App\Ticket;
-use Carbon\Carbon;
 use App\Http\Requests\TicketStoreRequest;
 
 class TicketsController extends Controller
@@ -27,9 +24,23 @@ class TicketsController extends Controller
      */
     public function create(Event $event)
     {
-        // if ($event->status < 4) { abort(403); }
+        if ($event->checkEventStatus(4)) return back();
         $event->load('showOnGoing','shows.tickets');
         return view('create.ticket', compact('event'));
+    }
+
+    /**
+     * Fetch the stored shows and tickets
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function fetch(Event $event)
+    {
+        return [
+            'tickets' => $event->shows()->with('tickets')->get(),
+            'ticketUrl' => $event->ticketUrl,
+        ];
     }
 
     /**
@@ -38,7 +49,7 @@ class TicketsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TicketStoreRequest $request, Event $event)
+    public function update(TicketStoreRequest $request, Event $event)
     {
         // goes through each show attached to the event
         foreach( $event->shows as $show) {
@@ -82,7 +93,6 @@ class TicketsController extends Controller
 
         $pricerange = Ticket::getPriceRange($array, $types, $currency);
 
-
         // Add price range string to event
         $event->update([
             'price_range' => $pricerange,
@@ -90,33 +100,8 @@ class TicketsController extends Controller
             'call_to_action' => $request->callAction,
         ]);
 
-        //Checks to see if category has been selected then updates status to 3
-        if ( $event->status < 6 && $event->isInProgress() && $event->price_range && $event->ticketUrl ) {
-            $event->update([ 'status' => '5' ]);
-        }
-
-        if($request->reSubmitEvent) {
-            $event->update([
-                'status' => '8',
-                'approved' => false
-            ]);
-        }
-
+        $event->updateEventStatus(5, $request);
         $event = $event->fresh();
         $event->searchable();
-    }
-
-    /**
-     * Fetch the stored shows and tickets
-     * 
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function fetch(Event $event)
-    {
-        return response()->json(array(
-            'tickets' => $event->shows()->with('tickets')->get(),
-            'ticketUrl' => $event->ticketUrl,
-        ));
     }
 }

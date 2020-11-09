@@ -236,18 +236,6 @@
                                                 </h3>
                                             </div>
                                         </a>
-                                        <div class="card-description">
-                                            <ShowMore 
-                                                :text="pick.comments"
-                                                :limit="20" />
-                                        </div>
-                                        <div class="staffpicks__user index">
-                                            <div class="staffpicks__user--name index">
-                                                <p>
-                                                    <span>{{ pick.event.category.name }}</span>
-                                                </p>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -359,15 +347,7 @@
 
         data() {
             return {
-                events: [],
-                weekend: [],
-                horror: [],
-                value: '',
-                list: [],
-                price: '',
-                eventName: '',
                 location: [],
-                weekendDates: [],
                 mobile: window.innerWidth < 768 ? true : false,
                 translateStaff: 0,
                 translateCat: 0,
@@ -381,17 +361,6 @@
         },
 
         methods: {
-            async onLoad() {
-                try {
-                    let {data} = await axios.get('/index/fetch')
-                    this.events = data.events;
-                    this.weekend = data.weekend;
-                    this.horror = data.horror;
-                    this.weekendDates = data.weekenddates
-                } catch(err) {
-                  console.log(err)
-                }
-            },
             showMore(name){
                 name == 'cat' && this.translateCat != -200 ? this.translateCat -= 100 : '';
                 name == 'staff' && this.translateStaff != (this.staffpicks.length -1) * -100? this.translateStaff -= 100 : '';
@@ -407,14 +376,6 @@
             hover() {
                 return this.hoverArray = [this.hover - 1, this.hover + 1]
             },
-            hoverArray() {
-            }
         },
-
-        mounted() { 
-            this.onLoad()
-        },
-
-
     };
 </script>

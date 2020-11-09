@@ -29,17 +29,6 @@ export default {
             showMore: this.text.split(' ').length >= this.limit ? true : false
         }
     },
-
-    mounted() { 
-        if (this.text.split(' ').length > 100) {
-            console.log('more words');
-        } else {
-            console.log('les words');
-        }
-    },
-
-
-
 }
     
 </script>

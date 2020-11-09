@@ -126,7 +126,7 @@
                     <div 
                         v-if="user && user.type == 'a'" 
                         class="event-show__adminedit">
-                        <a :href="`/create-event/${event.slug}/title`">
+                        <a :href="`/create/${event.slug}/title`">
                             <div>
                                 Edit
                             </div>

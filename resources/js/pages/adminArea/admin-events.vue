@@ -30,7 +30,7 @@
                     Owner
                 </button>
             </div>
-            <a :href="`/create-event/${event.slug}/title`">
+            <a :href="`/create/${event.slug}/title`">
                 <button class="default">
                     edit
                 </button>
@@ -115,7 +115,7 @@
             },
 
             asyncGenerateEventList(eventList) {
-                axios.get('/api/admin/search/events', { params: { keywords: eventList } })
+                axios.get('/api/admin/events/search', { params: { keywords: eventList } })
                 .then(res => {
                     this.events = res.data;
                 });
@@ -127,7 +127,7 @@
             }, 
 
             asyncGenerateOrganizerList(value) {
-                axios.get('/api/admin/search/organizer', { params: { keywords: value } })
+                axios.get('/api/admin/organizer/search', { params: { keywords: value } })
                 .then(res => {
                     this.organizers = res.data;
                 });

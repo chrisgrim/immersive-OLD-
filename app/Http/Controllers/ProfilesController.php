@@ -121,6 +121,7 @@ class ProfilesController extends Controller
      */
     public function destroy(User $user)
     {
+        $user->conversations()->detach();
         $user->delete();
     }
 

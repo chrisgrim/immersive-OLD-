@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\ContactLevel;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class ContactLevelsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('admin');
+        $this->middleware('moderator');
     }
 
     /**
@@ -45,33 +46,8 @@ class ContactLevelsController extends Controller
      */
     public function store(Request $request)
     {
-         ContactLevel::create([
-            'level' => $request->level,
-            'admin' => true,
-            'user_id' => auth()->user()->id
-        ]);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\ContactLevel  $contactLevel
-     * @return \Illuminate\Http\Response
-     */
-    public function show(ContactLevel $contactlevel)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\ContactLevel  $contactLevel
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ContactLevel $contactlevel)
-    {
-        //
+        ContactLevel::saveContactLevel($request);
+        return ContactLevel::all();
     }
 
     /**
@@ -83,18 +59,8 @@ class ContactLevelsController extends Controller
      */
     public function update(Request $request, ContactLevel $contactlevel)
     {
-        if ($request->rank) {
-            return $contactlevel->update([
-                'rank' => $request->rank,
-                'user_id' => auth()->user()->id
-            ]);
-        }
-        if ($request->level) {
-            return $contactlevel->update([
-                'level' => $request->level,
-                'user_id' => auth()->user()->id
-            ]);
-        }
+        $contactlevel->updateContactLevel($request);
+        return ContactLevel::all();
     }
 
     /**
@@ -106,5 +72,6 @@ class ContactLevelsController extends Controller
     public function destroy(ContactLevel $contactlevel)
     {
         $contactlevel->delete();
+        return ContactLevel::all();
     }
 }

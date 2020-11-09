@@ -197,10 +197,10 @@
                     return `/events/${this.loadmessages.event.slug}`;
                 }
                 if (this.loaduser.type == 'a') {
-                    return `/finish/events/${this.loadmessages.event.slug}`;
+                    return `/admin/events/${this.loadmessages.event.slug}/finalize`;
                 }
                 if (this.loaduser.type !== 'a') {
-                    return `/create-event/${this.loadmessages.event.slug}/title`;
+                    return `/create/${this.loadmessages.event.slug}/title`;
                 }
             }
 

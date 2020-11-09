@@ -6,6 +6,7 @@ use ScoutElastic\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use App\Scopes\RankScope;
+use Illuminate\Support\Str;
 use Intervention\Image\ImageManagerStatic as Image;
 
 class Category extends Model
@@ -93,7 +94,7 @@ class Category extends Model
     */
     public function updateElements($request, $category) 
     {
-        $request->name !== $category->name && !$request->image ? MakeImage::renameImage($category, str_slug($request->name), 'category', $request) : '';
+        $request->name !== $category->name && !$request->image ? MakeImage::renameImage($category, Str::slug($request->name), 'category', $request) : '';
         if ($request->image) {
             MakeImage::saveImage($request, $category, 600, 600, 'category');
         } else {
@@ -102,7 +103,7 @@ class Category extends Model
                 'rank' => $request->rank,
                 'description' => $request->description,
                 'name' => $request->name,
-                'slug' => str_slug($request->name)
+                'slug' => Str::slug($request->name)
             ]);
         }
     }

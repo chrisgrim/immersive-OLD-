@@ -1,23 +1,25 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Organizer;
+
 use Illuminate\Http\Request;
 
-class AdminOrganizerController extends Controller
+class OrganizerController extends Controller
 {
     /**
-    * Checks for admin before allowing controller access
-    *
-    * @return \Illuminate\Http\Response
-    */
+     * Checks for admin before allowing controller access
+     *
+     * @return \Illuminate\Http\__construct
+     */
     public function __construct()
     {
         $this->middleware('moderator');
     }
 
-    /**
+        /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -35,38 +37,6 @@ class AdminOrganizerController extends Controller
     public function fetch(Request $request)
     {
         return Organizer::all()->take($request->paginate)->load('user');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
@@ -107,13 +77,54 @@ class AdminOrganizerController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * index of organizations to be approved
      *
-     * @param  int  $id
+     * @param  \App\AdminArea  $adminArea
+     * @return \Illuminate\Http\view
+     */
+    public function queues()
+    {
+        $organizers = Organizer::where('status', 'r')->get();
+        return view('adminArea.orgapproval',compact('organizers'));
+    }
+
+    /**
+     * Finalization of specific organizations approval
+     *
+     * @param  \App\AdminArea  $adminArea
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function finalize(Organizer $organizer)
     {
-        //
+        $organizer = $organizer->load('user');
+        return view('adminArea.showorgapproval',compact('organizer'));
     }
+
+     /**
+     * Approve Organization
+     *
+     * @param  \App\AdminArea  $adminArea
+     * @return \Illuminate\Http\Response
+     */
+    public function approve(Organizer $organizer)
+    {
+        $organizer->update(['status' => 'p']);
+    }
+
+     /**
+     * Delete Organization
+     *
+     * @param  \App\AdminArea  $adminArea
+     * @return \Illuminate\Http\Response
+     */
+    public function delete(Organizer $organizer)
+    {
+        if ($organizer->events) {
+            foreach ($organizer->events as $event) {
+                $event->delete();
+            }
+        }
+        $organizer->delete();
+    }
+
 }

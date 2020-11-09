@@ -11,7 +11,7 @@ class EventPolicy
     use HandlesAuthorization;
 
     /**
-     * Determine whether the user can view the event.
+     * Determine whether the user can update the event.
      *
      * @param  \App\User  $user
      * @param  \App\Event  $event

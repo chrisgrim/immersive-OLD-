@@ -36,7 +36,7 @@ export default {
 
     data() {
         return {
-            eventUrl:_.has(this.event, 'slug') ? `/create-event/${this.event.slug}` : null,
+            eventUrl:_.has(this.event, 'slug') ? `/create/${this.event.slug}` : null,
             selectedValue: new Date(),
         }
     },

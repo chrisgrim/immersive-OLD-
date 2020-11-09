@@ -17,15 +17,15 @@ export default {
         },
 
         onBack(value) {
-            return value == 'exit' ?  this.onBackInitial() :  window.location.href = `/create-event/${this.event.slug}/${value}`
+            return value == 'exit' ?  this.onBackInitial() :  window.location.href = `/create/${this.event.slug}/${value}`
         },
 
         onFetch(value) {
-            return `/create-event/${this.event.slug}/${value}/fetch?timestamp=${new Date().getTime()}`
+            return `/create/${this.event.slug}/${value}/fetch?timestamp=${new Date().getTime()}`
         },
             
         onForward(value) {
-            return window.location.href = `/create-event/${this.event.slug}/${value}`;
+            return window.location.href = `/create/${this.event.slug}/${value}`;
         },
 
         onRegistered() {

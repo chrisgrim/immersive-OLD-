@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\MobilityAdvisory;
 use Illuminate\Http\Request;
 
-class MobilityController extends Controller
+class MobilitiesController extends Controller
 {
     /**
      * Checks for admin before allowing controller access
@@ -14,7 +15,7 @@ class MobilityController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('admin');
+        $this->middleware('moderator');
     }
 
     /**
@@ -45,12 +46,8 @@ class MobilityController extends Controller
      */
     public function store(Request $request)
     {
-        MobilityAdvisory::create([
-            'mobilities' => $request->mobilities,
-            'slug' => str_slug($request->mobilities),
-            'admin' => true,
-            'user_id' => auth()->user()->id
-        ]);
+        MobilityAdvisory::saveMobilitiesLevel($request);
+        return MobilityAdvisory::where('admin', true)->get();
     }
 
     /**
@@ -62,19 +59,8 @@ class MobilityController extends Controller
      */
     public function update(Request $request, MobilityAdvisory $mobility)
     {
-        if ($request->rank) {
-            return $mobility->update([
-                'rank' => $request->rank,
-                'user_id' => auth()->user()->id
-            ]);
-        }
-        if ($request->mobilities) {
-             $mobility->update([
-                'mobilities' => $request->mobilities,
-                'slug' => str_slug($request->mobilities),
-                'user_id' => auth()->user()->id
-            ]);
-        }
+        $mobility->updateMobilitiesLevel($request);
+        return MobilityAdvisory::where('admin', true)->get();
     }
 
     /**
@@ -86,5 +72,6 @@ class MobilityController extends Controller
     public function destroy(MobilityAdvisory $mobility)
     {
         $mobility->delete();
+        return MobilityAdvisory::where('admin', true)->get();
     }
 }

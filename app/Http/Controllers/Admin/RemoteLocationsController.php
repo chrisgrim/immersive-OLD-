@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\RemoteLocation;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class RemoteLocationsController extends Controller
@@ -15,7 +17,7 @@ class RemoteLocationsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('admin');
+        $this->middleware('moderator');
     }
 
     /**
@@ -48,33 +50,12 @@ class RemoteLocationsController extends Controller
     {
         RemoteLocation::create([
             'name' => $request->name,
-            'slug' => str_slug($request->name),
+            'slug' => Str::slug($request->name),
             'description' => $request->description,
             'admin' => true,
             'user_id' => auth()->user()->id
         ]);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return RemoteLocation::all();
     }
 
     /**
@@ -86,25 +67,15 @@ class RemoteLocationsController extends Controller
      */
     public function update(Request $request, RemoteLocation $remotelocation)
     {
-        if ($request->name) {
-            $remotelocation->update([
-                'slug' => str_slug($request->name),
-                'name' => $request->name,
-                'user_id' => auth()->user()->id,
-            ]);
-        }
-         if ($request->description) {
-            $remotelocation->update([
-                'description' => $request->description,
-                'user_id' => auth()->user()->id,
-            ]);
-        }
-        if ($request->rank) {
-            $remotelocation->update([
-                'user_id' => auth()->user()->id,
-                'rank' => $request->rank,
-            ]);
-        }
+        $remotelocation->update([
+            'slug' => Str::slug($request->name),
+            'name' => $request->name,
+            'user_id' => auth()->user()->id,
+            'description' => $request->description,
+            'user_id' => auth()->user()->id,
+            'rank' => $request->rank,
+        ]);
+        return RemoteLocation::all();
     }
 
     /**
@@ -116,5 +87,6 @@ class RemoteLocationsController extends Controller
     public function destroy(RemoteLocation $remotelocation)
     {
         $remotelocation->delete();
+        return RemoteLocation::all();
     }
 }

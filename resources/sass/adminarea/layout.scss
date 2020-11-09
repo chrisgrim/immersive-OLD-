@@ -1,6 +1,6 @@
-/*------------------------------------*\
+/* ------------------------------------*\
   #Admin- Layout Page
-\*------------------------------------*/
+\*------------------------------------ */
 
 #admin {
     width: 80%;
@@ -175,35 +175,63 @@
             margin: auto;
         }
     }
-    & .title{
-        position: relative;
-        display: inline-block;
-        & .add {
-            position: absolute;
-            top: 50%;
-            right: -8rem;
-            height: 4rem;
-            margin-top: -2rem;
-            & button {
-                border-radius: 50%;
-                width: 4rem;
-                height: 4rem;
-                padding:1.3rem 0rem;
-                border: solid #008489 1px;
-                box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 0px 0px, rgba(0, 0, 0, 0.04) 0px 0px 0px 0.5px;
-                & p {
-                    font-size: 4rem;
-                    color: #008489;
-                    margin:0;
-                    margin-top: -.9rem;
-                }
-            }
-        }
-    }
 }
 .menu__sub-menu--arrow {
     position: absolute;
     left: 10rem;
     top: 1.4rem;
     color:#b3b3b3;
+}
+
+#admin .validation-error {
+    text-align: left;
+    color: red;
+    font-size: 1.2rem;
+    margin-left: 2rem;
+    background: white;
+    border-radius: 5rem;
+    padding: 1rem;
+}
+
+#admin .list {
+    width: 100%;
+    background: #f9f9f9;
+    border-radius: .5rem;
+    padding: 1rem;
+    margin-top: 1rem;
+    border: 1px solid #dedede;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    justify-items: center;
+    position: relative;
+    align-items: center;
+}
+
+#admin .list button.delete-circle {
+    position: absolute;
+    right: 0;
+    padding: 0;
+    border-radius: 50%;
+    border: 0;
+    height: 2.5rem;
+    width: 2.5rem;
+    top: 0;
+    margin-top: -0.5rem;
+    margin-right: -1rem;
+    background: black;
+}
+
+#admin .title h1 {
+    display: inline-block;
+    vertical-align: top;
+    line-height: 6rem;
+}
+
+#admin .title .add {
+    display: inline-block;
+}
+
+#admin .title .add button {
+    padding: 0;
+    border: 0;
 }

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\ContentAdvisory;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class ContentAdvisoriesController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('admin');
+        $this->middleware('moderator');
     }
 
     /**
@@ -45,34 +46,8 @@ class ContentAdvisoriesController extends Controller
      */
     public function store(Request $request)
     {
-        ContentAdvisory::create([
-            'advisories' => $request->advisories,
-            'slug' => str_slug($request->advisories),
-            'admin' => true,
-            'user_id' => auth()->user()->id
-        ]);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        ContentAdvisory::saveAdvisory($request);
+        return ContentAdvisory::where('admin', true)->get();
     }
 
     /**
@@ -84,19 +59,8 @@ class ContentAdvisoriesController extends Controller
      */
     public function update(Request $request, ContentAdvisory $contentadvisory)
     {
-        if ($request->rank) {
-            return $contentadvisory->update([
-                'rank' => $request->rank,
-                'user_id' => auth()->user()->id
-            ]);
-        }
-        if ($request->advisories) {
-            return $contentadvisory->update([
-                'advisories' => $request->advisories,
-                'slug' => str_slug($request->advisories),
-                'user_id' => auth()->user()->id
-            ]);
-        }
+        $contentadvisory->updateAdvisory($request);
+        return ContentAdvisory::where('admin', true)->get();
     }
 
     /**
@@ -108,5 +72,6 @@ class ContentAdvisoriesController extends Controller
     public function destroy(ContentAdvisory $contentadvisory)
     {
         $contentadvisory->delete();
+        return ContentAdvisory::where('admin', true)->get();
     }
 }

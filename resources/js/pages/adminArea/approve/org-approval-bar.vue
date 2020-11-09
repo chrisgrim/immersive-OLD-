@@ -2,11 +2,11 @@
     <div>
         <div class="approvebar">
             <div class="buttons">
-                <span style="display:inline-block;margin:0rem 6rem">{{loadorganizer.user.email}}   </span>
+                <span style="display:inline-block;margin:0rem 6rem">{{ loadorganizer.user.email }}   </span>
                 <button :class="{bspin : dis}" :disabled="dis" class="create" @click.prevent="goBack()"> Go Back </button>
                 <button :class="{bspin : dis}" :disabled="dis" class="create" @click.prevent="onDelete()"> Delete </button>
                 <button :class="{bspin : dis}" :disabled="dis" class="create" @click.prevent="makeEdits()"> Make Edits Yourself </button>
-                <button :class="{bspin : dis}" :disabled="dis" class="create" @click.prevent="approved()"> Approved </button>
+                <button :class="{bspin : dis}" :disabled="dis" class="create" @click.prevent="onApproved()"> Approved </button>
             </div>
         </div>
     </div>
@@ -27,32 +27,18 @@
         },
 
         methods: {
-            approved() {
+            onApproved() {
                 this.dis = true;
-                axios.post(`/approve/org/${this.organizer.slug}`)
-                .then(res => { 
-                    // console.log(res.data);
-                    window.location.href = '/finish/organizers';
-                })
-                .catch(error => {   
-                    console.log(error.response.data);      
-                    this.serverErrors = error.response.data.errors;
-                    this.dis = false;
-                });
+                axios.post(`/admin/organizer/${this.organizer.slug}/approve`)
+                .then( window.location.href = '/admin/organizers/finalize' )
+                .catch( error => { this.serverErrors = error.response.data.errors; this.dis = false });
             },
 
             onDelete() {
                 this.dis = true;
-                axios.post(`/delete/org/${this.organizer.slug}`)
-                .then(res => { 
-                    // console.log(res.data);
-                    window.location.href = '/finish/organizers';
-                })
-                .catch(error => {   
-                    console.log(error.response.data);      
-                    this.serverErrors = error.response.data.errors;
-                    this.dis = false;
-                });
+                axios.post(`/admin/organizer/${this.organizer.slug}/delete`)
+                .then( window.location.href = '/admin/organizers/finalize' )
+                .catch(error => { this.serverErrors = error.response.data.errors; this.dis = false });
             },
 
             makeEdits() {
@@ -60,7 +46,7 @@
             },
 
             goBack() {
-                window.location.href = '/finish/organizers';
+                window.location.href = '/admin/organizers/finalize';
             },
         },
 

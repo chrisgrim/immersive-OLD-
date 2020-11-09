@@ -121,7 +121,7 @@
             },
 
             endpoint() {
-                return `/create-event/${this.event.slug}/images`
+                return `/create/${this.event.slug}/images`
             },
 
             navSubmit() {

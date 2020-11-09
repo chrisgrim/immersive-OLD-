@@ -62,49 +62,31 @@
             approved() {
                 this.dis = true;
                 axios.post(`/admin/event/${this.event.slug}/approve`)
-                .then(window.location.href = '/finish/events');
+                .then(window.location.href = '/admin/events/finalize');
             },
 
             denied() {
                 this.$v.$touch(); 
-                if (this.$v.$invalid) { return false };
+                if (this.$v.$invalid) { return false }
                 this.dis = true;
-                let data = {
-                    message: this.comments
-                };
-                axios.post(`/unapprove/${this.event.slug}`, data)
-                .then(res => { 
-                    this.dis = false;
-                    window.location.href = '/finish/events';
-                })
-                .catch(error => {  
-                    console.log(error.response.data);       
-                    this.serverErrors = error.response.data.errors;
-                    this.dis = false;
-                });
+
+                axios.post(`/admin/event/${this.event.slug}/fail`, { message: this.comments })
+                .then( window.location.href = '/admin/events/finalize' )
+                .catch( error => {  this.serverErrors = error.response.data.errors; this.dis = false });
             },
 
             rejected() {
                 this.$v.$touch(); 
-                if (this.$v.$invalid) { return false };
+                if (this.$v.$invalid) { return false }
                 this.dis = true;
-                let data = {
-                    message: this.comments
-                };
-                axios.post(`/reject/${this.event.slug}`, data)
-                .then(res => { 
-                    console.log(res.data);
-                    window.location.href = '/finish/events';
-                })
-                .catch(err => {   
-                    console.log(err.response.data);      
-                    this.serverErrors = err.response.data.errors;
-                    this.dis = false;
-                });
+
+                axios.post(`/admin/event/${this.event.slug}/reject`, { message: this.comments })
+                .then( window.location.href = '/admin/events/finalize' )
+                .catch( err => { this.serverErrors = err.response.data.errors;this.dis = false });
             },
 
             makeEdits() {
-                window.location.href = `/create-event/${this.event.slug}/title`
+                window.location.href = `/create/${this.event.slug}/title`
             },
 
             organizer() {
@@ -112,7 +94,7 @@
             },
 
             goBack() {
-                window.location.href = '/finish/events';
+                window.location.href = '/admin/events/finalize';
             },
         },
 

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Create;
+use App\Http\Controllers\Controller;
 use App\Event;
 use Response;
 use Illuminate\Http\Request;
 use App\Http\Requests\TitleStoreRequest;
 
-class EventTitleController extends Controller
+class TitleController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -26,7 +26,7 @@ class EventTitleController extends Controller
      * @param  \App\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function title(Event $event)
+    public function create(Event $event)
     {
         return view('create.title', compact('event'));
     }
@@ -37,7 +37,7 @@ class EventTitleController extends Controller
      * @param  \App\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function fetchTitle(Event $event)
+    public function fetch(Event $event)
     {
         return $event;
     }
@@ -48,29 +48,16 @@ class EventTitleController extends Controller
      * @param  \App\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function updateTitle(TitleStoreRequest $request, Event $event)
+    public function update(TitleStoreRequest $request, Event $event)
     {
-        $eventExists = Event::where('slug', str_slug($request->name))->where('user_id', auth()->id())->first();
-        if ($eventExists && $eventExists->id != $event->id) {
-            return Response::json(['errors' => (object)array('name' => 'same name')], 404); 
-        }
+        if ($event->exists($event, $request)) return Response::json(['errors' => ['name' => 'same name']], 404); 
 
         $event->update([ 
             'name' => $request->name,
             'tag_line' => $request->tagLine,
         ]);
 
-        //Checks to see if category has been selected then updates status to 3
-        if ($event->status < 2 && $event->isInProgress() && $event->name) {
-            $event->update([ 'status' => '1' ]);
-        }
-        
-        if($request->reSubmitEvent){
-            $event->update([
-                'status' => '8',
-                'approved' => false
-            ]);
-        };
+        $event->updateEventStatus(1, $request);
 
 
     }

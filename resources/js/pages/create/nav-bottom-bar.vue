@@ -17,7 +17,7 @@
         
         data() {
             return {
-                isReview: this.event ? window.location.pathname == `/create-event/${this.event.slug}/review` ? true : false : '',
+                isReview: this.event ? window.location.pathname == `/create/${this.event.slug}/review` ? true : false : '',
             }
         },
 

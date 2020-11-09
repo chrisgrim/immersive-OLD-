@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Scopes\RankScope;
+use App\ContactLevel;
 use Illuminate\Database\Eloquent\Model;
 
 class ContactLevel extends Model
@@ -32,5 +33,33 @@ class ContactLevel extends Model
     public function events() 
     {
     	return $this->belongsToMany(Event::class);
+    }
+
+    /**
+     * This saves a new Contact Level type
+     *
+     * @return  nothing
+     */
+    public static function saveContactLevel($request) 
+    {
+        ContactLevel::create([
+            'level' => $request->level,
+            'admin' => true,
+            'user_id' => auth()->user()->id
+        ]);
+    }
+
+     /**
+     * This updates a ContactLevel type
+     *
+     * @return nothing
+     */
+    public function updateContactLevel($request) 
+    {
+        $this->update([
+            'rank' => $request->rank,
+            'level' => $request->level,
+            'user_id' => auth()->user()->id
+        ]);
     }
 }

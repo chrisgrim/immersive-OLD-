@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Intervention\Image\ImageManagerStatic as Image;
 
 class MakeImage extends Model
@@ -19,7 +20,7 @@ class MakeImage extends Model
         //      either new-titles or 69sjj3s
         $rand = substr(md5(microtime()),rand(0,26),7);
         //      546ds3g
-        $title = str_slug($name);
+        $title = Str::slug($name);
         //      new-titles
         $extension = $request->file('image')->getClientOriginalExtension();
         //      jpg

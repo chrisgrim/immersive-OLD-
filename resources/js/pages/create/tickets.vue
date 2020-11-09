@@ -273,7 +273,7 @@ export default {
 
     computed: {
         endpoint() {
-            return `/create-event/${this.event.slug}/tickets`
+            return `/create/${this.event.slug}/tickets`
         },
 
         navSubmit() {
@@ -285,7 +285,7 @@ export default {
                 'tickets': this.tickets,
                 'ticketUrl': this.ticketUrl,
                 'callAction': this.callAction,
-                'reSubmitEvent': this.resubmit,
+                'resubmit': this.resubmit,
             }
         },
     },
@@ -372,7 +372,7 @@ export default {
             }
         },
 
-        deleteRow(index, v) {
+        deleteRow(index) {
             this.$delete(this.tickets, index) ;
         },
 
@@ -456,8 +456,8 @@ export default {
         },
 
         onSubmit(value) {
-            if (!this.customCheck()) {return false};
-            if (this.checkVuelidate()) { return false };
+            if (!this.customCheck()) {return false}
+            if (this.checkVuelidate()) { return false }
             axios.post(this.endpoint, this.submitObject)
             .then(res => {  
                 value == 'save' ? this.save() : this.onForward(value);

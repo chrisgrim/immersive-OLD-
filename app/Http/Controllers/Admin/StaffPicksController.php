@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\StaffPick;
 use App\Event;
 use App\User;
@@ -21,25 +22,15 @@ class StaffPicksController extends Controller
     {
         $this->middleware('moderator')->except('fetch', 'show');
     }
-    
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return StaffPick::paginate(10);
-    }
 
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function userpicks(User $user)
+    public function fetch(Request $request)
     {
-        return StaffPick::where('user_id', $user->id)->paginate(10);
+        return $request->user ? StaffPick::where('user_id', $request->user)->paginate(10) : StaffPick::paginate(10);
     }
 
     /**
@@ -49,21 +40,8 @@ class StaffPicksController extends Controller
      */
     public function create()
     {
-        $ids = StaffPick::all()->pluck('user_id');
-        $users = User::find($ids);
-        return view('adminArea.staffpicks', compact('users'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function fetch(Request $request)
-    {
-        return Event::all()
-            ->where('status', 'p')
-            ->take(10);
+        $staff = StaffPick::staffWithPicks();
+        return view('adminArea.staffpicks', compact('staff'));
     }
 
     /**
@@ -74,19 +52,8 @@ class StaffPicksController extends Controller
      */
     public function store(Request $request)
     {
-        //increment value of event
-        Event::find($request->event_id['id'])->increment('rank',3);
-
-        StaffPick::Create(
-            [
-            'event_id' => $request->event_id['id'],
-            'user_id' => auth()->id(),
-            'comments' => $request->comments,
-            'rank' => $request->rank ? $request->rank : 5,
-            'start_date' => $request->dates[0],
-            'end_date' => $request->dates[1]
-            ]
-        );
+        StaffPick::saveStaffPick($request);
+        return StaffPick::paginate(10);
     }
 
 
@@ -115,17 +82,6 @@ class StaffPicksController extends Controller
             ->orderBy('rank')
             ->get();
         return view('staffpicks.show', compact('staffpicks', 'week'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\StaffPick  $staffPick
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(StaffPick $staffpick)
-    {
-        //
     }
 
     /**
@@ -159,5 +115,6 @@ class StaffPicksController extends Controller
             $staffpick->event->decrement('rank',3);
         }
         $staffpick->delete();
+        return StaffPick::paginate(10);
     }
 }

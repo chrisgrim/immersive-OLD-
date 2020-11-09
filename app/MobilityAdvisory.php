@@ -4,6 +4,8 @@ namespace App;
 
 use App\Scopes\RankScope;
 use Illuminate\Database\Eloquent\Model;
+use App\MobilityAdvisory;
+use Illuminate\Support\Str;
 
 class MobilityAdvisory extends Model
 {
@@ -45,15 +47,47 @@ class MobilityAdvisory extends Model
         if ($request->has('mobilityAdvisory')) {
             foreach ($request['mobilityAdvisory'] as $content) {
                 MobilityAdvisory::firstOrCreate([
-                    'slug' => str_slug($content)
+                    'slug' => Str::slug($content)
                 ],
                 [
                     'user_id' => auth()->user()->id,
                     'mobilities' => $content
                 ]);
             };
-            $newSync = MobilityAdvisory::all()->whereIn('slug', array_map('str_slug', $request['mobilityAdvisory']));
+            $newSync = MobilityAdvisory::whereIn('slug', collect($request->mobilityAdvisory)->map(function ($item) {
+                return Str::slug($item);
+            })->toArray())->get();
             $event->mobilityadvisories()->sync($newSync);
         };
+    }
+
+    /**
+     * This saves a new Mobilities Level type
+     *
+     * @return  nothing
+     */
+    public static function saveMobilitiesLevel($request) 
+    {
+        MobilityAdvisory::create([
+            'mobilities' => $request->mobilities,
+            'slug' => Str::slug($request->mobilities),
+            'admin' => true,
+            'user_id' => auth()->user()->id
+        ]);
+    }
+
+     /**
+     * This updates a Mobilities Level type
+     *
+     * @return nothing
+     */
+    public function updateMobilitiesLevel($request) 
+    {
+        $this->update([
+            'rank' => $request->rank,
+            'user_id' => auth()->user()->id,
+            'mobilities' => $request->mobilities,
+            'slug' => Str::slug($request->mobilities),
+        ]);
     }
 }

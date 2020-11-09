@@ -4,28 +4,36 @@
             <div class="title">
                 <h1>Mobility</h1>
                 <div class="add">
-                    <button @click.prevent="isModalVisible = true"><p>+</p></button>
+                    <button @click.prevent="isModalVisible = true">
+                        <IconSvg type="add" />
+                    </button>
                 </div>
             </div>
         </div>
 
-
-        <div class="list" v-for="(mobility, index) in mobilities">
+        <div 
+            class="list" 
+            :key="mobility.id"
+            v-for="(mobility) in mobilities">
             <input 
-            type="text" 
-            v-model="mobility.mobilities" 
-            placeholder="Mobilities"
-            @blur="saveMobility(mobility)"
-            />
+                type="text" 
+                v-model="mobility.mobilities" 
+                placeholder="Mobilities"
+                @blur="onUpdate(mobility)">
             <input 
-            type="text" 
-            v-model="mobility.rank" 
-            placeholder="Mobilities"
-            @blur="saveRank(mobility)"
-            />
-            <button @click.prevent="showModal(mobility)" class="delete-circle"><p>X</p></button>
+                type="text" 
+                v-model="mobility.rank" 
+                placeholder="Mobilities"
+                @blur="onUpdate(mobility)">
+            <button 
+                @click.prevent="showModal(mobility)" 
+                class="delete-circle">
+                <IconSvg type="delete" />
+            </button>
         </div>
-        <modal v-if="isEditModalVisible" @close="isEditModalVisible = false">
+        <modal 
+            v-if="isEditModalVisible" 
+            @close="isEditModalVisible = false">
             <div slot="header">
                 <div class="circle del">
                     <p>X</p>
@@ -36,12 +44,18 @@
                 <p>You are deleting {{modalDelete.mobility}}.</p>
             </div>
             <div slot="footer">
-                <button class="btn del" @click.prevent="deleteMobility(modalDelete)">Delete</button>
+                <button 
+                    class="btn del" 
+                    @click.prevent="onDelete(modalDelete)">
+                    Delete
+                </button>
             </div>
         </modal>
 
         <div class="pin noimg">
-            <modal v-if="isModalVisible" @close="isModalVisible = false">
+            <modal 
+                v-if="isModalVisible" 
+                @close="isModalVisible = false">
                 <div slot="header">
                     <div></div>
                 </div>
@@ -49,14 +63,13 @@
                     <div class="text">
                         <div class="name">
                             <input 
-                            type="text" 
-                            v-model="mobility" 
-                            placeholder="Mobilities"
-                            :class="{ active: mobilityActive}"
-                            @click="mobilityActive = true"
-                            @blur="mobilityActive = false"
-                            @input="$v.mobility.$touch"
-                            />
+                                type="text" 
+                                v-model="mobility" 
+                                placeholder="Mobilities"
+                                :class="{ active: mobilityActive}"
+                                @click="mobilityActive = true"
+                                @blur="mobilityActive = false"
+                                @input="$v.mobility.$touch">
                             <div v-if="$v.mobility.$error" class="validation-error">
                                 <p class="error" v-if="!$v.mobility.required">Please Add Mobility </p>
                             </div>
@@ -64,7 +77,11 @@
                     </div>
                 </div>
                 <div slot="footer">
-                    <button @click.prevent="submitNewMobility()" class="btn sub">Submit</button>
+                    <button 
+                        @click.prevent="onSubmit" 
+                        class="btn sub">
+                        Submit
+                    </button>
                 </div>
             </modal>
         </div>
@@ -74,9 +91,11 @@
 <script>
     
     import { required } from 'vuelidate/lib/validators';
-
+    import IconSvg from '../../components/Svg-icon'
 
     export default {
+
+        components: { IconSvg },
 
         data() {
             return {
@@ -86,34 +105,36 @@
                 isModalVisible: false,
                 isEditModalVisible: false,
                 modalDelete: '',
-
             }
-        },
-
-        computed: {
-            
         },
 
         methods: {
 
-            //check if validation rules have been followed and returns false if not. Then I submit the new name and slug. I then get the response data and pass it to the new window load.
-            async submitNewMobility() {
+            onSubmit(){
                 this.$v.$touch(); 
                 if (this.$v.$invalid) { return false };
-                let data = {
-                    mobilities: this.mobility
-                }
 
-                axios.post('/mobilities', data)
-                .then(response => { 
-                    console.log(response.data);
-                    this.isModalVisible = false;
-                    this.mobility = '';
-                    this.loadMobilities();
-                })
-                .catch(error => { 
-                    this.isModalVisible = false;
-                });
+                axios.post('/mobilities', { mobilities: this.mobility })
+                .then( res => { this.mobilities = res.data; this.clearMobility(); })
+                .catch( this.isModalVisible = false )
+            },
+
+            onDelete(mobility) {
+                axios.delete(`/mobilities/${mobility.id}`)
+                .then( res => { this.mobilities = res.data; this.isEditModalVisible = false })
+                .catch( error => { this.serverErrors = error.response.data.errors; });
+            },
+
+            onUpdate(mobility) {
+                axios.patch(`/mobilities/${mobility.id}`, mobility)
+                .then( res => { this.mobilities = res.data })
+                .catch( error => { this.serverErrors = error.response.data.errors });
+            },
+
+            onLoad() {
+                axios.get('/mobilities')
+                .then( res => { this.mobilities = res.data })
+                .catch( error => { this.serverErrors = error.response.data.errors; });
             },
 
             showModal(mobility) {
@@ -121,59 +142,15 @@
                 this.isEditModalVisible = true;
             },
 
-            deleteMobility(mobility) {
-                axios.delete(`/mobilities/${mobility.id}`)
-                .then(response => { 
-                    console.log(response.data);
-                    this.isEditModalVisible = false;
-                    this.loadMobilities();
-                })
-                .catch(error => { this.serverErrors = error.response.data.errors; });
+            clearMobility() {
+                this.isModalVisible = false;
+                this.mobility = '';
             },
 
-            loadMobilities() {
-                axios.get('/mobilities')
-                .then(response => { 
-                   this.mobilities = response.data;
-                })
-                .catch(error => { this.serverErrors = error.response.data.errors; });
-            },
-
-            saveMobility(mobility) {
-                let data = {
-                    mobilities: mobility.mobilities
-                };
-                axios.patch(`/mobilities/${mobility.id}`, data)
-                .then(response => { 
-                    console.log(response.data);
-                    this.loadGenres();
-                    this.$v.$reset();
-                })
-                .catch(error => { 
-                    this.serverErrors = error.response.data.errors;
-                });
-            },
-
-            saveRank(mobility) {
-                let data = {
-                    rank: mobility.rank
-                };
-                axios.patch(`/mobilities/${mobility.id}`, data)
-                .then(response => { 
-                    console.log(response.data);
-                    this.loadGenres();
-                    this.$v.$reset();
-                })
-                .catch(error => { 
-                    this.serverErrors = error.response.data.errors;
-                });
-            },
-
-            
         },
 
         created() {
-            this.loadMobilities()
+            this.onLoad()
         },
 
         validations: {

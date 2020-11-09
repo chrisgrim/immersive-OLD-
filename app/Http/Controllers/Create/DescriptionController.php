@@ -1,7 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Create;
+use App\Http\Controllers\Controller;
 use App\Genre;
 use App\Event;
 use Illuminate\Http\Request;
@@ -23,7 +23,7 @@ class DescriptionController extends Controller
      */
     public function create(Event $event)
     {
-        // if ($event->status < 5) { abort(403); }
+        if ($event->checkEventStatus(5)) return back();
         $event->load('genres');
         $tags = Genre::where('admin', true)->orWhere('user_id', auth()->user()->id)->get();
         return view('create.description', compact('event', 'tags'));
@@ -37,10 +37,10 @@ class DescriptionController extends Controller
      */
     public function fetch(Event $event)
     {
-        return response()->json(array(
+        return [
             'event' => $event,
             'genres' => $event->genres()->get(),
-        ));
+        ];
     }
 
     /**
@@ -49,15 +49,12 @@ class DescriptionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(DescriptionStoreRequest $request, Event $event)
+    public function update(DescriptionStoreRequest $request, Event $event)
     {  
         $event->storeDescription($request, $event);
+        $event->updateEventStatus(6, $request);
         $event = $event->fresh();
         $event->searchable();
 
-        //Checks to see if description has been sgored then updates status to 6
-        if ( $event->status < 7 && $event->isInProgress() && $event->genres()->exists() && $event->description ) {
-            $event->update([ 'status' => '6' ]);
-        }
     }
 }

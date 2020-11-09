@@ -253,19 +253,6 @@ class SearchController extends Controller
         return User::all();
     }
 
-    public function searchEvents(Request $request)
-    {
-        if ($request->keywords) {
-            $events = Event::search($request->keywords)
-                ->rule(EventSearchRule::class)
-                ->get();
-             if ($events->count()) {
-                return $events;  
-            }
-        }
-        return Event::where('status','p')->take(10)->get();
-    }
-
     public function searchBoneyard(Request $request)
     {
         return Event::onlyTrashed()->where('name', 'like', '%' . $request->keywords . '%')->get();

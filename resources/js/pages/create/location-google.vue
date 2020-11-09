@@ -200,7 +200,7 @@
                 return data = {remote: this.remoteLocations.map(a => a.name), description: this.description};
             },
             endpoint() {
-                return `/create-event/${this.event.slug}/location`
+                return `/create/${this.event.slug}/location`
             },
             corsEndpoint() {
                 return `https://maps.googleapis.com/maps/api/geocode/json?address=${this.location.postal_code ? this.location.postal_code : this.location.city}&key=AIzaSyBxpUKfSJMC4_3xwLU73AmH-jszjexoriw`

@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Create;
+use App\Http\Controllers\Controller;
 use App\Event;
 use App\MakeImage;
 use Illuminate\Http\Request;
-use Intervention\Image\ImageManagerStatic as Image;
 
 class ImageController extends Controller
 {
@@ -22,7 +21,7 @@ class ImageController extends Controller
      */
     public function create(Event $event)
     {
-        // if ($event->status < 7) { abort(403); }
+        if ($event->checkEventStatus(7)) return back();
         return view('create.image', compact('event'));
     }
 
@@ -32,19 +31,10 @@ class ImageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Event $event)
+    public function update(Request $request, Event $event)
     {
-        if ($event->isInProgress()) {
-            MakeImage::saveNewImage($request, $event, 1280, 720, 'event');
-        } else {
-            MakeImage::updateImage($request, $event, 1280, 720, 'event');
-        }
-
-        //Checks to see if category has been selected then updates status to 3
-        if ($event->isInProgress() && $event->largeImagePath) {
-            $event->update([ 'status' => '8' ]);
-        }
-
+        $event->inProgress() ? MakeImage::saveNewImage($request, $event, 1280, 720, 'event') : MakeImage::updateImage($request, $event, 1280, 720, 'event');
+        $event->updateEventStatus(8, $request);
         return $event;
 
     }

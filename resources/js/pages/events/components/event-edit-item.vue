@@ -52,7 +52,7 @@
                                 :content="`https://www.everythingimmersive.com/events/${event.slug}`" 
                                 itemprop="url">
                             <a 
-                                :href="`/create-event/${event.slug}/title`" 
+                                :href="`/create/${event.slug}/title`" 
                                 class="card-url" />
                             <div class="card-image__top">
                                 <template v-if="inProgress(event)">
@@ -123,7 +123,7 @@
                             </a>
                         </template>
                         <template v-if="status(event)">
-                            <a :href="`/create-event/${event.slug}/title`">
+                            <a :href="`/create/${event.slug}/title`">
                                 <button class="edit-event__sub-button">
                                     Edit
                                 </button>
@@ -223,7 +223,7 @@
             newEvent(organizer) {
                 axios.post(`/events`, organizer)
                 .then(response => { 
-                    window.location.href = `/create-event/${response.data.slug}/title`; 
+                    window.location.href = `/create/${response.data.slug}/title`; 
                 })
                 .catch(error => { this.serverErrors = error.response.data.errors; });
             },

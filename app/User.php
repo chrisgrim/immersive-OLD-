@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\View\View;
 use Laravel\Cashier\Billable;
+use Illuminate\Support\Str;
 use DB;
 
 class User extends Authenticatable implements MustVerifyEmail
@@ -257,7 +258,7 @@ class User extends Authenticatable implements MustVerifyEmail
         //      jpg
         $rand = substr(md5(microtime()),rand(0,26),7);
         //      546ds3g
-        $name = str_slug($user->name);
+        $name =  Str::slug($user->name);
         //      chris-grim
         $directory = 'user-images/' . $name . '-' . $rand;
         //      user-images/chris-grim-54fwd3g

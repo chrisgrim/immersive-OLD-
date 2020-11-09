@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Location extends Model
 {
@@ -54,15 +55,16 @@ class Location extends Model
     {
         foreach ($request->remote as $loc) {
             RemoteLocation::firstOrCreate([
-                'slug' => str_slug($loc)
+                'slug' => Str::slug($loc)
             ],
             [
                 'name' => $loc,
                 'user_id' => auth()->user()->id,
             ]);
         };
-        
-        $newSync = RemoteLocation::all()->whereIn('slug',  array_map('str_slug', $request['remote']));
+        $newSync = RemoteLocation::whereIn('slug', collect($request->remote)->map(function ($item) {
+            return Str::slug($item);
+        })->toArray())->get();
         $event->remotelocations()->sync($newSync);
 
         $event->update([

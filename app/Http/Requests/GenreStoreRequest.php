@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\UniqueSlugRule;
 
-class LocationStoreRequest extends FormRequest
+class GenreStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +25,7 @@ class LocationStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'hiddenLocation' => 'max:500'
+            'name' => [ new UniqueSlugRule($this->id) ],
         ];
     }
 }

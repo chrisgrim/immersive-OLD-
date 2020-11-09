@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 class AddSlugToGenresTable extends Migration
 {
@@ -19,7 +20,7 @@ class AddSlugToGenresTable extends Migration
                 $table->string('slug');
             });
             DB::table('genres')->get()->each(function ($post) {
-                DB::table('genres')->where('id', $post->id)->update(['slug' => str_slug($post->name)]);
+                DB::table('genres')->where('id', $post->id)->update(['slug' =>  Str::slug($post->name)]);
             });
             Schema::table('genres', function (Blueprint $table) {
                 $table->unique('slug');

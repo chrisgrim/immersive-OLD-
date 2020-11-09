@@ -1,7 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Create;
+use App\Http\Controllers\Controller;
 use App\Location;
 use App\Event;
 use App\RemoteLocation;
@@ -29,7 +29,7 @@ class LocationController extends Controller
      */
     public function create(Event $event)
     {
-        // if ($event->status < 1) { abort(403); }
+        if ($event->checkEventStatus(1)) return back();
         $event->load('location', 'remotelocations');
         $remote = RemoteLocation::where('admin', true)->orWhere('user_id', auth()->user()->id)->get();
         return view('create.location', compact('event', 'remote'));
@@ -42,7 +42,7 @@ class LocationController extends Controller
      */
     public function fetch(Event $event)
     {
-        return $data = [
+        return [
             'location' => $event->location()->first(),
             'pivots' => $event->remotelocations()->get(),
         ];
@@ -54,18 +54,9 @@ class LocationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(LocationStoreRequest $request, Event $event)
+    public function update(LocationStoreRequest $request, Event $event)
     {
-        if($request->remote) {
-            Location::storeRemoteLocation($request, $event);
-        } else {
-            Location::storeEventLocation($request, $event);
-        }
-
-        //Checks to see if location has been created then updates status to 2
-        if ($event->status < 3 && $event->isInProgress() && ( $event->location_latlon || !$event->hasLocation )) {
-            $event->update([ 'status' => '2' ]);
-        }
-
+        $request->remote ? Location::storeRemoteLocation($request, $event) : Location::storeEventLocation($request, $event);
+        $event->updateEventStatus(2, $request);
     }
 }

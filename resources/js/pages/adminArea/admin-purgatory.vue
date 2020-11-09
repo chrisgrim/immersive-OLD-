@@ -7,39 +7,47 @@
         </div>
         <div class="field">
             <input 
-            v-model="eventList"
-            placeholder="Filter by event name" 
-            class="general"
-            @keyup="asyncGenerateEventList(eventList)"
-            type="text">
+                v-model="eventList"
+                placeholder="Filter by event name" 
+                class="general"
+                @keyup="onSearch(eventList)"
+                type="text">
         </div>
-        <div class="list" v-for="(event, index) in events">
+        <div 
+            class="list" 
+            :key="event.id"
+            v-for="(event) in events">
             <div>
-                <img style="height:40px;width:40px;object-fit:cover;" :src="`/storage/${event.thumbImagePath}`" alt="">
+                <img 
+                    style="height:40px;width:40px;object-fit:cover;" 
+                    :src="`/storage/${event.thumbImagePath}`" 
+                    alt="">
             </div>
-                <div>
-                    {{event.name}}
-                </div>
             <div>
-                <a target="_blank" :href="`/create-event/${event.slug}/title`">
+                {{ event.name }}
+            </div>
+            <div>
+                <a 
+                    target="_blank" 
+                    :href="`/create/${event.slug}/title`">
                     <button v-if="event.status == 'r'"> Event In Review </button>
                     <button v-else> Edit </button>
                 </a>
             </div>
         </div>
         <div class="pagination-button">
-            <button v-if="moreToLoad" @click="loadMore">Load More</button>
+            <button 
+                v-if="moreToLoad" 
+                @click="onLoad">
+                Load More
+            </button>
         </div>
     </div>
 </template>
 
 <script>
-    
-    import { required } from 'vuelidate/lib/validators';
 
     export default {
-
-        props: ['loadedevents'],
 
         data() {
             return {
@@ -47,37 +55,28 @@
                 eventList: '',
                 page: 2,
                 moreToLoad: true,
-
             }
         },
 
-        computed: {
-          //
-        },
-
         methods: {
-
-            asyncGenerateEventList(eventList) {
-                axios.get('/api/admin/search/purgatory', { params: { keywords: eventList } })
-                .then(res => {
-                    console.log(res.data);
-                    this.events = res.data;
-                });
+            onSearch(eventList) {
+                axios.get('/api/admin/purgatory/search', { params: { keywords: eventList } })
+                .then( res => { console.log(res.data); this.events = res.data.data });
             },
 
-            loadMore() {
-                axios.post(`/admin/purgatory/fetch?page=${this.page}`)
-                .then(res => {  
-                    console.log(res.data);
+            onLoad() {
+                axios.post(`/admin/events/purgatory/fetch?page=${this.page}`)
+                .then( res => {  
                     this.events = this.events.concat(res.data.data);
                     this.page++;
                     this.page == res.data.total + 1 ? this.moreToLoad = false : '';
                 })
-                .catch(err => {
-                    this.onErrors(err);
-                });
+                .catch( err => { this.onErrors(err) });
             },
- 
+        },
+
+        created() {
+            this.onLoad()
         },
 
     }

@@ -8,39 +8,47 @@
 
         <div class="field">
             <input 
-            v-model="userList"
-            placeholder="Filter by name or email" 
-            class="general"
-            @keyup="asyncGenerateUserList(userList)"
-            type="text">
+                v-model="userList"
+                placeholder="Filter by name or email" 
+                class="general"
+                @keyup="onSearch(userList)"
+                type="text">
         </div>
-        <div class="list" v-for="(user, index) in users">
+        <div 
+            class="list" 
+            :key="user.id"
+            v-for="(user) in users.data">
             <input 
-            type="text" 
-            v-model="user.name" 
-            placeholder="User Name"
-            @blur="saveName(user)"
-            />
+                type="text" 
+                v-model="user.name" 
+                placeholder="User Name"
+                @change="onUpdate(user)">
             <input 
-            type="text" 
-            v-model="user.email" 
-            placeholder="Email"
-            @blur="saveEmail(user)"
-            />
+                type="text" 
+                v-model="user.email" 
+                placeholder="Email"
+                @change="onUpdate(user)">
             <select 
-            v-model="user.type" 
-            placeholder="User Type"
-            @blur="saveUserType(user)">
-            <option value="a">Admin</option>
-            <option value="m">Moderator</option>
-            <option value="g">Guest</option>
+                v-model="user.type" 
+                placeholder="User Type"
+                @change="onUpdate(user)">
+                <option value="a">Admin</option>
+                <option value="m">Moderator</option>
+                <option value="g">Guest</option>
             </select>
-            <button @click.prevent="showModal(user, 'delete')" class="delete-circle"><p>X</p></button>
+            <button 
+                @click.prevent="showModal(user, 'delete')" 
+                class="delete-circle">
+                <IconSvg type="delete" />
+            </button>
         </div>
-        <div class="pagination-button">
-            <button class="default" @click="loadMore">Load more</button>
-        </div>
-        <modal v-if="modal == 'delete'" @close="modal = null">
+        <pagination 
+            :limit="1"
+            :list="users"
+            @selectpage="onLoad" />
+        <modal 
+            v-if="modal == 'delete'" 
+            @close="modal = null">
             <div slot="header">
                 <div class="circle del">
                     <p>X</p>
@@ -48,24 +56,27 @@
             </div>
             <div slot="body"> 
                 <h3>Are you sure?</h3>
-                <p>You are deleting the user {{selectedModal.name}} user.</p>
+                <p>You are deleting the user {{ selectedModal.name }} user.</p>
             </div>
             <div slot="footer">
-                <button class="btn del" @click.prevent="deleteUser(selectedModal)">Delete</button>
+                <button 
+                    class="btn del" 
+                    @click.prevent="onDelete(selectedModal)">
+                    Delete
+                </button>
             </div>
         </modal>
     </div>
 </template>
 
 <script>
-    
-    import { required } from 'vuelidate/lib/validators';
-    import Multiselect from 'vue-multiselect'
 
+    import IconSvg from '../../components/Svg-icon'
+    import Pagination  from '../../components/pagination.vue'
 
     export default {
 
-        components: { Multiselect },
+        components: { IconSvg, Pagination },
 
         data() {
             return {
@@ -78,113 +89,51 @@
                 modal: false,
                 selectedModal: '',
                 isLoading: '',
-                pagination: {paginate:10},
-
             }
         },
 
-        computed: {
-        },
 
         methods: {
 
-            showModal(user, arr) {
-                this.selectedModal = user;
-                this.modal = arr;
+            onDelete(user) {
+                axios.delete(`/admin/users/${user.id}/delete`)
+                .then( res => { this.modal=false; this.users = res.data })
+                .catch( error => { this.serverErrors = error.response.data.errors; });
             },
 
-            deleteUser(user) {
-                axios.delete(`/users/${user.id}`)
-                .then(response => { 
-                    this.modal = null;
-                    this.loadUsers();
-                })
-                .catch(error => { this.serverErrors = error.response.data.errors; });
+            onLoad(page) {
+                axios.post(`/admin/users/fetch?page=${page}`)
+                .then( res => { this.users = res.data })
+                .catch( error => { this.serverErrors = error.response.data.errors; });
             },
 
-            loadMore() {
-                this.pagination.paginate += 10;
-                this.loadUsers();
+            onUpdate(user) {
+                console.log('test');
+                axios.patch(`/admin/users/${user.id}`, user)
+                .then( res => { this.users = res.data; })
+                .catch( error => {  this.serverErrors = error.response.data.errors });
             },
 
-            loadUsers() {
-                axios.post('/userlist/fetch', this.pagination)
-                .then(response => {
-                    console.log(response.data);
-                    this.users = response.data;
-                })
-                .catch(error => { this.serverErrors = error.response.data.errors; });
-            },
-
-            saveName(user) {
-                let data = {
-                    name: user.name
-                };
-                axios.patch(`/master/userlist/${user.id}`, data)
-                .then(response => { 
-                    console.log(response.data)
-                   this.loadUsers()
-                })
-                .catch(error => { 
-                    this.serverErrors = error.response.data.errors; 
-                });
-            },
-
-            saveEmail(user) {
-                let data = {
-                    email: user.email
-                };
-                axios.patch(`/master/userlist/${user.id}`, data)
-                .then(response => { 
-                    console.log(response.data)
-                   this.loadUsers()
-                })
-                .catch(error => { 
-                    this.serverErrors = error.response.data.errors; 
-                });
-            },
-
-            saveUserType(user) {
-                let data = {
-                    type: user.type
-                };
-                axios.patch(`/master/userlist/${user.id}`, data)
-                .then(response => { 
-                    console.log(response.data)
-                   this.loadUsers()
-                })
-                .catch(error => { 
-                    this.serverErrors = error.response.data.errors; 
-                });
-            },
-
-            asyncGenerateUserList (query) {
-                axios.get('/api/search/user/list', { params: { keywords: query } })
-                .then(response => {
-                    console.log(response.data);
-                    this.users = response.data;
-                })
-                .catch(error => {
-                    this.loadUsers();
-                })
+            onSearch(query) {
+                axios.get('/api/admin/users/search', { params: { keywords: query } })
+                .then( res => { this.users = res.data })
+                .catch()
             },
 
             createList() {
                 this.searchUserOptions = this.userlist;
             },
 
-            
+            showModal(user, arr) {
+                this.selectedModal = user;
+                this.modal = arr;
+            }, 
         },
 
         created() {
-            this.loadUsers()
+            this.onLoad()
         },
 
-        validations: {
-            region: {
-                required,
-            },
-        },
     }
 
 </script>

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\ReviewEvent;
 
 class ReviewEvent extends Model
 {
@@ -23,6 +24,20 @@ class ReviewEvent extends Model
     public function event() 
     {
         return $this->belongsTo(Event::class);
+    }
+
+    public static function saveReviewEvent($request)
+    {
+        ReviewEvent::create([
+            'user_id' => auth()->id(),
+            'event_id' => $request->event['id'],
+            'organizer_id' => $request->event['organizer_id'],
+            'reviewer_name' => $request->reviewername,
+            'url' => $request->url,
+            'review' => $request->review,
+            'image_path' => $request->image_path,
+            'rank' => $request->rank ? $request->rank : 5
+        ]);
     }
 
 }

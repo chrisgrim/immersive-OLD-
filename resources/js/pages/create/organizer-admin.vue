@@ -200,7 +200,7 @@ export default {
             showFormFields: false,
             organizer: this.initializeOrganizerObject(),
             searchOptions: [this.initializeOrganizerObject()],
-            eventUrl:_.has(this.event, 'slug') ? `/create-event/${this.event.slug}` : null,
+            eventUrl:_.has(this.event, 'slug') ? `/create/${this.event.slug}` : null,
             nameActive: false,
             descriptionActive: false,
             websiteActive: false,

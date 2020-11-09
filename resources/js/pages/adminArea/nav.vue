@@ -9,7 +9,7 @@
             <h3>Admin Area</h3>
         </div>
         <div class="admin-menu">
-            <a href="/finish/events">
+            <a href="/admin/events/finalize">
                 <button 
                     :class="{active: active == 'approve'}" 
                     class="admin-menu__item">
@@ -24,7 +24,7 @@
                 </button>
             </a>
 
-            <a href="/finish/organizers">
+            <a href="/admin/organizers/finalize">
                 <button 
                     :class="{active: active == 'orgApprove'}" 
                     class="admin-menu__item">
@@ -60,7 +60,7 @@
 
             <a 
                 v-if="admin" 
-                href="/admin/purgatory">
+                href="/admin/events/purgatory">
                 <button 
                     :class="{active: active == 'purgatory'}" 
                     class="admin-menu__item">
@@ -70,7 +70,7 @@
 
             <a 
                 v-if="admin" 
-                href="/master/userlist">
+                href="/admin/users">
                 <button 
                     :class="{active: active == 'users'}" 
                     class="admin-menu__item">
@@ -208,15 +208,15 @@
                 path == '/contentadvisories/create' ? this.active = 'content' : '';
                 path == '/mobilities/create' ? this.active = 'mobilities' : '';
                 path == '/interactivelevels/create' ? this.active = 'interactive' : '';
-                path == '/master/userlist' ? this.active = 'users' : '';
+                path == '/admin/users' ? this.active = 'users' : '';
                 path == '/admin/events' ? this.active = 'events' : '';
                 path == '/admin/boneyard' ? this.active = 'boneyard' : '';
-                path == '/admin/purgatory' ? this.active = 'purgatory' : '';
+                path == '/admin/events/purgatory' ? this.active = 'purgatory' : '';
                 path == '/admin/organizer' ? this.active = 'organizers' : '';
                 path == '/reviewevents/create' ? this.active = 'reviews' : '';
                 path == '/staffpicks/create' ? this.active = 'picks' : '';
-                path == '/finish/organizers' ? this.active = 'orgApprove' : '';
-                path == '/finish/events' ? this.active = 'approve' : '';
+                path == '/admin/organizers/finalize' ? this.active = 'orgApprove' : '';
+                path == '/admin/events/finalize' ? this.active = 'approve' : '';
 
                 if (this.active == 'contact' || this.active == 'remote' || this.active == 'mobilities' || this.active == 'interactive' || this.active == 'interactive') {
                     this.advisories = true;

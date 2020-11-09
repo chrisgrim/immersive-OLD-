@@ -165,7 +165,7 @@
             },
 
             asyncGenerateUserList (query) {
-                axios.get('/api/search/user/list', { params: { keywords: query } })
+                axios.get('/api/admin/users/search', { params: { keywords: query } })
                 .then(res => {
                     this.users = res.data;
                 })
@@ -175,7 +175,7 @@
             },
 
             loadUsers() {
-                axios.get('/api/search/user/list')
+                axios.get('/api/admin/users/search')
                 .then(res => {
                     this.users = res.data;
                 })

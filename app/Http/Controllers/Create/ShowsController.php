@@ -1,15 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Create;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Event;
 use App\Show;
 use App\Timezone;
 use App\ShowOnGoing;
-use Carbon\Carbon;
-use App\Http\Requests\ShowStoreRequest;
-use Illuminate\Support\Facades\Log;
 
 class ShowsController extends Controller
 {
@@ -28,49 +25,10 @@ class ShowsController extends Controller
      */
     public function create(Event $event)
     {
-        // if ($event->status < 3) { abort(403); }
+        if ($event->checkEventStatus(3)) return back();
         $event->load('showOnGoing','shows.tickets','timezone');
         $timezones = Timezone::all()->sortBy('offset')->values();
         return view('create.show', compact('event', 'timezones'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     * 
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request, Event $event)
-    {
-        if($request->onGoing) {
-            ShowOnGoing::saveNewShowOnGoing($request, $event, $request->start_date);
-            Show::saveNewShows($request, $event);
-        }
-
-        if ($request->always) {
-            Show::saveAlwaysShow($request, $event);
-        }
-
-        if ($request->shows) {
-            Show::saveNewShows($request, $event);
-        }
-
-        Show::updateEvent($request, $event);
-
-        //Checks to see if dates have been added then updates status to 4
-        if ($event->status < 5 && $event->isInProgress() && $event->closingDate && $event->show_times && $event->showtype && $event->closingDate) {
-            $event->update([ 'status' => '4' ]);
-        }
-        //Check if they changed the dates after published
-        if($request->reSubmitEvent) {
-            $event->update([
-                'status' => '8',
-                'approved' => false
-            ]);
-        }
-
-        $event = $event->fresh();
-        $event->searchable();
     }
 
     /**
@@ -105,5 +63,26 @@ class ShowsController extends Controller
                 'embargo_date' => $event->embargo_date,
             ));
         }
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Event $event)
+    {
+        if($request->onGoing) {
+            ShowOnGoing::saveNewShowOnGoing($request, $event, $request->start_date);
+            Show::saveNewShows($request, $event);
+        }
+        if ($request->always) Show::saveAlwaysShow($request, $event);
+        if ($request->shows)  Show::saveNewShows($request, $event);
+
+        Show::updateEvent($request, $event);
+        $event->updateEventStatus(4, $request);
+        $event = $event->fresh();
+        $event->searchable();
     }
 }

@@ -93,7 +93,7 @@ export default {
             dateFormat: 'D MMM',
             dateOne: '',
             dateTwo: '',
-            eventUrl:_.has(this.event, 'slug') ? `/create-event/${this.event.slug}` : null,
+            eventUrl:_.has(this.event, 'slug') ? `/create/${this.event.slug}` : null,
             dateRange: '',
         }
     },

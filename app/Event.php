@@ -7,6 +7,7 @@ use App\Genre;
 use ScoutElastic\Searchable;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Scopes\PublishedScope;
@@ -91,6 +92,16 @@ class Event extends Model implements Auditable
         ];
     }
 
+    /**
+     * Get the user events
+     *
+     * @return users collection of events
+     */
+    public function scopeUserEvents($query)
+    {
+        return $query->where('user_id', auth()->id());
+    } 
+
     public function showsSelect()
     {
         return $this->hasMany(Show::class)->select('date');
@@ -120,7 +131,7 @@ class Event extends Model implements Auditable
     *
     * @return bool
     */
-    public function isInProgress() {
+    public function inProgress() {
         return $this->status != 'r' && $this->status != 'p' && $this->status != 'e' && $this->status != 'n';
     }
 
@@ -396,6 +407,43 @@ class Event extends Model implements Auditable
     }
 
     /**
+    * Check if event exists
+    *
+    * @return boolean
+    */
+    public function exists($event, $request) 
+    {
+        $eventExists = Event::UserEvents()->where('slug', Str::slug($request->name))->first();
+
+        return $eventExists && $eventExists->id !== $event->id;
+
+    }
+
+    /**
+    * Update status
+    *
+    * @return udpates event status
+    */
+    public function updateEventStatus($status, $request) 
+    {
+        if ($request->resubmit) {
+            $this->update([ 'status' => '8' ]);
+        } else {
+            if ($this->status < $status + 1 && $this->inProgress()) $this->update([ 'status' => $status ]); 
+        }
+    }
+
+    /**
+    * Check Event Statue
+    *
+    * @return checks event status and returns boolean
+    */
+    public function checkEventStatus($status) 
+    {
+        return $this->status < $status && $this->inProgress();
+    }
+
+    /**
     * Deletes the event images and then deletes event
     *
     * @return Nothing
@@ -418,15 +466,15 @@ class Event extends Model implements Auditable
     */
     public static function finalSlug($event) 
     {
-        if(Event::withTrashed()->where('slug', '=', str_slug($event->name))->where('id', '!=', $event->id)->exists()){
-            $slug = str_slug($event->name) . '-' . substr(md5(microtime()),rand(0,26),5);
+        if(Event::withTrashed()->where('slug', '=', Str::slug($event->name))->where('id', '!=', $event->id)->exists()){
+            $slug = Str::slug($event->name) . '-' . substr(md5(microtime()),rand(0,26),5);
             if(Event::where('slug', '=', $slug)->exists()){
-                return str_slug($event->name) . '-' . rand(1,50000);
+                return Str::slug($event->name) . '-' . rand(1,50000);
             } else {
                 return $slug;
             };
         } else {
-            return str_slug($event->name);
+            return Str::slug($event->name);
         };
     }
 
@@ -451,14 +499,16 @@ class Event extends Model implements Auditable
         if ($request->has('genre')) {
             foreach ($request['genre'] as $genre) {
                 Genre::firstOrCreate([
-                    'slug' => str_slug($genre)
+                    'slug' => Str::slug($genre)
                 ],
                 [
                     'name' => $genre,
                     'user_id' => auth()->user()->id,
                 ]);
             };
-            $newSync = Genre::all()->whereIn('slug', array_map('str_slug', $request['genre']));
+            $newSync = Genre::whereIn('slug', collect($request->genre)->map(function ($item) {
+                return Str::slug($item); 
+            })->toArray())->get();
             $event->genres()->sync($newSync);
         };
     }

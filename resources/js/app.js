@@ -131,7 +131,6 @@ Vue.component('vue-admin-stats', () => import(/* webpackChunkName: "assets/as" *
 Vue.component('admin-event-reviews', () => import(/* webpackChunkName: "assets/aer" */ './pages/adminArea/admin-event-reviews.vue'));
 Vue.component('admin-staff-picks', () => import(/* webpackChunkName: "assets/ap" */ './pages/adminArea/admin-staff-picks.vue'));
 Vue.component('admin-mobility', () => import(/* webpackChunkName: "assets/am" */ './pages/adminArea/admin-mobility.vue'));
-Vue.component('admin-regions', () => import(/* webpackChunkName: "assets/ar" */ './pages/adminArea/admin-regions.vue'));
 Vue.component('admin-user', () => import(/* webpackChunkName: "assets/au" */ './pages/adminArea/admin-user.vue'));
 Vue.component('admin-organizer', () => import(/* webpackChunkName: "assets/ao" */ './pages/adminArea/admin-organizer.vue'));
 Vue.component('admin-content-advisories', () => import(/* webpackChunkName: "assets/aca" */ './pages/adminArea/admin-content-advisories.vue'));

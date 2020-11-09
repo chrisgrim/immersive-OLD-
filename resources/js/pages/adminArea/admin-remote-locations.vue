@@ -4,34 +4,42 @@
             <div class="title">
                 <h1>Remote Locations</h1>
                 <div class="add">
-                    <button @click.prevent="isModalVisible = true"><p>+</p></button>
+                    <button @click.prevent="isModalVisible = true">
+                        <IconSvg type="add" />
+                    </button>
                 </div>
             </div>
         </div>
 
 
-        <div class="list" v-for="(remoteLocation, index) in remoteLocations">
+        <div 
+            class="list" 
+            :key="remoteLocation.id"
+            v-for="(remoteLocation) in remoteLocations">
             <input 
-            type="text" 
-            v-model="remoteLocation.name" 
-            placeholder="Remote Location"
-            @blur="saveLocation(remoteLocation)"
-            />
+                type="text" 
+                v-model="remoteLocation.name" 
+                placeholder="Remote Location"
+                @blur="onUpdate(remoteLocation)">
             <textarea
-            type="text" 
-            v-model="remoteLocation.description" 
-            placeholder="Remote location description"
-            @blur="saveDescription(remoteLocation)"
-            /></textarea> 
+                type="text" 
+                v-model="remoteLocation.description" 
+                placeholder="Remote location description"
+                @blur="onUpdate(remoteLocation)" />
             <input 
-            type="text" 
-            v-model="remoteLocation.rank" 
-            placeholder="Remote Location"
-            @blur="saveRank(remoteLocation)"
-            />
-            <button @click.prevent="showModal(remoteLocation)" class="delete-circle"><p>X</p></button>
+                type="text" 
+                v-model="remoteLocation.rank" 
+                placeholder="Remote Location"
+                @blur="onUpdate(remoteLocation)">
+            <button 
+                @click.prevent="showModal(remoteLocation)" 
+                class="delete-circle">
+                <IconSvg type="delete" />
+            </button>
         </div>
-        <modal v-if="isEditModalVisible" @close="isEditModalVisible = false">
+        <modal 
+            v-if="isEditModalVisible" 
+            @close="isEditModalVisible = false">
             <div slot="header">
                 <div class="circle del">
                     <p>X</p>
@@ -39,44 +47,52 @@
             </div>
             <div slot="body"> 
                 <h3>Are you sure?</h3>
-                <p>You are deleting {{modalDelete.location}}.</p>
+                <p>You are deleting {{ modalDelete.location }}.</p>
             </div>
             <div slot="footer">
-                <button class="btn del" @click.prevent="deleteLocation(modalDelete)">Delete</button>
+                <button 
+                    class="btn del" 
+                    @click.prevent="onDelete(modalDelete)">
+                    Delete
+                </button>
             </div>
         </modal>
 
         <div class="pin noimg">
-            <modal v-if="isModalVisible" @close="isModalVisible = false">
+            <modal 
+                v-if="isModalVisible" 
+                @close="isModalVisible = false">
                 <div slot="header">
-                    <div></div>
+                    <div />
                 </div>
                 <div slot="body" class="body">
                     <div class="text">
                         <div class="name">
                             <input 
-                            type="text" 
-                            v-model="remoteLocation.name" 
-                            placeholder="Remote Location"
-                            :class="{ active: activeItem = 'name'}"
-                            @click="activeItem = 'name'"
-                            @blur="activeItem = null"
-                            @input="$v.remoteLocation.name.$touch"
-                            />
+                                type="text" 
+                                v-model="remoteLocation.name" 
+                                placeholder="Remote Location"
+                                :class="{ active: activeItem = 'name'}"
+                                @click="activeItem = 'name'"
+                                @blur="activeItem = null"
+                                @input="$v.remoteLocation.name.$touch">
                             <div v-if="$v.remoteLocation.name.$error" class="validation-error">
                                 <p class="error" v-if="!$v.remoteLocation.name.required">Please Add Remote Location </p>
                             </div>
                             <textarea
-                            type="text" 
-                            v-model="remoteLocation.description" 
-                            placeholder="Remote location description"
-                            @blur="saveDescription(remoteLocation)"
-                            /></textarea> 
+                                type="text" 
+                                v-model="remoteLocation.description" 
+                                placeholder="Remote location description"
+                                @blur="onUpdate(remoteLocation)" />
                         </div>
                     </div>
                 </div>
                 <div slot="footer">
-                    <button @click.prevent="submitNewLocation()" class="btn sub">Submit</button>
+                    <button 
+                        @click.prevent="onSubmit" 
+                        class="btn sub">
+                        Submit
+                    </button>
                 </div>
             </modal>
         </div>
@@ -85,10 +101,21 @@
 
 <script>
     
-    import { required } from 'vuelidate/lib/validators';
-
+    import { required } from 'vuelidate/lib/validators';    
+    import IconSvg from '../../components/Svg-icon'
 
     export default {
+
+        components: { IconSvg },
+
+        computed: {
+            submitObject() {
+                return {
+                    name: this.remoteLocation.name,
+                    description: this.remoteLocation.description
+                }
+            }
+        },
 
         data() {
             return {
@@ -101,103 +128,45 @@
                 isModalVisible: false,
                 isEditModalVisible: false,
                 modalDelete: '',
-
             }
         },
 
-        computed: {
-            
-        },
-
         methods: {
-
-            //check if validation rules have been followed and returns false if not. Then I submit the new name and slug. I then get the response data and pass it to the new window load.
-            submitNewLocation() {
+            onSubmit() {
                 this.$v.$touch(); 
-                if (this.$v.$invalid) { return false };
-                let data = {
-                    name: this.remoteLocation.name,
-                    description: this.remoteLocation.description
-                };
+                if (this.$v.$invalid) { return }
 
-                axios.post('/remotelocations', data)
-                .then(response => { 
-                    location.reload();
-                })
-                .catch(error => { 
-                    this.isModalVisible = false;
-                });
+                axios.post('/remotelocations', this.submitObject)
+                .then( res => { this.remoteLocations = res.data; })
+                .catch( this.isModalVisible = false );
+            },
+
+            onDelete(remotelocations) {
+                axios.delete(`/remotelocations/${remotelocations.id}`)
+                .then( res => { this.remoteLocations = res.data; this.isEditModalVisible = false })
+                .catch( error => { this.serverErrors = error.response.data.errors; });
+            },
+
+            onLoad() {
+                axios.get('/remotelocations')
+                .then( res => { this.remoteLocations = res.data })
+                .catch( error => { this.serverErrors = error.response.data.errors; });
+            },
+
+            onUpdate(remoteLocation) {
+                axios.patch(`/remotelocations/${remoteLocation.id}`, remoteLocation)
+                .then( res => { this.remoteLocations = res.data })
+                .catch( error => { this.serverErrors = error.response.data.errors });
             },
 
             showModal(remotelocations) {
                 this.modalDelete = remotelocations;
                 this.isEditModalVisible = true;
             },
-
-            deleteLocation(remotelocations) {
-                axios.delete(`/remotelocations/${remotelocations.id}`)
-                .then(response => { 
-                    console.log(response.data);
-                    this.isEditModalVisible = false;
-                    this.loadLocations();
-                })
-                .catch(error => { this.serverErrors = error.response.data.errors; });
-            },
-
-            loadLocations() {
-                axios.get('/remotelocations')
-                .then(response => { 
-                   this.remoteLocations = response.data;
-                })
-                .catch(error => { this.serverErrors = error.response.data.errors; });
-            },
-
-            saveLocation(remoteLocation) {
-                let data = {
-                    name: remoteLocation.name
-                };
-                axios.patch(`/remotelocations/${remoteLocation.id}`, data)
-                .then(response => { 
-                    console.log(response.data)
-                    this.loadLocations()
-                })
-                .catch(error => { 
-                    this.serverErrors = error.response.data.errors; 
-                });
-            },
-
-            saveDescription(remoteLocation) {
-                let data = {
-                    description: remoteLocation.description
-                };
-                axios.patch(`/remotelocations/${remoteLocation.id}`, data)
-                .then(response => { 
-                   console.log(response.data)
-                })
-                .catch(error => { 
-                    this.serverErrors = error.response.data.errors; 
-                });
-            },
-
-            saveRank(remoteLocation) {
-                let data = {
-                    rank: remoteLocation.rank
-                };
-                axios.patch(`/remotelocations/${remoteLocation.id}`, data)
-                .then(response => { 
-                    console.log(response.data)
-                    this.loadLocations()
-                })
-                .catch(error => { 
-                    this.serverErrors = error.response.data.errors; 
-                });
-            },
-
-            
         },
 
         created() {
-            this.loadLocations()
+            this.onLoad()
         },
 
         validations: {
@@ -211,5 +180,4 @@
             },
         },
     }
-
 </script>

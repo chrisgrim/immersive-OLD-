@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\InteractiveLevel;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class InteractiveLevelController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('admin');
+        $this->middleware('moderator');
     }
 
      /**
@@ -45,10 +46,8 @@ class InteractiveLevelController extends Controller
      */
     public function store(Request $request)
     {
-        InteractiveLevel::create([
-            'name' => $request->name,
-            'description' => $request->description,
-        ]);
+        InteractiveLevel::saveInteractiveLevel($request);
+        return InteractiveLevel::all();
     }
 
     /**
@@ -60,21 +59,8 @@ class InteractiveLevelController extends Controller
      */
     public function update(Request $request, InteractiveLevel $interactivelevel)
     {
-        if ($request->name) {
-            return $interactivelevel->update([
-                'name' => $request->name,
-            ]);
-        }
-        if ($request->rank) {
-            return $interactivelevel->update([
-                'rank' => $request->rank,
-            ]);
-        }
-        if ($request->description) {
-            return $interactivelevel->update([
-                'description' => $request->description,
-            ]);
-        }
+        $interactivelevel->updateInteractiveLevel($request);
+        return InteractiveLevel::all();
     }
 
     /**
@@ -86,5 +72,6 @@ class InteractiveLevelController extends Controller
     public function destroy(InteractiveLevel $interactivelevel)
     {
         $interactivelevel->delete();
+        return InteractiveLevel::all();
     }
 }

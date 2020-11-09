@@ -8,7 +8,7 @@
                 style="opacity:0;position:absolute;top:0;" 
                 autofocus>
             <div class="field">
-                <label class="area">Select physical interaction level with guests</label>
+                <label class="area">Select physical interaction level with performers</label>
                 <multiselect 
                     v-model="contactAdvisories" 
                     :options="contactAdvisoryOptions" 
@@ -119,7 +119,7 @@
                 <h2>Mobility Advisories</h2>
             </div>
             <div class="field">
-                <label> Is the event wheelchair Accessible? </label>
+                <label> Is the event wheelchair accessible? </label>
                 <multiselect 
                     v-model="advisories.wheelchairReady" 
                     :options="options"
@@ -243,7 +243,7 @@
 
         computed: {
             endpoint() {
-                return `/create-event/${this.event.slug}/advisories`
+                return `/create/${this.event.slug}/advisories`
             },
 
             navSubmit() {

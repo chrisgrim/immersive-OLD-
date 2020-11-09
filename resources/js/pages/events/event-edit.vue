@@ -236,7 +236,7 @@
 
 			newEvent(organizer) {
 				axios.post(`/events`, organizer)
-				.then(res => { window.location.href = `/create-event/${res.data.slug}/title` })
+				.then(res => { window.location.href = `/create/${res.data.slug}/title` })
                 .catch(error => { this.serverErrors = error.response.data.errors; });
 			},
 

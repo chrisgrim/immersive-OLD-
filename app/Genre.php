@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use ScoutElastic\Searchable;
 use App\Scopes\RankScope;
+use Illuminate\Support\Str;
 
 class Genre extends Model
 {
@@ -54,6 +55,39 @@ class Genre extends Model
     public function events() 
     {
     	return $this->belongsToMany(Event::class);
+    }
+
+    /**
+     * This saves a new Genre type
+     *
+     * @return  nothing
+     */
+    public static function saveGenre($request) 
+    {
+        Genre::firstOrCreate([
+            'slug' => Str::slug($request->name)
+        ],
+        [
+            'name' => $request->name,
+            'user_id' => auth()->user()->id,
+            'admin' => true,
+        ]);
+    }
+
+     /**
+     * This updates a genre type
+     *
+     * @return nothing
+     */
+    public function updateGenre($request) 
+    {
+        $this->update([
+            'rank' => $request->rank,
+            'name' => $request->name,
+            'slug' => Str::slug($request->name),
+            'user_id' => auth()->user()->id,
+            'admin' => $request->admin,
+        ]);
     }
 
     protected $searchRules = [

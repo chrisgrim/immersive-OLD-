@@ -392,6 +392,7 @@
     import VueSlider from 'vue-slider-component'
     import searchBasicsMixin from '../../../mixins/search-basics-mixin'
     import 'vue-slider-component/theme/antd.css'
+    
     export default {
 
         props:['categories','maxprice', 'events', 'onlineevents', 'tags', 'page', 'onlinepage'],

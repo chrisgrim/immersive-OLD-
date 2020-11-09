@@ -615,9 +615,9 @@
 
             onSubmit() {
                 this.disabled = true;
-                axios.get(`/create-event/${this.event.slug}/submit`)
+                axios.get(`/create/${this.event.slug}/submit`)
                 .then(res => {
-                   window.location.href = `/create-event/${this.event.slug}/thankyou`;
+                   window.location.href = `/create/${this.event.slug}/thankyou`;
                 })
                 .catch(err => { this.onErrors(err) });
             },

@@ -17,8 +17,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::GET('events', 'EventController@get');
-
 //Nav Bar
 // IS USED Users entered data into the navbar
 Route::GET('search/navbar/content', 'SearchController@searchNav');
@@ -34,25 +32,20 @@ Route::GET('search/location', 'SearchController@searchLocation');
 //IS USED Searches remote events
 Route::POST('search/online', 'Search\OnlineSearchController@fetch');
 
-// IS USED Gets pagination for home index page
-Route::POST('index/loadmore', 'EventController@fetch');
 
 
 //Admin Section
 //IS USED On Organizer Create Page this searches all organizers and returns based on users selection
 Route::GET('search/organizer', 'SearchController@searchOrganizer');
 
-// IS USED On admin page returns user list for editing users
-Route::GET('search/user/list', 'SearchController@searchUsers');
 
 // IS USED Admin get list of events
-Route::GET('admin/search/events', 'SearchController@searchEvents');
-
-// IS USED Admin get list of events
-Route::GET('admin/search/boneyard', 'SearchController@searchBoneyard');
-
-// IS USED Admin get list of events
-Route::GET('admin/search/organizer', 'Admin\SearchController@organizers');
+Route::GET('admin/event/deleted/search', 'Admin\SearchController@deletedEvents');
+Route::GET('admin/organizer/search', 'Admin\SearchController@organizers');
+Route::GET('admin/genres/search', 'Admin\SearchController@genres');
+Route::GET('admin/events/search', 'Admin\SearchController@events');
+Route::GET('admin/purgatory/search', 'Admin\SearchController@purgatory');
+Route::GET('admin/users/search', 'SearchController@searchUsers');
 
 
 

@@ -95,7 +95,7 @@
 
         computed: {
             endpoint() {
-                return `/create-event/${this.event.slug}/category`
+                return `/create/${this.event.slug}/category`
             },
 
             navSubmit() {

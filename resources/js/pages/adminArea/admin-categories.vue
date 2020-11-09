@@ -4,92 +4,111 @@
             <div class="title">
                 <h1>Categories</h1>
                 <div class="add">
-                    <button @click.prevent="isModalVisible = true"><p>+</p></button>
+                    <button @click.prevent="isModalVisible = true">
+                        <IconSvg type="add" />
+                    </button>
                 </div>
             </div>
         </div>
         <tabs>
             <!-- location based category tab -->
-            <tab title="Location Based Events" :active="true" class="tab-events">
-                <div class="list" v-for="(category, index) in categories.location">
+            <tab 
+                title="Location Based Events" 
+                :active="true" 
+                class="tab-events">
+                <div 
+                    class="list" 
+                    :key="category.id"
+                    v-for="(category) in categories.location">
                     <input 
-                    type="text" 
-                    v-model="category.name" 
-                    placeholder="Category Name"
-                    @blur="onEdit(category)"
-                    />
+                        type="text" 
+                        v-model="category.name" 
+                        placeholder="Category Name"
+                        @blur="onEdit(category)">
                     <textarea
-                    type="text" 
-                    v-model="category.description" 
-                    placeholder="Category Name"
-                    @blur="onEdit(category)"
-                    /></textarea> 
-                    <div class="box" :style="{ backgroundImage: `url('/storage/${category.thumbImagePath}')` }">
+                        type="text" 
+                        v-model="category.description" 
+                        placeholder="Category Name"
+                        @blur="onEdit(category)" />
+                    <div 
+                        class="box" 
+                        :style="{ backgroundImage: `url('/storage/${category.thumbImagePath}')` }">
                         <label>
-                             <image-upload @loaded="onImageEdit($event, category)"></image-upload>
-                             <CubeSpinner :loading="isLoading"></CubeSpinner>
+                            <image-upload @loaded="onImageEdit($event, category)" />
+                            <CubeSpinner :loading="isLoading" />
                         </label> 
                     </div>
                     <input 
-                    type="text" 
-                    v-model="category.credit" 
-                    placeholder="image credit"
-                    @blur="onEdit(category)"
-                    />
+                        type="text" 
+                        v-model="category.credit" 
+                        placeholder="image credit"
+                        @blur="onEdit(category)">
                     <div>
                         <input 
-                        type="text" 
-                        v-model="category.rank" 
-                        placeholder="Category Rank"
-                        @blur="onEdit(category)"
-                        />
+                            type="text" 
+                            v-model="category.rank" 
+                            placeholder="Category Rank"
+                            @blur="onEdit(category)">
                     </div>
-                    <button @click.prevent="showModal(category)" class="delete-circle"><p>X</p></button>
+                    <button 
+                        @click.prevent="showModal(category)" 
+                        class="delete-circle">
+                        <IconSvg type="delete" />
+                    </button>
                 </div>
             </tab>
 
             <!-- remote based category tab -->
-            <tab title="Online Events" class="tab-events">
-                <div class="list" v-for="(category, index) in categories.remote">
+            <tab 
+                title="Online Events" 
+                class="tab-events">
+                <div 
+                    class="list" 
+                    :key="category.id"
+                    v-for="(category) in categories.remote">
                     <input 
-                    type="text" 
-                    v-model="category.name" 
-                    placeholder="Category Name"
-                    @blur="onEdit(category)"
-                    />
+                        type="text" 
+                        v-model="category.name" 
+                        placeholder="Category Name"
+                        @blur="onEdit(category)">
                     <textarea
-                    type="text" 
-                    v-model="category.description" 
-                    placeholder="Category Name"
-                    @blur="onEdit(category)"
-                    /></textarea> 
-                    <div class="box" :style="{ backgroundImage: `url('/storage/${category.thumbImagePath}')` }">
+                        type="text" 
+                        v-model="category.description" 
+                        placeholder="Category Name"
+                        @blur="onEdit(category)" />
+                    <div 
+                        class="box" 
+                        :style="{ backgroundImage: `url('/storage/${category.thumbImagePath}')` }">
                         <label>
-                             <image-upload @loaded="onImageEdit($event, category)"></image-upload>
-                             <CubeSpinner :loading="isLoading"></CubeSpinner>
+                            <image-upload @loaded="onImageEdit($event, category)" />
+                            <CubeSpinner :loading="isLoading" />
                         </label> 
                     </div>
                     <input 
-                    type="text" 
-                    v-model="category.credit" 
-                    placeholder="image credit"
-                    @blur="onEdit(category)"
-                    />
+                        type="text" 
+                        v-model="category.credit" 
+                        placeholder="image credit"
+                        @blur="onEdit(category)">
                     <div>
                         <input 
-                        type="text" 
-                        v-model="category.rank" 
-                        placeholder="Category Rank"
-                        @blur="onEdit(category)"
-                        />
+                            type="text" 
+                            v-model="category.rank" 
+                            placeholder="Category Rank"
+                            @blur="onEdit(category)">
                     </div>
-                    <button @click.prevent="showModal(category)" class="delete-circle"><p>X</p></button>
+                    <button 
+                        @click.prevent="showModal(category)" 
+                        class="delete-circle">
+                        <IconSvg type="delete" />
+                    </button>
                 </div>
             </tab>
         </tabs>
 
         <!-- Delete Category Modal -->
-        <modal v-if="isEditModalVisible" @close="isEditModalVisible = false">
+        <modal 
+            v-if="isEditModalVisible" 
+            @close="isEditModalVisible = false">
             <div slot="header">
                 <div class="circle del">
                     <p>X</p>
@@ -97,52 +116,67 @@
             </div>
             <div slot="body"> 
                 <h3>Are you sure?</h3>
-                <p>You are deleting your {{modalDelete.name}} category.</p>
+                <p>You are deleting your {{ modalDelete.name }} category.</p>
             </div>
             <div slot="footer">
-                <button class="btn del" @click.prevent="deleteCategory(modalDelete)">Delete</button>
+                <button 
+                    class="btn del" 
+                    @click.prevent="onDelete(modalDelete)">
+                    Delete
+                </button>
             </div>
         </modal>
         
         <!-- Add new category -->
         <div class="pin">
-            <modal v-if="isModalVisible" @close="isModalVisible = false">
+            <modal 
+                v-if="isModalVisible" 
+                @close="isModalVisible = false">
                 <div slot="header">
-                    <div></div>
+                    <div />
                 </div>
                 <div slot="body" class="body">
                     <label :style="{ backgroundImage: `url('${imageFile.src}')` }">
-                        <div v-if="!imageFile.src" class="box">
+                        <div 
+                            v-if="!imageFile.src" 
+                            class="box">
                             <div class="in">
                                 <div>
-                                    <svg class="b" height="32" width="32" viewBox="0 0 24 24" aria-label="Add an image or video" role="img"><path d="M24 12c0-6.627-5.372-12-12-12C5.373 0 0 5.373 0 12s5.373 12 12 12c6.628 0 12-5.373 12-12zm-10.767 3.75a1.25 1.25 0 0 1-2.5 0v-3.948l-1.031 1.031a1.25 1.25 0 0 1-1.768-1.768L12 7l4.066 4.065a1.25 1.25 0 0 1-1.768 1.768l-1.065-1.065v3.982z"></path></svg>
+                                    <svg 
+                                        class="b" 
+                                        height="32" 
+                                        width="32" 
+                                        viewBox="0 0 24 24" 
+                                        aria-label="Add an image or video" 
+                                        role="img">
+                                        <path d="M24 12c0-6.627-5.372-12-12-12C5.373 0 0 5.373 0 12s5.373 12 12 12c6.628 0 12-5.373 12-12zm-10.767 3.75a1.25 1.25 0 0 1-2.5 0v-3.948l-1.031 1.031a1.25 1.25 0 0 1-1.768-1.768L12 7l4.066 4.065a1.25 1.25 0 0 1-1.768 1.768l-1.065-1.065v3.982z" />
+                                    </svg>
                                 </div>
-                                 <div>
+                                <div>
                                     <p>Click here to upload image</p>
-                                    <p>Must be at least 720x960 and under 2mb</p>
+                                    <p>Must be at least 800x800 and under 2mb</p>
                                 </div>
                             </div>
                         </div>
-                         <image-upload @loaded="onImageUpload"></image-upload>
-                         <CubeSpinner :loading="isLoading"></CubeSpinner>
+                        <image-upload @loaded="onImageUpload" />
+                        <CubeSpinner :loading="isLoading" />
                         <div v-if="$v.imageFile.$error" class="validation-error">
-                            <p class="error" v-if="!$v.imageFile.required">Please Add Image </p>
-                            <p class="error" v-if="!$v.imageFile.fileSize">Image needs to be less than 2mb </p>
-                            <p class="error" v-if="!$v.imageFile.fileType">Image should be jpg, gif, or png</p>
-                            <p class="error" v-if="!$v.imageFile.imageRatio">Needs to be at least 720 x 960</p>
+                            <template class="error" v-if="!$v.imageFile.required">Please Add Image </template>
+                            <template class="error" v-if="!$v.imageFile.fileSize">Image needs to be less than 2mb </template>
+                            <template class="error" v-if="!$v.imageFile.fileType">Image should be jpg, gif, or png</template>
+                            <template class="error" v-if="!$v.imageFile.imageRatio">Needs to be at least 800x800</template>
                         </div>
                     </label> 
                     <div class="text">
                         <div class="name">
                             <input 
-                            type="text" 
-                            v-model="name" 
-                            placeholder="Category Name"
-                            :class="{ active: nameActive}"
-                            @click="nameActive = true"
-                            @blur="nameActive = false"
-                            @input="clearInfo"
-                            />
+                                type="text" 
+                                v-model="name" 
+                                placeholder="Category Name"
+                                :class="{ active: nameActive}"
+                                @click="nameActive = true"
+                                @blur="nameActive = false"
+                                @input="clearInfo">
                             <div v-if="$v.name.$error" class="validation-error">
                                 <p class="error" v-if="!$v.name.required">Please Add Category Name </p>
                                 <p class="error" v-if="!$v.name.serverFailed">This category has already been created</p>
@@ -150,15 +184,14 @@
                         </div>
                         <div class="desc">
                             <textarea
-                            type="text"
-                            rows="6"
-                            v-model="description" 
-                            placeholder="Category Description"
-                            :class="{ active: nameActive }"
-                            @click="nameActive = true"
-                            @blur="nameActive = false"
-                            @input="$v.description.$touch"
-                             /></textarea>
+                                type="text"
+                                rows="6"
+                                v-model="description" 
+                                placeholder="Category Description"
+                                :class="{ active: nameActive }"
+                                @click="nameActive = true"
+                                @blur="nameActive = false"
+                                @input="$v.description.$touch" />
                             <div v-if="$v.description.$error" class="validation-error">
                                 <p class="error" v-if="!$v.description.required">Please Add Category Description </p>
                             </div>
@@ -166,18 +199,29 @@
                         <div class="field">
                             <div style="text-align:left;">Is this a remote category?</div>
                             <div id="cover">
-                                <input v-model="remote" type="checkbox" id="checkbox">
-                                <div id="bar"></div>
+                                <input 
+                                    v-model="remote" 
+                                    type="checkbox" 
+                                    id="checkbox">
+                                <div id="bar" />
                                 <div id="knob">
-                                    <p v-if="remote">Yes</p>
-                                    <p v-else="remote">No</p>
+                                    <p v-if="remote">
+                                        Yes
+                                    </p>
+                                    <p v-else>
+                                        No
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div slot="footer">
-                    <button @click.prevent="submitNewCategory()" class="btn sub">Submit</button>
+                    <button 
+                        @click.prevent="onSubmit()" 
+                        class="btn sub">
+                        Submit
+                    </button>
                 </div>
             </modal>
         </div>
@@ -190,17 +234,27 @@
     import CubeSpinner  from '../layouts/loading.vue'
     import _ from 'lodash'
     import formValidationMixin from '../../mixins/form-validation-mixin'
+    import IconSvg from '../../components/Svg-icon'
 
 
     export default {
-        components: { CubeSpinner },
+        components: { CubeSpinner, IconSvg },
 
         mixins: [formValidationMixin],
 
         computed: {
             endpoint() {
-                return `/create-event/${this.event.slug}/advisories`
+                return `/create/${this.event.slug}/advisories`
             },
+
+            submitObject() {
+                return {
+                    image: this.imageFile.file,
+                    name: this.name,
+                    description: this.description,
+                    remote: this.remote ? 1 : 0,
+                }
+            }
         },
 
         data() {
@@ -221,36 +275,34 @@
 
         methods: {
 
-            //check if validation rules have been followed and returns false if not. Then I submit the new name and slug. I then get the response data and pass it to the new window load.
-            submitNewCategory() {
+            onSubmit() {
                 this.$v.$touch(); 
-                if (this.$v.$invalid) { return false };
+                if (this.$v.$invalid) { return false; }
                 this.isLoading = true;
 
-                let data = new FormData();
-                data.append('image', this.imageFile.file);
-                data.append('name', this.name);
-                data.append('description', this.description);
-                data.append('remote', this.remote ? 1 : 0 );
+                var form_data = new FormData();
+                for ( var key in this.submitObject ) { form_data.append(key, this.submitObject[key]) }
 
-
-                axios.post('/categories', data)
-                .then(res => { 
-                    location.reload();
-                })
-                .catch(error => {
-                    this.serverErrors = error.response.data.errors; 
-                    this.isLoading = false;
-                    this.isModalVisible = true;
-                });
+                axios.post('/categories', form_data)
+                .then( res => { this.categories = res.data; this.isModalVisible = false; this.isLoading = false; })
+                .catch();
             },
 
-            deleteCategory(category) {
+            onDelete(category) {
                 axios.delete(`/categories/${category.slug}`)
-                .then(res => { 
-                    this.isEditModalVisible = false;
-                    this.loadCategories();
-                })
+                .then( res => { this.categories = res.data; this.isEditModalVisible = false; })
+                .catch( error => { this.serverErrors = error.response.data.errors; });
+            },
+
+            onEdit(category) {
+                axios.patch(`/categories/${category.slug}`, category)
+                .then( res=> { this.categories = res.data } )
+                .catch(err => { this.onErrors(err); });
+            },
+
+            onLoad() {
+                axios.get(`/categories?timestamp=${new Date().getTime()}`)
+                .then(res => { this.categories = res.data })
                 .catch(error => { this.serverErrors = error.response.data.errors; });
             },
 
@@ -259,18 +311,10 @@
                 this.serverErrors = [];
             },
 
-            loadCategories() {
-                axios.get('/categories')
-                .then(response => { 
-                   this.categories = response.data;
-                })
-                .catch(error => { this.serverErrors = error.response.data.errors; });
-            },
-
             onImageUpload(image) {
                 this.imageFile = image; 
                 this.$v.imageFile.$touch();
-                if (this.$v.imageFile.$invalid) { return false };
+                if (this.$v.imageFile.$invalid) { return false }
             },
 
             onImageEdit(image, category) {
@@ -283,12 +327,8 @@
                 data.append('image', image.file);
                 data.append('_method', 'PATCH');
                 axios.post(`/categories/${category.slug}`, data)
-                .then(res => { 
-                   window.location.href = `/categories/create`;
-                })
-                .catch(error => { 
-                    console.log(error.response.data.errors);
-                });
+                .then( res => { this.categories = res.data; this.isLoading = false; } )
+                .catch( error => { console.log(error.response.data.errors) });
             },
 
             showModal(category) {
@@ -296,29 +336,13 @@
                 this.isEditModalVisible = true;
             },
 
-            onEdit(category) {
-
-                axios.patch(`/categories/${category.slug}`, category)
-                .then(res => { 
-                    this.loadCategories()
-                })
-                .catch(err => {
-                    this.onErrors(err);
-                });
-            },
-
-
             hasServerError(field) {
                 return (field && _.has(this, 'serverErrors.' + field) && !_.isEmpty(this.serverErrors[field]));
             },
-
-
-
-            
         },
 
         created() {
-            this.loadCategories()
+            this.onLoad()
         },
 
         validations: {
