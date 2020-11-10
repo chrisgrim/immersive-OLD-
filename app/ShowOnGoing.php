@@ -30,12 +30,19 @@ class ShowOnGoing extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
-    public static function saveNewShowOnGoing($request, $event, $startdate)
+    public static function saveNewShowOnGoing($request, $event)
     {
-        if ($startdate) {
-            $initialdate = new Carbon($startdate);
-            $period = CarbonPeriod::create(new Carbon($startdate), $initialdate->addMonths(6));
-        } else {
+        if ($request->limited) 
+        {
+            $period = CarbonPeriod::create(new Carbon($request->start_date), new Carbon($request->end_date));
+        } 
+        elseif($request->onGoing) 
+        {
+            $initialdate = new Carbon($request->start_date);
+            $period = CarbonPeriod::create(new Carbon($request->start_date), $initialdate->addMonths(6));
+        } 
+        else
+        {
             $period = CarbonPeriod::create(Carbon::now()->startOfDay(), Carbon::now()->startOfDay()->addMonths(6));
         }
 

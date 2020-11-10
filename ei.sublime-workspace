@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"end",
+				"endDate"
+			],
+			[
+				"staffp",
+				"staffpick"
+			],
+			[
 				"org",
 				"organizer"
 			],
@@ -506,25 +514,19 @@
 			[
 				"add",
 				"addShowDates"
-			],
-			[
-				"Ini",
-				"initializeDateObject2"
-			],
-			[
-				"mar",
-				"margin\tproperty"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
+			"contents": "<?php\n\nRoute::GET('/', 'EventController@index')->name('home');\n\nRoute::GET('/login/{provider}', 'Auth\\LoginController@redirectToProvider');\nRoute::GET('/login/{provider}/callback', 'Auth\\LoginController@handleProviderCallback');\n\nAuth::routes(['verify' => true]);\n\nRoute::RESOURCE('events', 'EventController');\nRoute::RESOURCE('categories', 'Admin\\CategoryController');\nRoute::RESOURCE('contactlevels', 'Admin\\ContactLevelsController');\nRoute::RESOURCE('contentadvisories', 'Admin\\ContentAdvisoriesController');\nRoute::RESOURCE('genres', 'Admin\\GenresController');\nRoute::RESOURCE('remotelocations', 'Admin\\RemoteLocationsController');\nRoute::RESOURCE('mobilities', 'Admin\\MobilitiesController');\nRoute::RESOURCE('staffpicks', 'Admin\\StaffPicksController');\nRoute::RESOURCE('reviewevents', 'Admin\\ReviewEventsController');\nRoute::RESOURCE('interactivelevels', 'Admin\\InteractiveLevelController');\n\n// ----------   Search Page -------\n\nRoute::POST('/search/storedata', 'SearchDataController@store');\n\nRoute::GET('/index/search', 'SearchController@index');\n\nRoute::GET('/index/search-online', 'Search\\OnlineSearchController@index');\n\nRoute::GET('/index/search-all', 'SearchController@allsearch');\n// This is the search for vuex\nRoute::POST('/vuex/search', 'SearchController@filterIndex');\n\n//Get Messages from database\nRoute::GET('/messages', 'ConversationsController@index');\nRoute::GET('/conversations/fetch/messages', 'ConversationsController@fetchmessages');\nRoute::GET('/conversations/fetch/eventmessages', 'ConversationsController@fetcheventmessages');\nRoute::GET('/conversations/{conversation}', 'ConversationsController@show');\nRoute::POST('/conversations/{conversation}', 'ConversationsController@update');\n\n//Admin Area\nRoute::GET('/admin/dashboard', 'Admin\\AdminAreaController@index');\n\n//Admin Events\nRoute::GET('/admin/events', 'Admin\\EventController@index');\nRoute::POST('/admin/events/fetch', 'Admin\\EventController@fetch');\nRoute::POST('/admin/event/{event}/approve', 'Admin\\EventController@approve');\nRoute::POST('/admin/event/{event}/fail', 'Admin\\EventController@fail');\nRoute::POST('/admin/event/{event}/reject', 'Admin\\EventController@reject');\nRoute::GET('/admin/events/finalize', 'Admin\\EventController@queues');\nRoute::GET('/admin/events/{event}/finalize', 'Admin\\EventController@finalize');\nRoute::POST('/admin/event/{event}/change-organizer', 'Admin\\EventController@changeOrganizer');\nRoute::POST('/admin/event/boneyard/fetch', 'Admin\\BoneyardController@fetch');\nRoute::POST('/admin/event/boneyard/{event}/resurrect', 'Admin\\BoneyardController@resurrect');\nRoute::GET('/admin/boneyard', 'Admin\\BoneyardController@index');\nRoute::GET('/admin/events/purgatory', 'Admin\\PurgatoryController@index');\nRoute::POST('/admin/events/purgatory/fetch', 'Admin\\PurgatoryController@fetch');\n\n//Admin Users\nRoute::GET('/admin/users', 'Admin\\UsersController@index');\nRoute::PATCH('/admin/users/{user}', 'Admin\\UsersController@update');\nRoute::DELETE('/admin/users/{user}/delete', 'Admin\\UsersController@delete');\nRoute::POST('/admin/users/fetch', 'Admin\\UsersController@fetch');\n\n//Admin Staff Picks\nRoute::POST('/admin/staffpicks/fetch', 'Admin\\StaffPicksController@fetch');\nRoute::GET('/staffpicks/current', 'Admin\\StaffPicksController@show');\n\n//Admin Organizers\nRoute::POST('/admin/organizer/{organizer}/approve', 'Admin\\OrganizerController@approve');\nRoute::POST('/admin/organizer/{organizer}/delete', 'Admin\\OrganizerController@delete');\nRoute::GET('/admin/organizers/finalize', 'Admin\\OrganizerController@queues');\nRoute::GET('/admin/organizers/{organizer}/finalize', 'Admin\\OrganizerController@finalize');\nRoute::GET('/admin/organizer', 'Admin\\OrganizerController@index');\nRoute::PATCH('/admin/organizer/{organizer}', 'Admin\\OrganizerController@update');\nRoute::POST('/admin/organizer/fetch', 'Admin\\OrganizerController@fetch');\n\nRoute::POST('/admin/data', 'SearchDataController@create');\n\n\n//Organizer \nRoute::POST('/organizer/{organizer}/patch', 'OrganizerController@update');\nRoute::RESOURCE('organizer', 'OrganizerController');\nRoute::POST('message/organizer/{organizer}/{user}', 'OrganizerController@message');\nRoute::POST('change/organizer/{organizer}/', 'AdminOrganizerController@edit');\n\n//User Profile Pages\nRoute::RESOURCE('users', 'ProfilesController');\nRoute::GET('account-settings', 'ProfilesController@account');\nRoute::GET('account-settings/notifications', 'ProfilesController@notifications');\nRoute::GET('account-settings/favorited', 'ProfilesController@favorited');\n\n// favorites Button\nRoute::GET('myFavorites/{user}', 'FavoritesController@index');\nRoute::POST('favorite/{event}/favorites', 'FavoritesController@store');\nRoute::DELETE('favorite/{event}/favorites', 'FavoritesController@destroy');\nRoute::GET('favorite/{event}/login', 'FavoritesController@loginToFavorite');\n\n//Event Creation Process\nRoute::GET('/create/events/edit', 'Create\\EventController@show');\nRoute::POST('/create/{organizer}/events/fetch', 'Create\\EventController@fetch');\n//Create Title\nRoute::GET('/create/{event}/title', 'Create\\TitleController@create');\nRoute::GET('/create/{event}/title/fetch', 'Create\\TitleController@fetch');\nRoute::PATCH('/create/{event}/title ', 'Create\\TitleController@update');\n//Create Location\nRoute::GET('/create/{event}/location', 'Create\\LocationController@create');\nRoute::GET('/create/{event}/location/fetch', 'Create\\LocationController@fetch');\nRoute::PATCH('/create/{event}/location', 'Create\\LocationController@update');\n//Select Category\nRoute::GET('/create/{event}/category', 'Create\\CategoryController@create');\nRoute::GET('/create/{event}/category/fetch', 'Create\\CategoryController@fetch');\nRoute::PATCH('/create/{event}/category', 'Create\\CategoryController@update');\n//Create Show and Ticket Times\nRoute::GET('/create/{event}/shows', 'Create\\ShowsController@create');\nRoute::GET('/create/{event}/shows/fetch', 'Create\\ShowsController@fetch');\nRoute::POST('/create/{event}/shows', 'Create\\ShowsController@update');\n//Create Tickets\nRoute::GET('/create/{event}/tickets', 'Create\\TicketsController@create');\nRoute::GET('/create/{event}/tickets/fetch', 'Create\\TicketsController@fetch');\nRoute::POST('/create/{event}/tickets', 'Create\\TicketsController@update');\n//Create Description\nRoute::GET('/create/{event}/description', 'Create\\DescriptionController@create');\nRoute::GET('/create/{event}/description/fetch', 'Create\\DescriptionController@fetch');\nRoute::PATCH('/create/{event}/description ', 'Create\\DescriptionController@update');\n//Create Advisories\nRoute::GET('/create/{event}/advisories', 'Create\\AdvisoriesController@create');\nRoute::GET('/create/{event}/advisories/fetch', 'Create\\AdvisoriesController@fetch');\nRoute::PATCH('/create/{event}/advisories ', 'Create\\AdvisoriesController@update');\n//Create Image\nRoute::GET('/create/{event}/images', 'Create\\ImageController@create');\nRoute::POST('/create/{event}/images', 'Create\\ImageController@update');\n//Create Review\nRoute::GET('/create/{event}/review', 'Create\\EventController@review');\n//Submit Event\nRoute::GET('/create/{event}/submit', 'Create\\EventController@submit');\nRoute::GET('/create/{event}/thankyou', 'Create\\EventController@completed');\n\n\n//Website Info\nRoute::GET('/privacy-policy', 'LegalController@privacy');\nRoute::GET('/terms', 'LegalController@terms');\nRoute::GET('/disclaimer', 'LegalController@disclaimer');\nRoute::GET('/event-sitemap.xml', 'SitemapController@event_sitemap');\nRoute::GET('/organizer-sitemap.xml', 'SitemapController@organizer_sitemap');\n\n//Generate City List\nRoute::GET('/citylist/generate', 'CityListsController@generate');\n\n\n",
 			"file": "routes/web.php",
+			"file_size": 7577,
+			"file_write_time": 132494270104252603,
 			"settings":
 			{
-				"buffer_size": 7961,
-				"encoding": "UTF-8",
+				"buffer_size": 7577,
 				"line_ending": "Unix"
 			}
 		}
@@ -640,17 +642,43 @@
 		"/Users/chrisgrim/code/ei/app",
 		"/Users/chrisgrim/code/ei/app/Http",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers",
+		"/Users/chrisgrim/code/ei/database",
 		"/Users/chrisgrim/code/ei/resources",
 		"/Users/chrisgrim/code/ei/resources/js",
 		"/Users/chrisgrim/code/ei/resources/js/mixins",
 		"/Users/chrisgrim/code/ei/resources/js/pages",
+		"/Users/chrisgrim/code/ei/resources/js/pages/create",
 		"/Users/chrisgrim/code/ei/resources/js/pages/staffpicks",
+		"/Users/chrisgrim/code/ei/resources/js/store",
 		"/Users/chrisgrim/code/ei/resources/sass",
-		"/Users/chrisgrim/code/ei/resources/views",
+		"/Users/chrisgrim/code/ei/resources/sass/create",
 		"/Users/chrisgrim/code/ei/routes"
 	],
 	"file_history":
 	[
+		"/Users/chrisgrim/code/ei/resources/sass/create/advisories.scss",
+		"/Users/chrisgrim/code/ei/resources/sass/create/shows.scss",
+		"/Users/chrisgrim/code/ei/resources/js/pages/create/tickets.vue",
+		"/Users/chrisgrim/code/ei/resources/js/pages/create/advisories.vue",
+		"/Users/chrisgrim/code/ei/resources/js/pages/create/description.vue",
+		"/Users/chrisgrim/code/ei/resources/js/pages/create/shows.vue",
+		"/Users/chrisgrim/code/ei/resources/js/pages/create/category.vue",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/Create/ShowsController.php",
+		"/Users/chrisgrim/code/ei/app/ShowOnGoing.php",
+		"/Users/chrisgrim/code/ei/app/Show.php",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/Create/EventController.php",
+		"/Users/chrisgrim/code/ei/resources/js/store/index.js",
+		"/Users/chrisgrim/code/ei/resources/js/pages/create/nav.vue",
+		"/Users/chrisgrim/code/ei/resources/js/pages/create/image.vue",
+		"/Users/chrisgrim/code/ei/resources/js/pages/create/review-event.vue",
+		"/Users/chrisgrim/code/ei/resources/js/pages/create/location-google.vue",
+		"/Users/chrisgrim/code/ei/resources/js/pages/create/title.vue",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/Create/TicketsController.php",
+		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-show.vue",
+		"/Users/chrisgrim/code/ei/resources/sass/events/event-show.scss",
+		"/Users/chrisgrim/code/ei/resources/js/pages/layouts/alert.vue",
+		"/Users/chrisgrim/code/ei/resources/views/emails/event-approved.blade.php",
+		"/Users/chrisgrim/code/ei/routes/web.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/EventController.php",
 		"/Users/chrisgrim/code/ei/routes/api.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/Admin/OrganizerController.php",
@@ -729,20 +757,14 @@
 		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-index.vue",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/CategoryController.php",
 		"/Users/chrisgrim/code/ei/resources/js/pages/events/components/show-more.vue",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/Create/EventController.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/Create/TitleController.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/Create/LocationController.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/Create/CategoryController.php",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/Create/ShowsController.php",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/Create/TicketsController.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/Create/DescriptionController.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/Create/AdvisoriesController.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/Create/ImageController.php",
-		"/Users/chrisgrim/code/ei/resources/js/pages/create/tickets.vue",
 		"/Users/chrisgrim/code/ei/app/Policies/EventPolicy.php",
-		"/Users/chrisgrim/code/ei/resources/js/pages/create/shows.vue",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/EventTitleController.php",
-		"/Users/chrisgrim/code/ei/resources/js/pages/create/title.vue",
 		"/Users/chrisgrim/code/ei/app/Http/Requests/LocationStoreRequest.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/AdvisoriesController.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/TicketsController.php",
@@ -753,32 +775,15 @@
 		"/Users/chrisgrim/code/ei/resources/js/pages/events/components/event-edit-item.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/intro.vue",
 		"/Users/chrisgrim/code/ei/resources/js/mixins/form-validation-mixin.js",
-		"/Users/chrisgrim/code/ei/resources/js/pages/create/review-event.vue",
-		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-show.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/events/event-edit.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/organizer-admin.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/datepicker.vue",
-		"/Users/chrisgrim/code/ei/resources/js/pages/create/nav.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/nav-bottom-bar.vue",
-		"/Users/chrisgrim/code/ei/resources/js/pages/create/location-google.vue",
-		"/Users/chrisgrim/code/ei/resources/js/pages/create/image.vue",
-		"/Users/chrisgrim/code/ei/resources/js/pages/create/description.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/datepicker_old.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/checklist_old.vue",
-		"/Users/chrisgrim/code/ei/resources/js/pages/create/category.vue",
-		"/Users/chrisgrim/code/ei/resources/js/pages/create/advisories.vue",
 		"/Users/chrisgrim/code/ei/app/Organizer.php",
 		"/Users/chrisgrim/code/ei/resources/js/components/pagination.vue",
-		"/Users/chrisgrim/code/ei/resources/sass/components/grid.scss",
-		"/Users/chrisgrim/code/ei/resources/views/events/edit.blade.php",
-		"/Users/chrisgrim/code/ei/resources/js/pages/create/organizer.vue",
-		"/Users/chrisgrim/code/ei/resources/views/emails/organizer-reminder.blade.php",
-		"/Users/chrisgrim/code/ei/resources/views/emails/event-reminder.blade.php",
-		"/Users/chrisgrim/code/ei/resources/js/pages/layouts/nav.vue",
-		"/Users/chrisgrim/code/ei/resources/js/pages/create/organizer-nav.vue",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/Search/EventController.php",
-		"/Users/chrisgrim/code/ei/resources/js/mixins/test.mixin.js",
-		"/Users/chrisgrim/code/ei/resources/js/pages/layouts/nav-search.vue"
+		"/Users/chrisgrim/code/ei/resources/sass/components/grid.scss"
 	],
 	"find":
 	{
@@ -789,6 +794,9 @@
 		"height": 164.0,
 		"where_history":
 		[
+			"/Users/chrisgrim/code/ei/resources/sass",
+			"/Users/chrisgrim/code/ei/resources/js/pages",
+			"/Users/chrisgrim/code/ei/resources",
 			"/Users/chrisgrim/code/ei",
 			"/Users/chrisgrim/code/ei/resources",
 			"/Users/chrisgrim/code/ei",
@@ -913,9 +921,6 @@
 			"/Users/chrisgrim/code/ei/resources/sass",
 			"/Users/chrisgrim/code/ei/resources/js",
 			"/Users/chrisgrim/code/ei/resources/views",
-			"/Users/chrisgrim/code/ei/resources/js",
-			"/Users/chrisgrim/code/ei/app",
-			"/Users/chrisgrim/code/ei",
 			"/Users/chrisgrim/code/ei/resources/js"
 		]
 	},
@@ -924,6 +929,44 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			".option__title--interaction",
+			"option__title--interaction",
+			"show",
+			"Show",
+			"show",
+			"onDateCHange",
+			"onDateChange",
+			"onDateCange",
+			"placeholdero",
+			"dochange",
+			"showReady",
+			"Change",
+			"change",
+			"Limit",
+			"limit",
+			"week",
+			"};",
+			"limited__calender",
+			"field",
+			"weeklyOngoing",
+			"startDate",
+			";",
+			"};",
+			"vue",
+			"flatpickr",
+			"test1",
+			"eventsToBeEmitted",
+			"datearray",
+			"touch",
+			"this.$store.state",
+			"return this.$store.state.save",
+			"return this.$store.state.navurl",
+			"$store.state.save",
+			"save",
+			"data",
+			"</NavMenuItem>",
+			"navSubmit",
+			"ticket",
 			"eventcontroller@fetch",
 			"index/loadmore",
 			"admin/data",
@@ -1013,45 +1056,7 @@
 			"saveRank",
 			"saveInteractive",
 			"saveDescription",
-			"loadInteractiveLevels",
-			"required",
-			"asyncGenerateEventList",
-			"resurrect",
-			"loadMore",
-			"AdminAreaEventsController",
-			"eventList",
-			"asyncGenerateEventList",
-			"moreToLoad",
-			"admin/purgatory",
-			"purgatory",
-			"api/admin/search/purgatory",
-			"required",
-			"image_path",
-			"selectOnlinePage",
-			"onUpdate",
-			"onSubmit",
-			"response",
-			"updateReview",
-			"admin/search/events",
-			"loadEvents",
-			"addReview",
-			"deleteReview",
-			"loadReviews",
-			"response",
-			"saveRank",
-			"saveContentAdvisory",
-			"loadContentAdvisories",
-			"deleteContentAdvisory",
-			"submitNewContentAdvisory",
-			"genre",
-			"response",
-			"saveRank",
-			"saveContactLevel",
-			"deleteContactLevel",
-			"loadContactLevels",
-			"submitNewContactLevel",
-			"search",
-			"genre"
+			"loadInteractiveLevels"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -1078,15 +1083,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7961,
+						"buffer_size": 7577,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								5217,
-								5217
+								62,
+								62
 							]
 						],
 						"settings":
@@ -1097,7 +1102,7 @@
 							"syntax": "Packages/PHP/PHP.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 291.0,
+						"translation.y": 1966.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,

@@ -55,6 +55,8 @@
                                     :config="calendarConfig"
                                     ref="datePicker"                                              
                                     class="form-control"
+                                    @on-value-update="onDateChange" 
+                                    :events="eventsToBeEmitted"
                                     placeholder="Select date"   
                                     name="dates" />
                             </div>
@@ -62,7 +64,9 @@
                                 <flat-pickr
                                     v-model="dates"
                                     :config="calendarConfig"
-                                    ref="datePicker"                                              
+                                    ref="datePicker"
+                                    @on-value-update="onDateChange" 
+                                    :events="eventsToBeEmitted"                                           
                                     class="form-control"
                                     placeholder="Select date"        
                                     name="dates" />
@@ -143,7 +147,9 @@
                                     <flat-pickr
                                         v-model="embargoDate"
                                         :config="embargoCalendarConfig"
-                                        ref="datePicker"                                              
+                                        ref="datePicker"
+                                        @on-value-update="onDateChange" 
+                                        :events="eventsToBeEmitted"                                          
                                         class="form-control"
                                         placeholder="Select date"               
                                         name="dates" />
@@ -153,8 +159,178 @@
                     </section>
                 </div>
            
+                <!-- Limited Dates -->
+                <div v-show="showType.id == 2" class="limited-show-dates">
+                    <section class="event-enter-showdates">
+                        <div class="field limited__calender">
+                            <label> Select the first day your weekly shows begin</label>
+                            <div class="embargo-calendar">
+                                <flat-pickr
+                                    v-model="startDate"
+                                    :config="embargoCalendarConfig"
+                                    ref="datePicker"                                              
+                                    class="form-control"
+                                    @on-value-update="onDateChange" 
+                                    :events="eventsToBeEmitted"
+                                    placeholder="Select date"    
+                                    name="dates" />
+                            </div>
+                            <div v-if="$v.limit.$error" class="validation-error">
+                                <p class="error" v-if="!$v.limit.ifLimit">Please select a start and end date</p>
+                                <p class="error" v-if="!$v.limit.correctRange">The start date must be before the end date</p>
+                            </div>
+                        </div>
+                        <div class="field limited__calender">
+                            <label> Select the last day your weekly shows ends</label>
+                            <div class="embargo-calendar">
+                                <flat-pickr
+                                    v-model="endDate"
+                                    :config="embargoCalendarConfig"
+                                    ref="datePicker"                                              
+                                    class="form-control"
+                                    @on-value-update="onDateChange" 
+                                    :events="eventsToBeEmitted"
+                                    placeholder="Select date"    
+                                    name="dates" />
+                            </div>
+                            <div v-if="$v.limit.$error" class="validation-error">
+                                <p class="error" v-if="!$v.limit.ifLimit">Please select a start and end date</p>
+                                <p class="error" v-if="!$v.limit.correctRange">The start date must be before the end date</p>
+                            </div>
+                        </div>
+                        <div class="field ongoing-show-dates">
+                            <label> Select show days</label>
+                            <div class="week-calendar grid">
+                                <div
+                                    class="week-calendar__day" 
+                                    :class="{ active: week.mon }" 
+                                    @click="addWeekDay('mon')">
+                                    <h4>Mon</h4>
+                                </div>
+                                <div 
+                                    class="week-calendar__day"
+                                    :class="{ active: week.tue }" 
+                                    @click="addWeekDay('tue')">
+                                    <h4>Tue</h4>
+                                </div>
+                                <div 
+                                    class="week-calendar__day" 
+                                    :class="{ active: week.wed }" 
+                                    @click="addWeekDay('wed')">
+                                    <h4>Wed</h4>
+                                </div>
+                                <div 
+                                    class="week-calendar__day" 
+                                    :class="{ active: week.thu }" 
+                                    @click="addWeekDay('thu')">
+                                    <h4>Thu</h4>
+                                </div>
+                                <div 
+                                    class="week-calendar__day"
+                                    :class="{ active: week.fri }" 
+                                    @click="addWeekDay('fri')">
+                                    <h4>Fri</h4>
+                                </div>
+                                <div 
+                                    class="week-calendar__day"
+                                    :class="{ active: week.sat }"
+                                    @click="addWeekDay('sat')">
+                                    <h4>Sat</h4>
+                                </div>
+                                <div 
+                                    class="week-calendar__day"
+                                    :class="{ active: week.sun }"
+                                    @click="addWeekDay('sun')">
+                                    <h4>Sun</h4>
+                                </div>
+                            </div>
+                            <div v-if="$v.week.$error" class="validation-error">
+                                <p class="error" v-if="!$v.week.ifWeekly">Please select at least one day</p>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="ongoing-show-dates">
+                        <div class="field">
+                            <label> Show Timezone </label>
+                            <multiselect 
+                                v-model="timezone" 
+                                deselect-label="Can't remove this value" 
+                                track-by="name"
+                                :class="{ active: active == 'timezone','error': $v.timezone.$error }"
+                                @click="active = 'timezone'"
+                                @blur="active = null"
+                                label="description"
+                                @input="$v.timezone.$touch"
+                                placeholder="Select timezone" 
+                                :options="timezones" 
+                                :allow-empty="false">
+                                <template slot="singleLabel" slot-scope="{ option }">
+                                    <strong>{{ option.description }}</strong>
+                                </template>
+                            </multiselect>
+                            <div v-if="$v.timezone.$error" class="validation-error">
+                                <p class="error" v-if="!$v.timezone.ifOnDemand">Please include timezone of show</p>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="event-enter-showtimes ongoing-show-dates">
+                        <div class="field">
+                            <label> Show Times</label>
+                            <textarea 
+                                v-model="showTimes" 
+                                class="create-input area"
+                                :class="{ active: active == 'times','error': $v.showTimes.$error }"
+                                rows="8" 
+                                :placeholder="placeholdero" 
+                                required
+                                @click="active = 'times'"
+                                @blur="active = null"
+                                @input="$v.showTimes.$touch"
+                                autofocus />
+                            <div v-if="$v.showTimes.$error" class="validation-error">
+                                <p class="error" v-if="!$v.showTimes.required">Please give a brief description of show times</p>
+                                <p class="error" v-if="!$v.showTimes.maxLength">Show time is too long</p>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="field">
+                            <label> Does the event have a specific embargo date? <br> (i.e. The date you would like it to first appear on EI) </label>
+                            <div id="cover">
+                                <input 
+                                    @input="$v.showEmbargoDate.$touch" 
+                                    v-model="showEmbargoDate" 
+                                    type="checkbox" 
+                                    id="checkbox">
+                                <div id="bar" />
+                                <div id="knob">
+                                    <p v-if="showEmbargoDate">
+                                        Yes
+                                    </p>
+                                    <p v-else>
+                                        No
+                                    </p>
+                                </div>
+                            </div>
+                            <div v-if="showEmbargoDate">
+                                <div class="embargo-calendar">
+                                    <flat-pickr
+                                        v-model="embargoDate"
+                                        :config="embargoCalendarConfig"
+                                        ref="datePicker"
+                                        @on-value-update="onDateChange" 
+                                        :events="eventsToBeEmitted"                                        
+                                        class="form-control"
+                                        placeholder="Select date"               
+                                        name="dates" />
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
                 <!-- Open Ended (Weekly) Dates -->
-                <div v-show="showType.id == 2" class="ongoing-show-dates">
+                <div v-show="showType.id == 3" class="ongoing-show-dates">
                     <section class="event-enter-showdates">
                         <div class="field">
                             <label> Select show days</label>
@@ -214,7 +390,8 @@
                                     :config="embargoCalendarConfig"
                                     ref="datePicker"                                              
                                     class="form-control"
-                                    @change="$v.$touch"
+                                    @on-value-update="onDateChange" 
+                                    :events="eventsToBeEmitted"
                                     placeholder="Select date"    
                                     name="dates" />
                             </div>
@@ -290,6 +467,8 @@
                                         :config="embargoCalendarConfig"
                                         ref="datePicker"                                              
                                         class="form-control"
+                                        @on-value-update="onDateChange" 
+                                        :events="eventsToBeEmitted"
                                         placeholder="Select date"               
                                         name="dates" />
                                 </div>
@@ -299,7 +478,7 @@
                 </div>
                 
                 <div 
-                    v-show="showType.id == 3" 
+                    v-show="showType.id == 4" 
                     class="everyday-show-dates">
                     <section class="event-enter-showtimes">
                         <div class="field">
@@ -345,7 +524,9 @@
                                     <flat-pickr
                                         v-model="embargoDate"
                                         :config="embargoCalendarConfig"
-                                        ref="datePicker"                                              
+                                        ref="datePicker"
+                                        @on-value-update="onDateChange" 
+                                        :events="eventsToBeEmitted"                                             
                                         class="form-control"
                                         placeholder="Select date"               
                                         name="dates" />
@@ -409,7 +590,7 @@ export default {
         },
 
         navSubmit() {
-            return this.$store.state.save
+            return this.$store.state.navurl
         },
 
         published() {
@@ -418,24 +599,26 @@ export default {
 
         dateArray() {
             if(!Array.isArray(this.dates) && this.dates.includes(",")) {
+                this.ready = true;
                 return this.dates.split(",");
             } else {
                 if(!Array.isArray(this.dates)) {
+                    this.ready = true;
                     return [this.dates];
                 } else {
-                    ''
+                    return null;
                 }
             }
         },
 
         weeklyOngoing() {
-            if (this.week.mon == 0) {return true};
-            if (this.week.tue == 0) {return true};
-            if (this.week.wed == 0) {return true};
-            if (this.week.thu == 0) {return true};
-            if (this.week.fri == 0) {return true};
-            if (this.week.sat == 0) {return true};
-            if (this.week.sun == 0) {return true};
+            if (this.week.mon == 0) {return true}
+            if (this.week.tue == 0) {return true}
+            if (this.week.wed == 0) {return true}
+            if (this.week.thu == 0) {return true}
+            if (this.week.fri == 0) {return true}
+            if (this.week.sat == 0) {return true}
+            if (this.week.sun == 0) {return true}
             return false;
         },
 
@@ -443,12 +626,14 @@ export default {
             return {
                 'dates': Array.isArray(this.dates) ? this.dates : this.dateArray,
                 'showtimes': this.showTimes,
-                'shows': this.showType.id == '1' ? true : false,
                 'embargo_date' : this.showEmbargoDate ? this.embargoDate : null,
-                'week': this.week && this.showType.id == '3' ? _.mapValues(this.week, () => true) : this.week,
-                'onGoing' : this.showType.id == '2' && this.weeklyOngoing ? true : false,
-                'always': this.showType.id == '3' || !this.weeklyOngoing ? true : false,
+                'week':  this.showType.id == '2' && this.showType.id == '3' ? _.mapValues(this.week, () => true) : this.week,
+                'shows': this.showType.id == '1',
+                'limited' : this.showType.id == '2',
+                'onGoing' : this.showType.id == '3',
+                'always': this.showType.id == '4',
                 'start_date': this.startDate ? this.startDate : null,
+                'end_date': this.endDate ? this.endDate : null,
                 'timezone': this.timezone,
                 'resubmit': this.resubmit,
             }
@@ -462,6 +647,7 @@ export default {
             showType: [],
             dates: this.event.shows ? this.event.shows.map(a => a.date) : '',
             startDate: '',
+            endDate: '',
             embargoDate: this.event.embargo_date ? this.event.embargo_date : '',
             showEmbargoDate: this.event.embargo_date ? true : false,
             calendarConfig: this.initializeCalendarObject(),
@@ -475,19 +661,56 @@ export default {
             placeholdero: 'Please provide a brief description of weekly show times. For example:' + '\n' + '\n' + '10:00PM shows on Monday & Tuesday.' + '\n' + '12:00PM on Wednesday and Thursday.',
             placeholdera: 'Please provide a brief description of daily times. For example:' + '\n' + '\n' + 'Show begins everyday at 12PM.' + '\n' + 'Enjoy at any time.',
             showTypeOptions: [
-                {   id: 1,   name: 'Limited Run (Specific Dates)', description:'Select limited run if you have specific show dates.'}, 
-                {   id: 2, name: 'Open Ended (Weekly)', description:'Select open ended if your show has no end date in the next 6 months.'}, 
-                {   id: 3, name: 'On Demand (Any Time)', description:'Select on demand if your show is available at any time.'}],
+                {   id: 1, name: 'Select Dates (Specific Dates)', description:'Your show has specific performance dates.'},
+                {   id: 2, name: 'Limited Run (A range of dates, by day of week)', description:'Your show has an opening date and a closing date, and may have dark days each week.'}, 
+                {   id: 3, name: 'Open Ended (Weekly)', description:'Your show recurs regularly and has no end date in the next 6 months, and may have dark days each week.'}, 
+                {   id: 4, name: 'Ongoing', description:'Your show has no closing date and is available to do by audience members 24/7, with no dark dates. '}],
             exit: false,
             showStartDate: this.event.show_on_going ? true : false,
             timezone: this.event.timezone ? this.event.timezone : '',
             updated: false,
             resubmit: false,
-
+            ready: false,
+            eventsToBeEmitted : ['onReady', 'onChange','onValueUpdate']
         }
     },
 
     methods: {
+
+        onLoad() {
+            axios.get(this.onFetch('shows'))
+            .then(res => {
+                res.data.dates ? this.dates = res.data.dates : '';
+                res.data.week ? this.week = res.data.week : '';
+                res.data.showTimes ? this.showTimes = res.data.showTimes : '';
+                if (this.event.showtype == 'l') {
+                    this.endDate = res.data.dates[0]
+                    this.startDate = res.data.dates[res.data.dates.length - 1]
+                }
+                if (this.event.showtype == 'o') {
+                    this.startDate = res.data.dates[res.data.dates.length - 1]
+                }
+            });
+            if (this.event.showtype == 's') { return this.showType = this.showTypeOptions[0]}
+            if (this.event.showtype == 'l') { return this.showType = this.showTypeOptions[1]}
+            if (this.event.showtype == 'o') { return this.showType = this.showTypeOptions[2]}
+            if (this.event.showtype == 'a') { return this.showType = this.showTypeOptions[3]}
+        },
+
+        onSubmit(value) {
+            if (this.checkVuelidate()) { return false }
+            axios.post(this.endpoint, this.submitObject)
+            .then(res => {  
+                value == 'save' ? this.save() : this.onForward(value);
+            })
+            .catch(err => { this.onErrors(err) });
+        },
+
+        onDateChange() {
+            if (this.ready) {
+                 this.$v.week.$touch();
+            }
+        },
 
         initializeCalendarObject() {
             return {
@@ -536,27 +759,6 @@ export default {
             this.week[day] = !this.week[day];
         },
 
-        onLoad() {
-            axios.get(this.onFetch('shows'))
-            .then(res => {
-                res.data.dates ? this.dates = res.data.dates : '';
-                res.data.week ? this.week = res.data.week : '';
-                res.data.showTimes ? this.showTimes = res.data.showTimes : '';
-            });
-            if (this.event.showtype == 'a') { return this.showType = this.showTypeOptions[2]};
-            if (this.event.showtype == 'o') { return this.showType = this.showTypeOptions[1]};
-            if (this.event.showtype == 's') { return this.showType = this.showTypeOptions[0]};
-        },
-
-        onSubmit(value) {
-            if (this.checkVuelidate()) { return false };
-            axios.post(this.endpoint, this.submitObject)
-            .then(res => {  
-                value == 'save' ? this.save() : this.onForward(value);
-            })
-            .catch(err => { this.onErrors(err) });
-        },
-
         checkStatus() {
             if ((this.event.status == 'p' || this.event.status == 'e') && this.resubmit == false) {
                 this.modal = true;
@@ -573,11 +775,7 @@ export default {
 
     watch: {
         navSubmit() {
-            if (this.event.status < 4 && this.$v.$invalid) {
-                this.onBack(this.navSubmit);
-            } else {
-                this.onSubmit(this.navSubmit);
-            }
+            return !this.$v.$anyDirty ? this.onBack(this.navSubmit) : this.onSubmit(this.navSubmit);
         },
 
     },
@@ -600,14 +798,22 @@ export default {
                 return this.showType.id == '1' ? this.dates.length ? true : false : true
             },
         },
+        limit: {
+            ifLimit() {
+                return this.showType.id == '2' ? this.startDate && this.endDate  ? true : false : true
+            },
+            correctRange() {
+                return this.showType.id == '2' ? this.startDate < this.endDate  ? true : false : true
+            }
+        },
         week: {
             ifWeekly() {
-                return this.showType.id == '2' ? this.week.mon == 1 || this.week.tue == 1 || this.week.wed == 1 || this.week.thu == 1 || this.week.fri == 1 || this.week.sat == 1 || this.week.sun == 1  ? true : false : true
+                return this.showType.id == '2' || this.showType.id == '3' ? this.week.mon == 1 || this.week.tue == 1 || this.week.wed == 1 || this.week.thu == 1 || this.week.fri == 1 || this.week.sat == 1 || this.week.sun == 1  ? true : false : true
             }
         },
         timezone: {
             ifOnDemand() {
-                return this.showType.id == '3' ? true : (this.timezone ? true : false)
+                return this.showType.id == '4' ? true : (this.timezone ? true : false)
             }
         },
         showEmbargoDate: {

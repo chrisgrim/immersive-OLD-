@@ -125,7 +125,7 @@
             },
 
             navSubmit() {
-                return this.$store.state.save
+                return this.$store.state.navurl
             },
             readySubmit() {
                 return this.readyToSubmit && this.imageAdded ? false : true;

@@ -277,7 +277,7 @@ export default {
         },
 
         navSubmit() {
-            return this.$store.state.save
+            return this.$store.state.navurl
         },
 
         submitObject() {
@@ -505,11 +505,7 @@ export default {
 
     watch: {
         navSubmit() {
-            if (this.event.status < 5 && this.$v.$invalid) {
-                this.onBack(this.navSubmit);
-            } else {
-                this.onSubmit(this.navSubmit);
-            }
+            return !this.$v.$anyDirty ? this.onBack(this.navSubmit) : this.onSubmit(this.navSubmit);
         },
 
         tickets() {

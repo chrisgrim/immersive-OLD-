@@ -99,7 +99,7 @@
             },
 
             navSubmit() {
-                return this.$store.state.save
+                return this.$store.state.navurl
             },
         },
 
@@ -152,11 +152,7 @@
 
         watch: {
             navSubmit() {
-                if (this.event.status < 3 && !this.$v.$anyDirty) {
-                    this.onBack(this.navSubmit);
-                } else {
-                    this.onSubmit(this.navSubmit);
-                }
+                return !this.$v.$anyDirty ? this.onBack(this.navSubmit) : this.onSubmit(this.navSubmit);
             }
         },
 

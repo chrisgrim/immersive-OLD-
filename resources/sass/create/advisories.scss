@@ -1,6 +1,6 @@
-/*------------------------------------*\
+/* ------------------------------------*\
   #Create Section- Advisories Page
-\*------------------------------------*/
+\*------------------------------------ */
 
 
 .event-create__advisories {
@@ -12,23 +12,22 @@
 
 .option__title--interaction {
     font-size: 2rem;
-    margin-bottom: .5rem;
+    margin-bottom: 0.5rem;
+    line-height: 2.5rem;
 }
 
 .option__small-interaction {
-    font-size: 1.3rem
+    font-size: 1.3rem;
 }
 
-@media (max-width: 1050px) { 
+@media (max-width: 1050px) {
     .event-create__advisories {
         grid-template-columns: 1fr;
     }
 }
 
-@media (max-width: 768px) { 
+@media (max-width: 768px) {
     .event-create__advisories {
         padding: 5rem 2rem 14rem 2rem;
     }
 }
-
-

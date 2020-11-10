@@ -134,6 +134,26 @@ section .event-title {
     overflow: hidden;
 }
 
+.event-show__staffpicks__user {
+    float: right;
+    margin-top: 2rem;
+}
+
+.event-show__staffpicks__user .name {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.event-show__staffpicks__user .name p{
+    line-height: 4rem;
+}
+
+.event-show__staffpicks__user img {
+    display: inline-block;
+    width: 4rem;
+    border-radius: 50%;
+}
+
 .event-show__tickets {
     width:100%;
     position: relative;

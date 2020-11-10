@@ -1,5 +1,5 @@
 <template>
-	<div class="event-create__advisories grid">
+    <div class="event-create__advisories grid">
         <section class="event-create">
             <div class="title">
                 <h2>Physical Contact Advisories</h2>
@@ -247,7 +247,7 @@
             },
 
             navSubmit() {
-                return this.$store.state.save
+                return this.$store.state.navurl
             },
 
             submitObject() {
@@ -375,9 +375,9 @@
             age: {
                 required
             },
-        	contactAdvisories: {
-        		required
-        	},
+            contactAdvisories: {
+                required
+            },
             mobilityAdvisories: {
                 required
             },

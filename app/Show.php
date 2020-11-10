@@ -87,7 +87,8 @@ class Show extends Model
                 ],
                 [
                     'description' => $ticket['description'],
-                    'ticket_price' => str_replace('$', '', $ticket['ticket_price']),
+                    'currency' => $ticket['currency'],
+                    'ticket_price' => $ticket['ticket_price'],
                     'type' => $ticket['type']
                 ]);
             }
@@ -132,7 +133,8 @@ class Show extends Model
                     ],
                     [
                         'description' => $ticket['description'],
-                        'ticket_price' => str_replace('$', '', $ticket['ticket_price']),
+                        'currency' => $ticket['currency'],
+                        'ticket_price' => $ticket['ticket_price'],
                         'type' => $ticket['type']
                     ]);
                 }
@@ -149,12 +151,19 @@ class Show extends Model
     {
         //  get the last date based on show type
         if ($request->shows) {
+            $type = 's';
+            $lastDate = $event->shows()->orderBy('date', 'DESC')->first()->date;
+        }
+        if ($request->limited) {
+            $type = 'l';
             $lastDate = $event->shows()->orderBy('date', 'DESC')->first()->date;
         }
         if ($request->onGoing) {
+            $type = 'o';
             $lastDate = $event->shows()->orderBy('date', 'DESC')->first()->date;
         }
         if ($request->always) {
+            $type = 'a';
             $lastDate = Carbon::now()->addMonths(6)->format('Y-m-d H:i:s');
         }
 
@@ -162,7 +171,7 @@ class Show extends Model
             'show_times' => $request->showtimes,
             'embargo_date' => $request->embargo_date,
             'closingDate' => $lastDate,
-            'showtype' => $request->shows ? 's' : ($request->onGoing ? 'o' : 'a'),
+            'showtype' => $type,
             'timezone_id' => $request->timezone ? $request->timezone['id'] : null,
         ]);
     }

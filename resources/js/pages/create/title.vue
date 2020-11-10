@@ -129,7 +129,7 @@
             },
 
             navSubmit() {
-                return this.$store.state.save
+                return this.$store.state.navurl
             },
 
         },

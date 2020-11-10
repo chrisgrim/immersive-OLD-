@@ -20,7 +20,7 @@ state: {
     map: false,
     mobile: true,
     searchtype: 'Immersive Online',
-    save: 'ttis',
+    navurl: null,
     presearch: [],
     bounds:'',
     filter: false,
@@ -50,8 +50,8 @@ mutations: {
     presearch (state, presearch) {
         state.presearch = presearch
     },
-    saveevent (state, save) {
-        state.save = save
+    onnavurl (state, navurl) {
+        state.navurl = navurl
     },
     onfilter (state, filter) {
         state.filter = filter

@@ -8,6 +8,9 @@ use App\Show;
 use App\Timezone;
 use App\ShowOnGoing;
 
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
+
 class ShowsController extends Controller
 {
     /**
@@ -47,9 +50,19 @@ class ShowsController extends Controller
                 'embargo_date' => $event->embargo_date,
             ));
         }
+        if($event->showtype == 'l') {
+            return response()->json(array(
+                'week' => $event->showOnGoing()->first(),
+                'dates' => $event->shows()->pluck('date'),
+                'tickets' => $event->shows()->with('tickets')->get(),
+                'showTimes' => $showTimes = $event->show_times,
+                'embargo_date' => $event->embargo_date,
+            ));
+        }
         if($event->showtype == 'o') {
             return response()->json(array(
                 'week' => $event->showOnGoing()->first(),
+                'dates' => $event->shows()->pluck('date'),
                 'tickets' => $event->shows()->with('tickets')->get(),
                 'showTimes' => $showTimes = $event->show_times,
                 'embargo_date' => $event->embargo_date,
@@ -73,12 +86,20 @@ class ShowsController extends Controller
      */
     public function update(Request $request, Event $event)
     {
-        if($request->onGoing) {
-            ShowOnGoing::saveNewShowOnGoing($request, $event, $request->start_date);
+
+        if ($request->shows)  Show::saveNewShows($request, $event);
+
+        if ($request->limited) {
+            ShowOnGoing::saveNewShowOnGoing($request, $event);
             Show::saveNewShows($request, $event);
         }
+
+        if($request->onGoing) {
+            ShowOnGoing::saveNewShowOnGoing($request, $event);
+            Show::saveNewShows($request, $event);
+        }
+
         if ($request->always) Show::saveAlwaysShow($request, $event);
-        if ($request->shows)  Show::saveNewShows($request, $event);
 
         Show::updateEvent($request, $event);
         $event->updateEventStatus(4, $request);

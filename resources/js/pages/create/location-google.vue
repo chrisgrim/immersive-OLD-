@@ -206,7 +206,7 @@
                 return `https://maps.googleapis.com/maps/api/geocode/json?address=${this.location.postal_code ? this.location.postal_code : this.location.city}&key=AIzaSyBxpUKfSJMC4_3xwLU73AmH-jszjexoriw`
             },
             navSubmit() {
-                return this.$store.state.save
+                return this.$store.state.navurl
             },
         },
         data() {

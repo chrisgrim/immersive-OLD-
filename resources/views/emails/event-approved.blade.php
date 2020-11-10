@@ -9,7 +9,12 @@
                 <h2 style="font-family: 'Secular One', sans-serif;font-size: 3rem;">EI.</h2>
             </div>
             <div style="text-align: center;margin-bottom: 1.4rem;">
-                <span style="font-family: 'Sen', sans-serif;color: #6d6d6d;"><p>Your event {{$name}} on Everything Immersive has been approved!</p></span>
+                <span style="font-family: 'Sen', sans-serif;color: #6d6d6d;">
+                    <p>Your event {{$name}} on Everything Immersive has been approved!</p>
+                </span>
+                <span style="font-family: 'Sen', sans-serif;color: #6d6d6d;">
+                    <p>Change your dates, ticket prices, and almost all event information whenever you like without having to resubmit. Use "Your Events" link in the navigation to see a list of all of your events.
+                </span>
             </div>
         </div>
         <div style="
