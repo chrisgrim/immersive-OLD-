@@ -64,7 +64,7 @@ class OrganizerController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Load the show page with the organizer
      *
      * @param  \App\Organizer  $organizer
      * @return \Illuminate\Http\Response
@@ -72,10 +72,18 @@ class OrganizerController extends Controller
     public function show(Organizer $organizer)
     {
         if($organizer->status !== 'p') { return redirect('/');}
-        $organizer->load(['events' => function ($query) {
-            $query->where('status', 'p');
-        }]);
         return view('organizers.show', compact('organizer'));
+    }
+
+    /**
+     * Fetches the organizers events for the show page
+     *
+     * @param  \App\Organizer  $organizer
+     * @return \Illuminate\Http\Response
+     */
+    public function fetchEvents(Organizer $organizer, Request $request) 
+    {
+        return Event::where('status', 'p')->where('organizer_id', $organizer->id)->orderByRaw('closingDate >= NOW() desc')->paginate(9);
     }
 
     /**

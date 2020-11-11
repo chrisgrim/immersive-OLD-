@@ -1,52 +1,72 @@
 <template>
     <div class="organizer-show-contact">
-        <div v-if="canMessage " class="contact">
-            <button class="default-border" @click="isModalVisible=true">
+        <div 
+            v-if="canMessage " 
+            class="contact">
+            <button 
+                class="default-border" 
+                @click="isModalVisible=true">
                 Contact
             </button>
         </div>
-        <div v-if="verify " class="contact">
-            <button class="default-border" @click="onSubmit('verify')">
+        <div 
+            v-if="verify " 
+            class="contact">
+            <button 
+                class="default-border" 
+                @click="onSubmit('verify')">
                 Contact
             </button>
         </div>
-        <div v-if="!user" class="contact">
-            <button class="default-border" @click="onSubmit('guest')">
+        <div 
+            v-if="!user" 
+            class="contact">
+            <button 
+                class="default-border" 
+                @click="onSubmit('guest')">
                 Contact
             </button>
         </div>
-        <login-pop v-if="isLoginVisible" :visible="isLoginVisible" @close="isLoginVisible=false"></login-pop>
-        <modal v-if="isModalVisible" @close="isModalVisible=false">
-            <div slot="header">
-            </div>
+        <login-pop 
+            v-if="isLoginVisible" 
+            :visible="isLoginVisible" 
+            @close="isLoginVisible=false" />
+        <modal 
+            v-if="isModalVisible" 
+            @close="isModalVisible=false">
+            <div slot="header" />
             <div slot="body"> 
-                <h3>Ask {{organizer.name}}</h3>
+                <h3>Ask {{ organizer.name }}</h3>
                 <p>Send a question to the organizer or about an event.</p>
                 <div class="field">
                     <textarea
-                    v-model="message" 
-                    rows="8"
-                    class="message"
-                    :class="{ 'error': $v.message.$error }"
-                    @input="$v.message.$touch()"
-                    type="text">
-                    </textarea>
+                        v-model="message" 
+                        rows="8"
+                        class="message"
+                        :class="{ 'error': $v.message.$error }"
+                        @input="$v.message.$touch()"
+                        type="text" />
                 </div>
                 <div v-if="$v.message.$error" class="validation-error">
                     <p class="error" v-if="!$v.message.required">Please include a message</p>
                     <p class="error" v-if="!$v.message.maxLength">The message is too long.</p>
-                </div>
+                </div>
             </div>
             <div slot="footer">
-                <button :class="{bspin : disabled}" :disabled="disabled" class="btn sub" @click="onSend()">Submit</button>
+                <button 
+                    :class="{bspin : disabled}" 
+                    :disabled="disabled" 
+                    class="btn sub" 
+                    @click="onSend()">
+                    Submit
+                </button>
             </div>
         </modal>
         <vue-email-verify
-        v-if="isVerifyVisible"
-        @close="isVerifyVisible = false"
-        :user="user" 
-        message="verify">
-        </vue-email-verify>
+            v-if="isVerifyVisible"
+            @close="isVerifyVisible = false"
+            :user="user" 
+            message="verify" />
     </div>
 </template>
 <script>

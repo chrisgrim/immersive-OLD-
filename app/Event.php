@@ -8,6 +8,7 @@ use ScoutElastic\Searchable;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Scopes\PublishedScope;
@@ -47,7 +48,7 @@ class Event extends Model implements Auditable
     *
     * @var array
     */
-    protected $appends = ['isFavorited'];
+    protected $appends = ['isFavorited', 'isShowing'];
 
         /**
      * The "booted" method of the model.
@@ -142,6 +143,16 @@ class Event extends Model implements Auditable
     */
     public function getIsPickedAttribute() {
         return $this->status == 'p';
+    }
+
+    /**
+    * Determines if the show is still available
+    *
+    * @return boolean
+    */
+    public function getIsShowingAttribute()
+    {
+        return $this->closingDate >= Carbon::now();
     }
     
     /**

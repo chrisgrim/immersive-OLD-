@@ -7,6 +7,7 @@
                 v-for="(event) in events"
                 :key="event.id"
                 class="eventlist__element" 
+                :class="{'is-past': isShowing(event)}"
                 :style="`width:${width}`">
                 <div 
                     :class="{ 'dis': isDisabled, black : color=='black' }" 
@@ -56,7 +57,7 @@
                             </div>
                             <div class="card-price">
                                 <h4 :class="{ black : color=='black' }">
-                                    {{ event.price_range }}
+                                    {{ event.price_range }} <span v-if="isShowing(event)"> (Event passed) </span>
                                 </h4>
                             </div>
                         </div>
@@ -73,11 +74,14 @@
 
 <script>
     export default {
-        props:['events', 'loadurl', 'color', 'favorite'],
+        props:['events', 'loadurl', 'color', 'favorite', 'past'],
 
         computed: {
             url() {
                 return event => this.loadurl == 'admin' ? `/admin/events/${event.slug}/finalize` : `/events/${event.slug}`
+            },
+            isShowing(event) {
+                return event => this.past && !event.isShowing
             }
         },
 

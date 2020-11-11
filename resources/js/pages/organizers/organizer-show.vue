@@ -87,11 +87,17 @@
                     class="organizer-show-info__description">
                     <p>{{ organizer.description }}</p>
                 </div>
-                <template v-if="loadorganizer.events && loadorganizer.events.length">
+                <template v-if="events">
                     <div class="organizer-show__events">
                         <h2>Events by {{ organizer.name }}</h2>
-                        <vue-event-index :events="loadorganizer.events" />
+                        <vue-event-index 
+                            :events="events.data"
+                            past="true" />
                     </div>
+                    <pagination 
+                        :limit="1"
+                        :list="events"
+                        @selectpage="onLoad" />
                 </template>
             </div>
         </section>
@@ -103,12 +109,13 @@
 </template>
 <script>
     import ContactOrganizer from '../organizers/contact-organizer.vue'
+    import Pagination  from '../../components/pagination.vue'
 
     export default {
 
         props: ['loadorganizer', 'user'],
 
-        components: { ContactOrganizer },
+        components: { ContactOrganizer, Pagination },
 
         computed: {
             hasLogo() {
@@ -120,13 +127,7 @@
             return {
                 organizer:this.loadorganizer,
                 titleFontSize: '',
-                location: {},
-                height:0,
-                finalImage: '',
-                nameActive: false,
-                content: '',
-                options: {
-                },
+                events: [],
             }
         },
 
@@ -140,10 +141,19 @@
                 }
                 return this.titleFontSize = `font-size:7rem;line-height:9rem`
             },
+
+            async onLoad(page) {
+                try {
+                    let {data} = await axios.get(`/organizer/${this.loadorganizer.slug}/events?page=${page}` )
+                    this.events = data
+                } 
+                catch(err) { err => {err.data}}
+            },
         },
 
         mounted() {
             this.getTitleFontSize();
+            this.onLoad();
         },
     };
 </script>

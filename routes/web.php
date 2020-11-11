@@ -78,8 +78,9 @@ Route::POST('/admin/data', 'SearchDataController@create');
 
 
 //Organizer 
-Route::POST('/organizer/{organizer}/patch', 'OrganizerController@update');
 Route::RESOURCE('organizer', 'OrganizerController');
+Route::GET('/organizer/{organizer}/events', 'OrganizerController@fetchEvents');
+Route::POST('/organizer/{organizer}/patch', 'OrganizerController@update');
 Route::POST('message/organizer/{organizer}/{user}', 'OrganizerController@message');
 Route::POST('change/organizer/{organizer}/', 'AdminOrganizerController@edit');
 

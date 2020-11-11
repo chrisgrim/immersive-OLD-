@@ -119,6 +119,18 @@ img.card-image__img {
     transition: transform 0.1s, filter 0.1s;
 }
 
+.is-past img.card-image__img {
+    opacity: 0.5;
+}
+
+.is-past .card-content h3 {
+    opacity: 0.5;
+}
+
+.is-past .card-content h4 {
+    opacity: 0.5;
+}
+
 img.card-image__img.index {
     height: 30rem;
 }
