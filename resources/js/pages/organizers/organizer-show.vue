@@ -1,83 +1,119 @@
 <template>
     <div>
-        <section class="organizer-show grid">
-            <div class="organizer-show__image" style="height:100%">
-                <div class="organizer-show__image--media">
-                    <div v-if="organizer.thumbImagePath">
-                        <picture>
-                            <source type="image/webp" :srcset="`/storage/${organizer.thumbImagePath}`"> 
-                            <img :src="`/storage/${organizer.thumbImagePath.slice(0, -4)}jpg`" :alt="`${organizer.name} organizer`">
-                        </picture>
+        <section class="organizer-show">
+            <template v-if="hasLogo">
+                <div class="organizer-show__image">
+                    <div class="organizer-show__image--media">
+                        <div v-if="hasLogo">
+                            <picture>
+                                <source 
+                                    type="image/webp" 
+                                    :srcset="`/storage/${organizer.thumbImagePath}`"> 
+                                <img 
+                                    :src="`/storage/${organizer.thumbImagePath.slice(0, -4)}jpg`" 
+                                    :alt="`${organizer.name} organizer`">
+                            </picture>
+                        </div>
+                        <div v-else />
                     </div>
-                    <div v-else></div>
                 </div>
-            </div>
-
-            <div class="organizer-show__info">
+            </template>
+            <div 
+                class="organizer-show__info"
+                :class="{'has-logo' : hasLogo}">
                 <div class="organizer-show__info--name">
-                    <h2 :style="titleFontSize">{{organizer.name}}</h2>
+                    <div :class="{'has-logo' : hasLogo}">
+                        <h2 :style="titleFontSize">
+                            {{ organizer.name }}
+                        </h2>
+                    </div>
                 </div>
-                <div class="organizer-show__info--contact grid">
-                    <a rel="noreferrer noopener" target="_blank" :href="`https://www.twitter.com/${organizer.twitterHandle}`" v-if="organizer.twitterHandle">
+                <div class="organizer-show__info--contact">
+                    <a 
+                        rel="noreferrer noopener" 
+                        target="_blank" 
+                        :href="`https://www.twitter.com/${organizer.twitterHandle}`" 
+                        v-if="organizer.twitterHandle">
                         <div class="">
-                            <img class="organizer-info-contact__image" src="/storage/website-files/twitter.png" alt="">
-                            <span class="organizer-info-contact__type">{{organizer.twitterHandle}}</span>
+                            <img 
+                                class="organizer-info-contact__image" 
+                                src="/storage/website-files/twitter.png" 
+                                alt="">
+                            <span class="organizer-info-contact__type">{{ organizer.twitterHandle }}</span>
                         </div>
                     </a>
-                    <a rel="noreferrer noopener" target="_blank" :href="`https://www.facebook.com/${organizer.facebookHandle}`" v-if="organizer.facebookHandle">
-                        <div class="" >
-                            <img class="organizer-info-contact__image" src="/storage/website-files/facebook.png" alt="">
-                            <span class="organizer-info-contact__type">{{organizer.facebookHandle}}</span>
+                    <a 
+                        rel="noreferrer noopener" 
+                        target="_blank" 
+                        :href="`https://www.facebook.com/${organizer.facebookHandle}`" 
+                        v-if="organizer.facebookHandle">
+                        <div class="">
+                            <img 
+                                class="organizer-info-contact__image" 
+                                src="/storage/website-files/facebook.png" 
+                                alt="">
+                            <span class="organizer-info-contact__type">{{ organizer.facebookHandle }}</span>
                         </div>
                     </a>
-                    <a rel="noreferrer noopener" target="_blank" :href="`https://www.instagram.com/${organizer.instagramHandle}`" v-if="organizer.instagramHandle">
+                    <a 
+                        rel="noreferrer noopener" 
+                        target="_blank" 
+                        :href="`https://www.instagram.com/${organizer.instagramHandle}`" 
+                        v-if="organizer.instagramHandle">
                         <div class="">
-                            <img class="organizer-info-contact__image" src="/storage/website-files/insta.png" alt="">
-                            <span class="organizer-info-contact__type">{{organizer.instagramHandle}}</span>
+                            <img 
+                                class="organizer-info-contact__image" 
+                                src="/storage/website-files/insta.png" 
+                                alt="">
+                            <span class="organizer-info-contact__type">{{ organizer.instagramHandle }}</span>
                         </div>
                     </a>
-                    <a rel="noreferrer noopener" target="_blank" :href="`${organizer.website}`" v-if="organizer.website">
+                    <a 
+                        rel="noreferrer noopener" 
+                        target="_blank" 
+                        :href="`${organizer.website}`" 
+                        v-if="organizer.website">
                         <div class="">
-                            <img class="organizer-info-contact__image" src="/storage/website-files/orgwebsite.png" alt="">
-                            <span class="organizer-info-contact__type">{{organizer.name}}</span>
+                            <img 
+                                class="organizer-info-contact__image" 
+                                src="/storage/website-files/orgwebsite.png" 
+                                alt="">
+                            <span class="organizer-info-contact__type">{{ organizer.name }}</span>
                         </div>
                     </a>
                 </div>
-                <div style="white-space: pre-line;" class="organizer-show-info__description">
-                    <p>{{organizer.description}}</p>
+                <div 
+                    style="white-space: pre-line;" 
+                    class="organizer-show-info__description">
+                    <p>{{ organizer.description }}</p>
                 </div>
+                <template v-if="loadorganizer.events && loadorganizer.events.length">
+                    <div class="organizer-show__events">
+                        <h2>Events by {{ organizer.name }}</h2>
+                        <vue-event-index :events="loadorganizer.events" />
+                    </div>
+                </template>
             </div>
         </section>
 
-         <!-- <ContactOrganizer :user="user" :loadorganizer="organizer"></ContactOrganizer> -->
+        <!-- <ContactOrganizer :user="user" :loadorganizer="organizer"></ContactOrganizer> -->
 
-        <section class="padded organizer-show__events" v-if="loadorganizer.events && loadorganizer.events.length">
-            <h2>Events by {{organizer.name}}</h2>
-            <vue-event-index :events="loadorganizer.events"></vue-event-index>
-        </section>
-        <div class="organizer-show__background">
-        </div>
+        <div class="organizer-show__background" />
     </div>
 </template>
 <script>
-    import _ from 'lodash';
-    import ImageUpload from '../layouts/image-upload.vue'
     import ContactOrganizer from '../organizers/contact-organizer.vue'
-    import Multiselect from 'vue-multiselect';
-    import { required } from 'vuelidate/lib/validators'
-
-
-
 
     export default {
 
         props: ['loadorganizer', 'user'],
 
-        components: {
-            Multiselect, ImageUpload, ContactOrganizer
-        },
+        components: { ContactOrganizer },
 
         computed: {
+            hasLogo() {
+                return this.loadorganizer.largeImagePath
+            }
         },
 
         data() {
@@ -109,11 +145,5 @@
         mounted() {
             this.getTitleFontSize();
         },
-
-
-        validations: {
-        },
-
-
     };
 </script>

@@ -3,7 +3,7 @@
         <nav 
             v-if="!mobileDevice" 
             class="nav" 
-            :class="{ 'fixed' : isFixed, 'absolute' : isAbsolute }">
+            :class="{ 'fixed' : isFixed, 'absolute' : isAbsolute, 'darkmenu' : blackText }">
             <div class="nav-menu grid">
                 <div class="nav-logo">
                     <a href="/">
@@ -387,10 +387,13 @@
                 return this.navtype == 'searchpage'
             },
             isAbsolute() {
-                return this.navtype == 'homepage'
+                return this.navtype == 'homepage' || this.navtype == 'org'
+            },
+            blackText() {
+                return this.navtype == 'org'
             },
             logoColor() {
-                return this.navtype == 'homepage' || this.navtype == 'searchpage' ? 'white' : '#404040'
+                return this.navtype == 'homepage' || this.navtype == 'org' || this.navtype == 'searchpage' ? 'white' : '#404040'
             }
         },
 

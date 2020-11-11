@@ -51,10 +51,10 @@
 
 @section('nav')
     @auth
-        <vue-nav navtype="org" :user= "{{auth()->user()}}"></vue-nav>
+        <vue-nav navtype="org" :user="{{auth()->user()}}" />
     @endauth
     @guest
-        <vue-nav navtype="org"></vue-nav>
+        <vue-nav navtype="org" />
     @endguest
 @endsection
 
