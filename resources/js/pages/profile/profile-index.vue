@@ -1,66 +1,82 @@
 <template>
     <div class="user-profile grid">
         <section class="user-profile-image">
-
             <!-- Non Editable User Image --> 
             <div v-if="!canEditPage">
                 <div v-if="avatar">
                     <picture>
-                        <source type="image/webp" :srcset="`/storage/${avatar}`"> 
-                        <img class="user-profile-image" :src="`/storage/${avatar.slice(0, -4)}jpg`" :alt="`${loaduser.name}`">
+                        <source 
+                            type="image/webp" 
+                            :srcset="`/storage/${avatar}`"> 
+                        <img 
+                            class="user-profile-image" 
+                            :src="`/storage/${avatar.slice(0, -4)}jpg`" 
+                            :alt="`${loaduser.name}`">
                     </picture>
                 </div>
                 <div v-else-if="user.gravatar">
                     <picture>
-                        <img class="user-profile-image" :src="user.gravatar" :alt="`${loaduser.name}`">
+                        <img 
+                            class="user-profile-image" 
+                            :src="user.gravatar" 
+                            :alt="`${loaduser.name}`">
                     </picture>
                 </div>
-                <div v-else class="user-profile-noimage__text" :style="`background:${user.hexColor}`">
-                    <h2>{{loaduser.name.charAt(0)}}</h2>
+                <div 
+                    v-else 
+                    class="user-profile-noimage__text" 
+                    :style="`background:${user.hexColor}`">
+                    <h2>{{ loaduser.name.charAt(0) }}</h2>
                 </div>
             </div>
             
-             <!-- Editable User Image --> 
-            <div v-else class="user-profile-image">  
+            <!-- Editable User Image --> 
+            <div 
+                v-else 
+                class="user-profile-image">  
                 <label 
-                v-if="avatar"
-                class="user-profile-image__wrapper"
-                :class="{ imageloaded: avatar, imageloading: uploading }"
-                :style="`background:url('/storage/${avatar}')`">
-                <image-upload @loaded="onImageUpload"></image-upload>
-                <CubeSpinner :loading="loading"></CubeSpinner>
-                <span class="user-profile-image__update-text">
-                    <p v-if="uploading">Loading</p>
-                    <p v-else="uploading">Update</p>
-                </span>
+                    v-if="avatar"
+                    class="user-profile-image__wrapper"
+                    :class="{ imageloaded: avatar, imageloading: uploading }"
+                    :style="`background:url('/storage/${avatar}')`">
+                    <image-upload @loaded="onImageUpload" />
+                    <CubeSpinner :loading="loading" />
+                    <span class="user-profile-image__update-text">
+                        <p v-if="uploading">Loading</p>
+                        <p v-else>Update</p>
+                    </span>
                 </label>
 
                 <label
-                v-else-if="user.gravatar"
-                class="user-profile-image__wrapper"
-                :class="{ imageloaded: avatar, imageloading: uploading }"
-                :style="`background:url('${user.gravatar}')center no-repeat;background-size: cover;`">
-                <image-upload @loaded="onImageUpload"></image-upload>
-                <CubeSpinner :loading="loading"></CubeSpinner>
-                <span class="user-profile-image__update-text">
-                    <p v-if="uploading">Loading</p>
-                    <p v-else="uploading">Update</p>
-                </span>
-
-                </label>
-                <div v-else class="user-profile-image">
-                    <div class="user-profile-noimage__text" :style="`background:${user.hexColor}`">
-                        <h2>{{loaduser.name.charAt(0)}}</h2>
-                    </div>
-                    <label 
-                    class="profile-wrapper"
-                    :class="{ imageloaded: avatar, imageloading: uploading }">
-                    <image-upload @loaded="onImageUpload"></image-upload>
-                    <CubeSpinner :loading="loading"></CubeSpinner>
+                    v-else-if="user.gravatar"
+                    class="user-profile-image__wrapper"
+                    :class="{ imageloaded: avatar, imageloading: uploading }"
+                    :style="`background:url('${user.gravatar}')center no-repeat;background-size: cover;`">
+                    <image-upload @loaded="onImageUpload" />
+                    <CubeSpinner :loading="loading" />
                     <span class="user-profile-image__update-text">
                         <p v-if="uploading">Loading</p>
-                        <p v-else="uploading">Update</p>
+                        <p v-else>Update</p>
                     </span>
+
+                </label>
+                <div 
+                    v-else 
+                    class="user-profile-image">
+                    <div 
+                        class="user-profile-noimage__text" 
+                        :style="`background:${user.hexColor}`">
+                        <h2>{{ loaduser.name.charAt(0) }}</h2>
+                    </div>
+                    <label 
+                        class="profile-wrapper"
+                        :class="{ imageloaded: avatar, imageloading: uploading }">
+                        <image-upload @loaded="onImageUpload" />
+                        <CubeSpinner :loading="loading" />
+                        <span class="user-profile-image__update-text">
+                            <p v-if="uploading">Loading</p>
+                            <p v-else>Update</p>
+                        </span>
                     </label>
                 </div>
 
@@ -74,21 +90,20 @@
             </div>
         </section>
 
-         <!-- User information Section --> 
+        <!-- User information Section --> 
         <section class="user-enter-profile">
             <div v-show="onEditUser">
                 <div class="field">
                     <div class="text">
                         <div class="field">
                             <label>User Name</label>
-                            <input 
-                            type="text" 
-                            v-model="user.name"
-                            :class="{ active: active == 'user','error': $v.user.name.$error }"
-                            @click="active = 'website'"
-                            @blur="active = null"
-                            @input="$v.user.name.$touch"
-                            />
+                            <input 
+                                type="text" 
+                                v-model="user.name"
+                                :class="{ active: active == 'user','error': $v.user.name.$error }"
+                                @click="active = 'website'"
+                                @blur="active = null"
+                                @input="$v.user.name.$touch">
                             <div v-if="$v.user.name.$error" class="validation-error">
                                 <p class="error" v-if="!$v.user.name.required">Must have a name</p>
                                 <p class="error" v-if="!$v.user.name.maxLength">Can't be more than 50 characters</p>
@@ -98,26 +113,24 @@
                         <div class="field">
                             <label> Location </label>
                             <input 
-                            ref="autocomplete" 
-                            :placeholder="locationPlaceholder ? locationPlaceholder : 'Choose your location'"
-                            :class="{ active: active == 'location'}"
-                            autocomplete="false"
-                            onfocus="value = ''" 
-                            @click="active = 'location'"
-                            @blur="active = null"
-                            type="text"
-                            />
+                                ref="autocomplete" 
+                                :placeholder="locationPlaceholder ? locationPlaceholder : 'Choose your location'"
+                                :class="{ active: active == 'location'}"
+                                autocomplete="false"
+                                onfocus="value = ''" 
+                                @click="active = 'location'"
+                                @blur="active = null"
+                                type="text">
                         </div>
                         <div class="field">
                             <label> Email </label>
                             <input 
-                            type="email" 
-                            v-model="user.email"
-                            :class="{ active: active == 'email','error': $v.user.email.$error }"
-                            @click="active = 'email'"
-                            @blur="active = null"
-                            @input="$v.user.email.$touch"
-                            />
+                                type="email" 
+                                v-model="user.email"
+                                :class="{ active: active == 'email','error': $v.user.email.$error }"
+                                @click="active = 'email'"
+                                @blur="active = null"
+                                @input="$v.user.email.$touch">
                             <div v-if="$v.user.email.$error" class="validation-error">
                                 <p class="error" v-if="!$v.user.email.required">Must have an email</p>
                                 <p class="error" v-if="!$v.user.email.email">Must be a valid email</p>
@@ -125,44 +138,65 @@
                             </div>
                         </div>
                         <div class="">
-                            <button :disabled="disabled" @click.prevent="onSubmit()" class="save"> Save </button>
-                            <button @click.prevent="onEditUser=false" class="cancel"> Cancel </button>
+                            <button 
+                                :disabled="disabled" 
+                                @click.prevent="onSubmit()" 
+                                class="save"> 
+                                Save 
+                            </button>
+                            <button 
+                                @click.prevent="onEditUser=false" 
+                                class="cancel"> 
+                                Cancel
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
             <div v-show="!onEditUser">
                 <div class="profile-user-name">
-                    <h1>{{user.name}}</h1>
+                    <h1>{{ user.name }}</h1>
                 </div>
                 <div class="info">
                     <div class="profile-user-info">
-                        Member since {{ new Date(user.created_at) | dateFormat('YYYY') }}
+                        Member since {{ cleanDate(user.created_at) }}
                     </div>
-                    <div v-if="canEditPage" class="profile-user-edit" @click="onEditUser = true">
+                    <div 
+                        v-if="canEditPage" 
+                        class="profile-user-edit" 
+                        @click="onEditUser = true">
                         Edit profile
                     </div>
-                    <button :disabled="disabled" @click.prevent="resend" class="verify-email" v-if="userOwnsPage && !user.email_verified_at && !onSent">
+                    <button 
+                        :disabled="disabled" 
+                        @click.prevent="resend" 
+                        class="verify-email" 
+                        v-if="userOwnsPage && !user.email_verified_at && !onSent">
                         Please verify your account.
                     </button>
-                    <div class="ver a" v-if="userOwnsPage && !user.email_verified_at && onSent">
+                    <div 
+                        class="ver a" 
+                        v-if="userOwnsPage && !user.email_verified_at && onSent">
                         Please check your email.
                     </div>
                 </div>
-                <div class="profile-user-info" v-if="location.latitude">
+                <div 
+                    class="profile-user-info" 
+                    v-if="location.latitude">
                     <div>
-                        Lives near <span style="font-weight:600;color:#616161">{{locationPlaceholder}}</span> 
+                        Lives near <span style="font-weight:600;color:#616161">{{ locationPlaceholder }}</span> 
                     </div>
                 </div>
             </div>
             <div class="logout mobile">
-                <button @click.prevent="logout()">Log out</button>
+                <button @click.prevent="logout()">
+                    Log out
+                </button>
             </div>
         </section>
     </div>
 </template>
 <script>
-    import _ from 'lodash';
     import ImageUpload from '../layouts/image-upload.vue'
     import { required, maxLength, email } from 'vuelidate/lib/validators'
     import CubeSpinner  from '../layouts/loading.vue'
@@ -235,14 +269,14 @@
             initializeLocationObject() {
                 return {
                     street:  '',
-                    city:  '',
-                    region: '',
-                    country: '',
-                    postal_code: '',
-                    hiddenLocation: '',
+                    city:  '',
+                    region: '',
+                    country: '',
+                    postal_code: '',
+                    hiddenLocation: '',
                     hiddenLocationToggle: 0,
-                    latitude: '',
-                    longitude: '',
+                    latitude: '',
+                    longitude: '',
                     home: '',
                 }
             },
@@ -275,7 +309,7 @@
             onImageUpload(image) {
                 this.imageFile = image;
                 this.$v.$touch(); 
-                if (this.$v.$invalid) { return false };
+                if (this.$v.$invalid) { return false }
                 this.onAddImage();
             },
 
@@ -284,14 +318,12 @@
                 this.formData.append('image', this.imageFile.file);
                 this.formData.append('_method', 'PATCH');
                 axios.post(this.endPoint, this.formData)
-                .then(response => {
-                    location.reload();
-                })
+                .then( location.reload() )
                 .catch(err => {  console.log(err); });
             },
 
             onSubmit() {
-                if (this.checkVuelidate()) { return false };
+                if (this.checkVuelidate()) { return false }
                 axios.patch(this.endPoint, this.submitObject)
                 .then(res => {
                     this.onEditUser = false;
@@ -317,6 +349,10 @@
                     return this.avatar = `${this.loaduser.thumbImagePath.slice(0, -4)}jpg`
                 }
             },
+
+            cleanDate(data) {
+                return this.$dayjs(data).format("YYYY");
+            }
             
         },
 

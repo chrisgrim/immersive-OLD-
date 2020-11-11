@@ -35,6 +35,14 @@
                     edit
                 </button>
             </a>
+            <div>
+                <template v-if="event.status === 'p'">
+                    <p>Live</p>
+                </template>
+                <template v-if="event.status === 'e'">
+                    <p>Embargoed <br> (goes live {{ cleanDate(event.embargo_date) }})</p>
+                </template>
+            </div>
         </div>
         <div class="pagination-button">
             <button 
@@ -52,8 +60,8 @@
                 </div>
             </div>
             <div slot="body"> 
-                <h3>Change {{modalData.name}} Event Organizer</h3>
-                <p>Current organizer is {{modalData.organizer.name}}</p>
+                <h3>Change {{ modalData.name }} Event Organizer</h3>
+                <p>Current organizer is {{ modalData.organizer.name }}</p>
                 <multiselect 
                     v-model="organizer" 
                     label="name" 
@@ -97,47 +105,31 @@
         },
 
         methods: {
-            delete(event) {
-                axios.delete(`/genres/${genre.id}`)
-                .then(res => { 
-                    this.isEditModalVisible = false;
-                    this.loadGenres();
-                })
-                .catch(error => { this.serverErrors = error.response.data.errors; });
-            },
 
-            loadEvents() {
+            onLoad() {
                 axios.post('/admin/events/fetch', this.pagination)
-                .then(res => {
-                    this.events = res.data;
-                })
-                .catch(error => { this.serverErrors = error.response.data.errors; });
+                .then( res => { this.events = res.data })
+                .catch( error => { this.serverErrors = error.response.data.errors });
             },
 
             asyncGenerateEventList(eventList) {
                 axios.get('/api/admin/events/search', { params: { keywords: eventList } })
-                .then(res => {
-                    this.events = res.data;
-                });
+                .then( res => { this.events = res.data });
             },
 
             loadMore() {
                 this.pagination.paginate += 10;
-                this.loadEvents();
+                this.onLoad();
             }, 
 
             asyncGenerateOrganizerList(value) {
                 axios.get('/api/admin/organizer/search', { params: { keywords: value } })
-                .then(res => {
-                    this.organizers = res.data;
-                });
+                .then( res => { this.organizers = res.data });
             },
 
             changeOwner() {
                 axios.post(`/admin/event/${this.modalData.slug}/change-organizer`, this.organizer)
-                .then(res => {
-                    this.clearModalData()
-                });
+                .then( this.clearModalData() );
             },
 
             openModal(data) {
@@ -146,15 +138,19 @@
             },
 
             clearModalData() {
-                this.loadEvents();
+                this.onLoad();
                 this.modalData = null
                 this.modalVisible = false
+            },
+
+            cleanDate(data) {
+                return this.$dayjs(data).format("dddd, MMMM D YYYY");
             }
 
         },
 
         created() {
-            this.loadEvents()
+            this.onLoad()
         },
 
     }

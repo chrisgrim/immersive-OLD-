@@ -46,7 +46,7 @@ class EventController extends Controller
      */
     public function fetch(Request $request)
     {
-        return Event::where('status','p')->take($request->paginate)->get();
+        return Event::where('status','p')->orWhere('status','e')->take($request->paginate)->get();
     }
 
     /**
