@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use ScoutElastic\Searchable;
-use App\Scopes\RankScope;
+use App\Scopes\AdminScope;
 use Illuminate\Support\Str;
 
 class Genre extends Model
@@ -29,7 +29,7 @@ class Genre extends Model
      */
     protected static function booted()
     {
-        static::addGlobalScope(new RankScope);
+        static::addGlobalScope(new AdminScope);
     }
 
     /**
