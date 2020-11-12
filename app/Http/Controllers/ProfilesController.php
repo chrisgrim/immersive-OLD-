@@ -21,12 +21,21 @@ class ProfilesController extends Controller
         $this->middleware(['auth', 'verified'])->except('show');
     }
 
+    /**
+     * Index page for the User profile
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
     public function index(User $user)
     {
-        $user='test';
         return view('profiles.index', compact('user'));
     }
 
+    /**
+     * Show Page for the specific user
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
     public function show(User $user)
     {
         $events = $user->favouritedEvents()->get()->load('organizer');
@@ -34,20 +43,45 @@ class ProfilesController extends Controller
         return view('profiles.index', compact('user', 'events'));
     }
 
+    /**
+     * Account page for user
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
     public function account()
     {
         return view('profiles.account');
     }
 
+    /**
+     * Notification page for user
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
     public function notifications()
     {
         return view('profiles.notifications');
     }
 
+    /**
+     * Favorites page for user
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
     public function favorited()
     {
-        $events = auth()->user()->favouritedEvents()->get()->load('organizer');
+        $events = auth()->user()->favouritedEvents()->paginate(12);
         return view('profiles.favorited', compact('events'));
+    }
+
+    /**
+     * Favorites page for user
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function fetchFavorited()
+    {
+        return auth()->user()->favouritedEvents()->paginate(12);
     }
 
     /**

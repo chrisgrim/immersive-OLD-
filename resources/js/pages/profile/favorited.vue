@@ -4,36 +4,38 @@
             <h3>Your Favorited Events</h3>
         </div>
 
-        <div class="event-index-eventlist grid">
-            <div v-for="(event, index) in events" class="eventlist__element">
-                <vue-event-index :event="event"></vue-event-index>
-            </div>
-        </div>
-
+        <div class="">
+            <vue-event-index :events="events.data" />
+            <pagination 
+                :limit="1"
+                :list="events"
+                @selectpage="paginate" />
         </div>
     </div>
 </template>
 
 <script>
+    import Pagination  from '../../components/pagination.vue'
 
     export default {
 
+        props: ['loaduser', 'loadevents'],
 
-        props: ['loaduser', 'events'],
-
-        computed: {
-
-        },
+        components: { Pagination },
 
         data() {
             return {
-                
+                events: this.loadevents,
             }
         },
 
         methods: {
-            
-
+            paginate(page) {
+                console.log(page);
+                axios.get(`/account-settings/favorited/fetch?page=${page}`)
+                .then( res => { this.events = res.data })
+                .catch( error => {error})
+            }
         },
 
     };

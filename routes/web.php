@@ -89,6 +89,7 @@ Route::RESOURCE('users', 'ProfilesController');
 Route::GET('account-settings', 'ProfilesController@account');
 Route::GET('account-settings/notifications', 'ProfilesController@notifications');
 Route::GET('account-settings/favorited', 'ProfilesController@favorited');
+Route::GET('account-settings/favorited/fetch', 'ProfilesController@fetchFavorited');
 
 // favorites Button
 Route::GET('myFavorites/{user}', 'FavoritesController@index');

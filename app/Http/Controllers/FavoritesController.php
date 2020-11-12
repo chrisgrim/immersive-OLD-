@@ -9,10 +9,17 @@ use Illuminate\Http\Request;
 
 class FavoritesController extends Controller
 {
+
 	public function __construct()
 	{
 		$this->middleware(['auth', 'verified']);
 	}
+
+    /**
+     * Show the favorites
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
     public function index(User $user)
     {   
         $favorites = Favorite::select('favorited_id', 'favorited_type')
@@ -20,6 +27,7 @@ class FavoritesController extends Controller
             ->get();
         return view('favorites.index', compact('favorites'));
     }
+    
     public function store(Event $event)
     {
         $event->favorite();

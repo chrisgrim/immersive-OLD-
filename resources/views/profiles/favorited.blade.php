@@ -8,7 +8,9 @@
 
 @section('nav')
     @auth
-        <vue-nav navtype="favorited" :user= "{{auth()->user()}}"></vue-nav>
+        <vue-nav 
+            navtype="favorited" 
+            :user= "{{auth()->user()}}" />
     @endauth
     @guest
         <vue-nav></vue-nav>
@@ -17,6 +19,8 @@
 
 @section('content')
     <div id="bodyArea">
-        <vue-user-favorited :events="{{ $events }}" :loaduser="{{ auth()->user() }}" v-cloak></vue-user-favorited> 
+        <vue-user-favorited 
+            :loadevents="{{ $events->toJson() }}" 
+            :loaduser="{{ auth()->user() }}" /> 
     </div>
 @endsection
