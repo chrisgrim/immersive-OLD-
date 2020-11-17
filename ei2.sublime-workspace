@@ -1,0 +1,1552 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"vueNav",
+				"vueNavSearch"
+			],
+			[
+				"com",
+				"component"
+			],
+			[
+				"Vue",
+				"vueProfileButton"
+			],
+			[
+				"comp",
+				"components"
+			],
+			[
+				"has",
+				"hasLogo"
+			],
+			[
+				"grid-tem",
+				"grid-template-columns\tproperty"
+			],
+			[
+				"in",
+				"inline-grid\tdisplay"
+			],
+			[
+				"or",
+				"organizer"
+			],
+			[
+				"pad",
+				"padding-right\tproperty"
+			],
+			[
+				"end",
+				"endDate"
+			],
+			[
+				"staffp",
+				"staffpick"
+			],
+			[
+				"org",
+				"organizer"
+			],
+			[
+				"inte",
+				"interactiveLevel"
+			],
+			[
+				"key",
+				"keywords"
+			],
+			[
+				"Gen",
+				"GenreStoreRequest"
+			],
+			[
+				"sub",
+				"submitObject"
+			],
+			[
+				"re",
+				"reloadPage"
+			],
+			[
+				"relo",
+				"reloadPage"
+			],
+			[
+				"even",
+				"eventExists"
+			],
+			[
+				"req",
+				"request"
+			],
+			[
+				"close",
+				"closeModal"
+			],
+			[
+				"sele",
+				"selectedModal"
+			],
+			[
+				"revi",
+				"reviewData"
+			],
+			[
+				"orga",
+				"organizerList"
+			],
+			[
+				"ORG",
+				"organizer"
+			],
+			[
+				"select",
+				"selectPage"
+			],
+			[
+				"ret",
+				"return"
+			],
+			[
+				"staff",
+				"staffpick"
+			],
+			[
+				"modal",
+				"modalData"
+			],
+			[
+				"mo",
+				"modalData"
+			],
+			[
+				"mod",
+				"modalVisible"
+			],
+			[
+				"inl",
+				"inline-block\tdisplay"
+			],
+			[
+				"dis",
+				"displayExample"
+			],
+			[
+				"backgr",
+				"background-repeat\tproperty"
+			],
+			[
+				"tag",
+				"tagLine"
+			],
+			[
+				"ne",
+				"newEvent"
+			],
+			[
+				"Sub",
+				"submitNewEvent"
+			],
+			[
+				"new",
+				"newevent"
+			],
+			[
+				"ax",
+				"axiosOnline"
+			],
+			[
+				"is",
+				"isHovered"
+			],
+			[
+				"hov",
+				"hover"
+			],
+			[
+				"hover",
+				"hoverArray"
+			],
+			[
+				"mapse",
+				"mapsearch"
+			],
+			[
+				"filter",
+				"filter__body"
+			],
+			[
+				"ful",
+				"fullMap"
+			],
+			[
+				"mobi",
+				"mobiledates"
+			],
+			[
+				"show",
+				"showfilter"
+			],
+			[
+				"mob",
+				"mobileDates"
+			],
+			[
+				"mobil",
+				"mobileLocation"
+			],
+			[
+				"s",
+				"showfilter"
+			],
+			[
+				"min",
+				"min-height\tproperty"
+			],
+			[
+				"cla",
+				"className"
+			],
+			[
+				"text",
+				"text-align\tproperty"
+			],
+			[
+				"on",
+				"onlineEventList"
+			],
+			[
+				"onl",
+				"onlinepage"
+			],
+			[
+				"upda",
+				"updateOnlineEvents"
+			],
+			[
+				"curren",
+				"current_page"
+			],
+			[
+				"curr",
+				"currentOnlinePage"
+			],
+			[
+				"one",
+				"onlinePagination"
+			],
+			[
+				"cur",
+				"current_page"
+			],
+			[
+				"vuex",
+				"vuexOnline"
+			],
+			[
+				"onlineeve",
+				"onlineevents"
+			],
+			[
+				"pag",
+				"pagination"
+			],
+			[
+				"prev",
+				"previousPage"
+			],
+			[
+				"next",
+				"nextPage"
+			],
+			[
+				"cate",
+				"category"
+			],
+			[
+				"evn",
+				"eventList"
+			],
+			[
+				"box",
+				"box-shadow\tproperty"
+			],
+			[
+				"map",
+				"mapInfo"
+			],
+			[
+				"cal",
+				"calendarConfigMobile"
+			],
+			[
+				"location",
+				"locationEvents"
+			],
+			[
+				"locat",
+				"locationEvents"
+			],
+			[
+				"pric",
+				"priceOptions"
+			],
+			[
+				"hide",
+				"hideMenu"
+			],
+			[
+				"fix",
+				"fixedNav"
+			],
+			[
+				"nav",
+				"navtype"
+			],
+			[
+				"can",
+				"canFavorite"
+			],
+			[
+				"ca",
+				"category"
+			],
+			[
+				"back",
+				"background\tproperty"
+			],
+			[
+				"trans",
+				"transform\tproperty"
+			],
+			[
+				"inline",
+				"inline-block"
+			],
+			[
+				"max",
+				"maxprice"
+			],
+			[
+				"event",
+				"eventList"
+			],
+			[
+				"search",
+				"searchedevents"
+			],
+			[
+				"texts-",
+				"text-transform\tproperty"
+			],
+			[
+				"font-",
+				"font-size\tproperty"
+			],
+			[
+				"grid-te",
+				"grid-template-columns\tproperty"
+			],
+			[
+				"cat",
+				"categoryList"
+			],
+			[
+				"cateo",
+				"categoryList"
+			],
+			[
+				"cag",
+				"categoryList"
+			],
+			[
+				"sta",
+				"staffpicks"
+			],
+			[
+				"staf",
+				"staffwidth"
+			],
+			[
+				"load",
+				"loadedCat"
+			],
+			[
+				"web",
+				"website-files"
+			],
+			[
+				"sear",
+				"searchType"
+			],
+			[
+				"zoo",
+				"zoomOut"
+			],
+			[
+				"zoom",
+				"zoomIn"
+			],
+			[
+				"check",
+				"checkvalue"
+			],
+			[
+				"onli",
+				"onlineEventList"
+			],
+			[
+				"online",
+				"onlineevents"
+			],
+			[
+				"ap",
+				"approved"
+			],
+			[
+				"ch",
+				"checkStatus"
+			],
+			[
+				"cu",
+				"customCheck"
+			],
+			[
+				"stat",
+				"checkStatus"
+			],
+			[
+				"div",
+				"divWidth"
+			],
+			[
+				"tex",
+				"text-align\tproperty"
+			],
+			[
+				"rel",
+				"relative"
+			],
+			[
+				"translateC",
+				"translateCat"
+			],
+			[
+				"ser",
+				"serverErrors"
+			],
+			[
+				"ev",
+				"eventExists"
+			],
+			[
+				"serv",
+				"serverFailed"
+			],
+			[
+				"wee",
+				"weekendDates"
+			],
+			[
+				"categ",
+				"categories"
+			],
+			[
+				"inde",
+				"indexfetch"
+			],
+			[
+				"jum",
+				"jumpDate"
+			],
+			[
+				"obje",
+				"object-fit\tproperty"
+			],
+			[
+				"grid",
+				"inline-grid\tdisplay"
+			],
+			[
+				"hid",
+				"hiddenSearch"
+			],
+			[
+				"loca",
+				"location"
+			],
+			[
+				"sea",
+				"searchField"
+			],
+			[
+				"long",
+				"long_name"
+			],
+			[
+				"set",
+				"setPlace"
+			],
+			[
+				"searc",
+				"search_term"
+			],
+			[
+				"chu",
+				"chunks"
+			],
+			[
+				"for",
+				"foreach\tforeach …"
+			],
+			[
+				"da",
+				"dateArray"
+			],
+			[
+				"Event",
+				"EventReminder"
+			],
+			[
+				"create",
+				"created_at"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": ".env",
+			"settings":
+			{
+				"buffer_size": 1565,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "routes/web.php",
+			"settings":
+			{
+				"buffer_size": 7907,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "webpack.mix.js",
+			"settings":
+			{
+				"buffer_size": 829,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "webpack.config.js",
+			"settings":
+			{
+				"buffer_size": 108,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "resources/js/app.js",
+			"settings":
+			{
+				"buffer_size": 11211,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 256.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"brow",
+				"Preferences: Browse Packages"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"REMOVE",
+				"Package Control: Remove Package"
+			],
+			[
+				"INSTAL",
+				"Package Control: Install Package"
+			],
+			[
+				"pac",
+				"Package Control: Enable Package"
+			],
+			[
+				"packa",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"PACKA",
+				"Package Control: Remove Package"
+			],
+			[
+				"PACK",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package Control: in",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Disable Package"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"clean",
+				"CleanCSS: Clean current file"
+			],
+			[
+				"oa",
+				"OverrideAudit: Open Resource"
+			],
+			[
+				"Snippet: ",
+				"Snippet: console.log"
+			],
+			[
+				"Package Control: ins",
+				"Package Control: Install Package"
+			],
+			[
+				"intall",
+				"Package Control: Install Package"
+			],
+			[
+				"package",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 464.0
+	},
+	"console":
+	{
+		"height": 183.0,
+		"history":
+		[
+			"SublimeLinter.lint.persist.linter_classes.keys()",
+			"import SublimeLinter",
+			"import urllib.request,os,hashlib; h = '6f4c264a24d933ce70df5dedcf1dcaee' + 'ebe013ee18cced0ef93d5f746d80ef60'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/chrisgrim/code/ei3"
+	],
+	"file_history":
+	[
+		"/Users/chrisgrim/code/ei3/package.json",
+		"/Users/chrisgrim/code/ei3/resources/js/fake.scss",
+		"/Users/chrisgrim/code/ei3/resources/views/auth/login.blade.php",
+		"/Users/chrisgrim/code/ei3/webpack.config.js",
+		"/Users/chrisgrim/code/ei3/resources/views/layouts/meta.blade.php",
+		"/Users/chrisgrim/code/ei3/routes/api.php",
+		"/Users/chrisgrim/code/ei3/package-lock.json",
+		"/Users/chrisgrim/code/ei3/resources/js/app.js",
+		"/Users/chrisgrim/code/ei3/config/services.php",
+		"/Users/chrisgrim/code/ei3/config/scout.php",
+		"/Users/chrisgrim/code/ei3/config/jetstream.php",
+		"/Users/chrisgrim/code/ei3/config/fortify.php",
+		"/Users/chrisgrim/code/ei2/resources/js/pages/events/event-index.vue",
+		"/Users/chrisgrim/code/ei2/resources/views/events/index.blade.php",
+		"/Users/chrisgrim/code/ei2/resources/js/pages/events/event-show.vue",
+		"/Users/chrisgrim/code/ei2/resources/js/Pages/events/event-index.vue",
+		"/Users/chrisgrim/code/ei2/resources/js/Pages/layouts/nav.vue",
+		"/Users/chrisgrim/code/ei2/resources/js/Pages/events/components/filter.vue",
+		"/Users/chrisgrim/code/ei2/resources/js/pages/organizers/contact-organizer.vue",
+		"/Users/chrisgrim/code/ei2/resources/views/events/show.blade.php",
+		"/Users/chrisgrim/code/ei2/resources/views/adminArea/showapproval.blade.php",
+		"/Users/chrisgrim/code/ei2/webpack.mix.js",
+		"/Users/chrisgrim/code/ei2/package.json",
+		"/Users/chrisgrim/code/ei2/resources/js/app.js",
+		"/Users/chrisgrim/code/ei2/resources/views/layouts/meta.blade.php",
+		"/Users/chrisgrim/code/ei2/resources/js/store/index.js",
+		"/Users/chrisgrim/code/ei2/package-lock.json",
+		"/Users/chrisgrim/code/ei2/resources/views/create/index.blade.php",
+		"/Users/chrisgrim/code/ei2/config/services.php",
+		"/Users/chrisgrim/code/ei2/config/excel.php",
+		"/Users/chrisgrim/code/ei2/app/Console/Commands/ForgotFinishEventsCommand.php",
+		"/Users/chrisgrim/code/ei2/app/Console/Commands/KathNewsCommand.php",
+		"/Users/chrisgrim/code/ei2/app/Console/Commands/NewsletterCommand.php",
+		"/Users/chrisgrim/code/ei2/app/Console/Commands/PublishEventsCommand.php",
+		"/Users/chrisgrim/code/ei2/app/Policies/ConversationPolicy.php",
+		"/Users/chrisgrim/code/ei2/app/Policies/EventPolicy.php",
+		"/Users/chrisgrim/code/ei2/app/Policies/MessagePolicy.php",
+		"/Users/chrisgrim/code/ei2/app/Policies/OrganizerPolicy.php",
+		"/Users/chrisgrim/code/ei2/app/Rules/UniqueSlugRule.php",
+		"/Users/chrisgrim/code/ei2/app/Mail/EventApproved.php",
+		"/Users/chrisgrim/code/ei2/app/Mail/EventChanges.php",
+		"/Users/chrisgrim/code/ei2/app/Mail/EventRejected.php",
+		"/Users/chrisgrim/code/ei2/app/Mail/ModeratorComments.php",
+		"/Users/chrisgrim/code/ei2/app/Imports/CitiesImport.php",
+		"/Users/chrisgrim/code/ei2/app/Models/User.php",
+		"/Users/chrisgrim/code/ei2/config/scout.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/CityListsController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/ConversationsController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/MessagesController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/OrganizerController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/ProfilesController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/SearchController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/SearchDataController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/SitemapController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/UserMasterController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Search/OnlineSearchController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Search/SearchController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Admin/AdminAreaController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Admin/BoneyardController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Admin/CategoryController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Admin/ContactLevelsController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Admin/ContentAdvisoriesController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Admin/EventController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Admin/GenresController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Admin/InteractiveLevelController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Admin/MobilitiesController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Admin/OrganizerController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Admin/PurgatoryController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Admin/RemoteLocationsController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Admin/ReviewEventsController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Admin/SearchController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Admin/StaffPicksController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Admin/UsersController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Auth/ConfirmPasswordController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Auth/RegisterController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Auth/VerificationController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Create/AdvisoriesController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Create/CategoryController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Create/DescriptionController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Create/EventController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Create/ImageController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Create/LocationController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Create/ShowsController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Create/TicketsController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Auth/LoginController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Create/TitleController.php",
+		"/Users/chrisgrim/code/ei2/app/Models/Message.php",
+		"/Users/chrisgrim/code/ei2/app/Models/InteractiveLevel.php",
+		"/Users/chrisgrim/code/ei2/app/Models/Favoritable.php",
+		"/Users/chrisgrim/code/ei2/app/Models/Event.php",
+		"/Users/chrisgrim/code/ei2/app/Models/ContactLevel.php",
+		"/Users/chrisgrim/code/ei2/app/Models/MobilityAdvisory.php",
+		"/Users/chrisgrim/code/ei2/app/Models/ModeratorComment.php",
+		"/Users/chrisgrim/code/ei2/app/Models/UserLocation.php",
+		"/Users/chrisgrim/code/ei2/app/Models/UserSearchRule.php",
+		"/Users/chrisgrim/code/ei2/app/Models/UserIndexConfigurator.php",
+		"/Users/chrisgrim/code/ei2/app/Models/Timezone.php",
+		"/Users/chrisgrim/code/ei2/app/Models/Ticket.php",
+		"/Users/chrisgrim/code/ei2/app/Models/StaffPick.php",
+		"/Users/chrisgrim/code/ei2/app/Models/ShowOnGoing.php",
+		"/Users/chrisgrim/code/ei2/app/Models/Show.php",
+		"/Users/chrisgrim/code/ei2/app/Models/SearchData.php",
+		"/Users/chrisgrim/code/ei2/app/Models/ReviewEvent.php",
+		"/Users/chrisgrim/code/ei2/app/Models/RemoteLocationSearchRule.php",
+		"/Users/chrisgrim/code/ei2/app/Models/RemoteLocation.php",
+		"/Users/chrisgrim/code/ei2/app/Models/RemoteIndexConfigurator.php",
+		"/Users/chrisgrim/code/ei2/app/Models/PriceRange.php",
+		"/Users/chrisgrim/code/ei2/app/Models/OrganizerSearchRule.php",
+		"/Users/chrisgrim/code/ei2/app/Models/OrganizerIndexConfigurator.php",
+		"/Users/chrisgrim/code/ei2/app/Models/Organizer.php",
+		"/Users/chrisgrim/code/ei2/app/Models/AdminArea.php",
+		"/Users/chrisgrim/code/ei2/app/Providers/RouteServiceProvider.php",
+		"/Users/chrisgrim/code/ei2/app/Models/GenreSearchRule.php",
+		"/Users/chrisgrim/code/ei2/app/Models/Location.php",
+		"/Users/chrisgrim/code/ei2/app/Models/MakeImage.php",
+		"/Users/chrisgrim/code/ei2/app/Models/GenreIndexConfigurator.php",
+		"/Users/chrisgrim/code/ei2/app/Models/Genre.php",
+		"/Users/chrisgrim/code/ei2/app/Models/Favorite.php",
+		"/Users/chrisgrim/code/ei2/app/Models/EventSearchRule.php",
+		"/Users/chrisgrim/code/ei2/app/Models/EventRemoteSearchRule.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/EventController.php",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/FavoritesController.php",
+		"/Users/chrisgrim/code/ei2/app/Models/EventMapSearchRule.php",
+		"/Users/chrisgrim/code/ei2/app/Models/EventIndexConfigurator.php",
+		"/Users/chrisgrim/code/ei2/app/Models/Conversation.php",
+		"/Users/chrisgrim/code/ei2/app/Models/ContentAdvisory.php",
+		"/Users/chrisgrim/code/ei2/app/Models/ContactOrganizer.php",
+		"/Users/chrisgrim/code/ei2/app/Models/CityListSearchRule.php"
+	],
+	"find":
+	{
+		"height": 30.0
+	},
+	"find_in_files":
+	{
+		"height": 164.0,
+		"where_history":
+		[
+			"/Users/chrisgrim/code/ei3/resources/views",
+			"/Users/chrisgrim/code/ei3/resources",
+			"/Users/chrisgrim/code/ei3/resources/views"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"/js",
+			"js",
+			"assets",
+			"mix",
+			"assets/js"
+		],
+		"highlight": false,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 4,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": ".env",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1565,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								12,
+								12
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "routes/web.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7907,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7907,
+								7907
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/PHP/PHP.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 2953.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "webpack.mix.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 829,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								35,
+								0
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "webpack.config.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 108,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								108,
+								0
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "resources/js/app.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 11211,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								10986,
+								10986
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 30.0
+	},
+	"input":
+	{
+		"height": 72.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.SublimeLinter":
+	{
+		"height": 75.0
+	},
+	"output.SublimeLinter Messages":
+	{
+		"height": 168.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.sftp":
+	{
+		"height": 122.0
+	},
+	"pinned_build_system": "",
+	"project": "ei2.sublime-project",
+	"replace":
+	{
+		"height": 56.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"routese",
+				"app/Providers/RouteServiceProvider.php"
+			],
+			[
+				"",
+				"resources/sass/events/components/search-filters.scss"
+			],
+			[
+				"script",
+				"node_modules/nan/doc/script.md"
+			],
+			[
+				"authen",
+				"vendor/laravel/ui/auth-backend/AuthenticatesUsers.php"
+			],
+			[
+				"authent",
+				"app/Http/Middleware/Authenticate.php"
+			],
+			[
+				"servi",
+				"config/services.php"
+			],
+			[
+				"auth se",
+				"app/Providers/AuthServiceProvider.php"
+			],
+			[
+				"authse",
+				"app/Providers/AuthServiceProvider.php"
+			],
+			[
+				"register",
+				"app/Http/Controllers/Auth/RegisterController.php"
+			],
+			[
+				"ForwardsCalls",
+				"vendor/laravel/framework/src/Illuminate/Support/Traits/ForwardsCalls.php"
+			],
+			[
+				"dat",
+				"config/database.php"
+			],
+			[
+				"app",
+				"config/app.php"
+			],
+			[
+				"ker",
+				"app/Http/Kernel.php"
+			],
+			[
+				"file",
+				"config/filesystems.php"
+			],
+			[
+				"kern",
+				"app/Http/Kernel.php"
+			],
+			[
+				"APP",
+				"bootstrap/app.php"
+			],
+			[
+				"searchru",
+				"vendor/babenkoivan/scout-elasticsearch-driver/src/SearchRule.php"
+			],
+			[
+				"verifi",
+				"app/Http/Controllers/Auth/VerificationController.php"
+			],
+			[
+				"auth ",
+				"config/auth.php"
+			],
+			[
+				"mail",
+				"config/mail.php"
+			],
+			[
+				"service",
+				"config/services.php"
+			],
+			[
+				"servu",
+				"vendor/symfony/http-kernel/Exception/ServiceUnavailableHttpException.php"
+			],
+			[
+				"serv",
+				"config/services.php"
+			],
+			[
+				"ser",
+				"config/services.php"
+			],
+			[
+				"sess",
+				"config/session.php"
+			],
+			[
+				"verifica",
+				"app/Http/Controllers/Auth/VerificationController.php"
+			],
+			[
+				"staffpicks",
+				"app/Http/Controllers/StaffPicksController.php"
+			],
+			[
+				".env",
+				".env"
+			],
+			[
+				"social",
+				"vendor/laravel/socialite/src/Facades/Socialite.php"
+			],
+			[
+				"abstractpro",
+				"vendor/laravel/socialite/src/One/AbstractProvider.php"
+			],
+			[
+				"forgor",
+				"app/Http/Controllers/Auth/ForgotPasswordController.php"
+			],
+			[
+				"sendpass",
+				"vendor/laravel/ui/auth-backend/SendsPasswordResetEmails.php"
+			],
+			[
+				"password",
+				"vendor/laravel/framework/src/Illuminate/Support/Facades/Password.php"
+			],
+			[
+				"sessio",
+				"config/session.php"
+			],
+			[
+				"handler",
+				"app/Exceptions/Handler.php"
+			],
+			[
+				"registerco",
+				"app/Http/Controllers/Auth/RegisterController.php"
+			],
+			[
+				"logincon",
+				"app/Http/Controllers/Auth/LoginController.php"
+			],
+			[
+				"login.",
+				"vendor/laravel/framework/src/Illuminate/Auth/Events/Login.php"
+			],
+			[
+				"redirect",
+				"app/Http/Middleware/RedirectIfAuthenticated.php"
+			],
+			[
+				"redirectif",
+				"app/Http/Middleware/RedirectIfAuthenticated.php"
+			],
+			[
+				"imagemoda",
+				"resources/views/adminArea/imagemodal.vue"
+			],
+			[
+				"verify",
+				"vendor/laravel/framework/src/Illuminate/Auth/Notifications/VerifyEmail.php"
+			],
+			[
+				"verifyem",
+				"vendor/laravel/framework/src/Illuminate/Auth/Notifications/VerifyEmail.php"
+			],
+			[
+				"ensureemai",
+				"vendor/laravel/framework/src/Illuminate/Auth/Middleware/EnsureEmailIsVerified.php"
+			],
+			[
+				"authcontroller",
+				"app/Http/Controllers/Auth/LoginController.php"
+			],
+			[
+				"auth",
+				"resources/lang/en/auth.php"
+			],
+			[
+				"regis",
+				"vendor/laravel/framework/src/Illuminate/Foundation/Auth/RegistersUsers.php"
+			],
+			[
+				"registerus",
+				"vendor/laravel/framework/src/Illuminate/Foundation/Auth/RegistersUsers.php"
+			],
+			[
+				"vue2-google",
+				"node_modules/vue2-google-maps/dist/vue-google-maps.js"
+			],
+			[
+				"registeru",
+				"vendor/laravel/framework/src/Illuminate/Foundation/Auth/RegistersUsers.php"
+			],
+			[
+				"session",
+				"config/session.php"
+			],
+			[
+				"bilable",
+				"vendor/laravel/cashier/src/Billable.php"
+			],
+			[
+				"app.",
+				"config/app.php"
+			],
+			[
+				"services.",
+				"config/services.php"
+			],
+			[
+				"eventcon",
+				"app/Http/Controllers/EventController.php"
+			],
+			[
+				"config/app",
+				"config/app.php"
+			],
+			[
+				"config/ap",
+				"config/app.php"
+			],
+			[
+				"config/a",
+				"config/app.php"
+			],
+			[
+				"authser",
+				"app/Providers/AuthServiceProvider.php"
+			],
+			[
+				"config/",
+				"config/services.php"
+			],
+			[
+				"appser",
+				"app/Providers/AppServiceProvider.php"
+			],
+			[
+				"app.p",
+				"config/app.php"
+			],
+			[
+				"databas",
+				"config/database.php"
+			],
+			[
+				"datab",
+				"config/database.php"
+			],
+			[
+				"database",
+				"config/database.php"
+			],
+			[
+				"api",
+				"routes/api.php"
+			],
+			[
+				"throttle",
+				"vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php"
+			],
+			[
+				"Maatwebsite\\Excel\\Concerns\\WithProgressBar",
+				"vendor/maatwebsite/excel/src/Concerns/WithProgressBar.php"
+			],
+			[
+				"Illuminate\\Console\\Command",
+				"vendor/laravel/framework/src/Illuminate/Console/Command.php"
+			],
+			[
+				"comands",
+				"vendor/laravel/framework/src/Illuminate/Console/Events/CommandStarting.php"
+			],
+			[
+				"app.php",
+				"config/app.php"
+			],
+			[
+				"databa",
+				"config/database.php"
+			],
+			[
+				"appserv",
+				"app/Providers/AppServiceProvider.php"
+			],
+			[
+				"app\\pro",
+				"app/Providers/AppServiceProvider.php"
+			],
+			[
+				"app\\provider",
+				"app/Providers/RouteServiceProvider.php"
+			],
+			[
+				"config/da",
+				"config/database.php"
+			],
+			[
+				"bootstrap/app",
+				"bootstrap/app.php"
+			],
+			[
+				"AppServiceProvider.php",
+				"app/Providers/AppServiceProvider.php"
+			],
+			[
+				"geonames",
+				"vendor/michaeldrennen/geonames/src/GeonamesServiceProvider.php"
+			],
+			[
+				"data",
+				"config/database.php"
+			],
+			[
+				"config/data",
+				"config/database.php"
+			],
+			[
+				"scout",
+				"config/scout_elastic.php"
+			],
+			[
+				"scout_el",
+				"config/scout_elastic.php"
+			],
+			[
+				"scou",
+				"config/scout.php"
+			],
+			[
+				"config/sc",
+				"vendor/laravel/scout/config/scout.php"
+			],
+			[
+				"config/scou",
+				"vendor/laravel/scout/config/scout.php"
+			],
+			[
+				"configapp",
+				"config/app.php"
+			],
+			[
+				"appproi",
+				"app/Providers/AppServiceProvider.php"
+			],
+			[
+				"lmfcontr",
+				"vendor/unisharp/laravel-filemanager/src/Controllers/LfmController.php"
+			],
+			[
+				"appse",
+				"app/Providers/AppServiceProvider.php"
+			],
+			[
+				"config/lf",
+				"config/lfm.php"
+			],
+			[
+				"api.php",
+				"routes/api.php"
+			],
+			[
+				"routes/ap",
+				"routes/api.php"
+			],
+			[
+				"config.php",
+				"showbelow/vendor/beyondcode/laravel-dump-server/config/config.php"
+			],
+			[
+				"cors.",
+				"node_modules/caniuse-lite/data/features/cors.js"
+			],
+			[
+				"conf",
+				"node_modules/dotenv/config.js"
+			],
+			[
+				"authenicateus",
+				"vendor/laravel/framework/src/Illuminate/Foundation/Auth/AuthenticatesUsers.php"
+			],
+			[
+				"faker/provider/",
+				"vendor/fzaninotto/faker/src/Faker/Provider/Person.php"
+			],
+			[
+				"c/app.php",
+				"config/app.php"
+			],
+			[
+				"meta",
+				"resources/views/layouts/meta.blade.php"
+			],
+			[
+				"web",
+				"routes/web.php"
+			],
+			[
+				"defacon",
+				"vendor/psy/psysh/test/fixtures/default/.config/psysh/config.php"
+			],
+			[
+				"authsr",
+				"app/Providers/AuthServiceProvider.php"
+			],
+			[
+				"auths",
+				"app/Providers/AuthServiceProvider.php"
+			],
+			[
+				"route",
+				"vendor/symfony/routing/Route.php"
+			],
+			[
+				"migrationuser",
+				"database/migrations/2014_10_12_000000_create_users_table.php"
+			],
+			[
+				"edit",
+				"resources/views/posts/edit.blade.php"
+			],
+			[
+				"lfooter",
+				"resources/views/layouts/footer.blade.php"
+			],
+			[
+				"create.bla",
+				"resources/views/posts/create.blade.php"
+			],
+			[
+				"creat",
+				"node_modules/lodash/create.js"
+			],
+			[
+				"master",
+				"resources/views/layouts/master.blade.php"
+			],
+			[
+				"footer",
+				"resources/views/layouts/footer.blade.php"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 322.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
