@@ -6,32 +6,17 @@
 
 import Vuelidate from "vuelidate";
 import store from './store/index'
-import vuelidateErrorExtractor, { templates } from "vuelidate-error-extractor";
 import { Icon }  from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-
-import VueFilterDateFormat from '@vuejs-community/vue-filter-date-format';
 import Dayjs from 'vue-dayjs';
-
-
-// import VueRouter from 'vue-router';
-// import {routes} from './routes';
-// Vue.use(VueRouter);
-// const router = new VueRouter({
-//   routes,
-//   mode: 'history'
-// });
 
 
 window.axios = require('axios');
 window.Vue = require('vue');
 Vue.use(Dayjs);
 Vue.use(Vuelidate);
-Vue.use(VueFilterDateFormat);
-
-
 Vue.use(require('vue-cookies'));
-// require('./bootstrap');
+
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -49,10 +34,6 @@ if (token) {
 } else {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
-
-
-
-
 
 
 // this part resolve an issue where the markers would not appear
@@ -183,34 +164,34 @@ Vue.component('vue-reset-password', () => import(/* webpackChunkName: "assets/lr
 
 if(document.getElementById("header")){
 	const header = new Vue({
-    	el: '#header',
+        el: '#header',
         store,
 	});
-};
+}
 if(document.getElementById("create")){
 	const create = new Vue({
-    	el: '#create',
+        el: '#create',
         store,
 	});
-};
+}
 if(document.getElementById("admin")){
-  const admin = new Vue({
-      el: '#admin',
-  });
-};
+    const admin = new Vue({
+        el: '#admin',
+    });
+}
 if(document.getElementById("bodyArea")){
-  const bodyArea = new Vue({
-      el: '#bodyArea',
-      store,
-  });
-};
+    const bodyArea = new Vue({
+        el: '#bodyArea',
+        store,
+    });
+}
 if(document.getElementById("footer")){
     const footer = new Vue({
         el: '#footer',
     });
-};
+}
 if(document.getElementById("flash")){
-  const flash = new Vue({
-      el: '#flash',
-  });
-};
+    const flash = new Vue({
+        el: '#flash',
+    });
+}

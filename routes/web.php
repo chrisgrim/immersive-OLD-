@@ -47,6 +47,7 @@ Route::POST('/admin/event/{event}/approve', 'Admin\EventController@approve');
 Route::POST('/admin/event/{event}/fail', 'Admin\EventController@fail');
 Route::POST('/admin/event/{event}/reject', 'Admin\EventController@reject');
 Route::GET('/admin/events/finalize', 'Admin\EventController@queues');
+Route::GET('/admin/events/finalize/fetch', 'Admin\EventController@fetchQue');
 Route::GET('/admin/events/{event}/finalize', 'Admin\EventController@finalize');
 Route::POST('/admin/event/{event}/change-organizer', 'Admin\EventController@changeOrganizer');
 Route::POST('/admin/event/boneyard/fetch', 'Admin\BoneyardController@fetch');
