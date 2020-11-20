@@ -193,11 +193,12 @@ class SearchController extends Controller
             ->take(5)
             ->get();
 
-            // $organizer = Organizer::search($request->keywords)
-            // ->rule(OrganizerSearchRule::class)
-            // ->take(5)
-            // ->get();
-            $concatdata = $event;
+            $organizer = Organizer::search($request->keywords)
+            ->rule(OrganizerSearchRule::class)
+            ->take(5)
+            ->get();
+            
+            $concatdata = $event->concat($organizer);
             return ['data' => $concatdata];
         }
 
