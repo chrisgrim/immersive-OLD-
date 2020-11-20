@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"event",
+				"eventsLoaded"
+			],
+			[
 				"has",
 				"hasLogo"
 			],
@@ -320,10 +324,6 @@
 				"maxprice"
 			],
 			[
-				"event",
-				"eventList"
-			],
-			[
 				"search",
 				"searchedevents"
 			],
@@ -523,7 +523,7 @@
 			"file": "routes/web.php",
 			"settings":
 			{
-				"buffer_size": 7742,
+				"buffer_size": 7820,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -639,19 +639,24 @@
 		"/Users/chrisgrim/code/ei",
 		"/Users/chrisgrim/code/ei/app",
 		"/Users/chrisgrim/code/ei/app/Http",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers",
-		"/Users/chrisgrim/code/ei/resources",
-		"/Users/chrisgrim/code/ei/resources/js",
-		"/Users/chrisgrim/code/ei/resources/js/pages",
-		"/Users/chrisgrim/code/ei/resources/js/pages/organizers",
-		"/Users/chrisgrim/code/ei/resources/js/pages/profile",
-		"/Users/chrisgrim/code/ei/resources/views",
-		"/Users/chrisgrim/code/ei/resources/views/events",
-		"/Users/chrisgrim/code/ei/resources/views/profiles",
-		"/Users/chrisgrim/code/ei/routes"
+		"/Users/chrisgrim/code/ei/database",
+		"/Users/chrisgrim/code/ei/database/migrations",
+		"/Users/chrisgrim/code/ei/resources"
 	],
 	"file_history":
 	[
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/Admin/EventController.php",
+		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/approve/approval-list.vue",
+		"/Users/chrisgrim/code/ei/.gitignore",
+		"/Users/chrisgrim/code/ei/resources/views/adminArea/approval.blade.php",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/SearchController.php",
+		"/Users/chrisgrim/code/ei/webpack.js.mix.js",
+		"/Users/chrisgrim/code/ei/app/Http/Kernel.php",
+		"/Users/chrisgrim/code/ei/resources/js/app.js",
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/Create/EventController.php",
+		"/Users/chrisgrim/code/ei/database/migrations/2020_11_13_194733_add_image_to_users_table.php",
+		"/Users/chrisgrim/code/ei/database/migrations/2014_10_12_000000_create_users_table.php",
+		"/Users/chrisgrim/code/ei/composer.json",
 		"/Users/chrisgrim/code/ei/resources/views/profiles/favorited.blade.php",
 		"/Users/chrisgrim/code/ei/resources/js/pages/profile/favorited.vue",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/ProfilesController.php",
@@ -663,7 +668,6 @@
 		"/Users/chrisgrim/code/ei/app/Scopes/RankScope.php",
 		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/admin-events.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/profile/profile-index.vue",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/Admin/EventController.php",
 		"/Users/chrisgrim/code/ei/routes/web.php",
 		"/Users/chrisgrim/code/ei/resources/js/pages/organizers/organizer-show.vue",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/OrganizerController.php",
@@ -685,7 +689,6 @@
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/category.vue",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/Create/ShowsController.php",
 		"/Users/chrisgrim/code/ei/app/Show.php",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/Create/EventController.php",
 		"/Users/chrisgrim/code/ei/resources/js/store/index.js",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/nav.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/create/image.vue",
@@ -711,7 +714,6 @@
 		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/admin-remote-locations.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/approve/org-approval-list.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/approve/org-approval-bar.vue",
-		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/approve/approval-list.vue",
 		"/Users/chrisgrim/code/ei/app/Location.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/Admin/RemoteLocationsController.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/Admin/CategoryController.php",
@@ -731,7 +733,6 @@
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/Admin/UsersController.php",
 		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/admin-user.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/admin-organizer.vue",
-		"/Users/chrisgrim/code/ei/resources/js/app.js",
 		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/admin-regions.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/admin-mobility.vue",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/Admin/MobilitiesController.php",
@@ -750,7 +751,6 @@
 		"/Users/chrisgrim/code/ei/resources/js/pages/events/components/filter.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/admin-content-advisories.vue",
 		"/Users/chrisgrim/code/ei/app/ReviewEvent.php",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/SearchController.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/Admin/ContentAdvisoriesController.php",
 		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/admin-create-review.vue",
 		"/Users/chrisgrim/code/ei/resources/js/pages/adminArea/admin-contact-level.vue",
@@ -772,14 +772,7 @@
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/Create/LocationController.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/Create/CategoryController.php",
 		"/Users/chrisgrim/code/ei/app/Http/Controllers/Create/DescriptionController.php",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/Create/AdvisoriesController.php",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/Create/ImageController.php",
-		"/Users/chrisgrim/code/ei/app/Policies/EventPolicy.php",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/EventTitleController.php",
-		"/Users/chrisgrim/code/ei/app/Http/Requests/LocationStoreRequest.php",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/AdvisoriesController.php",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/TicketsController.php",
-		"/Users/chrisgrim/code/ei/app/Http/Controllers/ShowsController.php"
+		"/Users/chrisgrim/code/ei/app/Http/Controllers/Create/AdvisoriesController.php"
 	],
 	"find":
 	{
@@ -790,6 +783,8 @@
 		"height": 164.0,
 		"where_history":
 		[
+			"/Users/chrisgrim/code/ei/app",
+			"/Users/chrisgrim/code/ei",
 			"/Users/chrisgrim/code/ei/resources/sass",
 			"/Users/chrisgrim/code/ei/resources/js/pages",
 			"/Users/chrisgrim/code/ei/resources",
@@ -915,8 +910,6 @@
 			"/Users/chrisgrim/code/ei/resources/sass",
 			"/Users/chrisgrim/code/ei/resources/js",
 			"/Users/chrisgrim/code/ei/resources/sass",
-			"/Users/chrisgrim/code/ei/resources/js",
-			"/Users/chrisgrim/code/ei/resources/views",
 			"/Users/chrisgrim/code/ei/resources/js"
 		]
 	},
@@ -925,6 +918,10 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"moderator",
+			"vuelidateErrorExtractor",
+			"PortalVue",
+			"cweag",
 			"framework",
 			"laravel",
 			"2",
@@ -1048,11 +1045,7 @@
 			"list",
 			"onLoadMore",
 			"load-more",
-			"intersected",
-			"onLoadMore",
-			"deletePick",
-			"loadPicks",
-			"onLoadMore"
+			"intersected"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -1079,15 +1072,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7742,
+						"buffer_size": 7820,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4345,
-								4345
+								2311,
+								2234
 							]
 						],
 						"settings":
@@ -1098,7 +1091,7 @@
 							"syntax": "Packages/PHP/PHP.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 1796.0,
+						"translation.y": 900.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,

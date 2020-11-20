@@ -57,8 +57,17 @@ class EventController extends Controller
      */
     public function queues()
     {
-        $events = Event::where('status', 'r')->with('organizer')->get();
-        return view('adminArea.approval',compact('events'));
+        return view('adminArea.approval');
+    }
+
+    /**
+     * Get latest events
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function fetchQue()
+    {
+        return Event::where('status', 'r')->with('organizer')->get();
     }
 
     /**
