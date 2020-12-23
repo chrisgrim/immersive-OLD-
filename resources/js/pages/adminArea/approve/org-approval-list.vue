@@ -74,6 +74,7 @@
 </template>
 
 <script>
+
     export default {
 
         props: ['organizers', 'user'],
@@ -87,7 +88,6 @@
         methods: {
 
             divWidth() {
-                console.log(this.$refs.list.clientWidth);
                 if (this.$refs.list.clientWidth > 1000) {
                     return this.width = '25%'
                 }

@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-use ScoutElastic\Searchable;
+use Laravel\Scout\Searchable;
+use ElasticScoutDriverPlus\CustomSearch;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -25,9 +26,8 @@ class User extends Authenticatable implements MustVerifyEmail
     use Notifiable;
     use Billable;
     use Searchable;
+    use CustomSearch;
     use TwoFactorAuthenticatable;
-
-    protected $indexConfigurator = UserIndexConfigurator::class;
 
     /**
      * The attributes that are mass assignable.
@@ -76,8 +76,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function toSearchableArray()
     {
         return [
-            "id" => $this->id,
-            "name" => $this->name ,
+            "name" => $this->name,
             "email" => $this->email,
         ];
     }
@@ -297,78 +296,5 @@ class User extends Authenticatable implements MustVerifyEmail
 
     }
 
-    protected $searchRules = [
-        //
-    ];
-
-    protected $mapping = [
-        'properties' => [
-            'id' => [
-                'type' => 'integer',
-                'index' => false
-            ],
-            'name' => [
-                'type' => 'search_as_you_type',
-            ],
-            'email' => [
-                'type' => 'search_as_you_type',
-            ],
-            'email_verified_at' => [
-                'type' => 'text',
-                'index' => false
-            ],
-            'password' => [
-                'type' => 'text',
-                'index' => false
-            ],
-            'avatar_path' => [
-                'type' => 'text',
-                'index' => false
-            ],
-            'has_unread' => [
-                'type' => 'text',
-                'index' => false
-            ],
-            'image_path' => [
-                'type' => 'text',
-                'index' => false
-            ],
-            'provider' => [
-                'type' => 'text',
-                'index' => false
-            ],
-            'type' => [
-                'type' => 'text',
-                'index' => false
-            ],
-            'remember_token' => [
-                'type' => 'text',
-                'index' => false
-            ],
-            'created_at' => [
-                'type' => 'text',
-                'index' => false
-            ],
-            'updated_at' => [
-                'type' => 'text',
-                'index' => false
-            ],
-            'stripe_id' => [
-                'type' => 'text',
-                'index' => false
-            ],
-            'card_brand' => [
-                'type' => 'text',
-                'index' => false
-            ],
-            'card_last_four' => [
-                'type' => 'text',
-                'index' => false
-            ],
-            'trail_ends_at' => [
-                'type' => 'text',
-                'index' => false
-            ],
-        ]
-    ];
+    
 }

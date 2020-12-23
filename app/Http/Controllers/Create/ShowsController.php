@@ -86,9 +86,17 @@ class ShowsController extends Controller
     public function update(Request $request, Event $event)
     {
 
+
         if ($request->shows)  Show::saveNewShows($request, $event);
 
         if ($request->limited) {
+            //check if the start and finish include the week dates
+            foreach (CarbonPeriod::create($request->start_date, $request->end_date) as $date) {
+                $calendarDays[] = strtolower($date->format('D'));
+            }
+            $weekDays= array_keys (array_filter($request->week));
+            if (empty(array_intersect($calendarDays, $weekDays))) return abort(500, "noOverlap");
+            
             ShowOnGoing::saveNewShowOnGoing($request, $event);
             Show::saveNewShows($request, $event);
         }

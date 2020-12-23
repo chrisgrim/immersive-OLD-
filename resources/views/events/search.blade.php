@@ -17,7 +17,7 @@
 
 @section('content')
     <div id="bodyArea">
-        <search-listing user="{{ auth()->id() }}" :tags="{{ $tags }}" :searchedevents="{{ $searchedevents->toJson() }}" :onlineevents="{{ $onlineevents->toJson() }}" :categories="{{ $categories }}" :maxprice="{{ $maxprice }}">
+        <search-listing user="{{ auth()->id() }}" :tags="{{ $tags }}" :searchedevents="{{ $searchedevents }}" :onlineevents="{{ $onlineevents }}" :categories="{{ $categories }}" :maxprice="{{ $maxprice }}">
     </div>
 @endsection
 

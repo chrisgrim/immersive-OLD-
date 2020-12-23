@@ -1,66 +1,48 @@
 <template>
     <div 
-        :class="{ showcat: selectedCategory}" 
+        :class="{ showcat: catgory}" 
         class="event-create__category grid">
         <section 
-            :class="{ showcat: selectedCategory}" 
+            :class="{ showcat: catgory}" 
             class="event-enter-category">
             <div class="title">
                 <h2>Immersive Categories</h2>
             </div>
             <div class="field">
-                <multiselect 
-                    v-show="categories.length > 0" 
-                    v-model="selectedCategory" 
+                <v-select 
+                    v-model="catgory"
+                    label="name"
+                    :options="categoryOptions"
+                    :clearable="false"
                     placeholder="Select Category"
-                    label="name" 
-                    track-by="name" 
-                    deselectLabel=''
-                    :allow-empty="false"  
-                    :options="categoryOptions" 
-                    open-direction="bottom"
-                    @input="$v.selectedCategory.$touch"
-                    :class="{ active: active == 'category','error': $v.selectedCategory.$error}"
-                    @click="active = 'category'"
-                    @blur="active = null">
-                    <template 
-                        slot="option" 
-                        slot-scope="props">
-                        <div class="option__desc">
-                            <span class="option__title">{{ props.option.name }}</span>
-                        </div>
-                    </template>
-                </multiselect>
+                    @search:blur="active = null"
+                    @search:focus="active = 'category'"
+                    @input="$v.catgory.$touch"
+                    :class="{ active: active == 'category','error': $v.catgory.$error}" />
                 <input 
                     type="hidden" 
                     name="category" 
-                    v-model="selectedCategory">
-                <div 
-                    v-if="$v.selectedCategory.$error" 
-                    class="validation-error">
-                    <p 
-                        class="error" 
-                        v-if="!$v.selectedCategory.required">
-                        Please select your event's category
-                    </p>
+                    v-model="catgory">
+                <div v-if="$v.catgory.$error" class="validation-error">
+                    <p class="error" v-if="!$v.catgory.required">Please select your event's category</p>
                 </div>
-
                 <div>
-                    <p v-text="this.selectedCategory ? selectedCategory.description : ''" />
+                    <br>
+                    <p v-text="this.catgory ? catgory.description : ''" />
                 </div>
             </div>
         </section>
 
         <section 
-            :class="{ showcat: selectedCategory}" 
-            v-if="selectedCategory" 
+            :class="{ showcat: catgory}" 
+            v-if="catgory" 
             class="event-show-category__image" 
-            :style="pageHeight">
+            :style="`height:calc(${window/pageHeight}px - 7rem)`">
             <picture>       
                 <source 
                     type="image/webp" 
-                    :srcset="`/storage/${selectedCategory.largeImagePath}`"> 
-                <img :src="`/storage/${selectedCategory.largeImagePath.slice(0, -4)}jpg`">
+                    :srcset="`/storage/${catgory.largeImagePath}`"> 
+                <img :src="`/storage/${catgory.largeImagePath.slice(0, -4)}jpg`">
             </picture>
         </section>
         <Submit 
@@ -82,86 +64,63 @@
 <script>
     import Submit  from './components/submit-buttons.vue'
     import formValidationMixin from '../../mixins/form-validation-mixin'
-	import Multiselect from 'vue-multiselect'
 	import { required } from 'vuelidate/lib/validators';
 
 	export default {
 
         props: ['event', 'categories'],
 
-        mixins: [formValidationMixin],
+        mixins: [ formValidationMixin ],
 
-		components: { Multiselect, Submit },
+		components: { Submit },
 
         computed: {
             endpoint() {
                 return `/create/${this.event.slug}/category`
             },
-
-            navSubmit() {
-                return this.$store.state.navurl
-            },
         },
 
 		data() {
 			return {
-				selectedCategory: '',
+				catgory: '',
 				categoryOptions: this.categories,
 				active: null,
-                pageHeight: 0,
+                window: window.innerHeight,
+                pageHeight: window.innerWidth > 1050 ? 1 : 2,
                 disabled: false,
-                serverErrors: '',
                 updated: false,
-                approved: this.event.status == 'p' || this.event.status == 'e' ? true : false,
+                creationPage: 3,
 			}
 		},
 
 
 		methods: {
-			onSubmit(value) {
-                if (!this.$v.$anyDirty && this.event.status != 2) {return this.onForward(value)}
-                if (this.checkVuelidate()) { return false }
-				axios.patch(this.endpoint, this.selectedCategory)
-				.then(res => {  
-                    value == 'save' ? this.save() : this.onForward(value);
-                })
-                .catch(err => {this.onErrors(err);});
+			async onSubmit(value) {
+                if ( this.checkForChanges(value) ) { return this.onForward(value) }
+                if ( this.checkVuelidate() ) { return }
+				await axios.patch(this.endpoint, this.catgory)
+                value == 'save' ? this.save() : this.onForward(value);
 			},
-
-            handleResize() {
-                if (window.innerWidth > 1050) {
-                    this.pageHeight = `height:calc(${window.innerHeight}px - 7rem)`;
-                } else {
-                    this.pageHeight = `height:calc(${window.innerHeight/2}px - 7rem)`;
-                }
-            },
 
             onLoad() {
                 axios.get(this.onFetch('category'))
-                .then(res => {
-                    this.selectedCategory = res.data;
-                });
+                .then( res => { this.catgory = res.data; });
             },
 		},
 
         created() {
-            window.addEventListener('resize', this.handleResize)
-            this.handleResize();
             this.onLoad();
+            this.disabled = false;
         },
 
         watch: {
-            navSubmit() {
-                return !this.$v.$anyDirty ? this.onBack(this.navSubmit) : this.onSubmit(this.navSubmit);
+            '$store.state.navurl'() {
+                this.checkForChanges() ? this.onBack(this.$store.state.navurl.page) : this.onSubmit(this.$store.state.navurl.page)
             }
         },
 
-        destroyed() {
-            window.removeEventListener('resize', this.handleResize)
-        },
-
 		validations: {
-			selectedCategory: {
+			catgory: {
 				required
 			},
 		},

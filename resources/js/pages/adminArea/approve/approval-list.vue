@@ -10,7 +10,7 @@
                 <vue-event-index 
                     favorite="hidden" 
                     loadurl="admin" 
-                    :events="events" />
+                    :events="eventsLoaded" />
             </div>
         </section>
     </div>
@@ -18,17 +18,29 @@
 
 <script>
 
+    import vueEventIndex from '../../events/components/index-item.vue'
+
     export default {
 
-        props:['events', 'user'],
+        components: { vueEventIndex },
+
+        props:[ 'user' ],
 
         data() {
             return {
+                eventsLoaded: null,
             }
         },
 
         methods: {
+            onLoad() {
+                axios.get(`/admin/events/finalize/fetch?timestamp=${new Date().getTime()}`)
+                .then( res => { this.eventsLoaded = res.data })
+            },
+        },
 
+        created() {
+            this.onLoad()
         },
 
     };

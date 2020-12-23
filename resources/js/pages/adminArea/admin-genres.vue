@@ -4,7 +4,7 @@
             <div class="title">
                 <h1>Tags</h1>
                 <div class="add">
-                    <button @click.prevent="isModalVisible = true">
+                    <button @click.prevent="modal = 'new'">
                         <IconSvg type="add" />
                     </button>
                 </div>
@@ -21,13 +21,13 @@
             </div>
             <div class="c-tags__list--grid-top">
                 <p>tag</p>
-                <p>rank</p>
+                <p>rank (1 is most important)</p>
                 <p>admin</p>
             </div>
             <div 
                 class="list c-tags__list--grid" 
                 :key="genre.id"
-                v-for="(genre) in genres">
+                v-for="genre in genres.data">
                 <div class="field">
                     <input 
                         type="text" 
@@ -36,63 +36,49 @@
                         @blur="onUpdate(genre)">
                 </div>
                 <div class="field">
-                    <multiselect 
-                        v-model="genre.rank" 
-                        :options="[1,2,3,4,5]"
-                        :show-labels="false"
+                    <v-select 
+                        v-model="genre.rank"
+                        label="name"
                         placeholder="Leave blank for default Rank of 5 (1 being most important)"
-                        open-direction="bottom"
-                        :class="{ active: active == 'rank'}"
-                        @click="active = 'rank'"
-                        @blur="active = null"
+                        @search:focus="active = 'rank'"
+                        @search:blur="active = null"
                         @input="onUpdate(genre)"
-                        :preselect-first="false" />
+                        :clearable="false"
+                        :class="{ active: active == 'rank'}"
+                        :options="[1,2,3,4,5]" />
                 </div>
                 <div class="field">
-                    <multiselect 
-                        v-model="genre.admin" 
-                        :options="[0,1]"
-                        :show-labels="false"
-                        placeholder="admin tags"
-                        open-direction="bottom"
-                        :class="{ active: active == `${genre.id}rank`}"
-                        @click="active = `${genre.id}rank`"
-                        @blur="active = null"
+                    <v-select 
+                        v-model="genre.admin"
+                        placeholder="admin"
+                        @search:focus="active = `${genre.id}rank`"
+                        @search:blur="active = null"
                         @input="onUpdate(genre)"
-                        :preselect-first="false" />
+                        :clearable="false"
+                        :class="{ active: active == `${genre.id}rank`}"
+                        :options="[1,2,3,4,5]" />
                 </div>
-
                 <button 
-                    @click.prevent="showModal(genre)" 
+                    @click.prevent="showModal(genre, 'delete')" 
                     class="delete-circle">
                     <IconSvg type="delete" />
                 </button>
             </div>
-            <modal 
-                v-if="isEditModalVisible" 
-                @close="isEditModalVisible = false">
-                <div slot="header">
-                    <div class="circle del">
-                        <p>X</p>
-                    </div>
-                </div>
-                <div slot="body"> 
-                    <h3>Are you sure?</h3>
-                    <p>You are deleting {{ modalDelete.genre }}.</p>
-                </div>
-                <div slot="footer">
-                    <button 
-                        class="btn del" 
-                        @click.prevent="onDelete(modalDelete)">
-                        Delete
-                    </button>
-                </div>
-            </modal>
-
+            <pagination 
+                :limit="1"
+                :list="genres"
+                @selectpage="onLoad" />
+            <VueDeleteModal 
+                v-if="modal == 'delete'"
+                :item="selectedModal"
+                :strict="true"
+                body="Deleting this Tag will delete it everywhere"
+                @close="modal = null"
+                @ondelete="onDelete" />
             <div class="pin noimg">
                 <modal 
-                    v-if="isModalVisible" 
-                    @close="isModalVisible = false">
+                    v-if="modal == 'new'"
+                    @close="modal = null">
                     <div slot="header">
                         <div />
                     </div>
@@ -122,7 +108,6 @@
                     </div>
                 </modal>
             </div>
-            <load-more @intersect="intersected()" />
         </div>
     </div>
 </template>
@@ -130,13 +115,16 @@
 <script>
     
     import { required } from 'vuelidate/lib/validators'
-    import LoadMore  from '../../components/LoadMore.js'
-    import Multiselect from 'vue-multiselect'
     import IconSvg from '../../components/Svg-icon'
+    import Pagination  from '../../components/pagination.vue'
+    import VueDeleteModal from '../../components/Vue-Delete-Modal'
+    import formValidationMixin from '../../mixins/form-validation-mixin'
 
     export default {
 
-        components: { Multiselect, LoadMore, IconSvg },
+        components: { IconSvg, Pagination, VueDeleteModal },
+
+        mixins: [ formValidationMixin ],
 
         data() {
             return {
@@ -144,69 +132,50 @@
                 genres: [],
                 active: false,
                 name: '',
-                isModalVisible: false,
-                isEditModalVisible: false,
-                modalDelete: '',
-                pagination: '',
-                page: 1,
+                modal: null,
+                selectedModal: '',
             }
         },
 
         methods: {
 
-            onSubmit() {
-                this.$v.$touch(); 
-                if (this.$v.$invalid) { return false }
-
-                axios.post('/genres', {name: this.name})
-                .then(res => { this.genres = res.data.data; this.isModalVisible = false; })
-                .catch(error => { this.isModalVisible = false });
+            async onSubmit() {
+                if (this.checkVuelidate()) { return false }
+                await axios.post('/genres', {name: this.name})
+                location.reload();
             },
 
             onUpdate(genre) {
                 axios.patch(`/genres/${genre.id}`, genre)
-                .then(res => { this.genres = res.data.data; })
-                .catch(error => { this.serverErrors = error.response.data.errors; });
+                .then( res => { this.genres = res.data.data })
             },
 
-            onDelete(genre) {
-                axios.delete(`/genres/${genre.id}`)
-                .then(res => { this.isEditModalVisible = false; this.genres = res.data.data; })
-                .catch(error => { this.serverErrors = error.response.data.errors; });
+            async onDelete() {
+                await axios.delete(`/genres/${this.selectedModal.id}`)
+                location.reload();
             },
 
-            onLoad() {
-                axios.get(`/genres?page=${this.page}`)
+            onLoad(page) {
+                axios.get(`/genres?page=${page}`)
                 .then(res => { 
-                    res.data.current_page == 1 ? this.genres = res.data.data : this.genres = this.genres.concat(res.data.data);
-                    this.pagination = res.data;
-                    this.page = res.data.current_page + 1;
+                    this.genres = res.data;
                 })
-                .catch(error => { this.serverErrors = error.response.data.errors; });
             },
 
             onSearch(value) {
-                this.page = 2;
                 axios.get('/api/admin/genres/search', { params: { keywords: value } })
                 .then(res => {
-                    this.genres = res.data.data;
+                    this.genres = res.data;
                 });
             },
-
-            showModal(genre) {
-                this.modalDelete = genre;
-                this.isEditModalVisible = true;
-            },
-
-            intersected() {
-                if (this.genre) {return false}
-                if( this.pagination.last_page < this.page ) {return false}
-                this.onLoad();
-            },
             
+            showModal(genre, arr) {
+                this.selectedModal = genre;
+                this.modal = arr;
+            },
         },
 
-        created() {
+        mounted() {
             this.onLoad()
         },
 

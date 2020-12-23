@@ -9,35 +9,7 @@
                         <h3>Discover immersive experiences...</h3>
                     </div>
                     <div class="index-nav-search">
-                        <nav-search 
-                            page="homepage" 
-                            :searchtype="searchType" />
-                    </div>
-                    <div class="event-index__switch-search">
-                        <div class="event-index__switch-search--tab">
-                            <button @click="searchType = 'category'">
-                                Category or Tag
-                            </button>
-                            <div 
-                                :class="{active: searchType == 'category'}" 
-                                class="event-index__bottom-bar" />
-                        </div>
-                        <div class="event-index__switch-search--tab">
-                            <button @click="searchType = 'location'">
-                                Location
-                            </button>
-                            <div 
-                                :class="{active: searchType == 'location'}" 
-                                class="event-index__bottom-bar" />
-                        </div>
-                        <div class="event-index__switch-search--tab">
-                            <button @click="searchType = 'event'">
-                                Organizer or Event
-                            </button>
-                            <div    
-                                :class="{active: searchType == 'event'}" 
-                                class="event-index__bottom-bar" />
-                        </div>
+                        <vue-nav-search page="homepage" />
                     </div>
                 </div>
             </header>
@@ -308,12 +280,13 @@
 
 <script>
     import ShowMore  from './components/show-more.vue'
+    import vueNavSearch  from '../layouts/nav-search.vue'
 
     export default {
 
         props:['categories', 'staffpicks'],
 
-        components: { ShowMore },
+        components: { ShowMore, vueNavSearch },
 
         computed: {
             user () {
@@ -351,7 +324,6 @@
                 mobile: window.innerWidth < 768 ? true : false,
                 translateStaff: 0,
                 translateCat: 0,
-                searchType: 'category',
                 staffwidth: window.innerWidth > 768 ? 100 : 90,
                 width: window.innerWidth > 768 ? '33%' : '90%',
                 hover: '',

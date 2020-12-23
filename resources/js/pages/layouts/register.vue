@@ -182,7 +182,7 @@
 
 <script>
     import _ from 'lodash';
-    import { required, requiredIf, maxLength } from 'vuelidate/lib/validators'
+    import { required, maxLength } from 'vuelidate/lib/validators'
     import CubeSpinner  from '../layouts/loading.vue'
     import PasswordForget  from './forgotPassword.vue'
     import formValidationMixin from '../../mixins/form-validation-mixin'
@@ -310,18 +310,18 @@
         validations: {
             user: {
                 email: {
-                    required,
+                    // required,
                     serverFailed(){ return !this.hasServerError('email'); },
                 },
                 name: {
                     requiredIfRegister() { 
                         return !this.isLogin ? this.user.name ? true : false : true
                     },
-                    maxLength: maxLength(50),
+                    // maxLength: maxLength(50),
                 },
                 password: {
                     serverFailed(){ return !this.hasServerError('password'); },
-                    required
+                    // required
                 },
                 passwordConfirm: {
                     sameAsPassword() {

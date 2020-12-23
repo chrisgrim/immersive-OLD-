@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Conversation;
+use App\Models\Conversation;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ConversationPolicy

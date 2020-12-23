@@ -11,58 +11,44 @@
                 v-model="organizer"
                 placeholder="Filter by organization name" 
                 class="general"
-                @keyup="asyncGenerateOrganizerList(organizer)"
+                @keyup="onSearchOrganizers(organizer)"
                 type="text">
         </div>
-        <div 
-            class="list"
-            :key="organizer.id"
-            v-for="(organizer) in organizers">
-            <div class="edit">
-                <a :href="`/organizer/${organizer.slug}/edit`">
-                    <button class="default">Edit Organizer</button>
-                </a>
-            </div>
-            <div>
-                {{ organizer.name }}
-            </div>
-            <div>
-                {{ organizer.user.email }}
-            </div>
-            <div>
-                <button @click.prevent="showModal(organizer, 'changeOrg')">Change Owner</button>
-            </div>
-            <button 
-                @click.prevent="showModal(organizer, 'deleteOrg')" 
-                class="delete-circle">
-                <p>X</p>
-            </button>
-        </div>
-        <div class="pagination-button">
-            <button 
-                class="default" 
-                @click="loadMore">
-                Load more
-            </button>
-        </div>
-        <modal 
-            v-if="modal == 'deleteOrg'" 
-            @close="modal = null">
-            <div slot="header">
-                <div class="circle del">
-                    <p>X</p>
+        <div v-if="organizers && organizers.length">
+            <div 
+                class="list"
+                v-for="(org) in organizers"
+                :key="org.id">
+                <div class="edit">
+                    <a :href="`/organizer/${org.slug}/edit`">
+                        <button class="default">Edit Organizer</button>
+                    </a>
                 </div>
-            </div>
-            <div slot="body"> 
-                <h3>Are you sure?</h3>
-                <p>You are deleting your {{selectedModal.name}} organization.</p>
-            </div>
-            <div slot="footer">
+                <div>
+                    {{ org.name }}
+                </div>
+                <div>
+                    {{ org.user.email }}
+                </div>
+                <div>
+                    <button @click.prevent="showModal(org, 'changeOrg')">
+                        Change Owner
+                    </button>
+                </div>
                 <button 
-                    class="btn del" 
-                    @click="deleteOrg()">Delete</button>
+                    @click.prevent="showModal(org, 'deleteOrg')" 
+                    class="delete-circle">
+                    <IconSvg type="delete" />
+                </button>
             </div>
-        </modal>
+        </div>
+        <VueDeleteModal 
+            v-if="modal == 'deleteOrg'"
+            :item="selectedModal"
+            :strict="true"
+            body="Deleting this organizer will delete all of the organizers events as well. Please be sure you know what you are doing."
+            @close="modal = null"
+            @ondelete="onDelete" />
         <modal 
             v-if="modal == 'changeOrg'" 
             @close="modal = null">
@@ -73,19 +59,21 @@
             </div>
             <div slot="body"> 
                 <h3>Change Organizer Owner</h3>
-                <multiselect 
-                    v-model="user" 
-                    deselect-label="Can't remove this value" 
-                    track-by="email" 
-                    label="email" 
-                    placeholder="Select one" 
-                    :options="users"
-                    @search-change="asyncGenerateUserList" />
+                <v-select 
+                    v-model="user"
+                    label="name"
+                    placeholder="Enter User Name"
+                    @search="onSearchUsers"
+                    @search:focus="onSearchUsers"
+                    :clearable="false"
+                    :options="users" />
             </div>
             <div slot="footer">
                 <button 
                     class="btn sub" 
-                    @click="onChangeOwner()">Change Owner</button>
+                    @click="onChangeOwner()">
+                    Change Owner 
+                </button>
             </div>
         </modal>
     </div>
@@ -93,142 +81,65 @@
 
 <script>
     
-    import { required } from 'vuelidate/lib/validators';
-    import Multiselect from 'vue-multiselect'
-
+    import IconSvg from '../../components/Svg-icon'
+    import VueDeleteModal from '../../components/Vue-Delete-Modal'
 
     export default {
 
-        components: { Multiselect },
-
-        computed: {
-            organizers() {
-                return this.organizerList.length ? this.organizerList : this.initOrganizers 
-            }
-        },
+        components: { IconSvg, VueDeleteModal },
 
         data() {
             return {
-                organizerList: [],
-                initOrganizers: [],
+                organizers: [],
+                organizer: null,
                 isModalVisible: false,
                 isEditModalVisible: false,
                 modalDelete: '',
-                isLoading: '',
                 selectedModal: '',
                 modal: '',
-                newOwner: 'bob',
                 user: '',
                 users:[],
                 showEdit: false,
-                pagination: {paginate:10},
-
             }
         },
 
         methods: {
-
             showModal(event, arr) {
                 this.selectedModal = event;
                 this.modal = arr;
             },
 
-            deleteOrg(index) {
-                axios.delete(`/organizer/${this.selectedModal.slug}`)
-                .then(res => {
-                   location.reload();
-                })
-                .catch(err => { 
-                });
-            },
-
-            loadMore() {
-                this.pagination.paginate += 10;
-                this.onLoad();
+            async onDelete() {
+                await axios.delete(`/organizer/${this.selectedModal.slug}`)
+                location.reload()
             },
 
             onLoad() {
-                axios.post('/admin/organizer/fetch', this.pagination)
-                .then(res => {
-                    this.initOrganizers = res.data;
-                })
-                .catch(error => { this.serverErrors = error.res.data.errors; });
+                axios.get(`/admin/organizer/fetch?timestamp=${new Date().getTime()}`)
+                .then( res => { this.organizers = res.data.data });
             },
 
-            onChangeOwner() {
-                axios.post(`/change/organizer/${this.selectedModal.slug}`, this.user)
-                .then(res => { 
-                    console.log(res.data)
-                    this.modal = '';
-                    this.onLoad();
-                })
+            async onChangeOwner() {
+                await axios.post(`/admin/organizer/${this.selectedModal.slug}/changeUser`, this.user)
+                location.reload()
             },
 
-            asyncGenerateUserList (query) {
+            onSearchOrganizers (query) {
+                axios.get('/api/admin/organizer/search', { params: { keywords: query } })
+                .then( res => { this.organizers = res.data.data });
+            },
+
+            onSearchUsers (query) {
                 axios.get('/api/admin/users/search', { params: { keywords: query } })
-                .then(res => {
-                    this.users = res.data;
-                })
-                .catch(error => {
-                    this.loadUsers();
-                })
+                .then(res => { this.users = res.data.data });
             },
 
-            loadUsers() {
-                axios.get('/api/admin/users/search')
-                .then(res => {
-                    this.users = res.data;
-                })
-                .catch(error => { this.serverErrors = error.response.data.errors; });
-            },
-
-            onSaveUser(value) {
-                let data = {
-                    user_id: value.user_id,
-                };
-                axios.patch(`/admin/organizer/${value.slug}`, data)
-                .then(response => { 
-                    console.log(response.data)
-                   this.onLoad()
-                })
-                .catch(error => { 
-                    this.serverErrors = error.response.data.errors; 
-                });
-            },
-            onSaveName(val) {
-                let data = {
-                    name: val.name
-                };
-                axios.patch(`/admin/organizer/${val.slug}`, data)
-                .then(res => { 
-                    console.log(res.data)
-                   this.onLoad()
-                })
-                .catch(error => { 
-                    this.serverErrors = error.res.data.errors; 
-                });
-            }, 
-
-            asyncGenerateOrganizerList(query) {
-                axios.get('/api/search/organizer', { params: { keywords: query } })
-                .then(res => {
-                    this.organizerList = res.data;
-                });
-            },
-
-            
         },
 
         created() {
             this.onLoad();
-            this.loadUsers();
         },
 
-        validations: {
-            region: {
-                required,
-            },
-        },
     }
 
 </script>

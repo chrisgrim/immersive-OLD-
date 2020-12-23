@@ -9,21 +9,17 @@
                 autofocus>
             <div class="field">
                 <label class="area">Select physical interaction level with performers</label>
-                <multiselect 
-                    v-model="contactAdvisories" 
-                    :options="contactAdvisoryOptions" 
-                    :multiple="true" 
-                    placeholder="Choose all that apply"
-                    open-direction="bottom"
-                    :close-on-select="false"
-                    :show-labels="false"
-                    :class="{ active: active == 'contact','error': $v.contactAdvisories.$error }"
-                    @click="active = 'contact'"
-                    @blur="active = null"
-                    @input="$v.contactAdvisories.$touch"
+                <v-select 
+                    v-model="contactAdvisories"
+                    :options="contactAdvisoryOptions"
+                    multiple
                     label="level" 
-                    track-by="id" 
-                    :preselect-first="false" />
+                    placeholder="Choose all that apply"
+                    :clearable="false"
+                    @search:blur="active = null"
+                    @search:focus="active = 'contact'"
+                    @input="$v.contactAdvisories.$touch"
+                    :class="{ active: active == 'contact','error': $v.contactAdvisories.$error }" />
                 <div v-if="$v.contactAdvisories.$error" class="validation-error">
                     <p class="error" v-if="!$v.contactAdvisories.required">Must choose at least one contact level </p>
                 </div>
@@ -35,18 +31,16 @@
             </div>
             <div class="field">
                 <label> Is there sexual content? </label>
-                <multiselect 
-                    v-model="advisories.sexual" 
+                <v-select 
+                    v-model="advisories.sexual"
                     :options="options"
-                    :show-labels="false"
+                    label="name" 
                     placeholder="Choose one"
-                    label="name"
-                    open-direction="bottom"
-                    :class="{ active: active == 'sexual','error': $v.advisories.sexual.$error }"
-                    @click="active = 'sexual'"
-                    @blur="active = null"
+                    :clearable="false"
+                    @search:blur="active = null"
+                    @search:focus="active = 'sexual'"
                     @input="$v.advisories.sexual.$touch"
-                    :preselect-first="false" />
+                    :class="{ active: active == 'sexual','error': $v.advisories.sexual.$error }" />
                 <div v-if="$v.advisories.sexual.$error" class="validation-error">
                     <p class="error" v-if="!$v.advisories.sexual.required">Required</p>
                 </div>
@@ -67,48 +61,41 @@
                         autofocus />
                     <div v-if="$v.advisories.sexualDescription.$error" class="validation-error">
                         <p class="error" v-if="!$v.advisories.sexualDescription.ifSexual">Please describe the sexual content </p>
+                        <p class="error" v-if="!$v.advisories.sexualDescription.maxLength">Description is too long </p>
                     </div>
                 </div>
             </div>
             <div class="field">
                 <label class="area">Include warnings and advisories</label>
-                <multiselect 
-                    v-model="contentAdvisories" 
-                    :show-labels="false"
-                    :close-on-select="false"
+                <v-select 
+                    v-model="contentAdvisories"
                     :options="contentAdvisoryOptions"
-                    :class="{ active: active == 'content','error': $v.contentAdvisories.$error }"
-                    :multiple="true" 
-                    tag-placeholder="Add this as new tag"
-                    :taggable="true" 
-                    tag-position="bottom"
+                    multiple
+                    taggable
+                    label="advisories" 
                     placeholder="Select from list or enter your own" 
-                    open-direction="bottom"
-                    @tag="addContentTag"
-                    @click="active = 'content'"
-                    @blur="active = null"
-                    @input="$v.contactAdvisories.$touch"
-                    label="advisories"
-                    track-by="id" />
+                    :clearable="false"
+                    @search:blur="active = null"
+                    @search:focus="active = 'content'"
+                    @input="$v.contentAdvisories.$touch"
+                    :class="{ active: active == 'content','error': $v.contentAdvisories.$error }" />
                 <div v-if="$v.contentAdvisories.$error" class="validation-error">
                     <p class="error" v-if="!$v.contentAdvisories.required">Must enter a content advisory </p>
+                    <p class="error" v-if="!$v.contentAdvisories.maxChar">Advisory character length is too long </p>
                 </div>
             </div>
             <div class="field">
                 <label>Age restriction</label>
-                <multiselect 
-                    v-model="age" 
+                <v-select 
+                    v-model="age"
                     :options="agelimit"
-                    :show-labels="false"
+                    label="name" 
                     placeholder="Select the appropriate age group"
-                    open-direction="bottom"
-                    track="id"
-                    label="name"
-                    :class="{ active: active == 'age','error': $v.age.$error }"
-                    @click="active = 'age'"
-                    @blur="active = null"
+                    :clearable="false"
+                    @search:blur="active = null"
+                    @search:focus="active = 'age'"
                     @input="$v.age.$touch"
-                    :preselect-first="false" />
+                    :class="{ active: active == 'age','error': $v.age.$error }" />
                 <div v-if="$v.age.$error" class="validation-error">
                     <p class="error" v-if="!$v.age.required">Required</p>
                 </div>
@@ -120,44 +107,37 @@
             </div>
             <div class="field">
                 <label> Is the event wheelchair accessible? </label>
-                <multiselect 
+                <v-select 
                     v-model="advisories.wheelchairReady" 
                     :options="options"
-                    :show-labels="false"
+                    label="name" 
                     placeholder="Choose one"
-                    label="name"
-                    open-direction="bottom"
-                    :class="{ active: active == 'wheel','error': $v.advisories.wheelchairReady.$error }"
-                    @click="active = 'wheel'"
-                    @blur="active = null"
+                    :clearable="false"
+                    @search:blur="active = null"
+                    @search:focus="active = 'wheel'"
                     @input="$v.advisories.wheelchairReady.$touch"
-                    :preselect-first="false" />
+                    :class="{ active: active == 'wheel','error': $v.advisories.wheelchairReady.$error }" />
                 <div v-if="$v.advisories.wheelchairReady.$error" class="validation-error">
                     <p class="error" v-if="!$v.advisories.wheelchairReady.required">Required</p>
                 </div>
             </div>
             <div class="field">
                 <label class="area">Select any mobility restrictions</label>
-                <multiselect 
+                <v-select 
                     v-model="mobilityAdvisories" 
-                    :options="mobilityAdvisoryOptions" 
-                    :multiple="true" 
-                    :show-labels="false"
-                    :close-on-select="false"
-                    tag-placeholder="Add this as new tag"
-                    :taggable="true" 
-                    tag-position="bottom"
+                    :options="mobilityAdvisoryOptions"
+                    multiple
+                    taggable
+                    label="mobilities" 
                     placeholder="Select from list or enter your own" 
-                    open-direction="bottom"
-                    :class="{ active: active == 'mobility','error': $v.mobilityAdvisories.$error }"
-                    @tag="addMobilityTag"
-                    @click="active = 'mobility'"
-                    @blur="active = null"
+                    :clearable="false"
+                    @search:blur="active = null"
+                    @search:focus="active = 'mobility'"
                     @input="$v.mobilityAdvisories.$touch"
-                    label="mobilities"
-                    track-by="id" />
+                    :class="{ active: active == 'mobility','error': $v.mobilityAdvisories.$error }" />
                 <div v-if="$v.mobilityAdvisories.$error" class="validation-error">
                     <p class="error" v-if="!$v.mobilityAdvisories.required">Must enter a mobility advisory </p>
+                    <p class="error" v-if="!$v.mobilityAdvisories.maxChar">Advisory character length is too long </p>
                 </div>
             </div>
         </section>
@@ -167,29 +147,22 @@
                 <h2>Audience Interaction Level</h2>
             </div>
             <div class="field">
-                <label class="area">Select physical interaction level with performers</label>
-                <multiselect 
+                <label class="area">Select interaction level with performers</label>
+                <v-select 
                     v-model="interactiveLevel" 
-                    :options="interactiveLevelOptions" 
-                    :multiple="false" 
-                    placeholder="Select your event's interaction level"
-                    open-direction="bottom"
-                    :allowEmpty="false"
-                    :show-labels="false"
-                    :class="{ active: active == 'interactive','error': $v.interactiveLevel.$error }"
-                    @click="active = 'interactive'"
-                    @blur="active = null"
-                    @input="$v.interactiveLevel.$touch"
+                    :options="interactiveLevelOptions"
                     label="name" 
-                    track-by="id" 
-                    :preselect-first="false">
-                    <template slot="option" slot-scope="props">
-                        <div class="option__desc">
-                            <div class="option__title--interaction">{{ props.option.name }}</div>
-                            <div class="option__small-interaction">{{ props.option.description }}</div>
-                        </div>
+                    placeholder="Select your event's interaction level"
+                    :clearable="false"
+                    @search:blur="active = null"
+                    @search:focus="active = 'interactive'"
+                    @input="$v.interactiveLevel.$touch"
+                    :class="{ active: active == 'interactive','error': $v.interactiveLevel.$error }">
+                    <template #option="{ name, description }">
+                        <div class="option__title--interaction">{{ name }}</div>
+                        <div class="option__small-interaction">{{ description }}</div>
                     </template>
-                </multiselect>
+                </v-select>
                 <div v-if="$v.interactiveLevel.$error" class="validation-error">
                     <p class="error" v-if="!$v.interactiveLevel.required">Must choose at least one interaction level </p>
                 </div>
@@ -209,6 +182,7 @@
                     autofocus />
                 <div v-if="$v.advisories.audience.$error" class="validation-error">
                     <p class="error" v-if="!$v.advisories.audience.required">Must enter the audience's role </p>
+                    <p class="error" v-if="!$v.advisories.audience.maxLength">Audience Role is too long </p>
                 </div>
             </div>
         </section>
@@ -228,26 +202,21 @@
 
 <script>
     import formValidationMixin from '../../mixins/form-validation-mixin'
-    import Multiselect from 'vue-multiselect'
     import _ from 'lodash';
-    import { required, numeric } from 'vuelidate/lib/validators'
+    import { required, maxLength } from 'vuelidate/lib/validators'
     import Submit  from './components/submit-buttons.vue'
 
 	export default {
 
         mixins: [formValidationMixin],
 
-        components: { Multiselect, Submit },
+        components: { Submit },
 
 		props: ['event', 'loadcontact', 'loadcontent', 'loadmobility', 'loadinteractive', 'agelimit'],
 
         computed: {
             endpoint() {
                 return `/create/${this.event.slug}/advisories`
-            },
-
-            navSubmit() {
-                return this.$store.state.navurl
             },
 
             submitObject() {
@@ -287,10 +256,18 @@
                 serverErrors: [],
                 updated: false,
                 approved: this.event.status == 'p' || this.event.status == 'e' ? true : false,
+                creationPage: 7,
 			}
 		},
 
 		methods: {
+            async onSubmit(value) {
+                if ( this.checkForChanges(value) ) { return this.onForward(value) }
+                if ( this.checkVuelidate() ) { return }
+                await axios.patch(this.endpoint, this.submitObject)
+                value == 'save' ? this.save() : this.onForward(value);
+            },
+
 			initializeAdvisoriesObject() {
 				return {
 					contactAdvisories: this.event.advisories ? this.event.advisories.contactAdvisories : '',
@@ -300,35 +277,6 @@
 					ageRestriction: this.event.advisories ? this.event.advisories.ageRestriction : '',
                     audience: this.event.advisories ? this.event.advisories.audience : '',
 				}
-			},
-
-            addContentTag (newTag) {
-                const tag = {
-                    advisories: newTag,
-                    id: newTag.substring(0, 0) + Math.floor((Math.random() * 10000000))
-                }
-                this.contentAdvisoryOptions.push(tag)
-                this.contentAdvisories.push(tag)
-            },
-
-            addMobilityTag (newTag) {
-                const tag = {
-                    mobilities: newTag,
-                    id: newTag.substring(0, 0) + Math.floor((Math.random() * 10000000))
-                }
-                this.mobilityAdvisoryOptions.push(tag)
-                this.mobilityAdvisories.push(tag)
-            },
-
-			onSubmit(value) {
-				if (this.checkVuelidate()) { return false };
-				axios.patch(this.endpoint, this.submitObject)
-				.then(res => { 
-                    value == 'save' ? this.save() : this.onForward(value);
-                })
-				.catch(err => {
-                    this.onErrors(err);
-                });
 			},
 
             updateAdvisoryFields(input) {
@@ -357,12 +305,8 @@
 		},
 
         watch: {
-            navSubmit() {
-                if (this.event.status < 7 && this.$v.$invalid) {
-                    this.onBack(this.navSubmit);
-                } else {
-                    this.onSubmit(this.navSubmit);
-                }
+            '$store.state.navurl'() {
+                this.checkForChanges() ? this.onBack(this.$store.state.navurl.page) : this.onSubmit(this.$store.state.navurl.page)
             }
         },
 
@@ -379,10 +323,16 @@
                 required
             },
             mobilityAdvisories: {
-                required
+                required,
+                maxChar() {
+                    return this.mobilityAdvisories.filter( mobility => mobility.mobilities.length > 30 ).length ? false : true
+                }
             },
             contentAdvisories: {
-                required
+                required,
+                maxChar() {
+                    return this.contentAdvisories.filter( content => content.advisories.length > 30 ).length ? false : true
+                }
             },
             interactiveLevel: {
                 required
@@ -391,13 +341,15 @@
                 sexualDescription: {
                     ifSexual() {
                         return this.advisories.sexual && this.advisories.sexual.type ? this.advisories.sexualDescription ? true : false : true
-                    }
+                    },
+                    maxLength: maxLength(1000),
                 },
                 wheelchairReady: {
                     required,
                 },
                 audience: {
                     required,
+                    maxLength: maxLength(1000),
                 },
                 sexual: {
                     required

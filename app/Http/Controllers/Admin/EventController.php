@@ -14,6 +14,7 @@ use App\Mail\EventChanges;
 use App\Mail\EventApproved;
 use App\Mail\EventRejected;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 
@@ -46,7 +47,7 @@ class EventController extends Controller
      */
     public function fetch(Request $request)
     {
-        return Event::where('status','p')->orWhere('status','e')->take($request->paginate)->get();
+        return Event::where('status','p')->orWhere('status','e')->paginate(30);
     }
 
     /**
@@ -57,8 +58,17 @@ class EventController extends Controller
      */
     public function queues()
     {
-        $events = Event::where('status', 'r')->with('organizer')->get();
-        return view('adminArea.approval',compact('events'));
+        return view('adminArea.approval');
+    }
+
+    /**
+     * Get latest events
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function fetchQue()
+    {
+        return Event::where('status', 'r')->with('organizer')->get();
     }
 
     /**
@@ -165,6 +175,16 @@ class EventController extends Controller
         }
 
         $event->delete();
+    }
+
+    public function DBUpdate() 
+    {
+        DB::table('tickets')->where('ticket_type', '=', 'App\Show')->update([
+        'ticket_type' => 'App\Models\Show',
+        ]);
+        DB::table('favorites')->where('favorited_type', '=', 'App\Event')->update([
+        'favorited_type' => 'App\Models\Event',
+        ]);
     }
 
 }

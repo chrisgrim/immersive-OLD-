@@ -5,21 +5,38 @@
         </div>
         <div class="listing-details-block">
             <tabs>
-                <tab v-if="conversations && conversations.length" title="Messages" :notification="user.unread=='m'"  class="tab-events">
+                <tab 
+                    v-if="conversations && conversations.length" 
+                    title="Messages" 
+                    :notification="user.unread=='m'"  
+                    class="tab-events">
                     <div>
-                        <div v-for="conversation in conversations">
-                            <MessageIndexTab :conversation="conversation" :loaduser="loaduser"></MessageIndexTab>
+                        <div 
+                            :key="conversation.id"
+                            v-for="conversation in conversations">
+                            <MessageIndexTab 
+                                :conversation="conversation" 
+                                :loaduser="loaduser" />
                         </div>
                     </div>
-                    <load-more @intersect="intersected('message')"></load-more> 
+                    <load-more @intersect="intersected('message')" /> 
                 </tab>
-                <tab v-if="eventConversations && eventConversations.length" title="Events" :notification="user.unread=='e'" class="tab-events" :active="true">
+                <tab 
+                    v-if="eventConversations && eventConversations.length" 
+                    title="Events" 
+                    :notification="user.unread=='e'" 
+                    class="tab-events" 
+                    :active="true">
                     <div>
-                        <div v-for="conversation in eventConversations">
-                            <MessageIndexTab :conversation="conversation" :loaduser="loaduser"></MessageIndexTab> 
+                        <div 
+                            v-for="conversation in eventConversations"
+                            :key="conversation.id">
+                            <ModMessageIndexTab 
+                                :conversation="conversation" 
+                                :loaduser="loaduser" /> 
                         </div>
                     </div>
-                    <load-more @intersect="intersected('event')"></load-more> 
+                    <load-more @intersect="intersected('event')" /> 
                 </tab>
             </tabs>
         </div>
@@ -29,23 +46,14 @@
 <script>
     import LoadMore  from '../../components/LoadMore.js'
     import MessageIndexTab from '../messages/components/message-index-tab.vue'
+    import ModMessageIndexTab from '../messages/components/modmessage-index-tab.vue'
     export default {
 
         props: ['loaduser'],
 
-        components: { MessageIndexTab, LoadMore },
+        components: { MessageIndexTab, ModMessageIndexTab, LoadMore },
 
         computed: {
-            // userConversations() {
-            //     return this.conversations.filter(function (conversation) {
-            //         return conversation.messages.length;
-            //     })
-            // },
-            // eventConversations() {
-            //     return this.conversations.filter(function (conversation) {
-            //         return conversation.modmessages.length;
-            //     })
-            // },
         },
 
         data() {
@@ -64,9 +72,8 @@
 
         methods: {
             intersected(value) {
-                if( this.messagePagination.last_page < this.messagePage && value == 'message' ) {return false};
-                if( this.eventMessagePagination.last_page < this.eventMessagePage && value == 'event') {return false};
-                console.log('test');
+                if( this.messagePagination.last_page < this.messagePage && value == 'message' ) { return }
+                if( this.eventMessagePagination.last_page < this.eventMessagePage && value == 'event') { return }
                 this.onLoadMore(value);
      
             },

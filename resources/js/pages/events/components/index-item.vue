@@ -2,8 +2,10 @@
     <div 
         class="event-index__eventlist" 
         ref="list">
-        <div class="event-index__eventlist--middle vertical">
-            <div 
+        <div 
+            class="event-index__eventlist--middle vertical" 
+            v-if="events && events.length">
+            <div
                 v-for="(event) in events"
                 :key="event.id"
                 class="eventlist__element" 

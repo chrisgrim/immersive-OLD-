@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-use ScoutElastic\Searchable;
+use Laravel\Scout\Searchable;
+use ElasticScoutDriverPlus\CustomSearch;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -12,8 +13,7 @@ use Illuminate\Support\Facades\Storage;
 class Organizer extends Model
 {
     use Searchable;
-
-    protected $indexConfigurator = OrganizerIndexConfigurator::class;
+    use CustomSearch;
 
     /**
     * What protected variables are allowed to be passed to the database
@@ -32,9 +32,9 @@ class Organizer extends Model
     public function toSearchableArray()
     {
         return [
-            "id" => $this->id,
             "name" => $this->name ,
-            // "email" => $this->email,
+            "email" => $this->email,
+            'priority' => 3,
         ];
     }
 
@@ -45,7 +45,7 @@ class Organizer extends Model
     */
     public function shouldBeSearchable()
     {
-        return $this->isPublished();
+        return $this->status == 'p';
     }
 
     /**
@@ -161,6 +161,7 @@ class Organizer extends Model
     */
     public function deleteOrganizer($organizer) 
     {
+        foreach ($organizer->events as $event) { $event->delete(); }
         $organizer->delete();
     }
 
@@ -173,20 +174,4 @@ class Organizer extends Model
     {
         return 'slug';
     }
-
-    protected $searchRules = [
-        //
-    ];
-
-    protected $mapping = [
-        'properties' => [
-            'id' => [
-                'type' => 'integer',
-                'index' => false
-            ],
-            'name' => [
-                'type' => 'search_as_you_type',
-            ],
-        ]
-    ];
 }

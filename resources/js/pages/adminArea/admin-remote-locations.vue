@@ -11,7 +11,20 @@
             </div>
         </div>
 
-
+        <div class="list">
+            <div>
+                name
+            </div>
+            <div>
+                description
+            </div>
+            <div>
+                admin
+            </div>
+            <div>
+                rank
+            </div>
+        </div>  
         <div 
             class="list" 
             :key="remoteLocation.id"
@@ -26,10 +39,17 @@
                 v-model="remoteLocation.description" 
                 placeholder="Remote location description"
                 @blur="onUpdate(remoteLocation)" />
+            <select 
+                placeholder="Admin"
+                v-model="remoteLocation.admin"
+                @change="onUpdate(remoteLocation)">
+                <option value="1">True</option>
+                <option value="0">False</option>
+            </select>
             <input 
                 type="text" 
                 v-model="remoteLocation.rank" 
-                placeholder="Remote Location"
+                placeholder="Rank"
                 @blur="onUpdate(remoteLocation)">
             <button 
                 @click.prevent="showModal(remoteLocation)" 

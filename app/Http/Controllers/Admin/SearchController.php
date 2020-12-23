@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\OrganizerSearchRule;
 use App\Models\Organizer;
 use App\Models\Event;
 use App\Models\Genre;
-use App\Models\GenreSearchRule;
-use App\Models\EventSearchRule;
+use App\Models\User;
+use Illuminate\Support\Arr;
 
 use Illuminate\Http\Request;
 
@@ -21,11 +20,20 @@ class SearchController extends Controller
      */
     public function organizers(Request $request)
     {
-        if (! $request->keywords) return Organizer::take(10)->get();
+        if (! $request->keywords) return Organizer::with('user')->paginate(30);
 
-        return Organizer::search($request->keywords)
-        ->rule(OrganizerSearchRule::class)
-        ->get();
+        $organizer = Organizer::multiMatchSearch()
+        ->fields(['name', 'name._2gram','name._3gram'])
+        ->query($request->keywords)
+        ->type('bool_prefix')
+        ->load(['user'])
+        ->paginate(30);
+
+        $filter = tap($organizer->toArray(), function (array &$content) {
+            $content['data'] = Arr::pluck($content['data'], 'model');
+        });
+
+        return  json_encode($filter);
     }
 
     /**
@@ -38,9 +46,18 @@ class SearchController extends Controller
     {
         if (! $request->keywords) return Genre::orderBy('name')->paginate(40);
 
-        return Genre::search($request->keywords)
-            ->rule(GenreSearchRule::class)
+        $genre = Genre::multiMatchSearch()
+            ->fields(['name', 'name._2gram','name._3gram'])
+            ->query($request->keywords)
+            ->type('bool_prefix')
+            ->sort('rank', 'desc')
             ->paginate(10);
+
+        $filter = tap($genre->toArray(), function (array &$content) {
+            $content['data'] = Arr::pluck($content['data'], 'model');
+        });
+
+        return  json_encode($filter);
     }
 
      /**
@@ -51,11 +68,43 @@ class SearchController extends Controller
      */
     public function events(Request $request)
     {
-        if (! $request->keywords) return Event::where('status','p')->take(10)->get();
+        if (! $request->keywords) return Event::where('status','p')->paginate(10);
 
-        return Event::search($request->keywords)
-            ->rule(EventSearchRule::class)
-            ->get();
+        $events = Event::multiMatchSearch()
+            ->fields(['name', 'name._2gram','name._3gram'])
+            ->query($request->keywords)
+            ->type('bool_prefix')
+            ->sort('rank', 'desc')
+            ->paginate(10);
+
+        $filter = tap($events->toArray(), function (array &$content) {
+            $content['data'] = Arr::pluck($content['data'], 'model');
+        });
+
+        return json_encode($filter);
+    }
+
+    /**
+     * Return User.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function users(Request $request)
+    {
+        if (! $request->keywords) return User::paginate(10);
+
+        $users = User::multiMatchSearch()
+            ->fields(['name', 'name._2gram','name._3gram'])
+            ->query($request->keywords)
+            ->type('bool_prefix')
+            ->paginate(10);
+
+        $filter = tap($users->toArray(), function (array &$content) {
+            $content['data'] = Arr::pluck($content['data'], 'model');
+        });
+
+        return json_encode($filter);
     }
 
      /**
@@ -74,18 +123,17 @@ class SearchController extends Controller
             ->paginate(10);
         }
 
-        return Event::where('name', '=', $request->keywords)
-                ->where('status', '!=', 'p')
-                ->where('status', '!=', 'e')
-                ->whereNotNull('name')
-                ->orderByDESC('created_at')
-                ->paginate(10);
+        return Event::where('name', 'like', '%' . $request->keywords . '%')
+        ->where('status', '!=', 'p')
+        ->where('status', '!=', 'e')
+        ->whereNotNull('name')
+        ->orderByDESC('created_at')
+        ->paginate(10);
     }
 
     public function deletedEvents(Request $request)
     {
-        return Event::onlyTrashed()->where('name', 'like', '%' . $request->keywords . '%')->get();
-        return Event::onlyTrashed()->take(10)->get();
+        return Event::onlyTrashed()->where('name', 'like', '%' . $request->keywords . '%')->paginate(10);
     }
 
 }

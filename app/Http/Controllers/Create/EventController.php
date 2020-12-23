@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Create;
 use App\Http\Controllers\Controller;
 use App\Models\Organizer;
 use App\Models\Event;
+use Illuminate\Http\Request;
 
 
 class EventController extends Controller
@@ -21,9 +22,7 @@ class EventController extends Controller
      */
     public function show()
     {
-        $organizers = Organizer::getOrganizerEvents();
-
-        return view('events.edit', compact('organizers'));
+        return view('events.edit');
     }
 
     /**

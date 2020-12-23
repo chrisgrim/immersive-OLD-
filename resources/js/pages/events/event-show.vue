@@ -83,7 +83,7 @@
                                         v-else 
                                         class="header__show-info bold">no dates left</span>
                                 </span>
-                                <span v-if="event.showtype=='o'">
+                                <span v-if="event.showtype=='o' || event.showtype=='l'">
                                     <span class="header__show-info">Shows</span>
                                     <span class="header__show-info bold">
                                         <span v-if="event.show_on_going.mon">M</span>
@@ -528,7 +528,6 @@
                 <ShowMore 
                     :text="event.organizer.description"
                     :limit="50" />
-                <!-- <ContactOrganizer :user="user" :loadorganizer="event.organizer"></ContactOrganizer>  -->
             </div>
         </section>
 
@@ -660,7 +659,6 @@
 
 <script>
     import {LMap, LTileLayer, LMarker, LPopup} from 'vue2-leaflet'
-    import ContactOrganizer from '../organizers/contact-organizer.vue'
     import flatPickr from 'vue-flatpickr-component'
     import ShowMore  from './components/show-more.vue'
 
@@ -668,7 +666,7 @@
 
         props: ['loadevent', 'user', 'tickets'],
 
-        components: { LMap, LTileLayer, LMarker, flatPickr, ContactOrganizer, LPopup, ShowMore},
+        components: { LMap, LTileLayer, LMarker, flatPickr, LPopup, ShowMore},
 
         computed: {
             locationPlaceholder() {

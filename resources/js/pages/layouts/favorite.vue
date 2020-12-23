@@ -61,8 +61,12 @@
 </template>
 
 <script>
+    import vueEmailVerify from './email-verified.vue'
+
 	export default {
 		props: ['event', 'inputclass'],
+
+        components: { vueEmailVerify },
 
         computed: {
             classes() {

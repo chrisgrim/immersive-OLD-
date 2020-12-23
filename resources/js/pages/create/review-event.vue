@@ -1,6 +1,5 @@
 <template>
     <div class="show-content">
-
         <!-- header -->
         <header class="event-show grid">
             <div class="header-left">
@@ -38,7 +37,7 @@
                                 <span v-else-if="remaining && remaining.length == 1 ? remaining.length : ''" class="header__show-info bold">{{ remaining.length }} date left</span>
                                 <span v-else class="header__show-info bold">no dates left</span>
                             </span>
-                            <span v-if="event.showtype=='o'">
+                            <span v-if="event.showtype=='o' || event.showtype=='l'">
                                 <span class="header__show-info">Shows</span>
                                 <span class="header__show-info bold">
                                     <span v-if="event.show_on_going.mon">M</span>
@@ -497,7 +496,7 @@
 
         props: ['loadevent', 'user', 'tickets'],
 
-        mixins: [formValidationMixin],
+        mixins: [ formValidationMixin ],
 
         components: { LMap, LTileLayer, LMarker, flatPickr, ContactOrganizer, LPopup, LIcon, LoadMore},
 
@@ -510,10 +509,6 @@
                 + (this.event.location.region ? this.event.location.region + ' | ' : '') 
                 + (this.event.location.country ? this.event.location.country : '') 
                 : '';
-            },
-
-            navSubmit() {
-                return this.$store.state.navurl
             },
 
             eventUrl() {
@@ -669,10 +664,9 @@
                 this.$refs.datePicker ? this.$refs.datePicker.fp.jumpToDate(new Date()) : ''
             },
             
-            navSubmit() {
-                console.log('test');
-                this.onBack(this.navSubmit);
-            }
+            '$store.state.navurl'() {
+                this.onBack(this.$store.state.navurl.page)
+            },
         },
 
         mounted() {
@@ -681,10 +675,12 @@
             this.breadcrumbs();
             this.getTitleFontSize();
         },
+
         created () {
             window.addEventListener('scroll', this.handleScroll);
         },
-        destroyed () {
+
+        unmounted () {
             window.removeEventListener('scroll', this.handleScroll);
         }
     };

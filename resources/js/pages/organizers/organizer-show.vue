@@ -110,12 +110,13 @@
 <script>
     import ContactOrganizer from '../organizers/contact-organizer.vue'
     import Pagination  from '../../components/pagination.vue'
+    import vueEventIndex from '../events/components/index-item.vue'
 
     export default {
 
         props: ['loadorganizer', 'user'],
 
-        components: { ContactOrganizer, Pagination },
+        components: { ContactOrganizer, Pagination, vueEventIndex },
 
         computed: {
             hasLogo() {

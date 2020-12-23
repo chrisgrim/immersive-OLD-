@@ -19,19 +19,32 @@
                     </div>
                 </div>
             </div>
-            <div class="admin-approve-similar-name" v-if="exists">
-                <a rel="noreferrer noopener" target="_blank" :href="`/events/${exists.slug}`">An event named {{exists.name}} already exists</a>
-            </div>
+            <template v-if="exists">
+                <div class="admin-approve-similar-name">
+                    <a 
+                        rel="noreferrer noopener" 
+                        target="_blank" 
+                        :href="`/events/${exists.slug}`">An event named {{ exists.name }} already exists</a>
+                </div>
+            </template>
             <div class="admin-approve-url">
-                <a rel="noreferrer noopener" target="_blank" :href="loadevent.ticketUrl">{{loadevent.ticketUrl}}</a>
+                <a 
+                    rel="noreferrer noopener" 
+                    target="_blank" 
+                    :href="loadevent.ticketUrl">
+                    {{ loadevent.ticketUrl }}
+                </a>
             </div>
             <div class="buttons">
-                <button :class="{bspin : dis}" :disabled="dis" class="create" @click.prevent="organizer()"> Organizer </button>
-                <button :class="{bspin : dis}" :disabled="dis" class="create" @click.prevent="goBack()"> Go Back </button>
-                <button :class="{bspin : dis}" :disabled="dis" class="create" @click.prevent="rejected()"> Reject </button>
-                <button :class="{bspin : dis}" :disabled="dis" class="create" @click.prevent="makeEdits()"> Make Edits Yourself </button>
-                <button :class="{bspin : dis}" :disabled="dis" class="create" @click.prevent="denied()"> Request Changes </button>
-                <button :class="{bspin : dis}" :disabled="dis" class="create" @click.prevent="approved()"> Approved </button>
+                <button 
+                    v-for="(button, index) in buttons"
+                    :key="index"
+                    @click.prevent="button.click"
+                    :class="{bspin : dis}" 
+                    :disabled="dis" 
+                    class="create">
+                    {{ button.name }}
+                </button>
             </div>
         </div>
     </div>
@@ -39,9 +52,12 @@
 
 <script>
     import { required } from 'vuelidate/lib/validators';
+    import formValidationMixin from '../../../mixins/form-validation-mixin'
 
     export default {
         props: ['loadevent', 'exists'],
+
+        mixins: [ formValidationMixin ],
 
         computed: {
             approvedOrg() {
@@ -55,46 +71,49 @@
                 comments: '',
                 commentsActive: false,
                 dis: false,
+                buttons: [
+                    { click: () => { this.onEditOrganizer() }, name: 'Organizer' },
+                    { click: () => { this.onBack() }, name: 'Go Back' },
+                    { click: () => { this.onRejected() }, name: 'Reject' },
+                    { click: () => { this.onEdit() }, name: 'Make Edits Yourself' },
+                    { click: () => { this.onDenied() }, name: 'Request Changes' },
+                    { click: () => { this.onApproved() }, name: 'Approved' },
+                ],
             }
         },
 
         methods: {
-            approved() {
-                this.dis = true;
-                axios.post(`/admin/event/${this.event.slug}/approve`)
-                .then(window.location.href = '/admin/events/finalize');
+            async onApproved() {
+                await axios.post(`/admin/event/${this.event.slug}/approve`)
+                this.redirect('/admin/events/finalize')
             },
 
-            denied() {
-                this.$v.$touch(); 
-                if (this.$v.$invalid) { return false }
-                this.dis = true;
-
-                axios.post(`/admin/event/${this.event.slug}/fail`, { message: this.comments })
-                .then( window.location.href = '/admin/events/finalize' )
-                .catch( error => {  this.serverErrors = error.response.data.errors; this.dis = false });
+            async onDenied() {
+                if (this.checkVuelidate()) { return false }
+                await axios.post(`/admin/event/${this.event.slug}/fail`, { message: this.comments })
+                this.redirect('/admin/events/finalize')
             },
 
-            rejected() {
-                this.$v.$touch(); 
-                if (this.$v.$invalid) { return false }
-                this.dis = true;
-
-                axios.post(`/admin/event/${this.event.slug}/reject`, { message: this.comments })
-                .then( window.location.href = '/admin/events/finalize' )
-                .catch( err => { this.serverErrors = err.response.data.errors;this.dis = false });
+            async onRejected() {
+                if (this.checkVuelidate()) { return false }
+                await axios.post(`/admin/event/${this.event.slug}/reject`, { message: this.comments })
+                this.redirect('/admin/events/finalize')
             },
 
-            makeEdits() {
-                window.location.href = `/create/${this.event.slug}/title`
+            onEdit() {
+                this.redirect(`/create/${this.event.slug}/title`)
             },
 
-            organizer() {
-                window.location.href = `/organizer/${this.event.organizer.slug}/edit`
+            onEditOrganizer() {
+                this.redirect(`/organizer/${this.event.organizer.slug}/edit`)
             },
 
-            goBack() {
-                window.location.href = '/admin/events/finalize';
+            onBack() {
+                this.redirect('/admin/events/finalize');
+            },
+
+            redirect(value) {
+                window.location.href = value;
             },
         },
 

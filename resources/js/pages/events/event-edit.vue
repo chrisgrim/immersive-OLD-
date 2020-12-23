@@ -17,7 +17,19 @@
                     <div class="organizer-card__title">
                         {{ organizer.name }}
                     </div>
-                    <div class="organizer-card__nav">
+                    <div class="organizer-card__nav"> 
+                        <button
+                            v-if="organizer.status === 'p'"
+                            @click.prevent="showOrganizer(organizer)" 
+                            class="preview-organizer">
+                            Preview Organizer
+                        </button>
+                        <button
+                            v-else
+                            @click.prevent="" 
+                            class="preview-organizer">
+                            Pending Approval
+                        </button>
                         <a :href="`/organizer/${organizer.slug}/edit`">
                             <button class="edit-organizer">Edit</button>
                         </a>
@@ -28,11 +40,6 @@
                                 Delete
                             </button>
                         </template>
-                        <button 
-                            @click.prevent="showOrganizer(organizer)" 
-                            class="preview-organizer">
-                            Preview Organizer
-                        </button>
                     </div>
                 </div>
                 <div class="listing-details-block">
@@ -42,9 +49,8 @@
                             :active="true" 
                             :id="organizer.id" 
                             class="event-edit__eventlist">
-                            <vue-event-edit-listing-item 
+                            <vue-event-edit-listing-item
                                 :organizer="organizer" 
-                                :user="user" 
                                 :events="organizer.in_progress_events.data" />
                             <pagination
                                 :list="organizer.in_progress_events"
@@ -127,7 +133,9 @@
                             title="Past Events" 
                             :id="organizer.id + 1" 
                             class="event-edit__eventlist">
-                            <vue-event-edit-listing-item :events="organizer.past_events.data" />
+                            <vue-event-edit-listing-item
+                                tab="current"
+                                :events="organizer.past_events.data" />
                             <pagination
                                 :list="organizer.past_events"
                                 :limit="2"
@@ -155,7 +163,7 @@
 
 	export default {
 
-        props: ['user', 'organizers'],
+        props: ['user'],
 
         components: { Pagination },
 
@@ -170,7 +178,7 @@
                 activeItem: '',
                 webp: false,
                 limit: 8,
-                organizerList: this.organizers,
+                organizerList: [],
 			}
 		},
 
@@ -199,6 +207,12 @@
         },
 
 		methods: {
+            async onload() {
+                await axios.get(`/create/organizers/fetch?timestamp=${new Date().getTime()}`)
+                .then(res => {
+                    this.organizerList = res.data;
+                })
+            },
 
             deleteOrg() {
                 axios.delete(`/organizer/${this.selectedModal.slug}`)
@@ -254,20 +268,20 @@
 
         mounted() {
             this.canUseWebP();
+            this.onload();
         },
 
         validations: {
             reviewername: {
-                required,
-
+                // required,
             },
             url: {
-                required,
-                url
+                // required,
+                // url
             },
             review: {
-                required,
-                maxLength: maxLength(120)
+                // required,
+                // maxLength: maxLength(120)
             },
         },
     };

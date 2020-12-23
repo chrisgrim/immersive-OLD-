@@ -5,39 +5,44 @@
                 <h1>Users</h1>
             </div>
         </div>
-
         <div class="field">
             <input 
                 v-model="userList"
-                placeholder="Filter by name or email" 
+                placeholder="Filter by name" 
                 class="general"
                 @keyup="onSearch(userList)"
                 type="text">
         </div>
         <div 
             class="list" 
-            :key="user.id"
-            v-for="(user) in users.data">
+            :key="item.id"
+            v-for="(item) in users.data">
             <input 
                 type="text" 
-                v-model="user.name" 
+                v-model="item.name" 
                 placeholder="User Name"
-                @change="onUpdate(user)">
+                @change="onUpdate(item)">
             <input 
                 type="text" 
-                v-model="user.email" 
+                v-model="item.email" 
                 placeholder="Email"
-                @change="onUpdate(user)">
+                @change="onUpdate(item)">
             <select 
-                v-model="user.type" 
+                v-model="item.type" 
                 placeholder="User Type"
-                @change="onUpdate(user)">
-                <option value="a">Admin</option>
-                <option value="m">Moderator</option>
-                <option value="g">Guest</option>
+                @change="onUpdate(item)">
+                <option value="a">
+                    Admin
+                </option>
+                <option value="m">
+                    Moderator
+                </option>
+                <option value="g">
+                    Guest
+                </option>
             </select>
             <button 
-                @click.prevent="showModal(user, 'delete')" 
+                @click.prevent="showModal(item, 'delete')" 
                 class="delete-circle">
                 <IconSvg type="delete" />
             </button>
@@ -46,26 +51,13 @@
             :limit="1"
             :list="users"
             @selectpage="onLoad" />
-        <modal 
-            v-if="modal == 'delete'" 
-            @close="modal = null">
-            <div slot="header">
-                <div class="circle del">
-                    <p>X</p>
-                </div>
-            </div>
-            <div slot="body"> 
-                <h3>Are you sure?</h3>
-                <p>You are deleting the user {{ selectedModal.name }} user.</p>
-            </div>
-            <div slot="footer">
-                <button 
-                    class="btn del" 
-                    @click.prevent="onDelete(selectedModal)">
-                    Delete
-                </button>
-            </div>
-        </modal>
+        <VueDeleteModal 
+            v-if="modal == 'delete'"
+            :item="selectedModal"
+            :strict="true"
+            body="You are deleting the user. Please be sure you know what you are doing."
+            @close="modal = null"
+            @ondelete="onDelete" />
     </div>
 </template>
 
@@ -73,10 +65,11 @@
 
     import IconSvg from '../../components/Svg-icon'
     import Pagination  from '../../components/pagination.vue'
+    import VueDeleteModal from '../../components/Vue-Delete-Modal'
 
     export default {
 
-        components: { IconSvg, Pagination },
+        components: { IconSvg, Pagination, VueDeleteModal },
 
         data() {
             return {
@@ -95,29 +88,24 @@
 
         methods: {
 
-            onDelete(user) {
-                axios.delete(`/admin/users/${user.id}/delete`)
-                .then( res => { this.modal=false; this.users = res.data })
-                .catch( error => { this.serverErrors = error.response.data.errors; });
+            async onDelete() {
+                await axios.delete(`/admin/users/${this.selectedModal.id}/delete`)
+                location.reload();
             },
 
             onLoad(page) {
                 axios.post(`/admin/users/fetch?page=${page}`)
                 .then( res => { this.users = res.data })
-                .catch( error => { this.serverErrors = error.response.data.errors; });
             },
 
-            onUpdate(user) {
-                console.log('test');
-                axios.patch(`/admin/users/${user.id}`, user)
+            async onUpdate(user) {
+                await axios.patch(`/admin/users/${user.id}`, user)
                 .then( res => { this.users = res.data; })
-                .catch( error => {  this.serverErrors = error.response.data.errors });
             },
 
             onSearch(query) {
                 axios.get('/api/admin/users/search', { params: { keywords: query } })
                 .then( res => { this.users = res.data })
-                .catch()
             },
 
             createList() {

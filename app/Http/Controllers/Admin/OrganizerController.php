@@ -35,7 +35,7 @@ class OrganizerController extends Controller
      */
     public function fetch(Request $request)
     {
-        return Organizer::all()->take($request->paginate)->load('user');
+        return Organizer::with('user')->paginate(30);
     }
 
     /**
@@ -73,6 +73,20 @@ class OrganizerController extends Controller
             };
         };
         $organizer->update($request->all());
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function user(Request $request, Organizer $organizer)
+    {
+        foreach ($organizer->events as $event) {
+            $event->update([ 'user_id' => $request->id ]);
+        }
+        $organizer->update([ 'user_id' => $request->id ]);
     }
 
     /**

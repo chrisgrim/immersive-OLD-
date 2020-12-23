@@ -2,7 +2,10 @@
     <div class="event-edit__eventlist--top">
         <div class="event-index__eventlist edit" ref="list">
             <div class="event-index__eventlist--middle vertical">
-                <div class="eventlist__element edit" :style="`width:${width}`">
+                <div 
+                    v-if="organizer"
+                    class="eventlist__element edit" 
+                    :style="`width:${width}`">
                     <div class="card new">
                         <div 
                             @click.prevent="newEvent(organizer)" 
@@ -72,7 +75,7 @@
                                 <template v-if="event.status == 'e'">
                                     <div class="card-details">
                                         <div class="card-details__content">
-                                            <p><b>Goes Live <br> {{ new Date(event.embargo_date) | dateFormat('MMM DD, YYYY')}} </b></p>
+                                            <p><b>Goes Live <br>  {{ cleanDate(event.embargo_date) }} </b></p>
                                         </div>
                                     </div>
                                 </template>
@@ -179,7 +182,7 @@
                 return event => event.status == 'p' ? true : false;
             },
             isDisabled() {
-                return event => event.status == 'r' ? true : false
+                return event => event.status == 'r' ? true : false 
             }
 
         },
@@ -217,7 +220,7 @@
                 if (this.$refs.list.clientWidth > 600) {
                     return this.width = '33.3333%'
                 }
-                return this.width = '41%';
+                return this.width = '75%';
             },
 
             newEvent(organizer) {
@@ -227,6 +230,10 @@
                 })
                 .catch(error => { this.serverErrors = error.response.data.errors; });
             },
+
+            cleanDate(data) {
+                return this.$dayjs(data).format("MMM DD YYYY");
+            }
         },
 
         mounted() {

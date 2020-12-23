@@ -137,9 +137,6 @@ p.create-menu-text {
     }
 }
 
-section.event-create {
-    
-}
 
 button.create {
     border: 1px solid #008489;
@@ -213,7 +210,6 @@ button.create[disabled]{
 
 @media (max-width: 768px) { 
     .create-menu {
-        grid-template-columns: 8rem 1fr !important;
         grid-gap:0rem !important;
     }
     section.event-create {
@@ -239,12 +235,83 @@ button.create[disabled]{
        grid-template-columns: 1fr;
        grid-gap:0 !important;
     }
-    nav.create {
-        display: none;
-    }
     .event-create__submit-button {
         display: none;
     }
+    nav.create {
+        width: 100%;
+        position: absolute;
+        z-index: 3999;
+        height: 100vh;
+        border-radius: 0 5rem 5rem 0;
+        margin-left: 0rem;
+        border:1px solid #b3b3b3;
+        padding: 2rem;
+    }
+    nav.create.hide {
+       margin-left:-100vw;
+    }
+
+    .create-nav-guide {
+        margin: 8rem 0 4rem 0;
+    }
+
+    .nav-create-logo h3 {
+        position: absolute;
+        right: 2.5rem;
+        top: 3.8rem;
+        font-size: 3rem;
+    }
+
+    .create-nav-hamburger {
+        z-index: 4999;
+        position: absolute;
+        top: 5%;
+        left: 2rem;
+    }
+
+    .create-nav-hamburger span {
+        display: block;
+        width: 33px;
+        height: 4px;
+        margin-bottom: 5px;
+        position: relative;
+
+        background: #cdcdcd;
+        border-radius: 3px;
+
+        z-index: 1;
+
+        transform-origin: 4px 0px;
+
+        transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+        background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+        opacity 0.55s ease;
+    }
+
+    .create-nav-hamburger span:first-child {
+        transform-origin: 0% 0%;
+    }
+
+    .create-nav-hamburger span:nth-last-child(2) {
+        transform-origin: 0% 100%;
+    }
+
+    .create-nav-hamburger.active span {
+        opacity: 1;
+        transform: rotate(45deg) translate(-10px, -10px);
+        background: #232323;
+    }
+
+    .create-nav-hamburger.active span:nth-last-child(3) {
+        opacity: 0;
+        transform: rotate(0deg) scale(0.2, 0.2);
+    }
+
+    .create-nav-hamburger.active span:nth-last-child(2) {
+        transform: rotate(-45deg) translate(-10px, 10px);
+    }
+
 
 }
 

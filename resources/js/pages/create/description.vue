@@ -18,6 +18,7 @@
                     rows="14" />
                 <div v-if="$v.group.description.$error" class="validation-error">
                     <p class="error" v-if="!$v.group.description.required">Must provide a description</p>
+                    <p class="error" v-if="!$v.group.description.maxLength">Description is too long</p>
                 </div>
             </div>
             <div class="field">
@@ -26,13 +27,13 @@
                     type="text" 
                     v-model="group.websiteUrl"
                     :class="{ active: active == 'website','error': $v.group.websiteUrl.$error }"
-                    @click="onToggle('website')"
+                    @click="active = 'website'"
                     @blur="active = null"
                     @input="$v.group.websiteUrl.$touch"
                     placeholder="Link to a page that has more information about your event">
                 <div v-if="$v.group.websiteUrl.$error" class="validation-error">
                     <p class="error" v-if="!$v.group.websiteUrl.url">Must be a url (https://...)</p>
-                    <p class="error" v-if="!$v.group.websiteUrl.webNotWorking">One of your urls isn't working</p>
+                    <p class="error" v-if="!$v.group.websiteUrl.maxLength">Url is too long</p>
                 </div>
             </div>
         </section>
@@ -43,25 +44,21 @@
             </div>
             <div class="field">
                 <label>Type in or select all show tags. We use these to help people find your event!</label>
-                <multiselect 
+                <v-select 
                     v-model="tagName"
-                    tag-placeholder="Add this as new tag" 
-                    placeholder="Type here to create your own" 
                     label="name"
-                    :close-on-select="false"
-                    track-by="id" 
-                    :options="tagOptions" 
-                    :multiple="true" 
-                    :taggable="true" 
-                    tag-position="bottom"
-                    :class="{ active: active == 'genre','error': $v.tagName.$error }"
-                    @tag="addTag"
+                    placeholder="Type here to create your own" 
+                    :options="tagOptions"
+                    taggable
+                    multiple
+                    @search:blur="active = null"
+                    @search:focus="active = 'genre'"
                     @input="$v.tagName.$touch"
-                    @click="active = 'genre'"
-                    @blur="active = null" />
+                    :class="{ active: active == 'genre','error': $v.tagName.$error }" />
                 <div v-if="$v.tagName.$error" class="validation-error">
                     <p class="error" v-if="!$v.tagName.required">Must select at least one Tag</p>
                     <p class="error" v-if="!$v.tagName.maxLength">No more than 10 tags</p>
+                    <p class="error" v-if="!$v.tagName.maxChar">Tag character length is too long</p>
                 </div>
             </div>
         </section>
@@ -81,7 +78,6 @@
 
 <script>
     import formValidationMixin from '../../mixins/form-validation-mixin'
-    import Multiselect from 'vue-multiselect'
     import { required, url, maxLength } from 'vuelidate/lib/validators'
     import Submit  from './components/submit-buttons.vue'
 
@@ -89,17 +85,13 @@
 
 		props: ['event', 'loadtags'],
 
-        components: { Multiselect, Submit },
+        components: { Submit },
 
-        mixins: [formValidationMixin],
+        mixins: [ formValidationMixin ],
 
         computed: {
             endpoint() {
                 return `/create/${this.event.slug}/description`
-            },
-
-            navSubmit() {
-                return this.$store.state.navurl
             },
         },
 
@@ -113,48 +105,17 @@
                 active: null,
                 updated: false,
                 approved: this.event.status == 'p' || this.event.status == 'e' ? true : false,
+                creationPage: 6,
 			}
 		},
 
 		methods: {
-
-            initializeSubmitObject() {
-                return {
-                    description: this.event.description ? this.event.description : '',
-                    websiteUrl: this.event.websiteUrl ? this.event.websiteUrl : '',
-                    genre: this.event.genres ? this.event.genres.map(a => a.name) : '',
-                }
-            },
-
-			onSubmit(value) {
-                if (!this.$v.$anyDirty && this.event.status != 5) {return this.onForward(value)};
-                if (this.checkVuelidate()) { return false };
-				axios.patch(this.endpoint, this.group)
-                .then(res => { 
-                    value == 'save' ? this.save() : this.onForward(value);
-                })
-                .catch(err => { this.onErrors(err) });
+			async onSubmit(value) {
+                if ( this.checkForChanges(value) ) { return this.onForward(value) }
+                if ( this.checkVuelidate() ) { return }
+				await axios.patch(this.endpoint, this.group)
+                value == 'save' ? this.save() : this.onForward(value);
 			},
-
-            onToggle(arr) {
-                this.active = arr;
-                this.serverErrors = [];
-            },
-
-            addTag (newTag) {
-                if (this.validateText(newTag)) { alert('No urls as tags') ;return false };
-                const tag = {
-                    name: newTag,
-                    id: newTag.substring(0, 0) + Math.floor((Math.random() * 10000000))
-                }
-                this.tagOptions.push(tag);
-                this.tagName.push(tag);
-                this.$v.tagName.$touch();
-            },
-
-            validateText(str) {
-                return str && str.startsWith("http") || str && str.startsWith("@") ? true : false
-            },
 
             onLoad() {
                 axios.get(this.onFetch('description'))
@@ -164,36 +125,47 @@
                     res.data.genres ? this.group.genre = res.data.genres.map(a => a.name) : '';
                 });
             },
-
+            
+            initializeSubmitObject() {
+                return {
+                    description: this.event.description ? this.event.description : '',
+                    websiteUrl: this.event.websiteUrl ? this.event.websiteUrl : '',
+                    genre: this.event.genres ? this.event.genres.map(a => a.name) : '',
+                }
+            },
 		},
 
         created() {
             this.onLoad();
+            this.disabled = false;
         },
 
         watch: {
+            '$store.state.navurl'() {
+                this.checkForChanges() ? this.onBack(this.$store.state.navurl.page) : this.onSubmit(this.$store.state.navurl.page)
+            },
+
             tagName(){
                 return this.group.genre = this.tagName.map(a => a.name);
             },
-
-            navSubmit() {
-                return !this.$v.$anyDirty ? this.onBack(this.navSubmit) : this.onSubmit(this.navSubmit);
-            },
         },
-
 
         validations: {
             tagName: {
                 required,
-                maxLength: maxLength(10)
+                maxLength: maxLength(10),
+                maxChar() {
+                    return this.tagName.filter( tag => tag.name.length > 30 ).length ? false : true
+                }
             },
             group : {
                 description: {
-                    required
+                    required,
+                    maxLength: maxLength(5000),
                 },
                 websiteUrl: {
-                   url,
-                   webNotWorking(){ return this.websiteUrl ? !this.hasServerError('broken') : true },
+                    url,
+                    maxLength: maxLength(200),
                 },
             }
         },

@@ -3,14 +3,14 @@
 namespace App\Models;
 
 use App\Scopes\RankScope;
-use ScoutElastic\Searchable;
+use Laravel\Scout\Searchable;
+use ElasticScoutDriverPlus\CustomSearch;
 use Illuminate\Database\Eloquent\Model;
 
 class RemoteLocation extends Model
 {
-    use Searchable; 
-
-    protected $indexConfigurator = RemoteIndexConfigurator::class;
+    use Searchable;
+    use CustomSearch;
 
     /**
     * What protected variables are allowed to be passed to the database
@@ -39,7 +39,6 @@ class RemoteLocation extends Model
     public function toSearchableArray()
     {
         return [
-            "id" => $this->id,
             "name" => $this->name ,
         ];
     }
@@ -54,19 +53,4 @@ class RemoteLocation extends Model
         return $this->belongsToMany(Event::class);
     }
 
-    protected $searchRules = [
-        //
-    ];
-
-    protected $mapping = [
-        'properties' => [
-            'id' => [
-                'type' => 'integer',
-                'index' => false
-            ],
-            'name' => [
-                'type' => 'search_as_you_type',
-            ],
-        ]
-    ];
 }

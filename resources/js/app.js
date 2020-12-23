@@ -9,8 +9,9 @@ import store from './store/index'
 import { Icon }  from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import Dayjs from 'vue-dayjs';
+import vSelect from 'vue-select'
 
-
+Vue.component('v-select', vSelect)
 window.axios = require('axios');
 window.Vue = require('vue');
 Vue.use(Dayjs);
@@ -45,22 +46,11 @@ Icon.Default.mergeOptions({
 });
 
 
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./pages/ExampleComponent.vue -> <example-component></example-component>
- */
-
-// const files = require.context('./', true, /\.vue$/i);
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
-
 
 //Nav
 Vue.component('vue-nav', () => import(/* webpackChunkName: "assets/ls" */ './pages/layouts/nav.vue'));
-Vue.component('nav-search', () => import(/* webpackChunkName: "assets/lns" */ './pages/layouts/nav-search.vue'));
-Vue.component('profile-button', () => import(/* webpackChunkName: "assets/lp" */ './pages/layouts/profile-button.vue'));
+// Vue.component('nav-search', () => import(/* webpackChunkName: "assets/lns" */ './pages/layouts/nav-search.vue'));
+// Vue.component('profile-button', () => import(/* webpackChunkName: "assets/lp" */ './pages/layouts/profile-button.vue'));
 
 //Footer
 Vue.component('vue-footer', () => import(/* webpackChunkName: "assets/lfo" */ './pages/layouts/footer.vue'));
@@ -71,7 +61,7 @@ Vue.component('favorite', () => import(/* webpackChunkName: "assets/lf" */ './pa
 Vue.component('modal', () => import(/* webpackChunkName: "assets/lm" */ './pages/layouts/modal.vue'));
 Vue.component('tabs', () => import(/* webpackChunkName: "assets/lts" */ './pages/layouts/tabs.vue'));
 Vue.component('tab', () => import(/* webpackChunkName: "assets/lt" */ './pages/layouts/tab.vue'));
-Vue.component('image-upload', () => import(/* webpackChunkName: "assets/liu" */ './pages/layouts/image-upload.vue'));
+// Vue.component('image-upload', () => import(/* webpackChunkName: "assets/liu" */ './pages/layouts/image-upload.vue'));
 Vue.component('vue-alert', () => import(/* webpackChunkName: "assets/la" */ './pages/layouts/alert.vue'));
 Vue.component('vue-email-verify', () => import(/* webpackChunkName: "assets/lev" */ './pages/layouts/email-verified.vue'));
 
@@ -92,9 +82,6 @@ Vue.component('create-description', () => import(/* webpackChunkName: "assets/cd
 Vue.component('create-advisories', () => import(/* webpackChunkName: "assets/ca" */ './pages/create/advisories.vue'));
 Vue.component('vue-create-review-event', () => import(/* webpackChunkName: "assets/cre" */ './pages/create/review-event.vue'));
 Vue.component('vue-create-first-event', () => import(/* webpackChunkName: "assets/cs" */ './pages/create/start-event-creation.vue'));
-
-
-
 
 //Admin Area
 Vue.component('admin-nav', () => import(/* webpackChunkName: "assets/an" */ './pages/adminArea/nav.vue'));
@@ -139,10 +126,10 @@ Vue.component('organizer-show', () => import(/* webpackChunkName: "assets/os" */
 Vue.component('event-show', () => import(/* webpackChunkName: "assets/es" */ './pages/events/event-show.vue'));
 Vue.component('event-index', () => import(/* webpackChunkName: "assets/ei" */ './pages/events/event-index.vue'));
 Vue.component('search-listing', () => import(/* webpackChunkName: "assets/es" */ './pages/events/event-search.vue'));
-Vue.component('event-map-search', () => import(/* webpackChunkName: "assets/ems" */ './pages/events/event-map-search.vue'));
+// Vue.component('event-map-search', () => import(/* webpackChunkName: "assets/ems" */ './pages/events/event-map-search.vue'));
 Vue.component('event-list-search', () => import(/* webpackChunkName: "assets/els" */ './pages/events/event-list-search.vue'));
 Vue.component('edit-events', () => import(/* webpackChunkName: "assets/ee" */ './pages/events/event-edit.vue'));
-Vue.component('vue-event-index', () => import(/* webpackChunkName: "assets/eii" */ './pages/events/components/index-item.vue'));
+// Vue.component('vue-event-index', () => import(/* webpackChunkName: "assets/eii" */ './pages/events/components/index-item.vue'));
 Vue.component('vue-event-edit-listing-item', () => import(/* webpackChunkName: "assets/edi" */ './pages/events/components/event-edit-item.vue'));
 Vue.component('vue-search-online', () => import(/* webpackChunkName: "assets/eos" */ './pages/events/search-online.vue'));
 

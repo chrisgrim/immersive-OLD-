@@ -1,15 +1,26 @@
 export default {
-    methods: {
 
+    methods: {
         checkVuelidate() {
             this.$v.$touch()
             !this.$v.$invalid ? this.disabled = true : false;
             return this.$v.$invalid
         },
 
+        checkForChanges(value) {
+            if ( !this.$v.$anyDirty && value !== 'save' && this.event.status + 1 >= this.creationPage ) {
+                return true;
+            }
+        },
+
         onErrors(err) {
             err ? this.serverErrors = err.response.data.errors : '';
             this.disabled = false;
+        },
+
+        onSingleError(err) {
+            this.disabled = false;
+            this.serverErrors = err.response.data.message;
         },
 
         onBackInitial() {
@@ -25,7 +36,8 @@ export default {
         },
             
         onForward(value) {
-            return window.location.href = `/create/${this.event.slug}/${value}`;
+            window.location.href = `/create/${this.event.slug}/${value}`;
+            this.disabled = false;
         },
 
         onRegistered() {

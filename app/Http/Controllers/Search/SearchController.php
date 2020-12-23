@@ -12,16 +12,6 @@ use App\Models\Organizer;
 use App\Models\CityList;
 use App\Models\SearchData;
 use App\Models\RemoteLocation;
-use App\Models\OrganizerSearchRule;
-use App\Models\CityListSearchRule;
-use App\Models\EventSearchRule;
-use App\Models\GenreSearchRule;
-use App\Models\DateSearchRule;
-use App\Models\UserSearchRule;
-use App\Models\EventMapSearchRule;
-use App\Models\EventRemoteSearchRule;
-use App\Models\CategorySearchRule;
-use App\Models\RemoteLocationSearchRule;
 use DB;
 use Carbon\Carbon;
 use Session;
@@ -30,62 +20,57 @@ use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
-    public function index(Request $request)
+    public function nav(Request $request)
     {
-        if ($request->price0) {$request->request->add(['price' => [$request->price0,$request->price1 ]]);}
-        if ($request->start) {$request->request->add(['dates' => [$request->start, $request->end]]);}
-        if ($request->mapsearch) {$request->request->add([
-            'mapboundary' => [
-                '_northEast' => 
-                [
-                    'lat' => $request->NElat,
-                    'lng' => $request->NElng,
-                ],
-                '_southWest' => 
-                [
-                    'lat' => $request->SWlat,
-                    'lng' => $request->SWlng,
-                ],
-            ]
-        ]);}
-
-        $maxprice = ceil(Event::getMostExpensive());
-
-        $categories = Category::all();
-
-        $tags = Genre::where('admin', 1)->orderBy('rank', 'desc')->get();
-
-        $searchedevents = Event::search('a')
-            ->rule(EventMapSearchRule::class)
-            ->with(['location', 'organizer', 'category', 'genres'])
-            ->paginate(20);
-
-        if ($request->lat) { $showNumber = 6; } else {$showNumber = 8;}
-
-        if ($request->price || $request->category || $request->tag || $request->dates ) {
-            $onlineevents = Event::search('a')
-            ->rule(EventRemoteSearchRule::class)
-            ->where('hasLocation', false)
-            ->with(['organizer','category', 'genres'])
-            ->orderBy('published_at', 'desc')
-            ->paginate($showNumber);
-        } else {
-            $onlineevents =  Event::where('hasLocation', false)
-            ->with(['organizer','category', 'genres'])
-            ->whereDate('closingDate', '>=', date("Y-m-d"))
-            ->orderByDesc('rank')
-            ->paginate($showNumber);
+        if ($request->keywords) {
+            $searchResult = Event::multiMatchSearch()
+            ->join(Organizer::class)
+            ->join(Category::class)
+            ->join(Genre::class)
+            ->join(CityList::class)
+            ->fields(['name', 'name._2gram','name._3gram'])
+            ->query($request->keywords)
+            // ->analyzer('rebuilt_english')
+            ->type('bool_prefix')
+            // ->sort('population', 'desc')
+            // ->sort('priority', 'desc')
+            ->execute();
+            if (count($searchResult->matches())) {
+                return $searchResult->matches();
+            }
+            $searchResult = Event::matchSearch()
+            ->field('name')
+            ->query($request->keywords)
+            ->fuzziness('AUTO')
+            ->size(10)
+            ->execute();
+            return $searchResult->matches();
         }
+        $searchResult = Event::matchAllSearch()
+        ->size(10)
+        ->execute();
+        return $searchResult->matches();
 
-        return view('events.search',compact('searchedevents', 'onlineevents', 'categories', 'maxprice', 'tags'));
     }
 
-     public function searchMapBoundary(Request $request)
+    public function location(Request $request) 
     {
-        return Event::search('a')
-            ->rule(EventMapSearchRule::class)
-            ->with(['location', 'organizer','category', 'genres'])
-            ->paginate(20);
+        if ($request->keywords) {
+            $cityResult = CityList::multiMatchSearch()
+                ->fields(['name'])
+                ->query($request->keywords)
+                ->type('bool_prefix')
+                ->sort('rank', 'desc')
+                ->sort('population', 'desc')
+                ->size(4)
+                ->execute();
+            return $cityResult->matches();
+        }
+        $searchResult = CityList::matchAllSearch()
+        ->sort('rank', 'desc')
+        ->size(10)
+        ->execute();
+        return $searchResult->matches();
     }
 
     public function allsearch(Request $request)

@@ -10,13 +10,13 @@
                 v-model="eventList"
                 placeholder="Filter by event name" 
                 class="general"
-                @keyup="search(eventList)"
+                @keyup="onSearch(eventList)"
                 type="text">
         </div>
         <div 
             class="list"
             :key="event.id"
-            v-for="(event) in events">
+            v-for="event in events.data">
             <div>
                 <img 
                     style="height:40px;width:40px;object-fit:cover;" 
@@ -27,53 +27,47 @@
                 {{ event.name }}
             </div>
             <div>
-                <button @click="resurrect(event)">
+                <button @click="onResurrect(event)">
                     Resurrect
                 </button>
             </div>
         </div>
-        <div class="pagination-button">
-            <template v-if="moreToLoad">
-                <button @click="onLoad">
-                    Load More
-                </button>
-            </template>
-        </div>
+        <pagination 
+            :limit="1"
+            :list="events"
+            @selectpage="onLoad" />
     </div>
 </template>
 
 <script>
+    import Pagination  from '../../components/pagination.vue'
 
     export default {
+
+        components: { Pagination },
 
         data() {
             return {
                 events: this.loadedevents ? this.loadedevents : [],
                 eventList: '',
-                page: 2,
-                moreToLoad: true,
             }
         },
 
         methods: {
 
-            search(eventList) {
+            onSearch(eventList) {
                 axios.get('/api/admin/event/deleted/search', { params: { keywords: eventList } })
-                .then( res => { this.events = res.data });
+                .then( res => { this.events = res.data })
             },
 
-            onLoad() {
-                axios.post(`/admin/event/boneyard/fetch?page=${this.page}`)
-                .then( res => {  
-                    this.events = this.events.concat(res.data.data);
-                    this.page++;
-                    this.page == res.data.total + 1 ? this.moreToLoad = false : '';
-                })
+            onLoad(page) {
+                axios.post(`/admin/event/boneyard/fetch?page=${page}`)
+                .then( res => { this.events = res.data })
             },
 
-            resurrect(event) {
-                axios.post(`/admin/event/boneyard/${event.id}/resurrect`)
-                .then( res => { this.events = res.data.data } );
+            async onResurrect(event) {
+                await axios.post(`/admin/event/boneyard/${event.id}/resurrect`)
+                this.onLoad()
             }   
         },
 

@@ -15,15 +15,7 @@
                     </button>
                     <div v-if="active === 'category'" class="e-search-filter__pop-box">
                         <div class="e-search-filter__pop-box--category">
-                            <multiselect 
-                            v-model="category"
-                            label="name"
-                            :options="categories" 
-                            placeholder="Categories"
-                            @select="submitCategory"
-                            open-direction="bottom"
-                            :preselect-first="false">
-                            </multiselect>
+                            
                         </div>
                         <div class="e-search-filter__pop-box--footer">
                             <button v-if="category" @click="clearCat()" class="pop-box__cancel">clear</button>
@@ -35,33 +27,7 @@
             <!-- Location Search -->
             <div v-if="!category.remote || category == ''" class="e-search-filter__item">
                 <div>
-                    <multiselect 
-                    v-model="searchBoxInput" 
-                    :options="searchBoxOptions" 
-                    open-direction="bottom"
-                    placeholder="Location"
-                    class="multi-button"
-                    label="name"
-                    :show-labels="false"
-                    :internal-search="false"
-                    :options-limit="30" 
-                    :limit="5"  
-                    track-by="name"
-                    @open="asyncGenerateCitiesList"
-                    @search-change="asyncGenerateCitiesList"
-                    @input="searchLocation"
-                    :show-no-results="false"
-                    :allow-empty="false">
-                        <template 
-                        slot="selection" 
-                        slot-scope="{ values, search, isOpen }">
-                            <span 
-                            class="multiselect__single" 
-                            v-if="values.length &amp;&amp; !isOpen">
-                                {{ values.length }} options selected
-                            </span>
-                        </template>
-                    </multiselect>
+                    
                 </div>
             </div>
             <!-- Date Search -->
@@ -131,15 +97,7 @@
                     </button>
                     <div v-if="active === 'tag'" class="e-search-filter__pop-box">
                         <div class="e-search-filter__pop-box--category">
-                            <multiselect 
-                            v-model="tag"
-                            label="name"
-                            :options="tags" 
-                            placeholder="Tags"
-                            @select="submitTag"
-                            open-direction="bottom"
-                            :preselect-first="false">
-                            </multiselect>
+                            
                         </div>
                         <div class="e-search-filter__pop-box--footer">
                             <button v-if="tag" @click="clearTag()" class="pop-box__cancel">clear</button>
@@ -166,33 +124,7 @@
                  <!-- Mobile Location Search -->
                 <div v-if="!category.remote || category == ''" class="mobile-filter-list__content--categories">
                     <h3>Location</h3>
-                    <multiselect 
-                    v-model="searchBoxInput" 
-                    :options="searchBoxOptions" 
-                    open-direction="bottom"
-                    placeholder="Location"
-                    class="multi-button"
-                    label="name"
-                    :show-labels="false"
-                    :internal-search="false"
-                    :options-limit="30" 
-                    :limit="5"  
-                    track-by="name"
-                    @open="asyncGenerateCitiesList"
-                    @search-change="asyncGenerateCitiesList"
-                    @input="searchLocation"
-                    :show-no-results="false"
-                    :allow-empty="false">
-                        <template 
-                        slot="selection" 
-                        slot-scope="{ values, search, isOpen }">
-                            <span 
-                            class="multiselect__single" 
-                            v-if="values.length &amp;&amp; !isOpen">
-                                {{ values.length }} options selected
-                            </span>
-                        </template>
-                    </multiselect>
+                   
                 </div>
                  <!-- Mobile Date Search -->
                 <div class="mobile-filter-list__content--dates">
@@ -208,14 +140,7 @@
                  <!-- Mobile Category Search -->
                 <div class="mobile-filter-list__content--categories">
                     <h3>Categories</h3>
-                    <multiselect 
-                    v-model="category"
-                    label="name"
-                    :options="categories" 
-                    placeholder="Categories"
-                    open-direction="bottom"
-                    :preselect-first="false">
-                    </multiselect>
+                    
                 </div>
                 
                  <!-- Mobile Price Search -->
@@ -253,14 +178,11 @@
             </div>
         </section>
         <load-more @intersect="intersected"></load-more>
-      
-
     </div>
 </template>
 <script>
     import flatPickr from 'vue-flatpickr-component'
     import 'flatpickr/dist/flatpickr.css'
-    import Multiselect from 'vue-multiselect'
     import VueSlider from 'vue-slider-component'
     import 'vue-slider-component/theme/antd.css'
     import LoadMore  from '../../../components/LoadMore.js'
@@ -270,7 +192,7 @@
 
         props:['categories','maxprice', 'events', 'tags'],
 
-        components: { flatPickr, Multiselect, VueSlider, LoadMore },
+        components: { flatPickr, VueSlider, LoadMore },
 
         computed: {
             showPrice() {

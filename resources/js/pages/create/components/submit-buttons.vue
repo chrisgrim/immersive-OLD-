@@ -5,7 +5,7 @@
                 :disabled="disabled" 
                 @click.prevent="onBackInitial()" 
                 class="nav-back-button"> 
-                Your events 
+                Dashboard
             </button>
         </div>
 

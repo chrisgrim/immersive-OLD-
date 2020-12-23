@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-use ScoutElastic\Searchable;
+use Laravel\Scout\Searchable;
+use ElasticScoutDriverPlus\CustomSearch;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use App\Scopes\RankScope;
@@ -12,8 +13,8 @@ use Intervention\Image\ImageManagerStatic as Image;
 class Category extends Model
 {
     use Searchable;
-
-    protected $indexConfigurator = CategoryIndexConfigurator::class;
+    use CustomSearch;
+    
     /**
     * What protected variables are allowed to be passed to the database
     *
@@ -47,9 +48,9 @@ class Category extends Model
     public function toSearchableArray()
     {
         return [
-            "id" => $this->id,
             "name" => $this->name,
             "rank" => $this->rank,
+            'priority' => 3,
         ];
     }
 
@@ -121,22 +122,5 @@ class Category extends Model
         }
         $category->delete();
     }
-
-
-    protected $searchRules = [
-        //
-    ];
-
-    protected $mapping = [
-        'properties' => [
-            'id' => [
-                'type' => 'integer',
-                'index' => false
-            ],
-            'name' => [
-                'type' => 'search_as_you_type',
-            ],
-        ]
-    ];
 
 }

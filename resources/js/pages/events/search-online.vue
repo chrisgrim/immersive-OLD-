@@ -15,7 +15,7 @@
                     <div class="title">
                         <h3>Online Events</h3>
                     </div>
-                    <template v-if="onlineEventList.data">
+                    <template>
                         <vue-event-index :events="onlineEventList.data" />
                     </template>
                     <div>
@@ -84,7 +84,7 @@
                                         <ul class="event__horizontal-card--tags">
                                             <li 
                                                 v-for="(itemTag, index) in eventTags(event)" 
-                                                :key="itemTag.id" >
+                                                :key="itemTag.id">
                                                 {{ itemTag.name }}<span v-if="index != '2'">•</span>
                                             </li>
                                         </ul>
@@ -113,9 +113,10 @@
     import Pagination  from './components/pagination.vue'
     import MobileFilterBar  from './components/mobile-filter-bar.vue'
     import searchBasicsMixin from '../../mixins/search-basics-mixin'
+    import vueEventIndex from './components/index-item.vue'
 
     export default {
-        components: { EventFilter, Pagination, MobileFilterBar },
+        components: { EventFilter, Pagination, MobileFilterBar, vueEventIndex },
 
         mixins: [ searchBasicsMixin ],
 
@@ -151,8 +152,8 @@
         methods: {
 
             updateOnlineEvents(value) {
-                this.onlineEventList = value;
                 this.onlinePagination = value.current_page;
+                this.onlineEventList = value;
             },
 
             selectOnlinePage (page) {

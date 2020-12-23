@@ -1,12 +1,19 @@
 <template>
     <div v-if="visible">
-        <div class="verify_bar" >
-            <div class="panel" ref="panel">
+        <div class="verify_bar">
+            <div 
+                class="panel" 
+                ref="panel">
                 <div class="text">
-                    <div @click="visible = false" class="close">
+                    <div 
+                        @click="visible = false" 
+                        class="close">
                         X
                     </div>
-                    <img style="width: 10rem" src="/storage/website-files/email-logo.png" alt="">
+                    <img 
+                        style="width: 10rem" 
+                        src="/storage/website-files/email-logo.png" 
+                        alt="">
                     <h3>Please verify your email</h3>
                     <p>Check your email and spam for our email.</p>
                 </div>
@@ -22,10 +29,7 @@
 <script>
     export default {
 
-        props: {
-            message: { type:String },
-
-        },
+        props: ['message'],
 
         computed: {
 
@@ -40,10 +44,9 @@
 
         methods: {
             resend() {
-                axios.post(`/email/resend`)
+                axios.post(`/email/verification-notification`)
                 .then(response => {
                     this.visible = false;
-                    console.log(response.data)
                 })
                 .catch(errorResponse => { 
                     console.log(errorResponse.data);
@@ -52,7 +55,7 @@
 
             onClickOutside(event) {
                 let panel =  this.$refs.panel;
-                if (!panel || panel.contains(event.target)) return console.log('one');;
+                if (!panel || panel.contains(event.target)) return console.log('one');
                 this.visible = false;
                 this.$emit('close');
             },
@@ -68,7 +71,7 @@
             setTimeout(() => document.addEventListener("click", this.onClickOutside), 200);
         },
 
-        beforeDestroy() {
+        unmounted() {
             document.removeEventListener("click", this.onClickOutside);
         },
     }

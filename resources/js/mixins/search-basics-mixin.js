@@ -58,8 +58,9 @@ export default {
             this.$store.commit('searchtype', '');
             
             if (this.url.category) {
-                this.category = this.categories.find(element => element.id == this.url.category);
-                this.$store.commit('searchtype', this.category.name);
+                let arr = this.url.category.split(',').map(Number);
+                this.category = this.categories.filter(element => arr.includes(element.id));
+                // this.$store.commit('searchtype', this.category.name);
             }
             if (this.url.city) {
                 this.city = this.url.city;
@@ -72,8 +73,10 @@ export default {
                 this.$store.commit('displaydates', this.url.dates.map(date => dayjs(date).format("MMM D")));
             }
             if (this.url.tag) {
-                this.tag = this.tags.find(element => element.name == this.url.tag);
-                this.$store.commit('searchtype', this.tag.name);
+                let arr = this.url.tag.split(',');
+                this.tag = this.tags.filter(element => arr.includes(element.name));
+
+                // this.$store.commit('searchtype', this.tag.name);
             }
             if (this.url.price) {
                 this.price = this.url.price;

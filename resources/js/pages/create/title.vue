@@ -1,32 +1,8 @@
 <template>
     <div class="event-create__title">
-        <section 
-            class="event-create__intro" 
-            v-if="newEvent">
-            <div>
-                <h4>Hi There,</h4>
-                <br>
-                <p>We’re excited that you're sharing your work with us so we can share it with the world!</p>
-                <p>Before we get started, make sure you have the following close at hand:</p>
-
-                <ul>
-                    <li><b>Your ticket site link.</b> (We don't provide ticketing services, we just help people discover your work.) </li>
-                    <li><b>An image for your event.</b> It's best if it is horizontal, doesn't have text on it, and has dimensions of at least 800 x 450  and is under 10mb in size.</li>
-                    <li><b>Text describing your event.</b> </li>
-                    <li>If it's an in-person event, text describing your <b>COVID-19 policies and protocols.</b> </li>
-                    <li><b>Your ticket price options.</b> We support multiple ticket types, including Pay What You Can, and many common currencies.</li> 
-                    <li>Be prepared to answer questions about <b>accessibility, content advisories, the nature of physical contact</b> at the event (if any), and the <b>nature of interaction</b> at the event.</li>
-                </ul>
-                <br>
-                <p>Once you’ve entered everything, smash that “Submit” button. We’ll get back to you with questions if we need anything cleared up!</p>
-                <p>Best,<br>
-                    Noah Nelson<br>
-                    Publisher<br>
-                    Everything Immersive & No Proscenium
-                </p>
-            </div>
-        </section>
-
+        <template v-if="newEvent">
+            <vue-new-beginner />
+        </template>
         <section 
             class="event-create" 
             v-else>
@@ -38,7 +14,9 @@
                 v-if="approved" 
                 class="field">
                 <label>Title</label>
-                <p class="create-titlename">{{ title.name }}</p>
+                <p class="create-titlename">
+                    {{ title.name }}
+                </p>
                 <button 
                     class="editTitle" 
                     v-if="resubmit" 
@@ -55,7 +33,7 @@
                     v-model="title.name" 
                     placeholder=" "
                     :class="{ active: active == 'name','error': $v.title.name.$error }"
-                    @input="cleanErr"
+                    @input="clearInput"
                     @click="active = 'name'"
                     @blur="active = 'null'">
                 <div v-if="$v.title.name.$error" class="validation-error">
@@ -114,6 +92,7 @@
 	import formValidationMixin from '../../mixins/form-validation-mixin'
 	import { required, maxLength } from 'vuelidate/lib/validators';
     import Submit  from './components/submit-buttons.vue'
+    import VueNewBeginner  from './components/vue-title-beginner.vue'
 
 	export default {
 
@@ -121,17 +100,12 @@
 
 		props: ['event', 'newsubmission'],
 
-        components: {Submit},
+        components: { Submit, VueNewBeginner },
 
         computed: {
             endpoint() {
                 return `/create/${this.event.slug}/title`
             },
-
-            navSubmit() {
-                return this.$store.state.navurl
-            },
-
         },
 
 		data() {
@@ -145,41 +119,11 @@
                 serverErrors: '',
                 updated: false,
                 newEvent: this.newsubmission,
+                creationPage: 1,
 			}
 		},
 
 		methods: {
-            initializeTitleObject() {
-                return {
-                    name: this.event.name ? this.event.name : '',
-                    tagLine: this.event.tag_line ? this.event.tag_line : '',
-                    resubmit: '',
-                }
-            },
-
-            clearinput() {
-                this.nameActive = true;
-                this.serverErrors = [];
-            },
-
-			onSubmit(value) {
-
-                if (this.event.status != 0 && !this.$v.$anyDirty) {return this.onForward(value)}
-                if (this.checkVuelidate()) { return false }
-				axios.patch( this.endpoint, this.title )
-				.then(res => { 
-                    value == 'save' ? this.save() : this.onForward(value);
-                })
-                .catch(err => { 
-                    this.onErrors(err) });
-			},
-
-            onResubmit() {
-                this.title.resubmit = 'resubmit';
-                this.approved = false;
-                this.modal = false;
-            },
-
             onLoad() {
                 axios.get(this.onFetch('title'))
                 .then(res => {
@@ -188,24 +132,46 @@
                 });
             },
 
-            cleanErr() {
+			async onSubmit(value) {
+                if ( this.checkForChanges(value) ) { return this.onForward(value) }
+                if ( this.checkVuelidate() ) { return }
+				await axios.patch( this.endpoint, this.title )
+                value == 'save' ? this.save() : this.onForward( value );
+			},
+
+            onResubmit() {
+                this.title.resubmit = 'resubmit';
+                this.approved = false;
+                this.modal = false;
+            },
+
+            clearInput() {
                 this.serverErrors = [];
                 this.$v.title.name.$touch();
             },
 
             acceptNewEvent() {
                 this.newEvent = false;
-            }
+            },
+
+            initializeTitleObject() {
+                return {
+                    name: this.event.name ? this.event.name : '',
+                    tagLine: this.event.tag_line ? this.event.tag_line : '',
+                    resubmit: '',
+                }
+            },
 		},
 
         created() {
             this.onLoad();
+            this.disabled = false;
         },
 
         watch: {
-            navSubmit() {
-                this.onSubmit(this.navSubmit);
-            },
+            '$store.state.navurl'() {
+                this.onSubmit(this.$store.state.navurl.page)
+            }
         },
 
 		validations: {

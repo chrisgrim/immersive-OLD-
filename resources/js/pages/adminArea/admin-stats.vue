@@ -16,16 +16,15 @@
             <h3>User Searches</h3>
         </div>
         <div>
-            <multiselect 
+            <v-select 
                 v-model="searchType"
+                :options="searchOptions"
+                :clearable="false"
                 placeholder="Search by type"
-                :allowEmpty="false"
-                :options="searchOptions" 
-                tag-position="bottom"
                 :class="{ active: active == 'type' }"
-                @input="onLoad"
-                @click="active = 'type'"
-                @blur="active = null" />
+                @search:blur="active = null"
+                @search:focus="active = 'type'"
+                @input="onLoad" />
         </div>
         <div>
             <apexchart 
@@ -39,16 +38,12 @@
 
 <script>
     import VueApexCharts from 'vue-apexcharts'
-    import { required } from 'vuelidate/lib/validators';
-    import Multiselect from 'vue-multiselect'
     Vue.use(VueApexCharts)
     Vue.component('apexchart', VueApexCharts)
 
 
     export default {
         props: ['eventcount', 'usercount'],
-
-        components: { Multiselect },
 
         computed: {
             submitObject() {
@@ -78,7 +73,7 @@
 
         methods: {
             onLoad() {
-                axios.post('/admin/data', this.submitObject)
+                axios.post('/admin/search/data', this.submitObject)
                 .then( res => {
                     this.options = {
                         xaxis: {
@@ -86,8 +81,7 @@
                         }
                     }
                     this.series = [{data: res.data.map(name => name.count), name: res.data.map(name => name.name.substring(0, 20))}]
-                })
-                .catch( err => {});
+                });
             },
                 
         },

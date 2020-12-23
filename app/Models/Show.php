@@ -167,6 +167,26 @@ class Show extends Model
             $lastDate = Carbon::now()->addMonths(6)->format('Y-m-d H:i:s');
         }
 
+        if ($event->status === 'e' && $request->embargo_date === null ) {
+            return $event->update([
+                'show_times' => $request->showtimes,
+                'embargo_date' => $request->embargo_date,
+                'closingDate' => $lastDate,
+                'showtype' => $type,
+                'timezone_id' => $request->timezone ? $request->timezone['id'] : null,
+                'status' => 'p'
+            ]);
+        }
+        if ($event->status === 'p' && $request->embargo_date ) {
+            return $event->update([
+                'show_times' => $request->showtimes,
+                'embargo_date' => $request->embargo_date,
+                'closingDate' => $lastDate,
+                'showtype' => $type,
+                'timezone_id' => $request->timezone ? $request->timezone['id'] : null,
+                'status' => 'e'
+            ]);
+        }
         $event->update([
             'show_times' => $request->showtimes,
             'embargo_date' => $request->embargo_date,

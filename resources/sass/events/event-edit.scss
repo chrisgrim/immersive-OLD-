@@ -193,6 +193,7 @@ button.new-organization__add {
 @media (max-width: 768px) {
     .event-edit__organizer {
         text-align: center;
+        margin-top:0;
     }
 
     .event-edit-eventlist {
@@ -204,6 +205,10 @@ button.new-organization__add {
         height: 100%;
         margin-top: 1rem;
         width: 100%;
+        padding:2rem;
+    }
+    .event-edit__eventlist {
+        padding: 1rem;
     }
 
     .organizer-card__image {

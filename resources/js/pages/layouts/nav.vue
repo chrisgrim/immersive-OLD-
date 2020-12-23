@@ -23,14 +23,14 @@
                     </a>
                 </div>
                 <div class="nav-search">
-                    <nav-search 
+                    <vue-nav-search 
                         searchtype="event"
                         v-if="hideSearch" />
                 </div>
                 <div class="nav-menu">
                     <template v-if="user">
                         <div class="nav-menu-item">
-                            <profile-button 
+                            <vue-profile-button 
                                 :screenwidth="mobileDevice" 
                                 :user="user" />
                         </div>
@@ -353,7 +353,7 @@
                                 cy="12" 
                                 r="10.4" />
                         </svg>         
-                        <profile-button 
+                        <vue-profile-button 
                             :screenwidth="mobileDevice" 
                             :user="user" />
                         <p class="mobile-nav-footer__text">
@@ -369,9 +369,14 @@
 
 <script>
 
+    import vueProfileButton from './profile-button.vue'
+    import vueNavSearch from './nav-search.vue'
+
 	export default {
 
         props:['user', 'navtype'],
+
+        components: { vueProfileButton, vueNavSearch },
 
         computed: {
             fullmap() {

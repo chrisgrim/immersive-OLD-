@@ -18,22 +18,14 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactUser;
 use App\Mail\ContactOrganizer;
 use Redirect;
+use Illuminate\Support\Str;
 
 class OrganizerController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'verified'])->except(['show', 'message']);
-        $this->middleware('can:update,organizer')->except(['store','show','create', 'message']);
-    }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+        $this->middleware(['auth', 'verified'])->except(['show', 'message','fetchEvents']);
+        $this->middleware('can:update,organizer')->except(['store','show','create', 'message', 'fetchEvents']);
     }
 
     /**
@@ -58,7 +50,7 @@ class OrganizerController extends Controller
      */
     public function store(OrganizerStoreRequest $request)
     {  
-        $organizer = Organizer::Create($request->except(['image', 'user_id']) + ['user_id' => auth()->id()]);
+        $organizer = Organizer::Create($request->except(['image', 'user_id']) + ['user_id' => auth()->id(), 'slug' => Str::slug($request->name)]);
         $request->image ? MakeImage::saveImage($request, $organizer, 600, 600, 'organizer') : null;
         $organizer->update(['status' => 'r']);
     }
@@ -112,8 +104,7 @@ class OrganizerController extends Controller
         // $web = get_headers($request->website, 1)[0];
         // if (strstr($web, '302') || strstr($web, '200 OK') || strstr($web, '301')) {
         // } else { return abort(404, "broken");}
-
-        $request->name !== $organizer->name && !$request->image ? MakeImage::renameImage($organizer, null, 'organizer', $request) : '';
+        if ($request->name !== $organizer->name && $request->image)   MakeImage::renameImage($organizer, null, 'organizer', $request);
 
         $organizer = Organizer::updateOrCreate(
             [
@@ -121,7 +112,7 @@ class OrganizerController extends Controller
             ],
             [
                 'name' => $request->name,
-                'slug' => $request->slug,
+                'slug' => Str::slug($request->name),
                 'description' => $request->description,
                 'website' => $request->website,
                 'email' => $request->email,
@@ -142,9 +133,17 @@ class OrganizerController extends Controller
      */
     public function destroy(Organizer $organizer)
     {
+        if (auth()->user()->isAdmin()) { return $organizer->deleteOrganizer($organizer); }
+
         $organizer->events->first->exists() ? null :  $organizer->deleteOrganizer($organizer);
     }
 
+    /**
+     * organizer messaging
+     *
+     * @param  \App\Organizer  $organizer
+     * @return \Illuminate\Http\Response
+     */
     public function message(Request $request, Organizer $organizer, User $user)
     {   
         $ids = [$organizer->user->id, $user->id];

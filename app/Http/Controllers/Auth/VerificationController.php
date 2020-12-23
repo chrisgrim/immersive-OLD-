@@ -7,7 +7,6 @@ use App\Models\Event;
 use App\Models\Category;
 use App\Models\StaffPick;
 use Carbon\Carbon;
-use Illuminate\Foundation\Auth\VerifiesEmails;
 
 class VerificationController extends Controller
 {
@@ -21,8 +20,6 @@ class VerificationController extends Controller
     | be re-sent if the user didn't receive the original email message.
     |
     */
-
-    use VerifiesEmails;
 
     /**
      * Where to redirect users after verification.
@@ -44,7 +41,7 @@ class VerificationController extends Controller
     }
 
     public function show() {
-        if (auth()->user()->email_verified_at) {return redirect('/');}
+        if (auth()->user()->email_verified_at) { return redirect('/'); }
         return redirect('/')->with( [ 'verifiy' => 'please verifiy' ] );
     }
 }

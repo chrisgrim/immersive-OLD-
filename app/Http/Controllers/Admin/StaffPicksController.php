@@ -93,14 +93,13 @@ class StaffPicksController extends Controller
      */
     public function update(Request $request, StaffPick $staffpick)
     {
-        if($request->rank) { $staffpick->update(['rank' => $request->rank]); return '';}
-        if($request->comments) { $staffpick->update(['comments' => $request->comments]); return '';}
-        $staffpick->update(
-            [
+        $staffpick->update([
+            'rank' => $request->rank,
+            'comments' => $request->comments,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
-            ]
-        );
+        ]);
+        return StaffPick::paginate(10);
     }
 
     /**

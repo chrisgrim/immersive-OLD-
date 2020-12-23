@@ -5,33 +5,6 @@
         <p>What organizer or production company is putting this immersive show on?</p>
     </div>
     <div class="organization-form">
-        <multiselect 
-        v-model="searchModel" 
-        id="ajax" 
-        label="name" 
-        track-by="name" 
-        placeholder="Add new event organization here or search for existing one" 
-        open-direction="bottom"
-        :allow-empty="false"
-        deselectLabel=''
-        :options="searchOptions" 
-        :searchable="true" 
-        :loading="isLoading" 
-        :options-limit="30" 
-        :limit="5"  
-        :show-no-results="false" 
-        @search-change="asyncFind"
-        @open="addNewOrganizer"
-        @select="onOrganizerSelect">
-            <template slot="option" slot-scope="props">
-                    <img class="option__image" :src="props.option.imagePath ? `/storage/${props.option.imagePath}` : defaultImage"
-                    alt="defaultImage">
-                    <div class="option__desc">
-                        <span class="option__title">{{ props.option.name }}</span>
-                        <span class="option__small">{{ props.option.description }}</span>
-                    </div>
-                </template>
-        </multiselect>
     </div>
    
     
@@ -45,7 +18,7 @@
                             <span class="profile-upload-layover">
                 <div class="add-profile-image"><p>+</p></div>
             </span>
-                <image-upload @loaded="onImageUpload"></image-upload>
+                <image-upload @loaded="onImageUpload" />
             </label>
             <input 
             type="hidden" 
@@ -167,13 +140,11 @@
 <script>
 import _ from 'lodash'
 import ImageUpload from '../layouts/image-upload.vue'
-import Multiselect from 'vue-multiselect'
-import { required, minLength, maxLength, url } from 'vuelidate/lib/validators'
+import { required, maxLength, url } from 'vuelidate/lib/validators'
 
 export default {
     components: { 
         ImageUpload,
-        Multiselect,
     },
     
     props: {

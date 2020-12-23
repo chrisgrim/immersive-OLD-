@@ -75,10 +75,12 @@
         color:$default-color;
     }
     & .validation-error {
-        margin-top: -20px;
+        margin-top: -8px;
         position: absolute;
         background: white;
         margin-left: 10px;
+        z-index: 10;
+        padding: 0.5rem;
         & p {
             margin: 0px;
             padding: 0px 5px;

@@ -70,10 +70,9 @@ class RemoteLocationsController extends Controller
         $remotelocation->update([
             'slug' => Str::slug($request->name),
             'name' => $request->name,
-            'user_id' => auth()->user()->id,
             'description' => $request->description,
-            'user_id' => auth()->user()->id,
             'rank' => $request->rank,
+            'admin' => $request->admin,
         ]);
         return RemoteLocation::all();
     }

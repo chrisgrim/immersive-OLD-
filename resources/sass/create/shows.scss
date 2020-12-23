@@ -11,13 +11,9 @@
     max-width: 60.2rem;
 }
 
-.field.limited__calender {
-    width: 49%;
-    display: inline-block;
-}
 
 .show-type-selection {
-    width: 40rem;
+    width: 50rem;
 }
 
 .event-tickets__add {
@@ -37,7 +33,18 @@
     min-height: 320px;
 }
 
-section.event-enter-showtimes {
+.event-create__shows .vs__dropdown-option h3 {
+    margin:0;
+    font-size:1.6rem;
+}
+
+.event-create__shows .vs__dropdown-option em {
+    font-size:1.4rem;
+    color:#909090;
+}
+
+.event-create__shows .vs__dropdown-option.vs__dropdown-option--highlight em {
+    color:white;
 }
 
 section.event-enter-showdates {
@@ -50,6 +57,19 @@ section.ticket-section {
 }
 
 .calendar .flatpickr-calendar.inline {
+    margin: inherit;
+}
+
+.field.limited__calender {
+    width: 49%;
+    display: inline-block;
+}
+
+.limited-run__calendar {
+    margin-top: 3rem;
+}
+
+.limited-run__calendar .flatpickr-calendar.inline {
     margin: inherit;
 }
 
@@ -68,6 +88,22 @@ section.ticket-section {
     margin-top: 15px;
     border: 1px solid #ebebeb;
     position: relative;
+}
+
+.create-shows__ticket-box .vs__actions{
+    display: none;
+}
+.create-shows__ticket-box .vs__dropdown-toggle {
+    height: 4.8rem;
+}
+.create-shows__ticket-box input.vs__search {
+    background: transparent;
+}
+.create-shows__ticket-box .vs--single span.vs__selected {
+    background: transparent;
+}
+.create-shows__ticket-box .vs__selected-options {
+    align-items: center;
 }
 
 .ticket-box__element {
@@ -220,7 +256,7 @@ button.delete-circle {
         margin: 2rem auto 10rem auto;
     }
     .event-create__shows {
-        padding: 4rem 2rem 14rem 2rem;
+        padding: 10rem 2rem 14rem 2rem;
     }
     .calendar .flatpickr-calendar.inline {
         width: 301px !important;
@@ -239,5 +275,16 @@ button.delete-circle {
         & h4 {
             font-size: 1rem;
         }
+    }
+    .field.limited__calender {
+        width: 100%;
+        display: inline-block;
+    }
+    .limited-run__calendar .flatpickr-calendar.inline {
+        margin: auto;
+    }
+    .limited-run__calendar {
+        margin-top: 0;
+        margin-bottom: 3rem;
     }
 }

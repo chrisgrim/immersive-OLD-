@@ -3,10 +3,15 @@
         <div class="approvebar">
             <div class="buttons">
                 <span style="display:inline-block;margin:0rem 6rem">{{ loadorganizer.user.email }}   </span>
-                <button :class="{bspin : dis}" :disabled="dis" class="create" @click.prevent="goBack()"> Go Back </button>
-                <button :class="{bspin : dis}" :disabled="dis" class="create" @click.prevent="onDelete()"> Delete </button>
-                <button :class="{bspin : dis}" :disabled="dis" class="create" @click.prevent="makeEdits()"> Make Edits Yourself </button>
-                <button :class="{bspin : dis}" :disabled="dis" class="create" @click.prevent="onApproved()"> Approved </button>
+                <button 
+                    v-for="(button, index) in buttons"
+                    :key="index"
+                    @click.prevent="button.click"
+                    :class="{bspin : dis}" 
+                    :disabled="dis" 
+                    class="create">
+                    {{ button.name }}
+                </button>
             </div>
         </div>
     </div>
@@ -23,30 +28,36 @@
             return {
                 organizer: this.loadorganizer,
                 dis: false,
+                buttons: [
+                    { click: () => { this.onBack() }, name: 'Go Back' },
+                    { click: () => { this.onDelete() }, name: 'Delete' },
+                    { click: () => { this.onEdit() }, name: 'Make Edits Yourself' },
+                    { click: () => { this.onApproved() }, name: 'Approved' },
+                ],
             }
         },
 
         methods: {
-            onApproved() {
-                this.dis = true;
-                axios.post(`/admin/organizer/${this.organizer.slug}/approve`)
-                .then( window.location.href = '/admin/organizers/finalize' )
-                .catch( error => { this.serverErrors = error.response.data.errors; this.dis = false });
+            async onApproved() {
+                await axios.post(`/admin/organizer/${this.organizer.slug}/approve`)
+                this.redirect('/admin/organizers/finalize')
             },
 
-            onDelete() {
-                this.dis = true;
-                axios.post(`/admin/organizer/${this.organizer.slug}/delete`)
-                .then( window.location.href = '/admin/organizers/finalize' )
-                .catch(error => { this.serverErrors = error.response.data.errors; this.dis = false });
+            async onDelete() {
+                await axios.post(`/admin/organizer/${this.organizer.slug}/delete`)
+                this.redirect('/admin/organizers/finalize')
             },
 
-            makeEdits() {
-                window.location.href = `/organizer/${this.organizer.slug}/edit`
+            onEdit() {
+                this.redirect(`/organizer/${this.organizer.slug}/edit`)
             },
 
-            goBack() {
-                window.location.href = '/admin/organizers/finalize';
+            onBack() {
+                this.redirect('/admin/organizers/finalize')
+            },
+
+            redirect(value) {
+                window.location.href = value;
             },
         },
 

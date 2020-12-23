@@ -15,18 +15,21 @@
     position: relative;
     margin-right: 3rem;
 }
+
 .vue-tab-button {
     border: none;
     padding: 2.4rem 0rem;
     background-color: white;
-    & h2 {
-        font-size: 1.6rem;
-        line-height: 2.2rem;
-        color: #5f5f5f;
-        font-weight: 500;
-        letter-spacing: .06rem;
-    }
 }
+
+.vue-tab-button h2 {
+    font-size: 1.6rem;
+    line-height: 2.2rem;
+    color: #5f5f5f;
+    font-weight: 500;
+    letter-spacing: .06rem;
+}
+
 .vue-tab-element.active button {
     border-bottom: 2px solid $default-color;
     border-radius:0;
@@ -36,38 +39,6 @@
     }
 }
 
-/*.vue-tab {
-    border-bottom: solid #e4e4e4 1px;
-    & .tabcontent {
-        width: 77%;
-        margin: auto;
-    }
-    & .ln {
-        display: inline-block;
-        position: relative;
-        margin-right: 3rem;
-        & button {
-            border: none;
-            padding: 2.4rem 0rem;
-            background-color: white;
-            & h2 {
-                font-size: 1.6rem;
-                line-height: 2.2rem;
-                color: #5f5f5f;
-                font-weight: 500;
-                letter-spacing: .06rem;
-            }
-        }
-    }
-    & .ln.act button {
-        border-bottom: 2px solid $default-color;
-        border-radius:0;
-        position: relative;
-        & h2 {
-            color:$default-color;
-        }
-    }
-}*/
 
 @media (max-width: 768px) {
     .vue-tab-content {
@@ -76,10 +47,8 @@
     .vue-tab-element {
         margin:0;
     }
-    .vue-tab-button {
-        & h2 {
-            font-size: 1rem;
-        }
+    .vue-tab-button h2 {
+        font-size: 1.7rem;
     }
     .vue-tab-button {
         padding: 1.2rem 1.2rem;

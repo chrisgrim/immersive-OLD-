@@ -10,13 +10,13 @@
                 v-model="eventList"
                 placeholder="Filter by event name" 
                 class="general"
-                @keyup="asyncGenerateEventList(eventList)"
+                @keyup="onSearch(eventList)"
                 type="text">
         </div>
         <div 
             class="list" 
             :key="event.id"
-            v-for="(event) in events">
+            v-for="event in events.data">
             <div>
                 {{ event.name }}
             </div>
@@ -44,13 +44,10 @@
                 </template>
             </div>
         </div>
-        <div class="pagination-button">
-            <button 
-                class="default" 
-                @click="loadMore">
-                Load more
-            </button>
-        </div>
+        <pagination 
+            :limit="1"
+            :list="events"
+            @selectpage="onLoad" />
         <modal 
             v-if="modalVisible" 
             @close="modalVisible = false">
@@ -62,22 +59,19 @@
             <div slot="body"> 
                 <h3>Change {{ modalData.name }} Event Organizer</h3>
                 <p>Current organizer is {{ modalData.organizer.name }}</p>
-                <multiselect 
-                    v-model="organizer" 
-                    label="name" 
-                    track-by="id" 
-                    placeholder="Type to search" 
-                    open-direction="bottom" 
-                    :options="organizers" 
-                    :searchable="true" 
-                    :internal-search="false"
-                    @open="asyncGenerateOrganizerList"
-                    @search-change="asyncGenerateOrganizerList" />
+                <v-select 
+                    v-model="organizer"
+                    label="name"
+                    placeholder="Enter Organizer"
+                    @search="searchOrganizers"
+                    @search:focus="searchOrganizers"
+                    :clearable="false"
+                    :options="organizers.data" />
             </div>
             <div slot="footer">
                 <button 
                     class="btn sub" 
-                    @click="changeOwner">
+                    @click="onChangeOwner">
                     Change Owner
                 </button>
             </div>
@@ -86,50 +80,42 @@
 </template>
 
 <script>
-    import Multiselect from 'vue-multiselect'
+    import Pagination  from '../../components/pagination.vue'
 
     export default {
 
-        components: { Multiselect },
+        components: { Pagination },
 
         data() {
             return {
-                events: '',
+                events: [],
                 eventList: '',
                 organizer: '',
                 organizers: [],
-                pagination: {paginate:10},
                 modalData: null,
                 modalVisible: false,
             }
         },
 
         methods: {
-
-            onLoad() {
-                axios.post('/admin/events/fetch', this.pagination)
+            onLoad(page) {
+                axios.post(`/admin/events/fetch?page=${page}`)
                 .then( res => { this.events = res.data })
-                .catch( error => { this.serverErrors = error.response.data.errors });
             },
 
-            asyncGenerateEventList(eventList) {
-                axios.get('/api/admin/events/search', { params: { keywords: eventList } })
+            onSearch(events) {
+                axios.get('/api/admin/events/search', { params: { keywords: events } })
                 .then( res => { this.events = res.data });
             },
 
-            loadMore() {
-                this.pagination.paginate += 10;
-                this.onLoad();
-            }, 
-
-            asyncGenerateOrganizerList(value) {
+            searchOrganizers(value) {
                 axios.get('/api/admin/organizer/search', { params: { keywords: value } })
                 .then( res => { this.organizers = res.data });
             },
 
-            changeOwner() {
-                axios.post(`/admin/event/${this.modalData.slug}/change-organizer`, this.organizer)
-                .then( this.clearModalData() );
+            async onChangeOwner() {
+                await axios.post(`/admin/event/${this.modalData.slug}/change-organizer`, this.organizer)
+                this.reset();
             },
 
             openModal(data) {
@@ -137,7 +123,7 @@
                 this.modalVisible = true
             },
 
-            clearModalData() {
+            reset() {
                 this.onLoad();
                 this.modalData = null
                 this.modalVisible = false
@@ -146,7 +132,6 @@
             cleanDate(data) {
                 return this.$dayjs(data).format("dddd, MMMM D YYYY");
             }
-
         },
 
         created() {

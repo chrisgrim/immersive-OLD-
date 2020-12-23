@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-use ScoutElastic\Searchable;
+use Laravel\Scout\Searchable;
+use ElasticScoutDriverPlus\CustomSearch;
 use Illuminate\Database\Eloquent\Model;
 
 class CityList extends Model
@@ -10,12 +11,17 @@ class CityList extends Model
 	protected $guarded = [];
 
 	use Searchable;
+    use CustomSearch;
 
-	protected $indexConfigurator = CityListIndexConfigurator::class;
-
-	protected $searchRules = [
-        //
-    ];
+    /**
+    * What events should be searchable for scout elastic search
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+    */
+    public function shouldBeSearchable()
+    {
+        return $this->population > 50000 && strlen($this->name) == strlen(utf8_decode($this->name));
+    }
 
     /**
      * Get the indexable data array for the model.
@@ -25,37 +31,11 @@ class CityList extends Model
     public function toSearchableArray()
     {
         return [
-            "id" => $this->id,
             "name" => $this->name,
             "population" => $this->population,
-            "rank" => $this->rank,
+            // "rank" => $this->rank,
+            "rank" => 10,
+            'priority' => 1,
         ];
     }
-
-    protected $mapping = [
-    	'properties' => [
-    		'id' => [
-                'type' => 'integer',
-                'index' => false
-            ],
-            'name' => [
-                'type' => 'search_as_you_type',
-            ],
-            'population' => [
-                'type' => 'integer',
-            ],
-            'rank' => [
-                'type' => 'integer',
-            ],
-            // 'latitude' => [
-            //     'type' => 'integer',
-            //     'index' => false
-            // ],
-            // 'longitude' => [
-            //     'type' => 'integer',
-            //     'index' => false
-            // ],
-    	]
-    ];
-
 }

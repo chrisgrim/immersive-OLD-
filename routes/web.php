@@ -3,9 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::GET('/forchrisonly', 'Admin\EventController@DBUpdate');
 
 // Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 //     return view('dashboard');
@@ -13,6 +11,7 @@ Route::get('/', function () {
 
 Route::GET('/', 'EventController@index')->name('home');
 
+Route::GET('/email/verify', 'Auth\VerificationController@show')->name('verification.notice');
 Route::GET('/login/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::GET('/login/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
 
@@ -29,11 +28,10 @@ Route::RESOURCE('interactivelevels', 'Admin\InteractiveLevelController');
 
 // ----------   Search Page -------
 
-Route::POST('/search/storedata', 'SearchDataController@store');
-
-Route::GET('/index/search', 'SearchController@index');
-
+Route::POST('/search/storedata', 'Search\SearchDataController@store');
+Route::GET('/index/search', 'Search\EventController@index');
 Route::GET('/index/search-online', 'Search\OnlineSearchController@index');
+Route::POST('/admin/search/data', 'Search\SearchDataController@create');
 
 Route::GET('/index/search-all', 'SearchController@allsearch');
 // This is the search for vuex
@@ -56,6 +54,7 @@ Route::POST('/admin/event/{event}/approve', 'Admin\EventController@approve');
 Route::POST('/admin/event/{event}/fail', 'Admin\EventController@fail');
 Route::POST('/admin/event/{event}/reject', 'Admin\EventController@reject');
 Route::GET('/admin/events/finalize', 'Admin\EventController@queues');
+Route::GET('/admin/events/finalize/fetch', 'Admin\EventController@fetchQue');
 Route::GET('/admin/events/{event}/finalize', 'Admin\EventController@finalize');
 Route::POST('/admin/event/{event}/change-organizer', 'Admin\EventController@changeOrganizer');
 Route::POST('/admin/event/boneyard/fetch', 'Admin\BoneyardController@fetch');
@@ -77,13 +76,12 @@ Route::GET('/staffpicks/current', 'Admin\StaffPicksController@show');
 //Admin Organizers
 Route::POST('/admin/organizer/{organizer}/approve', 'Admin\OrganizerController@approve');
 Route::POST('/admin/organizer/{organizer}/delete', 'Admin\OrganizerController@delete');
+Route::POST('/admin/organizer/{organizer}/changeUser', 'Admin\OrganizerController@user');
 Route::GET('/admin/organizers/finalize', 'Admin\OrganizerController@queues');
 Route::GET('/admin/organizers/{organizer}/finalize', 'Admin\OrganizerController@finalize');
 Route::GET('/admin/organizer', 'Admin\OrganizerController@index');
 Route::PATCH('/admin/organizer/{organizer}', 'Admin\OrganizerController@update');
-Route::POST('/admin/organizer/fetch', 'Admin\OrganizerController@fetch');
-
-Route::POST('/admin/data', 'SearchDataController@create');
+Route::GET('/admin/organizer/fetch', 'Admin\OrganizerController@fetch');
 
 
 //Organizer 
@@ -107,6 +105,7 @@ Route::GET('favorite/{event}/login', 'FavoritesController@loginToFavorite');
 
 //Event Creation Process
 Route::GET('/create/events/edit', 'Create\EventController@show');
+Route::GET('/create/organizers/fetch', 'Create\OrganizerController@fetch');
 Route::POST('/create/{organizer}/events/fetch', 'Create\EventController@fetch');
 //Create Title
 Route::GET('/create/{event}/title', 'Create\TitleController@create');

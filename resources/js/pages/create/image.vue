@@ -98,12 +98,13 @@
     import formValidationMixin from '../../mixins/form-validation-mixin'
     import { required } from 'vuelidate/lib/validators'
     import CubeSpinner  from '../layouts/loading.vue'
+    import ImageUpload from '../layouts/image-upload.vue'
 
     export default {
 
         mixins: [formValidationMixin],
 
-        components: { CubeSpinner, Submit },
+        components: { CubeSpinner, Submit, ImageUpload },
         
         props: ['event'],
 
@@ -124,16 +125,13 @@
                 return `/create/${this.event.slug}/images`
             },
 
-            navSubmit() {
-                return this.$store.state.navurl
-            },
             readySubmit() {
                 return this.readyToSubmit && this.imageAdded ? false : true;
             },
+
             eventPublished() {
                 return this.event.status == 'p' || this.event.status == 'e' ? false : true;
             }
-
         },
 
         
@@ -152,7 +150,6 @@
         },
 
         methods: {
-
             onImageUpload(image) {
                 this.imageFile = image; 
                 this.$v.$touch(); 
@@ -192,11 +189,12 @@
 
         created() {
             this.checkSubmissionStatus();
+            this.disabled = false;
         },
 
         watch: {
-            navSubmit() {
-                return this.onBack(this.navSubmit);
+            '$store.state.navurl'() {
+                this.onBack(this.$store.state.navurl.page)
             }
         },
 

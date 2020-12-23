@@ -73,10 +73,13 @@
     
     import { required, maxLength } from 'vuelidate/lib/validators';
     import formValidationMixin from '../../mixins/form-validation-mixin'
+    import vueEmailVerify from '../layouts/email-verified.vue'
 
     export default {
 
         props: ['loadorganizer', 'user'],
+
+        components: { vueEmailVerify },
 
         mixins: [formValidationMixin],
 

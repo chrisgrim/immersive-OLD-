@@ -3,15 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use ScoutElastic\Searchable;
+use Laravel\Scout\Searchable;
+use ElasticScoutDriverPlus\CustomSearch;
 use App\Scopes\AdminScope;
 use Illuminate\Support\Str;
 
 class Genre extends Model
 {
-    use Searchable; 
-
-    protected $indexConfigurator = GenreIndexConfigurator::class;
+    use Searchable;
+    use CustomSearch;
 
     /**
     * What protected variables are allowed to be passed to the database
@@ -21,6 +21,16 @@ class Genre extends Model
 	protected $fillable = [
     	'name','admin', 'user_id', 'rank', 'slug'
     ];
+
+    /**
+    * What events should be searchable for scout elastic search
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+    */
+    public function shouldBeSearchable()
+    {
+        return $this->admin === 1;
+    }
 
     /**
      * The "booted" method of the model.
@@ -40,10 +50,10 @@ class Genre extends Model
     public function toSearchableArray()
     {
         return [
-            "id" => $this->id,
             "name" => $this->name,
             "admin" => $this->admin,
             "rank" => $this->rank,
+            'priority' => 3,
         ];
     }
     
@@ -88,28 +98,5 @@ class Genre extends Model
             'user_id' => auth()->user()->id,
             'admin' => $request->admin,
         ]);
-    }
-
-    protected $searchRules = [
-        //
-    ];
-
-    protected $mapping = [
-        'properties' => [
-            'id' => [
-                'type' => 'integer',
-                'index' => false
-            ],
-            'name' => [
-                'type' => 'search_as_you_type',
-            ],
-            'admin' => [
-                'type' => 'text',
-            ],
-            'slug' => [
-                'type' => 'text',
-            ],
-        ]
-    ];
-    
+    }  
 }

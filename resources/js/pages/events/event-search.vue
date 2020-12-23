@@ -3,7 +3,7 @@
         <div
             v-if="hasLocation && mobile"
             class="event-search__container">
-            <event-map-search
+            <vue-event-map-search
                 :user="user"
                 :events="eventList.data" />
             <section 
@@ -26,9 +26,9 @@
                             </div>
                             <div>
                                 <a 
-                                    :href="`/events/${event.slug}`" 
                                     v-for="(event) in eventList.data" 
                                     :key="event.id"
+                                    :href="`/events/${event.slug}`" 
                                     class="event__horizontal-card">
                                     <div class="event__horizontal-card--element">
                                         <div class="event__horizontal-card--image">
@@ -160,9 +160,10 @@
                         </div>
                         <div>
                             <a 
-                                :href="`/events/${event.slug}`" 
+                                
                                 v-for="(event) in eventList.data" 
                                 :key="event.id"
+                                :href="`/events/${event.slug}`" 
                                 class="event__horizontal-card">
                                 <div class="event__horizontal-card--element">
                                     <div class="event__horizontal-card--image">
@@ -263,7 +264,7 @@
                     </div>
                 </div>
             </section>
-            <event-map-search
+            <vue-event-map-search
                 :user="user"
                 :events="eventList.data" />
         </div>
@@ -313,9 +314,9 @@
                     <template v-if="onlineEventList.data">
                         <div>
                             <a 
-                                :href="`/events/${event.slug}`" 
                                 v-for="(event) in onlineEventList.data" 
                                 :key="event.id"
+                                :href="`/events/${event.slug}`" 
                                 class="event__horizontal-card">
                                 <div class="event__horizontal-card--element">
                                     <div class="event__horizontal-card--image">
@@ -380,9 +381,11 @@
     import Pagination  from './components/pagination.vue'
     import MobileFilterBar  from './components/mobile-filter-bar.vue'
     import searchBasicsMixin from '../../mixins/search-basics-mixin'
+    import vueEventIndex from './components/index-item.vue'
+    import VueEventMapSearch from './event-map-search.vue'
 
     export default {
-        components: { EventFilter, Pagination, MobileFilterBar },
+        components: { EventFilter, Pagination, MobileFilterBar, vueEventIndex, VueEventMapSearch },
 
         mixins: [ searchBasicsMixin ],
 
@@ -436,6 +439,7 @@
         methods: {
 
             updateEvents(value) {
+                console.log(value);
                 this.eventList = value;
                 this.pagination = value.current_page;
             },
@@ -443,10 +447,6 @@
             updateOnlineEvents(value) {
                 this.onlineEventList = value;
                 this.onlinePagination = value.current_page;
-            },
-
-            test() {
-
             },
 
             selectPage (page) {

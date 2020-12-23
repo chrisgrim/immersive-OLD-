@@ -18,26 +18,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//Nav Bar
-// IS USED Users entered data into the navbar
-Route::GET('search/navbar/content', 'SearchController@searchNav');
 
-
-//Event Searchs
-// IS USED On Map move send new latlng/ if category that is attached and if dates that is attached 
-Route::POST('search/mapboundary', 'SearchController@searchMapBoundary');
-
-// IS USED
-Route::GET('search/location', 'SearchController@searchLocation');
-
-//IS USED Searches remote events
+Route::GET('search/navbar', 'Search\SearchController@nav');
+Route::GET('search/navbar/location', 'Search\SearchController@location');
+Route::POST('search/mapboundary', 'Search\EventController@mapBoundary');
 Route::POST('search/online', 'Search\OnlineSearchController@fetch');
 
-
-
-//Admin Section
-//IS USED On Organizer Create Page this searches all organizers and returns based on users selection
-Route::GET('search/organizer', 'SearchController@searchOrganizer');
 
 
 // IS USED Admin get list of events
@@ -46,13 +32,6 @@ Route::GET('admin/organizer/search', 'Admin\SearchController@organizers');
 Route::GET('admin/genres/search', 'Admin\SearchController@genres');
 Route::GET('admin/events/search', 'Admin\SearchController@events');
 Route::GET('admin/purgatory/search', 'Admin\SearchController@purgatory');
-Route::GET('admin/users/search', 'SearchController@searchUsers');
+Route::GET('admin/users/search', 'Admin\SearchController@users');
 
 
-
-
-//On admin page returns user list for editing users
-Route::GET('search/event/list', 'SearchController@searchEvents');
-
-
-Route::POST('index/filter', 'SearchController@filterIndex');

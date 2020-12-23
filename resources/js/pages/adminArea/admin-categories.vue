@@ -235,10 +235,11 @@
     import _ from 'lodash'
     import formValidationMixin from '../../mixins/form-validation-mixin'
     import IconSvg from '../../components/Svg-icon'
+    import ImageUpload from '../layouts/image-upload.vue'
 
 
     export default {
-        components: { CubeSpinner, IconSvg },
+        components: { CubeSpinner, IconSvg, ImageUpload },
 
         mixins: [formValidationMixin],
 

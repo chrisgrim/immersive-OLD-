@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use App\Rules\OrganizerUniqueSlugRule;
 
 class OrganizerStoreRequest extends FormRequest
 {
@@ -23,16 +25,16 @@ class OrganizerStoreRequest extends FormRequest
      */
     public function rules()
     {
+
         if ($this->organizer) {
             return [
-                'name' => "required|unique:organizers,name,{$this->organizer->id}",
-                'slug' => "required|unique:organizers,slug,{$this->organizer->id}",
+                'name' => ['required', 'max:60', new OrganizerUniqueSlugRule($this->name, $this->id)],
                 'description' => 'required|string|min:1|max:40000',
             ];
         }
+
         return [
-            'name' => "required|unique:organizers,name",
-            'slug' => "required|unique:organizers,slug",
+            'name' => ['required', 'max:60', new OrganizerUniqueSlugRule($this->name, $this->id)],
             'description' => 'required|string|min:1|max:40000',
         ];
     }

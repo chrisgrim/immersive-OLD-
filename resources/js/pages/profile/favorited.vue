@@ -5,36 +5,39 @@
         </div>
 
         <div class="event-index-eventlist grid">
-            <div v-for="(event, index) in events" class="eventlist__element">
-                <vue-event-index :event="event"></vue-event-index>
-            </div>
+            <vue-event-index :events="eventList.data" />
         </div>
-
+        <div>
+            <pagination 
+                :limit="1"
+                :list="eventList"
+                @selectpage="onLoad" />
         </div>
     </div>
 </template>
 
 <script>
+    import vueEventIndex from '../events/components/index-item.vue'
+    import Pagination  from '../../components/pagination.vue'
 
     export default {
 
-
         props: ['loaduser', 'events'],
 
-        computed: {
-
-        },
+        components: { vueEventIndex, Pagination },
 
         data() {
             return {
-                
+                eventList: this.events ? this.events : []
             }
         },
 
         methods: {
-            
-
-        },
+            onLoad(page) {
+                axios.post(`/admin/event/boneyard/fetch?page=${page}`)
+                .then( res => { this.eventList = res.data })
+            },
+        },  
 
     };
 </script>

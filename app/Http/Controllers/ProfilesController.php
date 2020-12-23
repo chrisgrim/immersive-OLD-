@@ -23,7 +23,6 @@ class ProfilesController extends Controller
 
     public function index(User $user)
     {
-        $user='test';
         return view('profiles.index', compact('user'));
     }
 
@@ -46,7 +45,7 @@ class ProfilesController extends Controller
 
     public function favorited()
     {
-        $events = auth()->user()->favouritedEvents()->get()->load('organizer');
+        $events = json_encode(auth()->user()->favouritedEvents()->with('organizer')->paginate(8));
         return view('profiles.favorited', compact('events'));
     }
 

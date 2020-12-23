@@ -20,7 +20,7 @@
                             </svg>
                         </button>
                     </div>
-                    <nav-search :searchtype="searchType" />
+                    <vue-nav-search :searchtype="searchType" />
                 </div>
                 <!-- Date Filter -->
                 <div class="filter__dates">
@@ -44,6 +44,7 @@
                         v-model="price"
                         tooltip="always"
                         v-bind="priceOptions"
+                        :tooltip-formatter="sliderFormat"
                         @drag-end="submit"
                         :enable-cross="false" />
                 </div>
@@ -77,6 +78,7 @@
                             tooltip="always"
                             v-bind="priceOptions"
                             @drag-end="submit"
+                            :tooltip-formatter="sliderFormat"
                             :enable-cross="false" />
                     </div>
                 </div>
@@ -85,10 +87,14 @@
                     <div ref="cat">
                         <button 
                             @click="show('category')" 
-                            :class="{ active: category }" 
+                            :class="{ active: category.length }" 
                             class="filter round">
-                            <template v-if="category">
-                                {{ category.name }}
+                            <template v-if="category.length">
+                                <span 
+                                    v-for="(cat) in category" 
+                                    :key="cat.id" >
+                                    {{ cat.name }}
+                                </span>
                             </template>
                             <template v-else>
                                 Categories
@@ -101,10 +107,14 @@
                     <div ref="tag">
                         <button 
                             @click="show('tag')" 
-                            :class="{ active : tag }" 
+                            :class="{ active : tag.length }" 
                             class="filter round">
-                            <template v-if="tag">
-                                {{ tag.name }}
+                            <template v-if="tag.length">
+                                <span 
+                                    v-for="(item) in tag" 
+                                    :key="item.id" >
+                                    {{ item.name }},
+                                </span>
                             </template>
                             <template v-else>
                                 Tags
@@ -148,11 +158,11 @@
                     <div class="filter__dropdown"> 
                         <div class="filter__dropdown--grid">
                             <div 
-                                v-for="(cat) in categories" 
+                                v-for="(cat, index) in categories" 
                                 :key="cat.id" 
                                 class="filter__category--element" 
-                                @click="submitCat(cat)">
-                                <button :class="{ active: cat.id == category.id }">
+                                @click="submitCat(cat, index)">
+                                <button :class="{ active: category.includes(cat) }">
                                     {{ cat.name }}
                                 </button>
                             </div>
@@ -182,7 +192,7 @@
                                 class="filter__category--element" 
                                 @click="submitTag(item)">
                                 <div>
-                                    <button :class="{active: item.id == tag.id}">
+                                    <button :class="{ active: tag.includes(item) }">
                                         {{ item.name }}
                                     </button>
                                 </div>
@@ -242,6 +252,7 @@
                         v-model="price"
                         tooltip="always"
                         v-bind="priceOptions"
+                        :tooltip-formatter="sliderFormat"
                         :enable-cross="false" />
                 </div>
                 
@@ -254,10 +265,10 @@
                                 <div
                                     v-for="(cat) in categories"
                                     :key="cat.id"
-                                    @click="submitMobile('cat', cat)"
+                                    @click="submitMobile(category, cat)"
                                     class="filter__categories--bottom">
                                     <div
-                                        :class="{ active: cat.id == category.id }"
+                                        :class="{ active: category.includes(cat) }"
                                         class="filter__categories--element clean-box" 
                                         style="width: 100%;height:100%">
                                         <div>
@@ -280,10 +291,10 @@
                                 <div
                                     v-for="(item) in tags"
                                     :key="item.id"
-                                    @click="submitMobile('tag', item)"
+                                    @click="submitMobile(tag, item)"
                                     class="filter__categories--bottom">
                                     <div
-                                        :class="{ active: item.id == tag.id }"
+                                        :class="{ active: tag.includes(item) }"
                                         class="filter__categories--element clean-box" 
                                         style="width: 100%;height:100%">
                                         <div>
@@ -337,7 +348,7 @@
                     </svg>
                 </div>
             </div>
-            <nav-search :searchtype="searchType" />
+            <vue-nav-search :searchtype="searchType" />
         </div>
 
         <!-- Mobile Dates Filter -->
@@ -390,6 +401,7 @@
 <script>
     import flatPickr from 'vue-flatpickr-component'
     import VueSlider from 'vue-slider-component'
+    import vueNavSearch from '../../layouts/nav-search.vue'
     import searchBasicsMixin from '../../../mixins/search-basics-mixin'
     import 'vue-slider-component/theme/antd.css'
     
@@ -397,7 +409,7 @@
 
         props:['categories','maxprice', 'events', 'onlineevents', 'tags', 'page', 'onlinepage'],
 
-        components: { flatPickr, VueSlider },
+        components: { flatPickr, VueSlider, vueNavSearch },
 
         mixins: [ searchBasicsMixin ],
 
@@ -408,10 +420,10 @@
             data() {
                 return {
                     mapboundary: this.boundaries,
-                    category: this.category.id,
+                    category: this.category.map(cat => cat.id),
                     dates: this.computerDate,
                     price: this.hasPrice ? this.price : '',
-                    tag: this.tag ? this.tag.name : null,
+                    tag: this.tag.map(item => item.name),
                     lat: this.boundaries ? '' : new URL(window.location.href).searchParams.get("lat"),
                     lng: this.boundaries ? '' : new URL(window.location.href).searchParams.get("lng"),
                     hasLocation: this.url.lat ? true : false
@@ -445,14 +457,15 @@
                 price: [0,100],
                 hasPrice: '',
                 priceOptions: { min: 0, max: 100 },
-                category: '',
-                tag: '',
+                category: [],
+                tag: [],
                 onlinePage: 1,
                 searchType: 'location',
                 mobile: window.innerWidth < 768,
                 boundaries: '',
                 center: '',
                 zoom:'',
+                sliderFormat: v => `$${('' + v).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`,
             }
         },
 
@@ -478,8 +491,7 @@
             axiosOnline() {
                 axios.post(`/api/search/online?page=1`, this.data)
                 .then(data => {
-                    console.log(data.data);
-                    this.$emit('onlineevents', data.data);
+                    this.$emit('onlineevents', data);
                     this.addPushState();
                 })
                 .catch(err => {this.onErrors(err);});
@@ -494,41 +506,37 @@
             },
 
             submitCat(value) {
-                if (this.category == value) {
-                    this.category = '';
-                    this.$store.commit('searchtype', '')
+                if (this.category.includes(value)) {
+                   let removeIndex = this.category.map(function(item) { return item.id; }).indexOf(value.id);
+                   this.category.splice(removeIndex, 1);
+                    // this.$store.commit('searchtype', '')
                 } else {
-                    this.category = value;
-                    this.$store.commit('searchtype', value.name);
+                    this.category.push(value);
+                    // this.$store.commit('searchtype', value.name);
                 }
                 this.submit();
             },
 
             submitTag(value) {
-                if (this.tag == value) {
-                    this.tag = '';
-                    this.$store.commit('searchtype', '')
+                if (this.tag.includes(value)) {
+                    let removeIndex = this.tag.map(function(item) { return item.id; }).indexOf(value.id);
+                    this.tag.splice(removeIndex, 1);
+                    // this.$store.commit('searchtype', '')
                 } else {
-                    this.tag = value;
-                    this.$store.commit('searchtype', value.name);
+                    this.tag.push(value);
+                    // this.$store.commit('searchtype', value.name);
                 }
                 this.submit();
             },
 
             submitMobile(arg1, arg2) {
-                if (arg1 == 'cat') {
-                    if (this.category == arg2) {
-                        this.category = '';
-                    } else {
-                        this.category = arg2;
-                    }
-                }
-                if (arg1 == 'tag') {
-                    if (this.tag == arg2) {
-                        this.tag = '';
-                    } else {
-                        this.tag = arg2
-                    }
+                if (arg1.includes(arg2)) {
+                    let removeIndex = arg1.map(function(item) { return item.id; }).indexOf(arg2.id);
+                    arg1.splice(removeIndex, 1);
+                    // this.$store.commit('searchtype', '')
+                } else {
+                    arg1.push(arg2);
+                    // this.$store.commit('searchtype', value.name);
                 }
             },
 

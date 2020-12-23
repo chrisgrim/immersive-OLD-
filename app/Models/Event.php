@@ -4,7 +4,8 @@ namespace App\Models;
 
 use App\Models\Conversation;
 use App\Models\Genre;
-use ScoutElastic\Searchable;
+use Laravel\Scout\Searchable;
+use ElasticScoutDriverPlus\CustomSearch;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -15,17 +16,16 @@ use App\Scopes\PublishedScope;
 
 class Event extends Model
 {
-    use Searchable, Favoritable, SoftDeletes;
-
-    protected $indexConfigurator = EventIndexConfigurator::class;
-
+    use CustomSearch;
+    use Favoritable;
+    use SoftDeletes;
+    use Searchable;
 
     protected $casts = [
         'location_latlon' => 'array',
         'hasLocation' => 'boolean'
     ];
 
-    
     /**
     * What protected variables are allowed to be passed to the database
     *
@@ -66,7 +66,7 @@ class Event extends Model
     */
     public function shouldBeSearchable()
     {
-        return $this->isPublished();
+        return $this->status === 'p';
     }
 
     /**
@@ -77,18 +77,19 @@ class Event extends Model
     public function toSearchableArray()
     {
         return [
-            'id' => $this->id,
             'name' => $this->name,
-            'published_at' => $this->published_at,
+            'status' => $this->status,
             'showtype' => $this->showtype,
             'rank' => $this->rank,
-            'closingDate' => $this->closingDate,
-            'priceranges' => $this->pricerangesSelect,
             'category_id' => $this->category_id,
             'location_latlon' => $this->location_latlon,
+            'hasLocation' => $this->hasLocation,
             'shows' => $this->showsSelect,
+            'published_at' => $this->published_at,
+            'closingDate' => $this->closingDate,
+            'priceranges' => $this->pricerangesSelect,
             'genres' => $this->genreSelect,
-            'hasLocation' => $this->hasLocation
+            'priority' => 5,
         ];
     }
 
@@ -118,7 +119,7 @@ class Event extends Model
     }
 
     /**
-    * Determines which events are published for Laravel Scout
+    * Helpful command to see published events
     *
     * @return bool
     */
@@ -522,83 +523,4 @@ class Event extends Model
             $event->genres()->sync($newSync);
         };
     }
-    
-    protected $searchRules = [
-        //
-    ];
-
-    protected $mapping = [
-        'properties' => [
-            'id' => [
-                'type' => 'integer',
-                'index' => false
-            ],
-            'name' => [
-                'type' => 'search_as_you_type',
-            ],
-            'rank' => [
-                'type' => 'integer',
-            ],
-            'shows' => [
-                'properties' => [
-                    'date' => [
-                        'type' => 'date',
-                        'format' => 'yyyy-MM-dd HH:mm:ss'
-                    ],
-                    'event_id' => [
-                        'type' => 'integer',
-                    ],
-                    'created_at' => [
-                        'type' => 'text',
-                        'index' => false
-                    ],
-                    'updated_at' => [
-                        'type' => 'text',
-                        'index' => false
-                    ],
-                ]
-            ],
-            'priceranges' => [
-                'properties' => [
-                    'price' => [
-                        'type' => 'integer',
-                    ],
-                    // 'event_id' => [
-                    //     'type' => 'integer',
-                    // ],
-                    // 'created_at' => [
-                    //     'type' => 'text',
-                    //     'index' => false
-                    // ],
-                    // 'updated_at' => [
-                    //     'type' => 'text',
-                    //     'index' => false
-                    // ],
-                ]
-            ],
-           
-            'hasLocation' => [
-                'type' => 'boolean',
-            ],
-           
-            'category_id' => [
-                'type' => 'integer',
-            ],
-            'organizer_id' => [
-                'type' => 'integer',
-            ],
-            'location_latlon' => [
-                'type' => 'geo_point'                
-            ],
-            'closingDate' => [
-                'type' => 'date',
-                'format' => 'yyyy-MM-dd HH:mm:ss'
-            ],
-            'published_at' => [
-                'type' => 'date',
-                'format' => 'yyyy-MM-dd HH:mm:ss'
-            ],
-        ]
-    ];
-
 }
