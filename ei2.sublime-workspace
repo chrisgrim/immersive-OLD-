@@ -529,19 +529,28 @@
 			}
 		},
 		{
-			"file": "app/Http/Controllers/Search/SearchDataController.php",
+			"file": "app/Http/Controllers/Search/SearchController.php",
 			"settings":
 			{
-				"buffer_size": 679,
+				"buffer_size": 4585,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "resources/js/pages/adminArea/admin-stats.vue",
+			"file": "resources/js/pages/create/review-event.vue",
 			"settings":
 			{
-				"buffer_size": 2499,
+				"buffer_size": 34015,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "resources/js/pages/layouts/nav-search.vue",
+			"settings":
+			{
+				"buffer_size": 10359,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -662,13 +671,17 @@
 		"/Users/chrisgrim/code/ei2/app",
 		"/Users/chrisgrim/code/ei2/app/Http",
 		"/Users/chrisgrim/code/ei2/app/Http/Controllers",
-		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Admin",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Search",
 		"/Users/chrisgrim/code/ei2/resources",
 		"/Users/chrisgrim/code/ei2/resources/js",
+		"/Users/chrisgrim/code/ei2/resources/js/pages",
 		"/Users/chrisgrim/code/ei2/routes"
 	],
 	"file_history":
 	[
+		"/Users/chrisgrim/code/ei2/resources/js/pages/events/event-show.vue",
+		"/Users/chrisgrim/code/ei2/resources/js/pages/adminArea/admin-stats.vue",
+		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Search/SearchDataController.php",
 		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Auth/VerificationController.php",
 		"/Users/chrisgrim/code/ei2/resources/js/app.js",
 		"/Users/chrisgrim/code/ei2/resources/js/pages/layouts/email-verified.vue",
@@ -736,7 +749,6 @@
 		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Search/OnlineSearchController.php",
 		"/Users/chrisgrim/code/ei2/app/Models/CityList.php",
 		"/Users/chrisgrim/code/ei2/app/Http/Controllers/SearchController.php",
-		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Search/SearchDataController.php",
 		"/Users/chrisgrim/code/ei2/app/Models/Genre.php",
 		"/Users/chrisgrim/code/ei2/elastic/migrations/2020_11_23_051941_create_city_index.php",
 		"/Users/chrisgrim/code/ei2/elastic/migrations/2020_11_23_233543_create_categories_index.php",
@@ -744,7 +756,6 @@
 		"/Users/chrisgrim/code/ei2/app/Models/Organizer.php",
 		"/Users/chrisgrim/code/ei2/app/Models/Category.php",
 		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Admin/EventController.php",
-		"/Users/chrisgrim/code/ei2/resources/js/pages/events/event-show.vue",
 		"/Users/chrisgrim/code/ei2/sftp-config.json",
 		"/Users/chrisgrim/code/ei2/app/Http/Controllers/EventController.php",
 		"/Users/chrisgrim/code/ei2/app/Models/Ticket.php",
@@ -771,7 +782,6 @@
 		"/Users/chrisgrim/code/ei2/resources/js/pages/events/event-index.vue",
 		"/Users/chrisgrim/code/ei2/resources/js/pages/layouts/nav.vue",
 		"/Users/chrisgrim/code/ei2/app/Http/Controllers/Admin/SearchDataController.php",
-		"/Users/chrisgrim/code/ei2/resources/js/pages/adminArea/admin-stats.vue",
 		"/Users/chrisgrim/code/ei2/resources/js/pages/create/checklist_old.vue",
 		"/Users/chrisgrim/code/ei2/resources/js/pages/categories/category-show.vue",
 		"/Users/chrisgrim/code/ei2/resources/js/pages/adminArea/components/vue-add-staffpick.vue",
@@ -991,7 +1001,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -1019,27 +1029,27 @@
 							"syntax": "Packages/PHP/PHP.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 627.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "app/Http/Controllers/Search/SearchDataController.php",
+					"file": "app/Http/Controllers/Search/SearchController.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 679,
+						"buffer_size": 4585,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								1037,
+								1037
 							]
 						],
 						"settings":
@@ -1053,24 +1063,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "resources/js/pages/adminArea/admin-stats.vue",
+					"file": "resources/js/pages/create/review-event.vue",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2499,
+						"buffer_size": 34015,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1961,
-								1961
+								14517,
+								14517
 							]
 						],
 						"settings":
@@ -1081,10 +1091,41 @@
 							"syntax": "Packages/Vuejs Complete Package/vue.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 1299.0,
+						"translation.y": 5950.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "resources/js/pages/layouts/nav-search.vue",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 10359,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								8603,
+								8603
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/Vuejs Complete Package/vue.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
 					"type": "text"
 				}
 			]

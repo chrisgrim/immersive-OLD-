@@ -29,6 +29,8 @@
 
 .nav input.vs__search {
     margin-left: 3rem !important;
+    height: 4rem;
+    line-height: 4rem;
 }
 
 input.vs__search::placeholder {
@@ -40,6 +42,7 @@ input.vs__search::placeholder {
     padding: 0.2rem;
     border-radius: 3rem;
     box-shadow: 0 4px 10px rgba(0,0,0,.1),0 0 0 1px rgba(0,0,0,.04);
+    height:5rem;
 }
 .nav-search .vs__dropdown-toggle {
     border:0;

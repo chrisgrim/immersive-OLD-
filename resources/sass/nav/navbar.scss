@@ -8,8 +8,10 @@
     background: 0;
     z-index: 1001;
     height: 7rem;
-    border-bottom: 0.1rem solid #ebebeb;
+/*    border-bottom: 0.1rem solid #ebebeb;*/
     padding: 0 8rem;
+    max-width: 1280px;
+    margin: auto;
 }
 
 .nav.fixed {
@@ -17,11 +19,13 @@
     background: black;
     border: 0;
     padding: 0 2rem;
+    max-width: 100%;
 }
 
 .nav.absolute {
     position: absolute;
     border: 0;
+    max-width: 100%;
 }
 
 .nav.mobile {
@@ -38,6 +42,7 @@
 .nav-logo {
     display: inline-block;
     position: relative;
+    line-height: 0rem;
 }
 
 .nav-logo p {
@@ -111,12 +116,14 @@ p.mobile-nav-footer__text {
 }
 
 /* ------------------------------------*\ #Menu \*------------------------------------ */
-
-.nav-menu {
-    width: 100%;
-    height: 100%;
-    grid-template-columns: 7rem auto auto;
+.nav__bar {
+    display: grid;
+    grid-template-columns: auto auto auto;
     align-items: center;
+    height: 100%;
+}
+.nav-menu {
+    justify-self: right;
 }
 
 .mobile.active .nav-menu {
@@ -139,10 +146,10 @@ p.mobile-nav-footer__text {
 }
 
 .nav-menu-item {
-    float: right;
-    margin: 0 2rem;
-    padding-top: 2.7rem;
     position: relative;
+    display: inline-block;
+    margin-left: 2rem;
+    min-width: 3rem;
 }
 
 .mobile .nav-menu-item {
@@ -190,13 +197,12 @@ a.menu-link {
 /* ------------------------------------*\ #Profile Button \*------------------------------------ */
 
 .nav-dropdown {
-    position: absolute;
-    width: 3.1rem;
-    height: 3.1rem;
+    width: 3.2rem;
+    height: 3.2rem;
     border-radius: 50%;
+    position: absolute;
     top: 0;
-    margin-top: 2rem;
-    left: 50%;
+    margin-top: -2rem;
 }
 
 button.nav-dropdown--icon {

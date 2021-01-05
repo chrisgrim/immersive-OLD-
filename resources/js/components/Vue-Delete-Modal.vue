@@ -20,8 +20,8 @@
             </div>
             <div class="delete-box__input">
                 <input 
-                v-model="toDelete"
-                type="text">
+                    v-model="toDelete"
+                    type="text">
                 <button 
                     @click="onDelete"
                     :disabled='isDisabled'>

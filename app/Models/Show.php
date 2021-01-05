@@ -178,7 +178,7 @@ class Show extends Model
             ]);
         }
         if ($event->status === 'p' && $request->embargo_date ) {
-            return $event->update([
+            $event->update([
                 'show_times' => $request->showtimes,
                 'embargo_date' => $request->embargo_date,
                 'closingDate' => $lastDate,
@@ -186,6 +186,7 @@ class Show extends Model
                 'timezone_id' => $request->timezone ? $request->timezone['id'] : null,
                 'status' => 'e'
             ]);
+            return $event->unsearchable();
         }
         $event->update([
             'show_times' => $request->showtimes,

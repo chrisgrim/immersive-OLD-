@@ -3,13 +3,12 @@
 \*------------------------------------*/
 
 html { font-size: 62.5%; font-family: 'Montserrat', sans-serif; height:100%;} 
-body, p { font-size: 17px; font-size: 1.7rem; font-family: 'Montserrat', sans-serif; margin:0px; height:100%;color:$font-color;} /* =14px */
+body, p { font-size: 16px; font-size: 1.6rem; line-height: 2.4rem; font-family: 'Montserrat', sans-serif; margin:0px; height:100%;color:$font-color;} /* =14px */
 h1   { font-size: 46px; font-size: 4.6rem; font-family: 'Montserrat', sans-serif; margin:0px; color:$font-color;display: inherit;} /* =24px */
 h2   { font-size: 31px; font-size: 3.1rem; font-family: 'Montserrat', sans-serif; margin:0px; color:$font-color; transform: scale(1, 1.11);margin:0;} /* =24px */
 h3   { font-size: 24px; font-size: 2.4rem; font-family: 'Montserrat', sans-serif; margin:0px; color:$font-color; transform: scale(1, 1.11);font-weight: 500;} /* =24px */
 h4   { font-size: 16px; font-size: 2.0rem; font-family: 'Montserrat', sans-serif; margin:0px; color:$font-color; transform: scale(1, 1.11);font-weight: 500;} /* =24px */
 a { text-decoration: none; color: inherit; }
-p {line-height: 2.5rem;}
 button {cursor: pointer; font-family: 'Montserrat', sans-serif;}
 ul {margin:0;padding:0;}
 select {
@@ -185,21 +184,28 @@ textarea {
     fill:#FF5A5F; 
     fill-opacity:1;
     stroke:#FF5A5F; 
-    height: 24px; 
-    width: 24px; 
+    height: 2.4rem; 
+    width: 2.4rem; 
     overflow: visible;
     stroke-width:2;
-    margin-left: .9rem;
-    margin-top: 1rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -1.2rem;
+    margin-left: -1.2rem;
 }
 .unhearted {
     fill: none;
     fill-opacity: 0;
     stroke: #000;
-    width: 24px;
+    height: 2.4rem; 
+    width: 2.4rem; 
     stroke-width: 2;
-    margin-left: .9rem;
-    margin-top: 1rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -1.2rem;
+    margin-left: -1.2rem;
 }
 
 button.default-border {

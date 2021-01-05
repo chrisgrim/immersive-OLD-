@@ -4,7 +4,7 @@
             v-if="!mobileDevice" 
             class="nav" 
             :class="{ 'fixed' : isFixed, 'absolute' : isAbsolute, 'darkmenu' : blackText }">
-            <div class="nav-menu grid">
+            <div class="nav__bar">
                 <div class="nav-logo">
                     <a href="/">
                         <svg 
@@ -29,10 +29,19 @@
                 </div>
                 <div class="nav-menu">
                     <template v-if="user">
-                        <div class="nav-menu-item">
-                            <vue-profile-button 
-                                :screenwidth="mobileDevice" 
-                                :user="user" />
+                        <div 
+                            class="nav-menu-item" 
+                            v-if="user.hasMessages ">
+                            <a 
+                                class="menu-link" 
+                                href="/messages">
+                                <div 
+                                    v-if="user.unread" 
+                                    class="active-dot">
+                                    <p />
+                                </div>
+                                <div>Inbox</div>
+                            </a>
                         </div>
                         <div 
                             class="nav-menu-item" 
@@ -52,27 +61,18 @@
                                 <div>Your Events</div>
                             </a>
                         </div>
-                        <div 
-                            class="nav-menu-item" 
-                            v-if="user.hasMessages ">
-                            <a 
-                                class="menu-link" 
-                                href="/messages">
-                                <div 
-                                    v-if="user.unread" 
-                                    class="active-dot">
-                                    <p />
-                                </div>
-                                <div>Inbox</div>
-                            </a>
+                        <div class="nav-menu-item">
+                            <vue-profile-button 
+                                :screenwidth="mobileDevice" 
+                                :user="user" />
                         </div>
                     </template>
                     <template v-else>
                         <div class="nav-menu-item">
                             <a 
                                 class="menu-link" 
-                                href="/login">
-                                <div>Login</div>
+                                href="/register?create=true">
+                                <div>Submit Your Experience (Free)</div>
                             </a>
                         </div>
                         <div class="nav-menu-item">
@@ -85,8 +85,8 @@
                         <div class="nav-menu-item">
                             <a 
                                 class="menu-link" 
-                                href="/register?create=true">
-                                <div>Submit Your Experience (Free)</div>
+                                href="/login">
+                                <div>Login</div>
                             </a>
                         </div>
                     </template>

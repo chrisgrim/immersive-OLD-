@@ -100,7 +100,7 @@
                         <a :href="eventUrl" rel="noreferrer noopener" target="_blank" v-for="ticket in tickets" :key="ticket.name">
                             <div class="event-show__ticket" @mouseover="hover = ticket" @mouseleave="hover = null">
                                 <div>
-                                     <div class="event-show__ticket--name">
+                                    <div class="event-show__ticket--name">
                                         <p>{{ticket.name}}</p>
                                     </div>
                                     <div v-if="ticket.type == 'f'" class="event-show__ticket--price">
@@ -125,7 +125,7 @@
         <load-more @intersect="intersected"></load-more>
 
         <!-- Dates -->
-        <section v-if="event.showtype == 's'" class="grid event-show two-panel">
+        <section v-if="event.showtype == 's' || event.showtype == 'l'" class="grid event-show two-panel">
             <div class="event-title">
                 <h2>Show Dates</h2>
             </div>
