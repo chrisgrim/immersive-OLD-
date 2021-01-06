@@ -11,7 +11,7 @@
                         <p> {{ event.organizer.name.charAt(0) }} </p>
                     </template>
                 </div>
-                <div class="es__organizer--name">
+                <div class="es__organizer--name subtext">
                     <h3> {{ event.organizer.name }} </h3>
                     <p> Hosting immersive events on EI since {{ cleanDate(event.organizer.created_at) }}</p>
                 </div>

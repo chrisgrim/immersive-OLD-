@@ -1,7 +1,7 @@
 <template>
     <section
         id="location"
-        class="pad4">
+        class="pad4 subtext">
         <template v-if="event.hasLocation">
             <div>
                 <h2>Location</h2>
@@ -9,7 +9,7 @@
                     <a 
                         rel="noreferrer" 
                         target="_blank" 
-                        :href="`http://maps.google.com/maps?q=${event.location.city},+${event.location.region}`">
+                        :href="`http://maps.google.com/maps?q=${location.city?location.city:''},+${location.region?location.region:''}`">
                         <b><p v-if="event.location.venue"> {{ event.location.venue }} </p></b>
                         <p><span v-if="event.location.city"> {{ event.location.city }},</span> <span v-if="event.location.region"> {{ event.location.region }} </span></p>
                         <br>
@@ -20,9 +20,10 @@
                     <a 
                         rel="noreferrer" 
                         target="_blank" 
-                        :href="`http://maps.google.com/maps?q=${event.location.home}+${event.location.street},+${event.location.city},+${event.location.region}`">
+                        :href="`http://maps.google.com/maps?q=${location.home?location.home:''}+${location.street?location.street:''},+${location.city?location.city:''},+${location.region?location.region:''}`">
                         <b><p v-if="event.location.venue"> {{ event.location.venue }} </p></b>
-                        <p>{{location}}</p>
+                        <p>{{ location.home }} {{ location.street }} {{ location.city }}</p>
+                        <p>{{ location.region }} {{ location.country }} {{ location.postal_code }}</p>
                     </a>
                 </div>
                 <div class="es__map">
@@ -79,22 +80,26 @@
                 center: this.event.location_latlon,
                 url:'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
                 attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-                location: '',
+                location: this.initializeLocationObject(),
             }
         },
 
+        methods: {
+            initializeLocationObject() { 
+                return {
+                    home: '',
+                    street: '',
+                    city: '',
+                    region: '',
+                    country: '',
+                    postal_code: '',
+                    another_field: ''
+                }
+            },
+        },
+
         mounted() {
-            let home = this.event.location.home ? this.event.location.home : ''
-            let street = this.event.location.street ? this.event.location.street : ''
-            let city = this.event.location.city ? this.event.location.city : ''
-            let region = this.event.location.region ? this.event.location.region : ''
-            let country = this.event.location.country ? this.event.location.country : ''
-            let zip = this.event.location.postal_code ? this.event.location.postal_code : ''
-            if (this.event.location.hiddenLocationToggle) {
-                this.location = `${city}, ${region}`;
-            } else {
-                this.location = `${home}${street} ${city}, ${region} ${country} ${zip}`
-            }
+            Object.assign(this.location, this.event.location);
         }
     }
 </script>

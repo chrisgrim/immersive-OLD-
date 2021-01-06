@@ -8,7 +8,7 @@
         </div>
 
         <div 
-            :class="{visible: visible}"
+            :class="{visible: visible, top: !scroll}"
             class="es__tickets--detailed">
             <div class="es__tickets--title">
                 <button @click="visible =! visible">
@@ -47,7 +47,7 @@
     import IconSvg from '../../../components/Svg-icon'
     export default {
 
-        props: [ 'event', 'tickets' ],
+        props: [ 'event', 'tickets', 'scroll' ],
 
         components: { IconSvg },
 

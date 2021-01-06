@@ -7,40 +7,27 @@
     background: white;
 }
 
-nav.event-show {
-    height: 7rem;
-    grid-template-columns: 5rem auto;
-    text-align: right;
-    -webkit-box-align: center;
-    align-items: center;
-}
+/* ------------------------------------*\
+  #Layout
+\*------------------------------------ */
 
-.event-show-nav__back-arrow {
-    padding: 2rem 4rem 2rem 3.2rem;
-}
-
-.event-show-nav__favorite {
-    padding: 0 3rem;
-}
-
-header.es__header {
-    max-width: 1280px;
-    margin: auto;
-    padding: 2rem 8rem 0 8rem;
-    position: relative;
-}
 .pad4 {
-    padding: 4rem 0;
+    padding: 3rem 0;
     border-bottom: 1px solid #DDDDDD;
 }
-.es__header--image img {
-    height: 46rem;
+.subtext p {
+    font-size: 1.4rem;
+    color: #717171;
+    line-height: 1.8rem;
+}
+.es__line {
+    height: 1px;
+    background: #DDDDDD;
     width: 100%;
-    object-fit: cover;
-    border-radius: 1rem;
 }
 .es__body {
     max-width: 1280px;
+    width:100%;
     margin: auto;
     padding: 0 8rem;
     display: grid;
@@ -51,6 +38,7 @@ header.es__header {
 .es__body h2 {
     font-size: 2rem;
     padding-bottom: 2rem;
+    display: inline-block;
 }
 .es__body--left {
     position: relative;
@@ -60,7 +48,7 @@ header.es__header {
     position: relative;
     display: inline-block;
 }
-.es__pricing--body {
+.es__quickbuy--body {
     position: -webkit-sticky;
     position: sticky;
     top: 80px;
@@ -73,6 +61,85 @@ header.es__header {
     margin-top: 4rem;
     box-shadow: 0px 1px 14px rgba(0, 0, 0, 0.12)
 }
+.es__widebody {
+    max-width: 1280px;
+    margin: auto;
+    padding: 0 8rem;
+}
+
+/* ------------------------------------*\
+  Header
+\*------------------------------------ */
+
+header.es__header {
+    max-width: 1280px;
+    margin: auto;
+    padding: 2rem 8rem 0 8rem;
+    position: relative;
+}
+.es__header--image img {
+    height: 46rem;
+    width: 100%;
+    object-fit: cover;
+}
+.es__mobile-nav {
+    height:6rem;
+}
+.es__mobile-nav--back {
+    display: inline-block;
+}
+.es__mobile-nav--button {
+    width: 6rem;
+    height: 6rem;
+    display: flex;
+    align-items: center;
+}
+.es__mobile-nav--button svg {
+    margin: 0 auto;
+    display: block;
+}
+.es__favorite {
+    position: absolute;
+    right: 0;
+    top: 4rem;
+    background: white;
+    border-radius: 0.5rem;
+    width: 5rem;
+    height: 5rem;
+    right: 10rem;
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 0px 0px, rgba(0, 0, 0, 0.04) 0px 0px 0px 0.5px;
+    & .unhearted {
+        fill: #ffffff;
+        stroke: #717171;
+    }
+}
+.es__favorite--mobile {
+    position: absolute;
+    right: 3rem;
+    top: 3rem;
+}
+.es__admin--edit {
+    position: absolute;
+    top: 4rem;
+    right: 17rem;
+    background: white;
+    height: 5rem;
+    width: 5rem;
+    text-align: center;
+    border-radius: .5rem;
+}
+.es__admin--edit p {
+    line-height: 5rem;
+}
+.es__star {
+    color: #FF385C;
+    font-size: 1.5rem;
+}
+
+/* ------------------------------------*\
+  Title
+\*------------------------------------ */
 
 .es__title--category {
     text-transform: uppercase;
@@ -85,9 +152,10 @@ header.es__header {
     font-size: 2.8rem;
     display: block;
     margin-bottom: 0.4rem;
+    line-height: 3rem;
 }
 .es__title--tag {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     margin-bottom: 0.8rem;
     display: block;
 }
@@ -109,7 +177,25 @@ header.es__header {
 .es__quickinfo img {
     width: 3.5rem;
 }
+.es__staffpick--award {
+    width: 6rem;
+    position: absolute;
+    left: -3rem;
+    top: -3.5rem;
+}
+.es__description img {
+    width: 5rem;
+    border-radius: 5rem;
+    float: right;
+    margin-top: -1.2rem;
+}
+.es__description h2 {
+    max-width: 88%
+}
 
+/* ------------------------------------*\
+  Location
+\*------------------------------------ */
 
 .es__remote {
     display: grid;
@@ -139,10 +225,14 @@ header.es__header {
     max-width: 45rem;
 }
 
+/* ------------------------------------*\
+  Details
+\*------------------------------------ */
 
 .es__details h3 {
     font-size: 2rem;
     padding-top: 2rem;
+    padding-bottom: 1rem;
 }
 .es__details p {
     font-size: 1.4rem;
@@ -160,10 +250,12 @@ header.es__header {
     margin-top: 1rem;
 }
 
+/* ------------------------------------*\
+  Quick Buy
+\*------------------------------------ */
 
 .es__tickets {
-    padding-bottom: 4rem;
-    border-bottom: 1px solid #DDDDDD;
+    margin-top: 1rem;
 }
 .es__tickets h3 {
     font-weight: 800;
@@ -175,16 +267,12 @@ header.es__header {
     text-decoration: underline;
 }
 .es__tickets--detailed.visible {
-    width: 45rem;
+    width: 100%;
     display:inline-block;
-    position: absolute;
-    top: 7rem;
+    position: relative;
     border-radius: 1rem;
     border: 1px solid #DDDDDD;
-    z-index: 5;
     background: white;
-    left: -31rem;
-    box-shadow: rgba(0, 0, 0, 0.28) 0px 8px 28px;
 }
 .es__tickets--detailed {
     display: none;
@@ -228,6 +316,9 @@ header.es__header {
     border-bottom: 1px solid #DDDDDD;
     padding: 3rem 2rem;
 }
+.es__ticket--element:last-child {
+    border-bottom: 0;
+}
 .es__ticket--name {
     display: grid;
     grid-template-columns: 1fr 1fr
@@ -248,10 +339,6 @@ header.es__header {
     color: #a0a0a0;
     font-weight: 400;
 }
-
-.es__pricing--body .flatpickr-calendar.inline {
-
-}
 .es__pricing--body .flatpickr-day {
     pointer-events: none;
 }
@@ -264,23 +351,69 @@ header.es__header {
     padding: 0;
 }
 .es__pricing--body .flatpickr-calendar.inline {
-    margin: inherit;
+    margin-top: 0;
 }
+
+/* ------------------------------------*\
+  Dates
+\*------------------------------------ */
 
 .es__dates {
     width: 100%;
     border-radius: 1rem;
-    margin-top: 4rem;
+    margin-top: 3rem;
 }
 .es__dates h3 {
-    font-size: 2rem;
+    font-size: 1.6rem;
     font-weight: 500;
-    padding-bottom: 0.5rem;
 }
 .es__dates .flatpickr-calendar {
     box-shadow: none;
 }
+.es__dates-button {
+    border: 1px solid #DDDDDD;
+    padding: 1rem;
+    border-radius: 1rem;
+    width: 100%;
+    text-align: left;
+    z-index: 100;
+    position: relative;
+}
+.es__dates-button:hover {
+    background: black;
+}
+.es__dates-button:hover h3,  .es__dates-button:hover p, .es__dates-button:hover b{
+    color: white;
+}
+.es__dates-button svg{
+    fill: black;
+}
+.es__dates-button:hover svg{
+    fill: white;
+}
+.es__dates-button:hover g {
+    fill: white;
+}
+.es__dates-button--arrow {
+    transform: rotate(-90deg);
+    display: inline-block;
+    position: absolute;
+    right: 2rem;
+    top: 2.3rem;
+}
 
+.es__dates--popup {
+    position: absolute;
+    top: 8rem;
+    right: 0;
+    border: 1px solid #dddddd;
+    border-radius: 12px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 20px;
+    background: white;
+    padding: 2rem;
+    margin: 0rem;
+    padding-top: 8rem;
+}
 .es__dates .flatpickr-day.flatpickr-disabled {
     background: #cecece;
     color: rgb(8 8 8 / 79%);
@@ -301,20 +434,26 @@ header.es__header {
     top: 0 !important;
 }
 .es__dates--week {
-    margin-bottom: 1rem;
+    margin: 2rem 0;
     grid-template-columns: repeat(7, 1fr);
-    border: 1px solid #ebebeb;
     border-radius: 5px;
     text-align: center;
     align-items: center;
-    grid-column-gap: 0.1rem !important;
-    max-width: 60rem;
     overflow: hidden;
     display: grid;
+    grid-gap: 2rem;
+}
+.es__week--days p {
+    display: inline-block;
+}
+.es__week--days b {
+    color: black;
 }
 .es__week--day {
-    width:100%;
-    height:100%;
+    border: 1px solid black;
+    border-radius: 1rem;
+    width: 7rem;
+    height: 6rem;
 }
 .es__week--day h4{
     font-size: 1.5rem;
@@ -322,7 +461,7 @@ header.es__header {
     line-height: 4rem;
 }
 .es__week--day.active {
-    background: #008489;
+    background: black;
 }
 .es__week--day.active h4 {
     color: white;
@@ -335,6 +474,9 @@ header.es__header {
     font-size: 1.4rem;
     color: #717171;
 }
+.es__ticket--buy {
+    margin-top: 3rem;
+}
 .es__ticket--buy button {
     background: #f55151;
     color: white;
@@ -346,16 +488,10 @@ header.es__header {
     border-radius: 1rem;
 }
 
+/* ------------------------------------*\
+  Organizer
+\*------------------------------------ */
 
-
-.es__widebody {
-    max-width: 1280px;
-    margin: auto;
-    padding: 0 8rem;
-}
-.es__organizer {
-    border-top: 1px solid #DDDDDD;
-}
 .es__organizer--details {
     display: grid;
     grid-template-columns: 6rem 1fr;
@@ -385,34 +521,40 @@ header.es__header {
 .es__organizer--name h3 {
     font-size: 2rem;
 }
-.es__organizer--name p {
-    font-size: 1.4rem;
-    color:#717171;
-}
 .es__organizer--rating {
     padding-bottom: 2rem;
 }
 
-.event-show__staffpicks__user {
-    float: right;
-    margin-top: 2rem;
+/* ------------------------------------*\
+  StaffPicks
+\*------------------------------------ */
+
+section.es__staffpick {
+    border: 1px solid #000000;
+    padding: 2rem;
+    border-radius: 1rem;
+}
+.es__staffpick--title {
+    display: grid;
+    grid-template-columns: 6rem 1fr;
+    padding-bottom: 2rem;
+}
+.es__staffpick--title img {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 5rem;
+}
+.es__staffpick--title h3 {
+    font-size: 2rem;
+}
+.es__staffpick--title p {
+    font-size: 1.4rem;
+    color: #717171;
 }
 
-.event-show__staffpicks__user .name {
-    display: inline-block;
-    vertical-align: top;
-}
-
-.event-show__staffpicks__user .name p{
-    line-height: 4rem;
-}
-
-.event-show__staffpicks__user img {
-    display: inline-block;
-    width: 4rem;
-    border-radius: 50%;
-}
-
+/* ------------------------------------*\
+  Details
+\*------------------------------------ */
 
 .event-show-review__right {
     margin-top: -2.9rem;
@@ -449,123 +591,6 @@ header.es__header {
 }
 
 
-
-.event-show__organizer--image {
-    width:10rem;
-    height: 10rem;
-    margin-bottom: 1.5rem;
-    & .img {
-        width: 100%;
-        height: 100%;
-        background-size: cover;
-        background-position: 50% 50%;
-        background-repeat: no-repeat;
-        border-radius: 5rem;
-    }
-}
-
-.organizer-icon-text.event-show {
-    font-size: 6rem;
-    margin-left: -.5rem;
-}
-
-.event-show__showtimes--specific {
-    width: 100%;
-    margin: 4rem 0;
-    overflow: hidden;
-}
-.event-show__showtimes--ongoing {
-    width: 100%;
-    overflow: hidden;
-}
-.audience-role__info {
-    overflow: hidden;
-    word-break: break-word;
-    hyphens: auto
-}
-
-.event-show__remote--name {
-    margin-bottom: 1rem;
-}
-.event-show__remote--description {
-    font-size: 1.4rem;
-    line-height: inherit !important;
-}
-.event-show__remote--userinfo {
-    width: 100%;
-    border: 1px solid #ccbebe;
-    background: #ececec;
-    padding: 2rem;
-    border-radius: 1rem;
-    max-width: 45rem;
-}
-.event-show__organizer--name{
-    margin-bottom: 1rem;
-}
-.event-show__dates--details {
-    margin-bottom: 1rem;
-}
-.event-show__remote--area {
-    display: grid;
-    grid-gap: 2rem;
-    grid-template-columns: repeat( auto-fit, minmax(20rem, 1fr) );
-    max-width: 45rem;
-    margin-bottom: 2rem;
-}
-.event-show__remote--type {
-    width: 100%;
-    border: 1px solid #ccbebe;
-    border-radius: 1rem;
-    padding: 2rem;
-}
-
-.es__favorite {
-    position: absolute;
-    right: 0;
-    top: 4rem;
-    background: white;
-    border-radius: 0.5rem;
-    width: 5rem;
-    height: 5rem;
-    right: 10rem;
-    text-align: center;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 0px 0px, rgba(0, 0, 0, 0.04) 0px 0px 0px 0.5px;
-    & .unhearted {
-        fill: #ffffff;
-        stroke: #717171;
-    }
-}
-.es__admin--edit {
-    position: absolute;
-    top: 4rem;
-    right: 17rem;
-    background: white;
-    height: 5rem;
-    width: 5rem;
-    text-align: center;
-    border-radius: .5rem;
-}
-.es__admin--edit p {
-    line-height: 5rem;
-}
-
-.searchFilterBar {
-    width: 100%;
-    height: 5rem;
-    border-bottom: 1px solid rgb(235, 235, 235);
-}
-
-
-.location-place {
-    & .text {
-        margin: 0px;
-        word-wrap: break-word;
-        font-size: 16px;
-        font-weight: 400;
-        line-height: 1.75em;
-        color: #484848;
-    }
-}
 .event-bottom-bar {
     position: fixed;
     bottom: -9rem;
@@ -634,6 +659,18 @@ button.event-bottom-bar__button {
     }
 }
 
+@media (min-width: 768px) {
+    .pad4 {
+        padding: 4rem 0;
+    }
+    .es__description p {
+        margin-top: 2rem;
+    }
+    .es__header--image img {
+        border-radius: 1rem;
+    }
+}
+
 
 .es__map .leaflet-control-zoom {
     display: none;
@@ -680,89 +717,20 @@ button.event-bottom-bar__button {
 }
 
 @media (max-width: 768px) {
-
-    nav.event-show {
-        display: grid;
-    }
-    section.event-show {
-        padding: 3.5rem 2rem;
-    }
-
-    header.event-show {
+    .es__body {
+        padding: 0 2rem;
         grid-template-columns: 1fr;
-        background: white;
+        grid-column-gap: 0;
     }
-    .header-left {
-        padding: 1rem 2rem 4rem 2rem;
-        border-bottom: 1px solid #ebebeb;
-        &__title {
-            & h1 {
-                font-weight: 800;
-                line-height: normal;
-            }
-        }
-        &__details {
-            position: relative;
-            display: inline-block;
-            width: 100%;
-            margin-top: 2rem;
-            & .item {
-                margin: 1.4rem 0;
-                display: grid;
-                grid-template-columns: 4rem auto;
-                -webkit-box-align: center;
-                align-items: center;
-            }
-        }
+    header.es__header {
+        padding: 0;
+        width:100%;
+    }
+    .es__widebody {
+        padding:0 2rem;
     }
 
-    .header__show-info {
-        display: inline-block;
-        font-size: 1.8rem;
-        &.bold {
-            margin-left: 1rem;
-        }
-    }
-
-    .header-right {
-        grid-column: 1;
-        grid-row: 1;
-        background:white;
-    }
-    .header-right__image {
-        height: 38rem;
-    }
-    .two-panel {
-        & .two-panel {
-            grid-template-columns: 1fr;
-            &:last-child {
-                border:0;
-                    margin-bottom: 0;
-            }
-        }
-    }
-
-    .show-week-calendar {
-        grid-template-columns: repeat(7,1fr) !important;
-    }
-    .show-week-calendar_day {
-        line-height: 7rem;
-        & h4 {
-            font-size: 1.4rem;
-        }
-    }
-
-    .event-show-showtimes {
-        width: 260px;
-    }
-
-    .event-bottom-bar__name {
-        display: none;
-    }
-
-    ul.info {
-        margin: 2rem 3rem;  
-    }
+  
 
     .grid.event-bottom-bar {
         grid-template-columns: 1fr 18rem;

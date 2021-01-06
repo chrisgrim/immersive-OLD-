@@ -13,29 +13,40 @@
                     :event="event" />
                 <EventLocation :event="event" />
                 <EventDetails :event="event" />
-                <EventReviews :event="event" />
             </div>
-            <div class="es__body--right">
-                <div class="es__pricing--body">
-                    <EventTickets
-                        :tickets="tickets"
-                        :event="event" />
-                    <EventDates :event="event" />
-                    <div class="es__ticket--buy">
-                        <a 
-                            :href="eventUrl" 
-                            rel="noreferrer noopener" 
-                            target="_blank">
-                            <button class="event-bottom-bar__button">
-                                {{ loadevent.call_to_action ? loadevent.call_to_action : 'Get Tickets' }}
-                            </button>
-                        </a>
+
+            <template v-if="!isMobile">
+                <div class="es__body--right">
+                    <div class="es__quickbuy--body">
+                        <EventQuickBuy
+                            :tickets="tickets"
+                            :event="event" />
+                        <div class="es__ticket--buy">
+                            <a 
+                                :href="eventUrl" 
+                                rel="noreferrer noopener" 
+                                target="_blank">
+                                <button 
+                                    v-if="remaining && remaining.length"
+                                    class="event-bottom-bar__button">
+                                    {{ loadevent.call_to_action ? loadevent.call_to_action : 'Get Tickets' }}
+                                </button>
+                                <button 
+                                    v-else
+                                    class="event-bottom-bar__button">
+                                    Head to event
+                                </button>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </template>
         </div>
         <div class="es__widebody">
+            <div class="es__line" />
+            <EventReviews :event="event" />
             <EventOrganizer :event="event" />
+            <EventRatings :event="event" />
         </div>
 
         <div 
@@ -87,12 +98,14 @@
     import EventLocation  from './show/event-show-location.vue'
     import EventStaffpick  from './show/event-show-staffpick.vue'
     import EventReviews  from './show/event-show-reviews.vue'
+    import EventQuickBuy  from './show/event-show-quickbuy.vue'
+    import EventRatings  from './show/event-show-ratings.vue'
 
     export default {
 
         props: ['loadevent', 'user', 'tickets'],
 
-        components: { LMap, LTileLayer, LMarker, LPopup, ShowMore, EventHeader, EventAbout, EventDetails, EventTickets, EventDates, EventOrganizer, EventLocation, EventStaffpick, EventReviews },
+        components: { LMap, LTileLayer, LMarker, LPopup, ShowMore, EventHeader, EventAbout, EventDetails, EventTickets, EventDates, EventOrganizer, EventLocation, EventStaffpick, EventReviews, EventQuickBuy, EventRatings },
 
         computed: {
             locationPlaceholder() {
@@ -151,7 +164,7 @@
 
             handleScroll () {
                 const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-                return currentScrollPosition > 60 ? this.bar = true : this.bar = false
+                return currentScrollPosition > 200 ? this.bar = true : this.bar = false
             },
 
             canUseWebP() {

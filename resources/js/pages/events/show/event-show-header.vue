@@ -1,28 +1,27 @@
 <template>
     <header class="es__header">
-        <nav class="event-show mobile">
-            <div class="back">
-                <a @click="goBack()">
-                    <div class="event-show-nav__back-arrow">
-                        <svg 
-                            aria-label="Back" 
-                            role="img" 
-                            viewBox="0 0 32 32" 
-                            xmlns="http://www.w3.org/2000/svg" 
-                            style="display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 4; overflow: visible;">
-                            <g fill="none">
-                                <path d="m20 28-11.29289322-11.2928932c-.39052429-.3905243-.39052429-1.0236893 0-1.4142136l11.29289322-11.2928932" />
-                            </g>
-                        </svg>
-                    </div>
-                </a>
-            </div>
-            <div class="event-show-nav__favorite">
-                <favorite 
-                    :user="user" 
-                    :inputclass="showEventMobileClass" 
-                    :event="event" />
-            </div>
+        <nav 
+            v-if="isMobile"
+            class="es__mobile-nav">
+            <a 
+                class="es__mobile-nav--back"
+                @click="goBack()">
+                <div class="es__mobile-nav--button">
+                    <svg 
+                        aria-label="Back" 
+                        role="img" 
+                        viewBox="0 0 32 32" 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        style="display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 4; overflow: visible;">
+                        <g fill="none">
+                            <path d="m20 28-11.29289322-11.2928932c-.39052429-.3905243-.39052429-1.0236893 0-1.4142136l11.29289322-11.2928932" />
+                        </g>
+                    </svg>
+                </div>
+            </a>
+            <favorite 
+                :inputclass="showEventMobileClass" 
+                :event="event" />
         </nav>
         <div class="es__header--content">
             <div class="es__header--image">
@@ -44,7 +43,6 @@
                     </a>
                 </div>
                 <favorite 
-                    :user="user" 
                     :inputclass="showEventClass" 
                     :event="event" />
             </div>
@@ -60,7 +58,7 @@
         data() {
             return {
                 showEventClass: 'es__favorite',
-                showEventMobileClass: 'show-heart-mobile-location',
+                showEventMobileClass: 'es__favorite--mobile',
                 isMobile: window.innerWidth < 768 ? true : false,
             }
         },

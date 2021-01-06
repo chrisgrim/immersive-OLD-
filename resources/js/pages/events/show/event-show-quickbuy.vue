@@ -1,0 +1,242 @@
+<template>
+    <section>
+        <div 
+            v-if="!ticketsVisible"
+            class="es__tickets subtext">
+            <h3>{{ event.price_range }}</h3>
+            <p @click="ticketsVisible =! ticketsVisible">
+                Show all prices
+            </p>
+        </div>
+
+        <div 
+            :class="{ visible: ticketsVisible }"
+            class="es__tickets--detailed">
+            <div class="es__tickets--title">
+                <button @click="ticketsVisible =! ticketsVisible">
+                    <IconSvg type="delete" />
+                </button>
+                <h4>Ticket Details</h4>
+            </div>
+            <div
+                class="es__ticket--element"
+                v-for="ticket in tickets" 
+                :key="ticket.name">
+                <div class="es__ticket--name">
+                    <h4> {{ ticket.name }} </h4>
+                    <template v-if="ticket.type == 'f'">
+                        <p>Free</p>
+                    </template>
+                    <template v-else-if="ticket.type == 'p'">
+                        <p>Pay what you can</p>
+                    </template>
+                    <template v-else>
+                        <p> {{ ticket.ticket_price == 0.00 ? 'Free' : `${ticket.currency} ${ticket.ticket_price}` }} </p>
+                    </template>
+                </div>
+                <div class="es__ticket--description">
+                    <p> {{ ticket.description }} </p>
+                </div>
+            </div>
+        </div>
+        <div 
+            :class="{visible: datesVisible}"
+            class="es__tickets--background" />
+        <div class="es__dates">
+            <template v-if="event.showtype == 's' || event.showtype == 'l'">
+                <button 
+                    @click="datesVisible =! datesVisible"
+                    class="es__dates-button subtext">
+                    <h3>Dates</h3>
+                    <p 
+                        v-if="remaining && remaining.length > 1 ? remaining.length : ''" 
+                        class="header__show-info bold">{{ remaining.length }} show dates remaining</p>
+                    <p 
+                        v-else-if="remaining && remaining.length == 1 ? remaining.length : ''" 
+                        class="header__show-info bold">{{ remaining.length }} date remaining</p>
+                    <p 
+                        v-else 
+                        class="header__show-info bold">no dates remaining</p>
+                    <div class="es__dates-button--arrow">
+                        <IconSvg 
+                            v-if="datesVisible"
+                            type="delete" />
+                        <IconSvg 
+                            v-else
+                            type="back" />
+                    </div>
+                </button>
+                <template v-if="datesVisible">
+                    <div class="es__dates--popup">
+                        <flat-pickr
+                            v-model="dates"
+                            :config="config"                                  
+                            class="form-control"
+                            placeholder="Select date"
+                            ref="datePicker"             
+                            name="dates" />
+                        <div class="es__dates--description">
+                            <ShowMore 
+                                :text="event.show_times"
+                                :limit="20" />
+                        </div>
+                    </div>
+                </template>
+            </template>
+
+            <template v-if="event.showtype == 'o'">
+                <button 
+                    @click="datesVisible =! datesVisible"
+                    class="es__dates-button subtext">
+                    <h3>Week Days</h3>  
+                    <div class="es__week--days">
+                        <p v-if="event.show_on_going.mon"><b>M</b></p>
+                        <p v-else>M</p>
+                        <p v-if="event.show_on_going.tue"><b>T</b></p>
+                        <p v-else>T</p>
+                        <p v-if="event.show_on_going.wed"><b>W</b></p>
+                        <p v-else>W</p>
+                        <p v-if="event.show_on_going.thu"><b>T</b></p>
+                        <p v-else>T</p>
+                        <p v-if="event.show_on_going.fri"><b>F</b></p>
+                        <p v-else>F</p>
+                        <p v-if="event.show_on_going.sat"><b>S</b></p>
+                        <p v-else>S</p>
+                        <p v-if="event.show_on_going.sun"><b>S</b></p>
+                        <p v-else>S</p>
+                    </div>   
+                    <div class="es__dates-button--arrow">
+                        <IconSvg 
+                            v-if="datesVisible"
+                            type="delete" />
+                        <IconSvg 
+                            v-else
+                            type="back" />
+                    </div>
+                </button>
+                <template v-if="datesVisible">
+                    <div class="es__dates--popup">
+                        <div class="es__dates--week">
+                            <div 
+                                class="es__week--day" 
+                                :class="{ active: week.mon }">
+                                <h4>Mon</h4>
+                            </div>
+                            <div 
+                                class="es__week--day"
+                                :class="{ active: week.tue }">
+                                <h4>Tue</h4>
+                            </div>
+                            <div 
+                                class="es__week--day" 
+                                :class="{ active: week.wed }">
+                                <h4>Wed</h4>
+                            </div>
+                            <div 
+                                class="es__week--day" 
+                                :class="{ active: week.thu }">
+                                <h4>Thu</h4>
+                            </div>
+                            <div 
+                                class="es__week--day"
+                                :class="{ active: week.fri }">
+                                <h4>Fri</h4>
+                            </div>
+                            <div 
+                                class="es__week--day"
+                                :class="{ active: week.sat }">
+                                <h4>Sat</h4>
+                            </div>
+                            <div 
+                                class="es__week--day"
+                                :class="{ active: week.sun }">
+                                <h4>Sun</h4>
+                            </div>
+                        </div>
+                        <div class="es__dates--description">
+                            <ShowMore 
+                                :text="event.show_times"
+                                :limit="20" />
+                        </div>
+                    </div>
+                </template>
+            </template>
+
+            <template v-if="event.showtype == 'a'">
+                <button 
+                    @click="datesVisible =! datesVisible"
+                    class="es__dates-button subtext">
+                    <h3>Anytime</h3>
+                    <div class="es__dates--description">
+                        <ShowMore 
+                            :text="event.show_times"
+                            :limit="20" />
+                    </div>
+                </button>
+            </template>
+        </div>
+    </section>
+</template>
+
+<script>
+    import IconSvg from '../../../components/Svg-icon'
+    import ShowMore  from '../components/show-more.vue'
+    import flatPickr from 'vue-flatpickr-component'
+    export default {
+
+        props: [ 'event', 'tickets' ],
+
+        components: { IconSvg, ShowMore, flatPickr },
+
+        computed: {
+            eventUrl() {
+                if (this.event.ticketUrl) {return this.event.ticketUrl}
+                if (this.event.websiteUrl) {return this.event.websiteUrl}
+                return this.event.organizer.website;
+            },
+        },
+
+        data() {
+            return {
+                hover: null,
+                visible: false,
+                config: this.initializeCalendarObject(),
+                dates: [],
+                week: this.event ? this.event.show_on_going : '',
+                remaining: [],
+                ticketsVisible: false,
+                datesVisible: false,
+            }
+        },
+
+        methods: {
+            initializeCalendarObject() { 
+                return {
+                    maxDate: new Date().fp_incr(180),
+                    mode: "multiple",
+                    inline: true,
+                    showMonths: 2,
+                    dateFormat: 'Y-m-d H:i:s',
+                    disable: [],
+                }
+            },
+
+            getDates() {
+                if(this.event.shows) {
+                    this.event.shows.forEach(event=> {
+                        if (this.$dayjs().subtract(1, 'day').format('YYYY-MM-DD 23:59:00') < event.date) {
+                            this.remaining.push(event.date);
+                        } else {
+                            this.config.disable.push(event.date);
+                        }
+                        this.dates.push(event.date);
+                    });
+                }
+            },
+        },
+
+        mounted() {
+            this.getDates();
+        }
+    }
+</script>
