@@ -54,6 +54,17 @@
             </ul>
         </div>
 
+        <div v-if="event.advisories.sexual">
+            <div class="title">
+                <h3>Sexual Advisories</h3>
+            </div>
+            <ul class="info">
+                <li>
+                    <p> {{ event.advisories.sexualDescription }} </p>
+                </li>
+            </ul>
+        </div>
+
         <div>
             <h3>Tags</h3>
             <div class="es__tags">
@@ -71,16 +82,6 @@
             </div>
         </div>
 
-        <div v-if="event.advisories.sexual">
-            <div class="title">
-                <h3>Sexual Advisories</h3>
-            </div>
-            <ul class="info">
-                <li>
-                    <p> {{ event.advisories.sexualDescription }} </p>
-                </li>
-            </ul>
-        </div>
     </section>
 </template>
 

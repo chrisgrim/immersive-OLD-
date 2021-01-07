@@ -224,6 +224,9 @@ header.es__header {
     padding: 2rem;
     max-width: 45rem;
 }
+.es__map .leaflet-control-zoom {
+    display: none;
+}
 
 /* ------------------------------------*\
   Details
@@ -466,6 +469,9 @@ header.es__header {
 .es__week--day.active h4 {
     color: white;
 }
+.es__week--days {
+    padding: 1rem 0;
+}
 .es__dates--description {
     padding-bottom: 2rem;
     overflow: hidden;
@@ -473,6 +479,10 @@ header.es__header {
 .es__dates--description p {
     font-size: 1.4rem;
     color: #717171;
+}
+.es__dates span.flatpickr-day {
+    user-select: none;
+    pointer-events: none;
 }
 .es__ticket--buy {
     margin-top: 3rem;
@@ -556,39 +566,6 @@ section.es__staffpick {
   Details
 \*------------------------------------ */
 
-.event-show-review__right {
-    margin-top: -2.9rem;
-    font-size: 1.4rem;
-    line-height: 2rem;
-    & h4 {
-        margin-bottom: .5rem;
-        font-size: 1.5rem;
-        margin-top: .5rem;
-    }
-}
-
-.show-week-calendar {
-    margin-bottom: 1rem;
-    grid-template-columns: repeat(7,1fr);
-    border: 1px solid #ebebeb;
-    border-radius: 5px;
-    text-align: center;
-    align-items: center;
-    grid-column-gap: 0rem !important;
-    max-width: 60rem;
-    overflow: hidden;
-}
-.show-week-calendar_day {
-    width: 100%;
-    height: 100%;
-    line-height: 8rem;
-    &.active {
-        background: $default-color;
-        & h4 {
-            color:white;
-        }
-    }
-}
 
 
 .event-bottom-bar {
@@ -633,31 +610,6 @@ button.event-bottom-bar__button {
     padding: 1.6rem 5rem;
 }
 
-.popup-content .info {
-    display: inline-block;
-    padding: 1rem;
-    position: absolute;
-    & .name {
-        font-weight: 400;
-        color: #222222;
-        font-size: 18px;
-        line-height: 24px;
-        max-height: 24px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-    }
-    & .price {
-        -webkit-box-align: center;
-        align-items: center;
-        color: #222222;
-        font-weight: 400;
-        font-size: 18px;
-        line-height: 24px;
-    }
-}
 
 @media (min-width: 768px) {
     .pad4 {
@@ -669,14 +621,6 @@ button.event-bottom-bar__button {
     .es__header--image img {
         border-radius: 1rem;
     }
-}
-
-
-.es__map .leaflet-control-zoom {
-    display: none;
-}
-
-@media (min-width: 768px) {
     .es__map .leaflet-top {
         top: -1.5rem;
     }
@@ -710,12 +654,6 @@ button.event-bottom-bar__button {
     }
 }
 
-@media (max-width: 1050px) {
-    .two-panel {
-        grid-template-columns: 27rem 1fr;
-    }
-}
-
 @media (max-width: 768px) {
     .es__body {
         padding: 0 2rem;
@@ -729,25 +667,12 @@ button.event-bottom-bar__button {
     .es__widebody {
         padding:0 2rem;
     }
-
-  
-
     .grid.event-bottom-bar {
         grid-template-columns: 1fr 18rem;
         padding: 1rem 2rem;
         & button {
             padding: 1.5rem 3rem;
         }
-    }
-    
-    .event-show-review__right--image {
-        display: inline-block;
-    }
-    .event-show-review__right--name {
-        display: inline-block;
-    }
-    .event-show-review__right {
-        margin: 0;
     }
 }
 

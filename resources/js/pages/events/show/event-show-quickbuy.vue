@@ -116,43 +116,13 @@
                 </button>
                 <template v-if="datesVisible">
                     <div class="es__dates--popup">
-                        <div class="es__dates--week">
-                            <div 
-                                class="es__week--day" 
-                                :class="{ active: week.mon }">
-                                <h4>Mon</h4>
-                            </div>
-                            <div 
-                                class="es__week--day"
-                                :class="{ active: week.tue }">
-                                <h4>Tue</h4>
-                            </div>
-                            <div 
-                                class="es__week--day" 
-                                :class="{ active: week.wed }">
-                                <h4>Wed</h4>
-                            </div>
-                            <div 
-                                class="es__week--day" 
-                                :class="{ active: week.thu }">
-                                <h4>Thu</h4>
-                            </div>
-                            <div 
-                                class="es__week--day"
-                                :class="{ active: week.fri }">
-                                <h4>Fri</h4>
-                            </div>
-                            <div 
-                                class="es__week--day"
-                                :class="{ active: week.sat }">
-                                <h4>Sat</h4>
-                            </div>
-                            <div 
-                                class="es__week--day"
-                                :class="{ active: week.sun }">
-                                <h4>Sun</h4>
-                            </div>
-                        </div>
+                        <flat-pickr
+                            v-model="dates"
+                            :config="config"                                  
+                            class="form-control"
+                            placeholder="Select date"
+                            ref="datePicker"             
+                            name="dates" />
                         <div class="es__dates--description">
                             <ShowMore 
                                 :text="event.show_times"
@@ -237,6 +207,12 @@
 
         mounted() {
             this.getDates();
+        },
+
+        watch: {
+            datesVisible() {
+                this.datesVisible ? this.$nextTick(() => { this.$refs.datePicker.fp.jumpToDate(new Date()) }) : '';
+            }
         }
     }
 </script>
