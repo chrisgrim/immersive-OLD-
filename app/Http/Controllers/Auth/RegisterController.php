@@ -65,7 +65,9 @@ class RegisterController extends Controller
 
         $user->getGravatar();
 
-        return redirect('/email/verify');
+        return $user;
+
+        // return redirect('/email/verify');
 
         // return $this->registered($request, $user)
         //                 ?: redirect($this->redirectPath())->with('verify', 'Thanks');

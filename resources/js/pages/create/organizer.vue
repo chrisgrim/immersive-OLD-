@@ -277,17 +277,15 @@ export default {
         onImageUpload(image) {
             this.imageFile = image; 
             this.$v.imageFile.$touch();
-            if (this.$v.imageFile.$invalid) { return false; };
+            if (this.$v.imageFile.$invalid) { return false; }
             this.formData.append('image', this.imageFile.file);
         },
 
         onSubmit() {
-
             if (this.checkVuelidate()) { return false }
             this.appendData()
-            axios.post(this.endPoint, this.organizer)
+            axios.post(this.endPoint, this.formData)
             .then(res => { 
-                console.log(res.data);
                 this.onFinishOrganizer('/create/events/edit');
             })
             .catch(err => {

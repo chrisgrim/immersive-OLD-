@@ -5,7 +5,12 @@
             class="es__tickets subtext">
             <h3>{{ event.price_range }}</h3>
             <p @click="ticketsVisible =! ticketsVisible">
-                Show all prices
+                <template v-if="tickets.length > 1">
+                    Show all prices
+                </template>
+                <template v-else>
+                    Show pricing details
+                </template>
             </p>
         </div>
 
@@ -42,7 +47,9 @@
         <div 
             :class="{visible: datesVisible}"
             class="es__tickets--background" />
-        <div class="es__dates">
+        <div 
+            v-if="!isMobile"
+            class="es__dates">
             <template v-if="event.showtype == 's' || event.showtype == 'l'">
                 <button 
                     @click="datesVisible =! datesVisible"
@@ -133,17 +140,33 @@
             </template>
 
             <template v-if="event.showtype == 'a'">
-                <button 
-                    @click="datesVisible =! datesVisible"
-                    class="es__dates-button subtext">
-                    <h3>Anytime</h3>
+                <div class="es__dates--body subtext">
+                    <h3>Available Anytime</h3>
                     <div class="es__dates--description">
                         <ShowMore 
                             :text="event.show_times"
                             :limit="20" />
                     </div>
-                </button>
+                </div>
             </template>
+        </div>
+
+        <div class="es__ticket--buy">
+            <a 
+                :href="eventUrl" 
+                rel="noreferrer noopener" 
+                target="_blank">
+                <button 
+                    v-if="remaining && remaining.length"
+                    class="event-bottom-bar__button">
+                    {{ event.call_to_action ? event.call_to_action : 'Get Tickets' }}
+                </button>
+                <button 
+                    v-else
+                    class="event-bottom-bar__button">
+                    Head to event
+                </button>
+            </a>
         </div>
     </section>
 </template>
@@ -176,6 +199,7 @@
                 remaining: [],
                 ticketsVisible: false,
                 datesVisible: false,
+                isMobile: window.innerWidth < 768 ? true : false,
             }
         },
 

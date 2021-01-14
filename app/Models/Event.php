@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Conversation;
 use App\Models\Genre;
+use App\Traits\Rateable;
 use Laravel\Scout\Searchable;
 use ElasticScoutDriverPlus\CustomSearch;
 use Illuminate\Support\Facades\Storage;
@@ -18,6 +19,7 @@ class Event extends Model
 {
     use CustomSearch;
     use Favoritable;
+    use Rateable;
     use SoftDeletes;
     use Searchable;
 
@@ -47,7 +49,7 @@ class Event extends Model
     *
     * @var array
     */
-    protected $appends = ['isFavorited', 'isShowing'];
+    protected $appends = ['isFavorited', 'isShowing', 'averageRating', 'ratingAmount', 'hasRated'];
 
         /**
      * The "booted" method of the model.

@@ -176,15 +176,4 @@ class EventController extends Controller
 
         $event->delete();
     }
-
-    public function DBUpdate() 
-    {
-        DB::table('tickets')->where('ticket_type', '=', 'App\Show')->update([
-        'ticket_type' => 'App\Models\Show',
-        ]);
-        DB::table('favorites')->where('favorited_type', '=', 'App\Event')->update([
-        'favorited_type' => 'App\Models\Event',
-        ]);
-    }
-
 }

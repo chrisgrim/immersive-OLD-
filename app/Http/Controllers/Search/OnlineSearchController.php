@@ -23,8 +23,8 @@ class OnlineSearchController extends Controller
                 $request->request->add(['price' => [$request->price0,$request->price1 ]]);
             }
         }
-
         if ($request->start) {$request->request->add(['dates' => [$request->start, $request->end]]);}
+
         $maxprice = ceil(Event::getMostExpensive());
         $categories = Category::all();
         $tags = Genre::where('admin', 1)->orderBy('rank', 'desc')->get();

@@ -17,8 +17,15 @@
                 </div>
             </div>
         </a>
-        <div class="es__organizer--rating">
-            <p>* 4 Reviews</p>
+        <div 
+            v-if="event.organizer.showRating.count"
+            class="es__organizer--rating">
+            <template v-if="event.organizer.showRating.count > 1">
+                <p> {{event.organizer.showRating.count}} Event reviews</p>
+            </template>
+            <template v-else-if="event.organizer.showRating.count === 1">
+                <p> {{event.organizer.showRating.count}} Event review</p>
+            </template>
         </div>
         <ShowMore 
             :text="event.organizer.description"
@@ -28,11 +35,12 @@
 
 <script>
     import ShowMore  from '../components/show-more.vue'
+    import IconSvg from '../../../components/Svg-icon'
     export default {
 
         props: [ 'event' ],
 
-        components: { ShowMore },
+        components: { ShowMore, IconSvg },
 
         data() {
             return {

@@ -3,8 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
 
-Route::GET('/forchrisonly', 'Admin\EventController@DBUpdate');
-
 // Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 //     return view('dashboard');
 // })->name('dashboard');
@@ -102,6 +100,10 @@ Route::GET('myFavorites/{user}', 'FavoritesController@index');
 Route::POST('favorite/{event}/favorites', 'FavoritesController@store');
 Route::DELETE('favorite/{event}/favorites', 'FavoritesController@destroy');
 Route::GET('favorite/{event}/login', 'FavoritesController@loginToFavorite');
+
+// ratings 
+Route::POST('rate/{event}/rating', 'RatingController@store');
+Route::POST('flag/{rating}/', 'FlagController@rating')->middleware('verified');
 
 //Event Creation Process
 Route::GET('/create/events/edit', 'Create\EventController@show');

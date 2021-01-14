@@ -27,14 +27,18 @@
     float: left;
     border-radius: 50%;
     margin-right: 2rem;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: center;
 }
 
 .organizer-card__image-icontext {
     text-align: center;
+    margin: auto;
     & h2 {
         color: #fff;
         font-size: 4rem;
-        margin: 0.4rem auto;
     }
 }
 

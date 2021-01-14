@@ -1,12 +1,12 @@
 <template>
     <p class="text">
-        <span style="white-space: pre-wrap;">{{ adjustedText }}</span>
+        <span :style="`white-space: ${whiteSpace};`">{{ adjustedText }}</span>
         <span 
             v-if="showMore" 
             @click="showMore = false">... <span class="show-text"><br>Show More</span>
         </span>
         <span 
-            v-if="!showMore && this.text.split(' ').length >= this.limit"
+            v-if="lessButton && !showMore && this.text.split(' ').length >= this.limit"
             @click="showMore = true"><span class="show-text"><br>Show Less</span>
         </span>
     </p>
@@ -15,7 +15,25 @@
 <script>
 
 export default {
-    props: ['text','limit'],
+
+    props : {
+        text: {
+            type: String,
+            default: ''
+        },
+        limit : {
+            type: Number,
+            default: 100,
+        }, 
+        whiteSpace: {
+            type: String,
+            default: 'pre-wrap'
+        },
+        lessButton: {
+            type: Boolean,
+            default: true
+        }
+    },
 
     computed: {
         adjustedText() {
@@ -26,7 +44,7 @@ export default {
 
     data() {
         return {
-            showMore: this.text.split(' ').length >= this.limit ? true : false
+            showMore: this.text.split(' ').length >= this.limit ? true : false,
         }
     },
 }

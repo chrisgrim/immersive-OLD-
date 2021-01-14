@@ -28,16 +28,11 @@ class OrganizerUniqueSlugRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        // if (Organizer::where('slug', '=', Str::slug($this->name))->exists()) {
-        //     return false;
-        // } else {
-        //     return true;
-        // }
 
         $organizer = Organizer::where('slug', '=', Str::slug($this->name))->first();
 
         if (Organizer::where('slug', '=', Str::slug($this->name))->exists()) {
-            if ( $this->id === $organizer->id ) {
+            if ( (int)$this->id === (int)$organizer->id ) {
                 return true;
             }
             return false;

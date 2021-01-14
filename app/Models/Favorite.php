@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+
 class Favorite extends Model
 {
     /**
@@ -11,6 +12,7 @@ class Favorite extends Model
      * @var array
      */
     protected $guarded = [];
+
     /**
      * Fetch the model that was favorited.
      *

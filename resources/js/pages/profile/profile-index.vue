@@ -1,9 +1,11 @@
 <template>
     <div class="user-profile grid">
-        <section class="user-profile-image">
+        <section 
+            class="user-profile-image" 
+            :style="`background:${user.hexColor}`">
             <!-- Non Editable User Image --> 
-            <div v-if="!canEditPage">
-                <div v-if="avatar">
+            <template v-if="!canEditPage">
+                <template v-if="avatar">
                     <picture>
                         <source 
                             type="image/webp" 
@@ -13,22 +15,21 @@
                             :src="`/storage/${avatar.slice(0, -4)}jpg`" 
                             :alt="`${loaduser.name}`">
                     </picture>
-                </div>
-                <div v-else-if="user.gravatar">
+                </template>
+                <template v-else-if="user.gravatar">
                     <picture>
                         <img 
                             class="user-profile-image" 
                             :src="user.gravatar" 
                             :alt="`${loaduser.name}`">
                     </picture>
-                </div>
+                </template>
                 <div 
                     v-else 
-                    class="user-profile-noimage__text" 
-                    :style="`background:${user.hexColor}`">
+                    class="user-profile-noimage__text">
                     <h2>{{ loaduser.name.charAt(0) }}</h2>
                 </div>
-            </div>
+            </template>
             
             <!-- Editable User Image --> 
             <div 

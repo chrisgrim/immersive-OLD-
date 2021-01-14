@@ -11,77 +11,27 @@
                 <EventStaffpick
                     v-if="event.staffpick"
                     :event="event" />
+                <EventDates 
+                    v-if="isMobile"
+                    :event="event" />
                 <EventLocation :event="event" />
                 <EventDetails :event="event" />
             </div>
-
-            <template v-if="!isMobile">
-                <div class="es__body--right">
-                    <div class="es__quickbuy--body">
-                        <EventQuickBuy
-                            :tickets="tickets"
-                            :event="event" />
-                        <div class="es__ticket--buy">
-                            <a 
-                                :href="eventUrl" 
-                                rel="noreferrer noopener" 
-                                target="_blank">
-                                <button 
-                                    v-if="remaining && remaining.length"
-                                    class="event-bottom-bar__button">
-                                    {{ loadevent.call_to_action ? loadevent.call_to_action : 'Get Tickets' }}
-                                </button>
-                                <button 
-                                    v-else
-                                    class="event-bottom-bar__button">
-                                    Head to event
-                                </button>
-                            </a>
-                        </div>
-                    </div>
+            <div class="es__body--right">
+                <div class="es__quickbuy--body">
+                    <EventQuickBuy
+                        :tickets="tickets"
+                        :event="event" />
                 </div>
-            </template>
+            </div>
         </div>
         <div class="es__widebody">
             <div class="es__line" />
             <EventReviews :event="event" />
             <EventOrganizer :event="event" />
-            <EventRatings :event="event" />
-        </div>
-
-        <div 
-            class="grid event-bottom-bar" 
-            v-if="isMobile"
-            :class="{ active: bar }">
-            <div class="event-bottom-bar__name">
-                <picture>
-                    <source 
-                        height="50" 
-                        width="50" 
-                        type="image/webp" 
-                        :srcset="`/storage/${event.thumbImagePath}`"> 
-                    <img 
-                        class="event-bottom-bar__img" 
-                        height="50" 
-                        width="50" 
-                        :src="`/storage/${event.thumbImagePath.slice(0, -4)}jpg`" 
-                        :alt="event.name">
-                </picture>
-                <h4>{{ event.name }}</h4>
-            </div>
-            <div class="event-price">
-                <h4>{{ event.price_range }}</h4>
-            </div>
-            <div class="event-get-tickets">
-                <a 
-                    :href="eventUrl" 
-                    rel="noreferrer noopener" 
-                    target="_blank">
-                    <button class="event-bottom-bar__button">
-                        {{ loadevent.call_to_action ? loadevent.call_to_action : 'Get Tickets' }}
-                    </button>
-                </a>
-            </div>
+            <EventRatings 
+                :user="user"
+                :event="event" />
         </div>
     </div>
 </template>
@@ -138,7 +88,6 @@
                 organizerImage: '',
                 dates: [],
                 remaining: [],
-                bar: false,
                 lastScrollPosition: 0,
                 config: this.initializeCalendarObject(),
                 titleFontSize: '',
@@ -160,11 +109,6 @@
                         this.dates.push(event.date);
                     });
                 }
-            },
-
-            handleScroll () {
-                const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-                return currentScrollPosition > 200 ? this.bar = true : this.bar = false
             },
 
             canUseWebP() {
@@ -193,13 +137,6 @@
         mounted() {
             this.getDates();
             this.canUseWebP();
-
-        },
-        created () {
-            window.addEventListener('scroll', this.handleScroll);
-        },
-        unmounted () {
-            window.removeEventListener('scroll', this.handleScroll);
         },
     };
 </script>

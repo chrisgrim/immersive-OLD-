@@ -1,12 +1,5 @@
 <template>
     <div class="event-create-start grid" :style="pageHeight">
-        <nav class="start-content__nav">
-            <div class="nav-logo">
-                <a href="/">
-                    <h3>EI</h3>
-                </a>
-            </div>
-        </nav>
         <div class="start-content">
             <div class="start-content__text">
                 <h2>Hi, {{user.name}}</h2>
@@ -16,12 +9,10 @@
         </div>
         <div class="login-image">
             <picture>
-                
                 <img :style="pageHeight" src="/storage/website-files/login-image.jpg">
             </picture>
         </div>
     </div>
-    
 </template>
 
 <script>

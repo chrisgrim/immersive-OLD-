@@ -20,20 +20,18 @@
                         :alt="user.name + `'s account`">
                 </picture>
             </label>
-            <div v-else-if="user.gravatar">
+            <template v-else-if="user.gravatar">
                 <img 
                     :src="user.gravatar" 
                     height="28" 
                     width="28" 
                     :alt="user.name + `'s account`">
-            </div>
-            <div 
-                v-else 
-                class="nav-dropdown__guest">
+            </template>
+            <template v-else>
                 <h2>
                     {{ userName.charAt(0) }}
                 </h2>
-            </div>
+            </template>
         </button>
         <ul 
             v-show="onToggle" 

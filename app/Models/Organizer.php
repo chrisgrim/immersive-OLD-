@@ -24,6 +24,13 @@ class Organizer extends Model
     	'user_id','name','website','slug','description','rating','largeImagePath','thumbImagePath','instagramHandle','twitterHandle','facebookHandle', 'email', 'status'
     ];
 
+     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['hexColor', 'showRating'];
+
     /**
      * Get the indexable data array for the model.
      *
@@ -72,13 +79,6 @@ class Organizer extends Model
     }
 
     /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
-    protected $appends = ['hexColor'];
-
-    /**
     * Each Organizer can have many events
     *
     * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -107,6 +107,19 @@ class Organizer extends Model
     {
         $myarray = ['#2F405F','#DA5E8E','#20B7A6','#749EEB','#1EAA9A']; 
         return $myarray[$this->id % count($myarray)];
+    }
+
+    /**
+    * Get Organizer Rating
+    *
+    * @return boolean
+    */
+    public function getShowRatingAttribute()
+    {
+        $ids = $this->events()->get()->pluck('id');
+        $data['count'] = Rating::where('rateable_type', Event::class)->whereIn('rateable_id', $ids)->count();
+        $data['rating'] = number_format(Rating::where('rateable_type', Event::class)->whereIn('rateable_id', $ids)->average('rating'), 1);
+        return $data;
     }
 
     /**

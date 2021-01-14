@@ -16,20 +16,26 @@ class MakeImage extends Model
     */
     public static function saveImage($request, $value, $width, $height, $type)
     {
+        // create either new-titles or random like 69sjj3s
         $name = $value->name ? $value->name : substr(md5(microtime()),rand(0,26),7);
-        //      either new-titles or 69sjj3s
+
+        // generate rand variable like 546ds3g
         $rand = substr(md5(microtime()),rand(0,26),7);
-        //      546ds3g
+
+        // create title like: new-titles
         $title = Str::slug($name);
-        //      new-titles
+
+        // get extension: (jpg)
         $extension = $request->file('image')->getClientOriginalExtension();
-        //      jpg
+
+        // combine title and extension:  new-titles.jpg
         $inputFile= $title . '.' . $extension;
-        //      new-titles.jpg
+
+        // create filename and set it = to title: new-titles
         $fileName= $title;
-        //      new-titles
+
+        // create directory: event-images/new-titles-54fwd3g
         $directory= $type . '-images/' . $title . '-' . $rand;
-        //      event-images/new-titles-54fwd3g
 
         $request->file('image')->storeAs('/public/' . $directory, $inputFile);
         Image::make(storage_path()."/app/public/$directory/$inputFile")
@@ -53,18 +59,23 @@ class MakeImage extends Model
     */
     public static function updateImage($request, $value, $width, $height, $type)
     {
+        // Generate random number: 39csx48
         $rand = substr(md5(microtime()),rand(0,26),7);
-        //   54fwdee
+
+        // Get file extension: jpg
         $extension = $request->file('image')->getClientOriginalExtension();
-        //   jpg
+
+        // Generate filename based of slug: myevent
         $imageName = $value->slug;
-        //   myevent
+
+        // Add extension to slug: myevent.jpg
         $inputFile = $imageName . '.' . $extension;
-        //    myevent.jpg
+
+        // Create variable filename based of Imagename: myevent
         $fileName = $imageName;
-        //    myevent
-        $directory = $type .'-images/' . $imageName . '-' . $rand;
-        //      event-images/myevent-54fwd3g
+
+        // Create directory name: event-images/myevent-54fwd3g-temp
+        $directory = $type .'-images/' . $imageName . '-' . $rand . '-' . 'final';
 
         $request->file('image')->storeAs('/public/' . $directory, $inputFile);
         Image::make(storage_path() . "/app/public/$directory/$inputFile")
@@ -88,16 +99,19 @@ class MakeImage extends Model
     */
     public static function renameImage($value, $slug, $type, $request)
     {
+        // Name is = tp slug or the request slug
         $name = $slug ? $slug : $request->slug;
-        
+
+        // Get the directory from the original imagepath: event-images/myevent-e2e9agg
         $dir = pathinfo($value->largeImagePath, PATHINFO_DIRNAME);
-        //      event-images/myevent-e2e9agg
+
+        // Get the filename from the original imagepath: myevent
         $filename = pathinfo($value->largeImagePath, PATHINFO_FILENAME);
-        //      myevent
+
+        // Generate a random number: 546dsee
         $rand = substr(md5(microtime()),rand(0,26),7);
-        //      546dsee
-        $newImagePath = $type . '-images/' . $name . '-' . $rand . '/' . $name;
-        //      event-images/myevent-546dsee/mynewevent
+        // Create a new imagepath: event-images/myevent-546dsee-final/mynewevent
+        $newImagePath = $type . '-images/' . $name . '-' . $rand . '-'. 'final' . '-' . '1' . '/' . $name;
 
         Storage::copy('public/' . $dir . '/' . $filename . '.webp', 'public/' . $newImagePath . '.webp' );
         Storage::copy('public/' . $dir . '/' . $filename . '.jpg', 'public/' . $newImagePath . '.jpg' );
@@ -118,29 +132,28 @@ class MakeImage extends Model
     */
     public static function saveNewImage($request, $value, $width, $height, $type)
     {
+        // Check if pathinfo for the largeimage path exists and is over 7 in length
         if (strlen(pathinfo($value->largeImagePath, PATHINFO_DIRNAME)) > 7) {
-
+            // Get the pathinfo: event-images/myevent-e2e9agg
             $dir = pathinfo($value->largeImagePath, PATHINFO_DIRNAME);
-            //      event-images/myevent-e2e9agg
+            // Get the filename: myevent
             $filename = pathinfo($value->largeImagePath, PATHINFO_FILENAME);
-            //      myevent
+            //Delete the original folder
             Storage::deleteDirectory('public/' . $dir);
 
         } else {
-
+            // Generate random number: 546ds3g
             $rand = substr(md5(microtime()),rand(0,26),7);
-            //      546ds3g
+            // Generate random filename: fd45cz3
             $filename = substr(md5(microtime()),rand(0,26),7);
-            //      fd45cz3
-            $dir = $type . '-images/' . $filename . '-' . $rand;
-            //      event-images/new-titles-54fwd3g
+            // Create dirctory name:  event-images/new-titles-54fwd3g-temp
+            $dir = $type . '-images/' . $filename . '-' . $rand . '-' . 'draft';
         }
 
+        // Get extension: jpg
         $extension = $request->file('image')->getClientOriginalExtension();
-        //      jpg
-        $inputFile= $filename . '.' . $extension;
-        //      new-titles.jpg
-
+        // Create title: new-titles.jpg
+        $inputFile = $filename . '.' . $extension;
 
         $request->file('image')->storeAs('/public/' . $dir, $inputFile);
         Image::make(storage_path()."/app/public/$dir/$inputFile")

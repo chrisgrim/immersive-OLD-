@@ -25,14 +25,6 @@ class OrganizerStoreRequest extends FormRequest
      */
     public function rules()
     {
-
-        if ($this->organizer) {
-            return [
-                'name' => ['required', 'max:60', new OrganizerUniqueSlugRule($this->name, $this->id)],
-                'description' => 'required|string|min:1|max:40000',
-            ];
-        }
-
         return [
             'name' => ['required', 'max:60', new OrganizerUniqueSlugRule($this->name, $this->id)],
             'description' => 'required|string|min:1|max:40000',

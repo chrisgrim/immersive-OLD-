@@ -1,5 +1,7 @@
 <template>
-    <nav class="create organizer" :style="pageHeight">
+    <nav 
+        class="create organizer" 
+        :style="pageHeight">
         <div class="grid create-nav-header">
             <div class="create-nav-header__home">
                 <div class="nav-create-logo">
@@ -40,6 +42,7 @@
         data() {
             return {
                 pageHeight:'',
+                disabled: false,
             }
         },
 

@@ -27,70 +27,72 @@
                         searchtype="event"
                         v-if="hideSearch" />
                 </div>
-                <div class="nav-menu">
-                    <template v-if="user">
-                        <div 
-                            class="nav-menu-item" 
-                            v-if="user.hasMessages ">
-                            <a 
-                                class="menu-link" 
-                                href="/messages">
-                                <div 
-                                    v-if="user.unread" 
-                                    class="active-dot">
-                                    <p />
-                                </div>
-                                <div>Inbox</div>
-                            </a>
-                        </div>
-                        <div 
-                            class="nav-menu-item" 
-                            v-if="!user.hasCreatedOrganizers">
-                            <a 
-                                class="menu-link" 
-                                href="/events/create">
-                                <div>Submit Your Experience (Free)</div>
-                            </a>
-                        </div>
-                        <div 
-                            class="nav-menu-item" 
-                            v-if="user.hasCreatedOrganizers">
-                            <a 
-                                class="menu-link" 
-                                href="/create/events/edit">
-                                <div>Your Events</div>
-                            </a>
-                        </div>
-                        <div class="nav-menu-item">
-                            <vue-profile-button 
-                                :screenwidth="mobileDevice" 
-                                :user="user" />
-                        </div>
-                    </template>
-                    <template v-else>
-                        <div class="nav-menu-item">
-                            <a 
-                                class="menu-link" 
-                                href="/register?create=true">
-                                <div>Submit Your Experience (Free)</div>
-                            </a>
-                        </div>
-                        <div class="nav-menu-item">
-                            <a 
-                                class="menu-link" 
-                                href="/register">
-                                <div>Register</div>
-                            </a>
-                        </div>
-                        <div class="nav-menu-item">
-                            <a 
-                                class="menu-link" 
-                                href="/login">
-                                <div>Login</div>
-                            </a>
-                        </div>
-                    </template>
-                </div>
+                <template v-if="hideMenuNav">
+                    <div class="nav-menu">
+                        <template v-if="user">
+                            <div 
+                                class="nav-menu-item" 
+                                v-if="user.hasMessages ">
+                                <a 
+                                    class="menu-link" 
+                                    href="/messages">
+                                    <div 
+                                        v-if="user.unread" 
+                                        class="active-dot">
+                                        <p />
+                                    </div>
+                                    <div>Inbox</div>
+                                </a>
+                            </div>
+                            <div 
+                                class="nav-menu-item" 
+                                v-if="!user.hasCreatedOrganizers">
+                                <a 
+                                    class="menu-link" 
+                                    href="/events/create">
+                                    <div>Submit Your Experience (Free)</div>
+                                </a>
+                            </div>
+                            <div 
+                                class="nav-menu-item" 
+                                v-if="user.hasCreatedOrganizers">
+                                <a 
+                                    class="menu-link" 
+                                    href="/create/events/edit">
+                                    <div>Your Events</div>
+                                </a>
+                            </div>
+                            <div class="nav-menu-item">
+                                <vue-profile-button 
+                                    :screenwidth="mobileDevice" 
+                                    :user="user" />
+                            </div>
+                        </template>
+                        <template v-else>
+                            <div class="nav-menu-item">
+                                <a 
+                                    class="menu-link" 
+                                    href="/register?create=true">
+                                    <div>Submit Your Experience (Free)</div>
+                                </a>
+                            </div>
+                            <div class="nav-menu-item">
+                                <a 
+                                    class="menu-link" 
+                                    href="/register">
+                                    <div>Register</div>
+                                </a>
+                            </div>
+                            <div class="nav-menu-item">
+                                <a 
+                                    class="menu-link" 
+                                    href="/login">
+                                    <div>Login</div>
+                                </a>
+                            </div>
+                        </template>
+                    </div>
+                </template>
             </div>
         </nav>
 
@@ -383,16 +385,19 @@
                 return this.$store.state.map || this.$store.state.mobilelocation || this.$store.state.mobiledates || this.$store.state.filter;
             },
             showMenu() {
-                return this.navtype != 'show' && this.navtype != 'messageshow'
+                return this.navtype != 'show' && this.navtype != 'messageshow' 
+            },
+            hideMenuNav() {
+                return this.navtype != 'create'
             },
             hideSearch() {
-                return this.navtype != 'homepage' && this.navtype !='onlinesearch' && this.navtype !='searchpage'
+                return this.navtype != 'homepage' && this.navtype != 'create' && this.navtype !='onlinesearch' && this.navtype !='searchpage'
             },
             isFixed() {
                 return this.navtype == 'searchpage'
             },
             isAbsolute() {
-                return this.navtype == 'homepage' || this.navtype == 'org'
+                return this.navtype == 'homepage' || this.navtype == 'org' || this.navtype == 'create'
             },
             blackText() {
                 return this.navtype == 'org'

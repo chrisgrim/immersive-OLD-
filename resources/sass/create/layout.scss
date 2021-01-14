@@ -11,13 +11,18 @@
    }
 }
 
+.ce__nav {
+    background: #f7f7f7;
+    box-shadow: rgba(0, 0, 0, 0.05) -4px 0px 20px inset;
+    z-index: 1004;
+}
+
 nav.create {
     width: 23rem;
     position: relative;
     z-index: 902;
     background: rgb(247, 247, 247);
     padding: 1.2rem;
-    box-shadow: rgba(0, 0, 0, 0.05) -4px 0px 20px inset;
 }
 .create-nav-header {
     grid-template-columns: 7rem 1fr;
@@ -102,7 +107,7 @@ p.create-menu-text {
     position: fixed;
     bottom: 0;
     height: 7rem;
-    z-index: 901;
+    z-index: 1001;
     display: grid;
     grid-template-columns: 23rem 1fr;
     &.review {
@@ -162,13 +167,13 @@ button.create[disabled]{
     position: fixed;
     bottom: 1.5rem;
     right: 2rem;
-    z-index: 902;
+    z-index: 1002;
 }
 .create-button__back {
     position: fixed;
     bottom: 1.5rem;
     left: 25rem;
-    z-index: 902;
+    z-index: 1002;
     &.review {
         left:2rem;
     }
@@ -180,7 +185,7 @@ button.create[disabled]{
 .event-create__submit-button {
     position: absolute;
     left: 11.5rem;
-    z-index: 1000;
+    z-index: 1002;
     top: 1.2rem;
 }
 

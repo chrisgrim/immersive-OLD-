@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="ce__nav">
         <div 
             @click="hide=!hide" 
             class="create-nav-hamburger"

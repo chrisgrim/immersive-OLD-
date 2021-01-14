@@ -52,11 +52,13 @@
                                     {{ event.name }}
                                 </h3>
                             </div>
-                            <div class="card-organizer">
-                                <h3 :class="{ black : color=='black' }">
-                                    {{ event.organizer.name }}
-                                </h3>
-                            </div>
+                            <template v-if="event.organizer">
+                                <div class="card-organizer">
+                                    <h3 :class="{ black : color=='black' }">
+                                        {{ event.organizer.name }}
+                                    </h3>
+                                </div>
+                            </template>
                             <div class="card-price">
                                 <h4 :class="{ black : color=='black' }">
                                     {{ event.price_range }} <span v-if="isShowing(event)"> (Event passed) </span>
