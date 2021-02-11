@@ -34,7 +34,7 @@
     },
     "dependencies": {
         "@vuejs-community/vue-filter-date-format": "^1.6.2",
-        "apexcharts": "^3.22.3",
+        "apexcharts": "^3.24.0",
         "google-maps-api-loader": "^1.1.1",
         "laravel-vue-pagination": "^2.3.1",
         "leaflet": "^1.7.1",
